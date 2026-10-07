@@ -1,0 +1,583 @@
+{
+ "process_area": {
+  "id": "PA-32.2",
+  "title": "Vendor Returns & Recovery"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-32-returns-reverse-logistics/PA-32.2-vendor-returns-recovery.md",
+ "value_stream": {
+  "directory": "VS-32-returns-reverse-logistics",
+  "id": "VS-32",
+  "name": "Returns & Reverse Logistics"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "~200–300 RTV shipments/month",
+    "Owner": "DC Returns Coordinator",
+    "Participants": "DC Returns Coordinator, Receiving Clerk, Buyer, Vendor",
+    "Trigger": "RTV authorization created (from W91, W1280, or W1626 disposition)",
+    "Volume": "Consolidated into ~50–80 vendor shipments/month"
+   },
+   "id": "W1631",
+   "level": 2,
+   "name": "Vendor Return-to-Vendor (RTV) Shipment Planning & Consolidation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles RTV-eligible inventory\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews RTV queue weekly\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves RMA with return authorization number\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: DC Returns Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Deadline-miss risk**: vendor RTV windows expire and recoverable value converts to scrap; mitigated by the weekly RTV queue prioritization including vendor RTV-policy deadlines (step 1)",
+     "- **RMA-less-shipment risk**: shipments dispatched without vendor authorization get refused at the vendor dock, doubling freight; mitigated by the Buyer RMA precondition before shipment preparation (steps 2–3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- RTV-eligible inventory queue grouped by vendor (W1631.1)",
+     "- Vendor RTV policy database (W1631.2)",
+     "- RMA number tracking per vendor (W1631.3)",
+     "- RTV shipment processing with in-transit tracking (W1631.5)"
+    ],
+    "Time Estimate": [
+     "Weekly RTV queue review 2 hours ≈ 104 hours/year; RMA acquisition 30 min/vendor × ~50–80 consolidated vendor shipments/month ≈ 300–480 hours/year; RTV shipment preparation 30 min/shipment × ~50–80/month ≈ 300–480 hours/year (RTV-eligible compilation and system posting automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Returns Coordinator",
+     "activity": "System compiles RTV-eligible inventory: items with \"Return to Vendor\" disposition from W91 (damaged/defective), W1280 (excess merchandise), or W1626 (customer return assessment); grouped by vendor",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Returns Coordinator reviews RTV queue weekly: (a) prioritizes by: (i) vendor credit value (high-value RTVs processed first), (ii) vendor RTV policy deadline (some vendors require RTV within 30 days of delivery), (iii) perishable/shelf-life urgency (cement, chemicals), (b) checks vendor RTV requirements: (i) RMA required from vendor (contact Buyer to obtain), (ii) original packaging required, (iii) specific carrier or ship-to address, (c) consolidates multiple RTV items for same vendor into single shipment",
+     "duration": "2 hours/week",
+     "n": "2",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Buyer obtains RMA from vendor: (a) contacts vendor with RTV details (items, quantities, defect description, original PO reference), (b) vendor approves RMA with return authorization number, (c) vendor specifies return shipping terms (vendor pays, BuildRight pays, split)",
+     "duration": "30 min/vendor",
+     "n": "3",
+     "r": "Buyer"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Returns Coordinator prepares RTV shipment: (a) picks items from quarantine/damaged goods area, (b) packs per vendor requirements, (c) prints shipping label and packing list with RMA number, (d) stages for carrier pickup or vendor pickup",
+     "duration": "30 min/shipment",
+     "n": "4",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "Shipment processed in system: (a) inventory deducted from \"RTV Pending\" status, (b) in-transit RTV inventory tracked, (c) AP Clerk notified of pending vendor credit",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1280",
+    "W1626",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "~50–80 vendor credit recoveries/month",
+    "Owner": "AP Clerk",
+    "Participants": "AP Clerk, Buyer, Controller",
+    "Trigger": "RTV shipment received by vendor",
+    "Volume": "Monthly RTV credit value: ~PHP 3–5M"
+   },
+   "id": "W1632",
+   "level": 2,
+   "name": "Vendor RTV Credit Recovery & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"Vendor confirms receipt of RTV shipment\" (replaces manual Step 1).",
+     "- System auto-record of \"AP Clerk matches vendor credit note to RTV record\" (replaces manual Step 2).",
+     "- System auto-issue of \"issues replacement shipment — processed as GR at no cost\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: AP Clerk review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Unrecovered-credit risk**: ~PHP 3–5M/month shipped back while credits quietly never arrive; mitigated by AP matching of vendor credit notes to RTV records and the monthly recovery-rate review (target >90%) (steps 1–2, 4)",
+     "- **Short-credit risk**: vendors credit less than agreed via restocking-fee or price disputes; mitigated by verification of credit amount against expected value before the credit is applied (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- RTV credit tracking with vendor confirmation status (W1632.1)",
+     "- AP credit matching against RTV record (W1632.2)",
+     "- Credit application against vendor AP (W1632.3)",
+     "- RTV recovery rate dashboard (W1632.4)"
+    ],
+    "Time Estimate": [
+     "~30 min per vendor credit recovery (receipt confirmation 15 min + credit-note matching 10 min + credit application 5 min) × ~50–80 recoveries/month ≈ 300–480 hours/year on ~PHP 3–5M monthly RTV credit value; monthly recovery report 1 hour ≈ 12 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Vendor confirms receipt of RTV shipment; issues credit note or replacement shipment; AP Clerk tracks confirmation status",
+     "duration": "15 min",
+     "n": "1",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "AP Clerk matches vendor credit note to RTV record: (a) verifies credit amount matches expected value (purchase price or agreed settlement), (b) verifies credit note references correct PO and RMA numbers",
+     "duration": "10 min/credit",
+     "n": "2",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "Credit applied: (a) system applies vendor credit against open AP (reduces amount due to vendor), (b) or vendor issues replacement shipment — processed as GR at no cost",
+     "duration": "5 min",
+     "n": "3",
+     "r": "AP Clerk / System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: Controller reviews RTV recovery report: (a) total RTV shipments vs. total credits received, (b) recovery rate (credits received ÷ RTV value shipped — target: > 90%), (c) aging of unrecovered RTVs (> 60 days escalated to Buyer), (d) vendor RTV performance score (feeds into vendor scorecard per W44)",
+     "duration": "1 hour/month",
+     "n": "4",
+     "r": "Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W44"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "~10–15 investigations/month",
+    "Owner": "Quality Manager",
+    "Participants": "Quality Manager, Buyer, DC Quality Inspector, vendor quality team",
+    "Trigger": "Defect rate exceeds threshold for a vendor/product (3+ defects of same type in 30 days)",
+    "Volume": "Focus on high-impact defects (safety, high-value, high-volume)"
+   },
+   "id": "W1633",
+   "level": 2,
+   "name": "Vendor Defective Product Investigation & Root Cause Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-detect of \"System alerts Quality Manager when defect pattern detected\" (replaces manual Step 1).",
+     "- System auto-record of \"records for affected lots\" (replaces manual Step 2).",
+     "- System auto-inspect of \"Quality Manager and Buyer engage vendor\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: Quality Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Pattern-miss risk**: isolated defect reports across 200 stores never connect into a visible pattern; mitigated by automated ≥3-in-30-day alerting across vendor/SKU/defect-type (step 1)",
+     "- **Dispute-stall risk**: the vendor rejects responsibility, freezing both recovery and corrective action; mitigated by third-party laboratory evidence (PHP 10–30K per test) forcing an objective resolution (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Defect-pattern alerting — same vendor/SKU/defect-type ≥3 occurrences in 30 days detected across GR inspection and returns data (step 1)",
+     "- Quality investigation workspace — defect samples and photos, GR inspection records, and complaint history aggregated per affected lot (step 2)",
+     "- VCAR linkage (W1610) — vendor RCA request, corrective action, and timeline tracking (step 3)",
+     "- Third-party test-lab interface — independent analysis results as dispute evidence (step 4)"
+    ],
+    "Time Estimate": [
+     "6.5 hours per occurrence (per-step effort 4 hours + 2 hours + 30 min); cadence-carried steps as authored (As needed) — at ~10–15 investigations/month ≈ 120–180 occurrences/year ≈ 780–1,170 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "System alerts Quality Manager when defect pattern detected: (a) same vendor, same SKU, same defect type ≥ 3 occurrences in 30 days, (b) same vendor, different SKUs, similar defect type ≥ 5 occurrences in 30 days, (c) any safety-related defect pattern",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quality Manager initiates investigation: (a) collects defect samples and photos from DC/stores, (b) reviews GR inspection records for affected lots, (c) reviews customer complaint records for affected products, (d) categorizes root cause hypothesis: (i) manufacturing defect, (ii) packaging inadequacy, (iii) shipping/handling damage, (iv) specification mismatch",
+     "duration": "4 hours",
+     "n": "2",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quality Manager and Buyer engage vendor: (a) share defect evidence and data, (b) request vendor root cause analysis, (c) agree on corrective action and timeline per W1610 (VCAR), (d) agree on immediate containment (hold shipments, substitute product, enhanced inspection)",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Quality Manager / Buyer"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "If vendor does not accept responsibility: (a) Quality Manager engages third-party testing laboratory for independent analysis (cost: PHP 10–30K per test), (b) test results shared with vendor for resolution, (c) if dispute continues: escalate to Category Manager and VP Merchandising for commercial resolution",
+     "duration": "As needed",
+     "n": "4",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Investigation closed when: (a) root cause identified and corrective action implemented, (b) vendor VCAR closed per W1610, (c) enhanced inspection shows defect rate returned to normal",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Quality Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1610"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "Per recall event (~1–2/year)",
+    "Owner": "DC Returns Coordinator",
+    "Participants": "DC Returns Coordinator, Store Managers, Compliance Officer, Buyer, Controller",
+    "Trigger": "Product recall decision from W1615",
+    "Volume": "Variable — can involve thousands of units across 200 stores and 4 DCs"
+   },
+   "id": "W1634",
+   "level": 2,
+   "name": "Vendor Product Recall Return & Recovery Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"DC Returns Coordinator consolidates recalled product from DCs and\" (replaces manual Step 2).",
+     "- System auto-document of \"document with destruction certificate\" (replaces manual Step 3).",
+     "- System auto-record of \"recorded as quality cost per W1614\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Commingling risk**: recalled stock mixes with ordinary RTV and re-enters sale or shipment; mitigated by segregated recall staging with lot-level tracking distinct from standard RTV flow (steps 2–3)",
+     "- **Recovery-shortfall risk**: the vendor negotiates partial credit and recall cost stays on BuildRight; mitigated by the Controller's total-cost calculation anchoring the recovery negotiation (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Recall-scope distribution — affected SKUs, lots, and recoverable quantities from W1615 to DC Returns Coordinators (step 1)",
+     "- Recall consolidation workflow — store and DC recall pulls consolidated into designated recall staging per W1616 (step 2)",
+     "- Disposition routing — vendor RTV per W1631, DENR-compliant destruction, or regulatory hold (step 3)",
+     "- Recall cost-recovery ledger — total cost (product + handling + disposal + refunds) grounding the vendor recovery negotiation (step 4)"
+    ],
+    "Time Estimate": [
+     "Per recall event (~1–2/year): DC consolidation of recalled product from 200 stores and 4 DCs and disposition (vendor return, destruction with DENR documentation, or hold) run at W1616-anchored effort with volumes variable by scope; financial recovery calculation and vendor cost allocation per event, with RMA/RTV per W1631 and vendor credits per W1632.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Compliance Officer provides recall scope to DC Returns Coordinator: affected SKUs, lot/batch numbers, quantity to recover from stores and DCs",
+     "duration": "Per W1616",
+     "n": "1",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "DC Returns Coordinator consolidates recalled product from DCs and stores: (a) DC: recalled product pulled from warehouse per W1616.3, (b) stores: recalled product consolidated and shipped to designated DC (store-to-DC reverse logistics), (c) customer returns of recalled product routed to designated DC",
+     "duration": "Variable",
+     "n": "2",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Recalled product disposition at DC: (a) **Return to vendor**: if vendor accepts return and provides credit — prepare consolidated RTV shipment per W1631, (b) **Destroy**: if product is unsafe for any use — arrange DENR-compliant destruction for chemicals or general destruction for non-hazardous items; document with destruction certificate, (c) **Hold for investigation**: retain samples for Quality Manager and Legal investigation",
+     "duration": "Variable",
+     "n": "3",
+     "r": "DC Returns Coordinator / Quality Manager"
+    },
+    {
+     "a": "CFO / VP Merchandising",
+     "activity": "Financial recovery: (a) Controller calculates total recall cost (product + handling + disposal + customer refunds), (b) Buyer negotiates vendor recovery: full credit, partial credit, or replacement, (c) insurance claim if applicable per W837, (d) unrecovered costs recorded as quality cost per W1614",
+     "duration": "Per recall event",
+     "n": "4",
+     "r": "Controller / Buyer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1614",
+    "W1615",
+    "W1616",
+    "W1631",
+    "W1632",
+    "W837"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "~6–8 seasonal return events/year (aligned with Philippine seasonal calendar)",
+    "Owner": "Buyer",
+    "Participants": "Buyer, Category Manager, DC Returns Coordinator, AP Clerk",
+    "Trigger": "Season ends or promotion concludes; unsold seasonal/promotional inventory eligible for vendor return",
+    "Volume": "~500–1,000 units per seasonal event"
+   },
+   "id": "W1635",
+   "level": 2,
+   "name": "Vendor Seasonal/Promotional Return Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews seasonal/promotional vendor agreements for return eligibility\" (replaces manual Step 1)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: Buyer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Eligibility-error risk**: ineligible seasonal stock shipped back is refused and returned at BuildRight's freight cost; mitigated by contract-level eligibility review before consolidation (step 1)",
+     "- **Late-consolidation risk**: seasonal items linger past vendor return windows; mitigated by event-aligned consolidation (~6–8 events/year on the seasonal calendar) (steps 1–2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor-agreement eligibility check — seasonal return provisions per vendor contract before anything ships (step 1)",
+     "- Seasonal consolidation queue — unsold seasonal inventory (unused, original packaging, within window) identified from stores and DCs (step 2)",
+     "- RTV execution chain — Buyer RMA, shipment per W1631, credit per W1632 (steps 3–4)"
+    ],
+    "Time Estimate": [
+     "~7 hours per seasonal event (return-eligibility review 2 hours + consolidation and identification 4 hours + non-returnable disposition 1 hour), with RMA/RTV per W1631 and vendor credits per W1632 on top; × ~6–8 seasonal events/year ≈ 42–56 hours/year plus downstream RTV effort at ~500–1,000 units per event.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Buyer reviews seasonal/promotional vendor agreements for return eligibility: (a) some vendor contracts include seasonal return provisions (unsold seasonal items returnable within 30 days of season end), (b) identifies eligible items, quantities, and return terms",
+     "duration": "2 hours/season",
+     "n": "1",
+     "r": "Buyer"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Returns Coordinator consolidates unsold seasonal inventory from stores and DCs; identifies items meeting return criteria (unused, original packaging, within return window)",
+     "duration": "4 hours/season",
+     "n": "2",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Buyer obtains RMA from vendor; DC Returns Coordinator processes RTV shipment per W1631",
+     "duration": "Per W1631",
+     "n": "3",
+     "r": "Buyer / DC Returns Coordinator"
+    },
+    {
+     "a": "Controller",
+     "activity": "AP Clerk processes vendor credit per W1632",
+     "duration": "Per W1632",
+     "n": "4",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Items not eligible for vendor return: dispositioned per W93 (markdown/clearance) or W91 (donate/scrap)",
+     "duration": "1 hour/season",
+     "n": "5",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1631",
+    "W1632",
+    "W91",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "~12 consignment vendor reviews/quarter",
+    "Owner": "Buyer",
+    "Participants": "Buyer, Category Manager, DC Returns Coordinator, AP Clerk",
+    "Trigger": "Consignment agreement review (typically quarterly) or vendor request",
+    "Volume": "~300 SKUs on consignment from 12 key vendors"
+   },
+   "id": "W1636",
+   "level": 2,
+   "name": "Vendor Consignment Unsold Inventory Return & Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews consignment inventory performance\" (replaces manual Step 1).",
+     "- System auto-document of \"For unsold consignment inventory\" (replaces manual Step 2).",
+     "- System auto-request of \"If vendor requests return\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: Buyer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Aging-capital risk**: unsold consignment occupies DC space with no ownership benefit; mitigated by the quarterly review with >180-day aging trigger forcing disposition (step 1)",
+     "- **Settlement-accuracy risk**: paying the vendor for unsold or returned consignment units; mitigated by settlement computed on sold inventory only, with returned units at zero (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment performance review — sell-through, >180-day aging, and margin across ~300 SKUs / 12 vendors (step 1)",
+     "- Disposition negotiation workflow — return, convert-to-owned at discount, or markdown options (step 2)",
+     "- RTV and settlement processing — consignment return per W1631 and settlement split sold vs. unsold (steps 3–4)"
+    ],
+    "Time Estimate": [
+     "Quarterly consignment cycle ~5 hours/vendor (performance review 2 hours + unsold-inventory negotiation 1 hour + settlement 2 hours) × 12 consignment vendors ≈ 60 hours/quarter ≈ 240 hours/year across ~300 consignment SKUs; vendor-requested returns processed per W1631.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Quarterly: Buyer reviews consignment inventory performance: (a) sell-through rate per SKU per vendor, (b) aging of consignment inventory (> 180 days unsold), (c) margin contribution of consignment vs. owned inventory",
+     "duration": "2 hours/vendor",
+     "n": "1",
+     "r": "Buyer"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "For unsold consignment inventory: (a) Buyer negotiates with vendor: (i) return unsold inventory to vendor, (ii) convert to owned inventory at discounted price, (iii) markdown and sell at clearance, (b) vendor selects option; agreement documented",
+     "duration": "1 hour/vendor",
+     "n": "2",
+     "r": "Buyer"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "If vendor requests return: DC Returns Coordinator processes RTV per W1631; consignment inventory physically returned to vendor",
+     "duration": "Per W1631",
+     "n": "3",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "Controller",
+     "activity": "Settlement: (a) AP Clerk calculates consignment settlement: (i) sold inventory — vendor payment at agreed consignment price, (ii) unsold returned inventory — no payment, (iii) markdown losses — per vendor agreement (vendor absorbs loss or shared), (b) system generates settlement report; payment processed per consignment terms",
+     "duration": "2 hours/quarter/vendor",
+     "n": "4",
+     "r": "AP Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1631"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-338"
+   ],
+   "fields": {
+    "Frequency": "~100–150 shipping errors/month (~2% of GRs)",
+    "Owner": "Receiving Clerk",
+    "Participants": "Receiving Clerk, DC Supervisor, Buyer, AP Clerk",
+    "Trigger": "Goods receipt reveals wrong item, wrong quantity, or wrong specification received",
+    "Volume": "~25–35 per DC/month"
+   },
+   "id": "W1637",
+   "level": 2,
+   "name": "Vendor Shipping Error & Wrong Item Return Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-match of \"match PO line\" (replaces manual Step 1).",
+     "- System auto-record of \"records discrepancy in system\" (replaces manual Step 2).",
+     "- System auto-count of \"Buyer contacts vendor to resolve\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-338 (ensure controlled execution — Vendor Returns & Recovery (PA-32.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Pay-for-undelivered risk**: AP pays invoices including wrong-item or over-shipped quantities; mitigated by GR discrepancy records blocking payment for the discrepancy quantity (steps 2–3)",
+     "- **Repeat-error risk**: errors fixed event-by-event with no vendor consequence; mitigated by shipping-error-rate tracking on the vendor scorecard informing sourcing decisions (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GR discrepancy record with photos — wrong item / wrong quantity / wrong spec captured and discrepant stock blocked from available (steps 1–2)",
+     "- Buyer–vendor resolution case — wrong-item pickup, expedited correct shipment, and AP hold on discrepant quantities (step 3)",
+     "- Resolution execution links — returns per W1631, AP adjustment per W1632, standard GR for corrected items (step 4)",
+     "- Vendor shipping-error scorecard feed — error-rate trend on the vendor scorecard (step 4)"
+    ],
+    "Time Estimate": [
+     "~25 min per shipping error (identification at GR 5 min + discrepancy recording 5 min + buyer-vendor resolution 15 min; downstream returns/AP adjustments per W1631/W1632) × ~100–150 errors/month ≈ 500–750 hours/year (~25–35 per DC/month).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Supervisor",
+     "activity": "At GR: Receiving Clerk identifies shipping error: (a) wrong item received (SKU doesn't match PO line), (b) wrong quantity (over-shipment or under-shipment), (c) wrong specification (e.g., wrong size, color, grade), (d) damaged in transit (carrier liability — separate from vendor error)",
+     "duration": "5 min/occurrence",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Receiving Clerk records discrepancy in system: (a) creates GR discrepancy record with photos, (b) system blocks discrepancy quantity from available stock, (c) notifies Buyer of shipping error",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Buyer contacts vendor to resolve: (a) **Wrong item**: vendor arranges pickup of wrong items and expedited shipment of correct items; no AP payment for wrong items, (b) **Over-shipment**: Buyer decides — accept excess (negotiate discount) or return excess per W1631, (c) **Under-shipment**: vendor ships remaining quantity on expedited basis; PO remains open, (d) **Wrong specification**: vendor arranges return and replacement; if spec difference is minor and acceptable to BuildRight, Buyer may negotiate price reduction instead",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Buyer"
+    },
+    {
+     "a": "Category Manager / Controller",
+     "activity": "Resolution executed: (a) returns processed per W1631, (b) AP adjusted per W1632, (c) correct items received and processed per standard GR, (d) vendor shipping error rate tracked in vendor scorecard per W44",
+     "duration": "Variable",
+     "n": "4",
+     "r": "Buyer / AP Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1631",
+    "W1632",
+    "W44"
+   ]
+  }
+ ]
+}

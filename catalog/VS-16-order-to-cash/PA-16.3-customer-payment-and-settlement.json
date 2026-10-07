@@ -1,0 +1,1178 @@
+{
+ "process_area": {
+  "id": "PA-16.3",
+  "title": "Customer Payment & Settlement"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md",
+ "value_stream": {
+  "directory": "VS-16-order-to-cash",
+  "id": "VS-16",
+  "name": "Order-to-Cash"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "Monthly provision review; write-offs as needed (typically quarterly batch)",
+    "Owner": "AR Supervisor (collections and write-off initiation); Controller (provisioning)",
+    "Participants": "AR Supervisor, AR Clerk, Finance Manager, Controller, CFO, Legal, Sales Rep",
+    "Trigger": "Monthly AR aging review; or specific account identified for write-off after collection escalation (W8.8a)",
+    "Volume": "~5,400 trade and corporate AR accounts; target bad debt rate < 0.5% of AR balance; estimated 10–20 write-off events/year"
+   },
+   "id": "W81",
+   "level": 2,
+   "name": "Bad Debt Provisioning, Write-Off & Recovery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Monthly AR aging review\" (replaces manual Step 1).",
+     "- System auto-count of \"Individual account assessment\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculates provision suggestion based on configured aging percentages per bucket\" (replaces manual Step 3)."
+    ],
+    "BIR Documentation Requirements": [
+     "For a bad debt write-off to be deductible for Philippine income tax purposes (per BIR Revenue Regulations), the following must be maintained:",
+     "- Proof that the debt was previously reported as income (sales invoices, official receipts)",
+     "- Demand letter sent via registered mail with return card",
+     "- Documentation of collection efforts (call logs, email correspondence, collection agency reports)",
+     "- Court filing (if legal action was pursued)",
+     "- Evidence of insolvency or bankruptcy (if applicable)",
+     "- Board resolution (for amounts requiring Board approval)",
+     "- Write-off approval with sign-off by authorized officer",
+     "- All documentation retained for 10 years per BIR retention requirements"
+    ],
+    "Background": [
+     "This workflow covers the complete bad debt lifecycle from initial provisioning through write-off and potential recovery. It formalizes and expands the bad debt steps embedded in W8.8a/8b into a standalone process with dedicated BIR documentation, provisioning methodology, and recovery tracking. The AR collection escalation process (W8 steps 6–8a) feeds into this workflow when accounts reach the write-off stage."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: AR Supervisor (collections and write-off initiation); Controller (provisioning) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Provision methodology subjectivity and auditor challenge**: the general provision rate (0.5–1% of AR portfolio) and specific provision assessment (50–100% based on collectibility) involve significant judgment; external auditors (W95) may challenge provision adequacy, especially if actual write-offs exceed provisioned amounts in prior years",
+     "- **BIR write-off documentation burden**: Philippine tax law requires extensive documentation to support bad debt write-off as a deductible expense (demand letters, collection logs, court filings); missing any element results in the write-off being disallowed during BIR examination (W77), triggering additional tax liability plus penalties",
+     "- **Recovery of written-off accounts creating tax complexity**: when a previously written-off account is recovered (step 10), the recovery is recognized as Bad Debt Recovery income; if the original write-off was claimed as a tax deduction, the recovery must be reported as taxable income in the year of recovery, creating a tax planning timing issue",
+     "- **Collection agency contingency fees eroding recovery**: with agency fees at 10–20% of collected amounts, net recovery on referred accounts is significantly reduced; for smaller accounts (< PHP 100,000), agency fees may consume most of the recovery, calling into question the economic viability of agency referral",
+     "- **Customer relationship damage from legal action**: filing collection cases against trade accounts (step 5e) permanently damages the commercial relationship; even if the debt is recovered, the customer will not return, and negative word-of-mouth in the Philippine business community can deter other potential trade customers"
+    ],
+    "Staffing Implication": [
+     "- **AR Supervisor**: adds ~2 hours/month for write-off initiation and documentation. Absorbed.",
+     "- **Controller**: adds ~1 hour/month for provision review + 30 min/quarter for summary presentation. Absorbed within existing close duties.",
+     "- **AR Clerk**: adds ~30 min/month for aging review escalation. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AR aging report with configurable bucket thresholds (W81.1)",
+     "- Individual account collectibility assessment with reason codes and supporting notes (W81.2)",
+     "- Automated bad debt provision calculator: specific provision per account + general provision based on aging matrix (W81.3)",
+     "- Provision posting with GL integration: Dr. Bad Debt Expense / Cr. Allowance for Doubtful Accounts (W81.4)",
+     "- Write-off documentation package generation with BIR-required attachments (W81.6)",
+     "- Tiered write-off approval workflow (W81.7)",
+     "- Write-off posting: provision drawdown or direct expense with AR reduction; account status change to \"Written Off\" with credit block (W81.8)",
+     "- Written-off accounts register with separate tracking from active AR (W81.9)",
+     "- Bad debt recovery posting: Dr. Cash / Cr. Bad Debt Recovery (separate P&L line from regular revenue) (W81.10–11)",
+     "- Quarterly bad debt summary dashboard: provision movement, write-off analysis, recovery rate, aging trend (W81.12)",
+     "- Integration with W8 (AR collections — W8.8a escalation feeds into W81 write-off trigger), W9A (month-end — provision posting included in close), W9B (year-end — bad debt methodology review with auditors), W24 (credit application — written-off customers blocked from new credit), W35 (management reporting — bad debt KPIs), W44 (vendor scorecard — recovery process mirrors vendor collection logic)"
+    ],
+    "Time Estimate": [
+     "- Monthly AR aging review for bad debt assessment: ~30 min/month (AR Clerk)",
+     "- Individual account collectibility assessment: ~15 min/account × ~20–30 accounts = ~5–8 hours/month",
+     "- Bad debt provision computation and posting: ~1.5 hours/month (Controller)",
+     "- Write-off documentation preparation: ~1–2 hours/account (AR Supervisor)",
+     "- Write-off approval and posting: ~5 min/account (system)",
+     "- Quarterly bad debt summary presentation: ~30 min/quarter (Controller)",
+     "- Annual methodology review with auditors: ~2 hours/year (CFO)",
+     "- Total bad debt management: ~8–12 hours/month (routine) + ~10–20 hours/year (write-off events)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "**Monthly AR aging review**: AR Clerk generates AR aging report by bucket (current, 1–30, 31–60, 61–90, 91–120, > 120 days); identifies accounts > 90 days overdue for bad debt assessment",
+     "duration": "30 min/month",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Individual account assessment**: for each account > 90 days overdue, AR Clerk and Sales Rep assess collectibility — (a) customer financial status (still operating, declared bankruptcy, unreachable), (b) collection history (payment promises made and broken, partial payments), (c) dispute status (customer disputes amount vs. simple non-payment), (d) security or collateral held (if any)",
+     "duration": "15 min/account",
+     "n": "2",
+     "r": "AR Clerk / Sales Rep"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Bad debt provision computation**: monthly, Controller computes bad debt provision using: (a) **specific provision**: for individually assessed accounts > 90 days where collection is uncertain — provision at 50–100% of outstanding amount based on assessment, (b) **general provision**: portfolio-level provision based on historical loss rate applied to remaining AR portfolio (e.g., 0.5–1% of total AR not specifically provided); system calculates provision suggestion based on configured aging percentages per bucket",
+     "duration": "1 hour/month",
+     "n": "3",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Controller reviews and approves monthly bad debt provision adjustment; system posts Dr. Bad Debt Expense / Cr. Allowance for Doubtful Accounts (balance sheet contra-asset)",
+     "duration": "30 min/month",
+     "n": "4",
+     "r": "Controller"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Write-off trigger**: when all collection efforts exhausted per W8.8a escalation tiers — (a) demand letter sent and no response after deadline, OR (b) external collection agency confirms account uncollectible, OR (c) customer confirmed insolvent/bankrupt (court filing or public record), OR (d) cost of collection exceeds amount recoverable — AR Supervisor initiates formal write-off process",
+     "duration": "15 min/account",
+     "n": "5",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Write-off documentation package**: AR Supervisor prepares BIR-compliant write-off documentation: (a) **demand letter**: copy of formal demand letter sent via registered mail with return card, (b) **collection report**: summary of all collection actions taken with dates (phone calls, emails, demand letters, collection agency referral, legal filing if applicable), (c) **account history**: full AR transaction history showing original invoices, payments received, and outstanding balance, (d) **evidence of insolvency** (if applicable): court filing, SEC dissolution notice, or other public record, (e) **write-off recommendation**: amount, reason, and supporting evidence summary",
+     "duration": "1–2 hours/account",
+     "n": "6",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "CEO / Board",
+     "activity": "**Write-off approval**: tiered by amount — (a) ≤ PHP 50,000: Finance Manager + Controller, (b) PHP 50,001–200,000: CFO, (c) PHP 200,001–1,000,000: CEO + CFO, (d) > PHP 1,000,000: Board resolution",
+     "duration": "15–30 min/write-off",
+     "n": "7",
+     "r": "Approver(s)"
+    },
+    {
+     "a": "Controller",
+     "activity": "**System posting**: system posts write-off — Dr. Allowance for Doubtful Accounts / Cr. Accounts Receivable (if provision exists) or Dr. Bad Debt Expense / Cr. Accounts Receivable (direct write-off if no prior provision); AR balance reduced; account status changed to \"Written Off\"; customer blocked from new credit sales; full transaction history retained for 10-year BIR retention",
+     "duration": "5 min/write-off",
+     "n": "8",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Post write-off tracking**: system maintains written-off accounts register — original amount, write-off date, reason, approving authority; written-off accounts excluded from standard AR aging but tracked separately for potential recovery",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Recovery — partial or full**: if customer subsequently pays on a previously written-off account — (a) AR Clerk receives payment (cash, bank transfer, or settlement agreement), (b) system posts recovery: Dr. Cash / Cr. Bad Debt Recovery (income — P&L), (c) recovery tracked separately from regular AR collections in GL and reporting, (d) if partial recovery: remaining balance remains in written-off register; if full recovery: account closed",
+     "duration": "10 min/recovery",
+     "n": "10",
+     "r": "AR Clerk / AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Recovery via settlement agreement**: if customer offers reduced settlement (e.g., 60% of outstanding), AR Supervisor negotiates; Finance Manager approves settlement terms; system posts: Dr. Cash (settled amount) / Cr. Bad Debt Recovery (settled amount); remaining written-off balance confirmed as final loss",
+     "duration": "30 min/settlement",
+     "n": "11",
+     "r": "AR Supervisor / Finance Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly**: Controller presents bad debt summary to CFO — (a) provision movement (opening balance + new provisions − write-offs + recoveries), (b) write-off volume and root cause analysis (customer bankruptcy, fraud, collection failure), (c) recovery rate on previously written-off accounts, (d) AR aging trend, (e) adequacy of general provision rate, (f) recommendation for provision rate adjustment if loss experience changes",
+     "duration": "30 min/quarter",
+     "n": "12",
+     "r": "Controller"
+    },
+    {
+     "a": "Board",
+     "activity": "**Annual**: CFO reviews bad debt provisioning methodology with external auditors as part of year-end audit (W9B); auditors assess adequacy of provision against actual loss history; methodology adjustments documented and approved",
+     "duration": "2 hours/year",
+     "n": "13",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W24",
+    "W35",
+    "W44",
+    "W77",
+    "W8",
+    "W95",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "~800–1,200 customer deposits/month (special orders, project accounts, layaway)",
+    "Owner": "AR Accountant",
+    "Participants": "AR Accountant, CSR / Sales Associate, Store Manager, Treasury Analyst, Customer",
+    "Trigger": "Customer places special order (W38); corporate/project account requires advance payment for large order; layaway deposit (W75); or customer requests credit balance refund",
+    "Volume": "Avg PHP 5,000–50,000 per deposit; project deposits can reach PHP 500,000+"
+   },
+   "id": "W94",
+   "level": 2,
+   "name": "Customer Deposit & Advance Payment Management",
+   "parent": null,
+   "req_refs": [
+    "FIN-005",
+    "POS-020"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"account\" (replaces manual Step 1).",
+     "- System auto-track of \"tracking\" (replaces manual Step 2).",
+     "- System auto-generate of \"Deposit application — at fulfillment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Customer deposits (advance payments) are a common retail scenario for big-box home improvement: special orders for non-stock items, large project orders requiring down payments, layaway deposits, and corporate accounts with credit balances. Without a structured workflow, deposits can be mishandled — unapplied to invoices, forgotten refunds, or misallocated across entities. This workflow manages the full deposit lifecycle from receipt to application, refund, or forfeiture. It supports FIN-005 (AR for B2B) and POS-020 (layaway/installment sales)."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: AR Accountant review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Unclaimed deposits aging into revenue recognition complexity**: Philippine law and BuildRight policy recognize unclaimed deposits as revenue after 365 days; however, the BIR may question the timing and taxability of unclaimed deposit recognition during examination, especially if the customer subsequently returns demanding a refund after revenue has been recognized",
+     "- **Special order deposit refund disputes**: when customers cancel special orders (W38), the cancellation fee policy may be unclear or inconsistently applied across stores; disputes over refund amounts create customer complaints and potential negative social media exposure in the Philippine retail market",
+     "- **Layaway deposit forfeiture compliance**: forfeiting layaway deposits (W75) must comply with the layaway agreement terms signed by the customer; if the agreement is missing or terms are ambiguous, the forfeiture is contestable and may result in full refund requirements plus customer relations damage",
+     "- **Deposit application errors for project accounts**: corporate/project accounts with milestone billing (W58) have complex deposit application requirements; applying deposits to the wrong milestone invoice or failing to apply deposits before invoicing creates AR discrepancies that are difficult to unravel"
+    ],
+    "Staffing Implication": [
+     "- **AR Accountant**: adds ~2–3 hours/week for deposit management and reconciliation. Absorbed within existing Finance team.",
+     "- **CSRs**: deposit collection and refund adds ~5 min per transaction; with ~800–1,200 deposits/month across 200 stores = ~4–6 per store/month. Absorbed.",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Deposit receipt creation at POS or AR with linked order reference (W94.1)",
+     "- Customer deposit register: per-customer, per-order deposit tracking with status and aging (W94.2)",
+     "- Auto-application of deposit to invoice at fulfillment (W94.3)",
+     "- Deposit refund processing with cancellation policy enforcement (W94.4)",
+     "- Unclaimed deposit aging report with escalation triggers (W94.5)",
+     "- Integration with W11 (BOPIS — prepayment), W12 (returns — refund from deposit), W19 (home delivery — prepayment), W38 (special orders — deposit collection and cancellation fee), W58 (project accounts — milestone advance billing), W75 (layaway — deposit and installment payments, forfeiture), W89 (bank reconciliation — deposit refunds in bank statement)"
+    ],
+    "Time Estimate": [
+     "- POS deposit collection: ~5 min/deposit × ~800–1,200/month = ~67–100 hours/month (spread across 200 stores)",
+     "- Bank transfer deposit posting: ~15 min/transfer × ~50–100/month = ~12–25 hours/month (AR Accountant)",
+     "- Deposit application at fulfillment: automated + ~5 min review per application",
+     "- Deposit refund processing: ~10 min/refund × ~100–200/month = ~17–33 hours/month (CSRs + AR Accountant)",
+     "- Unclaimed deposit aging review: ~15 min/week (AR Accountant)",
+     "- Monthly deposit reconciliation: ~2 hours/month (AR Accountant)",
+     "- Total deposit management: ~100–160 hours/month (primarily at store level, ~20–30 hours Finance)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Controller",
+     "activity": "**Deposit collection**: (a) **At POS** (store): Sales Associate or CSR collects deposit from customer for special order (W38), layaway (W75), or large in-store project order; system creates deposit receipt with deposit reference, customer account (loyalty, trade, or corporate), amount, and linked sales order or special order reference; payment captured via standard POS tender (cash, card, e-wallet); system posts to GL: Dr. Cash / Cr. Customer Deposits (liability); (b) **Online** (ecommerce): Customer prepays for BOPIS (W11) or home delivery (W19); system treats as advance payment captured by Digital Commerce Inc. and remitted to Depot Inc. per W14 IC model; (c) **Bank transfer** (corporate/project accounts): Corporate customer wires advance payment for large project order (W58); AR Accountant receives bank credit advice; posts deposit to customer account with project order reference",
+     "duration": "5 min/POS deposit; 15 min/bank transfer",
+     "n": "1",
+     "r": "Sales Associate / CSR / AR Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Deposit tracking**: System maintains deposit register per customer showing: deposit reference, date, amount, linked order, status (open/partially applied/fully applied/forfeited/refunded), aging; deposits are customer-level liability (not order-level revenue) until applied to invoice at fulfillment",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Deposit application — at fulfillment**: (a) When linked sales order is fulfilled and invoice is generated (POS sale, special order delivery, project billing per W58), system auto-applies deposit to invoice: system reduces customer deposit liability (Dr. Customer Deposits) and reduces AR (Cr. Accounts Receivable) or cash balance; (b) if deposit exceeds invoice amount: system applies deposit to invoice and maintains residual credit balance on customer account for next invoice or refund; (c) if deposit is less than invoice amount: system applies full deposit and customer pays remaining balance at POS or via standard AR terms",
+     "duration": "Automated + 5 min/review",
+     "n": "3",
+     "r": "System / AR Accountant"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Deposit refund**: (a) Customer requests cancellation of special order before fulfillment: CSR processes deposit refund per cancellation policy (full refund, less cancellation fee per W38, or forfeiture per W75 layaway rules); (b) system creates refund transaction: Dr. Customer Deposits / Cr. Cash (for POS refunds) or Cr. AP (for bank transfer refunds); (c) refund processed within 3–5 business days per customer-facing SLA; (d) for card/e-wallet deposits: refund to original payment method; for cash deposits: cash refund at store; for bank transfer deposits: bank transfer back to customer",
+     "duration": "10 min/refund",
+     "n": "4",
+     "r": "CSR / AR Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Unclaimed deposit aging**: System monitors unapplied/unrefunded deposits with aging: (a) 0–90 days: normal; (b) 90–180 days: system sends customer notification (deposit reminder); (c) 180–365 days: CSR contacts customer for disposition (apply, refund, or forfeit); (d) > 365 days: per Philippine law and BuildRight policy, unclaimed deposits may be recognized as revenue with Controller approval; system generates unclaimed deposit report for Controller review",
+     "duration": "15 min/week",
+     "n": "5",
+     "r": "System / CSR"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Layaway deposit forfeiture** (W75 integration): (a) If customer cancels layaway or defaults on installment payments per W75 cancellation rules, system forfeits deposit per layaway agreement terms; (b) forfeiture amount posted as Dr. Customer Deposits / Cr. Other Income (cancellation fee) or Cr. Revenue (if goods retained); (c) inventory reservation released per W75",
+     "duration": "Per W75",
+     "n": "6",
+     "r": "System / CSR"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Project account advance billing** (W58 integration): For corporate/project accounts with milestone billing: (a) project contract may specify advance payment (e.g., 30% down, 40% at delivery, 30% at completion); (b) each advance collected per step 1; (c) at each billing milestone (W58), system applies collected deposits to milestone invoice; (d) retention amounts (typically 10% held for 90–180 days post-completion) tracked separately in deposit register with scheduled release date",
+     "duration": "Per W58",
+     "n": "7",
+     "r": "AR Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Monthly reconciliation**: AR Accountant reconciles customer deposit liability account: (a) total deposit liability per GL must agree with deposit register total per system; (b) aging analysis of unapplied deposits; (c) investigate and resolve discrepancies; (d) report to Controller as part of W9A month-end close",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "AR Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W11",
+    "W12",
+    "W14",
+    "W19",
+    "W38",
+    "W58",
+    "W75",
+    "W89",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "~10–20 bad debt write-off events/year (per W81)",
+    "Owner": "Credit Manager / Finance Controller",
+    "Participants": "Collection Agent, Credit Manager, Finance Controller, CFO, Legal Counsel, External Auditor",
+    "Trigger": "Account > 180 days overdue with exhausted collection efforts; or customer bankruptcy/closure confirmed",
+    "Volume": "Average write-off: PHP 100,000–1,000,000; annual bad debt target: < 0.5% of B2B revenue"
+   },
+   "id": "W891",
+   "level": 2,
+   "name": "Customer Bad Debt Write-Off Proposal & Approval",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"account meeting write-off criteria\" (replaces manual Step 1).",
+     "- System auto-document of \"Compile write-off proposal — document\" (replaces manual Step 2).",
+     "- System auto-collect of \"collection option — for amounts > PHP 500,000\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: Credit Manager / Finance Controller review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- BIR bad debt deduction requires extensive documentation — 10+ pieces of evidence per write-off",
+     "- Write-off may be premature — customer could recover and pay (construction project delays are common)",
+     "- External collection agency recovery rate is low (~10–20%)",
+     "- Bad debt write-off impacts P&L — management may resist timely write-offs to protect earnings",
+     "- Concentrated risk — single large contractor default can exceed annual bad debt budget",
+     "- Written-off customers may return with new applications — need clear policy on re-admission"
+    ],
+    "Staffing Implication": [
+     "- Credit Manager: write-off proposal preparation (core responsibility)",
+     "- Legal Counsel: 1 hour per write-off > PHP 500,000",
+     "- Finance Controller: GL processing and BIR documentation",
+     "- External collection agency: contingency-based engagement"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **ERP AR Module** — write-off processing, customer status update, GL posting",
+     "- **Collection Management System** — collection history documentation",
+     "- **Finance Module** — bad debt expense, allowance for doubtful accounts, BIR documentation",
+     "- **Legal Matter Management** — litigation assessment, external collection agency tracking",
+     "- **BI Dashboard** — bad debt trends, portfolio risk analysis, scoring model accuracy"
+    ],
+    "Time Estimate": [
+     "- Per write-off: 4–8 person-hours over 2–4 weeks",
+     "- **Annual estimate: 20 write-offs × 6 hours = 120 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Identify write-off candidate — Collection Agent or Credit Manager identifies account meeting write-off criteria: (a) > 180 days overdue, (b) 3+ collection calls with no response or broken promises, (c) no active orders in 90+ days, (d) customer confirmed closed/bankrupt, or (e) legal collection deemed cost-prohibitive",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Collection Agent"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Compile write-off proposal — document: (a) account history (credit since date, total sales, payment pattern), (b) collection history (calls made, promises broken, last contact), (c) overdue invoice detail, (d) reason for write-off (bankruptcy, unresponsive, dispute, other), (e) legal opinion (if applicable), (f) recovery potential assessment (any assets or guarantors), (g) proposed write-off amount",
+     "duration": "1–2 hours",
+     "n": "2",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Evaluate legal collection option — for amounts > PHP 500,000: Legal Counsel assesses viability of legal action — cost of litigation vs. recovery probability; recommend legal action or write-off",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CFO / CEO",
+     "activity": "Obtain write-off approval — authorization: (a) ≤ PHP 50,000: Finance Manager + Controller, (b) PHP 50,001–200,000: CFO, (c) PHP 200,001–1,000,000: CEO + CFO, (d) > PHP 1,000,000: Board resolution (aligned to W81's write-off authority ladder); each approver reviews proposal and supporting documentation",
+     "duration": "30 min per approval level",
+     "n": "4",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Execute write-off — (a) post bad debt expense in GL, (b) reverse AR balance, (c) update customer status to \"Written Off\", (d) apply credit block to prevent future orders, (e) update allowance for doubtful accounts, (f) file BIR documentation for bad debt deduction (requires BIR-permitted evidence of collection efforts)",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "External collection agency referral (optional) — for write-offs > PHP 200,000 with identifiable customer: refer to external collection agency on contingency basis (typically 15–25% of recovered amount); track recovery",
+     "duration": "1 hour",
+     "n": "6",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual bad debt review — compile annual write-off summary: (a) total write-offs vs. target (< 0.5% of B2B revenue), (b) root cause analysis, (c) industry and geographic concentration, (d) credit scoring model accuracy, (e) recommendations for portfolio improvement",
+     "duration": "4 hours",
+     "n": "7",
+     "r": "Credit Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W81"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "~15–25 payment plan negotiations/month (primarily during post-project billing phase for corporate accounts)",
+    "Owner": "Credit Manager",
+    "Participants": "Credit Manager, Credit Analyst, AR Collector, Sales Manager (B2B), CFO, Customer (Finance/Procurement contact)",
+    "Trigger": "Corporate/project customer (from ~200 B2B accounts) requests payment plan for outstanding invoice(s); or AR aging shows customer 30+ days overdue; or customer proactively contacts BuildRight regarding cash flow difficulties",
+    "Volume": "Affects ~200 corporate/institutional accounts with Net 60–90 day terms; ~10–15% may require payment restructuring at any time"
+   },
+   "id": "W1326",
+   "level": 2,
+   "name": "Customer B2B Project Payment Plan Negotiation, Arrears Management & Restructuring",
+   "parent": null,
+   "req_refs": [
+    "FIN-044"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Arrears identification & escalation\" (replaces manual Step 1).",
+     "- System auto-count of \"Customer financial assessment\" (replaces manual Step 2).",
+     "- System auto-document of \"documents negotiated terms in system\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's ~200 corporate/institutional accounts generate ~10% of revenue (~PHP 6.2B/year). These accounts carry Net 60–90 day credit terms for large construction and government projects. Project-based B2B sales (W58) often result in large outstanding invoices (PHP 500K–5M per project) that face payment delays due to: (a) customer's own project billing cycle (general contractors wait for developer payment before paying suppliers), (b) government bureaucratic payment processing (government accounts per W1180 may take 90–180 days), (c) project disputes (customer claims material quality issues or quantity discrepancies), or (d) customer cash flow problems. W81 covers bad debt write-off and W1200 covers monthly statement review. This workflow covers the intermediate step: negotiating a payment plan to recover the debt while preserving the customer relationship — a critical balance for accounts representing significant annual revenue."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: formalizing plans as one-time arrangements and adjusting credit terms upon completion"
+    ],
+    "Pain Points / Risks": [
+     "- **Moral hazard**: customers who receive payment plans may expect future leniency, normalizing late payment behavior; mitigated by formalizing plans as one-time arrangements and adjusting credit terms upon completion",
+     "- **Cash flow impact**: PHP 50–100M in active payment plans at any time ties up working capital; Finance must factor payment plan receivables into cash flow forecasting per W30; aging payment plans increase working capital cost",
+     "- **Project dispute entanglement**: customer may conflate genuine payment difficulty with a disputed invoice (e.g., \"we won't pay until you replace the defective tiles\"); Credit Manager must separate dispute resolution (returns/replacements per W12) from payment plan negotiation",
+     "- **Government account constraints**: government accounts have fixed payment processing timelines (60–180 days per procurement law) that cannot be accelerated; payment plans for government accounts must align with government disbursement schedules per W1180",
+     "- **Write-off timing pressure**: payment plans that ultimately fail waste 3–6 months that could have been spent on collection or legal action; Credit Manager must set clear default triggers (2 missed installments) and enforce them consistently"
+    ],
+    "Staffing Implication": [
+     "- **Credit Manager**: ~4–6 hours/week on payment plan negotiation and monitoring. Absorbed.",
+     "- **Credit Analyst**: ~2–3 hours/week on customer financial assessment. Absorbed.",
+     "- **AR Collector**: ~1–2 hours/week on payment plan follow-up. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AR aging report with automated overdue escalation and payment plan candidate flagging (W1326.1)",
+     "- Customer credit scoring and history module per FIN-044 (W1326.2)",
+     "- Payment plan creation and formalization with installment schedule generation (W1326.3–4)",
+     "- Payment plan monitoring dashboard with compliance tracking, missed installment alerts, and default triggers (W1326.5)",
+     "- Credit limit and term adjustment module per FIN-044 for post-plan normalization (W1326.6)",
+     "- Integration with W81 (bad debt), W94 (deposits), W1381 (bounced check), W886 (credit assessment), W892 (statements), W1200 (monthly statement review), W58 (project quotes), FIN-044 (credit monitoring)"
+    ],
+    "Time Estimate": [
+     "- Arrears identification: 1–2 hours/account",
+     "- Financial assessment: 2–3 hours/account",
+     "- Negotiation: 2–4 hours/account",
+     "- Approval: 1–2 hours/account",
+     "- Monthly monitoring: 30 min/plan/month",
+     "- Post-plan normalization: 1 hour/account",
+     "- **Per payment plan**: ~8–14 hours total over 3–6 months",
+     "- **Annual**: ~1,500–4,000 hours/year across ~180–300 plans (at the monthly Frequency)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "**Arrears identification & escalation**: System identifies overdue invoices per AR aging report: (a) 30 days overdue: system sends automated past-due reminder per W892; (b) 45 days overdue: AR Collector contacts customer for payment commitment; (c) 60 days overdue (past credit terms): Credit Analyst reviews account; if customer indicates inability to pay in full, escalates to Credit Manager for payment plan negotiation; (d) system flags account as \"Payment Plan Candidate\" with total outstanding, days overdue, customer payment history, and account lifetime value",
+     "duration": "1–2 hours/account",
+     "n": "1",
+     "r": "System / AR Collector / Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "**Customer financial assessment**: Before negotiation, Credit Analyst assesses customer's financial situation: (a) payment history: has customer paid on time previously? is this a one-time delay or recurring pattern? (b) outstanding exposure: total AR balance including current invoices not yet due; (c) customer credit score: current score per FIN-044 monitoring; (d) external signals: has customer's business been affected by economic downturn, natural disaster, or project cancellation? (e) account value: annual revenue from customer, margin contribution, and strategic importance (government accounts, major developers); (f) Credit Analyst prepares recommendation: (i) standard payment plan (installments over 60–90 days), (ii) extended terms (restructure to longer payment period), (iii) accelerated collection (legal demand if high-risk), or (iv) write-off per W81 if uncollectable",
+     "duration": "2–3 hours/account",
+     "n": "2",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "CFO (plans > PHP 2M)",
+     "activity": "**Payment plan negotiation**: Credit Manager contacts customer's Finance/Procurement contact: (a) discuss reason for non-payment: cash flow timing, project dispute, billing error, or financial distress; (b) if project dispute: coordinate with Sales Manager and Category Manager to resolve dispute (material quality per W110, quantity discrepancy per W109) before payment plan discussion; (c) negotiate payment plan terms: (i) **Standard installment plan**: total outstanding split into 3–6 equal monthly payments; no interest if paid per schedule; (ii) **Partial payment with extended terms**: customer pays 30–50% immediately; remaining balance restructured over 90–180 days with 1% monthly late payment charge; (iii) **Project milestone payment**: payment aligned with customer's own project billing milestones (common for government and developer accounts); customer provides copy of their project billing schedule as commitment; (d) Credit Manager documents negotiated terms in system; customer confirms in writing (email or signed payment plan agreement)",
+     "duration": "2–4 hours",
+     "n": "3",
+     "r": "Credit Manager / Customer"
+    },
+    {
+     "a": "CEO (plans > PHP 5M)",
+     "activity": "**Approval & formalization**: (a) Credit Manager submits payment plan for approval: (i) plans ≤ PHP 1M: Credit Manager approves; (ii) plans PHP 1M–5M: CFO approves; (iii) plans > PHP 5M: CEO approves; (b) CFO reviews: (i) total exposure vs. customer lifetime value, (ii) risk of non-payment under the plan, (iii) impact on BuildRight's cash flow, (iv) precedent risk (will other customers request similar terms?); (c) if approved: system creates formal Payment Plan record linked to original invoice(s); payment schedule auto-generated with due dates and amounts; (d) if not approved: Credit Manager re-negotiates with customer or escalates to accelerated collection per W1381; (e) system updates customer account with \"Active Payment Plan\" status; new orders may require COD or deposit per Credit Manager's recommendation",
+     "duration": "1–2 hours",
+     "n": "4",
+     "r": "Credit Manager / CFO"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Payment plan monitoring**: AR Collector monitors payment plan compliance: (a) system generates payment reminders 5 days before each installment due date; (b) AR Collector follows up within 3 business days of missed installment; (c) if customer misses 2 consecutive installments: payment plan defaults — full outstanding balance immediately due; Credit Manager assesses next action: re-negotiate (one-time) or escalate to legal demand; (d) if customer pays per plan: system tracks compliance and removes \"Active Payment Plan\" flag upon completion; customer credit score improves per FIN-044 upon successful completion; (e) monthly: Credit Manager reviews all active payment plans — total exposure, compliance rate, aging of plans, and expected collection timeline",
+     "duration": "30 min/plan/month",
+     "n": "5",
+     "r": "AR Collector / Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Post-plan account normalization**: Upon successful plan completion: (a) system restores customer to standard credit terms; (b) Credit Analyst reviews whether original credit limit and payment terms remain appropriate — may adjust per FIN-044; (c) if customer's financial situation has deteriorated permanently: consider reducing credit limit, shortening payment terms, or converting to COD; (d) Sales Manager briefed on account status to manage customer relationship appropriately; (e) lessons learned feed into Credit Analyst's assessment for future credit decisions per W886",
+     "duration": "1 hour/account",
+     "n": "6",
+     "r": "Credit Analyst / Credit Manager / Sales Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W109",
+    "W110",
+    "W1180",
+    "W12",
+    "W1200",
+    "W1381",
+    "W30",
+    "W58",
+    "W81",
+    "W886",
+    "W892",
+    "W94"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "Quarterly business reviews for top 100 trade accounts; annual reviews for remaining ~5,100 trade accounts",
+    "Owner": "Sales Manager (B2B)",
+    "Participants": "Sales Manager, Category Manager, Credit Analyst, Trade Account Customer (Procurement/Owner), Marketing Coordinator",
+    "Trigger": "Quarterly trade account review calendar; or triggered by significant account change (new project, payment issue, competitor win/loss)",
+    "Volume": "100 quarterly reviews (top accounts, 400/yr) + ~5,100 annual reviews = ~5,500 reviews per year"
+   },
+   "id": "W1327",
+   "level": 2,
+   "name": "Customer Trade Account Spend Analysis, Category Insights & Quarterly Business Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Spend data preparation\" (replaces manual Step 1).",
+     "- System auto-file of \"profile\" (replaces manual Step 2).",
+     "- System auto-review of \"Quarterly Business Review\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's ~5,200 trade account customers (contractors, builders, interior designers, architects) generate ~30% of revenue (~PHP 18.7B/year). These professional customers buy regularly across multiple categories and have high lifetime value — a top contractor spending PHP 5M/year represents PHP 50M+ in lifetime revenue over 10 years. W1200 covers monthly statement review and credit monitoring. W102 covers category performance review from BuildRight's perspective. This workflow covers the external business review: a structured quarterly meeting with top trade accounts to analyze their spend patterns, identify growth opportunities, resolve service issues, and strengthen the relationship. For the top 100 accounts (generating ~60% of trade revenue), proactive relationship management through quarterly business reviews is a proven retention and growth strategy in B2B retail."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: preparing tangible insights (spend analysis, savings opportunities) that demonstrate QBR value; operational: customer master data governance per W292 and loyalty account linkage; operational: VP Merchandising oversight and quarterly review of pricing exception frequency"
+    ],
+    "Pain Points / Risks": [
+     "- **QBR no-show rate**: trade account customers may not see value in a quarterly meeting and decline or no-show; mitigated by preparing tangible insights (spend analysis, savings opportunities) that demonstrate QBR value; offering incentives (extra loyalty points, exclusive pricing) for QBR attendance",
+     "- **Sales Manager capacity**: 100 quarterly reviews × 60 min each = 100 hours/quarter plus preparation (2–3 hours each) = 300–400 hours/quarter; with Sales Managers handling ~20–25 accounts each, this is ~15–20 hours/month. Absorbed by existing B2B Sales Manager role.",
+     "- **Data quality for spend insights**: incomplete purchase history (customer buying from multiple POS terminals across stores, or placing orders under different account numbers) produces inaccurate spend analysis; mitigated by customer master data governance per W292 and loyalty account linkage",
+     "- **Competitive intelligence reliability**: spend analysis may suggest customer is buying elsewhere, but actual reason for declining purchases may be business slowdown rather than competitor switching; Sales Manager must verify competitive intelligence before taking retention action",
+     "- **Pricing exception proliferation**: if competitive retention actions routinely require price matching per W329, standard trade pricing becomes meaningless; mitigated by VP Merchandising oversight and quarterly review of pricing exception frequency"
+    ],
+    "Staffing Implication": [
+     "- **Sales Manager (B2B)**: ~15–20 hours/month on QBR preparation, meetings, and follow-up for ~25 accounts. Absorbed.",
+     "- **Category Managers**: ~4–6 hours/quarter on opportunity identification for top accounts. Absorbed.",
+     "- **Credit Analyst**: ~2–3 hours/quarter on spend data preparation. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer spend analytics module with category breakdown, trend analysis, and margin contribution per trade account (W1327.1)",
+     "- CRM with QBR meeting notes, action items, and competitive intelligence logging (W1327.3, 5)",
+     "- Cross-sell/up-sell recommendation engine based on purchase history and similar account profiles (W1327.2)",
+     "- Volume incentive and rebate tier tracking per W27 with approaching-tier alerts (W1327.2)",
+     "- Customer stratification module with tier assignment, review frequency, and resource allocation (W1327.6)",
+     "- Integration with W27 (rebates), W58 (project quotes), W87 (feedback), W130/W329 (competitive pricing), W139 (tool rental), W820 (BOM estimation), W904 (contractor referral), W980 (project delivery), W1200 (statement review), W1326 (payment plans)"
+    ],
+    "Time Estimate": [
+     "- Spend data preparation: 2–3 hours/account (automated where possible)",
+     "- Opportunity identification: 1–2 hours/account",
+     "- QBR meeting: 45–60 min/account",
+     "- Post-QBR action tracking: 30 min/account",
+     "- **Per account per quarter**: ~4–6 hours",
+     "- **Annual for top 100 accounts**: ~1,600–2,400 hours total across 4 Sales Managers",
+     "- **Annual account stratification**: 3–5 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Sales Manager",
+     "activity": "**Spend data preparation**: Credit Analyst compiles quarterly spend analysis for each top 100 trade account: (a) total spend: quarter vs. prior quarter vs. same quarter prior year; (b) category breakdown: spend per product category (lumber, plumbing, electrical, tiles, tools, etc.) with percentage share; (c) trend analysis: growing categories, declining categories, new categories purchased; (d) average order value and order frequency; (e) preferred fulfillment channels: in-store vs. BOPIS vs. delivery vs. special order (W38); (f) margin analysis: account's gross margin contribution vs. trade account average; (g) competitive intelligence: Sales Manager notes any known competitor purchases by the account (from W624 competitor visits and Sales Associate field intelligence); (h) payment behavior: on-time payment rate, average days-to-pay, any payment plan history per W1326",
+     "duration": "2–3 hours/account",
+     "n": "1",
+     "r": "Credit Analyst / System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Opportunity identification**: Sales Manager and Category Manager jointly identify growth opportunities per account: (a) cross-sell: categories where the account under-purchases vs. their project profile (e.g., a contractor buying lumber but not tiles — are they sourcing tiles elsewhere?); (b) up-sell: higher-margin alternatives or premium brands in categories where the account currently buys economy; (c) new service adoption: has the account tried installation referral per W904, BOM estimation per W820, tool rental per W139, project delivery per W980?; (d) volume incentive: is the account approaching a rebate tier per W27 that would reward increased spend?; (e) project pipeline: any known upcoming projects that BuildRight can pre-quote per W58?",
+     "duration": "1–2 hours/account",
+     "n": "2",
+     "r": "Sales Manager / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly Business Review (QBR) meeting**: Sales Manager conducts QBR with customer (in-person at customer's office or BuildRight Pro Desk, or video call for remote accounts): (a) present spend analysis: highlight the account's purchasing trends and how BuildRight has supported their projects; (b) discuss upcoming projects and material requirements: customer shares project pipeline; BuildRight commits to pricing and availability; (c) present growth opportunities: cross-sell categories, volume incentive tiers, new services; (d) solicit feedback: (i) what is BuildRight doing well? (ii) what can be improved? (iii) are there stock-out issues in specific categories? (iv) how does BuildRight compare to competitors on price, availability, and service? (e) resolve any open issues: credit terms, delivery problems, quality concerns, returns pending; (f) agree on action items with owners and deadlines",
+     "duration": "45–60 min/account",
+     "n": "3",
+     "r": "Sales Manager / Customer"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Competitive retention action**: If spend analysis reveals declining purchases or competitive intelligence indicates customer buying from competitors: (a) Sales Manager develops retention proposal: (i) matched pricing on competitive categories per W329, (ii) extended credit terms per W1326, (iii) priority delivery scheduling per W980, (iv) dedicated account coordinator; (b) VP Merchandising approves any pricing exceptions; (c) Sales Manager presents retention offer to customer; (d) system tracks retention actions and outcomes",
+     "duration": "2–3 hours/account",
+     "n": "4",
+     "r": "Sales Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-QBR action tracking**: Sales Manager logs all QBR outcomes and action items in CRM: (a) customer feedback themes aggregated per W87; (b) stock-out or availability issues escalated to Category Manager for supply planning review per W31; (c) cross-sell/up-sell commitments tracked to conversion; (d) competitive pricing intelligence shared with Category Manager per W130; (e) action items tracked to completion with weekly Sales Manager follow-up; (f) results feed into next quarter's QBR preparation",
+     "duration": "30 min/account",
+     "n": "5",
+     "r": "Sales Manager / System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Annual account stratification**: Annually, Sales Manager and Credit Analyst stratify all 5,200 trade accounts: (a) **Platinum** (top 50 accounts, > PHP 5M/year): dedicated account manager, quarterly QBR, priority service, custom pricing; (b) **Gold** (next 200 accounts, PHP 1–5M/year): semi-annual business review, preferential terms, proactive engagement; (c) **Silver** (next 1,000 accounts, PHP 200K–1M/year): annual review, standard trade terms; (d) **Bronze** (remaining ~4,000 accounts, < PHP 200K/year): self-service with annual statement review; (e) stratification drives resource allocation: Sales Manager time, Category Manager engagement, and credit terms per tier",
+     "duration": "3–5 days (annual)",
+     "n": "6",
+     "r": "Sales Manager / Credit Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W102",
+    "W1200",
+    "W130",
+    "W1326",
+    "W139",
+    "W27",
+    "W292",
+    "W31",
+    "W329",
+    "W38",
+    "W58",
+    "W624",
+    "W820",
+    "W87",
+    "W904",
+    "W980"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~50–80 PDCs received per week across 5 entities",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, AR Supervisor, Treasury Analyst, Bank",
+    "Trigger": "Trade or corporate account customer tenders post-dated check(s) as payment for outstanding AR invoices",
+    "Volume": "~2,500–4,000 PDCs/year; average PDC value PHP 30,000–200,000"
+   },
+   "id": "W1380",
+   "level": 2,
+   "name": "Customer Post-Dated Check (PDC) Receipt, Register Management & Bank Deposit Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check is properly filled out\" (replaces manual Step 1).",
+     "- System auto-record of \"records PDC in system\" (replaces manual Step 2).",
+     "- System rule-based authorization of \"authorized AR Clerks\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Post-dated checks (PDCs) remain a common payment method for B2B transactions in the Philippines, particularly among trade accounts (contractors, builders, hardware resellers) and corporate customers. While electronic payments (PESONet, InstaPay) are growing, an estimated 20–30% of trade account payments by value still arrive as PDCs. Managing the PDC lifecycle — receipt, registration, secure storage, timely deposit, and reconciliation — is critical for cash flow accuracy and AR aging integrity."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **PDC vault physical security risk**: physical checks stored on-site are vulnerable to theft, fire, or flood; if a batch of PDCs is lost, BuildRight must notify customers to issue replacement checks — a time-consuming and relationship-damaging process; mitigated by periodic reconciliation against source documents",
+     "- **Stale-dated checks missed**: if a PDC is not deposited within 6 months of the check date (per Philippine banking rules), the bank will refuse it; the AR aging may show the invoice as \"paid\" (PDC held) when the underlying payment instrument has expired — mitigated by the stale-date watch (step 8: 60-day alert, customer re-issuance demand, GL reversal before expiry)",
+     "- **PDC maturity date vs. bank processing lag**: depositing a PDC on its check date does not guarantee same-day clearance; Philippine bank check clearing takes 1–3 business days; the gap between deposit and clearance creates a timing difference in the cash position (W30)",
+     "- **Customer closes bank account before PDC date**: customer may close or freeze their bank account after issuing a PDC, causing the check to bounce when deposited; BuildRight has no real-time visibility into customer bank account status"
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing AR Clerk(s) — adds ~4–5 hours/week to existing workload. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PDC register: centralized tracking of all held, deposited, cleared, bounced, and returned PDCs with full lifecycle (W1380.2)",
+     "- Automated PDC maturity reports: weekly 7-business-day look-ahead + daily T-1 execution list (W1380.4)",
+     "- GL posting: PDC receipt (Dr. PDC Receivable / Cr. AR), deposit (Dr. Cash / Cr. PDC Receivable) (W1380.2, W1380.6)",
+     "- Cash-forecast feed: PDC maturity schedule exported to W233 (liquidity forecasting) and W30 (daily cash positioning) as scheduled inflows at expected clearing date (deposit + 1–3 banking days) — treasury execution in W423",
+     "- Credit-monitoring integration: W572 consumes PDC register status — invoices covered by registered PDCs restore available credit; on-account PDCs only upon application; bounced PDCs trigger NSF alerts (W1381)",
+     "- Bank reconciliation integration for PDC clearance matching (W89)",
+     "- Integration with W889 (AR aging — PDC receipt removes invoice from aging), W1381 (bounced check processing), W89 (bank reconciliation), W423 (treasury warehousing & clearing companion)"
+    ],
+    "Time Estimate": [
+     "~3 min/PDC for receipt and registration + ~1 hour/week for maturity monitoring and bank deposit preparation. Total: ~4–5 hours/week for AR Clerk."
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk receives PDC from customer (mail, courier, or in-person); verifies: (a) check is properly filled out (payee = correct BuildRight entity, amount matches invoice, signature present), (b) check date is in the future, (c) check is not stale-dated (Philippine checks valid for 6 months from date), (d) bank name and branch are legible, (e) amount in words matches amount in figures",
+     "duration": "3 min/PDC",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "AR Clerk records PDC in system: (a) check number, bank, branch, date, amount, customer account, invoice reference(s), receipt date; (b) system creates PDC register entry with status \"Held\"; (c) system posts entry: Dr. PDC Receivable (asset) / Cr. Accounts Receivable — Customer; this removes the invoice from AR aging and moves it to PDC held status; (d) allocation rules — a PDC covering multiple invoices is applied per the customer's remittance advice, or oldest-invoice-first (FIFO) if unspecified, with any residual held on-account; (e) on-account PDCs (no invoice reference — e.g., security for future purchases or a payment-plan installment) are recorded as an on-account credit (Dr. PDC Receivable / Cr. Customer on-account credit) and do not touch AR aging; (f) credit-limit relief rule — invoices covered by a registered PDC restore available credit up to the applied amount (consumed by W572 credit monitoring); on-account PDCs restore credit only when applied to invoices",
+     "duration": "3 min/PDC",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk stores physical PDC in secure PDC vault/cabinet at HQ or shared services; vault access restricted to AR Supervisor and authorized AR Clerks; PDCs organized by deposit month for easy retrieval",
+     "duration": "2 min/PDC",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System generates PDC maturity reports from the register: a weekly 7-business-day look-ahead (all PDCs maturing in the next 7 business days, sorted by entity and bank) for deposit planning, and a daily T-1 execution list of checks maturing tomorrow (worked by Treasury per W423)",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk retrieves maturing PDCs from vault; prepares bank deposit slip per bank; endorses checks (signs back); bundles by deposit bank; takes to bank for deposit",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "Bank processes deposit; AR Clerk obtains deposit confirmation; system updates PDC register status to \"Deposited\"; system posts: Dr. Cash in Bank / Cr. PDC Receivable",
+     "duration": "5 min/batch",
+     "n": "6",
+     "r": "AR Clerk / System"
+    },
+    {
+     "a": "—",
+     "activity": "Bank reconciliation (W89): Treasury Analyst matches bank clearance of deposited PDCs; if check clears — status updated to \"Cleared\"; if check bounces (DAIF/DAUD) — route to W1381",
+     "duration": "Part of W89",
+     "n": "7",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Stale-Date Watch**: monthly (plus automated alert 60 days ahead), AR Clerk reviews warehoused PDCs whose 6-month validity horizon approaches without deposit (held back for dispute, lost, or customer request); escalates to the customer for replacement; if not replaced before expiry, system reverses the receipt (Dr. Accounts Receivable / Cr. PDC Receivable), reinstating the invoice in AR aging, and notifies W572 credit monitoring",
+     "duration": "30 min/month",
+     "n": "8",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Customer-Requested Return / Replacement / Stop-Payment**: (a) pre-maturity return at customer request (e.g., switching to electronic payment): register status \"Returned\"; GL Dr. Accounts Receivable / Cr. PDC Receivable (reinstates covered invoices); physical handover against a customer-signed acknowledgment receipt; (b) lost/damaged PDC or customer stop-payment: original marked \"Cancelled — Replaced\" (or \"Cancelled — Stop Payment\"), replacement check processed per steps 1–3",
+     "duration": "15 min/case",
+     "n": "9",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Monthly Vault Count**: AR Supervisor and Treasury jointly count physical PDCs against the register (executed as W423 step 7); count sheet retained as audit evidence; discrepancies investigated same day",
+     "duration": "Part of W423",
+     "n": "10",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1381",
+    "W233",
+    "W30",
+    "W423",
+    "W572",
+    "W889",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "~15–25 bounced checks/month across all entities",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Clerk, AR Supervisor, Legal, Finance Manager, Customer, Bank",
+    "Trigger": "Bank notifies BuildRight that a deposited customer check was returned unpaid (DAIF — \"Drawn Against Insufficient Funds\" or account closed)",
+    "Volume": "~200–300 bounced checks/year; average bounced check value PHP 50,000–300,000"
+   },
+   "id": "W1381",
+   "level": 2,
+   "name": "Customer Bounced Check (DAIF) Resolution, Legal Action & BIR Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Bank notifies AR Clerk of returned check\" (replaces manual Step 1).",
+     "- System auto-update of \"System reverses the PDC deposit in two entries\" (replaces manual Step 2).",
+     "- System workflow notification of \"contacts customer within 24 hours\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Bounced checks (DAIF) are a persistent challenge in Philippine B2B commerce. Under Batas Pambansa Blg. 22 (BP 22 — the Bouncing Checks Law), issuing a check that bounces is a criminal offense punishable by imprisonment and/or fine. Additionally, the BIR requires reporting of DAIF checks as part of the annual information return. BuildRight must balance aggressive recovery (legal action) with customer relationship preservation."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: AR Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer relationship damage from BP 22 filing**: filing a criminal complaint against a trade account customer permanently damages the relationship and may generate negative word-of-mouth in the construction industry community; Legal and Finance must carefully weigh recovery vs. relationship",
+     "- **Low conviction rate for BP 22**: Philippine courts are slow; BP 22 cases typically take 1–3 years; even with conviction, collection is not guaranteed; many customers settle during the process but legal costs (attorney fees, filing fees) may exceed the check amount for smaller values",
+     "- **Repeat offenders**: some trade customers habitually issue PDCs that bounce; the credit monitoring system (W572) must flag these patterns and proactively tighten terms (shorter payment terms, reduced limits, or convert to COD)",
+     "- **Bank charges for returned checks**: Philippine banks charge PHP 500–2,000 per returned check; with 200–300 bounced checks/year, bank charges total PHP 100K–600K/year — an unrecoverable cost unless customer is billed for charges (Returned Check Fee debit memo, step 3d)",
+     "- **Double-recovery risk**: customer redeems by bank transfer while the original check is re-presented, duplicating collection; mitigated by single-path settlement — the bounced check is flagged \"do not re-present\" in the PDC register and the credit hold lifts only after Treasury confirms exactly one cleared redemption instrument (W425 step 6)"
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing AR Clerk and AR Supervisor — adds ~5–8 hours/week. Legal support for demand letters and prosecution adds ~2–4 hours/month. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PDC register: bounced check status tracking with reason code and resolution workflow (W1381.2)",
+     "- GL reversal: automated posting to re-establish AR and reverse cash on bounced check (W1381.2)",
+     "- BP 22 demand letter template with legal language per Philippine law (W1381.5)",
+     "- DAIF summary dashboard: bounced check count, value, resolution rate, aging (W1381.8)",
+     "- Credit hold auto-trigger: account flagged for credit block on bounced check per W572 (W1381.6)",
+     "- BIR DAIF report template for Annual Information Return (W1381.9)",
+     "- Integration with W1380 (PDC lifecycle — bounce is downstream event), W572 (credit monitoring — bounced check triggers alert), W812 (field collection and legal escalation), W81 (bad debt — unresolved bounced checks may lead to write-off)"
+    ],
+    "Time Estimate": [
+     "~15 min/case for initial contact + 1 hour/case for legal escalation = ~5–8 hours/week for AR Clerk and AR Supervisor. Legal involvement adds 2–4 hours/case for demand letters and 8–16 hours/case for prosecution."
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "Bank notifies AR Clerk of returned check; AR Clerk receives bank return memo with reason code (DAIF — insufficient funds, DAUD — uncleared deposits, account closed, stop payment, etc.)",
+     "duration": "Same day",
+     "n": "1",
+     "r": "Bank / AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System reverses the PDC deposit in two entries: (a) reverse deposit: Dr. PDC Receivable / Cr. Cash in Bank; (b) reinstate receivable: Dr. Accounts Receivable — Customer / Cr. PDC Receivable; the AR invoice is reactivated in aging with status \"Overdue — Bounced Check\"; PDC register status updated to \"Bounced — DAIF/DAUD\" (financial reversal executed with W425)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk contacts customer within 24 hours: (a) notifies customer of bounced check, (b) requests immediate replacement payment (cash, manager's check, or online transfer), (c) warns of BP 22 legal consequences if not resolved within 5 banking days, (d) posts the Returned Check Fee debit memo — standard penalty plus bank charges (PHP 500–2,000 per returned check): Dr. Accounts Receivable / Cr. Other Income (penalty posting executed with W425)",
+     "duration": "15 min/case",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "If customer provides replacement payment within 5 banking days: process payment per standard W8; update PDC register status to \"Replaced — Resolved\"; no further action",
+     "duration": "5 min/case",
+     "n": "4",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "If customer does not resolve within 5 banking days: AR Supervisor escalates to Legal; Legal prepares and sends formal demand letter via registered mail with return card (required per BP 22 before filing criminal complaint); demand letter gives customer 5 banking days from receipt to make good the check",
+     "duration": "1 hour/case",
+     "n": "5",
+     "r": "Legal"
+    },
+    {
+     "a": "CFO",
+     "activity": "If customer still does not pay after demand letter: (a) Legal evaluates whether to file BP 22 criminal complaint with prosecutor's office — decision based on amount (generally filed for > PHP 50,000), customer relationship value, and likelihood of recovery; (b) for amounts < PHP 50,000 or strategic customers: Finance Manager may approve extended payment plan or settlement negotiation instead of legal action; (c) system flags account for credit hold — no new credit sales per W572",
+     "duration": "30 min/case",
+     "n": "6",
+     "r": "Legal / Finance Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "If BP 22 complaint filed: Legal manages prosecution process (affidavit, evidence submission, court hearings); timeline: 6–18 months to resolution in Philippine courts",
+     "duration": "As needed",
+     "n": "7",
+     "r": "Legal"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Monthly: AR Supervisor prepares DAIF summary report — bounced check count, total value, resolution rate (replaced, settled, legal), average days to resolution; Finance Manager reviews and adjusts credit terms for repeat offenders",
+     "duration": "1 hour/month",
+     "n": "8",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "Annual: AR Supervisor compiles DAIF listing for BIR reporting — all bounced checks received during the year with customer TIN, check details, and resolution status; included in Annual Information Return (AIF) per BIR requirements",
+     "duration": "4 hours/year",
+     "n": "9",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1380",
+    "W425",
+    "W572",
+    "W8",
+    "W81",
+    "W812"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~140–200 electronic payments/day across 5 entities (≈35,000–50,000/year at ~250 business days, per the Volume)",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, AR Supervisor, Treasury Analyst, Customer",
+    "Trigger": "Customer makes electronic payment via PESONet, InstaPay, or bank-to-bank transfer; daily bank statement or payment notification received",
+    "Volume": "~35,000–50,000 electronic payments/year; growing ~20–30% annually as customers shift from checks"
+   },
+   "id": "W1382",
+   "level": 2,
+   "name": "Customer Electronic Payment (PESONet/InstaPay) Reconciliation & Auto-Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-suggest of candidate invoice matches (amount ±5% tolerance, reference-number heuristics) into the manual review queue (supports steps 2 and 4).",
+     "- System auto-route of unapplied cash >5 business days to the AR Supervisor escalation queue (replaces manual Step 6 triage).",
+     "- System auto-report of daily application-rate and aging metrics to the Finance Controller (replaces manual reporting atop steps 1–6)."
+    ],
+    "Background": [
+     "The Philippine payment landscape is rapidly shifting toward electronic payments. PESONet (batch electronic fund transfer, processed same-day or next-day) and InstaPay (real-time, 24/7, max PHP 50,000 per transaction) are the primary channels. BSP's Digital Payments Transformation Roadmap (2020–2023) targeted 50% of retail payments in digital form by 2023 (since achieved). For BuildRight's ~5,400 trade and corporate accounts, electronic payments now represent ~40–50% of AR collections by volume (though checks still dominate by value due to InstaPay's PHP 50K limit). The challenge is matching electronic payments to AR invoices when the customer's bank reference may not clearly identify the invoice numbers being paid."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: AR Clerk review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Low auto-match rate for InstaPay**: InstaPay's PHP 50,000 per-transaction limit means large B2B payments are split into multiple transfers; each transfer generates a separate bank record, and the customer may not reference invoices in each partial transfer",
+     "- **Customer name mismatch**: bank records show the remitting account name, which may differ from BuildRight's customer master (e.g., \"Juan Dela Cruz Construction\" vs. \"JDC Builders\" vs. \"J. Dela Cruz General Construction\"); fuzzy matching helps but generates false positives",
+     "- **PESONet processing lag**: PESONet batches are processed at cut-off times (typically 3:00 PM and end-of-day); a payment initiated on Friday afternoon may not settle until Monday, creating a weekend gap where the customer believes they have paid but AR still shows the invoice as open",
+     "- **Reference number limitations**: not all banking channels allow free-text reference fields; customers using mobile banking apps may only see \"BuildRight Depot\" as payee without the ability to add invoice numbers"
+    ],
+    "Staffing Implication": [
+     "At current volumes, 1 dedicated AR Clerk for electronic payment reconciliation and application. As auto-match rate improves, effort absorbed across existing AR team. No incremental headcount beyond current AR staffing.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Bank API integration: PESONet batch file import and InstaPay real-time webhook notifications (W1382.1)",
+     "- Auto-matching engine: configurable matching rules (customer name, amount, reference, tolerance) with confidence scoring (W1382.2)",
+     "- AR application posting: Dr. Cash / Cr. AR with invoice-level detail (W1382.3)",
+     "- Unapplied cash queue: daily worklist for AR Clerks with aging and escalation (W1382.4, W1382.6)",
+     "- Customer payment confirmation: automated email/SMS with invoice details and payment receipt (W1382.3)",
+     "- Integration with W89 (bank reconciliation), W889 (AR aging — electronic payments reduce AR balances), W1380 (PDC — alternative payment channel)"
+    ],
+    "Time Estimate": [
+     "~5–10 min/unmatched payment × ~40–80 unmatched payments/day = ~3.3–13.3 hours/day for AR Clerk. As auto-match rate improves (from 60% to 80%), manual effort drops to ~2–4 hours/day."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System receives daily electronic payment data from bank: (a) PESONet batch file — customer name, amount, reference number, date; (b) InstaPay real-time notifications via bank API; (c) direct bank-to-bank transfer confirmations from online banking",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Auto-matching engine attempts to match each payment to open AR invoices: (a) matches on customer name + exact amount → auto-apply; (b) matches on reference number containing invoice number → auto-apply; (c) matches on customer name + amount within tolerance (±5%) → flag for manual review; (d) no match found → route to unapplied cash queue",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "For auto-matched payments (estimated 60–70% match rate): system posts AR application — Dr. Cash / Cr. Accounts Receivable; invoice status updated to \"Paid\"; customer AR balance reduced; system sends payment confirmation to customer via email/SMS",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "For unmatched payments (estimated 30–40%): AR Clerk reviews unapplied cash queue daily — (a) check customer bank statement details for invoice references or project names; (b) cross-reference with customer's recent email or phone communication about payment; (c) contact customer to confirm which invoices the payment covers; (d) manually apply payment to correct invoices",
+     "duration": "5–10 min/payment",
+     "n": "4",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "For partial payments: AR Clerk applies payment to invoices per customer instruction; if no instruction: apply to oldest invoices first (FIFO); remaining balance stays open in AR aging",
+     "duration": "5 min/payment",
+     "n": "5",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Weekly: AR Supervisor reviews unapplied cash aging — any payment unapplied for > 5 business days escalated to AR Supervisor for resolution; unapplied cash > 30 days flagged for Finance Manager review",
+     "duration": "30 min/week",
+     "n": "6",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "Monthly: Treasury Analyst reconciles electronic payment bank statements to GL cash postings; identifies and resolves discrepancies",
+     "duration": "Part of W89",
+     "n": "7",
+     "r": "Treasury Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1380",
+    "W889",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-288"
+   ],
+   "fields": {
+    "Frequency": "~200–400 tax-exempt transactions/month across 200 stores (~1–2 per store per month)",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Supervisor, Cashier/Sales Rep, Store Manager, Customer (government purchasing officer), Tax Compliance Manager",
+    "Trigger": "Government agency, LGU, state university, or tax-exempt institution presents purchase order with tax exemption certificate",
+    "Volume": "Average transaction value: PHP 10,000–500,000 (government procurement of construction materials for public infrastructure, school buildings, barangay halls)"
+   },
+   "id": "W1524",
+   "level": 2,
+   "name": "Philippine Government & Institutional Customer Tax-Exempt Sales Processing, BIR-Compliant Documentation & OR Requirements",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"document is current\" (replaces manual Step 1).",
+     "- System auto-record of \"recorded\" (replaces manual Step 2).",
+     "- System auto-generate of \"printed prominently, customer TIN, agency name and address, PO reference, item…\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine government agencies, local government units (LGUs), government-owned and controlled corporations (GOCCs), state universities, and certain tax-exempt institutions (e.g., Philippine Red Cross, religious organizations with BIR tax exemption ruling) are exempt from VAT on purchases under specific conditions defined by the Tax Code (NIRC) and BIR Revenue Regulations. Processing tax-exempt sales at BuildRight Depot requires: (a) verifying the customer's tax exemption eligibility, (b) issuing a BIR-compliant Official Receipt (OR) or Sales Invoice (SI) with VAT correctly shown as zero or exempt (not the same as VAT-inclusive), (c) maintaining documentation trail for BIR audit: tax exemption certificate, purchase order, delivery receipt, and OR/SI copy. Incorrect processing — charging VAT to an exempt government customer (causing reimbursement rejection) or wrongly granting exemption to a non-qualifying customer (causing BIR assessment against BuildRight) — both create financial and compliance issues."
+    ],
+    "Controls": [
+     "- CTL-288 (ensure controlled execution — Customer Payment & Settlement (PA-16.3).)",
+     "- operational: AR Supervisor review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **VAT calculation confusion**: BuildRight's standard prices are VAT-inclusive (per Philippine retail convention); when a government customer's PO shows VAT-exclusive prices, Cashier must understand whether to (a) simply back out 12% from the VAT-inclusive retail price, or (b) apply a different base price — errors lead to government audit findings and reimbursement shortfalls",
+     "- **Tax exemption certificate validity**: expired tax exemption certificates are a common issue; government agencies sometimes present last year's certificate; processing with an expired certificate exposes BuildRight to BIR assessment for the uncollected VAT (12% of the transaction value)",
+     "- **Government check processing delays**: MDS (Modified Disbursement System) checks from national agencies and local treasury checks from LGUs may take 30–60 days to be issued after delivery; during this period, the receivable ages on BuildRight's books — impacting cash flow",
+     "- **Documentation completeness for BIR audit**: if any document in the package is missing (tax exemption certificate copy, PO copy, signed DR), BIR may disallow the VAT exemption and assess BuildRight for the VAT amount plus penalties; store-level filing discipline is critical"
+    ],
+    "Staffing Implication": [
+     "- AR Supervisor: ~2–3 hours/month on government transaction oversight and reconciliation; absorbed",
+     "- Cashier/Sales Rep: ~30–45 min per government transaction × 1–2/month = ~1–1.5 hours/store/month; absorbed",
+     "- Store Manager: ~5–10 min/transaction for manager override authorization; absorbed",
+     "- Tax Compliance Manager: ~2–3 hours/month on exempt sales review for VAT return; absorbed",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Government customer master: entity name, TIN, tax exemption certificate number and expiry, purchasing authority contacts (W1524.1)",
+     "- POS VAT exemption workflow: manager override required, VAT treatment set to \"Exempt\" with automatic price recalculation from VAT-inclusive to net-of-VAT (W1524.2)",
+     "- BIR-compliant SI/OR generation: \"VAT EXEMPT\" designation, NIRC Section 109 notation, government entity TIN (W1524.3)",
+     "- Government payment module: MDS check processing, government bank transfer reconciliation (W1524.5)",
+     "- Monthly exempt sales report: aggregation for BIR VAT return preparation, 10-year document archive (W1524.6)",
+     "- Integration with W527 (POS Tax Exemption Processing — base workflow), W540 (BIR Invoice Reprint), W1516 (BIR EIS Compliance)"
+    ],
+    "Time Estimate": [
+     "- Per transaction: 30–45 min (verification 10–15 min + processing 10–15 min + documentation 10–15 min)",
+     "- Payment collection: 15–20 min per transaction (government checks take longer to process)",
+     "- Monthly reconciliation: 2–3 hours",
+     "- **Chain-wide: ~300 transactions/month × 50 min average = ~250 hours/month (distributed across 200 stores + AR team)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "**Tax exemption verification**: (a) customer presents government purchase order (PO) or purchase request with: (i) agency/LGU letterhead, (ii) authorized signatory, (iii) fund allocation reference (allotment class), (iv) tax exemption certificate or BIR ruling; (b) Cashier/Sales Rep verifies: (i) tax exemption document is current (not expired — most have annual renewal), (ii) purchasing officer has authorization letter from agency head, (iii) agency is on BIR's list of VAT-exempt entities; (c) if verification passes: proceed with tax-exempt sale; if uncertain: escalate to AR Supervisor; if clearly ineligible: inform customer that standard VAT applies",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "Cashier / Sales Rep"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Transaction processing**: (a) Cashier creates sales order/transaction in POS with: (i) customer account linked to government entity master (separate from retail customer), (ii) VAT treatment set to \"Exempt\" (not zero-rated — these have different BIR treatments), (iii) PO number and fund allocation reference recorded; (b) system calculates: (i) item prices net of VAT (standard prices are VAT-inclusive per BuildRight's pricing policy — system backs out 12% VAT), (ii) total amount exempt; (c) Store Manager authorizes tax-exempt transaction (requires manager override in POS to prevent unauthorized VAT removal)",
+     "duration": "10–15 min",
+     "n": "2",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**BIR-compliant documentation**: (a) system generates: (i) Sales Invoice (SI) with: \"VAT EXEMPT\" printed prominently, customer TIN, agency name and address, PO reference, item details with unit prices (net of VAT), total amount, \"VAT Exempt pursuant to Section 109 of the NIRC\" notation; (ii) Official Receipt (OR) with matching details; (b) Cashier attaches: (i) copy of tax exemption certificate, (ii) copy of purchase order, (iii) copy of authorized purchasing officer ID; (c) all documents stapled/filed in store's government transaction folder for BIR audit readiness",
+     "duration": "10–15 min",
+     "n": "3",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Delivery and acceptance**: (a) if order includes delivery: Delivery Receipt (DR) generated with matching SI number; (b) government customer's receiving officer signs DR with date and official stamp; (c) signed DR returned to store and filed with SI/OR documentation package",
+     "duration": "Delivery per schedule",
+     "n": "4",
+     "r": "Delivery Staff / Customer"
+    },
+    {
+     "a": "—",
+     "activity": "**Payment collection**: (a) government customer payment typically via: (i) government check (MDS check from DBM or local treasury check), (ii) bank transfer to BuildRight's bank account; (b) AR Supervisor verifies: (i) check details match SI amount exactly (government cannot pay more or less than invoiced amount), (ii) check is from the correct government fund (some agencies have multiple accounts); (c) AR Supervisor applies payment to customer account with government check reference number; (d) if payment via MDS check: deposit to BuildRight's bank — government checks clear within 1–3 banking days",
+     "duration": "15–20 min",
+     "n": "5",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly reconciliation**: (a) AR Supervisor compiles all government tax-exempt sales for the month: (i) total exempt sales amount, (ii) list of government entities, (iii) corresponding SI/OR numbers; (b) Tax Compliance Manager reviews for BIR VAT return preparation: exempt sales must be correctly reported in the monthly/quarterly VAT return (BIR Form 2550Q/2550M) in the \"exempt sales\" column; (c) documentation package archived for 10-year BIR audit retention per A6.5",
+     "duration": "2–3 hours/month",
+     "n": "6",
+     "r": "AR Supervisor / Tax Compliance Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1516",
+    "W527",
+    "W540"
+   ]
+  }
+ ]
+}

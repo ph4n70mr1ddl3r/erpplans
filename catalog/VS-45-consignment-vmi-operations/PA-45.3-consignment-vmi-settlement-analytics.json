@@ -1,0 +1,560 @@
+{
+ "process_area": {
+  "id": "PA-45.3",
+  "title": "Consignment & VMI Settlement & Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-45-consignment-vmi-operations/PA-45.3-consignment-vmi-settlement-analytics.md",
+ "value_stream": {
+  "directory": "VS-45-consignment-vmi-operations",
+  "id": "VS-45",
+  "name": "Consignment & Vendor-Managed Inventory Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "AP Manager",
+    "Participants": "AP Manager, Category Manager, Vendor",
+    "Trigger": "Monthly settlement cycle per consignment agreement",
+    "Volume": "~15–25 consignment vendors settled monthly"
+   },
+   "id": "W1942",
+   "level": 2,
+   "name": "Consignment Sell-Through Settlement & Vendor Payment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"discounts shared per agreement\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews sell-through report\" (replaces manual Step 2).",
+     "- System auto-submit of \"submits settlement statement to vendor\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: AP Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Settlement disputes**: Vendor may dispute unit counts or deduction calculations; maintain detailed transaction-level sell-through data for audit support",
+     "- **Timing mismatch**: Sell-through period and payment period may not align; clear contractual settlement calendar prevents disputes"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated sell-through settlement calculation (W1942.1)",
+     "- Settlement statement generation and vendor portal submission (W1942.3)",
+     "- Integration with W7 (AP processing) for payment"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours/month for review; payment processing absorbed in standard AP cycle",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Manager",
+     "activity": "System generates monthly consignment sell-through report per vendor: (a) total units sold by SKU in settlement period, (b) consignment cost per unit per SKU, (c) total settlement amount: units sold × consignment cost, (d) deductions: (i) returns processed, (ii) damages charged to vendor per agreement, (iii) promotional discounts shared per agreement, (e) net settlement amount",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "AP Manager reviews sell-through report: (a) verify unit counts against POS transaction data, (b) verify consignment costs per agreement (any price changes applied correctly?), (c) verify deductions (returns, damages, promo contributions), (d) flag any discrepancies for Category Manager review",
+     "duration": "2–4 hours/month",
+     "n": "2",
+     "r": "AP Manager"
+    },
+    {
+     "a": "—",
+     "activity": "AP Manager submits settlement statement to vendor: (a) via vendor portal (preferred), (b) settlement statement includes: sell-through detail, deductions, net amount, payment terms (typically Net 30 from settlement date), (c) vendor reviews and confirms within 10 business days",
+     "duration": "1 day",
+     "n": "3",
+     "r": "AP Manager"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Payment processing: (a) vendor invoice (settlement statement) processed through AP, (b) standard payment run per W7.9, (c) payment to vendor bank account, (d) GL posting: debit consignment AP (liability created at ownership transfer), credit cash/bank",
+     "duration": "Per payment run",
+     "n": "4",
+     "r": "AP Manager / System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Pricing Analyst, VP Merchandising",
+    "Trigger": "Quarterly consignment margin review",
+    "Volume": "~15–25 consignment vendors"
+   },
+   "id": "W1943",
+   "level": 2,
+   "name": "Consignment Margin Analysis & Vendor Negotiation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates quarterly consignment margin report\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews margin analysis\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden costs**: Consignment may appear high-margin but operational costs (reconciliation, vendor management, aging management) reduce actual profitability; include operational overhead in margin analysis"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment margin analytics (W1943.1)",
+     "- Integration with W85 (product costing & margin analysis) for consolidated margin view"
+    ],
+    "Time Estimate": [
+     "- 2 days/quarter",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Pricing Analyst generates quarterly consignment margin report: (a) gross margin % by consignment vendor, (b) gross margin % by consignment category (appliances, tiles), (c) compare consignment margin to owned-inventory margin for same categories, (d) margin trend: improving or declining by vendor, (e) identify vendors where consignment margin < owned-inventory margin by > 5 percentage points",
+     "duration": "1 day/quarter",
+     "n": "1",
+     "r": "Pricing Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews margin analysis: (a) low-margin consignment vendors: negotiate improved consignment costs, (b) evaluate alternatives: can BuildRight purchase directly at better margin?, (c) high-margin consignment: consider expanding consignment range with vendor, (d) assess total value of consignment arrangement: (margin × volume) vs. (capital saved from not owning inventory)",
+     "duration": "1 day/quarter",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Annual: Category Manager negotiates consignment cost adjustments with vendors based on: (a) volume commitment (higher volume = lower consignment cost), (b) competitive benchmarking (what margin do other retailers get?), (c) total relationship value (vendor also supplies non-consignment goods)",
+     "duration": "Per annual negotiation",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "Semi-annual",
+    "Owner": "VP Supply Chain",
+    "Participants": "VP Supply Chain, Category Manager, Finance Manager",
+    "Trigger": "Semi-annual VMI program optimization review",
+    "Volume": "12 VMI vendors; ~300 VMI SKUs"
+   },
+   "id": "W1944",
+   "level": 2,
+   "name": "VMI Inventory Carrying Cost & Optimization Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates VMI inventory carrying cost\" (replaces manual Step 1)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Attribution difficulty**: Hard to isolate VMI program impact from overall supply chain performance; need control group (similar non-VMI SKUs) for comparison"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- VMI inventory analytics with carrying cost calculation (W1944.1)",
+     "- Integration with W35 (FP&A reporting) for carrying cost data"
+    ],
+    "Time Estimate": [
+     "- 3 days semi-annually",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Finance Manager calculates VMI inventory carrying cost: (a) average VMI inventory value (at WAC) per month, (b) carrying cost rate: warehousing + insurance + obsolescence risk + cost of capital (~20–25% of average inventory value per year for Philippine retail), (c) compare VMI carrying cost to non-VMI carrying cost for similar SKUs",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "VP Supply Chain evaluates VMI optimization: (a) inventory turns: VMI SKUs vs. non-VMI SKUs in same category, (b) stockout cost: lost sales from VMI stockouts vs. non-VMI stockouts, (c) procurement labor savings: VMI auto-replenishment reduces Buyer workload by ~X hours/month, (d) overstock cost: excess VMI inventory carrying cost above max level",
+     "duration": "1 day",
+     "n": "2",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Recommendations: (a) VMI SKUs with high overstock: tighten max levels or remove from VMI, (b) VMI SKUs with frequent stockouts: increase min levels or add supplier, (c) high-performing VMI vendors: expand VMI scope to additional SKUs, (d) low-performing VMI vendors: consider converting to standard procurement per W1947",
+     "duration": "1 day",
+     "n": "3",
+     "r": "VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1947",
+    "W35"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "Monthly dashboard; quarterly executive report",
+    "Owner": "VP Supply Chain",
+    "Participants": "VP Supply Chain, Category Manager, CFO",
+    "Trigger": "Monthly reporting cycle",
+    "Volume": "Consolidated across all consignment & VMI operations"
+   },
+   "id": "W1945",
+   "level": 2,
+   "name": "Consignment & VMI Dashboard & Executive Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"count, SKU count\" (replaces manual Step 1).",
+     "- System auto-review of \"VP Supply Chain reviews dashboard\" (replaces manual Step 2).",
+     "- System auto-report of \"report to CFO and VP Merchandising\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: VP Supply Chain review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Data integration**: Consignment data (non-valuated) and VMI data (valuated) come from different inventory views; dashboard must consolidate both"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment & VMI analytics dashboard (W1945.1)",
+     "- Integration with W35 (executive reporting) for consolidated view"
+    ],
+    "Time Estimate": [
+     "- 30 min/month review; 1 day/quarter executive reporting",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly dashboard generation: (a) consignment: total consignment inventory value (vendor-owned), sell-through rate, settlement accuracy, aging distribution, (b) VMI: total VMI inventory value (BuildRight-owned), fill rate, stockout rate, overstock rate, vendor compliance score, (c) combined: total consignment + VMI inventory as % of total inventory, total margin contribution, vendor count, SKU count",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "VP Supply Chain reviews dashboard: (a) identify trends, (b) flag exceptions for action, (c) distribute to Category Managers and Finance Manager",
+     "duration": "30 min/month",
+     "n": "2",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly: VP Supply Chain presents executive report to CFO and VP Merchandising: (a) program health: is consignment/VMI creating value?, (b) vendor performance: which vendors to expand, reduce, or terminate?, (c) financial impact: margin contribution, carrying cost, capital savings, (d) strategic recommendations",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W35"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "~15–25 renewals/year",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, VP Merchandising, VP Supply Chain, CFO, Vendor",
+    "Trigger": "Consignment agreement expiration (typically annual)",
+    "Volume": "~15–25 active consignment vendors"
+   },
+   "id": "W1946",
+   "level": 2,
+   "name": "Consignment Agreement Renewal & Terms Negotiation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares renewal analysis\" (replaces manual Step 1).",
+     "- System rule-based auto-approval of \"approves consignment terms from financial perspective\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Renewal gap**: If agreement expires without renewal, consignment goods status becomes ambiguous; set renewal calendar alerts 60 days before expiration"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment vendor performance analytics for renewal support (W1946.1)",
+     "- Integration with W230 (legal contract review) for agreement documentation"
+    ],
+    "Time Estimate": [
+     "- 1–2 days preparation per vendor; negotiation varies",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager prepares renewal analysis: (a) past year performance: sell-through rate, margin, return rate, (b) compare consignment arrangement vs. direct purchase alternative, (c) vendor relationship: payment timeliness, dispute resolution, support quality, (d) market conditions: are there alternative vendors offering better consignment terms?",
+     "duration": "1–2 days/vendor",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Negotiation: (a) improved consignment cost (target 2–5% reduction annually), (b) expanded SKU range (add high-demand items to consignment), (c) improved terms: faster settlement, better damage responsibility allocation, (d) performance incentives: volume-based consignment cost reduction",
+     "duration": "Per negotiation",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "CFO approves consignment terms from financial perspective: (a) margin impact, (b) balance sheet impact (consignment stock is off-balance-sheet — vendor-owned), (c) settlement terms cash flow impact",
+     "duration": "1 day",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W230"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "~1–2 conversion decisions/year",
+    "Owner": "VP Supply Chain",
+    "Participants": "VP Supply Chain, Category Manager, VP Merchandising",
+    "Trigger": "VMI vendor consistently underperforming; strategic decision to internalize replenishment",
+    "Volume": "12 VMI vendors monitored"
+   },
+   "id": "W1947",
+   "level": 2,
+   "name": "VMI-to-Standard Procurement Conversion Decision",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-forecast of \"forecasting risk\" (replaces manual Step 2).",
+     "- System auto-notify of \"notify vendor of VMI termination per contractual notice period\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: VP Supply Chain review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Transition disruption**: Switching from VMI to internal replenishment may cause temporary stock level instability; plan transition during low-demand period"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- VMI-to-standard procurement parameter migration (W1947.3)",
+     "- Integration with W2A (auto-replenishment) for new parameter setup"
+    ],
+    "Time Estimate": [
+     "- 1–2 days analysis; 2–4 weeks transition execution",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "VP Supply Chain identifies VMI vendor for conversion: (a) fill rate consistently < 93% (below 97% target for 2+ quarters), (b) stockout frequency impacting sales, (c) vendor unable or unwilling to improve, (d) internal replenishment capability available (Buyer capacity, demand planning tools)",
+     "duration": "As needed",
+     "n": "1",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Decision analysis: (a) cost of conversion: additional Buyer labor, demand planning tool cost, (b) benefit of conversion: better fill rate, lower stockout, more control over replenishment timing, (c) risk of conversion: loss of vendor collaboration, BuildRight bears forecasting risk, (d) present business case to VP Merchandising",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "If approved: (a) transition VMI SKUs to standard procurement per W2A, (b) establish ROP/EOQ parameters per W312, (c) notify vendor of VMI termination per contractual notice period, (d) monitor first 90 days closely for service level impact",
+     "duration": "2–4 weeks transition",
+     "n": "3",
+     "r": "VP Supply Chain / Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2A",
+    "W312"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-174"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "AP Manager",
+    "Participants": "AP Manager, Accounting Manager, IC Settlement Team",
+    "Trigger": "Monthly IC settlement cycle",
+    "Volume": "Cross-entity consignment/VMI transactions across 5 legal entities"
+   },
+   "id": "W1948",
+   "level": 2,
+   "name": "Consignment & VMI Intercompany Settlement (Multi-Entity)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics DC but sold by BuildRight Depot store\" (replaces manual Step 1).",
+     "- System auto-post of \"post IC AP/AR per W14\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify consignment/VMI IC balances match across entities\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-174 (ensure consignment & VMI settlement integrity.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Entity allocation complexity**: Consignment goods received at Logistics entity, sold by Depot entity, settled by Holdings entity (if centralized); clear allocation rules needed"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IC consignment/VMI transaction identification (W1948.1)",
+     "- IC settlement posting (W1948.2)",
+     "- Integration with W14 (IC settlement) and W9A (month-end close)"
+    ],
+    "Time Estimate": [
+     "- 1–2 days/month",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Manager",
+     "activity": "System identifies cross-entity consignment/VMI transactions: (a) consignment goods received by BuildRight Logistics DC but sold by BuildRight Depot store, (b) VMI stock at BuildRight Logistics DC transferred to BuildRight Depot stores, (c) ownership transfer revenue and COGS must be allocated to correct entities",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "AP Manager processes IC settlement for consignment/VMI: (a) consignment settlement: vendor payment from BuildRight Depot (selling entity), IC service fee from BuildRight Logistics (DC storage/service), (b) VMI settlement: standard PO payment from purchasing entity, IC transfer pricing for stock movements between entities, (c) post IC AP/AR per W14",
+     "duration": "1–2 days/month",
+     "n": "2",
+     "r": "AP Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly IC reconciliation: (a) verify consignment/VMI IC balances match across entities, (b) resolve timing differences (sale in one entity, settlement in another), (c) elimination entries for consolidation per W9A",
+     "duration": "Per month-end close",
+     "n": "3",
+     "r": "Accounting Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-378"
+   ],
+   "fields": {
+    "Frequency": "Continuous audit trail; annual documentation review",
+    "Owner": "Accounting Manager",
+    "Participants": "Accounting Manager, Internal Auditor, External Auditor",
+    "Trigger": "Ongoing; annual audit preparation",
+    "Volume": "All consignment & VMI transactions"
+   },
+   "id": "W1949",
+   "level": 2,
+   "name": "Consignment & VMI Audit Trail & Compliance Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documented with reason codes and approvals\" (replaces manual Step 1).",
+     "- System auto-review of \"review\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify consignment stock is correctly classified\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-378 (ensure controlled execution — Consignment & VMI Settlement & Analytics (PA-45.3).)",
+     "- operational: must strictly enforce non-valuated treatment"
+    ],
+    "Pain Points / Risks": [
+     "- **Balance sheet misclassification**: If consignment stock is inadvertently valued (treated as owned), it inflates inventory on balance sheet; system must strictly enforce non-valuated treatment"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated audit trail logging (W1949.1)",
+     "- Consignment/VMI compliance reports for audit (W1949.2)",
+     "- Integration with W21 (internal audit) for audit coverage"
+    ],
+    "Time Estimate": [
+     "- Continuous (automated); 2–3 days/year for audit preparation",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "System maintains continuous audit trail: (a) consignment: receipt → display → sale → ownership transfer → settlement, with timestamps, user IDs, and system references, (b) VMI: data sharing → replenishment → receipt → auto-confirmation → payment, with full traceability, (c) adjustments: damage, shrinkage, returns — all documented with reason codes and approvals",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual: Accounting Manager prepares consignment & VMI documentation for external audit: (a) consignment inventory is vendor-owned — excluded from BuildRight's balance sheet inventory; provide vendor ownership documentation, (b) VMI inventory is BuildRight-owned — included in balance sheet at WAC; provide VMI agreement terms for audit review, (c) settlement reconciliation: consignment settlements matched to sell-through, VMI payments matched to GR, (d) provide sample of transactions for auditor testing",
+     "duration": "2–3 days/year",
+     "n": "2",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Internal audit of consignment & VMI per W21: (a) verify consignment stock is correctly classified (not inadvertently included in owned inventory valuation), (b) verify VMI stock levels per physical count, (c) test settlement accuracy on sample basis, (d) review vendor agreements for compliance with BuildRight policies",
+     "duration": "Per annual audit plan",
+     "n": "3",
+     "r": "Internal Auditor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W21"
+   ]
+  }
+ ]
+}

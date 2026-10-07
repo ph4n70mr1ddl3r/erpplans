@@ -1,0 +1,553 @@
+{
+ "process_area": {
+  "id": "PA-96.2",
+  "title": "Lease Booking, Billing & Asset Lifecycle Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-96-equipment-leasing-capital-equipment-finance/PA-96.2-lease-booking-billing-asset-lifecycle.md",
+ "value_stream": {
+  "directory": "VS-96-equipment-leasing-capital-equipment-finance",
+  "id": "VS-96",
+  "name": "Equipment Leasing & Capital Equipment Finance"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-518"
+   ],
+   "fields": {
+    "Frequency": "Per lease deal",
+    "Owner": "Lease Operations Manager",
+    "Participants": "Lease Operations Mgr, Finance, IT, Treasury (links to VS-18)",
+    "Trigger": "Origination complete (W3168)",
+    "Volume": "Per lease deal"
+   },
+   "id": "W3169",
+   "level": 2,
+   "name": "Lease Booking, Asset Capitalization & Start-Day Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Lease Operations Mgr book lease in lease-management system\" (replaces manual Step 1).",
+     "- System auto-reconcile of \"reconcile to GL\" (replaces manual Step 2).",
+     "- System auto-schedule of \"schedule\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-518 (ensure controlled execution — Lease Booking, Billing & Asset Lifecycle Management (PA-96.2).)",
+     "- operational: 4-eyes booking review"
+    ],
+    "Pain Points / Risks": [
+     "- **Booking-error risk**: Wrong terms / schedule cause chronic billing issues; mitigated by 4-eyes booking review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease management system; GL/FA (links to VS-17/VS-35); treasury (links to VS-18); billing (links to W3170)"
+    ],
+    "Time Estimate": [
+     "- Per deal; ~1–2 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Lease Operations Mgr book lease in lease-management system: contract terms, payment schedule, asset record (serial, location, customer), residual, end-of-term option, lessor (W3165), funding source; generate lease ID",
+     "duration": "Per deal",
+     "n": "1",
+     "r": "Lease Operations Mgr / IT"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance capitalize asset / record lease receivable per lease type (operating vs. finance lease per PFRS 16, which superseded PAS 17 — links to VS-17); post advance rental receipt and initial direct cost; reconcile to GL",
+     "duration": "Per deal",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury (links to VS-18) confirm funding draw (if lessor-funded) or BuildRight warehouse line; disburse to vendor; activate billing schedule (links to W3170); confirm start day and first billing date",
+     "duration": "Per deal",
+     "n": "3",
+     "r": "Treasury Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3165",
+    "W3168",
+    "W3170"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-518"
+   ],
+   "fields": {
+    "Frequency": "Monthly per active lease",
+    "Owner": "Lease Operations Manager",
+    "Participants": "Lease Operations Mgr, AR (links to VS-16), Finance, Treasury (links to VS-18)",
+    "Trigger": "Billing cycle (monthly)",
+    "Volume": "All active leases (~hundreds to low-thousands)"
+   },
+   "id": "W3170",
+   "level": 2,
+   "name": "Lease Billing Cycle, Auto-Debit & AR Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly rental invoice per lease\" (replaces manual Step 1).",
+     "- System auto-file of \"file\" (replaces manual Step 2).",
+     "- System auto-monitor of \"AR monitor aging\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-518 (ensure controlled execution — Lease Booking, Billing & Asset Lifecycle Management (PA-96.2).)",
+     "- operational: PDC back-up and proactive outreach"
+    ],
+    "Pain Points / Risks": [
+     "- **Collection-failure risk**: Auto-debit fails disrupt cash flow; mitigated by PDC back-up and proactive outreach"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Billing engine; AR/cash application (links to VS-16); auto-debit (links to VS-18); e-invoicing (links to VS-79)"
+    ],
+    "Time Estimate": [
+     "- Monthly cycle; ~1–3 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Operations Manager",
+     "activity": "System generates monthly rental invoice per lease: rental amount, VAT (W3183), other charges (insurance, maintenance if bundled); deliver to customer per preference (email, portal, e-invoice — links to VS-79)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "System / AR"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "AR (links to VS-16) process collection: auto-debit (ADA) via customer-bank mandate, online transfer, PDC (post-dated cheques) on file; apply cash; manage exceptions (failed debit, NSF cheque)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "AR monitor aging; flag past-due to delinquency workflow (W3174); reconcile customer ledger; report portfolio billing metrics (on-time collection %, average days-past-due)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "AR Clerk / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3174",
+    "W3183"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-105"
+   ],
+   "fields": {
+    "Frequency": "Per schedule + event-driven",
+    "Owner": "Lease Operations Manager",
+    "Participants": "Lease Operations Mgr, Field Service (links to VS-12), Quality, Customer, Insurance (links to VS-26)",
+    "Trigger": "Lease term; periodic inspection; maintenance schedule",
+    "Volume": "All leased assets"
+   },
+   "id": "W3171",
+   "level": 2,
+   "name": "Lease Asset Tracking, Maintenance & Inspection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Lease Operations Mgr maintain asset record\" (replaces manual Step 1).",
+     "- System auto-schedule of \"scheduled maintenance per contract\" (replaces manual Step 2).",
+     "- System auto-document of \"document with photos\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-105 (prevent unauthorized lease credit extension.)",
+     "- operational: inspection and maintenance contract"
+    ],
+    "Pain Points / Risks": [
+     "- **Asset-abuse risk**: Customer misuse accelerates depreciation; mitigated by inspection and maintenance contract"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Asset master (links to VS-35); field service (links to VS-12); telematics/monitoring (links to VS-70/VS-06)"
+    ],
+    "Time Estimate": [
+     "- Per lease; ~annual inspection"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Lease Operations Mgr maintain asset record: location, condition, hours/usage (where telematics available), maintenance history, serial; track moves between sites with customer notification",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Lease Operations Mgr / IT"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Field Service (links to VS-12) / Vendor perform scheduled maintenance per contract (BuildRight-managed or customer-managed); capture service records; for solar/storage (links to VS-70), leverage remote monitoring (W2542-style)",
+     "duration": "Per schedule",
+     "n": "2",
+     "r": "Field Service / Vendor"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Lease Operations Mgr conduct periodic inspection (annual or per contract): asset condition, misuse, unauthorized modification, insurance compliance; document with photos; flag issues for remediation (W3172) or default path (W3174)",
+     "duration": "Annual per lease",
+     "n": "3",
+     "r": "Lease Operations Mgr / Inspector"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2542",
+    "W3172",
+    "W3174"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-518"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Lease Origination Manager",
+    "Participants": "Lease Origination Mgr, Lease Operations Mgr, Finance, Legal, Customer",
+    "Trigger": "Customer request; technology refresh; contract amendment",
+    "Volume": "Subset of active leases"
+   },
+   "id": "W3172",
+   "level": 2,
+   "name": "Lease Mid-Term Modification, Upgrade & Add-On",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validate credit impact\" (replaces manual Step 1).",
+     "- System auto-schedule of \"schedule, residual adjustment, fees, taxes\" (replaces manual Step 2).",
+     "- System auto-record of \"Lease Operations Mgr book modification\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-518 (ensure controlled execution — Lease Booking, Billing & Asset Lifecycle Management (PA-96.2).)",
+     "- operational: 4-eyes review and audit trail"
+    ],
+    "Pain Points / Risks": [
+     "- **Mod-error risk**: Mis-booked modification causes downstream issues; mitigated by 4-eyes review and audit trail"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease management system; pricing (links to W3162); contract amendment (links to VS-22/VS-30)"
+    ],
+    "Time Estimate": [
+     "- 1–3 weeks per request"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Origination Manager",
+     "activity": "Lease Origination Mgr assess modification request: upgrade (new asset swap), add-on (additional asset under same contract), term extension, re-pricing; validate credit impact (links to W3163) and residual impact (links to W3162)",
+     "duration": "Per request",
+     "n": "1",
+     "r": "Lease Origination Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/Lease Origination re-price: new payment schedule, residual adjustment, fees, taxes; Lease Credit Mgr re-approve if exposure increase; Legal execute amendment",
+     "duration": "Per request",
+     "n": "2",
+     "r": "Finance / Legal / Credit"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Lease Operations Mgr book modification: update schedule, asset record (swap-in/out — links to W3175 for returned asset); communicate new terms; archive amendment",
+     "duration": "Per request",
+     "n": "3",
+     "r": "Lease Operations Mgr / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3162",
+    "W3163",
+    "W3175"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-518"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Lease Operations Manager",
+    "Participants": "Lease Operations Mgr, Insurance (links to VS-26), Customer, Legal, Finance",
+    "Trigger": "Asset damage, theft, total loss",
+    "Volume": "Subset of leases"
+   },
+   "id": "W3173",
+   "level": 2,
+   "name": "Lease Insurance, Loss & Damage Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"Customer reports damage/theft\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspection\" (replaces manual Step 2).",
+     "- System auto-record of \"records\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-518 (ensure controlled execution — Lease Booking, Billing & Asset Lifecycle Management (PA-96.2).)",
+     "- operational: mandatory insurance verification (W3168) and annual check (W3171); operational: insurance verification (W3168) and annual check (W3171)"
+    ],
+    "Pain Points / Risks": [
+     "- **Uninsured-loss risk**: Coverage gap leaves BuildRight exposed; mitigated by mandatory insurance verification (W3168) and annual check (W3171)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance (links to VS-26); claim module; lease accounting (links to W3169/VS-17)"
+    ],
+    "Time Estimate": [
+     "- 2–8 weeks per incident"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Customer reports damage/theft; Lease Operations Mgr capture incident with evidence (photos, police report for theft); confirm coverage per insurance policy (W3168)",
+     "duration": "Per incident (<48 hr)",
+     "n": "1",
+     "r": "Lease Operations Mgr / Customer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Insurance Coordinator (links to VS-26) file claim with insurer; coordinate adjuster inspection; obtain repair/replacement authorization; manage deductible (customer or BuildRight per contract)",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "Insurance Coordinator"
+    },
+    {
+     "a": "Controller",
+     "activity": "On settlement: Finance reconcile insurer payout, customer liability (deductible, uninsured loss), and lease balance; repair or replace asset (links to W3172) or settle lease (links to W3176); update asset/insurance records",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Finance / Lease Operations Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3168",
+    "W3169",
+    "W3171",
+    "W3172",
+    "W3176"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-518"
+   ],
+   "fields": {
+    "Frequency": "Per delinquency",
+    "Owner": "Lease Credit Manager",
+    "Participants": "Lease Credit Mgr, AR (links to VS-16), Legal, Customer Service, Field Recovery",
+    "Trigger": "Past-due payment",
+    "Volume": "Subset of leases"
+   },
+   "id": "W3174",
+   "level": 2,
+   "name": "Lease Delinquency, Restructure & Cure Period",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-escalate of \"escalate per timeline\" (replaces manual Step 1).",
+     "- System auto-document of \"For viable customers\" (replaces manual Step 2).",
+     "- System auto-file of \"file collection suit, report to credit bureau\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-518 (ensure controlled execution — Lease Booking, Billing & Asset Lifecycle Management (PA-96.2).)",
+     "- operational: voluntary-surrender negotiation and legal process"
+    ],
+    "Pain Points / Risks": [
+     "- **Repossession difficulty risk**: Self-help repossession constrained by Philippine law; mitigated by voluntary-surrender negotiation and legal process"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AR/collections (links to VS-16); legal/case management; asset recovery"
+    ],
+    "Time Estimate": [
+     "- 30–180 days per case"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Credit Manager",
+     "activity": "AR (links to VS-16) flag past-due; escalate per timeline (1–3 days: reminder; 7–15: notice; 30+: demand letter); Lease Credit Mgr outreach to customer, understand hardship, agree cure plan",
+     "duration": "Per delinquency",
+     "n": "1",
+     "r": "AR Clerk / Lease Credit Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "For viable customers: Lease Credit Mgr offer restructure (extended term, lower payment, deferment); re-underwrite (links to W3163); Legal document amendment (links to W3172)",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Lease Credit Mgr / Legal"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "For non-curable default: Legal/Field Recovery execute remedies per contract — repossession of asset, demand full balance, file collection suit, report to credit bureau (where applicable); recover asset (links to W3175) and remarket (W3179)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Legal / Field Recovery"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3163",
+    "W3172",
+    "W3175",
+    "W3179"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-518"
+   ],
+   "fields": {
+    "Frequency": "Per maturing lease",
+    "Owner": "Lease Operations Manager",
+    "Participants": "Lease Operations Mgr, Inspector, Quality, Customer, Inventory (links to VS-05)",
+    "Trigger": "Lease end-of-term with return option exercised",
+    "Volume": "Per lease"
+   },
+   "id": "W3175",
+   "level": 2,
+   "name": "Lease Maturity, Return Inspection & Disposition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logistics guidance if returning\" (replaces manual Step 1).",
+     "- System auto-document of \"document with photos\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconcile to residual and post gain/loss\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-518 (ensure controlled execution — Lease Booking, Billing & Asset Lifecycle Management (PA-96.2).)",
+     "- operational: conservative residual (W3162) and strong remarketing (W3179)"
+    ],
+    "Pain Points / Risks": [
+     "- **Residual-realization risk**: Returned asset value below residual → loss; mitigated by conservative residual (W3162) and strong remarketing (W3179)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease management system; inspection module; inventory/disposition (links to VS-05/VS-35); GL (links to VS-17)"
+    ],
+    "Time Estimate": [
+     "- 2–6 weeks per return"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Pre-maturity (90 days): Lease Operations Mgr contact customer re: end-of-term options (return/renew/buy-out — W3176); provide return logistics guidance if returning",
+     "duration": "90 days pre-maturity",
+     "n": "1",
+     "r": "Lease Operations Mgr"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "On return: Inspector assess asset vs. end-of-lease condition standard (links to W3162 residual); identify excess wear/damage; compute customer charge for excess (per contract); document with photos",
+     "duration": "Per return",
+     "n": "2",
+     "r": "Inspector / Quality"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Disposition returned asset: remarket via used-equipment channel (W3179), refurbish (links to VS-09), redeploy to new lease, or scrap (links to VS-73/VS-35); reconcile to residual and post gain/loss (links to VS-17)",
+     "duration": "Per return",
+     "n": "3",
+     "r": "Lease Operations Mgr / Inventory / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3162",
+    "W3176",
+    "W3179"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-105"
+   ],
+   "fields": {
+    "Frequency": "Per lease at customer election",
+    "Owner": "Lease Operations Manager",
+    "Participants": "Lease Operations Mgr, Finance, Legal, Customer",
+    "Trigger": "Customer elects buy-out, early termination, or renewal",
+    "Volume": "Subset of leases"
+   },
+   "id": "W3176",
+   "level": 2,
+   "name": "Lease Buyout, Early Termination & Renewal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-communication of \"communicate to customer with Truth-in-Lending-style disclosure\" (replaces manual Step 1).",
+     "- System auto-renew of \"renewal\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-105 (prevent unauthorized lease credit extension.)",
+     "- operational: actuarially-sound formula and periodic recalibration"
+    ],
+    "Pain Points / Risks": [
+     "- **Buy-out-discount risk**: Below-market buy-out formula transfers value to customer; mitigated by actuarially-sound formula and periodic recalibration"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease accounting (links to VS-17); title/security release (links to VS-22/VS-35); new booking (links to W3169)"
+    ],
+    "Time Estimate": [
+     "- 1–4 weeks per deal"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Lease Operations Mgr compute early-termination / buy-out quote per contract formula (typically: PV of remaining rentals + residual − unearned income − early-termination fee); communicate to customer with Truth-in-Lending-style disclosure",
+     "duration": "Per request",
+     "n": "1",
+     "r": "Lease Operations Mgr / Finance"
+    },
+    {
+     "a": "Controller",
+     "activity": "On customer acceptance: Finance process buy-out payment; transfer asset title to customer (release the chattel-mortgage registration / RA 11057 notation — W3168); book lease termination and gain/loss (links to VS-17)",
+     "duration": "Per deal",
+     "n": "2",
+     "r": "Finance / Legal"
+    },
+    {
+     "a": "CFO",
+     "activity": "For renewal: Lease Origination Mgr originate new/renewed lease per current rates (W3162) and credit (W3163); book new lease (W3169) and close prior lease; or convert to month-to-month per contract",
+     "duration": "Per deal",
+     "n": "3",
+     "r": "Lease Origination Mgr / Lease Operations Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3162",
+    "W3163",
+    "W3168",
+    "W3169"
+   ]
+  }
+ ]
+}

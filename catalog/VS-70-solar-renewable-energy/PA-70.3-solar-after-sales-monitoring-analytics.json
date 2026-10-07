@@ -1,0 +1,544 @@
+{
+ "process_area": {
+  "id": "PA-70.3",
+  "title": "Solar After-Sales Monitoring & Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-70-solar-renewable-energy/PA-70.3-solar-after-sales-monitoring-analytics.md",
+ "value_stream": {
+  "directory": "VS-70-solar-renewable-energy",
+  "id": "VS-70",
+  "name": "Solar & Renewable Energy Product Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "Continuous monitoring; daily summary",
+    "Owner": "Solar Technical Support",
+    "Participants": "Solar Tech Support, Installation Partner, Customer",
+    "Trigger": "IoT monitoring detects anomaly or scheduled daily performance check",
+    "Volume": "~500–1,000 monitored systems (growing at ~600/year)"
+   },
+   "id": "W2542",
+   "level": 2,
+   "name": "Solar System Remote Monitoring & Performance Alerting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-import of \"import/export, inverter temperature, error codes\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews alerts daily and triages priority\" (replaces manual Step 2).",
+     "- System auto-log of \"logs service ticket in ERP\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: Solar Technical Support review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **IoT reliability**: Internet connectivity at customer sites may be intermittent; data gaps affect monitoring",
+     "- **Alert fatigue**: Minor weather-related underperformance generates excessive alerts"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IoT data ingestion API from inverter manufacturers",
+     "- Performance analytics with weather-correlation model",
+     "- Service ticket management with SLA tracking"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "IoT gateway collects real-time data from inverter: power output (kW), daily generation (kWh), grid import/export, inverter temperature, error codes; transmits to ERP via API; system compares actual vs. expected generation based on weather data (irradiance) and system specifications",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "System / Solar Tech Support"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "System generates alerts: Underperformance (actual <80% of expected for 3 consecutive days), Inverter Error (fault code triggers diagnostic), Communication Loss (no data for 24 hours); Solar Tech Support reviews alerts daily and triages priority",
+     "duration": "30–60 min/day",
+     "n": "2",
+     "r": "System / Solar Tech Support"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "For confirmed issues: Tech Support contacts customer, diagnoses remotely (inverter reset, connection check); dispatches installation partner for on-site repair if needed; logs service ticket in ERP; tracks resolution within SLA (non-critical: 5 days, critical: 2 days)",
+     "duration": "30 min – 2 hours per issue",
+     "n": "3",
+     "r": "Solar Tech Support / Installer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "Annual per installed system",
+    "Owner": "Solar Technical Support",
+    "Participants": "Solar Tech Support, Category Manager, Vendor",
+    "Trigger": "Annual performance review cycle or warranty claim",
+    "Volume": "~500–1,000 annual reviews (growing)"
+   },
+   "id": "W2543",
+   "level": 2,
+   "name": "Solar Panel Performance Degradation Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates annual degradation rate per installation\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews flagged installations\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitoring data as evidence\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: Solar Technical Support review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Data insufficiency**: Newer installations lack sufficient baseline data for degradation analysis",
+     "- **Vendor disputes**: Panel manufacturers may dispute warranty claims citing environmental factors"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Performance degradation analytics with weather normalization",
+     "- Warranty claim initiation with monitoring evidence attachment",
+     "- Customer communication module"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "System calculates annual degradation rate per installation: compares Year N actual generation vs. Year 1 baseline, normalized for weather (irradiance data); flags installations exceeding panel warranty degradation curve (typically <0.55%/year for Tier 1 panels)",
+     "duration": "1–2 days/year batch",
+     "n": "1",
+     "r": "System / Solar Tech Support"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Tech Support reviews flagged installations: determines if degradation is panel-related (manufacturing defect warrantable) vs. environmental (shading from new construction, soiling from nearby construction dust, vegetation growth)",
+     "duration": "30–60 min per case",
+     "n": "2",
+     "r": "Solar Tech Support"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "For warrantable degradation: initiates warranty claim with panel vendor (W2544); provides monitoring data as evidence; coordinates panel testing and replacement. For environmental issues: advises customer on remediation (tree trimming, panel cleaning service)",
+     "duration": "1–4 weeks per case",
+     "n": "3",
+     "r": "Solar Tech Support / Vendor"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W2544"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "~10–20 warranty claims/month",
+    "Owner": "Solar Sales Coordinator",
+    "Participants": "Solar Sales Coord, Vendor, Installation Partner, Finance, Customer",
+    "Trigger": "Customer reports solar product defect or monitoring detects performance issue",
+    "Volume": "~10–20/month"
+   },
+   "id": "W2544",
+   "level": 2,
+   "name": "Solar Warranty Claim & Vendor Recovery Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Coordinator receives warranty claim\" (replaces manual Step 1).",
+     "- System auto-document of \"documentation package per vendor warranty process\" (replaces manual Step 2).",
+     "- System auto-record of \"record and inventory\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: non-operational during warranty resolution"
+    ],
+    "Pain Points / Risks": [
+     "- **Long vendor processing**: Import vendor warranty claims take 4–8 weeks for resolution",
+     "- **Customer downtime**: System non-operational during warranty resolution"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Warranty claim management with multi-vendor routing",
+     "- Service dispatch for warranty inspection",
+     "- Vendor credit/replacement PO processing"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Coordinator receives warranty claim: customer-submitted via portal or monitoring-triggered; validates warranty status (within coverage period, registered serial number); categorizes: panel defect, inverter failure, battery issue, installation workmanship",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Solar Sales Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Coordinator coordinates inspection: dispatches installation partner to diagnose on-site; collects photographic evidence and test data; submits claim to vendor with documentation package per vendor warranty process (varies by manufacturer)",
+     "duration": "3–5 days",
+     "n": "2",
+     "r": "Solar Sales Coordinator / Installer"
+    },
+    {
+     "a": "Category Manager / Finance",
+     "activity": "Upon vendor approval: Coordinator coordinates replacement delivery and installation; Finance processes vendor credit/replacement PO; system updates warranty record and inventory; if vendor rejects, escalates to Category Manager for resolution or customer accommodation",
+     "duration": "1–4 weeks",
+     "n": "3",
+     "r": "Solar Sales Coord / Finance / Vendor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Category Manager — Electrical",
+    "Participants": "Category Mgr, Solar Sales Coordinator, VP Merchandising",
+    "Trigger": "Monthly review cycle",
+    "Volume": "~10–20 installation partners"
+   },
+   "id": "W2545",
+   "level": 2,
+   "name": "Solar Installation Partner Performance Scoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspection pass rate target ≥95%\" (replaces manual Step 1).",
+     "- System auto-review of \"Category Manager reviews scorecards\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: Category Manager — Electrical review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Partner scarcity**: Limited ERC-licensed solar installers in some provincial markets",
+     "- **Quality inconsistency**: Partners using subcontractors without adequate oversight"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Partner performance dashboard with automated scoring",
+     "- Inspection pass rate tracking from quality module",
+     "- Customer NPS integration from CRM"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "System generates partner scorecard: installation quality (inspection pass rate target ≥95%), schedule adherence (on-time installation target ≥90%), customer satisfaction (NPS from post-install survey), warranty claim rate (<5% within first year), safety incidents (zero tolerance)",
+     "duration": "1–2 hours",
+     "n": "1",
+     "r": "System / Solar Sales Coordinator"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews scorecards; conducts monthly performance call with each partner; for underperformers: issues corrective action plan with 30-day improvement window; for top performers: increases lead allocation and explores volume commitments",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Quarterly: Category Manager evaluates partner portfolio; onboards new partners in underserved regions (especially Visayas/Mindanao); terminates chronically underperforming partners per contract terms; maintains minimum 2 partners per region for competition",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "Category Manager / Procurement"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "~40–60 surveys/month",
+    "Owner": "Customer Experience Analyst",
+    "Participants": "CX Analyst, Category Manager, Solar Sales Coordinator",
+    "Trigger": "30 days post-installation completion",
+    "Volume": "~40–60/month"
+   },
+   "id": "W2546",
+   "level": 2,
+   "name": "Solar Customer Satisfaction & NPS Survey",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-send of \"sends automated NPS survey 30 days post-installation\" (replaces manual Step 1).",
+     "- System auto-review of \"CX Analyst reviews responses\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspection, performance optimization, partial refund if warranted\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: delivers"
+    ],
+    "Pain Points / Risks": [
+     "- **Low response rate**: Customers unlikely to respond to survey after completed project",
+     "- **Unrealistic expectations**: Some detractors expected higher electricity savings than system delivers"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated survey distribution with installation milestone trigger",
+     "- NPS analytics dashboard",
+     "- CRM feedback loop for service recovery"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "System sends automated NPS survey 30 days post-installation: product satisfaction, installation experience, communication quality, value for money, likelihood to recommend (0–10), open comments; survey completion target: >40% response rate",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System / CX Analyst"
+    },
+    {
+     "a": "COO",
+     "activity": "CX Analyst reviews responses: categorizes detractors (0–6), passives (7–8), promoters (9–10); routes detractor feedback to Category Manager for immediate follow-up within 48 hours; compiles monthly NPS report",
+     "duration": "2–3 hours/month",
+     "n": "2",
+     "r": "CX Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager addresses detractor issues: coordinates service recovery (additional inspection, performance optimization, partial refund if warranted); updates training or processes based on recurring themes; reports quarterly NPS trend to VP Merchandising",
+     "duration": "2–3 hours/month",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Category Manager — Electrical",
+    "Participants": "Category Mgr, FP&A, BI Analyst",
+    "Trigger": "Monthly reporting cycle",
+    "Volume": "Monthly aggregation of ~40–60 sales"
+   },
+   "id": "W2547",
+   "level": 2,
+   "name": "Solar Sales Analytics & Revenue Attribution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates solar sales dashboard\" (replaces manual Step 1).",
+     "- System auto-analyze of \"Category Manager analyzes trends\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews solar category P&L\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: Category Manager — Electrical review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Revenue timing**: Installation revenue recognized over 2–8 week project cycle vs. point-of-sale",
+     "- **Margin pressure**: Solar panel prices declining globally; margin maintenance requires bundle and services focus"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI platform with solar-specific sales analytics",
+     "- Revenue attribution for bundled product+service sales",
+     "- Category P&L reporting with margin analysis"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "BI Analyst generates solar sales dashboard: total revenue (product + installation), units sold by system size, average system price, margin by product category (panels, inverters, batteries, accessories, installation services), conversion rate (lead → sale), sales per store, regional performance",
+     "duration": "2–3 hours",
+     "n": "1",
+     "r": "BI Analyst / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager analyzes trends: attach rate (product-only vs. product+installation), upsell rate (battery, EV charger), vendor rebate recovery, installation partner cost trends, customer segment performance (B2C vs. B2B trade); identifies top/bottom performing stores",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "FP&A reviews solar category P&L: revenue growth vs. forecast, gross margin (target 25–30%), customer acquisition cost, lifetime value (including cross-sell); adjusts category financial plan for next quarter",
+     "duration": "1–2 hours",
+     "n": "3",
+     "r": "FP&A / Category Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "~10–20 returns/month",
+    "Owner": "Store Customer Service Rep",
+    "Participants": "Customer Service Rep, Department Supervisor, Category Manager, Vendor",
+    "Trigger": "Customer requests return of solar product (pre-installation) or defective unit replacement",
+    "Volume": "~10–20/month"
+   },
+   "id": "W2548",
+   "level": 2,
+   "name": "Solar Product Return & Exchange Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspects for physical damage\" (replaces manual Step 1).",
+     "- System auto-create of \"creates vendor return authorization request\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews return trend monthly\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: Store Customer Service Rep review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **High-value returns**: Solar panel returns are PHP 8K–25K per panel; strict inspection required",
+     "- **Vendor disputes**: Vendor may reject return claiming customer damage"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Return processing with vendor RMA integration",
+     "- Inventory quarantine management",
+     "- Return analytics dashboard"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Customer Service Rep processes return request: verifies purchase within 30-day return window (standard) or warranty period (defective); for panels/inverters — inspects for physical damage; for special-order items — confirms return authorization per vendor policy",
+     "duration": "20–30 min",
+     "n": "1",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Supervisor approves return; system processes refund (cash/card reversal) or exchange; for defective items: creates vendor return authorization request; items placed in defective quarantine area; customer receives replacement from stock or special order",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews return trend monthly: high return rate SKUs flagged for quality review with vendor; defective analysis by vendor, product type, and batch/lot; adjusts inventory buffers for high-return SKUs",
+     "duration": "1–2 hours/month",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-441"
+   ],
+   "fields": {
+    "Frequency": "Monthly; event-driven for regulatory changes",
+    "Owner": "Category Manager — Electrical",
+    "Participants": "Category Mgr, Procurement, Legal, VP Merchandising",
+    "Trigger": "Monthly intelligence cycle or regulatory announcement",
+    "Volume": "Monthly report; 2–4 regulatory alerts/year"
+   },
+   "id": "W2549",
+   "level": 2,
+   "name": "Solar Market Intelligence & Regulatory Update Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors market developments\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews regulatory changes\" (replaces manual Step 2).",
+     "- System auto-log of \"Category Manager incorporates intelligence into strategy\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-441 (ensure controlled execution — Solar After-Sales Monitoring & Analytics (PA-70.3).)",
+     "- operational: Category Manager — Electrical review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Regulatory uncertainty**: Philippine renewable energy policy subject to frequent changes",
+     "- **Global supply volatility**: Solar panel prices affected by Chinese trade policy and raw material costs"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Market intelligence repository",
+     "- Regulatory change log with compliance tracking",
+     "- Pricing engine updates for tax treatment changes"
+    ],
+    "Time Estimate": [
+     "- 30–120 min per occurrence"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager monitors market developments: global solar panel pricing trends (spot market), Philippine ERC net metering policy changes, DU-specific interconnection rule updates, government solar incentive programs (BOI tax holidays for solar manufacturers), competitor solar pricing and assortment",
+     "duration": "1–2 days/month",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Legal reviews regulatory changes: ERC circulars, DOE renewable energy targets, LGU building code amendments affecting solar installations, BIR tax treatment of solar sales (VAT zero-rating for renewable energy equipment per RA 9513); updates compliance requirements",
+     "duration": "1 day/quarter",
+     "n": "2",
+     "r": "Legal"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager incorporates intelligence into strategy: adjusts pricing based on global panel cost trends, updates assortment for new technology (e.g., bifacial panels, solid-state batteries), modifies sales approach for regulatory changes, briefs Store Ops and Training on updates",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

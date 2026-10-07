@@ -1,0 +1,553 @@
+{
+ "process_area": {
+  "id": "PA-69.2",
+  "title": "Active Disaster Response & Emergency Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-69-typhoon-disaster-response/PA-69.2-disaster-active-response-operations.md",
+ "value_stream": {
+  "directory": "VS-69-typhoon-disaster-response",
+  "id": "VS-69",
+  "name": "Typhoon & Natural Disaster Preparedness & Response"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "2–5 closures per store per year; region-wide events affect 20–60 stores simultaneously",
+    "Owner": "Regional Manager",
+    "Participants": "Regional Manager, Store Manager, VP Store Operations, HR, Security",
+    "Trigger": "PAGASA Signal No. 3+ in store area, local government evacuation order, or facility safety assessment",
+    "Volume": "Up to 200 stores for nationwide super typhoons"
+   },
+   "id": "W2510",
+   "level": 2,
+   "name": "Store Emergency Closure Decision & Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System rule-based authorization of \"authorizes closure with VP Store Operations approval for multi-store events\" (replaces manual Step 1).",
+     "- System auto-update of store status to \"Temporarily Closed\" on the store locator (replaces manual Step 3 posting)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: Regional Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Liability**: Customer or employee injury during closure process",
+     "- **Revenue loss**: PHP 840K+ per store per day of closure (avg PHP 25M/month ÷ 30)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store status management with automated channel propagation",
+     "- POS Z-report for mid-day closure",
+     "- Ecommerce/BOPIS order suspension per store",
+     "- Google Business Profile API for hours update",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-02): this workflow is the closure-*decision* canon (Regional Manager decides; VP Store Operations approves multi-store events; COO chain-wide); closure/reopening *mechanics* and reporting run VS-26 W850, protocol context VS-26 W848; frequency canon: 2–5/store/yr typhoon-signal closures vs W850's 5–10/store/yr all-cause closures"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours per store closure"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "Regional Manager assesses conditions per decision matrix: PAGASA signal, local government advisory, road accessibility, staff safety, facility integrity; authorizes closure with VP Store Operations approval for multi-store events",
+     "duration": "30–60 min",
+     "n": "1",
+     "r": "Regional Manager"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "Store Manager executes closure: announce to customers via PA system, complete current transactions, secure cash in safe, power down non-essential systems, engage alarm, lock facility, escort remaining customers out safely",
+     "duration": "1–2 hours",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "System automatically updates store status to \"Temporarily Closed\" on ecommerce, BOPIS, Google Business, and customer-facing channels; pauses all pending BOPIS orders with automated customer notification",
+     "duration": "15–30 min",
+     "n": "3",
+     "r": "System / Store Ops"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W848",
+    "W850"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "2–4 shutdowns per DC per year",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Ops Manager, Warehouse Supervisor, Safety Officer, VP Supply Chain",
+    "Trigger": "PAGASA Signal No. 3+ in DC area or facility flooding risk assessment",
+    "Volume": "4 DCs; typically 1–2 affected per event"
+   },
+   "id": "W2511",
+   "level": 2,
+   "name": "DC Emergency Shutdown & Asset Protection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checkpoint, stage all MHE\" (replaces manual Step 1).",
+     "- System auto-capture of \"Safety Officer confirms all personnel evacuated\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory loss**: Flooding at DC3 (Laguna — low-lying area) could damage PHP 500M+ in inventory",
+     "- **Recovery time**: DC may be non-operational for 3–7 days post-flooding for cleanup and stock verification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS emergency shutdown mode with transaction freeze",
+     "- Warehouse inventory location tracking for flood-risk assessment",
+     "- Security camera remote access"
+    ],
+    "Time Estimate": [
+     "- 3–5 hours per DC shutdown"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "DC Ops Manager initiates emergency shutdown: halt all inbound/outbound operations, complete in-process picking/packing or secure at last checkpoint, stage all MHE (forklifts, reach trucks) at high ground, secure dock doors with flood barriers",
+     "duration": "2–3 hours",
+     "n": "1",
+     "r": "DC Ops Manager"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "Warehouse Supervisors execute critical asset protection: move high-value inventory (power tools, appliances) above flood line, seal chemical storage areas, secure server room with waterproof covers, activate UPS for graceful system shutdown",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "Warehouse Supervisor / IT"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Safety Officer confirms all personnel evacuated; DC Ops Manager reports final status to Operations Center; maintains remote monitoring via security cameras where possible",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Safety Officer / DC Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "6–10 activations per year",
+    "Owner": "Logistics Manager",
+    "Participants": "Logistics Mgr, DC Ops, Procurement, Store Ops, Government/NGO Liaison",
+    "Trigger": "Post-typhoon needs assessment or government/NGO emergency order",
+    "Volume": "10–50 emergency deliveries per activation"
+   },
+   "id": "W2512",
+   "level": 2,
+   "name": "Emergency Merchandise Rapid Replenishment Dispatch",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-dispatch of \"Supply Chain receives post-disaster needs assessment from affected stores\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics Manager dispatches available trucks\" (replaces manual Step 2).",
+     "- System auto-count of \"count only, detailed matching deferred 48 hrs\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Road inaccessibility**: Blocked roads delay emergency deliveries by 24–72 hours",
+     "- **Security**: Emergency deliveries in disaster zones face looting risk"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Emergency PO and transfer order creation with fast-track approval",
+     "- WMS priority wave management",
+     "- TMS dynamic routing considering road closures"
+    ],
+    "Time Estimate": [
+     "- 6–12 hours per emergency dispatch cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Chain receives post-disaster needs assessment from affected stores and regional government; prioritizes dispatch: medical facility orders first, then essential supply stores, then general replenishment",
+     "duration": "2–4 hours",
+     "n": "1",
+     "r": "Supply Planning / Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "DC Ops picks emergency orders with dedicated priority wave; Logistics Manager dispatches available trucks (owned fleet first, then 3PL surge); coordinates road access with local government",
+     "duration": "4–8 hours",
+     "n": "2",
+     "r": "DC Ops / Logistics Manager"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "Store Ops receives emergency delivery with expedited GR process (visual count only, detailed matching deferred 48 hrs); updates inventory; begins emergency sales operations",
+     "duration": "2–3 hours",
+     "n": "3",
+     "r": "Store Manager / Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "3–5 activations per year",
+    "Owner": "COO",
+    "Participants": "COO, VP Store Operations, VP Supply Chain, CIO, CHRO, CFO, CMO, VP Legal",
+    "Trigger": "Multi-store/multi-DC typhoon impact event (Signal No. 3+ across 10+ stores)",
+    "Volume": "1 operations center per event"
+   },
+   "id": "W2513",
+   "level": 2,
+   "name": "Real-Time Disaster Operations Center Activation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"Center at HQ\" (replaces manual Step 1).",
+     "- System auto-log of \"Functional leads provide situation reports\" (replaces manual Step 2).",
+     "- System auto-document of \"documents all decisions for post-event review\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: COO review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Information gaps**: Communication blackouts in severely affected areas delay damage assessment",
+     "- **Decision fatigue**: Extended events (48+ hours) strain leadership capacity"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time dashboard: store/DC status, employee check-in, inventory levels, financial exposure",
+     "- Emergency communication platform with redundancy (internet + SMS + radio)",
+     "- Insurance claim notification system"
+    ],
+    "Time Estimate": [
+     "- Continuous during active event (typically 24–72 hours)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "COO activates Disaster Operations Center at HQ (Davao) or virtual: establishes command structure, communication channels, situation reporting cadence (every 2 hours during active event); assigns functional leads",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "COO"
+    },
+    {
+     "a": "COO",
+     "activity": "Functional leads provide situation reports: Store Ops (store status, damage, employee safety), Supply Chain (DC status, inventory, logistics), IT (system status, communication channels), HR (employee welfare), Finance (financial exposure), Legal (regulatory/liability)",
+     "duration": "Ongoing (every 2 hours)",
+     "n": "2",
+     "r": "Functional VPs"
+    },
+    {
+     "a": "CEO",
+     "activity": "COO makes operational decisions: store closure/reopening, emergency procurement authorization (up to PHP 200M), staff redeployment, customer communication, insurance notification; documents all decisions for post-event review",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "COO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "15–30 power outage activations per year across network",
+    "Owner": "Maintenance/Utility Staff",
+    "Participants": "Maintenance Staff, Store Manager, DC Ops Manager, Facilities",
+    "Trigger": "Commercial power outage at store or DC during/after typhoon",
+    "Volume": "10–50 simultaneous locations per major typhoon"
+   },
+   "id": "W2514",
+   "level": 2,
+   "name": "Emergency Generator & Power Contingency Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs activation time\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitors generator fuel consumption and arranges refueling logistics\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates if runtime < 4 hours remaining\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Fuel scarcity**: Regional fuel shortages post-typhoon limit generator runtime",
+     "- **Generator failure**: Aging units at older stores may fail during extended runs"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IoT generator monitoring (fuel level, runtime, load status)",
+     "- POS offline mode activation",
+     "- Facilities management system for generator fleet tracking",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-04): this workflow owns DC-level power contingency and typhoon-specific fuel logistics; store-level generator operations (any cause) run VS-24 W1223, the store canon"
+    ],
+    "Time Estimate": [
+     "- 30 min activation; ongoing monitoring every 4 hours during outage"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / DC Ops Manager",
+     "activity": "Maintenance activates backup generator: verifies fuel level (minimum 8-hour runtime), starts generator, transfers load to backup, prioritizes circuits (POS, security, lighting, refrigeration for DC); logs activation time",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Maintenance / Utility Staff"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "Store Manager confirms POS operation in offline mode; switches to cash-first tender policy if connectivity lost; monitors generator fuel consumption and arranges refueling logistics",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "Facilities tracks generator runtime, fuel consumption, and maintenance status across affected locations; coordinates fuel resupply with suppliers; escalates if runtime < 4 hours remaining",
+     "duration": "Ongoing (every 4 hours)",
+     "n": "3",
+     "r": "Facilities Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1223"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-232"
+   ],
+   "fields": {
+    "Frequency": "3–5 events per year requiring welfare tracking",
+    "Owner": "HR Operations Manager",
+    "Participants": "HR Ops Mgr, Store Managers, DC Ops, CHRO, Employee Relations",
+    "Trigger": "Post-typhoon employee safety check process",
+    "Volume": "50–2,000 employees per event"
+   },
+   "id": "W2515",
+   "level": 2,
+   "name": "Disaster-Affected Employee Welfare & Deployment Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"HR Ops activates welfare check\" (replaces manual Step 1).",
+     "- System workflow orchestration of \"coordinates relief goods distribution from store inventory per company policy\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks overtime and hazard pay eligibility per DOLE advisory\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-232 (ensure typhoon-response protocol execution.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Employee trauma**: Psychological impact on staff in severely affected areas; requires counseling support",
+     "- **Staffing gaps**: Inability to reopen stores promptly due to staff displacement"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR emergency notification with two-way status tracking",
+     "- Payroll emergency advance module",
+     "- Workforce scheduling with disaster redeployment"
+    ],
+    "Time Estimate": [
+     "- Initial welfare check: 12–24 hours; ongoing support: 1–4 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "HR Ops activates welfare check: automated SMS/IVR check-in to all employees in affected region; tracks response status (safe, affected, unreachable); Store/DC Managers supplement with direct calls to non-responders within 12 hours",
+     "duration": "12–24 hours",
+     "n": "1",
+     "r": "HR Operations Manager"
+    },
+    {
+     "a": "CHRO",
+     "activity": "For affected employees: HR assesses needs (housing, medical, financial); activates emergency salary advance (up to PHP 20,000 tax-free); coordinates relief goods distribution from store inventory per company policy",
+     "duration": "24–48 hours",
+     "n": "2",
+     "r": "HR Ops / Employee Relations"
+    },
+    {
+     "a": "COO",
+     "activity": "HR deploys replacement staff from unaffected stores to maintain minimum operations at reopened locations; tracks overtime and hazard pay eligibility per DOLE advisory",
+     "duration": "1–3 days",
+     "n": "3",
+     "r": "HR Operations Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "6–10 activations per year",
+    "Owner": "Procurement Manager",
+    "Participants": "Procurement Mgr, Merchandising, Finance, Logistics, Vendors",
+    "Trigger": "Post-disaster demand surge or government/NGO emergency procurement request",
+    "Volume": "50–200 emergency POs per major event"
+   },
+   "id": "W2516",
+   "level": 2,
+   "name": "Emergency Vendor Coordination & Expedite Procurement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow notification of \"contacts key emergency vendors\" (replaces manual Step 1).",
+     "- System auto-track of \"tracks emergency vendor payments\" (replaces manual Step 2).",
+     "- System auto-log of \"Logistics arranges expedited transport\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: DTI enforcement and long-term vendor relationships"
+    ],
+    "Pain Points / Risks": [
+     "- **Price gouging**: Vendors increase prices during emergencies; mitigated by DTI enforcement and long-term vendor relationships",
+     "- **Quality risk**: Emergency procurement bypasses normal QC inspection; mitigated by CTL-437 (controlled execution — Active Disaster Response & Emergency Operations (PA-69.2))"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Emergency PO creation with fast-track approval workflow",
+     "- AP emergency payment processing",
+     "- TMS expedited routing"
+    ],
+    "Time Estimate": [
+     "- 4–12 hours per procurement cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Procurement contacts key emergency vendors (tarps, plywood, nails, waterproofing, generators): confirms availability, negotiates emergency pricing (within DTI price freeze limits), secures allocation priority over competitors",
+     "duration": "4–8 hours",
+     "n": "1",
+     "r": "Procurement Manager / Buyers"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance fast-tracks emergency vendor payments: bypasses standard 30-day terms for COD/advance payment to secure allocation; CFO authorizes emergency procurement budget (tiered: PHP 10M / Finance Controller; PHP 50M / CFO; PHP 200M / CEO)",
+     "duration": "2–4 hours",
+     "n": "2",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Logistics arranges expedited transport: bypasses DC for direct-to-store delivery where possible; coordinates vendor truck dispatch to hardest-hit stores",
+     "duration": "4–8 hours",
+     "n": "3",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-437"
+   ],
+   "fields": {
+    "Frequency": "2–5 activations per store per year",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager, All Staff, Customers",
+    "Trigger": "Sudden weather deterioration while store is open with customers present",
+    "Volume": "Up to 200 stores; varies by typhoon track"
+   },
+   "id": "W2517",
+   "level": 2,
+   "name": "Active Typhoon Customer Safety & In-Store Emergency Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors weather conditions\" (replaces manual Step 1).",
+     "- System auto-update of \"updates every 15 minutes\" (replaces manual Step 2).",
+     "- System auto-document of \"document any customer incidents for insurance and liability purposes\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-437 (ensure controlled execution — Active Disaster Response & Emergency Operations (PA-69.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer panic**: Large crowds during sudden severe weather create stampede risk",
+     "- **Liability exposure**: Customer injury on premises during weather emergency"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PA system with pre-recorded emergency announcements",
+     "- First aid station inventory tracking",
+     "- Incident reporting module for customer injury documentation",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-03): the Store Manager holds site-level incident command at all times; the closure decision (Signal 3+/LGU order) follows W2510; evacuation protocol upkeep per VS-24 W695"
+    ],
+    "Time Estimate": [
+     "- Duration of event (typically 1–6 hours for shelter-in-place scenarios)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager monitors weather conditions; at sudden deterioration: activates customer safety protocol via PA announcement; directs customers away from outdoor lumber yard, loading dock, and exterior areas",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If shelter-in-place required: guide customers to interior secure area (away from large windows, overhead fixtures); provide water, first aid; maintain calm with regular PA updates every 15 minutes",
+     "duration": "Duration of event",
+     "n": "2",
+     "r": "All Staff"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "When safe to do so: gradually resume operations or execute orderly closure (W2510); document any customer incidents for insurance and liability purposes",
+     "duration": "1–2 hours post-event",
+     "n": "3",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2510",
+    "W695"
+   ]
+  }
+ ]
+}

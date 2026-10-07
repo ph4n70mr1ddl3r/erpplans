@@ -1,0 +1,574 @@
+{
+ "process_area": {
+  "id": "PA-158.1",
+  "title": "Standard-Cost Setup, Landed-Cost & Item Cost Roll"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.1-standard-cost-setup-landed-cost-and-item-cost-roll.md",
+ "value_stream": {
+  "directory": "VS-158-product-costing-landed-cost-and-cost-accounting",
+  "id": "VS-158",
+  "name": "Product Costing, Landed-Cost & Cost Accounting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Annual policy + per new item class",
+    "Owner": "Cost Accounting Manager (Controller org)",
+    "Participants": "Controller, Merchandising (VS-01), Master Data (VS-29), IT (VS-27/VS-113)",
+    "Trigger": "Cost-policy refresh; new item class; ERP setup",
+    "Volume": "1 cost-accounting policy; ~35K active SKUs across 13 categories"
+   },
+   "id": "W4649",
+   "level": 2,
+   "name": "Item Cost-Master & Standard-Cost Policy Framework",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-master template per item class; policy-driven cost-element defaulting; overhead-absorption engine"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: cost policy Controller-approved; cost-master changes via master-data governance (VS-29); valuation method documented per item class"
+    ],
+    "Cross-references": [
+     "- elevates W85 (VS-17.4); links to VS-29 (master data), VS-17.1 (GL), VS-113 (EA), W4656 (cost roll)"
+    ],
+    "Pain Points / Risks": [
+     "- **Inconsistent-valuation risk**: Mixed standard/WAC without clear policy produces non-comparable margins across categories; mitigated by the documented valuation policy per item class",
+     "- **Overhead-absorption error risk**: Mis-applied overhead distorts unit cost and margin; mitigated by per-category absorption rules"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item cost-master (ERP costing module); master data governance (VS-29); GL cost elements (VS-17.1); EA standards (VS-113)"
+    ],
+    "Time Estimate": [
+     "- ~5–8 days annual policy + ~1–2 days per new item class"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Define the cost-element and cost-type taxonomy (material, freight-in, duty, brokerage, insurance, handling, overhead absorption), the valuation method policy (standard cost for merchandisable items; WAC at receipt per profile §6.3; actual for project/job), and the per-category overhead-absorption rules",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Cost Accounting Manager"
+    },
+    {
+     "a": "Controller / CIO",
+     "activity": "Configure the item cost-master: cost element breakdown, standard-cost vs. WAC flag, lot/serial cost tracking for catch-weight/cut-to-length, kit/BOM linkage, and entity/location cost segments; align with master data governance (VS-29)",
+     "duration": "Per setup",
+     "n": "2",
+     "r": "Cost Accounting / Master Data / IT"
+    },
+    {
+     "a": "Controller",
+     "activity": "Publish the cost-accounting policy and the standard-cost update calendar; train merchandising/project teams on cost-data inputs and the variance-to-standard accountability model",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Cost Accounting Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4656",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Per contract/quote + quarterly refresh",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Procurement (VS-03), Merchandising (VS-01), Insights (VS-44), Pricing (VS-01.2)",
+    "Trigger": "Vendor contract/quote update; new SKU sourcing; periodic refresh",
+    "Volume": "~800–1,000 vendors; ~35K SKUs; top-20 vendors = 45% of COGS"
+   },
+   "id": "W4650",
+   "level": 2,
+   "name": "Purchase-Price, Vendor-Quote & Should-Cost Data Aggregation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Vendor-price feed into the cost engine; commodity-index-linked should-cost models; variance-to-should-cost alerts"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: purchase-price reconciled to vendor contracts; rebate netting documented (no double-count); should-cost variances Controller-reviewed"
+    ],
+    "Cross-references": [
+     "- links to VS-03 (procurement), VS-39 (rebate), W161 (price protection), VS-106 (commodity), W4656 (cost roll), W4657 (PPV)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stale-price risk**: A vendor price increase not flowing into the cost build understates COGS and overstates margin; mitigated by the quarterly refresh and contract-change feed",
+     "- **Rebate double-count risk**: Rebates netted as cost reduction twice (in price and again as income); mitigated by the documented netting policy (W4664)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor contract/quote data (VS-03); rebate accrual (VS-39); price protection (W161); commodity index (VS-106); cost engine"
+    ],
+    "Time Estimate": [
+     "- ~5–8 days/quarter price/should-cost aggregation across top categories"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Aggregate purchase-price inputs into the cost engine: vendor contract/quote price, price-protection claims (W161), volume-rebate estimates (VS-39, netted as a reduction of cost per W4664), and indexed/commodity-linked price clauses (VS-106)",
+     "duration": "Quarterly + on change",
+     "n": "1",
+     "r": "Cost Accounting / Procurement"
+    },
+    {
+     "a": "Controller / VP Merchandising",
+     "activity": "Build **should-cost** models for key categories (steel, cement, lumber, copper, paint) from raw-material indices + conversion/overhead estimates; compare to vendor quote to surface vendor margin and negotiation opportunity",
+     "duration": "Per category",
+     "n": "2",
+     "r": "Cost Accounting / Insights / Procurement"
+    },
+    {
+     "a": "Controller",
+     "activity": "Feed the validated purchase-price + should-cost data into the standard-cost build (W4656); flag SKUs where vendor price exceeds should-cost threshold for procurement action (VS-03.3)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / Procurement"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W161",
+    "W4656",
+    "W4657",
+    "W4664"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Per import shipment + monthly landed-cost run",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Imports/Customs (VS-02.2/VS-87), Treasury/FX (VS-18.3), Freight (VS-110), AP (VS-15)",
+    "Trigger": "Import PO receipt (VS-02.2); duty/freight invoice; periodic landed-cost run",
+    "Volume": "~400–600 import TEUs/month; ~40% of COGS is imported"
+   },
+   "id": "W4651",
+   "level": 2,
+   "name": "Import Landed-Cost Build-Up: Freight, Duty, Brokerage, Insurance & Port Freight",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Landed-cost auto-build from AP/GR/customs data; allocation-engine per category policy; late-invoice accrual automation"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: landed-cost allocation basis documented per category; 3-way matched to AP; FX rate source governed (VS-18.3); variance analyzed monthly"
+    ],
+    "Cross-references": [
+     "- links to VS-02.2/VS-87 (import/customs), VS-110 (freight), W191/W249/W1169 (freight elements), VS-18.3 (FX), W4656/W4658 (standard & variance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-allocation risk**: Freight/duty allocated by an inappropriate basis (value vs. weight) distorts per-SKU landed cost (heavy/low-value tiles vs. light/high-value tools); mitigated by per-category allocation policy",
+     "- **Landed-cost timing risk**: Landed-cost elements arriving after the sale (late freight/duty invoices) require true-up; mitigated by accrual estimates and monthly reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import PO/customs (VS-02.2/VS-87); freight (VS-110); AP 3-way match (VS-15); FX/treasury (VS-18.3); landed-cost module; GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~8–12 days/month import landed-cost across ~400–600 TEUs"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Build the landed-cost element stack per import shipment: ocean freight, marine insurance (W191), customs duty (VS-87), brokerage, demurrage/detention (W249), port freight/drayage (W1169), and FX conversion (actual or hedged rate per W80); allocate to SKUs by value, weight, volume, or cube per category policy",
+     "duration": "Per shipment + monthly",
+     "n": "1",
+     "r": "Cost Accounting / Imports / Freight"
+    },
+    {
+     "a": "Controller",
+     "activity": "Match the landed-cost elements to AP invoices (3-way, VS-15) and to the goods receipt (VS-04); post landed-cost adjustments to inventory/COGS; handle FX rate differences between hedged and actual (VS-18.3)",
+     "duration": "Per shipment",
+     "n": "2",
+     "r": "Cost Accounting / AP"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile total landed cost to the standard landed cost (W4656) and post the landed-cost variance (W4658); analyze import-rate volatility vs. the commodity/FX hedge (VS-106/VS-18.3)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Cost Accounting"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1169",
+    "W191",
+    "W249",
+    "W4656",
+    "W4658",
+    "W80"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Logistics (VS-06), DC Ops (VS-04), Freight (VS-110), AP (VS-15)",
+    "Trigger": "Domestic inbound freight; DC handling; monthly allocation run",
+    "Volume": "~72,000 inbound receipts/yr; DC handling across 4 DCs"
+   },
+   "id": "W4652",
+   "level": 2,
+   "name": "Domestic Freight, Handling & Inbound Cost Allocation to SKU",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Freight-invoice-to-shipment matching; allocation engine; absorb-vs-billback flagging"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: domestic-freight allocation basis documented; reconciled to AP monthly; billback opportunities flagged"
+    ],
+    "Cross-references": [
+     "- links to VS-06/VS-04 (logistics/DC), VS-110 (freight), W4662 (billback), W4658 (variance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Allocation-basis risk**: Inappropriate basis distorts SKU margin (e.g., allocating handling by value over-costs cheap heavy goods); mitigated by per-category basis and periodic review",
+     "- **Billback-leakage risk**: Cost that should be billed back to vendor (compliance chargebacks W245) absorbed into COGS; mitigated by W4662 analysis"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Freight audit/pay (VS-110.3); DC ops (VS-04); logistics (VS-06); AP (VS-15); landed/cost module; GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~5–7 days/month domestic freight allocation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Allocate domestic inbound freight (line-haul DC-bound, DSD), DC handling/receiving cost, and transfer freight (DC→store) to SKUs by an appropriate basis (weight, cube, case, value) per category policy; decide absorb-vs-billback posture (W4662)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Cost Accounting / Logistics"
+    },
+    {
+     "a": "Controller",
+     "activity": "Match freight/handling invoices to the receipts/shipments; post the cost to inventory or expense per the absorption policy; handle shared-shipment allocation across multiple SKUs/orders",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / AP / Logistics"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile allocated domestic freight to AP and to the standard; post domestic freight variance (W4658); identify cost-out opportunities (consolidation, routing — VS-110/VS-136)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Cost Accounting / Logistics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W245",
+    "W4658",
+    "W4662"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Per setup + periodic",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Merchandising (VS-01), Calibration (VS-115), DC Ops (VS-04), Pricing (VS-01.2)",
+    "Trigger": "Catch-weight/cut-to-length item setup; periodic unit-cost refresh",
+    "Volume": "Lumber (board-foot), wire/cable (meter), pipes (meter), nails/bulk (kg), tiles (sq-m); sold at 600 POS"
+   },
+   "id": "W4653",
+   "level": 2,
+   "name": "Catch-Weight & Cut-to-Length Unit-Cost Computation (per Board-Foot / Meter / Kg)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Conversion-factor engine; yield-from-actuals auto-update; unit-cost roll to POS pricing"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: conversion factors/yields re-verified quarterly (calibration-governed VS-115); scrap built into unit cost; per-unit cost Controller-approved"
+    ],
+    "Cross-references": [
+     "- links to VS-09.1 (custom fab), VS-115 (calibration), W169 (scrap), VS-01.2 (pricing), W4659 (yield variance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Yield-error risk**: An outdated yield/conversion factor mis-states per-unit cost on every one of 2.8M monthly POS transactions for those items; mitigated by periodic yield re-verification (links VS-115)",
+     "- **Scrap-unaccounted risk**: Cutting scrap not built into unit cost understates COGS; mitigated by scrap-inventory tracking (W169)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Catch-weight/cut-to-length module (VS-09.1/VS-115); item master (VS-29); POS pricing (VS-08); scrap inventory (W169); calibration (VS-115)"
+    ],
+    "Time Estimate": [
+     "- ~per item 2–4 hours; ~3–5 days/quarter yield re-verification"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Compute the per-selling-unit cost for catch-weight/cut-to-length items from the purchase unit cost and the conversion factor (e.g., cost per board-foot from per-cubic-meter lumber cost accounting for kerf/trim loss; cost per meter from per-roll wire cost; cost per kg from per-sack bulk cost) — validated against calibrated measurement (VS-115)",
+     "duration": "Per setup + periodic",
+     "n": "1",
+     "r": "Cost Accounting / Merchandising"
+    },
+    {
+     "a": "Controller",
+     "activity": "Account for fabrication yield/scrap (W169) and cutting labor where BuildRight performs the cut (VS-09.1 custom fabrication); build the unit cost into the item master and the POS pricing",
+     "duration": "Per setup",
+     "n": "2",
+     "r": "Cost Accounting / Store Services"
+    },
+    {
+     "a": "Controller",
+     "activity": "Periodically re-verify conversion factors and yield assumptions against actual cut/conversion data; adjust unit cost and post variance (W4659) where yield drifts",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W169",
+    "W4659"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Per kit + periodic roll",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Merchandising (VS-92), Pricing (VS-01.2), DC kitting (VS-04)",
+    "Trigger": "Kit/bundle creation (VS-92); component cost change; periodic roll",
+    "Volume": "Kit/bundle SKUs in catalog (VS-92); contractor packs, seasonal kits"
+   },
+   "id": "W4654",
+   "level": 2,
+   "name": "Kit / BOM Cost Roll-Up & Component Costing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto kit-cost roll on component change; kit-margin-erosion alert; BOM substitution handling"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: kit cost rolled on component change and quarterly; assembled-vs-standard reconciled; margin-erosion monitored"
+    ],
+    "Cross-references": [
+     "- links to VS-92 (kitting), VS-04 (DC), W4649 (component cost), W4659 (conversion variance), W4661 (margin)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stale-kit-cost risk**: A kit not re-rolled after component inflation understates kit COGS; mitigated by the periodic roll and component-change trigger",
+     "- **Margin-erosion risk**: Component inflation not passed into kit price erodes kit margin; mitigated by margin-monitoring (VS-92.3/W4661)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Kit/BOM module (VS-92.1); DC kitting (VS-92.2); component item costs (W4649); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~per kit 1–2 hours; ~3–5 days/quarter kit roll"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Roll up kit/BOM standard cost from component costs (material) plus DC assembly labor/overhead where BuildRight assembles (VS-92.2); validate the kit cost against the bundle price and category margin floor (VS-92.1)",
+     "duration": "Per kit + periodic",
+     "n": "1",
+     "r": "Cost Accounting / Merchandising / DC Ops"
+    },
+    {
+     "a": "Controller",
+     "activity": "On component-cost change, re-roll affected kits and post kit-cost revaluation; handle component substitution and yield/loss in the BOM",
+     "duration": "On change",
+     "n": "2",
+     "r": "Cost Accounting / Merchandising"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile kit assembled-cost to kit standard-cost and post production/conversion variance (W4659); monitor kit margin erosion from component inflation",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Cost Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4649",
+    "W4659",
+    "W4661"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Per PL SKU + periodic",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Private Label (VS-41), Procurement (VS-03), Insights/Should-cost (VS-44), Pricing (VS-01.2)",
+    "Trigger": "Private-label product development (VS-41); cost-quote; periodic refresh",
+    "Volume": "Private-label assortment (VS-41); growing portfolio"
+   },
+   "id": "W4655",
+   "level": 2,
+   "name": "Private-Label Fully-Burdened Cost Build (COGS+, Tooling, Royalty, MOQ)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Fully-burdened PL-cost template; tooling-amortization vs. actual-volume alert; auto-roll on material-index change"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: PL cost fully burdened (tooling/royalty/MOQ); tooling amortization vs. volume monitored; PL margin gap validated vs. national brand"
+    ],
+    "Cross-references": [
+     "- links to VS-41 (private label), VS-44 (should-cost), W4651 (landed cost), VS-35 (tooling asset), W4658 (variance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-amortized-tooling risk**: Low PL volume leaves tooling under-amortized → PL margin worse than planned; mitigated by volume-vs-forecast monitoring",
+     "- **Hidden-PL-cost risk**: Quality/royalty/MOQ-carrying cost omitted from the build overstates PL margin; mitigated by the fully-burdened build template"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PL product module (VS-41); should-cost (VS-44); landed cost (W4651); tooling asset amortization (VS-35); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~per PL SKU 3–5 hours; ~quarterly re-roll absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Build the fully-burdened private-label cost: ex-works supplier cost + freight/duty/brokerage (W4651) + tooling/mold amortization (per unit over forecast volume) + quality-inspection cost + royalty/licence (if any) + minimum-order-quantity (MOQ) carrying cost",
+     "duration": "Per PL SKU",
+     "n": "1",
+     "r": "Cost Accounting / Private Label"
+    },
+    {
+     "a": "Controller / VP Merchandising",
+     "activity": "Validate the PL cost vs. the national-brand equivalent cost and the target PL margin gap; surface tooling-amortization risk if volume underperforms forecast",
+     "duration": "Per PL SKU",
+     "n": "2",
+     "r": "Cost Accounting / Insights"
+    },
+    {
+     "a": "Controller",
+     "activity": "Periodically re-roll PL cost on supplier-cost/material-index change (VS-106); post PL-cost variance (W4658) and re-assess tooling amortization against actual volume",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4651",
+    "W4658"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-704"
+   ],
+   "fields": {
+    "Frequency": "Periodic roll (monthly for volatile categories; quarterly standard)",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Controller, Merchandising (VS-01), Master Data (VS-29), IT (VS-27)",
+    "Trigger": "Standard-cost calendar (monthly/quarterly); material/FX/duty shift",
+    "Volume": "~35K active SKUs; full roll quarterly"
+   },
+   "id": "W4656",
+   "level": 2,
+   "name": "Periodic Standard-Cost Roll, Revaluation & WAC/Standard Reclass",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Roll-engine consuming all cost-build workflows; auto-revaluation; margin-impact report to merchandising"
+    ],
+    "Controls": [
+     "- CTL-704 (ensure controlled execution — Standard-Cost Setup, Landed-Cost & Item Cost Roll (PA-158.1).)",
+     "- CTL-704: standard roll Controller-approved; revaluation reconciled; prior standard archived for variance; change-controlled (W4670)"
+    ],
+    "Cross-references": [
+     "- links to W4650–W4655 (cost builds), W4670 (change control), W4657/W4658 (variance), VS-17.1 (GL)"
+    ],
+    "Pain Points / Risks": [
+     "- **Off-cycle-shift risk**: A material FX/duty shift between rolls leaves standard cost stale; mitigated by ad-hoc roll triggers for volatile categories",
+     "- **Revaluation-error risk**: Incorrect revaluation to inventory distorts the balance sheet; mitigated by Controller review and reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Standard-cost roll engine; inventory revaluation; GL (VS-17.1); change-control (W4670); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~5–7 days/quarter full standard-cost roll (+ ad-hoc rolls as triggered)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Run the periodic standard-cost roll: pull updated purchase-price (W4650), landed cost (W4651), freight/handling (W4652), catch-weight (W4653), kit (W4654), PL (W4655); compute new standard cost per SKU per entity",
+     "duration": "Per roll",
+     "n": "1",
+     "r": "Cost Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Post standard-cost revaluation: adjust on-hand inventory value to the new standard; post the revaluation to inventory and a cost-revaluation P&L account; handle the WAC-at-receipt to standard reclass for items under WAC",
+     "duration": "Per roll",
+     "n": "2",
+     "r": "Cost Accounting / GL"
+    },
+    {
+     "a": "Controller",
+     "activity": "Publish the new standard cost to merchandising/pricing (margin impact), approve via the change-control matrix (W4670), and archive the prior standard for variance analysis (W4657/W4658)",
+     "duration": "Per roll",
+     "n": "3",
+     "r": "Cost Accounting / Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4650",
+    "W4651",
+    "W4652",
+    "W4653",
+    "W4654",
+    "W4655",
+    "W4657",
+    "W4658",
+    "W4670"
+   ]
+  }
+ ]
+}

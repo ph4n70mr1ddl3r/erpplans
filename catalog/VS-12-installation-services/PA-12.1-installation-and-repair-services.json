@@ -1,0 +1,2254 @@
+{
+ "process_area": {
+  "id": "PA-12.1",
+  "title": "Installation & Repair Services"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-12-installation-services/PA-12.1-installation-and-repair-services.md",
+ "value_stream": {
+  "directory": "VS-12-installation-services",
+  "id": "VS-12",
+  "name": "Installation & Services"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Daily across 200 stores",
+    "Owner": "Services Manager (HQ); Customer Service Rep (Store)",
+    "Participants": "CSR, Installation Contractor (3rd party), Warehouse/Logistics, Finance, Customer",
+    "Trigger": "Customer purchases installation-eligible product (e.g., split-type AC, water heater, floor tiles) and requests service",
+    "Volume": "~500–800 service orders/week chain-wide"
+   },
+   "id": "W138",
+   "level": 2,
+   "name": "Home Installation Services Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow notification of \"contact, preferred date\" (replaces manual Step 1).",
+     "- System auto-assign of \"assignment\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspection\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "As a \"Home Building Partner,\" BuildRight Depot provides professional installation services through a network of accredited 3rd-party contractors. This workflow manages the end-to-end lifecycle from service sale to contractor payout, ensuring quality control and financial reconciliation."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Services Manager (HQ); Customer Service Rep (Store) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Contractor no-shows or late arrivals are the top customer complaint; with 500–800 orders/week, even a 5% no-show rate generates 25–40 weekly incidents requiring rescheduling and service recovery.",
+     "- Installation quality varies significantly across 3rd-party contractors; the 10% audit sample (W138.8) is insufficient to catch chronic underperformers before customer complaints escalate.",
+     "- Disputes between contractors and customers over additional materials used during installation (W138.6) delay completion sign-off and payout, creating cash flow friction for contractors.",
+     "- Service SKU pricing does not always account for site-specific complexity (e.g., uneven flooring, old plumbing), leading to underpriced jobs and contractor margin pressure that discourages quality work."
+    ],
+    "Staffing Implication": [
+     "Services Manager at HQ dedicates ~2–3 hours/day to order management, escalation, and quality audit across ~500–800 weekly orders. At the store level, each CSR spends ~10 min per service order capture; at ~500–800 orders/week chain-wide (~2–4 per store per week) this is absorbed within existing CSR duties. Finance AP requires ~2–4 hours/week for contractor payout batch processing, handled by existing staff. No incremental headcount required at current volumes.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service SKU integration with material SKUs (prompting for service at POS)",
+     "- Contractor Portal/App for assignment, scheduling, photo upload, and sign-off",
+     "- Automated customer SMS/Email notifications",
+     "- Integration with AP for contractor payouts (W7)",
+     "- Service warranty tracking linked to customer profile (W17)",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-17): this workflow owns installation *service sales & scheduling*; the bulky-item delivery + installation + haul-away leg for white goods dispatched from stock runs the VS-143 canon (VS-143 schedules the crew, POD, and recycling/haul-away; this workflow books the job and hands the dispatch)"
+    ],
+    "Time Estimate": [
+     "End-to-end service order lifecycle: 3–7 days from sale to completion (10 min sale + 1 day contractor assignment/scheduling + 2–6 hours execution + 10 min sign-off). Weekly payout batch: 2–4 hours. Quality audit: 1 hour/day. Services Manager spends ~2–3 hours/day on order management and escalation."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Service Sale**: Customer purchases item + Service SKU at POS; CSR captures site details (address, contact, preferred date) and attaches to Service Order (SO)",
+     "duration": "10 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "Services Mgr",
+     "activity": "**Contractor Assignment**: System auto-assigns SO to nearest accredited contractor based on category (HVAC, Plumbing, Flooring) and current workload; contractor notified via mobile app",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System / Services Mgr"
+    },
+    {
+     "a": "Services Mgr",
+     "activity": "**Site Inspection (if complex)**: For large flooring or roofing jobs, contractor performs site inspection; updates SO with actual material requirements; system adjusts SO price if needed",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Contractor"
+    },
+    {
+     "a": "—",
+     "activity": "**Scheduling**: Contractor confirms installation date/time with customer via system; system sends SMS confirmation to customer",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Contractor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Material Release**: Store/DC releases materials for delivery (W19) or customer pickup (W11); system links material delivery status to SO status",
+     "duration": "Per W19",
+     "n": "5",
+     "r": "Warehouse / CSR"
+    },
+    {
+     "a": "—",
+     "activity": "**Execution**: Contractor performs installation; captures \"Before\" and \"After\" photos via mobile app; records any additional materials used from customer's stock",
+     "duration": "2–6 hours",
+     "n": "6",
+     "r": "Contractor"
+    },
+    {
+     "a": "—",
+     "activity": "**Completion & Sign-off**: Customer reviews work; signs digital completion certificate on contractor's app; rate service (1–5 stars)",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Customer / Contractor"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Quality Audit**: Services Manager reviews a sample of completed SOs (10%) and all low-rated services; triggers corrective action if needed",
+     "duration": "1 hour/day",
+     "n": "8",
+     "r": "Services Mgr"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Billing & Payout**: System moves SO to \"Completed/Ready for Payout\"; Finance runs weekly payout batch: Contractor Fee − Commission % = Net Payout",
+     "duration": "Weekly",
+     "n": "9",
+     "r": "Finance (AP)"
+    },
+    {
+     "a": "—",
+     "activity": "**Warranty Tracking**: System records installation date as start of labor warranty; links to product warranty (W33)",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W11",
+    "W17",
+    "W19",
+    "W33",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~5–10 requests per store/month",
+    "Owner": "Design Consultant",
+    "Participants": "Customer, Sales Rep, Category Manager",
+    "Trigger": "Customer requests renovation planning for Kitchen, Bathroom, or Wardrobe",
+    "Volume": "High-value sales potential (PHP 50,000–500,000 per lead)"
+   },
+   "id": "W148",
+   "level": 2,
+   "name": "Home Design & Consultancy Services",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"schedule site measurement if needed\" (replaces manual Step 1).",
+     "- System auto-create of \"Create kitchen/bath layout using design software\" (replaces manual Step 2).",
+     "- System auto-count of \"discount if applicable\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Design-to-order conversion rate is typically only 25–35% — customers use the free design service for inspiration but purchase from competitors or smaller local suppliers offering lower prices, wasting consultant time.",
+     "- 3D modeling time (2–4 hours per project) is a bottleneck; design consultants at high-volume stores cannot keep up with demand during renovation season, leading to long customer wait times and abandoned leads.",
+     "- SKU availability during design may change between presentation and order conversion (especially for tiles and fixtures with volatile stock levels), requiring redesigns that frustrate customers.",
+     "- Bundled discount approvals from Category Managers (W148.4) are slow, delaying quotation delivery and giving competitors time to intercept the customer."
+    ],
+    "Staffing Implication": [
+     "Each consultancy engagement requires ~4.5–6.5 hours of Design Consultant time. With ~5–10 requests/store/month, a full-time Design Consultant at flagship stores handles ~25–65 hours of consultancy monthly, fitting within a single FTE but leaving minimal capacity for walk-in design inquiries during peak renovation season. Stores with fewer than 5 requests/month can share a regional Design Consultant across 2–3 locations rather than dedicated headcount per store.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Design software with ERP Item Master integration for real-time SKU availability and pricing during 3D modeling (W148.2)",
+     "- Quotation generation module linked to BOM output from design software (W148.4)",
+     "- Sales Order conversion from quotation with automatic stock reservation (W148.5)",
+     "- Integration with W138 (installation services) for coordinating delivery and professional installation"
+    ],
+    "Time Estimate": [
+     "Per consultancy engagement: 4.5–6.5 hours total (1 hour discovery + 2–4 hours 3D modeling + 1 hour presentation + 30 min quotation + 15 min order conversion). With ~5–10 requests per store per month, a Design Consultant handles ~25–65 hours of consultancy work monthly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Discovery**: Interview customer on needs, style, and budget; schedule site measurement if needed",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Design Consultant"
+    },
+    {
+     "a": "—",
+     "activity": "**3D Modeling**: Create kitchen/bath layout using design software; select SKUs from active assortment",
+     "duration": "2–4 hours",
+     "n": "2",
+     "r": "Design Consultant"
+    },
+    {
+     "a": "Sales Rep",
+     "activity": "**Presentation**: Present 3D render and detailed BOM (Bill of Materials) to customer",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Design Consultant"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "**Quotation**: Generate project quotation (W58.1a) with bundled discount if applicable",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Sales Rep"
+    },
+    {
+     "a": "Store Mgr",
+     "activity": "**Order Conversion**: Customer accepts; convert to Sales Order; coordinate delivery and installation (W138)",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Sales Rep"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W138",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "High volume; ~1–3 tinting requests per store/day (≈~88,000–219,000 liters/year chain-wide at ~4 L per request)",
+    "Owner": "Paint Department Supervisor",
+    "Participants": "Paint Technician (Sales Associate), Customer, Cashier",
+    "Trigger": "Customer selects a base paint and a specific color from the swatch/fan deck",
+    "Volume": "~100,000+ liters mixed annually chain-wide"
+   },
+   "id": "W168",
+   "level": 2,
+   "name": "Custom Paint Mixing & Tinting Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters Color Code and Can Size in the tinting machine software\" (replaces manual Step 2).",
+     "- System auto-log of \"logs colorant consumption per canister\" (replaces manual Step 3).",
+     "- System auto-validate of \"check\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: records"
+    ],
+    "Pain Points / Risks": [
+     "- Color accuracy is customer-subjective — the \"dot test\" (W168.5) relies on visual comparison against a physical swatch; lighting conditions in-store and customer expectations can differ, leading to re-tint requests and wasted base paint.",
+     "- Colorant canister consumption tracking in milliliters is imprecise; actual consumption varies from system-calculated dosage, creating gradual inventory drift between physical colorant stock and system records.",
+     "- Tinting machine downtime (nozzle clogs, calibration drift) during peak hours (weekends) creates long customer wait times and lost sales, as customers cannot take paint immediately.",
+     "- Base paint stock-outs at the paint department level are not always visible to the tinting machine software — a customer may go through the entire tinting process only to find the base paint is out of stock at the shelf."
+    ],
+    "Staffing Implication": [
+     "Paint Technicians spend ~3.5–7 hours/day on tinting operations at ~15–30 requests/store/day, plus ~15 min daily maintenance. This represents roughly 0.5–1 FTE of dedicated Paint Technician time per store, typically absorbed by existing Paint Department Sales Associates. High-volume stores processing 25+ tinting requests/day should designate one associate as the primary tinting operator to ensure consistent quality and minimize customer wait times.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tinting software integration with ERP Item Master (Base + Colorants)",
+     "- Real-time consumption tracking of colorants (milliliters)",
+     "- Custom SKU generation at POS linked to original Base SKU for traceability",
+     "- Machine maintenance log tracking in W47 (Facility Maintenance)"
+    ],
+    "Time Estimate": [
+     "Per tinting request: ~13 min total (3 min color selection + 2 min system entry + 2 min tinting + 3 min mixing + 2 min quality check + 1 min labeling). Machine maintenance: 15 min daily + 30 min weekly calibration. With ~15–30 requests/store/day, Paint Technicians spend ~3.5–7 hours/day on tinting operations."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Color Selection**: Customer chooses color code from brand swatch; Technician identifies required Base Paint (A, B, C, or Deep)",
+     "duration": "3 min",
+     "n": "1",
+     "r": "Paint Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**System Entry**: Technician enters Color Code and Can Size in the tinting machine software; system calculates required colorant dosage",
+     "duration": "2 min",
+     "n": "2",
+     "r": "Paint Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**Tinting**: Technician places base can under dispenser; machine injects colorants; system logs colorant consumption per canister",
+     "duration": "2 min",
+     "n": "3",
+     "r": "Paint Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**Mixing**: Can is sealed and placed in the Gyroscopic Mixer for 2–3 minutes to ensure uniform color distribution",
+     "duration": "3 min",
+     "n": "4",
+     "r": "Paint Technician"
+    },
+    {
+     "a": "Dept Supervisor",
+     "activity": "**Quality Check**: Technician performs a \"dot test\" on the can lid; dries with heat gun; verifies match against physical swatch",
+     "duration": "2 min",
+     "n": "5",
+     "r": "Paint Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**Labeling & POS**: Technician generates a \"Custom Tint\" barcode label from the system; labels can; customer takes to Cashier",
+     "duration": "1 min",
+     "n": "6",
+     "r": "Paint Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**Checkout**: Cashier scans Custom SKU; system deducts Base Paint and Colorants from inventory in real-time",
+     "duration": "30 sec",
+     "n": "7",
+     "r": "Cashier"
+    },
+    {
+     "a": "Dept Supervisor",
+     "activity": "**Machine Maintenance**: Daily nozzle cleaning and weekly calibration to ensure color accuracy",
+     "duration": "15 min",
+     "n": "8",
+     "r": "Paint Technician"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W47"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Moderate; ~10–20 requests per store/day",
+    "Owner": "Lumber Department Supervisor",
+    "Participants": "Cutter (Stock Associate), Customer, Cashier",
+    "Trigger": "Customer purchases whole lumber/plywood and requests specific sizes",
+    "Volume": "Primary items: Plywood, Marine Board, 2x4 Lumber"
+   },
+   "id": "W169",
+   "level": 2,
+   "name": "Lumber & Board Cutting Services",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates number of cuts\" (replaces manual Step 2).",
+     "- System auto-count of \"discounted sale or internal use\" (replaces manual Step 5).",
+     "- System auto-log of \"logs\" (replaces manual Step 6)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Safety risk is significant — table saws and panel saws cause serious injuries; despite PPE requirements and machine guards, complacency during high-volume cutting periods (weekends) increases incident probability.",
+     "- Cutting accuracy depends on Cutter skill and experience; inconsistent cuts lead to customer complaints and wasted material, especially for expensive marine-grade plywood.",
+     "- Scrap management (W169.5) is largely informal — off-cuts accumulate without systematic tracking, resulting in missed revenue from saleable remnants and cluttered work areas that pose tripping hazards.",
+     "- Blade wear and tear is not systematically tracked beyond the manual safety log (W169.6); dull blades cause rough cuts, burn marks on wood, and increased kickback risk, yet replacement is reactive rather than schedule-based."
+    ],
+    "Staffing Implication": [
+     "With ~10–20 cutting requests/store/day requiring ~21–29 min each plus ~30 min daily maintenance, the Cutter role demands ~4–10 hours/day of Stock Associate time. At stores with 15+ daily requests, a dedicated Cutter (~0.5–1 FTE) is warranted to maintain throughput and safety compliance. Lower-volume stores can absorb cutting duties within existing Stock Associate rotations, though peak weekend surges often require temporary reassignment of an additional associate.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service SKU for \"Cutting Fee\" at POS",
+     "- Scrap inventory tracking (Optional: creating \"Remnant\" SKUs for large off-cuts)",
+     "- Safety incident logging in W52 (Health & Safety)"
+    ],
+    "Time Estimate": [
+     "Per cutting request: ~21–29 min total (5 min intake + 2 min calculation + 2 min payment + 5–15 min cutting + 2 min scrap management + 5 min safety log). With ~10–20 requests/store/day, the Cutter spends ~3.5–10 hours/day on cutting operations. Machine maintenance and blade replacement add ~30 min/day."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Intake**: Customer presents purchased board/lumber or selects from floor; provides cutting list/dimensions",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Cutter"
+    },
+    {
+     "a": "—",
+     "activity": "**Calculation**: Cutter calculates number of cuts; system determines \"Cutting Fee\" (e.g., first 2 cuts free, PHP 10 per subsequent cut)",
+     "duration": "2 min",
+     "n": "2",
+     "r": "Cutter"
+    },
+    {
+     "a": "—",
+     "activity": "**Payment**: Customer pays Cutting Fee at POS; receives \"Cutting Authorization\" slip",
+     "duration": "2 min",
+     "n": "3",
+     "r": "Cashier"
+    },
+    {
+     "a": "Dept Supervisor",
+     "activity": "**Execution**: Cutter performs cuts using Table Saw or Panel Saw; adheres to safety protocols (PPE, machine guards)",
+     "duration": "5–15 min",
+     "n": "4",
+     "r": "Cutter"
+    },
+    {
+     "a": "—",
+     "activity": "**Scrap Management**: (a) Off-cuts > 1ft offered to customer; (b) if declined, off-cuts moved to \"Scrap Bin\" for discounted sale or internal use",
+     "duration": "2 min",
+     "n": "5",
+     "r": "Cutter"
+    },
+    {
+     "a": "Dept Supervisor",
+     "activity": "**Safety Log**: Cutter logs machine hours and blade condition; reports dull blades for sharpening/replacement (W47)",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Cutter"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W47",
+    "W52"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-186"
+   ],
+   "fields": {
+    "Frequency": "Quarterly per contractor; or ad-hoc",
+    "Owner": "Services Quality Manager",
+    "Participants": "Services Quality Mgr, Contractor, Customer (for site visit)",
+    "Trigger": "Scheduled quarterly audit; or high complaint rate for a specific contractor (W138.8)",
+    "Volume": "~100–133 contractor audits/month nationwide (quarterly per contractor, per the 300–400 accredited pool — mostly remote checklist audits with on-site visits for high-risk tiers)"
+   },
+   "id": "W213",
+   "level": 2,
+   "name": "Installation Service Partner Quality Audit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System continuous audit of \"Audit Scoping\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspects workmanship against\" (replaces manual Step 2).",
+     "- System auto-validate of \"check\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-186 (ensure installation quality & warranty registration.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Site visits require customer permission and scheduling coordination with contractors; customer refusals or contractor unavailability delay audits and create gaps in quality coverage.",
+     "- The \"BuildRight Standard\" for workmanship assessment is subjective — different auditors may score the same installation differently, undermining scorecard reliability and contractor trust in the process.",
+     "- Probation and corrective action follow-through is inconsistent; contractors on probation may continue receiving work orders due to capacity constraints (insufficient alternative contractors in the area).",
+     "- CSAT data (W65) driving audit selection is often incomplete — many customers do not complete post-installation surveys, meaning problem contractors may escape detection until formal complaints escalate."
+    ],
+    "Staffing Implication": [
+     "Quarterly audit cycle covering all active contractors requires ~10–15 days/quarter of Services Quality Manager time, roughly equivalent to ~1.5 FTE-days per week sustained throughout the year. This is typically handled by a dedicated Services Quality Manager (1 FTE) who also manages corrective action follow-ups and contractor training coordination. Site visit travel to 200 stores across the chain adds unaccounted time; regional audit deputies may be needed if contractor count exceeds 50 active partners.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contractor quality audit module with photo upload capability",
+     "- CSAT and Complaint data integration for audit triggering",
+     "- Integration with Contractor Master Scorecard"
+    ],
+    "Time Estimate": [
+     "Per contractor audit: mostly remote checklist audits (~30–45 min each) plus ~20–30 on-site tier audits per quarter at ~1.5 days each; covering the 300–400 accredited pool quarterly ≈ 25–40 days per quarter for the Services Quality Manager (with regional support)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Services Qual Mgr",
+     "activity": "**Audit Scoping**: System identifies contractors with high volume or low CSAT (W65) in the past quarter",
+     "duration": "30 min",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Site Visit**: Auditor visits 3–5 active/completed sites with the contractor; inspects workmanship against \"BuildRight Standard\"",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Services Qual Mgr"
+    },
+    {
+     "a": "—",
+     "activity": "**Compliance Check**: Verify contractor's team has valid IDs, PPE, and appropriate tools (as required in W138 contract)",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Services Qual Mgr"
+    },
+    {
+     "a": "Services Mgr",
+     "activity": "**Audit Report**: Auditor logs findings in system: workmanship score, safety score, compliance score",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "Services Qual Mgr"
+    },
+    {
+     "a": "—",
+     "activity": "**Scorecard Update**: Audit score feeds into the \"Contractor Master Scorecard\" (linked to W44)",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Corrective Action**: If score < 70%, contractor put on \"Probation\"; requires remedial training or face de-listing",
+     "duration": "1 hour",
+     "n": "6",
+     "r": "Services Mgr"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W138",
+    "W44",
+    "W65"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Daily sign-ups, monthly billing runs",
+    "Owner": "Services Ops Manager",
+    "Participants": "Customer, Services Admin, Finance (AR)",
+    "Trigger": "Customer signs up for a recurring maintenance plan (e.g., Quarterly AC cleaning, monthly pest control).",
+    "Volume": "100-200 billing events per day enterprise-wide"
+   },
+   "id": "W282",
+   "level": 2,
+   "name": "Subscription Billing for Recurring Home Services",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates a recurring contract and defers revenue.\" (replaces manual Step 2).",
+     "- System auto-schedule of \"scheduled quarterly service.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Expired credit cards causing payment failures; disjointed scheduling resulting in missed service appointments",
+     "- Revenue recognition errors if deferred revenue is not properly amortized per period, especially for mid-month cancellations or plan upgrades/downgrades",
+     "- PCI-DSS compliance requirements for stored credit card tokens — any data breach exposes BuildRight to significant fines and reputational damage under NPC regulations",
+     "- Cancellation disputes — customers disputing charges after service completion or requesting refunds for unused service periods create AR reconciliation complexity and customer service burden"
+    ],
+    "Staffing Implication": [
+     "100–200 billing events/day are largely automated. Services Admin: ~2–3 hours/day for exception handling and subscription modifications. Finance AR: ~1 hour/day for failed payment follow-up and revenue recognition review. No incremental headcount; absorbed by existing Services Admin and Finance AR roles.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order Management (Subscriptions) — subscription contract creation, renewal, and cancellation lifecycle management",
+     "- Field Service — automated work order generation linked to subscription schedule and contractor assignment (W138)",
+     "- AR — deferred revenue recognition, billing run processing, and payment reconciliation",
+     "- Payment Gateway — secure credit card tokenization, automated billing on service completion, and failed payment retry logic"
+    ],
+    "Time Estimate": [
+     "**Total**: Automated billing cycle with minimal manual intervention. Per subscription sign-up: ~10 min. Monthly billing run: automated. Exception handling: ~1 hour/day for failed payments, cancellation disputes, and plan modifications. Revenue recognition: automated as part of month-end close (W9A). Services Admin spends ~2–3 hours/day on subscription exception management."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Services Admin",
+     "activity": "Customer purchases the subscription online or at POS, securely tokenizing their credit card.",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "Services Admin",
+     "activity": "ERP Subscription Billing module generates a recurring contract and defers revenue.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Services Admin",
+     "activity": "System automatically generates a field service work order (W138) 7 days prior to the scheduled quarterly service.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Finance AR",
+     "activity": "Upon completion of the service, system triggers the payment gateway to bill the tokenized card.",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance recognizes the deferred revenue for that period.",
+     "duration": "Automated",
+     "n": "5",
+     "r": "Finance AR"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W138",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~2–3 service intake events per store per week (≈20,000–30,000 repairs/year chain-wide)",
+    "Owner": "Service Center Manager",
+    "Participants": "Service Desk Clerk, Technician, Parts Specialist, Cashier",
+    "Trigger": "Customer brings in a damaged power tool (Makita, Bosch, DeWalt, etc.) for repair (In-Warranty or Out-of-Warranty)",
+    "Volume": "~20,000–30,000 repairs per year chain-wide"
+   },
+   "id": "W440",
+   "level": 2,
+   "name": "Power Tool Service & Repair Center Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspects tool\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks parts availability\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates estimate\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Service Center Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Long lead times due to spare parts stockouts (especially for older models).",
+     "- Communication gaps — customers not notified of delays or cost overruns.",
+     "- High training requirement for technicians to maintain manufacturer \"Authorized Center\" status."
+    ],
+    "Staffing Implication": [
+     "High-volume flagship stores require a dedicated Technician (~1 FTE). Regional stores share a regional hub technician."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service Desk module for ticket creation and customer communication",
+     "- Parts inventory management (segregated from retail inventory)",
+     "- Warranty verification link with Item Master and Sales History",
+     "- Integration with POS for out-of-warranty labor/parts billing"
+    ],
+    "Time Estimate": [
+     "~2.1–3.1 hours per repair (intake 10 min + diagnostics 30 min + quotation 5 min + parts issue 10 min + repair and safety testing 1–2 hours + release/billing 10 min; customer notification automated) × ~20,000–30,000 repairs/year ≈ 42,000–93,000 hours/year chain-wide (~2–3 intake events/store/week, per the Frequency), absorbed by service-desk clerks and technicians.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Intake**: Clerk inspects tool; verifies warranty status; captures customer complaint; system generates Service Ticket",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Service Desk Clerk"
+    },
+    {
+     "a": "Service Center Manager",
+     "activity": "**Diagnostic**: Technician inspects tool; identifies part failure; system checks parts availability",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**Quotation**: System generates estimate (Labor + Parts); Clerk notifies customer for approval (via SMS/App)",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Service Desk Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Part Issue**: Parts Specialist issues spares from \"Service Inventory\" (non-sales stock) to the ticket",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Parts Specialist"
+    },
+    {
+     "a": "—",
+     "activity": "**Repair**: Technician replaces parts; performs safety/functionality test; signs off on ticket",
+     "duration": "1–2 hours",
+     "n": "5",
+     "r": "Technician"
+    },
+    {
+     "a": "—",
+     "activity": "**Customer Notification**: System auto-notifies customer that tool is ready for pickup",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Release & Billing**: Customer picks up tool; pays at POS (if out-of-warranty); Clerk closes ticket",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Service Desk Clerk / Cashier"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~1–2 requests per store per week (≈200–400 surveys/week chain-wide)",
+    "Owner": "Project Sales Manager",
+    "Participants": "Technical Surveyor, Sales Rep, Customer",
+    "Trigger": "Customer requests survey for custom/project-based products (Aluminum windows, doors, kitchen cabinets)",
+    "Volume": "~200–400 surveys/week chain-wide"
+   },
+   "id": "W442",
+   "level": 2,
+   "name": "Site Technical Survey & Measurement Services",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"schedules visit with customer\" (replaces manual Step 2).",
+     "- System auto-measure of \"measurements\" (replaces manual Step 3).",
+     "- System auto-upload of \"uploads\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Project Sales Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Measurement errors leading to non-fitting custom items and massive fabrication waste.",
+     "- Customer no-shows for scheduled site visits wasting surveyor time."
+    ],
+    "Staffing Implication": [
+     "Regional hubs maintain a pool of 2–3 Surveyors serving 10–15 stores."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Field Service mobile app for measurement capture and photo upload",
+     "- Project folder integration for storing technical survey data",
+     "- Automated refund logic (linking Survey SKU to final Sales Order)"
+    ],
+    "Time Estimate": [
+     "~1.9–2.9 hours per survey (POS sale 5 min + scheduling 10 min + site visit 1–2 hours + data upload 15 min + quotation feed 15 min + technical review 10 min) × ~200–400 surveys/week ≈ 19,800–60,300 hours/year chain-wide (~1–2 requests/store/week, per the Frequency).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Service Sale**: Customer pays for \"Survey Service\" at POS (often refundable upon order)",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Sales Rep"
+    },
+    {
+     "a": "Project Sales Mgr",
+     "activity": "**Scheduling**: System assigns surveyor based on location/specialty; schedules visit with customer",
+     "duration": "10 min",
+     "n": "2",
+     "r": "System / Admin"
+    },
+    {
+     "a": "—",
+     "activity": "**Site Visit**: Surveyor visits site; performs precise measurements; takes photos of site conditions",
+     "duration": "1–2 hours",
+     "n": "3",
+     "r": "Surveyor"
+    },
+    {
+     "a": "—",
+     "activity": "**Data Upload**: Surveyor uploads measurements and photos into the ERP/Project folder",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Surveyor"
+    },
+    {
+     "a": "—",
+     "activity": "**Quotation Feed**: Sales Rep receives \"Verified Measurements\" alert; updates project quotation (W162)",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Sales Rep"
+    },
+    {
+     "a": "Project Sales Mgr",
+     "activity": "**Technical Review**: Project Manager/Technician reviews feasibility before final contract",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Project Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W162"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "~20–30 new contractor applications/month; ~10–15 new accreditations completed/month (including rejections and withdrawals); annual re-certification for all accredited contractors in Q1",
+    "Owner": "Services Manager",
+    "Participants": "Services Manager, Services Coordinator (R for scheduling and documentation), Quality Inspector (R for skills assessment), Training Manager (R for BuildRight training), HR Business Partner (I for background check coordination), Legal Counsel (I for contractor agreement), Store Manager (I for service area assignment input)",
+    "Trigger": "Contractor recruitment drive; contractor applies via BuildRight website, job fair, or referral; new store opening requires additional contractor pool; quality audit (W213) identifies need for contractor replacement",
+    "Volume": "~500–800 service orders/week fulfilled by third-party contractors; target accredited contractor pool: 300–400 contractors across all service categories (electricians, plumbers, tile setters, AC technicians, carpenters, painters, general handyman); current no-show rate: 25–40 weekly (~5% of orders); geographic coverage: 200 store service areas across Luzon, Visayas, and Mindanao"
+   },
+   "id": "W600",
+   "level": 2,
+   "name": "Service Contractor Accreditation & Onboarding Management",
+   "parent": null,
+   "req_refs": [
+    "SRV-001",
+    "SRV-003"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters the accreditation pipeline through one of four channels —\" (replaces manual Step 1).",
+     "- System auto-record of \"record\" (replaces manual Step 2).",
+     "- System auto-document of \"documented with pass/fail and notes\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W138 covers home installation services management — the end-to-end lifecycle from service sale to contractor payout. W213 covers installation service partner quality audit — periodic quality assessment of accredited contractors. W33 covers warranty claims which often trace back to installation quality. W139 covers tool rental which contractors may use. W442 covers site surveys which accredited contractors may perform. However, no workflow covers the upstream process of recruiting, qualifying, and onboarding the third-party contractors who deliver these services — the accreditation pipeline that feeds the W138 service order fulfillment engine.",
+     "Contractor quality is the single biggest operational pain point in BuildRight's services business. With ~500–800 service orders/week fulfilled by 300+ third-party contractors, a 5% no-show rate generates 25–40 weekly incidents requiring emergency rescheduling, customer complaint handling per W41, and service recovery costs. More critically, poor installation quality generates warranty claims per W33, customer complaints per W597, and reputational damage in an industry where word-of-mouth among contractors and homeowners is a powerful driver of business.",
+     "The Philippine context adds complexity: (1) **PRC licensing** — professional electricians and plumbers require Philippine Regulation Commission (PRC) licenses; (2) **TESDA certification** — tile setters, carpenters, and AC technicians should have Technical Education and Skills Development Authority (TESDA) National Certificate (NC) II or III; (3) **informal sector prevalence** — many skilled tradespeople in the Philippines operate informally without licenses or certifications, requiring BuildRight to balance quality standards with available supply; (4) **geographic coverage** — 200 stores across the archipelago means contractors are needed in urban centers (Metro Manila, Cebu, Davao) and provincial areas (Ilocos, Bicol, Samar, Zamboanga) where qualified tradespeople are scarcer."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: conditional accreditation pathway (step 2c) for experienced but uncertified applicants, combined with mandatory BuildRight training (step 6) and supervised trial period (step 8); operational: BuildRight training (step 6) and supervised trial period (step 8); operational: establishing 3–4 regional assessment hubs (Metro Manila, Cebu, Davao, and one Northern Luzon location), conducting quarterly assessment batches rather than individual assessments, and using senior accredited contractors as regional assessors"
+    ],
+    "Pain Points / Risks": [
+     "- **PRC/TESDA-certified tradespeople are scarce outside Metro Manila**: many qualified tradespeople in provincial areas operate informally without government certifications; requiring PRC/TESDA certification for all applicants would significantly limit the contractor pool in Visayas and Mindanao; mitigated by conditional accreditation pathway (step 2c) for experienced but uncertified applicants, combined with mandatory BuildRight training (step 6) and supervised trial period (step 8)",
+     "- **Skills assessment logistics for 200-store coverage**: conducting in-person skills assessments for applicants across Luzon, Visayas, and Mindanao requires regional assessment centers and Quality Inspector travel; mitigated by establishing 3–4 regional assessment hubs (Metro Manila, Cebu, Davao, and one Northern Luzon location), conducting quarterly assessment batches rather than individual assessments, and using senior accredited contractors as regional assessors",
+     "- **13-hour training requirement is a barrier for working contractors**: experienced tradespeople may resist dedicating 2 full days to BuildRight training when they can find work elsewhere; mitigated by offering training on weekends, splitting into evening sessions for virtual modules, and positioning training as a professional development opportunity (BuildRight certification enhances their market value)",
+     "- **Trial period length depends on installation volume**: in low-volume stores (provincial, new stores), a newly accredited contractor may not receive 15 installations within 90 days, extending the trial period indefinitely; mitigated by assigning trial contractors to higher-volume stores in their region for initial installations, then transitioning to their assigned store once trial is complete",
+     "- **Annual re-certification of 300–400 contractors is administratively heavy**: at ~45 min per re-certification × 350 contractors = ~260 person-hours in Q1; mitigated by automated performance data pull from W138/W213, batch re-certification sessions at regional hubs, and staggered re-certification by region (Luzon in January, Visayas in February, Mindanao in March)"
+    ],
+    "Staffing Implication": [
+     "- **Services Manager**: ~30–40 hours/month on accreditation management (application review, skills assessment attendance, trial monitoring, re-certification). Significant portion of Services Manager role alongside W138 service order management.",
+     "- **Services Coordinator**: dedicated support role for accreditation administration — application processing, credentials verification, background checks, scheduling, documentation. ~1 FTE justified at current volume (~20–30 applications/month + 350 annual re-certifications + ongoing trial monitoring).",
+     "- **Quality Inspector**: skills assessments consume ~6–9 hours/month (3 sessions × 2–3 hours each). Absorbed within existing Quality Inspector role from W213 audit team.",
+     "- **Training Manager**: 13 hours × ~12 new accreditations/month = ~156 training hours/month; this is a significant training load. Mitigated by batch training sessions (train 5–8 contractors simultaneously) reducing to ~35–55 training days/year (18–29 two-day batches at 5–8 contractors each). Absorbed by Training Manager with potential seasonal contractor trainer support.",
+     "- **Total accreditation pipeline effort**: ~200–250 person-hours/month for the full pipeline (recruitment through full accreditation), distributed across Services Manager, Services Coordinator, Quality Inspector, and Training Manager."
+    ],
+    "Steps": [],
+    "System Touchpoints (W600 — Contractor Accreditation)": [
+     "- Contractor management module with applicant tracking, accreditation status, and trial period management (SRV-003)",
+     "- Contractor mobile app for service order management, scheduling, photo capture, and digital completion (SRV-001)",
+     "- Skills assessment scoring rubric and results tracking (SRV-003)",
+     "- Training management integration for mandatory module completion tracking (W51, SRV-003)",
+     "- Service area coverage mapping and auto-assignment integration (W138)",
+     "- Contractor agreement management with digital signature (SRV-003)",
+     "- Performance data integration from W138 (service order history) and W213 (quality audit scores)",
+     "- Warranty claims feed from W33 for installation quality tracking",
+     "- Tool rental integration per W139 for contractors who rent tools",
+     "- NBI/PRC/TESDA external verification integration (manual lookup, system-documented results)",
+     "- Contractor payment processing integration per W138 step 9 (AP module)",
+     "- Annual re-certification workflow with performance threshold automation (SRV-003)"
+    ],
+    "Time Estimate": [
+     "~2.5–4 hours of coordination effort per applicant (application intake 15–20 min + credentials verification 30–45 min + background check 45–60 min + skills assessment ~30–60 min per applicant at 3–5 per 2–3-hour session + tool verification 15–20 min + service-area assignment 15 min + full-accreditation documentation 30 min), plus the 13-hour/2-day BuildRight training the contractor attends in batches; at ~20–30 applications/month ≈ 600–1,440 hours/year through the pipeline, plus annual re-certification 30–45 min × 300–400 contractors ≈ 150–300 hours/year in Q1.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Services Manager",
+     "activity": "**Contractor recruitment/application**: contractor enters the accreditation pipeline through one of four channels — (a) online application via BuildRight website careers/services page: contractor fills in personal details, trade category, years of experience, certifications held, service area, and uploads photos of previous work; (b) BuildRight-organized recruitment event: Services Coordinator conducts on-site recruitment at trade schools, TESDA centers, and regional contractor association events; (c) referral from existing accredited contractor or Store Manager; (d) proactive recruitment: Services Manager identifies geographic coverage gaps from W138 contractor assignment data and targets recruitment in underserved areas (e.g., Mindanao stores with <5 accredited contractors); system creates contractor applicant record with application source, date, and initial information",
+     "duration": "15–20 min per application (data entry + initial screening)",
+     "n": "1",
+     "r": "Services Coordinator / Contractor"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Credentials verification**: Services Coordinator verifies submitted credentials — (a) PRC license: verify license number and status via PRC online verification system (prc.gov.ph); confirm license is active and not expired; required for: electricians (Registered Master Electrician), plumbers (Registered Master Plumber); (b) TESDA certification: verify NC II/NC III certificate via TESDA online verification; required for: tile setters (NC II Masonry), AC technicians (NC II Refrigeration and Air-Conditioning), carpenters (NC II Carpentry); (c) if contractor does not have PRC/TESDA certification but has >5 years documented experience: Services Coordinator flags for conditional accreditation pathway (step 8 — supervised installations with accelerated certification support); (d) verify government-issued ID (valid passport, driver's license, or postal ID for identity); (e) verify NBI clearance or police clearance (valid within 6 months) per background check requirement; (f) document verification results in contractor applicant record",
+     "duration": "30–45 min per applicant",
+     "n": "2",
+     "r": "Services Coordinator"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Background check**: Services Coordinator conducts background screening — (a) NBI/police clearance: verify no criminal record; (b) check against BuildRight's internal blacklist: contractors previously terminated for cause (theft, fraud, customer complaints, no-show pattern); (c) contact 2 professional references (previous clients, employers, or trade association officers) — verify quality of work, reliability, and professionalism; (d) for contractors applying for electrical or plumbing categories: additional verification of no pending customer complaints or disciplinary actions with PRC; (e) background check results documented with pass/fail and notes; (f) applicants with criminal record involving theft, fraud, or violence are auto-rejected; applicants with minor issues assessed case-by-case by Services Manager",
+     "duration": "45–60 min per applicant",
+     "n": "3",
+     "r": "Services Coordinator"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Skills assessment**: qualified applicants attend in-person skills assessment at nearest BuildRight DC or flagship store — (a) practical assessment: applicant completes a supervised hands-on task representative of their trade: (i) electricians: wire a basic residential circuit (switch, outlet, light fixture) — assessed for code compliance, neatness, and safety; (ii) plumbers: install a faucet and connect P-trap — assessed for leak-free joints, proper sealing, and professional finish; (iii) tile setters: tile a 1m × 1m section — assessed for level, grout consistency, pattern alignment, and edge finishing; (iv) AC technicians: install a split-type AC unit on a mock wall — assessed for correct mounting, piping, electrical connection, and system testing; (v) carpenters: build a basic shelf or cabinet — assessed for measurements, joinery, finish quality; (b) assessment conducted by Quality Inspector (from W213 audit team) or senior accredited contractor serving as assessor; (c) scoring rubric: 5-point scale per criterion (workmanship, safety compliance, speed, professionalism, tool proficiency); minimum passing score: 3.5/5.0; (d) applicants scoring 3.0–3.5: conditional pass — eligible for supervised trial period (step 8) with mandatory mentoring; (e) applicants scoring <3.0: fail — may re-apply after 90 days with evidence of skill improvement",
+     "duration": "2–3 hours per assessment session (can assess 3–5 applicants per session)",
+     "n": "4",
+     "r": "Quality Inspector / Services Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Tool/equipment verification**: Services Coordinator verifies contractor has required tools for their trade — (a) each trade category has a minimum tool list: (i) electricians: multimeter, wire strippers, pliers, voltage tester, conduit bender, power drill; (ii) plumbers: pipe wrench, adjustable wrench, tube cutter, soldering torch, plunger, snake; (iii) tile setters: tile cutter, notched trowel, level, rubber mallet, grout float, wet saw; (iv) AC technicians: manifold gauge, vacuum pump, tubing cutter, flaring tool, refrigerant scale; (v) carpenters: circular saw, miter saw, nail gun, level, tape measure, chisels; (b) contractor presents tools for visual inspection; (c) if contractor lacks specific tools: discuss options — (i) purchase through BuildRight contractor discount program (10% discount on tools), (ii) rent from BuildRight tool rental per W139; (d) tool adequacy documented in contractor record",
+     "duration": "15–20 min per applicant",
+     "n": "5",
+     "r": "Services Coordinator"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**BuildRight training completion**: contractor completes mandatory BuildRight orientation and service training — (a) Module 1 — BuildRight Service Standards (4 hours, classroom or virtual): company overview, service expectations, customer interaction standards, uniform and grooming requirements, BuildRight service pledge, escalation procedures per W597; (b) Module 2 — Safety and Compliance (2 hours): PPE requirements per W172, site safety protocols, building code basics, electrical/plumbing code compliance per Philippine National Building Code (PD 1096) and National Electrical Code; (c) Module 3 — BuildRight Systems Training (3 hours): contractor mobile app usage — accepting service orders, scheduling, photo capture, digital completion certificate, payment tracking; (d) Module 4 — Category-Specific Installation Standards (4 hours, by trade): BuildRight installation standards for key product categories — AC installation checklist, tile installation specifications, water heater installation requirements, electrical wiring standards; (e) contractor must pass written assessment at end of each module (minimum score: 80%); (f) training delivered by Training Manager and Services Manager at regional training centers (Metro Manila, Cebu, Davao) or via virtual sessions for remote areas; (g) total training time: ~13 hours (typically delivered over 2 days)",
+     "duration": "13 hours per contractor (2 days)",
+     "n": "6",
+     "r": "Training Manager / Services Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Service area assignment**: Services Manager assigns accredited contractor to service areas — (a) contractor specifies preferred service area (city/municipality and radius in km from home base); (b) Services Manager reviews current contractor coverage map: identify areas with sufficient coverage (target: 3–5 contractors per trade category per store service area) and areas with gaps; (c) assign contractor to stores where coverage is most needed — prioritize stores with <3 accredited contractors in the contractor's trade category; (d) contractor may be assigned to multiple stores if geographically feasible (e.g., a contractor in Quezon City may serve 3–5 Metro Manila stores); (e) assignment documented in system and contractor visible for auto-assignment in W138 step 2",
+     "duration": "15 min per contractor",
+     "n": "7",
+     "r": "Services Manager"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Trial period (supervised installations)**: newly accredited contractor enters 90-day trial period — (a) first 5 installations: contractor accompanied by senior accredited contractor (mentor) who observes and provides real-time coaching; mentor submits feedback form per installation: quality score, customer interaction rating, timeliness, areas for improvement; (b) installations 6–15: contractor performs independently but all jobs receive enhanced quality audit (100% review vs. standard 10% per W138 step 8); (c) if any trial installation receives customer complaint or quality score <3/5: Services Manager conducts immediate review — provide additional training, extend trial period, or terminate accreditation; (d) if all 15 trial installations pass: trial period completed — contractor granted full accreditation status; (e) trial period data (quality scores, completion times, customer ratings) establishes baseline performance metrics for ongoing W213 quality audits",
+     "duration": "Trial period: 90 days (dependent on installation volume assigned)",
+     "n": "8",
+     "r": "Contractor / Quality Inspector / Services Manager"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Full accreditation**: upon successful trial completion — (a) system updates contractor status from \"Trial\" to \"Fully Accredited\"; (b) contractor added to full auto-assignment pool per W138 step 2 (trial contractors receive limited assignments); (c) contractor receives BuildRight accreditation badge and ID card (valid for 1 year); (d) contractor agreement executed: defines scope of services, payment terms (per-installment fee minus BuildRight commission), liability insurance requirements, no-show penalty policy (3 no-shows in 90 days = suspension), quality standards, and termination conditions; (e) agreement reviewed by Legal Counsel and signed by contractor and Services Manager; (f) contractor receives BuildRight uniform (polo shirt with logo) per W172",
+     "duration": "30 min per contractor (documentation + agreement signing)",
+     "n": "9",
+     "r": "Services Manager / Legal Counsel"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Annual re-certification**: all accredited contractors undergo annual re-certification in Q1 — (a) performance review: Services Manager pulls contractor's trailing 12-month performance data from W138/W213 — (i) total installations completed, (ii) average customer rating, (iii) no-show count, (iv) quality audit scores, (v) customer complaint count, (vi) warranty claim rate for contractor's installations per W33; (b) credentials refresh: verify PRC license, TESDA certification, NBI clearance are still current and valid; (c) updated training: contractor must complete any new or updated training modules introduced in the past year (e.g., new product installation procedures, updated safety protocols, system app updates); (d) re-certification decision: (i) contractor meets all performance thresholds (rating ≥3.5, no-shows ≤2/year, zero unresolved complaints) → re-certified for 1 year; (ii) contractor below threshold but showable improvement plan → conditional re-certification with 90-day performance improvement plan; (iii) contractor significantly below threshold (rating <3.0, or 3+ no-shows, or unresolved serious complaint) → accreditation revoked, removed from contractor pool; (e) re-certification results documented and communicated to contractor; (f) contractors who fail re-certification may re-apply after 6 months",
+     "duration": "30–45 min per contractor",
+     "n": "10",
+     "r": "Services Manager / Quality Inspector"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W138",
+    "W139",
+    "W172",
+    "W213",
+    "W33",
+    "W41",
+    "W442",
+    "W51",
+    "W597"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc for new services; quarterly pricing review; monthly for seasonal promotions",
+    "Owner": "Services Category Manager",
+    "Participants": "VP for Merchandising, Service Partners/Contractors, Finance, Store Operations, IT (ERP)",
+    "Trigger": "New service offering launch; existing service price revision; seasonal service promotion; vendor/partner capability change",
+    "Volume": "~50–80 active service SKUs; ~10–15 new service SKUs/year; ~30–40 price updates/year"
+   },
+   "id": "W794",
+   "level": 2,
+   "name": "Service SKU Catalog Management, Pricing & Material Linkage",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"requests per W87\" (replaces manual Step 1).",
+     "- System auto-count of \"account for contractor rate differentials\" (replaces manual Step 2).",
+     "- System auto-review of \"reviewed quarterly to ensure market competitiveness\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight's value-added services — home installation (W138), tool rental (W139), DIY workshops (W147), design consultancy (W148), paint mixing (W168), lumber cutting (W169), and 3D design rendering (W211) — are a key differentiator and margin contributor. Unlike merchandise SKUs with vendor-set costs, service SKUs require unique pricing logic: labor cost, material cost linkage (installation of purchased products), equipment depreciation (tool rental), contractor commission rates, and regional price variations. This workflow governs the creation, pricing, maintenance, and lifecycle of service SKUs in the ERP."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Services Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Material cost volatility eroding service margin**: service pricing set at beginning of quarter may become unprofitable if material costs increase (e.g., lumber, paint, copper tubing); quarterly review may not catch mid-quarter spikes",
+     "- **Contractor rate disputes**: contractors in high-demand seasons (pre-typhoon, holiday renovation rush) may demand higher rates than contracted; BuildRight must either absorb cost increase or risk contractor availability",
+     "- **Regional pricing complexity**: contractor rates vary significantly across Philippine regions (Metro Manila rates 30-50% higher than Mindanao); maintaining accurate regional pricing for 80 service SKUs across 5 regions is complex",
+     "- **Service-material linkage maintenance**: when merchandise SKUs are discontinued or replaced per W68, linked service SKUs must be updated to reference new materials; stale linkages cause incorrect POS prompts",
+     "- **Unprofitable service SKUs lingering**: low-volume services that don't meet minimum margin thresholds may remain active because no one reviews them for discontinuation"
+    ],
+    "Staffing Implication": [
+     "- **Services Category Manager**: ~8–12 hours/month on service SKU management; absorbed by existing category management team",
+     "- **Finance**: ~4–6 hours/quarter on service pricing review; absorbed by existing FP&A team",
+     "- **No incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item Master per W252 with service SKU type classification",
+     "- Material linkage module connecting service SKUs to required material SKUs",
+     "- Pricing engine per W289 with service-specific pricing logic (fixed, variable, quotation-based)",
+     "- Contractor rate management module linked to W600 contractor accreditation",
+     "- POS integration per W5B for service SKU selling with material prompts",
+     "- Service margin reporting per W85 for category profitability analysis",
+     "- Service order management per W545/W556 for job scheduling and tracking"
+    ],
+    "Time Estimate": [
+     "- New service SKU creation: 3-7 days (concept through POS activation)",
+     "- Pricing review: 1 day/quarter",
+     "- Contractor rate negotiation: 2-5 days per contractor",
+     "- Service SKU deactivation: 1 day",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Service Concept & Feasibility**: Services Category Manager evaluates new service opportunity: market demand (customer requests per W87), competitive landscape (do competitors offer this service), capability assessment (does BuildRight have trained staff or qualified contractors per W600), profitability estimate (target gross margin 30-45%); presents business case to VP Merchandising",
+     "duration": "3-5 days",
+     "n": "1",
+     "r": "Services Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Service SKU Creation**: Create service SKU in Item Master per W252: (a) service type classification (installation, rental, workshop, consultancy, custom processing); (b) UOM definition (per job, per hour, per day, per square meter, per linear meter); (c) material linkage: map service SKU to required material SKUs (e.g., \"Aircon Installation\" linked to specific aircon models, copper tubing, electrical conduit); (d) labor standard: estimated labor hours by skill level; (e) equipment linkage: map to rental equipment SKUs if applicable; (f) regional pricing matrix: define pricing per region (Metro Manila, Luzon Provincial, Visayas, Mindanao) to account for contractor rate differentials",
+     "duration": "1-2 days",
+     "n": "2",
+     "r": "Services Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Pricing & Margin Setup**: Finance and Services Category Manager set pricing: (a) cost build-up: labor + material + equipment depreciation + contractor commission + overhead allocation; (b) target margin: 30-45% gross margin depending on service complexity; (c) pricing method: fixed price (standard installation), variable (paint mixing per liter), quotation-based (large installation projects per W162); (d) POS integration: ensure service SKU appears correctly at POS with proper pricing and material prompts per W5B",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Finance / Services Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Contractor/Partner Rate Agreement**: For services delivered by external contractors per W600: (a) negotiate service rate per job type with contractor; (b) define service quality standards and SLA; (c) agree on payment terms (weekly, bi-monthly); (d) register contractor rate in ERP as service cost; (e) contractor rates reviewed quarterly to ensure market competitiveness",
+     "duration": "2-5 days per rate negotiation",
+     "n": "4",
+     "r": "Services Category Mgr / Procurement"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly Pricing Review**: Quarterly, Services Category Manager reviews all service SKU pricing: (a) compare service margin to target; (b) review material cost changes that affect service profitability (e.g., lumber price increase affects cutting service margin); (c) review contractor rate market benchmarks; (d) adjust pricing as needed per W40; (e) seasonal services (e.g., pre-typhoon roof repair consultation) repriced for peak demand",
+     "duration": "1 day/quarter",
+     "n": "5",
+     "r": "Services Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Service SKU Deactivation**: When a service is discontinued: (a) mark SKU as inactive per W68; (b) ensure no open orders reference the SKU; (c) notify Store Operations and POS team; (d) update store signage and promotional materials per W504; (e) archive service SKU data for historical analysis",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Services Category Mgr"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W138",
+    "W139",
+    "W147",
+    "W148",
+    "W162",
+    "W168",
+    "W169",
+    "W211",
+    "W252",
+    "W289",
+    "W40",
+    "W504",
+    "W545",
+    "W556",
+    "W5B",
+    "W600",
+    "W68",
+    "W85",
+    "W87"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-186"
+   ],
+   "fields": {
+    "Frequency": "~200–300 service complaints/year chain-wide",
+    "Owner": "Services Category Manager",
+    "Participants": "Customer, Store Manager, Service Contractor/Partner, Finance, Quality Assurance, VP for Merchandising",
+    "Trigger": "Customer reports dissatisfaction with delivered service (installation quality, equipment rental issue, workshop experience, project outcome); or warranty claim filed for service work per W33",
+    "Volume": "~15–25 complaints/month across 200 stores"
+   },
+   "id": "W795",
+   "level": 2,
+   "name": "Service Customer Complaint, Rework & Warranty Claim Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"center per W259, or email\" (replaces manual Step 1).",
+     "- System auto-record of \"record updated in W600 accreditation file\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews complaint details and original service order\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's value-added services — particularly home installation (W138) and custom processing (W168, W169) — carry unique quality and liability risks distinct from merchandise sales: faulty installation causing property damage, incorrect paint mixing requiring rework, cutting errors wasting material, or contractor no-shows delaying customer projects. Service complaints require specialized handling: contractor performance assessment, rework scheduling, material replacement coordination, and potential liability claims. While W41 covers general customer complaints and W33 covers warranty claims, this workflow addresses service-specific complaint resolution with contractor accountability."
+    ],
+    "Controls": [
+     "- CTL-186 (ensure installation quality & warranty registration.)",
+     "- operational: Services Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Contractor accountability gaps**: external contractors may resist rework at their own cost, dispute fault, or simply stop responding; BuildRight bears the customer relationship risk while contractor disputes drag on",
+     "- **Property damage liability**: faulty installation (e.g., electrical work, plumbing) can cause property damage far exceeding the original service fee; liability insurance adequacy per W610 is critical",
+     "- **Customer escalation to DTI**: unresolved service complaints may escalate to DTI Consumer Adjudication per W469, creating regulatory exposure and reputational risk",
+     "- **Rework scheduling conflicts**: contractor availability for rework may be 1-2 weeks out, leaving customer dissatisfied during the wait period",
+     "- **Service quality inconsistency across stores**: 200 stores with different contractors and varying service quality standards; customer experience varies significantly by location",
+     "- **Contractor disputes over fault**: contractors may blame material quality (BuildRight's product) while BuildRight blames workmanship; root cause analysis must be objective and evidence-based"
+    ],
+    "Staffing Implication": [
+     "- **Services Category Manager**: ~10–15 hours/month on service complaint management; absorbed by existing role",
+     "- **Store Managers**: ~2–3 hours/month per store on initial complaint receipt and minor resolution; absorbed by existing role",
+     "- **No incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service complaint module linked to original service order (W138, W139, W147, W148, W168, W169, W211)",
+     "- Contractor performance database per W600 accreditation",
+     "- Customer complaint escalation matrix per W597",
+     "- Billing adjustment module per W101 for refunds",
+     "- Insurance claims module per W610 for property damage",
+     "- Store credit issuance per W781 for compensation",
+     "- Service analytics dashboard for complaint trend analysis"
+    ],
+    "Time Estimate": [
+     "- Minor complaint resolution: 1-2 days",
+     "- Major/critical complaint investigation: 2-5 days",
+     "- Rework scheduling and execution: 1-7 days",
+     "- Customer compensation processing: 1-3 days",
+     "- Monthly service improvement review: 2-4 hours",
+     "- **Total per complaint**: 2-15 days from receipt to close-out (severity-dependent)",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Services Category Mgr",
+     "activity": "**Complaint Receipt & Classification**: Customer reports service issue via store visit, call center per W259, or email: Store Manager or Call Center Agent logs complaint in system with: (a) original service order reference (W138, W139, W147, W148, W168, W169, W211); (b) complaint type: quality (poor workmanship), timeliness (late/no-show), material (wrong product installed), safety (hazard created), billing (overcharge); (c) severity: minor (cosmetic, easily reworkable), major (functional failure, property damage risk), critical (safety hazard, active property damage)",
+     "duration": "15-30 min",
+     "n": "1",
+     "r": "Store Mgr / Call Center"
+    },
+    {
+     "a": "Services Category Mgr",
+     "activity": "**Immediate Resolution (Minor)**: For minor complaints (cosmetic issues, small rework): (a) Store Manager contacts contractor to schedule rework within 48 hours; (b) contractor returns to site to correct issue; (c) customer confirms satisfaction; (d) complaint closed; (e) contractor quality record updated in W600 accreditation file",
+     "duration": "1-2 days",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Investigation (Major/Critical)**: For major or critical complaints: (a) Services Category Manager reviews complaint details and original service order; (b) contacts contractor for their account of events; (c) if property damage or safety risk: dispatch inspector within 24 hours for site assessment with photos; (d) if billing dispute: Finance reviews original invoice vs. actual service delivered; (e) root cause analysis: was it contractor error, material defect, customer misuse, or scope ambiguity per W794",
+     "duration": "2-5 days",
+     "n": "3",
+     "r": "Services Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Corrective Action & Rework Scheduling**: Based on investigation: (a) if contractor error: contractor performs rework at their cost per service agreement; (b) if material defect: coordinate replacement per W12 returns process; (c) if BuildRight scope ambiguity: BuildRight bears rework cost and updates W794 service SKU description; (d) schedule rework with customer within 7 days; (e) if rework requires new materials: issue internal PO per W136 indirect procurement",
+     "duration": "1-7 days",
+     "n": "4",
+     "r": "Services Category Mgr / Contractor"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Customer Compensation**: Determine appropriate compensation: (a) full rework at no charge (contractor cost); (b) partial refund for inconvenience (store credit per W781 or cash refund per W101); (c) for critical issues causing property damage: coordinate with Insurance per W610; (d) goodwill gesture (discount on future service, free workshop attendance per W147); (e) Finance processes compensation per W101",
+     "duration": "1-3 days",
+     "n": "5",
+     "r": "Services Category Mgr / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Contractor Accountability**: Update contractor performance record: (a) log complaint against contractor in W600 accreditation file; (b) deduct contractor payment for rework costs if contractor error; (c) if 3+ complaints in 6 months: trigger contractor quality audit per W213; (d) if critical safety complaint: suspend contractor pending investigation; (e) annual contractor re-accreditation considers complaint history per W706",
+     "duration": "1-2 hours per complaint",
+     "n": "6",
+     "r": "Services Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Service Improvement**: Monthly, Services Category Manager reviews all service complaints: (a) complaint rate by service type and store; (b) top complaint root causes; (c) contractor performance by complaint frequency; (d) update W794 service SKU descriptions if scope ambiguity is recurring root cause; (e) update W600 contractor training requirements if skill gaps are identified",
+     "duration": "2-4 hours/month",
+     "n": "7",
+     "r": "Services Category Mgr"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W101",
+    "W12",
+    "W136",
+    "W138",
+    "W139",
+    "W147",
+    "W148",
+    "W168",
+    "W169",
+    "W211",
+    "W213",
+    "W259",
+    "W33",
+    "W41",
+    "W469",
+    "W597",
+    "W600",
+    "W610",
+    "W706",
+    "W781",
+    "W794"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "~500–800 installation orders/week chain-wide; ~3–4 per store per week",
+    "Owner": "Store Manager",
+    "Participants": "Stock Associate, Receiving Clerk, Installation Contractor, Customer Service Rep",
+    "Trigger": "Installation service order confirmed with scheduled date (W138 Step 4)",
+    "Volume": "Each installation kit contains 5–25 line items depending on installation type"
+   },
+   "id": "W1198",
+   "level": 2,
+   "name": "Installation Material Kit Pre-Stage, Quality Check & Site-Ready Packing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"Kit pull list generation\" (Step 1, already system-executed).",
+     "- System auto-scan of \"scans each item barcode to confirm pick\" (replaces manual Step 2).",
+     "- System auto-validate of \"performs quality check on picked items\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Successful installation services require that all materials are complete, undamaged, and ready for the installer when they arrive at the customer's site. Missing a single component (wrong tile adhesive, missing pipe fitting, incorrect wire gauge) causes installation delays, contractor idle time, and customer dissatisfaction. This workflow manages the pre-staging of installation material kits, quality verification, and site-ready packing to ensure installers have everything they need for a first-time-right installation."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: 24-hour pre-stage in Step 1 and immediate escalation for substitutions in Step 2; operational: batch verification in Step 3 per W421; operational: 4-hour pickup window after which kit is destaged and materials returned to shelf"
+    ],
+    "Pain Points / Risks": [
+     "- **Out-of-stock on installation day**: discovering a missing component on installation morning causes delay or cancellation; mitigated by 24-hour pre-stage in Step 1 and immediate escalation for substitutions in Step 2",
+     "- **Shade/batch mismatch for tiles**: installing tiles from different batches results in visible color variation; mitigated by batch verification in Step 3 per W421",
+     "- **Contractor no-show**: if contractor fails to pick up kit, staged materials occupy backroom space; mitigated by 4-hour pickup window after which kit is destaged and materials returned to shelf",
+     "- **Theft/loss of staged kits**: staged installation kits in backroom are vulnerable to misplacement or theft; mitigated by locked staging area and CCTV coverage per W71"
+    ],
+    "Staffing Implication": [
+     "- **Stock Associate**: ~30–50 min per installation kit (pick + stage + pack) × 3–4 kits/week = 1.5–3.5 hours/week. Absorbed by existing 4 Stock Associates on rotating basis.",
+     "- **Receiving Clerk**: ~10–15 min per kit for quality check. Absorbed within existing receiving duties.",
+     "- **No permanent incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Installation kit pull list generation linked to service order BOM (W1198.1)",
+     "- Barcode scanning for pick verification with shortage alert (W1198.2)",
+     "- Batch/shade consistency validation for tile installations (W421) (W1198.3)",
+     "- Digital contractor handoff form with signature capture (W1198.5)",
+     "- Material return processing linked to service order cost adjustment (W1198.6)"
+    ],
+    "Time Estimate": [
+     "~1–1.4 hours per installation kit (picking and staging 20–30 min + quality verification 10–15 min + site-ready packing 10–20 min + contractor handoff 10 min + unused-materials return 10 min; pull-list generation automated) × ~500–800 installation orders/week ≈ 26,000–58,000 hours/year chain-wide (~3–4 per store per week)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Kit pull list generation**: 24 hours before scheduled installation: system generates \"Installation Kit Pull List\" from the service order (W138); pull list includes: (a) primary product (AC unit, water heater, tiles, toilet), (b) ancillary materials (adhesive, grout, copper pipes, electrical wire, brackets, screws, sealant), (c) consumables (drill bits, blades, tape — included in installation fee); pull list sent to Stock Associate's handheld device",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Material picking and staging**: Stock Associate picks all items per pull list from store inventory; stages in designated \"Installation Staging Area\" in backroom; scans each item barcode to confirm pick; flags any out-of-stock items immediately: (a) Stock Associate checks alternate store availability for same-day transfer, (b) if unavailable: notifies CSR to contact customer for reschedule or substitution approval",
+     "duration": "20–30 min/kit",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Quality verification**: Receiving Clerk performs quality check on picked items: (a) primary product: verify correct model, color, size, and undamaged packaging, (b) tiles: verify correct batch/shade number (consistency per W421), (c) paint: verify correct tint formula if custom color, (d) fragile items: verify no cracks, chips, or dents, (e) electrical items: verify correct specifications (voltage, wattage, amperage); rejects any damaged or incorrect items for replacement",
+     "duration": "10–15 min/kit",
+     "n": "3",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Site-ready packing**: Stock Associate packs verified items for transport to customer site: (a) fragile items (tiles, sanitary ware) wrapped in bubble wrap and packed vertically in crate, (b) heavy items (AC outdoor unit, water heater) secured on dolly, (c) small parts and fittings in labeled zip-lock bags grouped by installation step, (d) installation checklist and warranty card attached to outside of kit, (e) \"Installation Kit — [Customer Name] — [Date]\" label applied",
+     "duration": "10–20 min/kit",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Contractor handoff**: Installation contractor arrives at store on scheduled day; Stock Associate presents staged kit; contractor reviews pull list against physical items; confirms completeness by signing digital handoff form; contractor loads materials into vehicle",
+     "duration": "10 min/handoff",
+     "n": "5",
+     "r": "Stock Associate / Contractor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Post-installation unused materials return**: After installation, contractor returns any unused materials to store with installation completion report; Receiving Clerk receives returns; system reverses inventory issuance for returned items; adjusts service order cost for actual materials consumed",
+     "duration": "10 min/return",
+     "n": "6",
+     "r": "Receiving Clerk / Contractor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W138",
+    "W421",
+    "W71"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~100–120 installation work orders dispatched chain-wide",
+    "Owner": "Services Dispatch Coordinator",
+    "Participants": "Services Dispatch Coordinator, Subcontractor, Store Manager, Customer, Services Manager (HQ)",
+    "Trigger": "Approved installation service order from W138 requiring subcontractor assignment; daily dispatch planning cycle",
+    "Volume": "~500–800 service orders/week across 200 stores; ~80% fulfilled by accredited subcontractors per W600"
+   },
+   "id": "W1170",
+   "level": 2,
+   "name": "Subcontractor Installation Daily Dispatch, Work Order & Capacity Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Daily work order pool review\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks accredited subcontractor availability per W600 registry\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates digital work order sent to subcontractor's mobile app\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Services Dispatch Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Subcontractor no-shows**: subcontractors may accept work orders but fail to show, leaving customers waiting and damaging BuildRight's reputation; penalty clause per W600 agreement mitigates but does not prevent",
+     "- **Skill mismatch**: assigning an AC installer to a tile installation leads to poor quality and rework per W795; skill database accuracy is critical",
+     "- **Geographic coverage gaps**: accredited subcontractors cluster in Metro Manila and major cities; provincial stores (Mindanao, Visayas) have limited subcontractor availability, creating long installation lead times",
+     "- **Weekend capacity bottleneck**: 60% of customer installations are requested on weekends; weekday capacity goes underutilized; pricing incentives for weekday installations could rebalance demand"
+    ],
+    "Staffing Implication": [
+     "- **Services Dispatch Coordinator**: 1 FTE per 50 stores (~4 FTE national), managing ~25–30 dispatches/day each; ~8 hours/day on coordination",
+     "- **Services Manager**: 2 hours/week on capacity planning; absorbed by existing role"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service order management linked to W138 installation services",
+     "- Subcontractor registry and skill database per W600",
+     "- Material ATP and reservation system",
+     "- Subcontractor mobile app for work order receipt and status updates",
+     "- Customer notification engine per W708",
+     "- GPS tracking for subcontractor dispatch monitoring",
+     "- Service BI dashboard for capacity analytics"
+    ],
+    "Time Estimate": [
+     "- Daily dispatch planning: 30 min + 15 min/order × 25 orders = ~6.5 hours/Coordinator/day",
+     "- Weekly capacity review: 2 hours",
+     "- **Per installation order dispatched: ~45 min of coordination time**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Services Manager",
+     "activity": "**Daily work order pool review**: Services Dispatch Coordinator reviews all pending installation work orders for the day/next day: (a) filter by store region, service type (AC installation, water heater, tile laying, electrical), priority (SLA-based), and material availability; (b) identify orders requiring pre-installation site survey per W442; (c) flag orders with customer-requested time windows",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Services Dispatch Coordinator"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Subcontractor availability & skill matching**: System checks accredited subcontractor availability per W600 registry: (a) available today/tomorrow, (b) holds required skill certification for service type (e.g., TESDA NC-II for electrical work), (c) within geographic coverage zone of customer site, (d) not double-booked; Coordinator selects best-fit subcontractor based on: skill match, proximity, customer rating history, and current workload balance",
+     "duration": "15 min/order",
+     "n": "2",
+     "r": "Services Dispatch Coordinator / System"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Work order dispatch**: System generates digital work order sent to subcontractor's mobile app: (a) customer name, address, contact; (b) service type and scope; (c) materials list linked to BOM from W820 or W211; (d) customer-requested time window; (e) store pickup location for materials; (f) installation standard operating procedure (SOP) reference; (g) safety requirements per W695; subcontractor acknowledges receipt and confirms acceptance within 2 hours",
+     "duration": "10 min/order",
+     "n": "3",
+     "r": "System / Services Dispatch Coordinator"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Material coordination**: For orders requiring store-supplied materials: (a) Coordinator confirms material availability at originating store per ATP; (b) if materials unavailable, check alternate store for transfer per W22 or reschedule installation; (c) subcontractor picks up materials from store receiving dock; Stock Associate verifies material handoff with subcontractor signature; (d) for customer-purchased materials: Coordinator confirms customer has materials on-site before dispatch",
+     "duration": "20 min/order",
+     "n": "4",
+     "r": "Services Dispatch Coordinator / Stock Associate"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Real-time dispatch monitoring**: System tracks subcontractor status: (a) en route to customer, (b) arrived on-site, (c) installation in progress, (d) completed; Coordinator monitors all active installations on dashboard; if subcontractor is delayed > 30 minutes from scheduled arrival, Coordinator contacts subcontractor and notifies customer via W708",
+     "duration": "Continuous",
+     "n": "5",
+     "r": "Services Dispatch Coordinator"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Capacity planning & rebalancing**: Weekly, Services Manager reviews subcontractor utilization: (a) average orders/week per subcontractor, (b) coverage gaps by region, (c) peak-day capacity (weekends = 60% of installations); if capacity insufficient: (i) accelerate accreditation of new subcontractors per W600, (ii) authorize overtime for existing subcontractors, (iii) reschedule non-urgent orders to off-peak days",
+     "duration": "2 hours/week",
+     "n": "6",
+     "r": "Services Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W138",
+    "W211",
+    "W22",
+    "W442",
+    "W600",
+    "W695",
+    "W708",
+    "W795",
+    "W820"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-186"
+   ],
+   "fields": {
+    "Frequency": "~500–800 installations/week chain-wide",
+    "Owner": "Department Supervisor (Store) / Services Quality Inspector",
+    "Participants": "Subcontractor, Customer, Department Supervisor, Services Quality Inspector (HQ), Services Manager",
+    "Trigger": "Subcontractor completes installation work order (W1170) and reports \"Installation Complete\"",
+    "Volume": "Every installation requires quality sign-off; ~5–10% require punch list defect remediation"
+   },
+   "id": "W1171",
+   "level": 2,
+   "name": "Installation Defect Punch List, Customer Walk-Through & Quality Sign-Off",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-upload of \"uploads photos of finished installation from multiple angles\" (replaces manual Step 1).",
+     "- System auto-review of \"review\" (replaces manual Step 2).",
+     "- System auto-validate of \"Quality checklist completion\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-186 (ensure installation quality & warranty registration.)",
+     "- operational: Department Supervisor (Store) / Services Quality Inspector review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Subcontractor self-reporting bias**: subcontractors completing their own quality checklist may underreport defects; post-acceptance audit per step 6 mitigates but only covers 10% of installations",
+     "- **Customer pressure to sign off**: customers may sign acceptance form despite minor defects because they need the product functional immediately (e.g., AC during summer); post-sign-off complaints increase",
+     "- **Punch list remediation delays**: subcontractors prioritize new installations over defect remediation (which pays less); 48-hour major defect SLA is frequently missed",
+     "- **Quality standard subjectivity**: \"acceptable\" tile lippage, grout consistency, and paint finish quality are subjective; standardized quality rubrics with photo examples needed per service type",
+     "- **Customer unavailability for walk-through**: customer may not be home when installation completes; subcontractor cannot obtain sign-off; delays revenue recognition and subcontractor payment"
+    ],
+    "Staffing Implication": [
+     "- **Services Quality Inspector**: 1 FTE per region (~4–5 FTE national), conducting ~50–80 post-acceptance audits/month each; ~6–8 hours/day on site visits",
+     "- **Department Supervisor**: walk-through oversight absorbed by existing role",
+     "- **Services Manager**: 3 hours/month on quality analytics; absorbed by existing role"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Installation work order management linked to W1170 dispatch",
+     "- Digital quality checklist per service type with photo capture",
+     "- Punch list creation and tracking module",
+     "- Customer digital signature and acceptance form",
+     "- Subcontractor payment trigger linked to W600 and AP per W7",
+     "- Warranty enrollment per W821",
+     "- Post-acceptance audit scheduling",
+     "- Service quality BI dashboard"
+    ],
+    "Time Estimate": [
+     "- Per installation: walk-through 15–30 min + quality checklist 10–15 min + sign-off 5 min = **30–50 min per installation**",
+     "- Per defect: 10 min documentation + remediation scheduling",
+     "- Post-acceptance audit: 45–60 min per audit",
+     "- **Chain-wide: ~250–400 hours/week for walk-throughs + ~50–80 audits/week (the 10% post-acceptance sample)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Services Dispatch Coordinator",
+     "activity": "**Completion notification**: Subcontractor marks work order \"Installation Complete\" in mobile app; uploads photos of finished installation from multiple angles; system notifies Department Supervisor and customer",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Subcontractor / System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Customer walk-through**: Subcontractor conducts in-person walk-through with customer: (a) demonstrate installed product functionality (e.g., AC cooling test, water heater flow test, tile alignment check); (b) explain warranty terms and maintenance per W821; (c) present digital punch list form on tablet for customer review; (d) customer notes any defects, incomplete work, or cosmetic issues",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Subcontractor"
+    },
+    {
+     "a": "Services Quality Inspector",
+     "activity": "**Quality checklist completion**: Subcontractor completes digital quality checklist per service type: (a) AC installation: mounting stability, refrigerant line connections, drain pipe slope, electrical connection, thermostat calibration; (b) tile installation: grout line consistency, surface flatness (no lippage > 1mm), waterproofing membrane integrity, slope to drain; (c) water heater: pipe connections leak-free, temperature-pressure relief valve functional, electrical grounding; (d) each checklist item rated Pass/Fail/Minor Defect; photos required for each category",
+     "duration": "10–15 min",
+     "n": "3",
+     "r": "Subcontractor"
+    },
+    {
+     "a": "Services Quality Inspector",
+     "activity": "**Defect documentation**: If customer identifies defects or checklist items fail: (a) system creates Punch List with defect descriptions, photos, and severity (Critical: safety or functional failure; Major: visible cosmetic or performance issue; Minor: cosmetic imperfection); (b) Critical defects: subcontractor must remediate same day; (c) Major defects: remediation within 48 hours; (d) Minor defects: remediation within 7 days or customer may accept as-is with sign-off; (e) system schedules remediation visit per W1170 dispatch",
+     "duration": "10 min/defect",
+     "n": "4",
+     "r": "Subcontractor / System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Customer sign-off**: If walk-through is satisfactory (no defects or only minor accepted): (a) customer signs digital acceptance form on tablet; (b) system updates work order status to \"Accepted\"; (c) triggers service revenue recognition per W16; (d) triggers subcontractor payment processing per W600 agreement (payment within 15 days of acceptance); (e) system enrolls project in warranty tracking per W821",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Customer / System"
+    },
+    {
+     "a": "Services Manager",
+     "activity": "**Post-acceptance quality audit**: Services Quality Inspector conducts random post-acceptance audit on 10% of installations: (a) visit customer site within 7 days of sign-off; (b) independently verify quality checklist items; (c) interview customer on satisfaction; (d) compare audit findings to subcontractor's self-reported checklist; (e) discrepancy rate feeds subcontractor scorecard per W213 and W600",
+     "duration": "45–60 min/audit",
+     "n": "6",
+     "r": "Services Quality Inspector"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Monthly quality analytics**: Services Manager compiles installation quality dashboard: (a) first-time fix rate (installations accepted without punch list), (b) punch list defect rate by type and subcontractor, (c) customer satisfaction score by service type, (d) post-acceptance audit discrepancy rate, (e) remediation cycle time; identify underperforming subcontractors for corrective action per W213",
+     "duration": "3 hours/month",
+     "n": "7",
+     "r": "Services Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1170",
+    "W16",
+    "W213",
+    "W600",
+    "W7",
+    "W821"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "~3,000–4,000 site assessments per month across 200 stores",
+    "Owner": "Installation Coordinator",
+    "Participants": "Installation Coordinator, Sales Associate, Measurement Technician (accredited per W600), Customer, Estimator/Quotation Specialist",
+    "Trigger": "Customer purchases or inquires about installation-dependent products (tiles, aircon, water heater, kitchen/bathroom fixtures, electrical panel) at store or ecommerce; or customer requests free site assessment",
+    "Volume": "~15–20 per store per month; higher in stores near new residential developments"
+   },
+   "id": "W1210",
+   "level": 2,
+   "name": "Customer In-Home Site Measurement, Assessment & Quotation for Installation Services",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [],
+    "Background": [
+     "BuildRight Depot's installation services (W138, W148) require accurate on-site measurements and assessments before a quotation can be issued. Unlike simple product sales, installation projects involve site-specific variables: room dimensions, wall/floor conditions, plumbing/electrical infrastructure, structural considerations, and building restrictions. A customer buying 30 sqm of tiles needs to know the exact room dimensions (including cuts for columns and corners), subfloor condition, and whether waterproofing is needed before an accurate materials list and labor quote can be provided. The site measurement visit is a critical conversion step — customers who receive a professional assessment and competitive quotation are 3–5× more likely to proceed with the full purchase and installation compared to walk-in estimates. This workflow covers the scheduling, execution, and quotation generation from the site visit."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Installation Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **No-show rate** — customers schedule assessments but are not home; estimated 10–15% no-show rate wastes technician time; confirmation call/SMS 24 hours before mitigates",
+     "- **Measurement errors** — inaccurate measurements lead to material shortages (requiring additional delivery) or overages (customer disputes excess material charges); laser measure and app-based recording minimize human error",
+     "- **Quotation-to-conversion rate** — industry average is 30–40%; competitive pricing, professional presentation, and fast turnaround (< 24 hours) improve conversion",
+     "- **Scope creep during installation** — site conditions not captured during assessment (hidden plumbing issues, structural damage behind walls) lead to change orders and customer disputes; thorough assessment with explicit exclusions in quotation mitigates",
+     "- **Technician safety** — assessments in construction sites or unfinished buildings present fall, electrical, and structural hazards; safety briefing and PPE requirements per W56 apply"
+    ],
+    "Staffing Implication": [
+     "- Measurement Technicians: ~15–20 nationwide (covering 200 stores); each technician handles ~2–3 assessments per day (≈30–50 technicians, per the 6,000–8,000 h/month and 1.5–2.5 h/assessment) across a geographic territory; technicians are accredited per W600",
+     "- Estimators: ~14–18 at HQ (centralized quotation generation; 2,250–3,000 estimator hours/month ÷ ~160–176 h/FTE-month, per the Time Estimate)",
+     "- Installation Coordinator: 1 per major region (4) = 4 FTEs",
+     "- Total incremental headcount: ~22–28 FTEs for site assessment operations"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Site measurement scheduling module with technician calendar and GPS routing",
+     "- Mobile measurement app with laser measure integration, dimensioned sketching, and photo capture",
+     "- Measurement-to-quotation pipeline: auto-generate materials list from measurements using SKU dimension data",
+     "- 3D visualization tool for customer-facing project preview (optional for tile and bathroom projects)",
+     "- Quotation management module linked to customer cart and installation work order system (W138)",
+     "- CRM lead tracking for declined quotations with nurturing automation",
+     "- Integration with W138 (installation management), W148 (design consultancy), W442 (site survey), W600 (technician accreditation), W542 (POS quotation), W546 (deposit collection)"
+    ],
+    "Time Estimate": [
+     "- Per assessment: 5 min scheduling + 1–2 hours on-site + 10 min report = ~1.5–2.5 hours",
+     "- Per quotation: 30–60 min estimator time",
+     "- Per customer follow-up: 5–10 min",
+     "- **Chain-wide: ~3,000–4,000 assessments/month × 2 hours average = 6,000–8,000 technician hours/month**",
+     "- **Estimator: ~3,000–4,000 quotations/month × 45 min average = 2,250–3,000 estimator hours/month**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Installation Coordinator",
+     "activity": "Customer expresses interest in installation-dependent purchase; Sales Associate captures: (a) product category (tiles, aircon, water heater, fixtures, electrical), (b) approximate scope (room size, number of units, type of project), (c) customer address and contact, (d) preferred assessment date/time; system checks measurement technician availability and schedules visit",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Sales Associate / System"
+    },
+    {
+     "a": "—",
+     "activity": "System sends customer confirmation SMS/email: scheduled date/time window (2-hour window), technician name and photo ID, assessment preparation checklist (clear area, ensure access to plumbing/electrical if applicable, have building floor plan if available), and link to reschedule",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Installation Coordinator",
+     "activity": "Measurement Technician receives job assignment on mobile app: customer details, product category, scope notes, address with GPS navigation, and any prior in-store product selections",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Installation Coordinator",
+     "activity": "**On-site assessment** (1–2 hours): Technician arrives at customer site; presents BuildRight ID; conducts assessment: (a) **Measurements**: laser measure all relevant dimensions — room length/width/height, door/window openings, column protrusions, pipe locations, electrical outlet positions; record in mobile app with photos; (b) **Condition assessment**: inspect subfloor condition (for tiles), wall condition (for fixtures), plumbing connectivity (for water heaters/toilets), electrical capacity (for aircons — check breaker amp rating, wire gauge, outdoor unit mounting space); (c) **Constraints**: note building restrictions (condo rules on drilling, HOA requirements, load-bearing wall identification), access limitations (narrow stairways, no elevator); (d) **Customer preferences**: discuss design preferences, timeline, budget range",
+     "duration": "1–2 hours",
+     "n": "4",
+     "r": "Measurement Technician"
+    },
+    {
+     "a": "—",
+     "activity": "Mobile app automatically generates **measurement report**: dimensioned floor plan/wall elevation, annotated photos, condition notes, constraint summary; Technician reviews for completeness and submits to Installation Coordinator",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Measurement Technician / System"
+    },
+    {
+     "a": "Installation Manager",
+     "activity": "**Quotation generation** (within 24 hours): Estimator reviews measurement report and generates itemized quotation: (a) **Materials list**: exact SKU quantities from measurement (tiles: area + 10% waste; plumbing: fittings list; electrical: wire length + conduit + breakers); (b) **Labor estimate**: based on complexity (simple rectangular room vs. complex angles, first-floor vs. upper-floor installation), estimated hours per trade (tiler, plumber, electrician); (c) **Ancillary materials**: adhesive, grout, sealant, waterproofing membrane, mounting brackets; (d) **Total quotation**: materials + labor + ancillary + delivery fee (W1208) + 12% VAT; (e) system auto-links quotation to customer's in-store or ecommerce cart",
+     "duration": "30–60 min",
+     "n": "6",
+     "r": "Estimator / System"
+    },
+    {
+     "a": "—",
+     "activity": "Installation Coordinator sends quotation to customer via email and SMS with: itemized breakdown, 3D visualization of finished project (if applicable), estimated project timeline (start-to-completion), payment terms (50% deposit per W546, balance on completion), and link to accept quotation online or visit store",
+     "duration": "5 min",
+     "n": "7",
+     "r": "Installation Coordinator / System"
+    },
+    {
+     "a": "Installation Coordinator",
+     "activity": "Customer accepts quotation: (a) online: customer clicks \"Accept\" in email, system converts quotation to sales order and schedules installation per W138; (b) in-store: customer visits store, Sales Associate recalls quotation, customer pays deposit, system creates installation work order; (c) if customer requests revision: Estimator adjusts quotation and resends",
+     "duration": "Variable",
+     "n": "8",
+     "r": "Customer / Sales Associate / System"
+    },
+    {
+     "a": "CX Manager",
+     "activity": "If customer declines: Installation Coordinator records reason in CRM (price too high, timeline doesn't work, competitor chosen, project postponed); CX team adds to lead nurturing pipeline for follow-up in 30/60/90 days",
+     "duration": "5 min",
+     "n": "9",
+     "r": "Installation Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1208",
+    "W138",
+    "W148",
+    "W442",
+    "W542",
+    "W546",
+    "W56",
+    "W600"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "Monthly scorecard; quarterly formal review with subcontractor; ad-hoc for critical quality failures",
+    "Owner": "Installation Services Manager",
+    "Participants": "Category Manager, Store Manager, Subcontractor, Quality Inspector, Finance Controller, HR Manager",
+    "Trigger": "Scheduled — monthly subcontractor scorecard generation; quarterly performance review; ad-hoc triggered by customer complaint, installation defect, or warranty claim attributed to subcontractor workmanship",
+    "Volume": "~150 active subcontractors across 200 stores; ~2,200–3,500 installation jobs completed per month chain-wide (per the 500–800/week basis)"
+   },
+   "id": "W1253",
+   "level": 2,
+   "name": "Subcontractor Performance Scorecard, Quality Assurance & Remediation Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Monthly scorecard generation\" (replaces manual Step 1).",
+     "- System auto-assign of \"Scorecard rating & tier assignment\" (replaces manual Step 2).",
+     "- System auto-review of \"Quarterly performance review meeting\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's installation services (tile setting, plumbing, electrical work, appliance installation, kitchen/bathroom remodeling) are primarily delivered through a network of ~150 accredited subcontractors managed via W600 (accreditation) and W1170 (daily dispatch). While the accreditation process establishes minimum qualifications, ongoing performance management is critical to maintaining BuildRight's brand reputation and avoiding liability for poor workmanship. Key risks include: (a) subcontractors cutting corners on materials or installation quality to maximize per-job margin; (b) schedule delays that impact customer satisfaction and cascading job scheduling; (c) customer complaints attributed to subcontractor workmanship requiring costly rework; (d) safety incidents during installation due to subcontractor negligence. This workflow establishes a systematic scorecard-based performance management process that measures, rates, and manages subcontractor performance with escalating consequences for underperformance."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Installation Services Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Subcontractor pool is tight in provincial areas — terminating underperformers may leave stores without coverage",
+     "- Customer complaint data may be incomplete — not all dissatisfied customers file formal complaints",
+     "- Quality inspection is spot-check based — cannot inspect every job without unreasonable cost",
+     "- Subcontractors may work for competitors simultaneously — availability conflicts affect schedule adherence",
+     "- Rate adjustments may drive good subcontractors to competitors who pay more"
+    ],
+    "Staffing Implication": [
+     "- Installation Services Manager: 30% of time on subcontractor performance management",
+     "- Quality Inspector: 1 FTE for chain-wide inspection (covers ~200 jobs/month at 10% sample rate)",
+     "- Regional Coordinators: 2 hours/month each on subcontractor scheduling adjustments"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Installation Services Module** — job assignment, completion tracking, defect logging",
+     "- **Customer Feedback System** — post-installation CSAT/NPS survey results",
+     "- **LP Module** — safety incident logging for subcontractor incidents",
+     "- **Finance Module** — payment tracking, rework cost allocation, rate adjustments",
+     "- **HR Module** — subcontractor accreditation status, PIP tracking",
+     "- **BI Platform** — scorecard dashboard, tier distribution analytics, trend reporting"
+    ],
+    "Time Estimate": [
+     "- Monthly scorecard: 2 hours/month = 24 hours/year",
+     "- Quarterly reviews: 4 hours/quarter = 16 hours/year",
+     "- Critical failure response: 4 hours × ~24 incidents/year = 96 hours/year",
+     "- Annual optimization: 16 hours/year",
+     "- **Annual estimate: ~152 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "**Monthly scorecard generation**: System automatically compiles monthly performance data per subcontractor across 6 dimensions: (a) **Quality score** (30% weight): defect rate (punch list items per job per W1171), customer complaint rate (per W795), rework rate; (b) **Schedule adherence** (20%): % of jobs completed within agreed timeline, average delay days; (c) **Customer satisfaction** (20%): average CSAT rating from post-installation survey, NPS score; (d) **Safety compliance** (15%): zero-incident rate, PPE compliance, safety orientation attendance; (e) **Documentation compliance** (10%): completion certificate submission rate, photo documentation quality, warranty form accuracy; (f) **Professionalism** (5%): appearance, communication, store feedback",
+     "duration": "2 hours/month (automated + review)",
+     "n": "1",
+     "r": "Installation Services Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Scorecard rating & tier assignment**: System assigns each subcontractor a tier based on composite score: (a) **Platinum** (≥ 4.5/5.0): priority for premium jobs, eligible for project management roles, annual recognition; (b) **Gold** (3.5–4.4): standard assignment, eligible for all job types; (c) **Silver** (2.5–3.4): restricted from complex/premium jobs, requires improvement plan; (d) **Bronze** (< 2.5): placed on probation, no new job assignments, 60-day remediation or termination",
+     "duration": "1 hour/month",
+     "n": "2",
+     "r": "Installation Services Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Quarterly performance review meeting**: For Gold-tier and above: 30-min phone review; for Silver and Bronze: formal in-person review at regional office: (a) present scorecard results with specific job-level examples; (b) discuss strengths and improvement areas; (c) for Silver: agree on specific improvement targets and timeline; (d) for Bronze: present formal Performance Improvement Plan (PIP) with 60-day milestones; (e) document meeting outcomes and commitments",
+     "duration": "4 hours/quarter (all subcontractors)",
+     "n": "3",
+     "r": "Installation Services Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Critical quality failure response**: For any installation that results in: (a) customer injury or property damage — immediate job suspension pending investigation; (b) structural failure (water leak, electrical hazard) — dispatch Quality Inspector within 24 hours, subcontractor bears rework cost; (c) 3+ customer complaints in rolling 30-day period — mandatory retraining and temporary suspension; (d) fraudulent documentation (falsified completion photos, warranty forms) — immediate termination per W600 offboarding",
+     "duration": "4–8 hours per incident",
+     "n": "4",
+     "r": "Quality Inspector / Installation Services Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Annual subcontractor pool optimization**: Installation Services Manager conducts annual review of subcontractor network: (a) terminate bottom 10% performers (Bronze tier with failed PIP); (b) recruit replacement subcontractors via W600 accreditation; (c) adjust geographic coverage — ensure minimum 3 accredited subcontractors per store; (d) negotiate rate adjustments based on performance tier (Platinum: +5% rate premium; Bronze: -5% rate reduction during PIP); (e) present network optimization plan to COO and Finance",
+     "duration": "16 hours/year",
+     "n": "5",
+     "r": "Installation Services Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1170",
+    "W1171",
+    "W600",
+    "W795"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-186"
+   ],
+   "fields": {
+    "Frequency": "Per installation job; ~2,200–3,500 installation jobs per month chain-wide (per the 500–800/week canon)",
+    "Owner": "Customer Service Representative / Installation Services Coordinator",
+    "Participants": "Subcontractor, Customer, Store Manager, Category Manager, Warranty Administrator",
+    "Trigger": "Installation job completion and customer quality sign-off (W1171)",
+    "Volume": "~4,500 completion certificates per month; ~4,500 warranty registrations per month"
+   },
+   "id": "W1254",
+   "level": 2,
+   "name": "Customer Project Digital Completion Certificate & Post-Installation Warranty Registration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"record customer acceptance — digital signature or OTP-verified acceptance\" (replaces manual Step 1).",
+     "- System auto-generate of \"generate warranty certificate with coverage details, claim process…\" (replaces manual Step 2).",
+     "- System auto-file of \"profile for future claim reference\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's installation services represent a significant revenue stream and brand differentiator, with ~4,000–5,000 installation jobs completed monthly across tile setting, plumbing, electrical, appliance installation, and kitchen/bathroom remodeling. Each completed installation triggers two critical post-service processes: (a) a digital completion certificate documenting the work performed, materials used, and customer acceptance — essential for warranty claims, liability protection, and regulatory compliance; and (b) warranty registration linking installed products to the customer's record with coverage terms and claim procedures. Currently, these processes are handled inconsistently — some stores use paper certificates, others skip warranty registration entirely, and many completion records lack photographic documentation. This workflow standardizes the digital completion certificate and warranty registration process across all 200 stores, ensuring: (i) legal protection for BuildRight in case of post-installation disputes; (ii) warranty coverage activation for customers; (iii) data capture for product performance analytics; (iv) compliance with Philippine contractor licensing requirements."
+    ],
+    "Controls": [
+     "- CTL-186 (ensure installation quality & warranty registration.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Subcontractors may resist photographing every job — adds 10–15 min per installation",
+     "- Customer digital signature requires mobile device or in-store tablet — not all customers are comfortable with digital signing",
+     "- Product warranty terms vary by manufacturer and are not always accurately maintained in item master",
+     "- Regulatory compliance documentation is burdensome — some subcontractors may not have current licenses",
+     "- Provincial stores with limited internet connectivity may have difficulty uploading photos to cloud storage"
+    ],
+    "Staffing Implication": [
+     "- Installation Services Coordinator: 15 min × ~2,850 jobs/month (midpoint) = ~710 hours/month",
+     "- Customer Service Representative: 5 min × 4,500 jobs/month = 375 hours/month",
+     "- Monthly analytics: 4 hours/month"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Installation Services Module** — job completion trigger, certificate template, material usage capture",
+     "- **Warranty Module** — warranty registration, coverage term calculation, claim eligibility check",
+     "- **CRM / Loyalty Module** — customer record linking, warranty profile management",
+     "- **Document Management System** — photo storage, certificate archival, compliance document filing",
+     "- **Notification Engine** — email/SMS warranty confirmation, expiry reminder scheduling",
+     "- **BI Platform** — completion certificate and warranty registration analytics"
+    ],
+    "Time Estimate": [
+     "- Per job: 25–35 min total (certificate + warranty + compliance)",
+     "- **Monthly estimate: 4,500 jobs × 30 min average = 135,000 min/month (~2,250 hours/month)**",
+     "- **Annual estimate: ~27,000 person-hours/year** (distributed across 200 stores and subcontractors)",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Digital completion certificate generation**: After customer quality sign-off (W1171), Installation Services Coordinator generates digital completion certificate in ERP: (a) auto-populate: job number, customer name, store location, installation date, subcontractor name and license number; (b) capture installed materials list — each material SKU, batch/lot number, and quantity used (linked from material kit per W1198); (c) attach before/after photographs — minimum 4 photos per job (pre-installation condition, during installation, completed installation, close-up of key connection points); (d) record customer acceptance — digital signature or OTP-verified acceptance",
+     "duration": "15 min per job",
+     "n": "1",
+     "r": "Installation Services Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Warranty term calculation**: System determines warranty coverage based on: (a) product manufacturer warranty (per item master) — typically 1–5 years for materials; (b) installation workmanship warranty — 1 year standard for BuildRight installation services; (c) combined warranty start date: installation completion date; (d) warranty end date: earliest of product warranty expiry or workmanship warranty expiry; (e) generate warranty certificate with coverage details, claim process instructions, and BuildRight customer service contact",
+     "duration": "5 min per job (automated)",
+     "n": "2",
+     "r": "System / Installation Services Coordinator"
+    },
+    {
+     "a": "Installation Services Coordinator",
+     "activity": "**Warranty registration & customer notification**: (a) register warranty in ERP warranty module with unique warranty ID; (b) link warranty to customer record in CRM (loyalty member or new customer); (c) send warranty confirmation to customer: email with digital warranty certificate, SMS with warranty ID and expiry date; (d) for loyalty members: auto-link warranty to customer profile for future claim reference; (e) schedule warranty expiry reminder notification (30 days before expiry)",
+     "duration": "5 min per job",
+     "n": "3",
+     "r": "Customer Service Representative"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Compliance documentation filing**: For installations requiring regulatory compliance: (a) electrical installations: ensure licensed electrician license number recorded per Philippine Electrical Code; (b) plumbing installations: ensure licensed plumber license number recorded per National Plumbing Code; (c) structural modifications: ensure building permit reference recorded where applicable; (d) gas appliance installations: ensure LPG connection certification per BFP (Bureau of Fire Protection) requirements; (e) attach compliance documents to digital completion certificate",
+     "duration": "10 min per job (if compliance docs required)",
+     "n": "4",
+     "r": "Installation Services Coordinator"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Monthly completion analytics**: Installation Services Coordinator generates monthly report: (a) completion certificate issuance rate — % of jobs with completed certificates; (b) warranty registration rate — % of eligible products registered; (c) average time from job completion to certificate generation; (d) certificate completeness audit — % with all required photos, materials list, and customer signature; (e) flag stores with < 90% completion certificate rate for corrective action",
+     "duration": "4 hours/month",
+     "n": "5",
+     "r": "Installation Services Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1171",
+    "W1198"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "~300–500 plumbing installation orders/month chain-wide",
+    "Owner": "Service Coordinator",
+    "Participants": "Service Coordinator, Plumbing Installation Subcontractor, Store Manager, Customer",
+    "Trigger": "Customer purchases plumbing fixtures (water heater, faucet set, toilet, shower system, water pump, water tank) and requests installation service at POS or via service counter",
+    "Volume": "Average service value: PHP 2,000–8,000 labor + PHP 3,000–30,000 materials"
+   },
+   "id": "W1519",
+   "level": 2,
+   "name": "Plumbing Fixture & Water System Installation Service Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Service order creation\" (replaces manual Step 1).",
+     "- System auto-document of \"Site assessment dispatch\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews assessment report\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Plumbing fixture installation is one of the top three installation service categories for BuildRight Depot (alongside aircon installation and tile installation). Unlike aircon which requires specialized TESDA RAC NC II certification, plumbing installation in the Philippines does not require a specific government-issued license for residential work — but quality varies enormously. A leaking pipe connection behind a wall or an improperly vented water heater poses both property damage and safety risks (water heater explosion risk with gas-fired units). BuildRight manages ~300–500 plumbing installations/month through accredited plumbing subcontractors, covering: kitchen faucet/sink installation, bathroom fixture installation (toilet, lavatory, shower set), water heater installation (electric and gas), water pump installation, and water tank installation. The service differentiator is warranty coverage: BuildRight warrants the installation labor for 12 months regardless of the product brand warranty, giving customers peace of mind that a single call to BuildRight resolves any installation-related issue."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Service Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden plumbing conditions**: site assessment may not reveal corroded pipes behind walls or improper venting in existing gas installations; subcontractor discovers issues mid-installation, requiring additional materials and labor not in original quotation — causing customer frustration and scope disputes",
+     "- **Water damage liability**: improper plumbing connection causing water leak damages customer's property; despite 12-month warranty, BuildRight faces claims for consequential damages (floor damage, ceiling damage for multi-story); insurance coverage per PA-26.3 must include installation liability rider",
+     "- **Subcontractor quality variance**: without plumbing licensing requirements, quality depends entirely on BuildRight's accreditation process (W600); a poorly trained subcontractor can damage BuildRight's reputation across the entire service category",
+     "- **Gas water heater safety**: gas-fired water heater installation carries CO poisoning and explosion risk; subcontractor must be specifically trained on gas fitting — wrong subcontractor assignment could have fatal consequences"
+    ],
+    "Staffing Implication": [
+     "- Service Coordinator: ~300–500 orders/month × 30 min coordination = ~150–250 hours/month; 1–2 dedicated coordinators per region (4 regions) = 4–8 coordinators chain-wide",
+     "- Plumbing Subcontractors: ~400 installations/month ÷ ~20 working days ÷ ~2 installations/day per subcontractor = ~10 active subcontractors chain-wide; managed as external partners, not employees",
+     "- No incremental BuildRight headcount; absorbed by existing Service Coordinator team",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service order creation linked to product sales order with installation type and complexity matrix (W1519.1)",
+     "- Site assessment mobile app: photo capture, material list, labor hour estimate, condition documentation (W1519.2)",
+     "- Subcontractor dispatch and scheduling: geographic zone assignment, skill matching, mobile work order delivery (W1519.4)",
+     "- Installation execution tracking: before/after photos, completion certificate (W1519.5–6)",
+     "- Warranty registration: 12-month installation warranty linked to service order and product serial number (W1519.6)",
+     "- Integration with W1254 (Digital Completion Certificate), W795 (Complaint & Rework), W213 (Partner Quality Audit), W600 (Contractor Accreditation)"
+    ],
+    "Time Estimate": [
+     "- Per installation: coordination 35–60 min + site visit 30–60 min (complex only) + installation 1–4 hours + closure 20 min",
+     "- Simple installations (faucet, toilet): ~3–4 hours elapsed",
+     "- Complex installations (water heater, water pump, water tank): ~5–8 hours elapsed including site visit",
+     "- **Chain-wide: ~400 orders/month × 5 hours average = ~2,000 hours/month (mostly subcontractor labor)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Service order creation**: (a) at POS or service counter: customer selects plumbing fixtures + installation service SKU; (b) Service Coordinator creates service order linked to product sales order; (c) captures: (i) installation type (faucet, toilet, water heater, shower set, water pump, water tank), (ii) installation location (kitchen, bathroom, laundry, outdoor), (iii) existing plumbing condition (new installation vs. replacement), (iv) preferred schedule date/time, (v) site address, (vi) customer contact; (d) system calculates service fee based on installation type and complexity matrix",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Site assessment dispatch** (for complex installations: water heater, water pump, water tank, or any gas-line work): (a) Service Coordinator schedules site assessment visit by plumbing subcontractor; (b) subcontractor visits site and documents: (i) existing plumbing layout, (ii) pipe material and condition (PVC, galvanized iron, PPR, PE), (iii) water pressure, (iv) electrical proximity (for electric water heaters), (v) venting path (for gas water heaters), (vi) structural mounting requirements (water tank on roof); (c) subcontractor submits assessment report via mobile app: photos, required additional materials (pipes, fittings, valves, sealant), estimated labor hours, any access challenges",
+     "duration": "30–60 min/site visit",
+     "n": "2",
+     "r": "Plumbing Subcontractor"
+    },
+    {
+     "a": "—",
+     "activity": "**Material confirmation**: (a) Service Coordinator reviews assessment report; (b) confirms additional materials needed beyond customer-purchased items: pipes, fittings, valves, sealant, mounting hardware; (c) additional materials either: (i) sourced from store inventory (customer returns to purchase), or (ii) included in service fee as \"installation materials kit\" (pre-defined per service type); (d) system generates updated service quotation with materials; customer confirms via SMS/app",
+     "duration": "15–20 min",
+     "n": "3",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Installation scheduling**: (a) Service Coordinator assigns job to accredited plumbing subcontractor based on: (i) geographic zone, (ii) skill match (gas water heater requires subcontractor with gas fitting experience), (iii) schedule availability; (b) subcontractor receives work order via mobile app with: site address, installation scope, product details, customer contact, preferred time, assessment report photos; (c) system sends customer SMS confirmation with subcontractor name, photo, and estimated arrival time",
+     "duration": "10–15 min",
+     "n": "4",
+     "r": "Service Coordinator / System"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Installation execution**: (a) subcontractor arrives at site; verifies product delivered/present; confirms scope with customer; (b) performs installation: (i) shuts off water supply, (ii) installs fixture per manufacturer specification and Philippine Plumbing Code (PPC) standards, (iii) connects to existing plumbing system, (iv) tests for leaks (pressurize and hold 15 min), (v) checks drainage flow, (vi) for water heaters: verifies electrical connection (or gas line connection + leak test), (vii) cleans up work area; (c) captures before/after photos via mobile app",
+     "duration": "1–4 hours (varies by job complexity)",
+     "n": "5",
+     "r": "Plumbing Subcontractor"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Quality sign-off and warranty registration**: (a) customer inspects completed work; (b) subcontractor demonstrates: fixture operation, water shut-off valve location, basic maintenance (e.g., cleaning faucet aerator); (c) customer signs digital completion certificate per W1254; (d) system registers 12-month installation warranty; (e) system triggers product warranty registration if applicable (manufacturer warranty); (f) subcontractor marks job complete in mobile app",
+     "duration": "10–15 min",
+     "n": "6",
+     "r": "Plumbing Subcontractor / Customer"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Service order closure**: (a) Service Coordinator reviews completion certificate and photos; (b) confirms no outstanding issues; (c) system triggers: (i) subcontractor payment (per agreed labor rate), (ii) customer satisfaction survey (SMS link), (iii) installation cost posted to store service revenue GL",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Service Coordinator / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1254",
+    "W213",
+    "W600",
+    "W795"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "~200–350 tile/flooring installation orders/month chain-wide",
+    "Owner": "Service Coordinator",
+    "Participants": "Service Coordinator, Tile Installation Subcontractor, Project Estimator, Customer",
+    "Trigger": "Customer purchases tiles, vinyl planks, or laminate flooring and requests installation service",
+    "Volume": "Average material value: PHP 15,000–80,000; installation labor: PHP 5,000–25,000"
+   },
+   "id": "W1520",
+   "level": 2,
+   "name": "Customer Tile & Flooring Installation Service Measurement, Layout Planning & Waste Factor Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Service order creation and measurement review\" (replaces manual Step 1).",
+     "- System auto-document of \"documents with photos and videos\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews site assessment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Tile and flooring installation is the highest-material-value installation service BuildRight offers. A typical customer spends PHP 15K–80K on tiles or flooring materials, and the installation quality directly determines whether the investment looks professional or amateurish. Poorly laid tiles (uneven grout lines, lippage, wrong adhesive, no expansion joints) cannot be easily corrected — the entire floor must be ripped up and re-done. Waste factor management is critical: experienced tile setters know to order 10–15% extra for cuts and breakage, but customers often resist this advice, leading to mid-project shortages when the specific tile batch is sold out. This workflow covers the complete installation service from measurement through completion, with particular emphasis on accurate quantity estimation (integrating with W963 Tile Calculator and W1061 Grout/Adhesive Calculator) and waste factor communication."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: strong waste factor communication but customer resistance persists"
+    ],
+    "Pain Points / Risks": [
+     "- **Tile batch/shade mismatch**: if customer orders insufficient quantity (refuses waste factor recommendation) and needs to order more tiles mid-project, the new batch may have a slightly different shade — visible shade variation across the floor; mitigated by strong waste factor communication but customer resistance persists",
+     "- **Substrate problems discovered mid-installation**: cracked concrete slab, unlevel floor, moisture seepage — discovered after customer has already purchased tiles; remediation (floor leveling compound, waterproofing, crack isolation membrane) adds PHP 5,000–20,000 in unexpected costs",
+     "- **Multi-day scheduling coordination**: tile installation spans 2–5 days; customer must provide access each day; subcontractor may delay if previous job overruns; schedule management across 200 stores requires robust dispatch coordination",
+     "- **Waste factor disputes**: customer orders 50 sqm of tiles but only 45 sqm is installed; customer demands refund for \"unused\" tiles — Service Coordinator must explain waste factor was communicated and accepted in Step 3"
+    ],
+    "Staffing Implication": [
+     "- Service Coordinator: ~275 orders/month × 1.5 hours coordination = ~413 hours/month; shared with other installation types; ~3–4 coordinators per region = 12–16 chain-wide",
+     "- Tile Subcontractors: ~275 installations/month ÷ ~4 per month per subcontractor (each takes 3–5 days) = ~70 active tile setters chain-wide; managed as external partners",
+     "- No incremental BuildRight headcount; absorbed by existing Service Coordinator and subcontractor network"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service order with tile-specific installation parameters: tile type, area, substrate, pattern complexity (W1520.1)",
+     "- Site measurement mobile app: room dimension capture, obstacle documentation, substrate condition assessment with photo/video (W1520.2)",
+     "- Material quantity calculator with waste factor recommendation engine: base quantity + pattern-based waste percentage (W1520.3)",
+     "- Multi-day scheduling with stage tracking: substrate prep → tile laying → grouting → cleanup (W1520.4–5)",
+     "- Quality inspection checklist: lippage, hollow tile tap test, slope, grout consistency (W1520.6)",
+     "- Integration with W963 (Tile Quantity Calculator), W1061 (Grout/Adhesive Calculator), W442 (Site Measurement), W1254 (Completion Certificate), W795 (Complaint & Rework)"
+    ],
+    "Time Estimate": [
+     "- Per installation: coordination 40–55 min + site visit 30–60 min + installation 2–5 days + sign-off 30 min + follow-up 10 min",
+     "- **Chain-wide: ~275 orders/month × coordination 1.5 hours + subcontractor labor 3 days average = ~413 coordination hours/month + ~825 subcontractor labor days/month**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Service order creation and measurement review**: (a) at POS or service counter: customer selects tiles/flooring + installation service SKU; (b) Service Coordinator reviews measurement data: (i) if customer used in-store estimation service (W963, W1061): pull area calculations, tile quantity, grout, adhesive, and recommended waste factor from estimation record; (ii) if no prior estimation: schedule site measurement visit (W442) to get accurate room dimensions; (c) Service Coordinator creates service order with: installation type (ceramic tile, porcelain tile, vinyl plank, laminate), area (sqm), substrate condition (concrete, existing tile, wood), pattern complexity (straight lay, diagonal, herringbone), and preferred schedule",
+     "duration": "15–20 min",
+     "n": "1",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Site measurement and substrate assessment** (mandatory for tile, optional for vinyl/laminate): (a) subcontractor visits site and measures: (i) precise room dimensions (length × width of each area), (ii) identifies obstacles (toilet flange, doorways, columns, built-in cabinets), (iii) checks substrate condition: (a) concrete substrate: level? cracks? moisture? curing age (>28 days required), (b) existing tile: can install over or must remove?, (c) wood substrate: structural integrity, deflection test; (b) subcontractor documents with photos and videos; (c) updates quantity estimate in system: actual sqm vs. planned sqm, waste factor recommendation (10% straight lay, 15% diagonal/herringbone, 20% for rooms with many cuts/obstacles)",
+     "duration": "30–60 min/site visit",
+     "n": "2",
+     "r": "Tile Subcontractor"
+    },
+    {
+     "a": "—",
+     "activity": "**Material confirmation and waste factor communication**: (a) Service Coordinator reviews site assessment; (b) presents updated material quantity to customer: (i) base quantity (actual sqm ÷ tile sqm/pc), (ii) waste factor (10–20% based on pattern and complexity), (iii) total order quantity; (c) explains waste factor necessity: \"tiles break during cutting, rooms are never perfectly square, you need spare tiles for future repairs — this batch color may not be available later\"; (d) customer confirms final material order + any additional materials (tile adhesive, grout, spacers, waterproofing membrane for wet areas, transition strips, baseboard); (e) system adjusts sales order if additional tiles/materials needed",
+     "duration": "15–20 min",
+     "n": "3",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Installation scheduling and dispatch**: (a) Service Coordinator assigns to accredited tile setter subcontractor; (b) schedules installation (tile installation typically requires 2–5 days depending on area and complexity: Day 1 substrate prep + waterproofing, Day 2–3 tile laying, Day 4 grouting, Day 5 cleanup); (c) ensures all materials delivered to site or available at store for pickup before installation start",
+     "duration": "10–15 min",
+     "n": "4",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Installation execution**: (a) subcontractor arrives at site; verifies all materials present and correct batch/shade; (b) performs installation: (i) substrate preparation: clean, level, apply waterproofing membrane (for wet areas — bathroom, kitchen), (ii) layout planning: establish center lines, check pattern alignment with doorways, dry-lay key areas to verify pattern; (iii) tile laying: apply adhesive with notched trowel, set tiles with spacers, check level every 3–4 tiles, cut tiles for edges and obstacles with wet saw; (iv) grouting: after adhesive cures (24 hours), apply grout, clean excess, seal grout lines; (v) final cleanup: remove spacers, clean tile surface, install transition strips and baseboard; (c) captures progress photos at each stage via mobile app",
+     "duration": "2–5 days",
+     "n": "5",
+     "r": "Tile Subcontractor"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Quality inspection and sign-off**: (a) subcontractor performs self-inspection: grout line consistency, lippage check (max 1mm for rectified tile, 2mm for standard tile), hollow-sounding tile check (tap test every tile — hollow indicates poor adhesive contact), slope check in wet areas (water should flow toward drain); (b) customer inspects completed installation; (c) customer signs digital completion certificate per W1254; (d) system registers 12-month installation warranty; (e) subcontractor marks job complete",
+     "duration": "20–30 min",
+     "n": "6",
+     "r": "Tile Subcontractor / Customer"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Post-grout curing follow-up** (24–48 hours after completion): (a) Service Coordinator contacts customer to confirm satisfaction after grout has fully cured and customer has had time to inspect under natural light; (b) addresses any concerns (hollow tiles, grout cracks, uneven areas); (c) if issues found: dispatch subcontractor for remediation per W795; (d) if satisfied: service order formally closed",
+     "duration": "5–10 min",
+     "n": "7",
+     "r": "Service Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1061",
+    "W1254",
+    "W442",
+    "W795",
+    "W963"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-275"
+   ],
+   "fields": {
+    "Frequency": "~2,200–3,500 installations/month across all stores (per the 500–800/week basis)",
+    "Owner": "Service Coordinator Lead",
+    "Participants": "Service Coordinator, Installation Partner Technician, Customer, Store Manager",
+    "Trigger": "Installation service completion (W138) reported by installation partner",
+    "Volume": "Particularly relevant for aircon installation, water heater installation, tile/flooring installation"
+   },
+   "id": "W1539",
+   "level": 2,
+   "name": "Installation Service Post-Completion Quality Inspection, Customer Sign-Off & Punch List Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"encountered, confirms materials used match the original service order\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews submitted photos against quality checklist for the service type — e.g.,…\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspects and either\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight offers installation services for purchased products (aircon, water heaters, tile/flooring, kitchen/bathroom fixtures) through certified installation partners. After the installation is completed, a quality inspection and customer sign-off process ensures that the work meets BuildRight's service standards and the customer is satisfied. Any punch list items (minor deficiencies requiring correction) are tracked to resolution. This workflow protects BuildRight from warranty disputes and ensures service quality that drives repeat business and referrals."
+    ],
+    "Controls": [
+     "- CTL-275 (ensure controlled execution — Installation & Repair Services (PA-12.1).)",
+     "- operational: Service Coordinator Lead review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer unavailable for walkthrough**: Some customers leave during installation or are unavailable for sign-off; photos-only sign-off creates documentation gaps if customer later disputes quality",
+     "- **Punch list partner non-compliance**: Installation partners may deprioritize punch list return visits because they are not billable; SLA enforcement through partner performance scoring is essential",
+     "- **Subjective quality standards**: Installation quality can be subjective (e.g., tile alignment tolerance); photographic documentation and objective checklist criteria reduce disputes"
+    ],
+    "Staffing Implication": [
+     "- Service Coordinators (store-level): ~10 min per installation × ~2,200–3,500/month (per the Frequency) = ~370–580 hours/month distributed across stores (~110–175 min/store/month); absorbed",
+     "- Service Coordinator Lead: ~30 hours/month on quality oversight and partner review; absorbed",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Partner mobile app with photo upload and quality checklist (W1539.1–2)",
+     "- Digital customer sign-off with punch list capture (W1539.3–4)",
+     "- Punch list lifecycle tracking with escalation alerts (W1539.4)",
+     "- Automated CSAT survey triggered on service order closure (W1539.6)",
+     "- Partner quality dashboard integration (W1539.7)"
+    ],
+    "Time Estimate": [
+     "- Per-installation processing: 15–25 min (Service Coordinator)",
+     "- Punch list tracking: 5–10 min/event × ~20% of installations",
+     "- Monthly partner review: 4 hours",
+     "- **Total: ~250–350 hours/month for Service Coordinator team across 200 stores**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Coordinator",
+     "activity": "**Installation completion notification**: Installation Partner Technician reports job completion via partner mobile app — uploads before/after photos, notes any issues encountered, confirms materials used match the original service order",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Installation Partner"
+    },
+    {
+     "a": "Service Coordinator Lead",
+     "activity": "**Quality checklist verification**: Service Coordinator reviews submitted photos against quality checklist for the service type — e.g., for aircon: mounting stability, pipe insulation, drainage flow test, electrical connection safety, thermostat function test, area cleanup; for tile installation: alignment, grout line consistency, waterproofing membrane integrity, surface cleanliness",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Customer walkthrough & sign-off**: Installation Partner conducts walkthrough with customer; demonstrates installed product functionality; customer inspects and either (a) signs off on completion (digital signature on partner app), or (b) identifies punch list items",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Installation Partner / Customer"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Punch list management** (if applicable): If customer identifies deficiencies, Installation Partner creates punch list with item descriptions and photos; commits to resolution timeline (minor items: 24–48 hours, major items: 3–5 business days); Service Coordinator tracks punch list status; escalates overdue items to Store Manager",
+     "duration": "5–10 min",
+     "n": "4",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "**Punch list resolution & final sign-off**: Installation Partner returns to resolve punch list items; uploads completion photos; customer provides final sign-off; system closes service order with full documentation",
+     "duration": "Varies",
+     "n": "5",
+     "r": "Installation Partner / Customer"
+    },
+    {
+     "a": "Service Coordinator Lead",
+     "activity": "**Post-installation survey**: System sends automated customer satisfaction survey (CSAT/NPS) 48 hours after final sign-off — installation quality, technician professionalism, timeliness, overall satisfaction; negative responses (< 7/10) trigger Service Coordinator follow-up call within 24 hours (W87)",
+     "duration": "5 min (auto) + 15 min (negative follow-up)",
+     "n": "6",
+     "r": "System / Service Coordinator"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Monthly partner quality review**: Service Coordinator Lead compiles monthly quality report per installation partner — completion rate, punch list frequency, average punch list resolution time, customer satisfaction score, warranty callback rate; feeds into partner performance review (W213)",
+     "duration": "4 hours/month",
+     "n": "7",
+     "r": "Service Coordinator Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W138",
+    "W213",
+    "W87"
+   ]
+  }
+ ]
+}

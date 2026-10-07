@@ -1,0 +1,1147 @@
+{
+ "process_area": {
+  "id": "PA-12.2",
+  "title": "Tool Rental & Equipment"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-12-installation-services/PA-12.2-tool-rental-and-equipment.md",
+ "value_stream": {
+  "directory": "VS-12-installation-services",
+  "id": "VS-12",
+  "name": "Installation & Services"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~5–7 rentals per store per month (~1,000–1,500/month chain-wide per W1319/W1376)",
+    "Owner": "Store Manager",
+    "Participants": "CSR, Warehouse/Stock Associate, Finance, Customer",
+    "Trigger": "Customer requests rental of professional tools (jackhammers, tile cutters, generators)",
+    "Volume": "~1,500 active rental units chain-wide"
+   },
+   "id": "W139",
+   "level": 2,
+   "name": "Tool & Equipment Rental Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks real-time availability of tool in store\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates Rental Agreement\" (replaces manual Step 2).",
+     "- System auto-inspect of \"Inspection\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Tool damage disputes between customers and store staff during inbound inspection are frequent and subjective — \"normal wear\" vs. \"customer damage\" is hard to adjudicate without detailed baseline condition photos from outbound inspection.",
+     "- Late returns disrupt subsequent reservations; with ~1,500 units chain-wide and peak demand on weekends, a 10% late return rate creates cascading availability problems.",
+     "- Security deposit amount (typically PHP 2,000–10,000) is insufficient to cover replacement cost for high-value tools (jackhammers, generators), creating loss exposure on unreturned or severely damaged equipment.",
+     "- Tool maintenance compliance is inconsistent — Stock Associates prioritize customer-facing duties over post-rental cleaning/servicing, leading to poorly maintained tools being rented to the next customer."
+    ],
+    "Staffing Implication": [
+     "With ~5–10 rentals/store/day requiring ~35 min each plus 20 min post-rental maintenance, stores need ~4–7 hours/day of dedicated Stock Associate time for rental operations. This is typically absorbed by existing Stock Associates at lower-volume stores, but high-traffic flagship locations may require a dedicated Rental Desk Associate (~0.5 FTE) to prevent rental duties from displacing core replenishment tasks.",
+     "---",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental inventory management module with real-time availability, rental status lifecycle (Available → Rented → In Maintenance → Available), and asset tracking per unit (W139.1, 8)",
+     "- Rental agreement generation at POS with automatic deposit capture and refund processing (W139.2, 6)",
+     "- Outbound and inbound inspection checklist on handheld for condition documentation with photo capture (W139.3, 5)",
+     "- Automated SMS reminder system for rental return reminders (W139.4)",
+     "- Asset lifecycle dashboard tracking cumulative hours, rental count, and maintenance history per unit (W139.8)"
+    ],
+    "Time Estimate": [
+     "Per rental transaction: ~35 min total (5 min request + 5 min contract/deposit + 10 min outbound inspection + 10 min return inspection + 5 min closing/refund). Post-rental maintenance: 20 min per tool. Store processes ~5–10 rentals/day = ~3–6 hours/day of rental operations."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Rental Request**: CSR checks real-time availability of tool in store; verifies customer ID and loyalty status",
+     "duration": "5 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "**Contract & Deposit**: System generates Rental Agreement; Customer pays Rental Fee + Refundable Security Deposit at POS",
+     "duration": "5 min",
+     "n": "2",
+     "r": "CSR / Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Tool Release**: Stock Associate performs \"Outbound Inspection\" with customer: verify tool condition, fuel level, and safety features; Customer signs release form",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**In-Use Tracking**: System tracks rental duration; sends SMS reminder 2 hours before scheduled return",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Return & Inspection**: Customer returns tool; Stock Associate performs \"Inbound Inspection\": check for damage, cleanliness, and functionality",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Closing & Refund**: (a) If tool OK: System processes deposit refund; (b) If tool damaged/dirty: CSR applies cleaning/repair fee from deposit; (c) If late: System calculates late fee",
+     "duration": "5 min",
+     "n": "6",
+     "r": "CSR / Cashier"
+    },
+    {
+     "a": "Maintenance",
+     "activity": "**Maintenance**: Tool moved to \"Maintenance\" status; Stock Associate performs standard cleaning/servicing before making \"Available\" again",
+     "duration": "20 min",
+     "n": "7",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Maintenance",
+     "activity": "**Asset Lifecycle**: System tracks total hours used/rentals per unit; triggers major preventive maintenance (PM) or retirement based on usage thresholds",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1319",
+    "W1376"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Annual planning; quarterly procurement; ad-hoc retirement decisions",
+    "Owner": "Rental Fleet Manager (HQ Merchandising)",
+    "Participants": "Category Manager (Tools), Procurement, Store Manager, Finance, Maintenance Supervisor",
+    "Trigger": "Annual rental fleet planning cycle; or individual unit reaches usage threshold for retirement; or new tool category demand identified",
+    "Volume": "~1,500 active rental units chain-wide; ~200–300 units replaced/added annually"
+   },
+   "id": "W1172",
+   "level": 2,
+   "name": "Tool Rental Fleet Procurement, Lifecycle Planning & Retirement Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles annual fleet plan\" (replaces manual Step 1).",
+     "- System auto-assign of \"assigns storage location and ensures staff training on new equipment per W139\" (replaces manual Step 2).",
+     "- System auto-review of \"review\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight maintains ~1,500 rental tool units across 200 stores (~7–8 units per store), covering professional-grade equipment: jackhammers, tile cutters, concrete mixers, generators, pressure washers, scaffolding, and power tools. Each rental unit is an individual asset tracked by serial number with its own maintenance history, utilization rate, and revenue contribution. Rental fleet management requires balancing: (a) initial procurement cost (professional-grade jackhammer: PHP 25,000–45,000; generator: PHP 35,000–80,000), (b) maintenance cost over lifecycle, (c) rental revenue per unit, and (d) replacement timing to avoid renting unreliable equipment that generates customer complaints. A well-managed rental fleet is a profit center and a traffic driver — customers who rent tools also purchase consumables (blades, bits, fuel) and may purchase the tool after a positive rental experience."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: Rental Fleet Manager (HQ Merchandising) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Professional-grade tool cost**: initial investment of PHP 25,000–80,000 per unit with ~1,500 units = PHP 37.5M–120M fleet investment; utilization must be ≥ 60% to justify carrying cost",
+     "- **Abuse and damage**: rental customers may misuse equipment, accelerating wear and increasing maintenance cost; deposit per W139 (PHP 2,000–10,000) may not cover damage to PHP 80,000 generators",
+     "- **Parts availability delay**: specialized parts for professional equipment (Hilti, DeWalt) may require import, taking 4–6 weeks; unit is out of service during repair, reducing fleet availability",
+     "- **Technology obsolescence**: cordless tool technology evolves rapidly; fleet can become outdated within 3 years as battery platforms change, making spare batteries unavailable",
+     "- **Store-level theft risk**: high-value rental units (generators, jackhammers) are theft targets; after-hours security per W838 essential"
+    ],
+    "Staffing Implication": [
+     "- **Rental Fleet Manager**: ~20% of time on fleet planning and lifecycle management; absorbed by existing Category Manager role",
+     "- **Store Manager**: per-unit retirement review and disposition ~30 min/unit × ~250 units/year = ~125 hours/year across all stores",
+     "- **Maintenance Supervisor**: lifecycle maintenance tracking absorbed into existing W139 role"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental asset management module with per-unit tracking (serial number, hours, maintenance history, revenue)",
+     "- Lifecycle alert engine with configurable thresholds",
+     "- Procurement per W224 for fleet acquisition",
+     "- Fixed asset module per W39 for depreciation and disposal",
+     "- POS system for used equipment sales and rental revenue",
+     "- Fleet performance BI dashboard"
+    ],
+    "Time Estimate": [
+     "- Annual fleet planning: 2–3 days",
+     "- Per-unit procurement: absorbed by W224",
+     "- Lifecycle tracking: automated",
+     "- Per-unit retirement decision: 30 min",
+     "- Quarterly review: 4 hours",
+     "- **Annual effort**: ~120–150 hours/year",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager (Tools)",
+     "activity": "**Annual fleet plan**: Rental Fleet Manager compiles annual fleet plan: (a) current fleet age and condition by tool category; (b) utilization rate per unit (rental days/available days) — target ≥ 60%; (c) maintenance cost trend per unit; (d) revenue per unit vs. carrying cost; (e) customer complaint rate by unit age; (f) identify categories for expansion (new store openings, new tool types) and categories for contraction (low-demand tools); (g) budget request to Finance per W489",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Procurement & deployment**: For approved fleet additions: (a) Procurement issues RFP per W224 to tool manufacturers (Bosch, Makita, DeWalt, Hilti) for professional-grade rental fleet pricing; (b) evaluate on: durability rating, parts availability in Philippines, manufacturer rental program support, warranty terms; (c) Finance approves CAPEX per W21; (d) receive new units at DC; register in ERP as individual rental assets with serial number; (e) distribute to stores based on fleet plan allocation; (f) Store Manager assigns storage location and ensures staff training on new equipment per W139",
+     "duration": "4–6 weeks",
+     "n": "2",
+     "r": "Procurement / Rental Fleet Manager"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "**Lifecycle tracking**: System tracks per-unit lifecycle metrics: (a) total rental count, (b) total operating hours, (c) maintenance events and cost, (d) revenue generated, (e) days out of service for maintenance; triggers alerts at: (i) 500 operating hours: major PM required, (ii) 1,000 hours or 3 years: retirement review, (iii) maintenance cost > 40% of replacement value: mandatory retirement review",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Retirement decision**: Rental Fleet Manager reviews units flagged for retirement: (a) compare maintenance cost trend to replacement cost; (b) assess reliability risk (customer complaint rate, breakdown frequency); (c) determine disposition: (i) sell to employee at book value, (ii) sell to used equipment dealer, (iii) transfer to store demo/display inventory, (iv) scrap if beyond repair; (d) initiate replacement procurement per Step 2",
+     "duration": "30 min/unit",
+     "n": "4",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "**Disposition execution**: For retired units: (a) remove from rental inventory in ERP; (b) Finance processes asset disposal per W39 (gain/loss on disposal); (c) if sold: process through POS as used equipment sale; (d) if scrapped: document destruction for tax purposes; (e) update fleet plan with replacement unit",
+     "duration": "1–2 hours/unit",
+     "n": "5",
+     "r": "Store Manager / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly fleet performance review**: Rental Fleet Manager presents quarterly fleet report to Category Manager: (a) fleet utilization by category, (b) revenue per unit and ROI, (c) maintenance cost ratio, (d) customer satisfaction with rental equipment, (e) upcoming retirement schedule, (f) recommended category additions/removals",
+     "duration": "4 hours/quarter",
+     "n": "6",
+     "r": "Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W139",
+    "W21",
+    "W224",
+    "W39",
+    "W489",
+    "W838"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "~50–80 breakdowns/month chain-wide (~5% of rentals); ~0.25–0.4 per store per month",
+    "Owner": "Store Manager",
+    "Participants": "Customer, Stock Associate, CSR, Store Manager, Rental Fleet Manager (HQ), Maintenance Technician, Vendor Service Center",
+    "Trigger": "Customer reports tool breakdown during rental period via phone, SMS, or in-store; or tool fails outbound inspection at W139.3 return processing",
+    "Volume": "~600–960 breakdowns/year across 1,500 rental units"
+   },
+   "id": "W1374",
+   "level": 2,
+   "name": "Tool Rental Equipment Breakdown, Emergency Repair Dispatch & Substitute Unit Provisioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"report tool breakdown during rental\" (replaces manual Step 1).",
+     "- System auto-record of \"records customer-reported symptoms\" (replaces manual Step 2).",
+     "- System auto-count of \"Store Manager determines resolution path\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's ~1,500 rental units (jackhammers, tile cutters, concrete mixers, generators, pressure washers, scaffolding, power tools) experience mechanical breakdowns during customer use. Professional-grade equipment operating in demanding construction conditions (dust, vibration, heavy loads) has an expected failure rate of ~5% per rental cycle. When a tool breaks down mid-project, the customer's construction work stops — a contractor waiting for a jackhammer on a PHP 500K project loses far more than the rental fee. BuildRight's response speed directly affects customer satisfaction, repeat rental likelihood, and brand reputation among trade professionals (30% of revenue per model company profile). This workflow manages the breakdown response, emergency repair dispatch, and substitute unit provisioning process."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: Store Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **No substitute available** — during peak weekends when utilization is > 80%, substitute units may not be available at any nearby store; customer's project stalls, generating negative word-of-mouth among contractor community",
+     "- **Customer-caused breakdown misclassified as mechanical failure** — customer may have misused the tool (overloaded generator, used wrong blade on tile cutter) but reports it as a mechanical failure; Stock Associate must diagnose accurately to avoid charging customer for repair while maintaining good relationship",
+     "- **Vendor service center turnaround time** — authorized service centers for brands like Hilti or DeWalt may take 2–4 weeks for repairs in the Philippines, keeping high-demand units out of the rental fleet",
+     "- **In-store repair capability limits** — Stock Associates are not trained mechanics; attempting complex repairs beyond minor maintenance risks further damage and safety liability; mitigated by the Store Manager review and approval gate"
+    ],
+    "Staffing Implication": [
+     "- Stock Associate: ~15 min per breakdown for diagnostic + swap; absorbed within existing 4 Stock Associates per store",
+     "- CSR: ~5 min per breakdown for system entry; absorbed",
+     "- Rental Fleet Manager: ~2 hours/month on analytics; absorbed",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Breakdown report linked to active rental transaction with diagnostic categorization (W1374.2)",
+     "- Substitute unit availability check across all stores in real-time (W1374.2)",
+     "- Automated rental proration and substitute rental creation (W1374.4)",
+     "- Tool repair status lifecycle (In Repair → vendor repair → testing → Available) with parts and labor tracking (W1374.5–7)",
+     "- Monthly breakdown analytics dashboard (W1374.8)",
+     "- Integration with W139 (rental operations), W1318 (reservation & waitlist), W1319 (safety briefing), W1172 (fleet lifecycle), W22 (inter-store transfers)"
+    ],
+    "Time Estimate": [
+     "- Per breakdown event: ~30 min customer-facing (5 min report + 10 min resolution + 10 min swap + 5 min system entry) + 15–60 min repair depending on severity",
+     "- Monthly chain-wide: ~50–80 breakdowns × 45–90 min = ~40–120 hours/month",
+     "- Rental Fleet Manager analytics: 2 hours/month",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer contacts store (phone or SMS) to report tool breakdown during rental: describes tool, issue (won't start, loss of power, unusual noise, smoke, fluid leak), and urgency of their project timeline",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "CSR creates breakdown report in system: (a) linked to active rental transaction per W139; (b) records customer-reported symptoms; (c) checks warranty status of the unit; (d) checks substitute tool availability at this store and nearest stores",
+     "duration": "5 min",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager determines resolution path: (a) **Substitute unit available at store**: Stock Associate retrieves substitute unit; prepares for customer exchange; customer brings broken tool to store for swap (or store dispatches substitute via delivery partner for high-value trade accounts); (b) **No substitute at store, available at nearby store**: Store Manager arranges inter-store transfer per W22 with \"Rental Emergency\" priority flag; estimated transfer time 1–4 hours for same-city stores; (c) **No substitute available within reasonable distance**: Store Manager offers rental extension waiver (free rental days equal to downtime), project schedule accommodation, or referral to competitor rental shop with BuildRight covering the cost difference",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If substitute provided: (a) system closes original rental at breakdown time; rental fee prorated to actual usage duration; (b) system opens new rental for substitute unit with same return date as original (customer does not lose rental days to breakdown); (c) system waives any substitute unit rental fee difference if substitute is a higher-tier model; (d) Stock Associate conducts abbreviated W1319 safety briefing if substitute is a different tool type",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Stock Associate / CSR / System"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "Broken unit disposition: (a) Stock Associate performs diagnostic inspection and categorizes failure: (i) minor (clogged filter, worn brush, blown fuse — repairable in-store by Stock Associate with standard parts kit), (ii) moderate (motor replacement, hydraulic seal leak — requires vendor service center), (iii) major (structural failure, frame crack — unit retirement review per W1172); (b) unit status set to \"In Repair\" in system; (c) if vendor repair required: Buyer arranges service center pickup per W139.8 warranty process",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Stock Associate / Buyer"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "In-store minor repair execution: (a) Stock Associate performs repair using standard maintenance parts kit (filters, brushes, fuses, belts, spark plugs); (b) tests repaired tool before returning to \"Available\" status; (c) system records repair event: parts used, labor time, root cause code; (d) parts consumed deducted from store maintenance inventory",
+     "duration": "30–60 min",
+     "n": "6",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "Vendor service center repair: (a) Buyer issues repair PO to tool manufacturer's authorized service center; (b) system tracks repair status; (c) vendor returns repaired unit with service report; (d) Stock Associate tests and returns to \"Available\"; (e) repair cost charged to rental unit's lifecycle cost per W1172",
+     "duration": "1–3 weeks",
+     "n": "7",
+     "r": "Buyer / Vendor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Rental Fleet Manager reviews monthly breakdown analytics: (a) breakdown rate by tool category and unit age; (b) mean time to repair (MTTR); (c) substitute unit fulfillment rate; (d) customer satisfaction post-breakdown; (e) units exceeding W1172 maintenance cost threshold flagged for retirement review",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1172",
+    "W1318",
+    "W1319",
+    "W139",
+    "W22"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "~150–300 overdue returns/month chain-wide (~10–20% of rentals, concentrated on weekend rentals)",
+    "Owner": "CSR (initial contact); Store Manager (escalation)",
+    "Participants": "CSR, Store Manager, Customer, Rental Fleet Manager (HQ), Finance (deposit forfeiture), Legal (unreturned equipment)",
+    "Trigger": "Rented tool not returned by scheduled return date/time; system detects overdue status",
+    "Volume": "~0.75–1.5 overdue returns per store per month"
+   },
+   "id": "W1375",
+   "level": 2,
+   "name": "Tool Rental Overdue Return Escalation, Recovery & Penalty Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-send of \"sends automated SMS/app push to customer\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates additional rental days at standard rate, confirms extension does not…\" (replaces manual Step 2).",
+     "- System auto-document of \"documents conversation in system with expected return commitment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Per W139 pain points, late returns disrupt subsequent reservations and create cascading availability problems. With ~1,500 rental units and peak weekend demand, a 10–20% overdue rate means ~150–300 tools per month are returned late, each potentially blocking a reservation made by another customer per W1318. The rental agreement per W139.2 includes late fees (daily rate applied for each day past return date), but enforcement requires consistent escalation and communication. Extreme cases — tools not returned for weeks or at all — risk loss of PHP 25,000–80,000 equipment units. This workflow manages the overdue escalation ladder from gentle reminder to deposit forfeiture to potential legal recovery."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: CSR (initial contact); Store Manager (escalation) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Deposit insufficient for recovery** — security deposits of PHP 2,000–10,000 (per W139) may cover late fees but not equipment replacement for high-value units (generators: PHP 35,000–80,000); BuildRight bears the loss for unreturned expensive equipment",
+     "- **Customer disputes late fees** — customers argue they were not properly informed of return time, or that the tool broke down (blaming the equipment for their inability to return); disputes consume Store Manager time and may require goodwill write-off of fees",
+     "- **Repeat offenders in trade segment** — contractors who frequently return tools late are also BuildRight's highest-value B2B customers (30% of revenue); aggressive enforcement risks losing trade account business; mitigated by the CSR (initial contact) and Store Manager (escalation) review and approval gate",
+     "- **PhilPost delivery reliability** — formal demand letters sent via registered mail may not reach the customer in a timely manner, delaying the legal escalation timeline"
+    ],
+    "Staffing Implication": [
+     "- CSR: ~5 min per overdue call × ~150–300/month = ~12–25 hours/month chain-wide (~4–8 min per store per month); absorbed",
+     "- Store Manager: ~10 min per 24-hour escalation × ~50–100/month = ~8–17 hours/month; absorbed",
+     "- Rental Fleet Manager: ~2 hours/month analytics + ~30 min per 10-day escalation case × 5–10/month = ~5–7 hours/month; absorbed",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated overdue detection with tiered notification (1-hour SMS, 4-hour CSR call, 24-hour manager call) (W1375.1–3)",
+     "- Late fee auto-calculation with deposit offset and balance tracking (W1375.4)",
+     "- Overdue case lifecycle management (Open → Deposit Forfeiture → Escalation → Resolution/Write-off) (W1375.5–7)",
+     "- Customer loyalty system flag for overdue rentals blocking future transactions (W1375.5)",
+     "- Formal demand letter generation with rental agreement and overdue details (W1375.5)",
+     "- Overdue analytics dashboard (W1375.8)",
+     "- Integration with W139 (rental operations), W1318 (reservations — blocking unavailable units), W1172 (fleet lifecycle — write-offs), W92 (inventory adjustment), W12A (returns — deposit refund)"
+    ],
+    "Time Estimate": [
+     "- Per overdue event (average): ~20 min across all touchpoints (automated notification + CSR call + system processing)",
+     "- Per deposit forfeiture case: ~30 min (CSR + Store Manager)",
+     "- Per 10-day escalation: ~30 min (Rental Fleet Manager)",
+     "- Monthly analytics: 2 hours",
+     "- **Chain-wide: ~150–300 overdue events/month × 20 min avg = ~50–100 hours/month**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System detects overdue status at 1 hour past scheduled return time: sends automated SMS/app push to customer: \"Your rental of [tool] was due at [time]. Please return to [store] as soon as possible. Late fees may apply per your rental agreement.\"",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If not returned within 4 hours of due time: CSR calls customer: (a) confirms customer received overdue notification; (b) asks for expected return time; (c) if customer needs extension: CSR processes rental extension in system — calculates additional rental days at standard rate, confirms extension does not conflict with existing reservation per W1318; (d) if extension conflicts with reservation: CSR offers alternative (return now, or swap to different tool category, or transfer reservation to another store with availability)",
+     "duration": "5 min/call",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "If not returned by end of next business day (24+ hours overdue): Store Manager calls customer; emphasizes escalating late fees and deposit implications; documents conversation in system with expected return commitment",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "System calculates and posts late fees: (a) standard daily rental rate applied for each calendar day past return date (including day of return); (b) late fees deducted from security deposit first; (c) if late fees exceed deposit amount: customer notified of additional amount due; (d) system tracks cumulative late fees and remaining deposit balance",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "If not returned within 3 days (72+ hours overdue) and customer unreachable after 3 contact attempts: (a) system automatically flags tool as \"Overdue — Deposit Forfeiture\"; (b) full security deposit forfeited; (c) CSR sends formal demand letter via registered mail (PhilPost) and email: demands return of equipment within 5 business days or payment of replacement value; (d) customer account flagged in loyalty system — future rentals blocked until resolution",
+     "duration": "15 min",
+     "n": "5",
+     "r": "System / CSR / Store Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "If not returned within 10 days of original due date: (a) case escalated to Rental Fleet Manager at HQ; (b) Rental Fleet Manager reviews: equipment value, customer history, contact attempts, any dispute or complaint linked to the rental; (c) if equipment value < PHP 20,000: Rental Fleet Manager authorizes write-off as loss per W92; equipment removed from rental fleet; (d) if equipment value ≥ PHP 20,000: case escalated to VP Legal for formal recovery action (demand letter from legal counsel, potential small claims filing)",
+     "duration": "30 min/case",
+     "n": "6",
+     "r": "Rental Fleet Manager / VP Legal"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Customer returns overdue tool at any point: (a) standard W139 inbound inspection performed; (b) late fees and any damage fees calculated per W139.6; (c) security deposit applied: (i) if deposit covers late fees + damage: remainder refunded; (ii) if fees exceed deposit: customer pays additional amount at POS; (d) customer loyalty flag removed if case resolved; (e) system closes overdue case",
+     "duration": "15 min",
+     "n": "7",
+     "r": "CSR / Cashier / Stock Associate"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Monthly: Rental Fleet Manager reviews overdue analytics: (a) overdue rate by store, tool category, and customer segment (trade vs. B2C); (b) average overdue duration; (c) deposit forfeiture rate; (d) equipment write-off value; (e) repeat offender rate; (f) stores with consistently high overdue rates reviewed for process improvement (better customer screening, higher deposits for high-risk categories)",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1172",
+    "W12A",
+    "W1318",
+    "W139",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Monthly reporting; quarterly deep-dive analysis",
+    "Owner": "Rental Fleet Manager (HQ)",
+    "Participants": "Rental Fleet Manager, Category Manager (Tools), VP Merchandising, Store Manager (store-level review), BI Analyst",
+    "Trigger": "Monthly rental performance reporting cycle; or quarterly fleet review per W1172.6; or Category Manager requests store-level rental benchmarking",
+    "Volume": "200 stores × ~7–8 rental units each = ~1,500 units; ~1,000–1,500 rentals/month chain-wide"
+   },
+   "id": "W1376",
+   "level": 2,
+   "name": "Tool Rental Revenue Analytics, Utilization Optimization & Store Performance Benchmarking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly rental performance report\" (replaces manual Step 1).",
+     "- System auto-report of \"BI Analyst enriches report with\" (replaces manual Step 2).",
+     "- System auto-identify of \"identify top 20 stores\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's tool rental program with ~1,500 units across 200 stores is designed as both a profit center (rental revenue + consumable attach sales) and a traffic driver (customers renting tools also purchase materials for their projects). However, utilization varies dramatically across stores: urban stores near construction sites may achieve > 70% utilization on jackhammers and concrete mixers, while provincial stores may struggle to reach 30%. Without rigorous analytics, BuildRight cannot optimize fleet distribution, identify underperforming stores, or right-size the rental assortment. This workflow provides the analytical framework for rental revenue optimization, store benchmarking, and fleet investment decisions."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: Rental Fleet Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Data quality for utilization calculation** — if Store Associates forget to update tool status in the system (e.g., tool returned but status remains \"Rented\"), utilization metrics are inflated, leading to incorrect fleet decisions",
+     "- **Seasonal demand distortion** — rental demand peaks during dry season (construction season, March–May) and dips during rainy season (June–August); monthly comparisons must be seasonally adjusted to avoid overreaction",
+     "- **Consumable attach rate underestimation** — customers purchasing blades, bits, and fuel at the same time as rental may not be accurately linked in POS data, understating the true revenue impact of the rental program",
+     "- **Small unit counts per store** — with only 7–8 units per store, a single unit being in repair for 2 weeks can dramatically shift the store's utilization rate, creating noise in benchmarking"
+    ],
+    "Staffing Implication": [
+     "- BI Analyst: ~4 hours/month on rental analytics; absorbed",
+     "- Rental Fleet Manager: ~10 hours/month on reporting, benchmarking, and optimization; absorbed (part of existing Category Manager role)",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Monthly rental performance report with revenue, utilization, duration, overdue, breakdown, and consumable attach metrics (W1376.1)",
+     "- BI dashboard with rental margin analysis, trend analysis, and cross-category correlation (W1376.2)",
+     "- Store benchmarking report with rankings, regional comparisons, and optimization flags (W1376.3)",
+     "- Optimization recommendation engine with fleet movement and pricing suggestions (W1376.4)",
+     "- Quarterly review presentation generation from BI data (W1376.5)",
+     "- Store-level monthly scorecard auto-distribution (W1376.6)",
+     "- Integration with W1172 (fleet lifecycle), W139 (rental operations), W1318 (reservations), W1374 (breakdowns), W1375 (overdue), W67 (store performance review)"
+    ],
+    "Time Estimate": [
+     "- Monthly reporting: ~10 hours (4 hours BI Analyst + 4 hours benchmarking + 2 hours optimization recommendations)",
+     "- Quarterly review: 4 hours preparation + half day presentation",
+     "- Store scorecards: automated distribution",
+     "- **Annual effort: ~150–180 hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "System generates monthly rental performance report: (a) total rental revenue by store, tool category, and unit; (b) utilization rate by unit (rental days ÷ available days); (c) average rental duration by tool category; (d) average revenue per rental day; (e) overdue rate by store; (f) breakdown rate by tool category and unit age; (g) consumable attach rate (revenue from blades, bits, fuel sold alongside rentals); (h) customer segment analysis (B2C DIYer vs. trade professional)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "BI Analyst enriches report with: (a) rental revenue per sqm of store rental display area; (b) rental gross margin (rental revenue minus depreciation, maintenance cost, parts cost, PPE cost); (c) trend analysis vs. prior month and same month prior year; (d) correlation between rental activity and store-level sales in complementary categories (e.g., tile cutter rentals correlated with tile sales)",
+     "duration": "4 hours/month",
+     "n": "2",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Rental Fleet Manager produces store performance benchmarking: (a) rank all 200 stores by rental revenue, utilization rate, and gross margin; (b) identify top 20 stores (best practices to replicate) and bottom 20 stores (coaching or fleet reallocation); (c) compare stores within same geographic region to control for market differences; (d) flag stores where utilization < 30% for three consecutive months as candidates for fleet reduction per W1172",
+     "duration": "4 hours/month",
+     "n": "3",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Rental Fleet Manager identifies optimization actions: (a) **High demand, low supply stores**: recommend fleet augmentation per W1172 (add units to stores where utilization consistently > 80%); (b) **Low demand, high supply stores**: recommend fleet redistribution (move underutilized units to high-demand stores); (c) **Category expansion**: tool categories with consistently high utilization and long waitlists per W1318 indicate demand for additional units or new tool types; (d) **Category contraction**: tool categories with < 25% utilization across multiple stores flagged for potential removal; (e) **Pricing optimization**: tool categories with > 90% utilization and no waitlist may be underpriced — price increase test recommended",
+     "duration": "2 hours/month",
+     "n": "4",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Quarterly: Rental Fleet Manager presents rental performance review to Category Manager and VP Merchandising: (a) total rental revenue and gross margin vs. plan; (b) fleet utilization heat map by store and category; (c) recommended fleet movements (additions, redistributions, retirements); (d) capital expenditure request for fleet additions per W1172; (e) pricing adjustment recommendations; (f) new tool category proposals (based on customer requests and market trends)",
+     "duration": "Half day/quarter",
+     "n": "5",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager receives monthly store-level rental scorecard: (a) store's rental revenue, utilization, and gross margin vs. chain average and regional peers; (b) overdue and breakdown rates vs. chain average; (c) consumable attach rate; (d) specific improvement recommendations (e.g., \"Increase weekend rental promotion for tile cutters — store is below regional average\"); (e) Store Manager includes rental performance in monthly store review per W67",
+     "duration": "15 min/store/month",
+     "n": "6",
+     "r": "System / Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1172",
+    "W1318",
+    "W1374",
+    "W1375",
+    "W139",
+    "W67"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~30–50 reservation requests chain-wide/day",
+    "Owner": "Store Manager",
+    "Participants": "Customer, CSR, Store Manager, Rental Fleet Manager (HQ), System",
+    "Trigger": "Customer requests advance booking for a rental tool via mobile app, phone, or in-store; or system identifies peak-demand window approaching (weekends, holiday construction periods)",
+    "Volume": "~1,000–1,500 reservations/month; peak on Friday–Saturday for weekend projects"
+   },
+   "id": "W1318",
+   "level": 2,
+   "name": "Tool Rental Reservation, Waitlist & Scheduling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks real-time availability of requested tool category at selected store for…\" (replaces manual Step 1).",
+     "- System auto-record of \"record with unique reservation ID\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitors cancellations and returns across all stores for waitlisted tool…\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's ~1,500 rental units across 200 stores (~7–8 units per store) face concentrated weekend demand: contractors and DIYers planning Saturday–Sunday projects book ahead to guarantee availability. Without a reservation system, customers arrive at stores only to find all jackhammers, tile cutters, or generators already rented — leading to lost revenue and customer frustration. W139 covers the physical rental transaction (request → contract → release → return). This workflow covers the upstream reservation, waitlist, and scheduling layer that maximizes fleet utilization and customer satisfaction by matching supply to demand across locations."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: must enforce return deadlines or proactively offer alternative units"
+    ],
+    "Pain Points / Risks": [
+     "- **Peak weekend concentration**: > 60% of rental demand occurs on Saturday–Sunday; fleet utilization drops to < 20% on weekdays; demand-based pricing (higher weekend rates) could smooth demand but may alienate price-sensitive DIYers",
+     "- **Cross-store transfer cost**: moving a PHP 40,000 jackhammer between stores to fulfill a PHP 1,500/day rental may not be cost-effective; Rental Fleet Manager must evaluate transfer cost vs. customer lifetime value",
+     "- **No-show rate**: free reservations may have 15–25% no-show rates; deposit pre-payment for repeat no-shows mitigates but adds friction",
+     "- **Multi-day rental extension conflicts**: customer rents for Saturday and extends to Sunday, conflicting with a Sunday reservation for the same unit; system must enforce return deadlines or proactively offer alternative units"
+    ],
+    "Staffing Implication": [
+     "- **CSR**: ~5–10 min per reservation request × 30–50/day chain-wide = ~3–5 hours/day across all stores; each store handles < 1 reservation/day on average. Absorbed.",
+     "- **Rental Fleet Manager**: ~1 hour/week on demand forecasting and fleet scheduling. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental reservation module with real-time availability calendar per unit per store (W1318.1–2)",
+     "- Customer notification system (SMS + app push) for reservation confirmation, reminders, and waitlist alerts (W1318.2–3)",
+     "- Waitlist queue management with auto-notification and confirmation timeout (W1318.3)",
+     "- Cross-store transfer integration per W22 for inter-store rental unit movement (W1318.4)",
+     "- Rental demand forecasting dashboard with utilization heat maps by store, tool category, and day-of-week (W1318.5)",
+     "- Mobile app \"Rent Tools\" section for self-service reservation, waitlist signup, and availability browsing (W1318.1)",
+     "- No-show tracking and customer flag module (W1318.6)",
+     "- Integration with W139 (rental operations), W1172 (fleet procurement), W22 (store transfers), W279 (substitution rules)"
+    ],
+    "Time Estimate": [
+     "- Per reservation: 5–10 min (customer-facing) + automated system processing",
+     "- Weekly fleet scheduling review: 1 hour",
+     "- Monthly demand analysis: 2 hours",
+     "- **Annual effort**: ~200 hours for reservation management + ~100 hours for fleet scheduling = ~300 hours/year",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Customer reservation request**: Customer submits reservation via: (a) BuildRight mobile app \"Rent Tools\" section — selects store, tool category, preferred date/time window, and rental duration (half-day, full-day, multi-day); (b) phone call to store CSR; (c) walk-in request at customer service counter; system checks real-time availability of requested tool category at selected store for the requested date range, considering existing reservations and currently rented units with scheduled return dates",
+     "duration": "3–5 min",
+     "n": "1",
+     "r": "Customer / CSR / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Availability confirmation & booking**: If tool available: (a) system creates reservation record with unique reservation ID; (b) reservation held for 2 hours pending customer confirmation; (c) customer receives SMS/app confirmation with reservation ID, pickup time window, store location, and rental rate; (d) system blocks the unit from other reservations for the booked period; (e) CSR reminds customer of required ID and deposit amount per W139",
+     "duration": "Automated + 2 min",
+     "n": "2",
+     "r": "System / CSR"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Waitlist management**: If tool unavailable for requested period: (a) system offers alternatives: (i) different dates with availability, (ii) same tool at nearest store with availability (with distance and transfer feasibility), (iii) equivalent tool in same category (e.g., Bosch jackhammer if DeWalt jackhammer unavailable per W279 substitution rules); (b) if no alternatives acceptable: customer placed on waitlist with preferred date range; (c) system monitors cancellations and returns across all stores for waitlisted tool categories; (d) when availability opens: system auto-notifies waitlisted customers by SMS/app push in queue order; customer has 1 hour to confirm before system moves to next waitlisted customer",
+     "duration": "Automated + 5 min per waitlist interaction",
+     "n": "3",
+     "r": "System / CSR"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Cross-store reservation fulfillment**: For high-demand categories where the local store has no availability: (a) system identifies nearest store with available unit (within 30 km or same island per W22 transfer logistics); (b) Rental Fleet Manager approves cross-store transfer for rental purposes; (c) unit transferred to requesting store per W22 with \"Rental Reservation\" priority flag; (d) system updates availability at both stores; (e) customer notified of pickup location and any slight timing adjustment",
+     "duration": "30 min coordination + transfer time",
+     "n": "4",
+     "r": "Rental Fleet Manager / System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Demand-based fleet scheduling**: Weekly: system generates rental demand forecast per store: (a) historical rental patterns by day-of-week, season, and local construction activity; (b) upcoming reservations vs. available fleet; (c) stores with consistently > 80% weekend utilization flagged for fleet augmentation per W1172; (d) stores with < 30% utilization flagged for potential fleet reduction or cross-store sharing; (e) Rental Fleet Manager reviews weekly demand report and adjusts inter-store unit distribution if needed",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "System / Rental Fleet Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Reservation no-show management**: If customer fails to pick up reserved tool within the pickup window (typically 2 hours): (a) system sends SMS/app reminder 30 minutes before window closes; (b) if no pickup by window end: reservation cancelled; unit released for walk-in or waitlist customers; (c) repeat no-show customers (3+ in 6 months) flagged in system — future reservations require deposit pre-payment via GCash/card to secure booking; (d) Store Manager may grant exceptions for documented emergencies",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1172",
+    "W139",
+    "W22",
+    "W279"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Per rental transaction; ~1,000–1,500 rentals/month chain-wide",
+    "Owner": "Department Supervisor",
+    "Participants": "Customer, Stock Associate (briefing conductor), Store Manager",
+    "Trigger": "Customer proceeds with tool rental after reservation (W1318) or walk-in (W139); required before tool release at step W139.3",
+    "Volume": "~50–75 safety briefings per store per month"
+   },
+   "id": "W1319",
+   "level": 2,
+   "name": "Tool Rental Customer Safety Briefing, Liability Waiver & Equipment Operation Acknowledgment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"recorded in system for briefing depth adjustment\" (replaces manual Step 1).",
+     "- System rule-based authorization of \"authorizes deposit deduction for damage or cleaning per W139.6\" (replaces manual Step 3).",
+     "- System auto-validate of \"checklist based on tool category\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight rents professional-grade power tools (jackhammers, concrete mixers, tile cutters, generators, pressure washers, circular saws, angle grinders) that pose significant safety risks when operated improperly. Philippine DOLE Department Order No. 13 (Guidelines on Occupational Safety and Health) mandates employer responsibility for equipment safety. While the customer is not BuildRight's employee, BuildRight has a duty of care as the equipment provider: (a) ensuring the customer understands basic safe operation, (b) documenting that safety instructions were provided, (c) requiring acknowledgment of risks and proper usage, and (d) verifying the customer is not visibly impaired. A single serious injury from a rented jackhammer or angle grinder could result in a PHP 5–20M liability claim, regulatory investigation, and reputational damage. This workflow standardizes the safety briefing process across all 200 stores."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: offering an annual \"Certified Renter\" program — customers who pass a one-time comprehensive safety assessment receive a Certified Renter badge in the system"
+    ],
+    "Pain Points / Risks": [
+     "- **Briefing fatigue for repeat renters**: contractors renting the same jackhammer weekly may resent repeating the safety briefing each time; mitigated by offering an annual \"Certified Renter\" program — customers who pass a one-time comprehensive safety assessment receive a Certified Renter badge in the system; abbreviated briefing (2 min confirmation only) for Certified Renters; annual recertification required",
+     "- **Language barrier**: safety briefings conducted in English or Filipino may not be understood by customers who speak Visayan, Ilocano, or other Philippine languages; Safety Briefing Cards available in English, Filipino, and Cebuano; Store Managers in Visayas and Mindanao ensure Stock Associates can brief in the local language",
+     "- **Liability waiver enforceability**: Philippine courts may not fully enforce liability waivers, especially for gross negligence claims; the waiver provides a legal defense layer but is not absolute protection; BuildRight's liability insurance per W863 provides primary coverage",
+     "- **PPE disposal cost**: disposable PPE (goggles, gloves, masks) issued with every rental adds PHP 50–150 per transaction × ~1,000–1,500 rentals/month ≈ PHP 0.6–2.7M/year in PPE cost; included in rental pricing but impacts rental margin",
+     "- **Customer refusing to sign waiver**: if customer refuses to sign the liability waiver, the rental cannot proceed; Stock Associate trained to explain that the waiver is a standard safety requirement, not a waiver of BuildRight's responsibilities; Store Manager may intervene for high-value trade accounts with established rental history"
+    ],
+    "Staffing Implication": [
+     "- **Stock Associates**: ~10–15 min per rental for safety briefing + waiver + PPE × ~50–75 rentals/store/month = ~10–19 hours/store/month. With 4 Stock Associates per store, this is ~3–5 hours each/month. Absorbed.",
+     "- **Department Supervisors**: ~2 hours/quarter for safety briefing review. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Digital safety briefing cards per tool category accessible on store tablets (W1319.2)",
+     "- Electronic liability waiver module with digital signature capture, timestamp, and rental transaction linkage (W1319.3)",
+     "- PPE checklist auto-generation based on tool category from item master attributes (W1319.4)",
+     "- First-time operator flag from customer rental history (W1319.5)",
+     "- Incident report linkage per W140 for rental-related injuries (W1319.6)",
+     "- Rental safety compliance dashboard with briefing/waiver/PPE completion rates (W1319.7)",
+     "- Integration with W139 (rental operations), W140 (safety incident), W51 (employee training)"
+    ],
+    "Time Estimate": [
+     "- Per rental (experienced operator): ~10 min (assessment 2 min + briefing 5 min + waiver 3 min)",
+     "- Per rental (first-time operator): ~20–25 min (assessment 2 min + briefing 8 min + demonstration 10–15 min + waiver 3 min)",
+     "- Quarterly review: 2 hours per store",
+     "- **Chain-wide monthly**: ~170–375 hours for safety briefings across all stores (1,000–1,500 rentals/month × 10–15 min)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "**Pre-briefing customer assessment**: Before conducting the safety briefing: (a) Stock Associate verifies customer is ≥ 18 years old (government-issued ID check, per W139.1); (b) visual assessment: customer appears alert, not under influence of alcohol or drugs, and physically capable of operating the equipment; (c) if customer appears impaired or is a minor: Stock Associate politely declines rental and informs Store Manager; (d) Stock Associate asks customer: \"Have you operated this type of equipment before?\" — answer recorded in system for briefing depth adjustment",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Tool-specific safety briefing**: Stock Associate conducts standardized safety briefing using the tool's Safety Briefing Card (laminated, attached to each rental unit's storage case): (a) **Personal protective equipment (PPE)**: required PPE for the specific tool (safety goggles for grinders, ear protection for jackhammers, gloves for all power tools, dust mask for tile cutters); PPE included with rental per W139; (b) **Operating instructions**: start/stop procedure, speed settings, blade/bit orientation; (c) **Hazard identification**: kickback risk (circular saws), electrocution risk (wet conditions with electric tools), crush risk (jackhammers), burn risk (generators — hot surfaces); (d) **Safe work area**: clear area of bystanders, secure workpiece, ensure ventilation for indoor gas-powered equipment; (e) **Emergency shutdown**: how to immediately stop the tool in an emergency; (f) **Prohibited uses**: modifications, removal of safety guards, use in rain for electric tools, exceeding rated load capacity; (g) briefing duration: 5 min for hand tools, 8–10 min for power tools and generators",
+     "duration": "5–10 min",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Liability waiver signing**: After safety briefing: (a) Stock Associate presents the Tool Rental Liability Waiver on the store tablet: (i) customer confirms receipt of safety briefing and understanding of operating instructions; (ii) customer acknowledges inherent risks of power tool operation and assumes personal responsibility for safe use; (iii) customer agrees to indemnify BuildRight for damage caused by improper operation; (iv) customer acknowledges obligation to return tool in same condition (normal wear excepted) per W139; (v) customer authorizes deposit deduction for damage or cleaning per W139.6; (b) customer signs waiver on tablet (digital signature captured with timestamp); (c) system stores signed waiver with rental transaction record; (d) a copy of the signed waiver emailed/SMSed to customer",
+     "duration": "3–5 min",
+     "n": "3",
+     "r": "Customer / Stock Associate / System"
+    },
+    {
+     "a": "—",
+     "activity": "**PPE issuance confirmation**: Stock Associate confirms required PPE is included with the rental: (a) system auto-generates PPE checklist based on tool category; (b) Stock Associate hands over PPE items (safety goggles, ear protection, gloves, dust mask as applicable); (c) PPE items are disposable/customer-keeps — not returned with tool; (d) PPE cost included in rental fee (estimated PHP 50–150 per rental for PPE); (e) system records PPE items issued for inventory deduction",
+     "duration": "2 min",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Demonstration for first-time operators**: If customer indicated no prior experience with the tool (Step 1d): (a) Stock Associate provides hands-on demonstration in the store's designated demo area or outdoor yard; (b) customer practices starting, operating, and stopping the tool under Stock Associate supervision; (c) Stock Associate confirms customer can safely operate the tool before proceeding to release; (d) demonstration adds 10–15 min to the rental process",
+     "duration": "10–15 min (only for first-time operators)",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "COO",
+     "activity": "**Incident reporting linkage**: If customer reports injury during rental period or returns tool with safety-related complaint: (a) Store Manager completes incident report per W140 (workplace safety incident); (b) system links incident to rental transaction and signed waiver; (c) Store Manager investigates: was safety briefing conducted? was waiver signed? was the tool in safe operating condition at release? (d) VP Legal reviews all rental-related injuries within 24 hours; (e) findings feed into quarterly safety briefing review (Step 7)",
+     "duration": "Per incident",
+     "n": "6",
+     "r": "Store Manager / VP Legal"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Quarterly safety briefing review**: Department Supervisor reviews rental safety metrics quarterly: (a) briefing completion rate — target 100%; (b) PPE issuance rate — target 100%; (c) waiver signing rate — target 100%; (d) first-time operator demonstration completion rate; (e) rental-related injuries, near-misses, and customer complaints; (f) update Safety Briefing Cards if tool manufacturers issue safety advisories; (g) refresh Stock Associate training on safety briefing delivery per W51",
+     "duration": "2 hours/quarter",
+     "n": "7",
+     "r": "Department Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1318",
+    "W139",
+    "W140",
+    "W51",
+    "W863"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Quarterly fleet planning review; continuous demand monitoring; capital replacement decisions 1–2 times/year",
+    "Owner": "Rental Fleet Manager",
+    "Participants": "Rental Fleet Manager, Category Manager (Tools), VP Merchandising, CFO (Capex), Store Manager, DC Logistics Coordinator",
+    "Trigger": "Quarterly rental fleet review cycle; or seasonal demand shift (rainy season → dry season); or tool reaching end-of-economic-life threshold; or sustained utilization above 85% for a tool category",
+    "Volume": "~1,500 rental units across 200 stores (~7–8 units/store avg per W139/W1172/W1374: jackhammers, tile cutters, concrete mixers, generators, pressure washers, circular saws, grinders, nail guns, compressors, welders); ~15 tool categories"
+   },
+   "id": "W1553",
+   "level": 2,
+   "name": "Tool Rental Fleet Seasonal Demand Management, Cross-Store Fleet Rebalancing & Capital Replacement Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-analyze of \"analyzes rental utilization by tool category, store, and season\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics arranges pickup and delivery\" (replaces manual Step 2).",
+     "- System auto-flag of \"flag for replacement in next capital cycle\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's tool rental fleet of ~2,000 units across 200 stores must be managed as a dynamic capital asset portfolio. Demand is highly seasonal: jackhammers and concrete mixers peak during the dry season (Jan–May construction boom) and decline during the rainy season (Jun–Oct); generators peak during typhoon season (power outage backup) and the Christmas season; tile cutters peak during the post-holiday renovation period (Jan–Feb). Geographic demand also varies — Metro Manila stores have higher rental volume for power tools (commercial construction), while provincial stores see more generator rentals (less reliable power infrastructure). This workflow manages the seasonal fleet optimization: demand forecasting, cross-store fleet rebalancing (moving underutilized units from low-demand to high-demand stores), capital replacement planning for aging units, and new fleet acquisition based on rental utilization data."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Transfer damage risk**: moving rental units between stores via DC logistics exposes them to transport damage; units must be properly packaged per manufacturer guidelines; damage during transfer reduces fleet availability; mitigated by CTL-276 (controlled execution — Tool Rental & Equipment (PA-12.2))",
+     "- **Seasonal demand unpredictability**: an unusually early or late rainy season disrupts pre-positioning plans; typhoon season generator demand is event-driven and difficult to forecast precisely",
+     "- **Capital lock-in**: rental fleet is a significant capital investment (~PHP 80–100M total fleet value); over-investing in underutilized tool categories ties up capital; under-investing in high-demand categories loses rental revenue and customer goodwill"
+    ],
+    "Staffing Implication": [
+     "- Rental Fleet Manager: ~12–16 hours/quarter on fleet planning. Absorbed.",
+     "- DC Logistics: ~50–100 transfer moves/quarter × 1 hour/move = ~50–100 hours/quarter. Absorbed in existing logistics operations.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental fleet asset register with utilization tracking, maintenance history, and lifecycle status per unit (W1553.1)",
+     "- Seasonal demand forecasting dashboard with historical utilization patterns by tool category and store (W1553.1)",
+     "- Inter-store transfer order system per W22 for fleet rebalancing (W1553.2)",
+     "- Capex request workflow per W21 for fleet acquisition (W1553.4)",
+     "- Integration with W139 (rental operations), W1318 (reservation), W1319 (safety briefing), W22 (transfers), W21 (capex)"
+    ],
+    "Time Estimate": [
+     "- Quarterly utilization analysis: 4 hours",
+     "- Rebalancing coordination: 4–6 hours/quarter",
+     "- Capital assessment: 2 hours/quarter",
+     "- Acquisition planning: 4 hours/year",
+     "- Seasonal pre-positioning: 4 hours/quarter",
+     "- **Annual estimate: ~60–80 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Quarterly utilization analysis**: Rental Fleet Manager analyzes rental utilization by tool category, store, and season: (a) utilization rate = days rented ÷ days available × 100; (b) revenue per unit per month; (c) maintenance cost per unit (trend — rising maintenance cost signals end-of-life); (d) utilization heatmap by region: which stores have chronically underutilized units (utilization < 30%) vs. over-demanded (utilization > 85% with frequent unavailability); (e) seasonal demand index: compare current quarter utilization vs. same quarter prior year",
+     "duration": "4 hours/quarter",
+     "n": "1",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Cross-store fleet rebalancing**: Based on utilization analysis: (a) identify units with utilization < 25% for 2+ consecutive quarters at a store — candidate for transfer to a higher-demand store; (b) identify stores with utilization > 85% and frequent customer turn-aways — need additional units; (c) coordinate inter-store transfer per W22: (i) DC Logistics arranges pickup and delivery, (ii) system updates unit location assignment, (iii) receiving store conducts condition check per W139; (d) rebalancing targets: reduce fleet-wide underutilization (utilization < 25%) from current ~15% of fleet to < 10%; rebalancing moves: ~50–100 units/quarter",
+     "duration": "4–6 hours/quarter",
+     "n": "2",
+     "r": "Rental Fleet Manager / DC Logistics"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Capital replacement assessment**: Rental Fleet Manager evaluates each unit against replacement criteria: (a) age > 3 years (typical rental tool lifespan: 2–4 years depending on usage intensity); (b) cumulative maintenance cost > 50% of replacement value; (c) maintenance frequency > 4 repairs/year; (d) safety recall or manufacturer end-of-support notice; (e) units meeting 2+ criteria: flag for replacement in next capital cycle; (f) estimated annual replacement: ~200–300 units/year (10–15% of fleet)",
+     "duration": "2 hours/quarter",
+     "n": "3",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**New fleet acquisition planning**: Based on demand trends and utilization gaps: (a) Rental Fleet Manager proposes new unit purchases: (i) tool categories with sustained utilization > 80% (need fleet expansion), (ii) new tool types requested by customers (e.g., robotic lawnmowers, heat guns, floor sanders — emerging demand), (iii) stores with growing population but inadequate fleet size; (b) CFO evaluates capex request per W21: (i) ROI calculation: rental revenue per unit ÷ purchase cost, (ii) payback period target: < 18 months; (c) annual new fleet acquisition budget: ~PHP 8–15M/year (~200–300 units × PHP 40–50K avg)",
+     "duration": "4 hours/year",
+     "n": "4",
+     "r": "Rental Fleet Manager / CFO"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Seasonal pre-positioning**: Before peak seasons: (a) dry season (Nov–Dec preparation): pre-position jackhammers, concrete mixers, tile cutters at stores in construction-heavy regions (Metro Manila, CALABARZON, Cebu); (b) typhoon season (May–Jun preparation): pre-position generators at stores in typhoon-prone areas (Eastern Visayas, Bicol, Northern Luzon); (c) holiday season (Oct–Nov preparation): increase inventory of popular gift-quality tools (power drills, impact drivers) for both rental and retail",
+     "duration": "4 hours/quarter",
+     "n": "5",
+     "r": "Rental Fleet Manager / DC Logistics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1172",
+    "W1318",
+    "W1319",
+    "W1374",
+    "W139",
+    "W21",
+    "W22"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "Monthly scheduled PM for high-use tools (jackhammers, generators); quarterly PM for medium-use tools (tile cutters, mixers); semi-annual for low-use tools; ~330–670 PM events/month chain-wide (per the ~4,000–8,000/year Volume)",
+    "Owner": "Rental Fleet Manager",
+    "Participants": "Rental Fleet Manager, Stock Associate (store-level PM), Authorized Service Center (vendor), Department Supervisor",
+    "Trigger": "Scheduled — based on rental hours counter or calendar interval per manufacturer; or post-rental customer-reported performance issue; or quarterly maintenance cycle",
+    "Volume": "~2,000 rental units; each unit serviced 2–6 times/year; ~4,000–8,000 PM events/year total"
+   },
+   "id": "W1554",
+   "level": 2,
+   "name": "Power Tool Rental Preventive Maintenance, Wear Parts Replacement & Servicing Vendor Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records\" (replaces manual Step 1).",
+     "- System auto-capture of \"renter per W139 if applicable\" (replaces manual Step 2).",
+     "- System auto-schedule of \"schedule pickup of tools due for major PM from each store\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Rental power tools experience significantly more wear than personally owned tools — a rental jackhammer may be used by 10 different operators in a month, each with varying skill levels and care standards. Without systematic preventive maintenance (PM), tool failure rates increase, leading to: (a) customer dissatisfaction (rental tool breaks mid-project), (b) safety incidents (W1319 safety briefing does not prevent equipment malfunction), (c) costly emergency repairs exceeding the cost of scheduled PM, and (d) premature tool replacement. This workflow establishes a structured PM program for BuildRight's rental fleet: scheduled servicing intervals, wear part replacement triggers, authorized service center coordination, and PM compliance tracking."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: system-block for units with overdue PM"
+    ],
+    "Pain Points / Risks": [
+     "- **PM skipping under rental demand pressure**: when a tool is in high demand, stores may skip PM to keep the unit available for rental; this leads to accelerated wear and potential in-use failure; mitigated by system-block for units with overdue PM",
+     "- **Service center capacity in provincial areas**: authorized service centers for premium tool brands are concentrated in Metro Manila and Cebu; stores in Mindanao, Bicol, and North Luzon face longer turnaround times (7–14 days vs. 3–5 days), reducing fleet availability",
+     "- **Wear part cost unpredictability**: rental units operated by inexperienced customers (first-time operators per W1319 Step 5) experience accelerated wear on blades, brushes, and bearings; difficult to forecast PM costs per unit precisely"
+    ],
+    "Staffing Implication": [
+     "- Stock Associates: ~15–30 min/unit × ~6 PM events/store/month = ~1.5–3 hours/store/month. Absorbed.",
+     "- Rental Fleet Manager: ~8–12 hours/month on PM program management. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PM scheduling engine with rental hour counter integration and calendar-based triggers (W1554.1)",
+     "- PM work order system with completion logging and findings documentation (W1554.2)",
+     "- Service center coordination module with pickup scheduling, status tracking, and turnaround monitoring (W1554.3)",
+     "- Wear parts inventory tracker per store with auto-reorder (W1554.4)",
+     "- PM compliance dashboard with completion rate, overdue alerts, and cost tracking (W1554.5)",
+     "- Integration with W139 (rental operations), W1318 (reservation), W1319 (safety), W1553 (fleet planning), W2 (purchase orders)"
+    ],
+    "Time Estimate": [
+     "- Store-level PM: ~15–30 min/unit × ~4,000–8,000 events/year = ~1,000–4,000 hours/year chain-wide",
+     "- Service center coordination: ~2–3 hours/month = ~30 hours/year",
+     "- PM compliance monitoring: ~2 hours/month = ~24 hours/year",
+     "- **Annual estimate: ~1,100–4,100 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**PM scheduling**: Rental Fleet Manager maintains PM schedule per tool category based on manufacturer recommendations and rental usage intensity: (a) heavy-use tools (jackhammers, generators): PM every 100 rental hours or monthly, whichever comes first; (b) medium-use tools (tile cutters, concrete mixers, pressure washers): PM every 200 rental hours or quarterly; (c) light-use tools (drills, circular saws, grinders): PM every 300 rental hours or semi-annually; (d) system auto-generates PM work orders based on rental hour counters (tracked via rental transaction records)",
+     "duration": "Automated scheduling + 2 hours/month review",
+     "n": "1",
+     "r": "System / Rental Fleet Manager"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Store-level basic PM**: Stock Associate performs basic PM tasks between rentals: (a) visual inspection: check power cord integrity, switch function, guard presence, housing cracks; (b) clean: remove concrete dust, paint splatter, debris from air vents and moving parts; (c) lubricate moving parts per manufacturer guidelines; (d) check and replace minor wear parts: carbon brushes (for universal motors), air filters (generators), cutting blades (if dull — charge to previous renter per W139 if applicable); (e) log PM completion in system with date, hours counter reading, and any findings",
+     "duration": "15–30 min/unit",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Authorized service center major PM**: For major servicing (annual overhaul, motor bearing replacement, gearbox service): (a) Rental Fleet Manager coordinates with authorized service centers per tool brand (Bosch, Makita, DeWalt have Philippine service networks): (i) schedule pickup of tools due for major PM from each store, (ii) service center performs manufacturer-specified major PM: motor testing, bearing replacement, seal replacement, calibration, safety interlock testing; (b) turnaround time: 3–5 business days per unit; (c) Rental Fleet Manager tracks tools at service center — system flags units out for > 7 days for follow-up; (d) store temporarily reassigns rental availability: remove serviced units from reservation system per W1318",
+     "duration": "Coordination: 2–3 hours/month",
+     "n": "3",
+     "r": "Rental Fleet Manager / Service Center"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "**Wear part inventory management**: Department Supervisor tracks replacement wear parts at store level: (a) common consumables kept in-stock per store: carbon brushes, air filters, blades, belts, safety guards, power cords; (b) reorder point per part based on replacement frequency: auto-generate PO per W2 for replenishment from vendor; (c) wear part cost tracking per unit: if cumulative wear part cost exceeds 40% of unit replacement cost, flag for capital replacement evaluation per W1553",
+     "duration": "1 hour/month",
+     "n": "4",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**PM compliance monitoring**: Rental Fleet Manager monitors PM compliance across 200 stores: (a) PM completion rate: % of scheduled PMs completed on time (target: ≥ 95%); (b) overdue PM alerts: units with overdue PM > 7 days — system blocks unit from rental availability until PM completed; (c) PM cost per unit by tool category — identify categories with abnormally high PM costs for potential fleet replacement; (d) quarterly PM compliance report to Category Manager and VP Merchandising",
+     "duration": "2 hours/month",
+     "n": "5",
+     "r": "Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1318",
+    "W1319",
+    "W139",
+    "W1553",
+    "W2"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-276"
+   ],
+   "fields": {
+    "Frequency": "~150–250 damage incidents/month chain-wide (~10–15% of rental returns have some damage beyond normal wear)",
+    "Owner": "Department Supervisor",
+    "Participants": "Department Supervisor, Stock Associate, Store Manager, Customer, Rental Fleet Manager, Customer Service Rep",
+    "Trigger": "Customer returns rental tool with visible damage beyond normal wear; or tool malfunction reported during rental period; or missing accessories/components at return",
+    "Volume": "~1,000–1,500 rentals/month; ~150–250 with damage assessment needed; ~30–50 with chargeable damage; ~5–10 with customer disputes"
+   },
+   "id": "W1555",
+   "level": 2,
+   "name": "Tool Rental Customer Damage Assessment, Repair Cost Recovery & Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checklist\" (replaces manual Step 1).",
+     "- System auto-capture of \"center if major per W1554\" (replaces manual Step 2).",
+     "- System auto-document of \"documented in system for pattern analysis\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight's rental tools are used by customers of varying skill levels in uncontrolled job site conditions. Despite the safety briefing per W1319 and liability waiver per W1319 Step 3, tools are returned with damage ranging from minor cosmetic wear (acceptable) to significant functional damage (broken handles, cracked housings, burnt motors from overload, missing guards, water-damaged electrical components). The liability waiver authorizes BuildRight to deduct repair costs from the customer's deposit, but the assessment must be fair, consistent, and well-documented to maintain customer relationships. Disputes arise when customers believe damage was pre-existing, the tool was defective, or the damage constitutes normal wear. This workflow standardizes the damage assessment process, cost recovery, and dispute resolution — balancing asset protection with customer satisfaction."
+    ],
+    "Controls": [
+     "- CTL-276 (ensure controlled execution — Tool Rental & Equipment (PA-12.2).)",
+     "- operational: Department Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Pre-existing damage ambiguity**: if pre-rental photos are incomplete or missing, it is difficult to prove damage occurred during the rental period; Store Manager may waive charge rather than risk customer dispute — disciplined photo capture at checkout is essential",
+     "- **Customer relationship damage**: charging a trade customer PHP 15,000 for a damaged jackhammer may save the asset but lose a customer spending PHP 300K/year; Store Managers need latitude to make commercial judgments for high-value accounts",
+     "- **Repair cost estimation accuracy**: Department Supervisors may underestimate or overestimate repair costs; standardized cost templates per tool category mitigate but cannot capture all scenarios",
+     "- **Legal exposure**: a customer who refuses to pay damage charges and claims the waiver is unenforceable under Philippine consumer protection law (RA 7394); Legal Counsel provides guidance on waiver enforceability"
+    ],
+    "Staffing Implication": [
+     "- Department Supervisors: ~15–20 min per damage assessment × ~150–250/month = ~40–80 hours/month chain-wide (~12 min/store/month). Absorbed.",
+     "- Store Managers: ~15 min per dispute × ~5–10/month = ~1–2.5 hours/month chain-wide. Absorbed.",
+     "- Rental Fleet Manager: ~2 hours/month on pattern analysis. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pre-rental and return photo capture system linked to rental transaction (W1555.1)",
+     "- Standardized return checklist with damage classification categories (W1555.1)",
+     "- Damage assessment report generator with cost estimation templates per tool category (W1555.2)",
+     "- Customer deposit deduction and additional charge processing at POS (W1555.3)",
+     "- Dispute case management with escalation levels and resolution tracking (W1555.4)",
+     "- Damage pattern analysis dashboard (W1555.5)",
+     "- Integration with W139 (rental operations), W1319 (safety briefing & waiver), W1554 (PM), W1553 (fleet planning)"
+    ],
+    "Time Estimate": [
+     "- Per damage assessment: 15–30 min",
+     "- Per dispute: 15–30 min",
+     "- Monthly pattern analysis: 2 hours",
+     "- **Annual estimate: ~600–1,200 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "**Return inspection**: Upon tool return per W139: (a) Stock Associate conducts standardized return checklist: (i) compare tool condition against pre-rental condition photos (taken at W139.3 checkout — 4 photos: front, back, left side, right side plus close-ups of any pre-existing damage), (ii) power test: plug in and run for 30 seconds — check for unusual noise, vibration, sparking, or overheating, (iii) accessory check: all included accessories present (blades, bits, hoses, guards, carrying case), (iv) cleanliness: tool returned in reasonable condition (excessive concrete/mud/paint requires cleaning fee); (b) classify damage: (i) Normal Wear — minor scratches, paint chips, faded labels; no charge, (ii) Chargeable Damage — broken handle, cracked housing, burnt smell (motor overload), missing guard, water damage; proceed to Step 2, (iii) Total Loss — tool destroyed, stolen, or unrepairable; proceed to Step 3",
+     "duration": "5–10 min",
+     "n": "1",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "**Damage assessment & cost estimate**: For chargeable damage: (a) Department Supervisor assesses repair scope: (i) parts needed (reference manufacturer parts list), (ii) labor estimate (internal repair if minor, authorized service center if major per W1554), (iii) total repair cost estimate; (b) compare repair cost vs. tool replacement value: (i) if repair cost < 50% of replacement: charge repair cost, (ii) if repair cost > 50% of replacement: charge replacement value (total loss); (c) system generates damage assessment report with photos, cost estimate, and customer charge",
+     "duration": "15–20 min",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Customer notification & charge**: (a) Department Supervisor informs customer of damage finding and estimated charge: (i) show pre-rental vs. return photos for comparison, (ii) explain damage classification (normal wear vs. chargeable), (iii) present cost estimate; (b) if customer accepts: deduct from deposit held per W139; if damage exceeds deposit: customer pays difference at POS; (c) if customer disputes: proceed to Step 4",
+     "duration": "10–15 min",
+     "n": "3",
+     "r": "Department Supervisor / Customer"
+    },
+    {
+     "a": "COO",
+     "activity": "**Dispute resolution**: If customer disputes damage charge: (a) Level 1 (Store Manager): Store Manager reviews photos, damage assessment, and rental history; mediates between Department Supervisor and customer; may offer compromise (split cost 50/50 as goodwill for loyal trade customers); (b) Level 2 (Rental Fleet Manager): if unresolved at store level, Rental Fleet Manager reviews case remotely — examines pre-rental photos, maintenance history per W1554 (was tool already in declining condition?), and customer rental history (first-time damage or repeat offender?); (c) Level 3 (COO): for high-value disputes (> PHP 10,000) or threats of legal action; COO makes final decision — may waive charge to preserve major trade account relationship; (d) all dispute resolutions documented in system for pattern analysis",
+     "duration": "15–30 min per dispute",
+     "n": "4",
+     "r": "Store Manager / Rental Fleet Manager / COO"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Pattern analysis & chronic offender management**: Monthly: (a) Rental Fleet Manager analyzes damage incident data: (i) damage rate by tool category (which tools get damaged most?), (ii) damage rate by store (do some stores have higher damage rates — indicating lax pre-rental inspection?), (iii) repeat damage offenders (customers with 2+ damage incidents in 12 months); (b) for repeat offenders: (i) first incident: standard charge, (ii) second incident: standard charge + mandatory demonstration per W1319 Step 5 regardless of experience, (iii) third incident: increased deposit (double standard) or rental privileges suspended for 6 months; (c) findings feed into W1553 fleet planning (tools with chronic damage may indicate quality issues requiring fleet replacement)",
+     "duration": "2 hours/month",
+     "n": "5",
+     "r": "Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1319",
+    "W139",
+    "W1553",
+    "W1554"
+   ]
+  }
+ ]
+}

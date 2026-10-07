@@ -1,0 +1,1722 @@
+{
+ "process_area": {
+  "id": "PA-06.2",
+  "title": "Fleet & Driver Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-06-logistics-fleet/PA-06.2-fleet-and-driver-management.md",
+ "value_stream": {
+  "directory": "VS-06-logistics-fleet",
+  "id": "VS-06",
+  "name": "Logistics & Fleet"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Per-vehicle: every 10,000 km or 6 months (whichever comes first); ~20% owned fleet (40 trucks) + 80% third-party (160 trucks, third-party maintenance outside scope)",
+    "Owner": "Fleet Maintenance Supervisor",
+    "Participants": "Fleet Maintenance Supervisor, Mechanic, Parts Coordinator, Logistics Planner, Finance (capex approval for major services)",
+    "Trigger": "Vehicle odometer or engine-hours threshold reached; or calendar-based service interval due",
+    "Volume": "~40 owned trucks × 2–3 services/year = ~80–120 preventive maintenance (PM) events/year; ~7–10 PM events/month"
+   },
+   "id": "W1348",
+   "level": 2,
+   "name": "Fleet Vehicle Preventive Maintenance Scheduling, Work Order & Parts Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews upcoming PM schedule against delivery dispatch plan\" (replaces manual Step 2).",
+     "- System auto-validate of \"creates digital PM work order\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's owned fleet (~40 trucks, a mix of 10-wheeler wing vans and 6-wheeler trucks) transports merchandise from 4 DCs to 200 stores. Vehicle breakdowns during delivery routes cause missed replenishment windows, spoiled perishable/seasonal shipments, and emergency 3PL spot-hire costs at premium rates. Preventive maintenance scheduling must balance vehicle availability against service needs, especially during peak seasons when all trucks are fully deployed."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: Fleet Maintenance Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- PM scheduling conflicts with peak delivery periods: during Q4 ber-months and bi-monthly sale events, taking a truck offline for PM reduces delivery capacity when demand is highest; Supervisors may defer PM, increasing breakdown risk",
+     "- Parts availability for older trucks: BuildRight's fleet includes trucks of varying age; parts for older models may have longer lead times or be discontinued, forcing emergency sourcing at premium prices",
+     "- Inconsistent mechanic findings documentation: if mechanics do not thoroughly document wear patterns during PM inspections, emerging issues (e.g., brake lining approaching minimum thickness) are missed, leading to on-road failures"
+    ],
+    "Staffing Implication": [
+     "- 1 Fleet Maintenance Supervisor (dedicated role) manages PM scheduling, work orders, and parts coordination across all 4 DC locations; ~6–8 hours/week on PM activities",
+     "- 2 Mechanics (full-time, split across DC3 Laguna and DC1 Davao, the two largest operations) handle 7–10 PM events/month plus ad-hoc repairs; each mechanic can handle ~3–4 PM events/week",
+     "- 1 Parts Coordinator (shared with general DC supplies procurement) dedicates ~4 hours/month to PM parts management",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics integration (W199) for odometer/engine-hours tracking",
+     "- Automated PM alert generation with threshold configuration",
+     "- Digital work order creation, assignment, and completion tracking",
+     "- Parts inventory management for commonly stocked maintenance items (filters, belts, brake pads, fluids)",
+     "- Vehicle maintenance history log with cost accumulation per vehicle",
+     "- Fleet availability status feed to dispatch planning (W196)",
+     "- Finance integration for maintenance cost recording against vehicle fixed asset"
+    ],
+    "Time Estimate": [
+     "- PM scheduling: 30 min/week for Fleet Maintenance Supervisor",
+     "- Work order creation: 15 min × 7–10 PM events/month = ~2 hours/month",
+     "- Parts coordination: 30 min × 7–10 PM events/month = ~4 hours/month",
+     "- Mechanic labor: 4–8 hours × 7–10 PM events/month = ~28–80 hours/month (≈0.2–0.5 FTE of mechanic capacity; the balance on ad-hoc repairs)",
+     "- Work order review: 15 min × 7–10 events/month = ~2 hours/month",
+     "- Total: ~35–90 hours/month depending on service complexity"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System tracks vehicle odometer and engine-hours via telematics (W199); auto-generates PM alert when threshold is within 500 km or 2 weeks of due date",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Fleet Maintenance Supervisor reviews upcoming PM schedule against delivery dispatch plan; selects service window that minimizes fleet impact (typically between dispatch waves or on low-demand days)",
+     "duration": "30 min/week",
+     "n": "2",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Fleet Maintenance Supervisor creates digital PM work order: standard service checklist (oil change, brake inspection, tire rotation, fluid top-up, belt/hose inspection, electrical system check)",
+     "duration": "15 min/work order",
+     "n": "3",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Parts Coordinator checks parts availability for scheduled PM items; orders parts if not in stock from approved automotive suppliers (lead time: 2–5 days for common parts)",
+     "duration": "30 min/work order",
+     "n": "4",
+     "r": "Parts Coordinator"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Mechanic performs PM per work order checklist; records findings, parts used, and labor hours in system; flags any issues requiring follow-up repair",
+     "duration": "4–8 hours/truck",
+     "n": "5",
+     "r": "Mechanic"
+    },
+    {
+     "a": "—",
+     "activity": "Fleet Maintenance Supervisor reviews completed work order; approves or schedules follow-up repair for flagged issues; updates vehicle maintenance history",
+     "duration": "15 min/work order",
+     "n": "6",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance receives completed work order with parts and labor costs; processes vendor payment for externally sourced parts; records maintenance cost against vehicle asset",
+     "duration": "Per W7",
+     "n": "7",
+     "r": "Finance (AP)"
+    },
+    {
+     "a": "—",
+     "activity": "System updates vehicle availability status back to \"active\" in dispatch planning module",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W196",
+    "W199",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "~40 owned trucks × 10–18 tires per truck = ~400–720 tires under management; average replacement every 60,000–80,000 km or 2–3 years per tire; ~150–200 tire replacements/year",
+    "Owner": "Fleet Maintenance Supervisor",
+    "Participants": "Mechanic, Driver (pre-trip inspection), Parts Coordinator, Tire Supplier, Finance (AP)",
+    "Trigger": "Tire tread depth reaches minimum threshold (3 mm for steer axles, 2 mm for drive/trailer axles per Philippine LTO regulations); or tire age exceeds 5 years; or tire damage detected during pre-trip inspection",
+    "Volume": "~12–17 tire replacements/month across owned fleet"
+   },
+   "id": "W1349",
+   "level": 2,
+   "name": "Fleet Tire Lifecycle Management, Tread Monitoring & Replacement Scheduling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks tire condition, notes any visible damage\" (replaces manual Step 1).",
+     "- System auto-record of \"records readings per tire position\" (replaces manual Step 2).",
+     "- System auto-log of \"logs tread depth readings by tire ID\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Tires represent a significant operating cost for BuildRight's owned fleet of 40 trucks navigating Philippine provincial roads, which include rough concrete, unpaved construction site access roads, and occasional flood-damaged surfaces. Tire failures during delivery cause route delays, potential cargo damage, and safety hazards. Systematic tread monitoring and proactive replacement scheduling prevents roadside failures and optimizes tire spend by replacing tires at the optimal point in their wear lifecycle — not too early (wasting remaining tread life) and not too late (risking blowout)."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: records and physical inventory indicate potential theft or unrecorded replacements"
+    ],
+    "Pain Points / Risks": [
+     "- Premature tire wear from provincial road conditions: roads to construction sites and provincial stores accelerate tire degradation beyond standard wear models, making remaining-life predictions inaccurate",
+     "- Retreading quality varies among Philippine retreading shops; a poorly retreaded tire may fail within weeks, negating the ~40–50% cost savings vs. new tire and creating safety liability",
+     "- Tire theft or substitution: with ~400–720 tires in circulation across 4 DCs and multiple maintenance bays, tracking individual tire assets requires disciplined serial number management; discrepancies between system records and physical inventory indicate potential theft or unrecorded replacements"
+    ],
+    "Staffing Implication": [
+     "- Fleet Maintenance Supervisor: ~2 hours/month on tire forecast review; absorbed within existing fleet management duties",
+     "- Mechanics: tire replacement and measurement absorbed within ~28–80 hours/month PM capacity",
+     "- Parts Coordinator: ~30 min/month on tire procurement; minimal incremental effort",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tire inventory register with serial number, position assignment, purchase date, and mileage accumulation",
+     "- Tread depth logging per tire ID with trend analysis and remaining-life calculation",
+     "- Automated replacement alert generation based on tread depth, age, or mileage thresholds",
+     "- Integration with PM work order system (W1348) for scheduled tread measurement",
+     "- Supplier purchase order integration for tire procurement",
+     "- Tire cost tracking per vehicle for total cost of ownership analysis"
+    ],
+    "Time Estimate": [
+     "- Pre-trip tire inspection by driver: 5 min/truck/trip (absorbed in existing pre-trip routine)",
+     "- PM tread measurement: 15 min/truck × 40 trucks × 2–3 times/year = ~20–30 hours/year of mechanic time",
+     "- Monthly replacement forecast review: 2 hours/month × Fleet Maintenance Supervisor",
+     "- Tire replacement labor: 1–2 hours/truck × 12–17 replacements/month = ~12–34 hours/month",
+     "- Old tire disposition: 15 min/set × 12–17 sets/month = ~3–4 hours/month",
+     "- Total incremental: ~40–60 hours/month across all roles"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Driver performs pre-trip inspection: visually checks tire condition, notes any visible damage (cuts, bulges, uneven wear); reports concerns via driver mobile app",
+     "duration": "5 min/pre-trip",
+     "n": "1",
+     "r": "Driver"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "During scheduled PM (W1348), Mechanic measures tread depth on all tires using calibrated depth gauge; records readings per tire position (steer left, steer right, drive inner, drive outer, trailer positions)",
+     "duration": "15 min/truck",
+     "n": "2",
+     "r": "Mechanic"
+    },
+    {
+     "a": "—",
+     "activity": "System logs tread depth readings by tire ID; calculates remaining useful life based on wear rate trends; auto-generates replacement alert when tread approaches minimum threshold",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Fleet Maintenance Supervisor reviews tire replacement forecast monthly: groups replacement orders by DC to consolidate supplier deliveries; considers retreading for drive/trailer positions where casing integrity is good",
+     "duration": "2 hours/month",
+     "n": "4",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Parts Coordinator places tire order with approved tire supplier (Philippine distributors: Yokohama, Goodyear, Continental); arranges delivery to respective DC maintenance bay",
+     "duration": "30 min/order",
+     "n": "5",
+     "r": "Parts Coordinator"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Mechanic performs tire replacement or retreading; records old tire condition (tread depth, damage type, reason for removal) and new tire serial number/position",
+     "duration": "1–2 hours/truck (2–4 tires)",
+     "n": "6",
+     "r": "Mechanic"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Old tires evaluated for retreading potential, recycling, or disposal; serviceable casings sent to retreading partner; unserviceable tires disposed per DENR waste tire guidelines",
+     "duration": "15 min/set",
+     "n": "7",
+     "r": "Mechanic / Parts Coordinator"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance records tire replacement cost; capitalizes tires above PHP 5,000 per unit or expenses as maintenance consumable below threshold",
+     "duration": "Per W7",
+     "n": "8",
+     "r": "Finance (AP)"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1348",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Continuous monitoring; Monthly review",
+    "Owner": "Fleet Manager",
+    "Participants": "Driver, Fleet Manager, Safety Officer, HR",
+    "Trigger": "New driver onboarding; or monthly performance review cycle",
+    "Volume": "~250–300 company drivers"
+   },
+   "id": "W197",
+   "level": 2,
+   "name": "Driver Performance & Safety Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"tracks Driver License expiries and professional certifications\" (replaces manual Step 1).",
+     "- System auto-log of \"logs events\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: Fleet Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- LTO driver license compliance tracking — missed expiries create legal exposure",
+     "- Lalamove/Transportify competition for driver retention — gig economy poaches experienced drivers",
+     "- DOLE fatigue management regulations for drivers — maximum driving hours enforcement"
+    ],
+    "Staffing Implication": [
+     "~250–300 company drivers. Monthly scorecard generation ~30 min each = ~125–150 hours/month. 1 Fleet Manager + 1 Safety Officer. Absorbed."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics / GPS provider API integration (Step 2)",
+     "- Driver Mobile App — safety alerts and coaching notifications",
+     "- HR Module (W72) — disciplinary and counseling workflows",
+     "- Fleet Dashboard — Driver Safety KPIs"
+    ],
+    "Time Estimate": [
+     "~30 min/driver/month for scorecard; daily incident review ~20 min/session; monthly review cycle ~3–4 hours per DC.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Manager",
+     "activity": "**Licensing & Compliance**: System tracks Driver License expiries and professional certifications (e.g., Hazmat for paint)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Safety Monitoring**: Telematics system logs events: Harsh braking, over-speeding, idling, and unauthorized stops",
+     "duration": "Real-time",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Incident Review**: Safety Officer reviews telematics alerts daily; conducts \"Coaching Session\" for frequent offenders",
+     "duration": "20 min",
+     "n": "3",
+     "r": "Safety Officer"
+    },
+    {
+     "a": "—",
+     "activity": "**Performance Scoring**: Monthly \"Driver Scorecard\" based on: On-time delivery %, fuel efficiency (km/L), and safety incidents",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Rewards/Discipline**: High scorers eligible for \"Safety Bonus\"; low scorers trigger HR counseling (W72)",
+     "duration": "Monthly",
+     "n": "5",
+     "r": "Fleet Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W72"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-178"
+   ],
+   "fields": {
+    "Frequency": "Ongoing",
+    "Owner": "Fleet Accountant",
+    "Participants": "Driver, Gas Station (Vendor), Fleet Accountant, Finance",
+    "Trigger": "Fueling event; or end of month",
+    "Volume": "~PHP 10M–15M monthly fuel spend"
+   },
+   "id": "W198",
+   "level": 2,
+   "name": "Fuel Management & Consumption Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters odometer reading at pump\" (replaces manual Step 1).",
+     "- System auto-file of \"file of all transactions\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculate actual km/L\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-178 (ensure fleet compliance & freight-cost integrity.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- Philippine fuel price volatility (PHP/USD + VAT impact) — budget variances of 5-10% monthly",
+     "- Fuel siphoning and card misuse — detection relies on odometer accuracy and driver honesty",
+     "- Insurance claims for fleet accidents — fuel-related incidents complicate claim processing"
+    ],
+    "Staffing Implication": [
+     "PHP 10-15M monthly fuel spend. Daily reconciliation automated. Monthly investigation ~10–15 flagged transactions × 1 hour each. 1 Fleet Accountant. Absorbed."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fuel Card provider data integration — Shell/Petron daily electronic file (Step 2)",
+     "- Fleet Dashboard — fuel KPIs (km/L, cost-per-km, exception count)",
+     "- Integration with W123 (Fraud Protocol) for confirmed fuel siphoning cases",
+     "- Integration with W7 (AP Payment) for monthly fuel invoice processing"
+    ],
+    "Time Estimate": [
+     "Daily reconciliation automated; monthly investigation ~10–15 hours; payment processing per W7.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Fueling**: Driver uses company Fuel Card; enters odometer reading at pump",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Driver"
+    },
+    {
+     "a": "Fleet Accountant",
+     "activity": "**Data Integration**: Fuel vendor (Shell/Petron) sends daily electronic file of all transactions",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Reconciliation**: System matches fuel transaction to vehicle and compares odometer jump vs. fuel volume to calculate actual km/L",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Fleet Accountant",
+     "activity": "**Exception Alert**: System flags anomalies: (a) Fuel volume > Tank capacity; (b) Low km/L (potential fuel siphoning); (c) Fueling far from assigned route",
+     "duration": "Real-time",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Investigation**: Fleet Manager investigates flagged transactions; if fraud confirmed, trigger W123 (Fraud Protocol)",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Payment**: Finance processes monthly fuel invoice; system allocates costs to specific vehicles and cost centers",
+     "duration": "Per W7",
+     "n": "6",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W123",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Real-time",
+    "Owner": "DC Dispatch",
+    "Participants": "DC Dispatch, Customer Service, Customer",
+    "Trigger": "Vehicle starts trip",
+    "Volume": "Continuous tracking of ~100–150 active delivery vehicles daily"
+   },
+   "id": "W199",
+   "level": 2,
+   "name": "Fleet Telematics & Real-Time Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"tracking\" (replaces manual Step 1).",
+     "- System auto-calculate of \"recalculates Estimated Time of Arrival\" (replaces manual Step 2).",
+     "- System auto-log of \"logs\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: DC Dispatch continuous monitoring with delay/breakdown alert handling and carrier escalation"
+    ],
+    "Pain Points / Risks": [
+     "- Telematics GPS accuracy in provincial/remote areas — dead zones delay ETA updates",
+     "- MMDA truck ban hours in Metro Manila — real-time rerouting needed when ban starts",
+     "- Insurance claims for fleet accidents — telematics data required as evidence",
+     "- DOLE fatigue management regulations for drivers — telematics idle/stop data used for compliance"
+    ],
+    "Staffing Implication": [
+     "Real-time monitoring. 1 DC Dispatch per shift per DC (~10 FTE across 4 DCs). Continuous monitoring absorbed into dispatch role."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics / GPS provider API integration (Step 1)",
+     "- Customer-facing SMS/App — ETA notifications and delivery tracking",
+     "- Fleet Dashboard — live map, vehicle status, delay alerts",
+     "- Integration with W188 (Preventive Maintenance) — odometer-triggered work orders",
+     "- Integration with W196 (Route Planning) — dynamic rerouting on delays"
+    ],
+    "Time Estimate": [
+     "Continuous monitoring during active shifts (absorbed into dispatch role); geofence alert handling ~5 min/event.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**GPS Tracking**: System tracks vehicle location, speed, and status (moving/stopped/idle)",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Dynamic ETA**: System recalculates Estimated Time of Arrival (ETA) based on live traffic; updates customer via SMS/App",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Geofencing**: System alerts DC Dispatch when vehicle arrives at or leaves a store/customer site; logs \"Time on Site\"",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Dispatch Dashboard**: DC Dispatch monitors all active vehicles on map; identifies delays or breakdowns",
+     "duration": "Continuous",
+     "n": "4",
+     "r": "DC Dispatch"
+    },
+    {
+     "a": "—",
+     "activity": "**Maintenance Integration**: Odometer data from telematics auto-triggers \"Preventive Maintenance\" in W188 when thresholds reached",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W188",
+    "W196"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "~10–15 incidents/month across fleet",
+    "Owner": "Fleet Safety Officer",
+    "Participants": "Driver, Fleet Manager, Insurance Claims Coordinator, LP Analyst, HR Business Partner (if driver injury)",
+    "Trigger": "Vehicle accident, cargo damage incident, or third-party property damage during delivery operations",
+    "Volume": "~2–4 per week"
+   },
+   "id": "W653",
+   "level": 2,
+   "name": "Fleet Accident & Incident Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks for injuries, calls emergency services if needed, notifies Fleet Manager…\" (replaces manual Step 1).",
+     "- System workflow notification of \"contact, vehicle details, insurance\" (replaces manual Step 2).",
+     "- System auto-file of \"files police report at nearest PNP station\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: Fleet Safety Officer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Driver panic or flight from accident scene; third-party fraud (staged accidents); evidence collection quality varies by driver composure; insurance claim processing delays in Philippine insurance market; cargo damage claims with customer impact during peak season"
+    ],
+    "Staffing Implication": [
+     "- **Fleet Safety Officer**: ~2 hours/month on incident analytics + ad-hoc investigation time (varies by incident frequency). Absorbed within existing safety role.",
+     "- **Fleet Manager**: per-incident response time varies; ~2–4 hours per moderate/major incident for recovery coordination. Absorbed within existing role.",
+     "- **Insurance Claims Coordinator**: ~1–2 weeks per claim tracking. Absorbed within existing insurance/finance role.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet telematics (W199), incident reporting mobile app, insurance claims module (W610), driver management (W197), repair work order system"
+    ],
+    "Time Estimate": [
+     "- Scene management: 1–2 hours; investigation: 3 days; claim resolution: 1–2 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Safety Officer",
+     "activity": "Driver activates incident protocol: stops vehicle, secures scene, checks for injuries, calls emergency services if needed, notifies Fleet Manager via mobile app within 15 minutes",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Driver"
+    },
+    {
+     "a": "Fleet Safety Officer",
+     "activity": "Driver collects evidence: photographs of vehicle damage, third-party vehicle/property damage, road conditions, cargo condition; obtains third-party information (name, contact, vehicle details, insurance); identifies witnesses; does NOT admit fault",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Driver"
+    },
+    {
+     "a": "Fleet Safety Officer",
+     "activity": "For accidents with injuries or significant property damage: Driver files police report at nearest PNP station; obtains police blotter reference number",
+     "duration": "1–2 hours",
+     "n": "3",
+     "r": "Driver"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Fleet Safety Officer receives incident report; classifies severity (Minor: cosmetic damage only, Moderate: functional damage, cargo affected, Major: injury, total loss, third-party claim); activates appropriate response level",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Fleet Safety Officer"
+    },
+    {
+     "a": "Fleet Safety Officer",
+     "activity": "Fleet Manager arranges: vehicle recovery/towing if undrivable, cargo salvage/transfer to backup vehicle for delivery completion, driver medical assessment if injured",
+     "duration": "2–4 hours",
+     "n": "5",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Insurance Claims Coordinator initiates insurance claim per W610: submits incident report with evidence, obtains repair estimate from accredited shop, tracks claim to settlement",
+     "duration": "1–2 weeks",
+     "n": "6",
+     "r": "Insurance Claims Coordinator"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Fleet Safety Officer conducts investigation: reviews telematics data (speed, braking, location), driver history, route conditions; determines root cause (driver error, vehicle failure, third-party fault, road hazard); classifies preventability",
+     "duration": "3 days",
+     "n": "7",
+     "r": "Fleet Safety Officer"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "For preventable accidents: Fleet Manager applies progressive discipline per driver safety program (W197); assigns remedial training; adjusts driver safety score",
+     "duration": "Per W197",
+     "n": "8",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Monthly: Fleet Safety Officer produces incident analytics: incident rate per 100,000 km, preventability rate, cost per incident, trend by driver/route/vehicle/time; feeds driver performance dashboard (W197)",
+     "duration": "2 hours/month",
+     "n": "9",
+     "r": "Fleet Safety Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W197",
+    "W199",
+    "W610"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "~20–30 new driver hires/year (turnover replacement); all drivers recertified annually",
+    "Owner": "Fleet Safety Officer",
+    "Participants": "Fleet Manager, HR Business Partner, Training Facilitator, Driver",
+    "Trigger": "New driver hire; annual recertification requirement; triggered by safety event requiring retraining",
+    "Volume": "~30–50 drivers (owned fleet); additional 3PL driver coordination"
+   },
+   "id": "W654",
+   "level": 2,
+   "name": "Driver Onboarding, Training & Certification",
+   "parent": null,
+   "req_refs": [
+    "COM-001"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-test of \"HR Business Partner confirms driver hire per recruitment process\" (replaces manual Step 1).",
+     "- System auto-validate of \"check-in/check-out procedures, fuel card usage\" (replaces manual Step 2).",
+     "- System auto-route of \"route familiarization, LGU truck ban awareness\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: Fleet Safety Officer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Professional driver license fraud in the Philippines; mentor availability during peak season; 1-week ride-along creates temporary capacity reduction; driver training attrition (hires leaving after training investment); limited training infrastructure at DC locations"
+    ],
+    "Staffing Implication": [
+     "- **Fleet Safety Officer**: primary trainer for onboarding and recertification; ~2 days per new hire + ~1 day/driver annual recert. With 20–30 new hires/year and 30–50 drivers recertifying, this represents ~70–110 training days/year. Dedicated training role within fleet operations.",
+     "- **Mentor Drivers**: 1-week ride-along per new hire; rotates among experienced drivers. Impact on normal delivery capacity during ride-along period.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet management module, driver qualification database, training module (W51), telematics (W199), HR module (employment records)"
+    ],
+    "Time Estimate": [
+     "- New hire: 2 days classroom + 1 week ride-along + 0.5 day assessment; annual recert: 1 day; remedial: 1–2 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Manager",
+     "activity": "HR Business Partner confirms driver hire per recruitment process (W15); verifies professional driver's license (restriction code 2 or 3 for trucks), valid medical certificate, NBI clearance, and drug test result (per COM-001)",
+     "duration": "Per W15",
+     "n": "1",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Fleet Safety Officer conducts 2-day driver onboarding: Day 1 — company orientation, fleet policies, safety culture, incident reporting protocol (W653), drug and alcohol policy, customer service standards; Day 2 — vehicle familiarization, telematics system training (W199), mobile app operation, DC check-in/check-out procedures, fuel card usage (W198)",
+     "duration": "2 days",
+     "n": "2",
+     "r": "Fleet Safety Officer"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Fleet Manager assigns experienced driver mentor for 1-week ride-along program: route familiarization, LGU truck ban awareness (W431), DC and store delivery point familiarization, customer interaction coaching, live cargo handling practice",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Mentor Driver"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Fleet Safety Officer conducts supervised driving assessment: pre-trip inspection, driving evaluation (city, highway, loading dock maneuvers), post-trip inspection, cargo securing assessment; passes/fails based on scoring rubric (minimum 80%)",
+     "duration": "0.5 day",
+     "n": "4",
+     "r": "Fleet Safety Officer"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "For passing drivers: Fleet Manager activates driver in dispatch system (W196); assigns initial routes with mentor backup; issues fuel card, mobile device, PPE, and vehicle keys",
+     "duration": "0.5 day",
+     "n": "5",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Annual recertification: Fleet Safety Officer conducts refresher training (safety updates, new regulations, accident review from past year); supervised driving re-assessment; license and medical certificate renewal verification",
+     "duration": "1 day/driver",
+     "n": "6",
+     "r": "Fleet Safety Officer"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "For post-incident retraining: Fleet Safety Officer conducts targeted remedial training based on incident root cause (W653); specialized modules: defensive driving, hazmat transport, load securing, adverse weather driving; re-assessment before return to active duty",
+     "duration": "1–2 days",
+     "n": "7",
+     "r": "Fleet Safety Officer"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W15",
+    "W196",
+    "W198",
+    "W199",
+    "W431",
+    "W51",
+    "W653"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Vehicle acquisition: 5-10 per year; registration: annual per vehicle; insurance: annual renewal; disposal: 3-5 per year",
+    "Owner": "Fleet Manager",
+    "Participants": "VP Supply Chain, Finance, Procurement, Insurance Provider, LTO, External Dealer",
+    "Trigger": "Fleet expansion need (new store openings); vehicle end-of-life (mileage/age threshold); insurance renewal; annual registration",
+    "Volume": "~40 owned vehicles (20% of fleet); mixed fleet of owned and 3PL per model-company profile"
+   },
+   "id": "W799",
+   "level": 2,
+   "name": "Vehicle Acquisition, Registration, Insurance & Disposal Lifecycle Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route characteristics and volume per W196\" (replaces manual Step 1).",
+     "- System auto-capture of \"LTO Registration & Compliance\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews current coverage\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight operates approximately 40 owned trucks (20% of total fleet, per model-company profile) for DC-to-store delivery and inter-DC transfers. The remaining 80% of transport is handled by 3PL partners per W242. Each owned vehicle has a lifecycle from acquisition through registration, insurance, maintenance, and eventual disposal. Philippine vehicles require annual registration with the Land Transportation Office (LTO), emission testing per Clean Air Act, and comprehensive insurance including third-party liability. This workflow governs the full vehicle asset lifecycle."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: Fleet Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **LTO registration backlogs**: Philippine LTO offices often have processing backlogs; vehicles with pending registration cannot legally operate, disrupting delivery schedules",
+     "- **Emission testing failures**: older vehicles may fail emission testing, requiring engine overhaul before registration can proceed; unplanned cost and downtime",
+     "- **Insurance premium increases after claims**: fleet accident rate per W653 directly impacts insurance premiums; high claim frequency can increase premiums by 20-40%",
+     "- **Vehicle resale value depreciation**: Philippine truck resale values drop significantly after 8 years; early disposal (at 6-7 years) maximizes resale value but increases annual CAPEX",
+     "- **Parts availability for older vehicles**: manufacturers may discontinue parts for older models; maintenance costs and downtime increase as vehicles age past parts support",
+     "- **Driver abuse and vehicle damage**: driver behavior directly impacts vehicle lifespan; telematics per W199 and driver scorecard per W197 are critical for vehicle longevity"
+    ],
+    "Staffing Implication": [
+     "- **Fleet Manager**: ~8–12 hours/month on vehicle lifecycle management; absorbed by existing role",
+     "- **Fleet Admin**: ~4–6 hours/month on registration and insurance paperwork; absorbed by existing admin role",
+     "- **No incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet Master per W401 with vehicle specifications, lifecycle dates, and cost history",
+     "- LTO registration tracking with expiry alerts per W506",
+     "- Insurance policy management per W59 with renewal alerts",
+     "- Preventive maintenance scheduling per W188 with telematics integration per W199",
+     "- Fixed Asset module per W39 for depreciation, CAPEX, and disposal accounting",
+     "- Procurement integration per W224 for vehicle acquisition bidding",
+     "- Fuel management integration per W198 for total cost of ownership tracking",
+     "- Telematics integration per W199 for odometer-based PM triggers"
+    ],
+    "Time Estimate": [
+     "- Vehicle acquisition: 4-6 weeks per vehicle",
+     "- Annual registration: 1-2 days per vehicle × 40 vehicles = 40-80 days/year",
+     "- Insurance renewal: 1-2 weeks/year (all vehicles)",
+     "- PM scheduling: per W188 (ongoing)",
+     "- Vehicle disposal: 2-4 weeks per vehicle",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Vehicle Requirement & Acquisition**: When fleet expansion is needed: (a) Fleet Manager assesses vehicle type needed (6-wheeler, 10-wheeler, wing van) based on route characteristics and volume per W196; (b) Procurement issues RFP per W224 to authorized truck dealers (Isuzu, Hino, Mitsubishi Fuso); (c) evaluate bids on: purchase price, fuel efficiency, after-sales support, parts availability in Philippines, resale value; (d) Finance approves CAPEX per W21; (e) register new vehicle in Fleet Master per W401 with all specifications, purchase date, warranty terms",
+     "duration": "4-6 weeks per vehicle",
+     "n": "1",
+     "r": "Fleet Manager / Procurement"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**LTO Registration & Compliance**: All owned vehicles must be registered annually with LTO: (a) emission testing per Clean Air Act (RA 8749) at LTO-accredited testing center; (b) vehicle inspection at LTO; (c) compulsory third-party liability (CTPL) insurance; (d) LTO registration fee payment; (e) registration sticker and plate renewal; (f) system tracks registration expiry dates with 60-day advance alerts per W506; (g) vehicle cannot be operated with expired registration per Philippine law",
+     "duration": "1-2 days per vehicle",
+     "n": "2",
+     "r": "Fleet Admin"
+    },
+    {
+     "a": "VP Supply Chain / Finance",
+     "activity": "**Insurance Management**: Annual fleet insurance renewal: (a) Fleet Manager reviews current coverage: comprehensive, third-party liability, cargo insurance, acts of God (typhoon, flood); (b) obtain competitive quotes from insurance providers; (c) negotiate fleet discount based on claim history per W610; (d) ensure coverage meets BuildRight cargo liability requirements; (e) register insurance policy in system per W59 with expiry alerts; (f) add new vehicles to policy; remove disposed vehicles",
+     "duration": "1-2 weeks annual renewal",
+     "n": "3",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Preventive Maintenance Scheduling**: Fleet Manager schedules PM per W188 based on: (a) manufacturer-recommended intervals (mileage or time-based); (b) telematics data per W199 (actual odometer vs. PM threshold); (c) seasonal requirements (pre-typhoon inspection, post-typhoon undercarriage check); (d) safety-critical items: brakes, tires, steering, lights inspected every 10,000 km; (e) system auto-generates PM work orders when mileage threshold approaches; (f) vehicle grounded if PM overdue by >10%",
+     "duration": "Per W188 schedule",
+     "n": "4",
+     "r": "Fleet Manager / Mechanic"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Vehicle Disposal**: When vehicle reaches end-of-life (typically 8-10 years or 500,000 km): (a) Fleet Manager recommends disposal based on: maintenance cost trend, reliability history, resale value projection, safety risk; (b) Finance approves disposal per W39 fixed asset disposal; (c) remove vehicle registration from LTO; (d) cancel insurance coverage; (e) sell via competitive bid to used truck dealers; (f) or trade-in with dealer for new vehicle acquisition per Step 1; (g) remove from Fleet Master per W401; (h) book gain/loss on disposal per W39",
+     "duration": "2-4 weeks per vehicle",
+     "n": "5",
+     "r": "Fleet Manager / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W188",
+    "W196",
+    "W197",
+    "W198",
+    "W199",
+    "W21",
+    "W224",
+    "W242",
+    "W39",
+    "W401",
+    "W506",
+    "W59",
+    "W610",
+    "W653"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-178"
+   ],
+   "fields": {
+    "Frequency": "Quarterly performance reviews; annual contract renewal evaluation",
+    "Owner": "Logistics Manager",
+    "Participants": "Logistics Manager, 3PL Account Manager, Finance Manager, Procurement Manager, Fleet Supervisor",
+    "Trigger": "Quarterly (Q1/Q2/Q3/Q4) per contract SLA review schedule; or triggered by persistent service failures exceeding threshold",
+    "Volume": "~10–15 active 3PL contracts (80% of fleet is third-party per company profile)"
+   },
+   "id": "W1207",
+   "level": 2,
+   "name": "Third-Party Logistics (3PL) Provider Quarterly Performance Review & Contract Renewal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"System compiles quarterly 3PL scorecard for each active provider\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics Manager reviews each 3PL scorecard\" (replaces manual Step 2).",
+     "- System auto-review of \"review meeting with each 3PL Account Manager\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot operates a mixed fleet model: 20% owned and 80% third-party trucks. Third-party logistics providers handle the majority of outbound distribution (DC → store replenishment) and last-mile customer deliveries. With ~5,000 store replenishment orders and ~42,900 ecommerce deliveries per month, 3PL performance directly impacts store replenishment on-time rates (target ≥ 95%) and customer delivery SLA compliance. Quarterly performance reviews ensure carriers maintain service standards, identify improvement opportunities, and inform contract renewal or rebidding decisions. This workflow complements W197 (driver performance — owned fleet), W198 (fuel management), W653 (fleet accidents), and W1163 (3PL daily operations) by governing the strategic vendor relationship and contract lifecycle."
+    ],
+    "Controls": [
+     "- CTL-178 (ensure fleet compliance & freight-cost integrity.)",
+     "- operational: Logistics Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **3PL capacity crunch during peak seasons** (Q4 holiday, typhoon recovery) — carriers prioritize larger clients; BuildRight's regional coverage may be deprioritized by national 3PLs",
+     "- **Rate escalation disputes** — fuel surcharges, toll fee increases, and wage adjustments create contract friction; clear escalation clauses in contracts mitigate",
+     "- **Service degradation during transition** — switching 3PL providers introduces risk of missed deliveries during onboarding; parallel running with old and new provider recommended; mitigated by the Logistics Manager review and approval gate and operational: periodic reconciliation against source documents",
+     "- **Data visibility gaps** — smaller provincial 3PLs may lack GPS/telematics, limiting real-time tracking and scorecard accuracy",
+     "- **Single-provider dependency** — concentration of volume with 1–2 dominant 3PLs creates leverage risk during renewal negotiations; mitigated by the Logistics Manager review and approval gate and operational: periodic reconciliation against source documents"
+    ],
+    "Staffing Implication": [
+     "- Logistics Manager: ~30–45 hours/quarter for all 3PL reviews (10–15 providers × 2–3 hours each for preparation + meeting)",
+     "- Logistics Analyst: ~8 hours/quarter for scorecard compilation (automated with analyst validation)",
+     "- Finance Manager: ~1 hour/quarter for cost review",
+     "- No incremental headcount — absorbed by existing roles"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 3PL scorecard automated compilation from: delivery tracking system (W199 telematics), POD return tracking, invoice matching (W7), damage claim records (W653), truck ban compliance (W431)",
+     "- Vendor master with contract terms, rate tables, SLA targets, and renewal dates",
+     "- Procurement RFQ module for annual rebidding",
+     "- Integration with W1163 (3PL daily operations), W198 (fuel monitoring), W653 (accident management), W249 (demurrage), W431 (truck ban)"
+    ],
+    "Time Estimate": [
+     "- Per provider quarterly review: 2–3 hours preparation + 1–2 hours meeting = ~3–5 hours",
+     "- All providers per quarter: 10–15 × 3–5 hours = 30–75 hours",
+     "- Annual contract renewals: ~1–2 weeks per renewal event (typically 3–5 renewals per year)",
+     "- **Annual estimate: ~300–500 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "System compiles **quarterly 3PL scorecard** for each active provider: (a) on-time delivery rate (target ≥ 95% for store replenishment; ≥ 90% for customer delivery), (b) delivery damage rate (target < 0.5% of shipments), (c) invoice accuracy rate (target ≥ 98%), (d) vehicle utilization rate, (e) driver compliance with LGU truck ban hours per W431, (f) safety incident count, (g) POD (proof of delivery) return timeliness, (h) cost per delivery vs. contract rate, (i) escalation response time",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System / Logistics Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Logistics Manager reviews each 3PL scorecard; highlights providers below SLA thresholds; prepares quarterly review presentation with: scorecard summary, trend analysis (quarter-over-quarter), top issues, and recommended actions (continue, improvement plan, rebid)",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Logistics Manager conducts **quarterly business review meeting** with each 3PL Account Manager: (a) present scorecard results, (b) discuss root causes for below-threshold metrics, (c) agree on corrective actions and timelines, (d) review upcoming volume projections and capacity requirements, (e) discuss rate adjustments if triggered by contract escalation/de-escalation clauses",
+     "duration": "1–2 hours per provider",
+     "n": "3",
+     "r": "Logistics Manager / 3PL Account Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Manager reviews 3PL cost performance: (a) actual freight cost per ton-km vs. contract rate, (b) fuel surcharge reconciliation, (c) demurrage and detention charges per W249, (d) invoice discrepancy history; Finance Manager flags cost anomalies for Logistics Manager investigation",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "If 3PL provider fails to meet minimum SLA for 2 consecutive quarters: Logistics Manager initiates **improvement plan** with: (a) specific corrective actions, (b) 30-day remediation timeline, (c) weekly check-in calls, (d) consequence clause (contract termination if not remediated within 60 days)",
+     "duration": "2 hours",
+     "n": "5",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Annual contract renewal**: for contracts expiring within 90 days: (a) Procurement Manager issues RFQ to current provider and 2–3 alternative providers, (b) Logistics Manager provides volume forecast and service requirements, (c) Procurement Manager evaluates bids on: cost (40%), service quality track record (30%), capacity and coverage (20%), safety and compliance (10%), (d) VP Supply Chain approves award or re-award",
+     "duration": "1–2 weeks",
+     "n": "6",
+     "r": "Procurement Manager / Logistics Manager"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "System updates 3PL vendor master with renewed contract terms: new rates, SLA targets, capacity commitments, effective dates; deactivates expired contracts; Logistics Manager communicates any provider changes to DC Supervisors and Store Managers",
+     "duration": "30 min",
+     "n": "7",
+     "r": "Logistics Manager / System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "If contract awarded to new provider: Logistics Manager executes 3PL onboarding per W1163: system integration testing, driver badge issuance, route familiarization, and pilot runs before full cutover",
+     "duration": "2 weeks",
+     "n": "8",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1163",
+    "W197",
+    "W198",
+    "W199",
+    "W249",
+    "W431",
+    "W653",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Weekly reconciliation; monthly pool review; annual procurement cycle for RTP replenishment",
+    "Owner": "Logistics Planner / DC Operations Manager",
+    "Participants": "Store Manager, Receiving Clerk, 3PL Transport Coordinator, Procurement Specialist, Finance Controller",
+    "Trigger": "Scheduled — weekly RTP inventory reconciliation; monthly pool health review; ad-hoc triggered by RTP shortage at DC or store accumulation alert",
+    "Volume": "~2,000 RTP units (pallets, plastic totes, wire baskets) in circulation across 4 DCs and 200 stores; ~5,000 DC-to-store shipments per month using RTP"
+   },
+   "id": "W1256",
+   "level": 2,
+   "name": "Returnable Transport Packaging (RTP) Pool Management, Tracking & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan RTP on receiving and log returns\" (replaces manual Step 1).",
+     "- System auto-count of \"count and condition\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspect RTP condition at each return\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's DC-to-store distribution network moves ~5,000 replenishment shipments per month across 200 stores. Each shipment uses returnable transport packaging (RTP) — standardized plastic pallets, stackable totes for hardware/fasteners, wire baskets for lumber, and insulated containers for temperature-sensitive items (paint, chemicals). RTP represents a significant capital investment (~PHP 2,000–5,000 per unit) and is designed to be returned empty to the DC after each delivery cycle, reducing single-use cardboard and shrink-wrap costs by an estimated PHP 15–20M per year. However, RTP pool management is a persistent challenge in Philippine retail: (a) stores accumulate RTP and fail to return it promptly, creating DC shortages; (b) RTP is repurposed by store staff for in-store display or storage rather than returned; (c) 3PL transport partners may not load empty RTP on return trips, prioritizing loaded deliveries; (d) RTP damage rate is estimated at 5–8% per year due to rough handling, forklift damage, and UV degradation in outdoor lumber yards. This workflow manages the RTP pool lifecycle — tracking, reconciliation, return logistics, and replenishment procurement — to maintain adequate pool levels and minimize loss."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: Logistics Planner / DC Operations Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- RTP tracking accuracy depends on store scanning discipline — busy stores may skip RTP return scanning during peak hours",
+     "- 3PL drivers may not have space for empty RTP on return trips if truck is loaded with DSD vendor goods",
+     "- Plastic pallets degrade in Philippine heat and UV exposure — outdoor lumber yard storage accelerates degradation",
+     "- Stores may resist returning RTP if repurposed for in-store use (display risers, storage bins)",
+     "- Initial RTP capital investment is significant (~PHP 5–10M for 2,000 units) — ROI depends on loss rate staying below 10% per year"
+    ],
+    "Staffing Implication": [
+     "- DC Shift Supervisor: 2 hours/week on reconciliation",
+     "- Logistics Planner: 3 hours/month on pool health review",
+     "- Receiving Clerks: 10 min additional per delivery for RTP scanning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **WMS** — RTP tracking at DC level, inbound/outbound RTP count",
+     "- **Inventory Module** — store-level RTP on-hand tracking, return logging",
+     "- **Transport Planning Module** — driver RTP collection assignment, return trip loading",
+     "- **Procurement Module** — annual RTP purchase order, supplier management",
+     "- **BI Platform** — RTP pool dashboard, loss rate analytics, turnaround time tracking",
+     "- **Barcode/RFID** — RTP unit identification (barcode labels or RFID tags for automated counting)"
+    ],
+    "Time Estimate": [
+     "- Weekly reconciliation: 2 hours/week = 104 hours/year",
+     "- Monthly review: 3 hours/month = 36 hours/year",
+     "- Store RTP handling: 10 min × 5,000 deliveries/month = 50,000 min/month (~833 hours/month)",
+     "- **Annual estimate: ~10,100 person-hours/year** (mostly distributed across store receiving staff)",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Weekly RTP inventory reconciliation**: DC Operations team reconciles RTP pool inventory: (a) count RTP units at each DC (by type: pallets, totes, wire baskets); (b) query store-level RTP on-hand from system (stores scan RTP on receiving and log returns); (c) count RTP on 3PL trucks (in-transit); (d) calculate pool variance: total acquired – (DC on-hand + store on-hand + in-transit) = unaccounted loss; (e) investigate variances > 2% of total pool",
+     "duration": "2 hours/week",
+     "n": "1",
+     "r": "DC Shift Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Store RTP return enforcement**: When DC-to-store delivery is made, driver collects empty RTP from previous delivery: (a) driver scans returning RTP units with handheld — system matches to store's outstanding RTP balance; (b) store Receiving Clerk confirms RTP return count and condition; (c) system updates store RTP on-hand and DC RTP on-hand; (d) for stores with > 20 outstanding RTP units (accumulation threshold): system alerts Store Manager for mandatory return on next delivery; (e) stores with > 50 outstanding units for > 30 days: flagged to Regional Manager for action",
+     "duration": "10 min per delivery",
+     "n": "2",
+     "r": "Receiving Clerk / Driver"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Damaged RTP disposition**: Stores and DCs inspect RTP condition at each return: (a) **Grade A** (serviceable): clean, no cracks, all features functional — return to pool; (b) **Grade B** (repairable): cracked but structurally sound — send to DC for repair (plastic welding, wire straightening); (c) **Grade C** (unserviceable): broken, warped, contaminated — disposition as scrap per W443; (d) system tracks damage rate by store, DC, and 3PL partner; (e) stores with > 10% damage rate receive handling retraining",
+     "duration": "5 min per RTP return",
+     "n": "3",
+     "r": "Receiving Clerk / DC Quality Inspector"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Monthly pool health review**: Logistics Planner reviews RTP pool health: (a) total pool size vs. target (minimum 2,500 units for current volume); (b) utilization rate — % of pool in active circulation vs. idle at stores; (c) loss rate trend — unaccounted losses as % of total pool per month; (d) damage rate trend; (e) average RTP turnaround time (DC → store → DC return); (f) calculate replacement procurement need: estimated losses + estimated damage = new RTP procurement quantity",
+     "duration": "3 hours/month",
+     "n": "4",
+     "r": "Logistics Planner"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Annual RTP procurement**: Procurement Specialist executes annual RTP replenishment purchase: (a) determine procurement quantity based on pool health review; (b) obtain competitive quotes from RTP suppliers (minimum 3 quotes for > PHP 500,000 purchase); (c) submit capex/expense request per approval matrix (W21); (d) manage delivery of new RTP units to DCs; (e) update pool master with new unit count and supplier warranty terms",
+     "duration": "8 hours/year",
+     "n": "5",
+     "r": "Procurement Specialist"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W21",
+    "W443"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Monthly review; continuous system monitoring",
+    "Owner": "Fleet Maintenance Supervisor",
+    "Participants": "Fleet Maintenance Supervisor, HR Assistant, Driver, LTO",
+    "Trigger": "Monthly compliance review cycle; or LTO license expiration approaching (system alert at 60-day, 30-day, and 7-day thresholds)",
+    "Volume": "~40 owned-fleet drivers + ~15 DC spotter/yard drivers = ~55 drivers requiring valid professional driver's licenses (PDL); ~55 licenses tracked, with ~11 expirations/year under the LTO 5-year validity, on rolling monthly monitoring"
+   },
+   "id": "W1400",
+   "level": 2,
+   "name": "Driver License Expiration Monitoring, LTO Compliance & Renewal Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters new license data upon driver onboarding\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks driver license expiration dates daily\" (replaces manual Step 2).",
+     "- System auto-schedule of \"schedule LTO appointment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine law requires all professional drivers to hold a valid Professional Driver's License (PDL) issued by the Land Transportation Office (LTO). For BuildRight's owned fleet (40 trucks) and DC yard operations (15 spotter drivers), every driver must maintain a current PDL with the correct restriction code (RC 1–8 depending on vehicle type: RC-2 for 6-wheeler, RC-3 for 10-wheeler). Driving with an expired, suspended, or incorrect restriction code is a violation under Republic Act 4136 (Land Transportation and Traffic Code) and exposes BuildRight to criminal liability, insurance invalidation, and LTFRB penalties."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: downtime, long queues, and limited appointment slots"
+    ],
+    "Pain Points / Risks": [
+     "- **LTO processing delays**: Philippine LTO offices frequently experience system downtime, long queues, and limited appointment slots; a driver may not receive their renewed license before expiration despite starting the process 60 days in advance",
+     "- **Restriction code mismatches**: a driver licensed for RC-2 (up to 4,500 kg GVW) may be assigned to a 10-wheeler truck requiring RC-3; this is a criminal violation under RA 4136 and invalidates insurance coverage in the event of an accident",
+     "- **Driver non-compliance**: drivers may delay renewal due to cost, time, or negligence; the 60-day alert and dispatch block mitigates but requires enforcement discipline from Fleet Maintenance Supervisor",
+     "- **Fake or altered licenses**: risk of drivers presenting fraudulent PDLs, especially for newly hired drivers; LTO online verification portal should be checked during onboarding (W654)"
+    ],
+    "Staffing Implication": [
+     "- Fleet Maintenance Supervisor: ~1 hour/month on license compliance monitoring; absorbed within existing role",
+     "- HR Assistant: ~15 min/month on LTO violation verification; absorbed",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Driver master record in ERP: license number, restriction codes, expiration date, scanned license images (W1400.1, W1400.6)",
+     "- Automated expiration alert engine with 60/30/7-day thresholds and dashboard (W1400.2)",
+     "- Dispatch system integration: driver license status check before shipment assignment (W196, W1400.8)",
+     "- LTO compliance monthly report with rolling 90-day forward view (W1400.9)",
+     "- Integration with W654 (driver onboarding — initial license capture), W197 (driver performance — license suspension flag), W653 (fleet accident — license verification post-incident)"
+    ],
+    "Time Estimate": [
+     "- Initial driver master setup: 10 min/driver × 55 drivers = ~9 hours (one-time)",
+     "- Monthly compliance report: ~30 min/month",
+     "- Per-renewal tracking: ~25 min/driver (5 min notification + 10 min verification + 10 min scan/upload)",
+     "- At ~55 drivers with 5-year validity: ~11 renewals/year × 25 min = ~4.5 hours/year",
+     "- Total ongoing: ~1 hour/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System maintains driver license master record per driver: full name, LTO license number, PDL restriction codes, expiration date, Conduction Stick Number; Fleet Maintenance Supervisor enters new license data upon driver onboarding (W654) and upon renewal",
+     "duration": "10 min/driver",
+     "n": "1",
+     "r": "Fleet Maintenance Supervisor / System"
+    },
+    {
+     "a": "—",
+     "activity": "System automatically checks driver license expiration dates daily; generates alerts at 60-day (yellow), 30-day (orange), and 7-day (red) pre-expiration thresholds; dashboard shows all drivers sorted by days-to-expiration",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "At 60-day alert: Fleet Maintenance Supervisor notifies driver verbally and via SMS/email to begin LTO renewal process; driver instructed to schedule LTO appointment (walk-in or online via LTO portal)",
+     "duration": "5 min/driver",
+     "n": "3",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "At 30-day alert: Fleet Maintenance Supervisor sends written reminder to driver with copy to HR; HR verifies driver has not received any LTO notice of suspension or revocation; if driver has pending LTO violations, HR flags for resolution before renewal",
+     "duration": "10 min/driver",
+     "n": "4",
+     "r": "Fleet Maintenance Supervisor / HR Assistant"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Driver completes LTO renewal: (a) medical examination at LTO-accredited clinic, (b) written examination (if required per LTO rules), (c) practical driving test (if required), (d) biometrics and photo capture, (e) payment of renewal fee (~PHP 500–800)",
+     "duration": "1 day",
+     "n": "5",
+     "r": "Driver"
+    },
+    {
+     "a": "—",
+     "activity": "Driver returns with renewed PDL; Fleet Maintenance Supervisor verifies new license: validates restriction codes match assigned vehicle type, confirms new expiration date, scans and uploads front/back of renewed license to driver master record in ERP",
+     "duration": "10 min/driver",
+     "n": "6",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System updates driver master with new license details and resets expiration alert calendar",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "If driver fails to renew before expiration: system automatically flags driver as \"License Expired — Do Not Dispatch\"; dispatch system (W196) prevents assignment of any shipment to this driver; Logistics Manager notified for immediate action",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System / Logistics Planner"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Monthly: Fleet Maintenance Supervisor runs LTO compliance report showing all drivers with licenses expiring within 90 days, drivers with restriction code mismatches, and any drivers currently blocked from dispatch; submits report to Logistics Manager",
+     "duration": "30 min/month",
+     "n": "9",
+     "r": "Fleet Maintenance Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W196",
+    "W197",
+    "W653",
+    "W654"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Annual per vehicle; ~40 owned trucks; LTO registration is valid for 1 year for commercial vehicles",
+    "Owner": "Fleet Maintenance Supervisor",
+    "Participants": "Fleet Maintenance Supervisor, Logistics Planner, Finance (payment), LTO, Motor Vehicle Inspection Center (MVIC)",
+    "Trigger": "Annual vehicle registration expiration approaching (system alert at 60-day and 30-day thresholds); or new vehicle acquisition requiring initial LTO registration (W799)",
+    "Volume": "~40 registrations/year (~3–4 per month); 80% of fleet (160 trucks) is third-party and registered by the 3PL operator (outside BuildRight scope)"
+   },
+   "id": "W1401",
+   "level": 2,
+   "name": "Fleet Vehicle Annual LTO Registration Renewal & Motor Vehicle Inspection Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"record per owned truck\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks vehicle registration expiration dates\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspection appointment for the vehicle\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Under Republic Act 4136, all motor vehicles in the Philippines must be registered annually with the LTO. Commercial vehicles (trucks with gross vehicle weight above 4,500 kg) require a Motor Vehicle Inspection (MVI) from an LTO-accredited Private Motor Vehicle Inspection Center (PMVIC) before registration renewal. The inspection covers emissions, lights, brakes, tires, and structural integrity. Vehicles that fail inspection must be repaired and retested. Operating an unregistered vehicle carries fines of PHP 5,000–10,000, vehicle impoundment, and LTFRB penalties for commercial operators."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: registration/inspection docket with 60/30-day lead alerts; vehicles past due blocked from dispatch"
+    ],
+    "Pain Points / Risks": [
+     "- **PMVIC availability and cost**: PMVIC centers are limited in Philippine provinces; Mindanao (HQ region) has fewer centers than Metro Manila; inspection fees of PHP 1,500–2,500 per commercial vehicle add ~PHP 60,000–100,000/year for 40 trucks",
+     "- **Emission test failures for aging trucks**: older trucks (5+ years) frequently fail emission tests due to diesel engine wear; repair costs (injector calibration, turbocharger service, DPF cleaning) can reach PHP 30,000–80,000 per vehicle",
+     "- **LTO processing delays**: LTO offices experience system downtime and manual processing backlogs; a vehicle may be grounded for 1–2 weeks awaiting registration despite passing inspection",
+     "- **Third-party fleet compliance gap**: 80% of trucks are 3PL-operated; BuildRight cannot enforce LTO registration compliance on 3PL trucks contractually but bears the reputational and operational risk if a 3PL truck is impounded while carrying BuildRight cargo"
+    ],
+    "Staffing Implication": [
+     "- Fleet Maintenance Supervisor: ~2–5 days/month on vehicle registration compliance (3–4 vehicles/month × 6–10 hours each); primary responsibility absorbed within existing role",
+     "- Fleet Mechanic: repair time for failed inspections varies; ~10–20 hours/year for emission-related repairs across the fleet",
+     "- Finance: ~30 min/vehicle for payment processing of registration fees and PMVI fees; ~20 hours/year",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vehicle master record: plate number, MV File Number, registration expiry, GVW, body type (W1401.1)",
+     "- Automated registration alert engine with 60/30-day thresholds (W1401.2)",
+     "- Dispatch system integration: vehicle registration status check before shipment assignment (W196, W1401.10)",
+     "- PMVIC inspection result integration: electronic results from PMVIC to LTO and BuildRight ERP (W1401.4)",
+     "- Vehicle compliance monthly report (W1401.11)",
+     "- Integration with W1348 (preventive maintenance — pre-inspection roadworthiness), W799 (vehicle acquisition — initial registration), W653 (accident management — post-accident registration status), W198 (fuel management — only registered vehicles fuel at company pumps)"
+    ],
+    "Time Estimate": [
+     "- Per-vehicle renewal process: ~3.5–6.5 hours (PMVIC inspection 1–2 h + LTO processing 2–4 h + admin 30 min; steps 5 and 7 share one LTO visit) over 2–3 days (PMVIC inspection 1–2 hours + LTO processing 2–4 hours + admin 30 min + repair if failed: 1–5 additional days)",
+     "- Monthly compliance report: ~30 min/month",
+     "- Annual total for 40 vehicles: ~240–400 hours/year (including failed inspection rework)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System maintains vehicle master record per owned truck: plate number, conduction sticker number, MV File Number, current registration expiry date, gross vehicle weight (GVW), body type, engine number, chassis number; Fleet Maintenance Supervisor updates upon acquisition (W799) and upon each renewal",
+     "duration": "10 min/vehicle",
+     "n": "1",
+     "r": "Fleet Maintenance Supervisor / System"
+    },
+    {
+     "a": "—",
+     "activity": "System automatically checks vehicle registration expiration dates; generates alerts at 60-day (yellow) and 30-day (red) pre-expiration thresholds; dashboard shows all owned vehicles sorted by days-to-expiration",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "At 60-day alert: Fleet Maintenance Supervisor schedules PMVIC inspection appointment for the vehicle; ensures vehicle is in roadworthy condition per preventive maintenance schedule (W1348)",
+     "duration": "15 min/vehicle",
+     "n": "3",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Fleet Maintenance Supervisor",
+     "activity": "Vehicle undergoes PMVIC inspection: (a) emission test (opacity/smoke test for diesel vehicles per DENR-EMB standards), (b) headlamp aim and intensity test, (c) brake efficiency test (front, rear, and parking), (d) side slip test, (e) under-chassis visual inspection (steering, suspension, leaks), (f) tire tread depth measurement; test results transmitted electronically from PMVIC to LTO",
+     "duration": "1–2 hours",
+     "n": "4",
+     "r": "MVIC Technician"
+    },
+    {
+     "a": "—",
+     "activity": "If vehicle **passes** PMVIC inspection: Fleet Maintenance Supervisor proceeds to LTO for registration renewal; LTO system automatically receives electronic inspection results",
+     "duration": "2–4 hours (including LTO queue)",
+     "n": "5",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "If vehicle **fails** PMVIC inspection: Fleet Maintenance Supervisor receives deficiency report listing specific failures; schedules repairs with fleet mechanic or external service provider (W1348); vehicle is repaired and re-inspected within 30 days; vehicle must not be dispatched for commercial use until it passes re-inspection",
+     "duration": "1–5 days (repair + re-inspection)",
+     "n": "6",
+     "r": "Fleet Maintenance Supervisor / Mechanic"
+    },
+    {
+     "a": "—",
+     "activity": "LTO registration renewal: Fleet Maintenance Supervisor presents (a) current Certificate of Registration (CR), (b) Official Receipt (OR) of previous year's registration, (c) PMVIC electronic inspection result, (d) Compulsory Third Party Liability (CTPL) insurance certificate, (e) payment of registration fee and weighing fee (total ~PHP 2,000–5,000 depending on GVW); LTO issues new OR/CR sticker",
+     "duration": "2–4 hours",
+     "n": "7",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Fleet Maintenance Supervisor updates vehicle master record with new registration expiry date; scans and uploads new OR/CR; affixes new registration sticker to vehicle windshield",
+     "duration": "10 min/vehicle",
+     "n": "8",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System resets registration alert calendar for the vehicle; vehicle remains eligible for dispatch",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "If vehicle registration expires without renewal: system flags vehicle as \"Registration Expired — Do Not Dispatch\"; dispatch system (W196) prevents assignment; Logistics Manager notified for immediate action; vehicle physically grounded until renewed",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System / Logistics Planner"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Monthly: Fleet Maintenance Supervisor runs LTO vehicle compliance report showing all vehicles with registrations expiring within 90 days, vehicles currently grounded for registration issues, and any vehicles with pending PMVIC re-inspection",
+     "duration": "30 min/month",
+     "n": "11",
+     "r": "Fleet Maintenance Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1348",
+    "W196",
+    "W198",
+    "W653",
+    "W799"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Daily fuel card transactions (~80–120 fuelings/day across fleet); monthly reporting and reconciliation",
+    "Owner": "Fleet Maintenance Supervisor",
+    "Participants": "Fleet Maintenance Supervisor, Drivers, Logistics Manager, Finance Controller, Fuel Card Provider",
+    "Trigger": "Ongoing fleet operations; monthly fuel cost review cycle; fuel price increase events",
+    "Volume": "~40 owned + ~160 contracted 3PL delivery vehicles; ~PHP 3–5M/month fuel spend"
+   },
+   "id": "W1515",
+   "level": 2,
+   "name": "Delivery Vehicle Fuel Card Management, Consumption Tracking & Cost Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Fuel card issuance and setup\" (replaces manual Step 1).",
+     "- System auto-capture of \"enters current odometer reading at POS\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews daily exception report and investigates\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Fuel is typically the second-largest variable cost in BuildRight's distribution operations after driver wages. With ~200 delivery vehicles (40 company-owned + 160 3PL-contracted) making daily deliveries across 4 DC territories, monthly fuel consumption reaches ~120,000–180,000 liters of diesel. Philippine diesel prices fluctuate PHP 5–15/liter within a quarter due to VAT adjustments, global crude movements, and DOE-mandated Biofuel blend changes. Without centralized fuel card management, drivers purchase fuel with cash/petty cash at random stations, leading to: no consumption tracking, fuel theft (\"short-filling\" where driver buys PHP 2,000 fuel but logs PHP 3,000), inability to negotiate volume discounts with fuel companies, and unreliable cost-per-kilometer data for route optimization."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: daily km/L monitoring with GPS-track and fueling-location correlation"
+    ],
+    "Pain Points / Risks": [
+     "- **Fuel siphoning**: despite fuel card controls, drivers may siphon diesel from vehicle tanks after fueling; mitigated by daily km/L monitoring but hard to detect in real-time; GPS track + fueling location correlation reduces opportunity",
+     "- **3PL fleet compliance**: 3PL-contracted drivers may resist fuel card mandates (prefer cash purchases at smaller stations); contractual requirement for fuel card participation must be enforced during 3PL contract renewal",
+     "- **Rural station coverage**: approved fuel network (Petron, Shell, Caltex) has gaps in remote provincial areas where BuildRight stores operate; drivers may legitimately need to fuel at non-network stations, creating false exceptions",
+     "- **Price volatility**: PHP 5–15/liter quarterly swings make budget forecasting unreliable; a PHP 10/liter increase on 150,000 liters/month = PHP 1.5M/month unbudgeted cost"
+    ],
+    "Staffing Implication": [
+     "- Fleet Maintenance Supervisor: ~30–60 min/day on exception monitoring + 2–3 hours/month reconciliation = ~200–350 hours/year; absorbed within existing role (currently monitoring fuel informally)",
+     "- Finance Controller: 2–3 hours/month on fuel cost reporting; absorbed",
+     "- Logistics Manager: 4–6 hours/quarter on contract negotiation; absorbed",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fuel card management module: card issuance, limits, restrictions, driver-vehicle assignment (W1515.1)",
+     "- Transaction processing: real-time validation, odometer capture, anomaly detection (W1515.2)",
+     "- Exception monitoring dashboard: anomaly rules engine, daily exception report, GPS-fueling location overlay (W1515.3)",
+     "- Fleet analytics: per-vehicle km/L tracking, cost/km, benchmark comparison (W1515.4)",
+     "- GL integration: consolidated statement import, fuel expense reconciliation (W1515.5)",
+     "- Integration with W196 (Route Planning) for distance validation, W1315 (Vehicle Loading) for weight-adjusted consumption benchmarks"
+    ],
+    "Time Estimate": [
+     "- Initial setup: 20 min/vehicle × 200 vehicles = ~67 hours (one-time)",
+     "- Daily exception monitoring: 30–60 min/day = ~150–300 hours/year",
+     "- Monthly reconciliation: 2–3 hours/month = ~24–36 hours/year",
+     "- Monthly cost reporting: 2–3 hours/month = ~24–36 hours/year",
+     "- Quarterly negotiation: 4–6 hours/quarter = ~16–24 hours/year",
+     "- **Annual ongoing: ~215–400 hours (Fleet Maintenance Supervisor + Finance Controller)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "**Fuel card issuance and setup**: (a) Fleet Maintenance Supervisor assigns one fuel card per vehicle (owned fleet) or per driver (3PL fleet); (b) card configured with: (i) fuel type restriction (diesel only), (ii) daily transaction limit (PHP 3,000 for 6-wheeler, PHP 5,000 for 10-wheeler), (iii) allowed fuel station network (Petron, Shell, Caltex — negotiated discount agreement), (iv) odometer reading required at each transaction; (c) driver signs fuel card custody agreement acknowledging replacement fee for lost cards",
+     "duration": "20 min/vehicle (initial setup)",
+     "n": "1",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Daily fueling**: (a) driver fuels at approved station within network; (b) taps fuel card at pump; (c) enters current odometer reading at POS; (d) fuel card system validates: vehicle/driver match, daily limit not exceeded, station is in approved network; (e) transaction approved: fuel amount, liters, station ID, odometer, timestamp recorded",
+     "duration": "10–15 min/fueling",
+     "n": "2",
+     "r": "Driver"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "**Exception monitoring** (daily): (a) system flags anomalies: (i) fueling amount exceeds expected consumption for distance driven (liters/km > vehicle model average + 15%), (ii) fueling at non-network station, (iii) multiple fuelings in one day, (iv) odometer reading decreased (tampering), (v) fueling outside DC delivery zone; (b) Fleet Maintenance Supervisor reviews daily exception report and investigates: contacts driver, reviews route manifest, checks GPS track vs. fueling location",
+     "duration": "30–60 min/day",
+     "n": "3",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "**Monthly reconciliation**: (a) system calculates per-vehicle: total liters, total cost, average km/L, cost/km, total distance (from odometer delta); (b) Fleet Maintenance Supervisor compares actual km/L vs. vehicle model benchmark (e.g., 10-wheeler: 3.5–4.5 km/L diesel; 6-wheeler: 5–6 km/L); (c) flags vehicles with > 20% deviation from benchmark for maintenance check (fuel system issue) or driver counseling (driving behavior)",
+     "duration": "2–3 hours/month",
+     "n": "4",
+     "r": "Fleet Maintenance Supervisor"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Monthly fuel cost reporting**: (a) Finance Controller receives consolidated fuel card statement from provider; (b) reconciles against GL fuel expense postings; (c) calculates: (i) total fleet fuel cost, (ii) cost per DC territory, (iii) cost per delivery (fuel portion), (iv) volume discount earned; (d) Finance Controller and Logistics Manager review monthly fuel cost trends and budget variance",
+     "duration": "2–3 hours/month",
+     "n": "5",
+     "r": "Finance Controller / Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Quarterly fuel contract negotiation**: (a) Fleet Maintenance Supervisor compiles consumption data by station chain; (b) Logistics Manager negotiates volume discount agreement with top 2 fuel companies: (i) target 3–5% discount vs. pump price, (ii) priority lane access at high-traffic stations near DCs, (iii) quarterly rebate based on volume tiers",
+     "duration": "4–6 hours/quarter",
+     "n": "6",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1315",
+    "W196"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "~40–60 vehicle registrations/year (owned fleet of ~20% of total truck requirement); ~5–10 LTFRB renewals/year",
+    "Owner": "Fleet Manager",
+    "Participants": "Fleet Manager, Fleet Assistant, Logistics Planner, LTO/LTFRB liaison",
+    "Trigger": "Vehicle registration renewal due (annual); or LTFRB freight license renewal (every 3–5 years); or new vehicle acquisition",
+    "Volume": "Critical for BuildRight Logistics, Inc. owned fleet operations"
+   },
+   "id": "W1536",
+   "level": 2,
+   "name": "Fleet Vehicle Registration Renewal, LTO Compliance & LTFRB Cargo Freight License Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates automated alerts at 60 days and 30 days before each renewal due date\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspection preparation\" (replaces manual Step 2).",
+     "- System auto-capture of \"LTO transaction processing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Logistics, Inc. operates a fleet of owned vehicles (10-wheeler wing vans and 6-wheeler trucks) supplementing the 80% third-party truck fleet. Philippine Land Transportation Office (LTO) vehicle registration is mandatory and must be renewed annually based on the vehicle's plate number ending digit schedule. Failure to maintain current registration results in vehicle impoundment, fines, and supply chain disruption. For cargo freight operations, LTFRB (Land Transportation Franchising and Regulatory Board) requires a Certificate of Public Convenience (CPC) or franchise for hire-and-reward operations."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: downtime and processing backlogs"
+    ],
+    "Pain Points / Risks": [
+     "- **LTO processing delays**: Philippine LTO offices frequently experience system downtime and processing backlogs; renewal that should take 1 day can take 2–3 visits",
+     "- **Plate number ending schedule**: LTO assigns renewal months based on plate ending digit (1=January, 2=February, etc.); this creates predictable seasonal peaks in the renewal workload",
+     "- **Emission test failures**: Older vehicles may fail emission testing, requiring engine work before registration can proceed; unplanned maintenance delays renewal"
+    ],
+    "Staffing Implication": [
+     "- Fleet Assistant: handles bulk of LTO processing; ~250 hours/year on registration management (30% of role); dedicated position",
+     "- Fleet Manager: oversees LTFRB compliance and monthly monitoring; absorbed",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet master with registration, franchise, and insurance expiry tracking (W1536.1)",
+     "- Automated renewal alert calendar integrated with dispatch system (W1536.1)",
+     "- Vehicle maintenance integration with workshop management (W188) for pre-inspection repairs (W1536.2)",
+     "- Dispatch blocking for non-compliant vehicles (W1536.6)",
+     "- Document management integration for registration document storage (W1536.5)"
+    ],
+    "Time Estimate": [
+     "- Calendar management: 2 hours/month",
+     "- Per-vehicle renewal: 4–8 hours × 50 vehicles/year = 200–400 hours/year",
+     "- LTFRB compliance: 2–3 days × 8 applications/year = 16–24 days/year",
+     "- Compliance monitoring: 1 hour/month = 12 hours/year",
+     "- **Total: ~340–600 hours/year** (renewals 200–400 + LTFRB 128–192 + monitoring 12)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Manager",
+     "activity": "**Renewal calendar management**: System maintains vehicle registration master with plate number, renewal month (based on LTO plate ending schedule), LTFRB franchise expiry, and insurance expiry; generates automated alerts at 60 days and 30 days before each renewal due date",
+     "duration": "2 hours/month",
+     "n": "1",
+     "r": "System / Fleet Assistant"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**Pre-inspection preparation**: Fleet Assistant schedules vehicle for mechanical inspection — brakes, tires, lights, body condition, emission testing (required by LTO); coordinates with maintenance workshop (W188) for any needed repairs before LTO inspection",
+     "duration": "1–2 days/vehicle",
+     "n": "2",
+     "r": "Fleet Assistant"
+    },
+    {
+     "a": "—",
+     "activity": "**LTO transaction processing**: Fleet Assistant (or authorized liaison) processes registration renewal at LTO — submits required documents (OR/CR, insurance policy, emission test result, stencil of engine/chassis number), pays fees; for vehicles requiring physical inspection, brings vehicle to LTO inspection center",
+     "duration": "4–8 hours/vehicle",
+     "n": "3",
+     "r": "Fleet Assistant"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**LTFRB compliance**: For vehicles requiring LTFRB franchise renewal, Fleet Manager prepares application — proof of financial capacity, vehicle maintenance records, driver qualifications, insurance coverage; attends LTFRB hearing if required; CPC renewal typically takes 30–60 days",
+     "duration": "2–3 days/application",
+     "n": "4",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**System update & documentation**: Upon successful renewal, Fleet Assistant updates fleet master (W401) with new registration expiry, new OR/CR details, updated insurance policy; uploads scanned copies of all renewed documents to document management system (W255)",
+     "duration": "15 min/vehicle",
+     "n": "5",
+     "r": "Fleet Assistant"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Compliance monitoring**: Fleet Manager runs monthly fleet compliance dashboard — vehicles with current vs. expired registration, upcoming renewals, vehicles out of service for non-compliance; any expired vehicle is blocked from dispatch assignment in routing system (W196)",
+     "duration": "1 hour/month",
+     "n": "6",
+     "r": "Fleet Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W188",
+    "W196",
+    "W255",
+    "W401"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-257"
+   ],
+   "fields": {
+    "Frequency": "Rare criminal event: expected in the low single digits or fewer per year across the mixed ~190-truck operation (20% owned / 80% third-party), with readiness exercised through the W197/W653 driver-safety drill rotation rather than live events",
+    "Owner": "Fleet Safety Officer",
+    "Participants": "Driver & helper (victims first, per the W197 duty of care), Fleet Manager, Logistics Manager (re-dispatch of stranded store orders), National LP Director (W1337 law-enforcement coordination), Corporate Security / GSOC (VS-159), HR Business Partner and EAP Counselor (W2867 critical-incident support), Insurance Coordinator (W799 fleet policies; VS-26 claims), VP Supply Chain, PNP units with jurisdiction over the route",
+    "Trigger": "Armed hijacking or robbery of a loaded BuildRight delivery truck in transit — own fleet or 3PL carrier under W1207 — where the driver or crew is held up and the tractor, trailer, or cargo is forcibly taken",
+    "Volume": "1 event × the load at risk (a full multi-stop trailer of power tools, appliances, or copper cable carries a PHP 1.5M–6M wholesale value) × the crew exposed (1 driver + 1 helper on own-fleet routes) × the recovery surface (PNP hot-pursuit window, cargo insurance claim, ORC intelligence feed)"
+   },
+   "id": "W5554",
+   "level": 2,
+   "name": "In-Transit Cargo Hijacking, Armed Truck Robbery & Driver-Safety First Response Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Telematics route-deviation and unscheduled-stop geofence alerting with automatic GSOC page and pre-assembled police pack (plate, seals, manifest, last position) — replaces the manual Step 2 notification scramble",
+     "- One-click hijack flag that freezes shipment documents, locks GPS history, and generates the insurer claim pack (replaces manual Steps 4/6 assembly)"
+    ],
+    "Background": [
+     "Cargo theft is named inside PA-23.3 as an organized-retail-crime class — \"cargo theft targeting BuildRight deliveries in transit or at DC loading docks\" appears only in W1337's intelligence-gathering background — and police/military escorts are mentioned only for post-disaster relief loads in VS-180. 'Hijack'/'holdup'/'cargo robbery' appear in zero dedicated workflow headers: W653 owns the accident/cargo-damage event, W2814 owns the CIT-vendor robbery, E-21 owns armed violence on premises — nobody owns the roadside armed robbery of a loaded truck, where the first rule is the opposite of loss prevention (comply, surrender the load, protect the crew), the PNP hot-pursuit clock starts at the first alert, and the GPS/seal evidence chain decides both the police case and the cargo claim. This workflow is that single owner; the driver-violence dimension rides W717 and the trauma chain rides W2867, while 3PL-carrier events additionally route through the W1207 carrier-liability machinery."
+    ],
+    "Controls": [
+     "- CTL-257 (ensure controlled execution — Fleet & Driver Management (PA-06.2).)",
+     "- operational: comply-first rule evidenced in W654 training records; GPS and manifest evidence preserved before the vehicle or documents re-enter routine service; no driver disciplinary action for property surrendered under armed duress"
+    ],
+    "Pain Points / Risks": [
+     "- **Resistance-injury risk**: a driver fighting for an insured trailer converts a property crime into a fatality; mitigated by the comply-first/no-pursuit rule briefed at W654 onboarding and re-briefed quarterly, with a written no-discipline guarantee for loads surrendered under duress",
+     "- **Delayed-alert risk**: hours-old notification destroys the PNP hot-pursuit window and the freshest GPS evidence; mitigated by Step 2's first-hour escalation ladder with GSOC accountability",
+     "- **Evidence-loss risk**: the telematics track overwriting before export or the manifest being amended for re-dispatch destroys both the police case and the cargo claim; mitigated by Step 4's preservation-first holds",
+     "- **Recovery-blindness risk**: hijacked high-resale SKUs funnel into fencing channels nobody watches; mitigated by the Step 5/8 ORC-network recovery watch",
+     "- **Re-victimization risk**: the same lane, schedule, and load profile repeated the following week; mitigated by Step 7's mandatory route/load-profile review before the lane re-opens to high-value loads"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by the Fleet Safety Officer, the GSOC watch, and the LP investigation bench; insurance handling rides the existing Insurance Coordinator remit. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics panic-alert event stream and GPS breadcrumb export with log-preservation hold (links to W199)",
+     "- Dispatch/load-manifest objects with seal numbers and driver-app timeline (links to W196)",
+     "- Incident case management with evidence attachments and restricted visibility (the W471-class pattern)",
+     "- ORC case file and law-enforcement coordination records (links to W1337)",
+     "- Motor-cargo insurance and freight-claim records (links to W799/W90)"
+    ],
+    "Time Estimate": [
+     "First 24 hours: ≈ 16–24 staff-hours (GSOC, fleet, LP, HR). Full case life including claim and hardening: ≈ 20–40 additional staff-hours spread over 4–8 weeks. Readiness rides the existing W197/W653 drill cadence — no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Safety Officer",
+     "activity": "**Comply-first discipline at the event**: driver and helper follow the no-resistance, no-pursuit rule — hand over keys/load on demand; trigger the telematics panic alert (W199) at the first safe moment; move the vehicle only if ordered to, and drive away only when safe",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Driver / Helper"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**Immediate notifications & hot-pursuit window**: GSOC/Fleet Duty phone escalates to PNP with plate, tractor/trailer numbers, seal numbers, load description, and last GPS position from W199 within the first hour — the recovery probability collapses after the first hours",
+     "duration": "15–60 min",
+     "n": "2",
+     "r": "GSOC / Fleet Duty"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**Crew welfare & stand-down**: medical check per the W501-class first-aid protocol; crew stood down for the shift with same-day family notification; critical-incident stress support initiated per W2867; no same-day formal statement (memory-contamination rule)",
+     "duration": "Same day",
+     "n": "3",
+     "r": "HR Business Partner / EAP Counselor"
+    },
+    {
+     "a": "National LP Director",
+     "activity": "**Evidence preservation**: GPS breadcrumb track exported and locked from the W199 platform before log rotation; last-known-position CCTV canvass list prepared for PNP; seal numbers, dispatch manifest (W196), and driver app timeline preserved as the claim/police pack",
+     "duration": "1–2 days",
+     "n": "4",
+     "r": "Fleet Safety Officer / LP Investigator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Load & order recovery**: affected shipments flagged; critical store replenishment re-dispatched per W196 routing; recovery watch on fencing channels for the high-resale SKU mix (power tools, cable) through the W1337 ORC network",
+     "duration": "1–2 weeks",
+     "n": "5",
+     "r": "Logistics Manager / LP Investigator"
+    },
+    {
+     "a": "CFO (claim sign-off)",
+     "activity": "**Insurance & carrier liability**: own-fleet events file the motor-cargo claim per W799/W59-class machinery (police report is a claim prerequisite); 3PL-carrier events pursue carrier liability per W1207 and freight recovery per W90/W191 — never double-claim the same loss",
+     "duration": "2–8 weeks",
+     "n": "6",
+     "r": "Insurance Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Prevention hardening**: post-incident route/lane review (W196), high-value load splitting or scheduling rules, escort decisions for flagged lanes, driver debrief folded into the W197/W654 safety curriculum",
+     "duration": "1–2 weeks",
+     "n": "7",
+     "r": "Fleet Safety Officer / Fleet Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Chain alert, ORC feed & review board**: modus advisory to fleet, DCs, and stores; full case file to the W1337 ORC intelligence network; post-incident review with LP and Corporate Security (VS-159) closing with documented lessons",
+     "duration": "2–4 weeks",
+     "n": "8",
+     "r": "National LP Director / Fleet Safety Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1207",
+    "W1337",
+    "W191",
+    "W196",
+    "W197",
+    "W199",
+    "W2814",
+    "W2867",
+    "W471",
+    "W501",
+    "W59",
+    "W653",
+    "W654",
+    "W717",
+    "W799",
+    "W90"
+   ]
+  }
+ ]
+}

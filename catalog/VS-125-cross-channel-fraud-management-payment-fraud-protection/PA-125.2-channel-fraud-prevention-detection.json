@@ -1,0 +1,544 @@
+{
+ "process_area": {
+  "id": "PA-125.2",
+  "title": "Channel-Specific Fraud Prevention & Detection"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-125-cross-channel-fraud-management-payment-fraud-protection/PA-125.2-channel-fraud-prevention-detection.md",
+ "value_stream": {
+  "directory": "VS-125-cross-channel-fraud-management-payment-fraud-protection",
+  "id": "VS-125",
+  "name": "Cross-Channel Fraud Management & Payment Fraud Protection"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous (~2.8M POS txns/month across 600 terminals)",
+    "Owner": "Fraud Management / Store Ops",
+    "Participants": "Fraud Management, Store Ops (links to VS-07), Cashiers (links to VS-08), Loss Prevention (links to VS-23), POS/IT (links to VS-08/VS-27), Payments (links to VS-80), HR (links to VS-19)",
+    "Trigger": "POS transaction stream (links to VS-08); exception alert",
+    "Volume": "~33.6M POS txns/yr; ~0.05–0.2% flagged for review"
+   },
+   "id": "W3865",
+   "level": 2,
+   "name": "POS / Store Transaction Fraud Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitor POS for in-store fraud patterns\" (replaces manual Step 1).",
+     "- System auto-review of \"Fraud Management/LP investigate flagged cashiers/transactions\" (replaces manual Step 2).",
+     "- System workflow orchestration of \"coordinate with acquirer\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: CCTV sync and exception analytics; operational: override thresholds and audit (links to VS-08/W1475)"
+    ],
+    "Pain Points / Risks": [
+     "- **Insider-collusion risk**: Cashier-customer collusion at POS hard to detect from journals alone; mitigated by CCTV sync and exception analytics",
+     "- **Override-abuse risk**: Manager price-override abused for discounts to associates; mitigated by override thresholds and audit (links to VS-08/W1475)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS journal/exception reports (links to VS-08); CCTV/EAS (links to VS-23); loyalty at POS (links to VS-13); payments/acquirer (links to VS-80); manager override (links to VS-08); HR case (links to VS-19/VS-119)"
+    ],
+    "Time Estimate": [
+     "- ~10–30 min/alert; ~7–28 alerts/store/month (per the 0.05–0.2% flag rate) → ~85–340 alerts/yr/store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Store-Ops monitor POS for in-store fraud patterns: cashier sweethearting/price-override, no-sale/cash-drawer anomalies, manual-price and markdown abuse (links to VS-01.2/W36), barcode-switch, false refunds, fictitious voids, loyalty-point farming at POS, and EAS-bypass on high-value items (links to VS-23) — using exception reports and scoring (links to W3859)",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Fraud Management / LP / Store Ops"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/LP investigate flagged cashiers/transactions (till audit, CCTV sync links to VS-23, journal review links to VS-08), confirm or dismiss, and route employee fraud to HR/Internal (links to W3876)",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "Fraud Management / LP / Store Ops"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Payments handle card-present fraud (skimming/clone, stolen-card use), coordinate with acquirer (links to VS-80) and law enforcement for organized rings (links to W3877), and tighten store controls (manager override thresholds links to VS-08)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Fraud Management / Payments / LP"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1475",
+    "W36",
+    "W3859",
+    "W3876",
+    "W3877"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous (~42,900 ecommerce orders/month)",
+    "Owner": "Fraud Management / Ecommerce",
+    "Participants": "Fraud Management, Ecommerce Ops (links to VS-10), Payments (links to VS-80), Logistics (links to VS-06/VS-56), Loyalty (links to VS-13), IT (links to VS-27/VS-113), Privacy (links to VS-91), Marketplace (links to VS-95)",
+    "Trigger": "Ecommerce checkout (links to VS-10); order placement",
+    "Volume": "~515K ecommerce orders/yr; ~2–5% held for review; COD high-risk subset"
+   },
+   "id": "W3866",
+   "level": 2,
+   "name": "Ecommerce & Digital Channel Fraud Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Fraud Management/Ecommerce score every card-not-present order at checkout\" (replaces manual Step 1).",
+     "- System auto-review of \"review queue, customer communication\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: COD scoring and delivery-confirmation controls; operational: tuned models and step-up auth"
+    ],
+    "Pain Points / Risks": [
+     "- **COD-leakage risk**: COD non-receipt claims and courier collusion are the largest PH ecommerce loss vector; mitigated by COD scoring and delivery-confirmation controls",
+     "- **Conversion risk**: Over-tight fraud blocks hurt ecommerce conversion (~3% revenue channel); mitigated by tuned models and step-up auth"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce checkout/3-DS (links to VS-10); payments gateway (links to VS-80); device/identity (links to VS-126/W3861); logistics/COD (links to VS-06.3/VS-56); loyalty (links to VS-13); CX (links to VS-13); marketplace (links to VS-95)"
+    ],
+    "Time Estimate": [
+     "- ~5–15 min/review; ~10,000–25,000 reviews/yr"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Ecommerce score every card-not-present order at checkout (links to VS-10) using device intelligence, 3-D Secure/Strong-Customer-Auth (BSP/QRPh), velocity, address/courier risk, and behavioral signals (links to W3859/W3861), with synchronous approve/step-up/decline within checkout flow",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "Fraud Management / Ecommerce / Payments"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management manage COD fraud (the dominant PH ecommerce risk): non-receipt claims, fake-address/undeliverable, courier collusion, return-fraud on delivery; pre-screen COD orders (links to VS-06.3/VS-56) and apply holds/deposits for high-risk customers (links to VS-126 identity)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Fraud Management / Ecommerce / Logistics"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management handle order holds, manual review queue, customer communication (links to VS-13 CX), and false-positive recovery (approve good orders) with feedback to model tuning (links to W3862)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Fraud Management / Ecommerce"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3859",
+    "W3861",
+    "W3862"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous (~2% return rate on 33.6M POS txns + ecommerce returns)",
+    "Owner": "Fraud Management / Returns",
+    "Participants": "Fraud Management, Returns/Customer Service (links to VS-32.1/VS-09), Store Ops (links to VS-07), Ecommerce (links to VS-10), Payments (links to VS-80), Loyalty (links to VS-13), LP (links to VS-23)",
+    "Trigger": "Return/refund event (links to VS-32.1); refund request",
+    "Volume": "~670K+ returns/yr; ~1–3% flagged as abuse"
+   },
+   "id": "W3867",
+   "level": 2,
+   "name": "Returns & Refund Abuse Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-flag of \"flagged returns, blacklist/return-ban for serial abusers\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconcile refund-to-card and original-tender matching\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: tender-match and store-credit routing; operational: targeted scoring and policy transparency"
+    ],
+    "Pain Points / Risks": [
+     "- **Refund-leakage risk**: Cash refunds for stolen/wardrobed goods; mitigated by tender-match and store-credit routing",
+     "- **CX risk**: Tight return controls anger good customers (Consumer Act links to VS-22); mitigated by targeted scoring and policy transparency"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Returns processing (links to VS-32.1); POS refund (links to VS-08); ecommerce returns (links to VS-10); payments refund (links to VS-80); loyalty (links to VS-13); damage claims (links to VS-90); identity/blacklist (links to VS-126)"
+    ],
+    "Time Estimate": [
+     "- ~5–20 min/flagged return; ~7,000–20,000 flagged returns/yr"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Returns score returns for abuse patterns: return-without-receipt, wardrobbing/return-after-use, receipt-reuse/duplicate-receipt, refund-to-different-tender, empty-box/switch, stolen-then-returned, receipt-fraud via fake invoices, and returns to abuse promo/loyalty (links to VS-32.1)",
+     "duration": "Per return",
+     "n": "1",
+     "r": "Fraud Management / Returns / LP"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management apply controls: refund authorization thresholds, store credit vs cash for flagged returns, blacklist/return-ban for serial abusers (links to VS-126), and restock-damage recovery (links to VS-90 damage claims)",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Fraud Management / Returns / Store Ops"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Payments reconcile refund-to-card and original-tender matching (links to VS-80), detect refund-fraud rings across stores, and feed cases (links to W3860)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Fraud Management / Payments"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3860"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous (peak during bi-monthly sales and double-points weekends)",
+    "Owner": "Fraud Management / Marketing / Loyalty",
+    "Participants": "Fraud Management, Marketing (links to VS-14/VS-58), Loyalty (links to VS-13), Ecommerce (links to VS-10), POS (links to VS-08), Merchandising (links to VS-01.2), Insights (links to VS-28.1)",
+    "Trigger": "Coupon/promo redemption (links to VS-58); loyalty earn/burn",
+    "Volume": "Millions of promo/coupon/loyalty events/yr; ~0.5–2% flagged"
+   },
+   "id": "W3868",
+   "level": 2,
+   "name": "Promotion, Coupon & Loyalty Abuse Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Fraud Management/Marketing/Loyalty prevent coupon/promo abuse\" (replaces manual Step 1)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: per-customer caps and kill-switch; operational: identity resolution (links to VS-126)"
+    ],
+    "Pain Points / Risks": [
+     "- **Code-leak risk**: Viral promo codes on social media cause mass over-redemption; mitigated by per-customer caps and kill-switch",
+     "- **Multi-account risk**: Customers farm loyalty via duplicate accounts; mitigated by identity resolution (links to VS-126)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Coupon/promo engine (links to VS-58); loyalty engine (links to VS-13); POS (links to VS-08); ecommerce (links to VS-10); merchandising/pricing (links to VS-01.2); identity (links to VS-126); revenue assurance (links to VS-118)"
+    ],
+    "Time Estimate": [
+     "- ~5–15 min/flagged event; peak-load during sale events"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Marketing/Loyalty prevent coupon/promo abuse: stacking-discount violations (links to VS-58), expired/fake/photocopied coupons, code-leak and bulk-redemption on digital promos (links to VS-58), price-override-to-promo abuse, and ineligible-SKU promo application (links to VS-01.2)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Fraud Management / Marketing / Loyalty"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Loyalty prevent loyalty abuse: point-farming (self-referral, fictitious txns), tier-farming, duplicate/multiple accounts per customer, point-cashout fraud, and stolen-account point burn (links to VS-13.2) — linking accounts by identity (links to VS-126)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Fraud Management / Loyalty"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Marketing recover mis-claimed promo value (reverse points, clawback), feed cases (links to W3860), and tighten promo design (links to VS-58) to close the loop with revenue assurance (links to VS-118)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Fraud Management / Marketing"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3860"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Fraud Management / Finance",
+    "Participants": "Fraud Management, Finance (links to VS-54/VS-80), Store Ops (links to VS-07), Ecommerce (links to VS-10), Payments (links to VS-80), IT Security (links to VS-27.3), LP (links to VS-23)",
+    "Trigger": "Gift-card issue/redeem (links to VS-54); stored-value movement",
+    "Volume": "Gift-card program (links to VS-54); ~0.2–1% of card activity flagged"
+   },
+   "id": "W3869",
+   "level": 2,
+   "name": "Gift Card & Stored-Value Fraud Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check bot attacks\" (replaces manual Step 1).",
+     "- System auto-count of \"Fraud Management/Finance handle card compromise response\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: rate-limiting and bot defense (links to VS-27); operational: thresholds and AML coordination (links to VS-86)"
+    ],
+    "Pain Points / Risks": [
+     "- **Bot-attack risk**: Balance-check bots harvest card numbers; mitigated by rate-limiting and bot defense (links to VS-27.3)",
+     "- **AML exposure risk**: Stored-value used for laundering; mitigated by thresholds and AML coordination (links to VS-86)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Gift-card/stored-value ledger (links to VS-54); POS (links to VS-08); ecommerce (links to VS-10); payments (links to VS-80); IT security/bot defense (links to VS-27.3); LP (links to VS-23); AML (links to VS-86); GL/breakage (links to VS-17)"
+    ],
+    "Time Estimate": [
+     "- ~10–30 min/flagged card event + incident response"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Finance prevent gift-card fraud: stolen-card-number brute-force, balance-check bot attacks (links to VS-27.3), cash-out via POS round-tripping, card-resale/marketplace fencing, refund-to-gift-card laundering, and BIR/anti-laundering exposure on stored-value (links to VS-86)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Fraud Management / Finance / IT Security"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Store-Ops prevent in-store gift-card fraud: barcode-switch/duplicate-redemption, cashier manipulation of card balances, theft of unsold card stock (links to VS-23), and refund-to-gift-card abuse",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "Fraud Management / LP / Store Ops"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Finance handle card compromise response (freeze/recycle balances, reissue), customer restitution (links to VS-13), and reconciliations with the gift-card ledger (links to VS-54) and breakage accounting (links to VS-17)",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Fraud Management / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous (card-not-present chargebacks concentrated in ecommerce)",
+    "Owner": "Fraud Management / Payments",
+    "Participants": "Fraud Management, Payments (links to VS-80), Ecommerce (links to VS-10), Finance (links to VS-17/VS-80), Legal (links to VS-100), Logistics (links to VS-06/VS-56), CX (links to VS-13)",
+    "Trigger": "Chargeback/claim from acquirer (links to VS-80); payment dispute",
+    "Volume": "Chargeback rate target <0.5% of card volume; ~thousands of disputes/yr"
+   },
+   "id": "W3870",
+   "level": 2,
+   "name": "Payment, Chargeback & First-Party/Friendly Fraud Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-classify of \"Fraud Management/Payments receive chargebacks/claims\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics build representment evidence\" (replaces manual Step 2).",
+     "- System auto-count of \"Fraud Management detect first-party/friendly-fraud patterns\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: SLA tracking and automated evidence assembly; operational: serial-customer detection and clear order records"
+    ],
+    "Pain Points / Risks": [
+     "- **Window-miss risk**: Representment filed after scheme deadline forfeits the dispute; mitigated by SLA tracking and automated evidence assembly",
+     "- **Friendly-fraud growth risk**: First-party chargebacks rising with ecommerce scale; mitigated by serial-customer detection and clear order records"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payments/acquirer/chargeback platform (links to VS-80); ecommerce (links to VS-10); delivery proof (links to VS-06.3/VS-56); identity (links to VS-126); AR/collections (links to VS-16); CX (links to VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~20–60 min/chargeback representment; ~thousands/yr"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Payments receive chargebacks/claims (Visa/Mastercard/QRPh/e-wallet disputes — links to VS-80), classify (true fraud vs friendly/first-party vs service-dispute), and link to original order/identity (links to VS-126)",
+     "duration": "Per chargeback",
+     "n": "1",
+     "r": "Fraud Management / Payments"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Logistics build representment evidence (delivery proof, signature/photo-on-delivery links to VS-06.3, IP/device match, comms history — links to W3875) and submit within scheme windows",
+     "duration": "Per chargeback",
+     "n": "2",
+     "r": "Fraud Management / Logistics / Payments"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management detect first-party/friendly-fraud patterns (serial chargeback customers) and apply account action (links to VS-126), recover via collections where material (links to VS-16), and feed learnings to ecommerce scoring (links to W3866/W3862)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Fraud Management / Payments / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3862",
+    "W3866",
+    "W3875"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "Continuous (~600K loyalty + ecommerce accounts)",
+    "Owner": "Fraud Management / IT Security",
+    "Participants": "Fraud Management, IT Security (links to VS-27.3), Ecommerce (links to VS-10), Mobile App (links to VS-75), Loyalty (links to VS-13), Privacy (links to VS-91), CX (links to VS-13)",
+    "Trigger": "Login/auth event (links to VS-10/VS-75); suspicious session",
+    "Volume": "Bot/credential-stuffing attacks periodic; ATO incidents ~dozens–hundreds/yr"
+   },
+   "id": "W3871",
+   "level": 2,
+   "name": "Account Takeover & Credential Abuse Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Fraud Management/IT-Security prevent ATO across login surfaces\" (replaces manual Step 1).",
+     "- System auto-count of \"account, notify customer\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: login-time scoring and MFA; operational: coordination with DPO (links to VS-91); operational: compromise triggers RA 10173 notification"
+    ],
+    "Pain Points / Risks": [
+     "- **ATO-blindspot risk**: ATO detected only after point burn/cash-out; mitigated by login-time scoring and MFA",
+     "- **Notifiable-breach risk**: ATO from a system compromise triggers RA 10173 notification; mitigated by coordination with DPO (links to VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Bot defense/auth (links to VS-27.3); ecommerce (links to VS-10); mobile app (links to VS-75); loyalty (links to VS-13); gift-card (links to VS-54); privacy/breach (links to VS-91); CX (links to VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~30–120 min/incident + customer-notification effort"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/IT-Security prevent ATO across login surfaces (ecommerce links to VS-10, mobile app links to VS-75, loyalty portal links to VS-13): credential-stuffing/bot defense (links to VS-27.3), device/anomaly scoring, MFA/step-up on high-risk login, and breach-credential monitoring",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "Fraud Management / IT Security / Ecommerce"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Loyalty detect and respond to ATO outcomes: unauthorized point burn, address/payment change, order placement to fraud address, gift-card cash-out (links to W3869) — freeze account, notify customer (links to VS-13), and reverse unauthorized transactions",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "Fraud Management / Loyalty / CX"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Privacy handle breach-notification obligations if ATO indicates a notifiable data breach under RA 10173 (72-hour NPC notification — links to VS-91/W53)",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Fraud Management / Privacy / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3869",
+    "W53"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-605"
+   ],
+   "fields": {
+    "Frequency": "~5,200 trade accounts + ~200 corporate; ~3,500 AR invoices/month",
+    "Owner": "Fraud Management / Trade Credit",
+    "Participants": "Fraud Management, Trade Credit (links to VS-16/VS-68), Trade Sales (links to VS-11/VS-107), Key Account (links to VS-107), KYC/AML (links to VS-86), AR (links to VS-16), Legal (links to VS-100)",
+    "Trigger": "Trade/B2B account application (links to VS-16/VS-11); order on credit",
+    "Volume": "Account-application fraud ~1–3% of new trade applications"
+   },
+   "id": "W3872",
+   "level": 2,
+   "name": "Trade / B2B Account & Application First-Party Fraud Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"verify with SEC/DTI/BIR\" (replaces manual Step 1).",
+     "- System auto-count of \"Fraud Management/AML run KYB/KYC and sanctions screening on trade\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitor in-life trade-account fraud\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-605 (ensure controlled execution — Channel-Specific Fraud Prevention & Detection (PA-125.2).)",
+     "- operational: SEC/DTI/BIR verification and KYB; operational: callback-verification control (links to VS-18/VS-86)"
+    ],
+    "Pain Points / Risks": [
+     "- **Synthetic-business risk**: Fraudulent business entities obtain trade credit; mitigated by SEC/DTI/BIR verification and KYB",
+     "- **BEC/bank-change risk**: Payment-diversion via fake bank-detail-change; mitigated by callback-verification control (links to VS-18/VS-86)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Trade credit/AR (links to VS-16/VS-68); KYB/KYC/sanctions (links to VS-86); identity graph (links to VS-126); trade sales (links to VS-11/VS-107); surety/bond (links to VS-116); legal (links to VS-100)"
+    ],
+    "Time Estimate": [
+     "- ~30–90 min/application screening + ongoing monitoring"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/Trade-Credit screen new trade/B2B applications for first-party/application fraud: identity/business misrepresentation (fake/fraudulent business — verify with SEC/DTI/BIR), synthetic identity, related-party to existing bad-debt accounts (links to VS-126 identity graph), and credit-history gaps",
+     "duration": "Per application",
+     "n": "1",
+     "r": "Fraud Management / Trade Credit / KYC"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/AML run KYB/KYC and sanctions screening on trade accounts (links to VS-86), verify trade references and bank details (with PADME/court check), and set credit limit commensurate with verified risk (links to VS-16/VS-68)",
+     "duration": "Per application",
+     "n": "2",
+     "r": "Fraud Management / KYC / Trade Credit"
+    },
+    {
+     "a": "Fraud Management Lead",
+     "activity": "Fraud Management/AR monitor in-life trade-account fraud: sudden over-ordering, payment-diversion/bank-detail-change fraud (BEC), Bust-out (max credit then disappear), and inflated-revenue-for-bid-bond fraud (links to VS-116) — coordinate recovery (links to VS-16/VS-68/W3874)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Fraud Management / AR / Trade Sales"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3874"
+   ]
+  }
+ ]
+}

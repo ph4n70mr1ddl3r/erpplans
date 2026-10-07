@@ -1,0 +1,558 @@
+{
+ "process_area": {
+  "id": "PA-126.2",
+  "title": "Customer Segmentation, Activation & Personalization Foundation"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.2-segmentation-activation-personalization.md",
+ "value_stream": {
+  "directory": "VS-126-customer-data-platform-single-customer-view-identity-resolution",
+  "id": "VS-126",
+  "name": "Customer Data Platform, Single Customer View & Identity Resolution"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "CDP / Marketing",
+    "Participants": "CDP Team, Marketing (links to VS-14), Loyalty (links to VS-13), Merchandising (links to VS-01), Trade/Key Account (links to VS-11/VS-107), Insights (links to VS-28.1/VS-44), Data Science (links to VS-30.2), Privacy (links to VS-91)",
+    "Trigger": "Segment need (links to W3887); campaign brief (links to VS-14)",
+    "Volume": "~50–200 active segments; refreshed daily/real-time"
+   },
+   "id": "W3889",
+   "level": 2,
+   "name": "Customer Segmentation & Targeting Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"CDP/Marketing build and maintain segments on the profile\" (replaces manual Step 1).",
+     "- System auto-document of \"document segment lineage for governance\" (replaces manual Step 2).",
+     "- System auto-count of \"counts/quality for activation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: daily/real-time refresh; operational: build-time enforcement (links to W3885)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stale-segment risk**: Segments not refreshed deliver wrong targets; mitigated by daily/real-time refresh",
+     "- **Consent-bypass risk**: Segments built without consent filtering; mitigated by build-time enforcement (links to W3885)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CDP segments; golden profile (links to W3884); consent (links to W3885); merchandising (links to VS-01); loyalty (links to VS-13); trade (links to VS-11/VS-107); insights (links to VS-28.1/VS-44); data governance (links to VS-28.2)"
+    ],
+    "Time Estimate": [
+     "- Continuous + ~1–3 days per major segment build"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing build and maintain segments on the profile (links to W3884/W3887): RFM, lifecycle stage, value tier, trade-pro vs DIY, category-affinity (links to VS-01), channel-preference, win-back/lapse-risk, new-mover/home-builder, seasonal (links to VS-13.2), and ad-hoc campaign segments",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "CDP / Marketing / Insights"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Privacy enforce consent and suppression at segment build (links to W3885), apply frequency caps and global suppression (do-not-contact, deceased, invalid), and document segment lineage for governance (links to VS-28.2)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Privacy / Marketing"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing publish segment counts/quality for activation (links to W3891), monitor segment drift, and refresh/refine with insights (links to VS-28.1/VS-44)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Marketing / Insights"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3884",
+    "W3885",
+    "W3887",
+    "W3891"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Real-time",
+    "Owner": "CDP / IT",
+    "Participants": "CDP Team, IT (links to VS-27/VS-113), Marketing (links to VS-14), Loyalty (links to VS-13), Sales Enablement/Clienteling (links to VS-124), Ecommerce (links to VS-10), POS (links to VS-08), Contact Center (links to VS-13), Data Science (links to VS-30.2)",
+    "Trigger": "Customer-identified interaction (POS, ecommerce, app, contact center)",
+    "Volume": "Millions of profile lookups/month across touchpoints"
+   },
+   "id": "W3890",
+   "level": 2,
+   "name": "Real-Time Customer Profile & Next-Best-Action Serving",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"CDP/IT expose the real-time customer profile and next-best-action\" (replaces manual Step 1).",
+     "- System auto-log of \"CDP/Data Science/Marketing define NBA logic\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: caching and sub-second API; operational: tasteful rules and consent (links to W3885)"
+    ],
+    "Pain Points / Risks": [
+     "- **Latency risk**: Slow profile/NBA API degrades POS/checkout (links to POS-013 SLA); mitigated by caching and sub-second API",
+     "- **Creepy-personalization risk**: Over-personalization alienates customers/privacy concern; mitigated by tasteful rules and consent (links to W3885)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time profile/NBA API; POS (links to VS-08); clienteling (links to VS-124); ecommerce (links to VS-10); app (links to VS-75); contact center (links to VS-13); offers/loyalty (links to VS-13/VS-58); services (links to VS-09/VS-12); trade pro (links to VS-43)"
+    ],
+    "Time Estimate": [
+     "- Maintained API + continuous NBA tuning"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/IT expose the real-time customer profile and next-best-action (NBA) API to touchpoints: POS customer lookup + clienteling prompt (links to VS-08/VS-124), ecommerce logged-in experience (links to VS-10), app home (links to VS-75), contact-center screen-pop (links to VS-13) — within sub-second latency",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "CDP / IT / EA"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data Science/Marketing define NBA logic: best next product/category to attach, best offer (links to VS-58/VS-13 loyalty), best message, service opportunity (estimation links to VS-09.2, installation links to VS-12), and trade-pro value prop (links to VS-43) — governed and explainable",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Data Science / Marketing"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing capture NBA acceptance/outcomes, feed model learning (links to W3892/W3895), and tune offers by segment/channel",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Marketing / Data Science"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3885",
+    "W3892",
+    "W3895"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Per campaign + continuous",
+    "Owner": "CDP / Marketing",
+    "Participants": "CDP Team, Marketing (links to VS-14), Loyalty (links to VS-13), Ecommerce (links to VS-10), Mobile App (links to VS-75), Store Ops/Comms (links to VS-07/VS-63), Paid Media/Agency (links to VS-14.2), Privacy (links to VS-91), IT (links to VS-27/VS-113)",
+    "Trigger": "Segment ready (W3889); campaign launch (links to VS-14)",
+    "Volume": "~hundreds of activations/month across email/SMS/push/paid-media/in-store"
+   },
+   "id": "W3891",
+   "level": 2,
+   "name": "Audience Activation & Cross-Channel Syndication",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-match of \"CDP/Marketing syndicate consented audiences to activation channels\" (replaces manual Step 1).",
+     "- System continuous audit of \"CDP/Privacy enforce consent per channel\" (replaces manual Step 2).",
+     "- System auto-count of \"counts, and capture downstream response for measurement\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: hash-match and consent gating; operational: delivery reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Consent-breach risk**: Paid-media audience export without consent (links to VS-91); mitigated by hash-match and consent gating",
+     "- **Reach-reconciliation risk**: Activated audience ≠ delivered (bounces/suppressions); mitigated by delivery reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Activation channels (links to VS-14/VS-75/VS-10); clienteling/store comms (links to VS-124/VS-63); paid media (links to VS-14.2); consent (links to W3885); privacy (links to VS-91); insights (links to VS-28.1)"
+    ],
+    "Time Estimate": [
+     "- ~0.5–2 days per campaign activation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing syndicate consented audiences to activation channels: email/SMS/push (links to VS-14/VS-75), ecommerce on-site personalization (links to VS-10), in-store/clienteling (links to VS-124/VS-63), and paid-media/publisher audiences (Meta/Google — links to VS-14.2) via consented audience export/hash-matching",
+     "duration": "Per campaign",
+     "n": "1",
+     "r": "CDP / Marketing / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Privacy enforce consent per channel (links to W3885), suppress non-consented/invalid, and maintain the activation audit trail (who/what/channel/when) for NPC compliance (links to VS-91)",
+     "duration": "Per activation",
+     "n": "2",
+     "r": "CDP / Privacy / Marketing"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing track activation delivery and reach, reconcile to segment counts, and capture downstream response for measurement (links to W3896)",
+     "duration": "Per campaign",
+     "n": "3",
+     "r": "CDP / Marketing / Insights"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3885",
+    "W3889",
+    "W3896"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Real-time + model cycle",
+    "Owner": "CDP / Data Science",
+    "Participants": "CDP Team, Data Science (links to VS-30.2), Ecommerce (links to VS-10), Mobile App (links to VS-75), Merchandising (links to VS-01), Marketing (links to VS-14), Insights (links to VS-28.1), Privacy (links to VS-91)",
+    "Trigger": "Online/app interaction; NBA need (links to W3890)",
+    "Volume": "Millions of recommendation impressions/month"
+   },
+   "id": "W3892",
+   "level": 2,
+   "name": "Personalization & Recommendation Engine Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"CDP/Data Science operate recommendation engines\" (replaces manual Step 1).",
+     "- System auto-capture of \"capture interactions for learning\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitoring, refresh, and explainability for merchandising partners\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: popularity/fallback logic; operational: diversity controls"
+    ],
+    "Pain Points / Risks": [
+     "- **Cold-start risk**: New customers/SKUs lack data for recommendations; mitigated by popularity/fallback logic",
+     "- **Bias risk**: Recommendations over-weight a few categories (links to VS-01); mitigated by diversity controls"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Recommendation engine; ecommerce (links to VS-10); app (links to VS-75); catalog (links to VS-01.3); merchandising (links to VS-01); analytics (links to VS-28.1); privacy (links to VS-91)"
+    ],
+    "Time Estimate": [
+     "- Maintained engine + continuous model cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data Science operate recommendation engines: \"frequently bought together\"/\"customers also bought\" (attachment links to VS-124), category cross-sell, project-basket completion (links to VS-66 design), recently-viewed, and trade-pro bundle (links to VS-43) — powered by the profile (links to W3884) and catalog (links to VS-01.3)",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "CDP / Data Science / Ecommerce"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Ecommerce serve personalized ecommerce/app experiences (home, search ranking, PDP, cart attach, recommendations — links to VS-10/VS-75) and capture interactions for learning",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Ecommerce / Data Science"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data Science run model governance (links to W3862 pattern): A/B champion/challenger (links to W3895), bias/fairness, performance monitoring, refresh, and explainability for merchandising partners (links to VS-01)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Data Science / Merchandising"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3862",
+    "W3884",
+    "W3890",
+    "W3895"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Real-time triggers + journey cycle",
+    "Owner": "CDP / Marketing",
+    "Participants": "CDP Team, Marketing (links to VS-14), Loyalty (links to VS-13), Ecommerce (links to VS-10), Mobile App (links to VS-75), CX (links to VS-13), Trade (links to VS-11/VS-107), Insights (links to VS-28.1), IT (links to VS-27)",
+    "Trigger": "Customer event (purchase/abandon/lifecycle)",
+    "Volume": "~20–50 active journeys; millions of trigger events/yr"
+   },
+   "id": "W3893",
+   "level": 2,
+   "name": "Customer Journey Orchestration & Trigger Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-post of \"post-purchase attach/care, welcome/onboarding\" (replaces manual Step 1).",
+     "- System auto-measure of \"measure journey performance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: frequency capping; operational: real-time eventing"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-messaging risk**: Multiple journeys overlap and fatigue customers; mitigated by frequency capping",
+     "- **Trigger-latency risk**: Delayed triggers miss the moment (e.g., cart-abandon); mitigated by real-time eventing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Journey orchestrator; activation channels (links to W3891); ecommerce (links to VS-10); loyalty (links to VS-13); CX (links to VS-13); services (links to VS-09/VS-12); consent (links to W3885); insights (links to VS-28.1)"
+    ],
+    "Time Estimate": [
+     "- ~2–5 days per journey build + continuous optimization"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing design and operate triggered journeys: browse/cart abandonment (links to VS-10), post-purchase attach/care, welcome/onboarding (links to VS-121 candidate), trade-onboarding (links to VS-43/VS-11), win-back/lapse (links to W3894), service follow-up (links to VS-09/VS-12), loyalty-tier upgrade (links to VS-13), and milestone/birthday",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "CDP / Marketing / Loyalty"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/IT orchestrate across channels (email/SMS/push/in-app/clienteling links to W3891) with consent enforcement (links to W3885), frequency caps, and journey-state management",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / IT / Marketing"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Insights measure journey performance (entry/exit/conversion — links to W3896), optimize steps, and sunset under-performers",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Insights / Marketing"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3885",
+    "W3891",
+    "W3894",
+    "W3896"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Monthly/quarterly model refresh",
+    "Owner": "CDP / Data Science",
+    "Participants": "CDP Team, Data Science (links to VS-30.2), Insights (links to VS-28.1), Loyalty (links to VS-13), Trade/Key Account (links to VS-11/VS-107), Finance (links to VS-17.4), Marketing (links to VS-14), Merchandising (links to VS-01)",
+    "Trigger": "Model cycle; strategy need",
+    "Volume": "~600K–1M customers scored; ~5–10 models"
+   },
+   "id": "W3894",
+   "level": 2,
+   "name": "Customer Lifetime Value, Churn & Propensity Modeling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"build and refresh CLV\" (replaces manual Step 1).",
+     "- System auto-validate of \"validate model accuracy\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: service-floor policy; operational: refresh cadence and validation"
+    ],
+    "Pain Points / Risks": [
+     "- **CLV-misuse risk**: CLV used to discriminate in service (links to VS-91/VS-85); mitigated by service-floor policy",
+     "- **Model-accuracy risk**: Stale CLV misallocates retention spend; mitigated by refresh cadence and validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Model platform (links to VS-30.2); profile (links to W3884); loyalty (links to VS-13); trade (links to VS-11/VS-107); merchandising (links to VS-01/VS-101); finance (links to VS-17.4); analytics (links to VS-28.1)"
+    ],
+    "Time Estimate": [
+     "- ~2–4 weeks per model cycle + continuous operationalization"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data Science build and refresh CLV (historical + predictive), churn/lapse-risk, and propensity models (next-category, trade-pro conversion links to VS-43, service-attach links to VS-09, financing propensity links to VS-38), with the score written to the profile (links to W3884)",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "CDP / Data Science"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing/Loyalty/Trade operationalize scores into action: high-CLV nurture, churn-prevention win-back (links to W3893), trade-pro upsell to high-propensity (links to VS-107), and merchandising/category planning input (links to VS-01/VS-101)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Marketing / Loyalty / Trade"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Finance/Insights use CLV for customer-economics decisions (acquisition-cost ceiling links to VS-121, retention-investment, channel-value links to VS-14) and validate model accuracy (links to W3895)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "CDP / Finance / Insights"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3884",
+    "W3893",
+    "W3895"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Per campaign + continuous",
+    "Owner": "CDP / Insights",
+    "Participants": "CDP Team, Insights (links to VS-28.1), Marketing (links to VS-14), Loyalty (links to VS-13), Ecommerce (links to VS-10), Trade (links to VS-11), Finance (links to VS-17.4), Data Science (links to VS-30.2)",
+    "Trigger": "Campaign cycle; measurement need",
+    "Volume": "~hundreds of campaigns/yr; ~20–50 A/B tests/yr"
+   },
+   "id": "W3895",
+   "level": 2,
+   "name": "Marketing Analytics, Attribution & Experimentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- workflow automation; system-driven processing with exception handling"
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: MTA/MMM; operational: right-sized test design"
+    ],
+    "Pain Points / Risks": [
+     "- **Attribution-gaming risk**: Last-click attribution over-credits lower-funnel channels; mitigated by MTA/MMM",
+     "- **Holdout-cost risk**: Holdouts forgo revenue; mitigated by right-sized test design"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-28.1); marketing channels (links to VS-14); loyalty (links to VS-13); ecommerce (links to VS-10); finance/sales (links to VS-17.4); model platform (links to VS-30.2); revenue assurance (links to VS-118)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 weeks per attribution cycle + per-test setup"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Insights run multi-touch attribution (MTA) and/or marketing-mix modeling (MMM) across channels (paid media links to VS-14.2, loyalty links to VS-13, email/SMS/push, ecommerce links to VS-10, in-store links to VS-07), reconciling to sales (links to VS-17.4)",
+     "duration": "Per cycle",
+     "n": "1",
+     "r": "CDP / Insights / Marketing"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing run A/B and holdout experimentation on offers, creative, journeys (links to W3893), and personalization (links to W3892), with statistically valid design and holdout groups",
+     "duration": "Per test",
+     "n": "2",
+     "r": "CDP / Marketing / Data Science"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Insights publish attribution/experiment results, recommend budget reallocation across channels/tactics (links to VS-14/VS-33), and feed learnings to models (links to W3894) and revenue assurance (links to VS-118)",
+     "duration": "Per cycle",
+     "n": "3",
+     "r": "CDP / Insights / Marketing"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3892",
+    "W3893",
+    "W3894"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-608"
+   ],
+   "fields": {
+    "Frequency": "Per campaign + quarterly",
+    "Owner": "CDP / Insights",
+    "Participants": "CDP Team, Insights (links to VS-28.1), Marketing (links to VS-14), Loyalty (links to VS-13), Merchandising (links to VS-01/VS-101), Trade (links to VS-11/VS-107), Finance (links to VS-17.4), Coupons/Promo (links to VS-58)",
+    "Trigger": "Campaign close (links to VS-14); promotion end (links to VS-58)",
+    "Volume": "~6 major campaigns/yr + monthly hot deals + loyalty/promo"
+   },
+   "id": "W3896",
+   "level": 2,
+   "name": "Campaign & Offer Measurement (Lift, ROI)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"CDP/Insights measure campaign/offer incrementality\" (replaces manual Step 1).",
+     "- System auto-flag of \"flag unprofitable offers\" (replaces manual Step 2).",
+     "- System auto-report of \"report CDP-attributed value to the steering committee\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-608 (ensure controlled execution — Customer Segmentation, Activation & Personalization Foundation (PA-126.2).)",
+     "- operational: control groups; operational: margin-adjusted ROI"
+    ],
+    "Pain Points / Risks": [
+     "- **Incrementality-opacity risk**: Revenue counted without a holdout overstates lift; mitigated by control groups",
+     "- **Margin-blind risk**: Top-line promo lifts sales but erodes margin; mitigated by margin-adjusted ROI"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics (links to VS-28.1); marketing (links to VS-14); coupons/promo (links to VS-58); merchandising (links to VS-01/VS-101); trade (links to VS-11/VS-107); finance (links to VS-17.4); revenue assurance (links to VS-118); trade promo (links to VS-128)"
+    ],
+    "Time Estimate": [
+     "- ~1 week per major campaign close + quarterly rollup"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Insights measure campaign/offer incrementality: treatment-vs-control lift, incremental revenue/margin, halo (links to VS-01 category), cannibalization, and cost (incl. discount/MDR links to VS-80) per campaign/offer",
+     "duration": "Per campaign",
+     "n": "1",
+     "r": "CDP / Insights / Marketing"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Merchandising/Finance measure margin impact (markdown links to VS-101, promo-leakage links to VS-118) and trade/promo ROI (links to VS-128), and flag unprofitable offers",
+     "duration": "Per campaign",
+     "n": "2",
+     "r": "CDP / Merchandising / Finance"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing publish results, retire under-performing offers, scale winners (links to VS-14/VS-58/VS-101), and report CDP-attributed value to the steering committee (links to W3881/W3904)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "CDP / Marketing / Insights"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3881",
+    "W3904"
+   ]
+  }
+ ]
+}

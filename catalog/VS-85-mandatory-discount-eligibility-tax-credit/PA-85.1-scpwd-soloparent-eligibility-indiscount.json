@@ -1,0 +1,518 @@
+{
+ "process_area": {
+  "id": "PA-85.1",
+  "title": "SC/PWD/Solo Parent Eligibility & In-Store Discount Program"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-85-mandatory-discount-eligibility-tax-credit/PA-85.1-scpwd-soloparent-eligibility-indiscount.md",
+ "value_stream": {
+  "directory": "VS-85-mandatory-discount-eligibility-tax-credit",
+  "id": "VS-85",
+  "name": "Mandatory Discount, Eligibility & Tax Credit Recovery"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-236"
+   ],
+   "fields": {
+    "Frequency": "~140,000–225,000 transactions/month (5–8% of POS)",
+    "Owner": "Store Manager",
+    "Participants": "Cashier, Customer, Store Manager",
+    "Trigger": "Customer presents discount ID at checkout",
+    "Volume": "600 POS terminals; 200 stores"
+   },
+   "id": "W2897",
+   "level": 2,
+   "name": "SC/PWD/Solo Parent ID Validation & Eligibility Verification at POS",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks photo, validity, and ownership\" (replaces manual Step 1).",
+     "- System auto-record of \"records transaction in mandatory-discount register\" (replaces manual Step 2).",
+     "- System auto-count of \"discount with courteous explanation where invalid\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-236 (ensure mandatory-discount & VAT-exemption compliance.)",
+     "- operational: mandatory ID capture in POS; operational: ID capture in POS"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Granting discount without valid ID forfeits tax credit; mitigated by mandatory ID capture in POS"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS mandatory-discount module; ID validation; discount register"
+    ],
+    "Time Estimate": [
+     "- 1–2 min per transaction"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier validates ID: OSCA Senior ID / PhilSys for seniors; PWD ID from NCDA-accredited LGU; Solo Parent ID from LGU; checks photo, validity, and ownership",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cashier captures ID number and customer name in POS; ERP applies statutory discount and records transaction in mandatory-discount register",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager resolves disputes (expired ID, eligibility question) per protocol; denies discount with courteous explanation where invalid",
+     "duration": "Per dispute",
+     "n": "3",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-236"
+   ],
+   "fields": {
+    "Frequency": "Per transaction",
+    "Owner": "Pricing Analyst",
+    "Participants": "Pricing, IT, Store Ops",
+    "Trigger": "Discount applied at POS",
+    "Volume": "~140K–225K transactions/month"
+   },
+   "id": "W2898",
+   "level": 2,
+   "name": "Mandatory Discount Computation, Stack Rules & Basket Validation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Pricing configures discount rules\" (replaces manual Step 1).",
+     "- System auto-log of \"IT implements stack-prevention logic\" (replaces manual Step 2).",
+     "- System continuous audit of \"audits POS application vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-236 (ensure mandatory-discount & VAT-exemption compliance.)",
+     "- operational: rule engine and audit"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Wrong stack/computation violates law and forfeits credit; mitigated by rule engine and audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Discount-rule engine; eligible-SKU mapping; POS audit log"
+    ],
+    "Time Estimate": [
+     "- Per-rule configuration; monthly audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Pricing configures discount rules: 20% SC/PWD (5% for groceries per RA 9994 for selected prime commodities; 32% for medicines under RA 10754 = 20% discount + 12% VAT-exempt); 10% Solo Parent on selected goods/baby items",
+     "duration": "Per rule",
+     "n": "1",
+     "r": "Pricing"
+    },
+    {
+     "a": "Pricing Analyst",
+     "activity": "IT implements stack-prevention logic (cannot combine SC + PWD; cannot combine statutory + promotional beyond allowed); validates eligible-SKU basket",
+     "duration": "Per rule",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Ops audits POS application vs. rule monthly; investigates computation errors; corrects configuration",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Store Ops"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-236"
+   ],
+   "fields": {
+    "Frequency": "Continuous; aggregated monthly",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Store Manager, IT",
+    "Trigger": "Each SC/PWD transaction",
+    "Volume": "~140K–225K transactions/month"
+   },
+   "id": "W2899",
+   "level": 2,
+   "name": "SC/PWD Purchase Book of Sales Transaction Recording",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records each SC/PWD transaction in mandatory Book of Sales/Transactions\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates book completeness monthly per store\" (replaces manual Step 2).",
+     "- System auto-inspect of \"Tax Accountant archives book per location for BIR inspection\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-236 (ensure mandatory-discount & VAT-exemption compliance.)",
+     "- operational: auto-recording and monthly reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Incomplete book forfeits tax credit and incurs penalty; mitigated by auto-recording and monthly reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Mandatory-discount book register; POS reconciliation; archive"
+    ],
+    "Time Estimate": [
+     "- Continuous; 1–2 days/month reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Accountant",
+     "activity": "ERP auto-records each SC/PWD transaction in mandatory Book of Sales/Transactions (per RA 9994 IRR): date, customer name, ID number, gross amount, discount, VAT component",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "ERP automation"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant validates book completeness monthly per store; reconciles to POS sales register; investigates gaps",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant archives book per location for BIR inspection; maintains 10-year retention",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-236"
+   ],
+   "fields": {
+    "Frequency": "Weekly review",
+    "Owner": "LP Analyst",
+    "Participants": "LP, Store Manager, IT",
+    "Trigger": "Anomaly detection or LP review",
+    "Volume": "~50–200 flagged events/month"
+   },
+   "id": "W2900",
+   "level": 2,
+   "name": "Discount Abuse, ID Sharing & Fraud Prevention Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors for fraud signals\" (replaces manual Step 1).",
+     "- System auto-review of \"LP investigates flagged events\" (replaces manual Step 2).",
+     "- System auto-scan of \"scan, frequency caps\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-236 (ensure mandatory-discount & VAT-exemption compliance.)",
+     "- operational: monitoring and validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Loss risk**: ID-sharing fraud erodes margin (discount not recoverable if invalid); mitigated by monitoring and validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LP exception monitoring; ID-frequency analytics; CCTV correlation"
+    ],
+    "Time Estimate": [
+     "- Continuous; 1–2 days/week"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Manager",
+     "activity": "IT/LP monitors for fraud signals: same ID used across multiple transactions/stores, frequent high-value purchases, ID photo mismatch",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP investigates flagged events; reviews CCTV; refers suspected ID-sharing/fraud to OSCA/NCDA/PNP where warranted",
+     "duration": "Per case",
+     "n": "2",
+     "r": "LP"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "Store Manager reinforces cashier vigilance; LP trends abuse by store and recommends controls (ID-scan, frequency caps)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Store Manager / LP"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-484"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Pricing, Compliance",
+    "Trigger": "Quarterly compliance review",
+    "Volume": "Medicine and prime-commodity SKUs (limited in hardware retail)"
+   },
+   "id": "W2901",
+   "level": 2,
+   "name": "Medicine & Prime Commodity Discount Compliance (RA 9994/7394)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Category Manager identifies SKUs subject to enhanced SC/PWD discount\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates no exclusion of mandatory items\" (replaces manual Step 2).",
+     "- System auto-report of \"reports compliance to DTI/NCDA inquiries\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-484 (ensure controlled execution — SC/PWD/Solo Parent Eligibility & In-Store Discount Program (PA-85.1).)",
+     "- operational: SKU-master audit"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Excluding eligible items violates Consumer Act and RA 9994; mitigated by SKU-master audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Eligible-SKU master; POS rule application; compliance audit"
+    ],
+    "Time Estimate": [
+     "- 1 week/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager identifies SKUs subject to enhanced SC/PWD discount (medicines 32%, selected prime commodities); maintains eligible-SKU list",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Pricing ensures POS applies correct enhanced discount on eligible SKUs; validates no exclusion of mandatory items",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Pricing"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance audits eligible-SKU coverage and discount application; reports compliance to DTI/NCDA inquiries",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-484"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + annual review",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Pricing, IT",
+    "Trigger": "RA 11861 implementation or rule update",
+    "Volume": "Eligible SKUs (baby/child items, school supplies, selected goods)"
+   },
+   "id": "W2902",
+   "level": 2,
+   "name": "Solo Parent Discount Program Configuration & Eligible-SKU Mapping",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"10% discount + VAT exemption on baby's milk, baby food/micronutrient supplements, sanitary diapers, and prescribed child medicines\" (replaces manual Step 1).",
+     "- System auto-capture of \"IT configures POS rule\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates eligible-SKU scope\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-484 (ensure controlled execution — SC/PWD/Solo Parent Eligibility & In-Store Discount Program (PA-85.1).)",
+     "- operational: cap-validation logic"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Exceeding weekly cap or wrong SKU scope; mitigated by cap-validation logic"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Eligible-SKU master; weekly-cap validation; POS rule"
+    ],
+    "Time Estimate": [
+     "- Per-update; monthly audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager configures Solo Parent eligible-SKU list per RA 11861 (10% discount + VAT exemption on baby's milk, baby food/micronutrient supplements, sanitary diapers, and prescribed child medicines; no weekly cap, PHP 250K annual income ceiling per RR 1-2023)",
+     "duration": "Per update",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Pricing Analyst",
+     "activity": "IT configures POS rule: eligible-item list validation via customer purchase history (no weekly cap under the RA 11861 IRR; income qualification verified at ID issuance); Solo Parent ID capture",
+     "duration": "Per update",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Pricing audits weekly cap enforcement; validates eligible-SKU scope; refines configuration",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Pricing"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-484"
+   ],
+   "fields": {
+    "Frequency": "Annual + onboarding",
+    "Owner": "Training Manager",
+    "Participants": "Training, Store Ops, HR",
+    "Trigger": "Onboarding + annual refresh",
+    "Volume": "~5,800 store employees"
+   },
+   "id": "W2903",
+   "level": 2,
+   "name": "Staff Training, ID Recognition & Customer Service Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"discount rules, stack prevention, customer-service protocol for denial\" (replaces manual Step 1).",
+     "- System auto-update of \"Store Ops delivers training to cashiers/sales associates\" (replaces manual Step 2).",
+     "- System auto-track of \"HR tracks certification\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-484 (ensure controlled execution — SC/PWD/Solo Parent Eligibility & In-Store Discount Program (PA-85.1).)",
+     "- operational: certification"
+    ],
+    "Pain Points / Risks": [
+     "- **Service risk**: Untrained staff mishandle discounts (deny valid, grant invalid); mitigated by certification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LMS certification; competency tracker"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per employee"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "Training develops curriculum: ID types and authentication, discount rules, stack prevention, customer-service protocol for denial",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Training Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Ops delivers training to cashiers/sales associates; certifies competency; refreshes on regulatory updates",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Store Ops"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "HR tracks certification; identifies gaps; addresses non-compliance via coaching",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "HR"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-484"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~20–50 complaints/year",
+    "Owner": "Customer Service Lead",
+    "Participants": "Customer Service, Store Manager, Compliance, Legal",
+    "Trigger": "Customer complaint on discount denial/service",
+    "Volume": "All stores"
+   },
+   "id": "W2904",
+   "level": 2,
+   "name": "Customer Complaint & DTI/NCSC Escalation Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Customer Service logs complaint\" (replaces manual Step 1).",
+     "- System auto-track of \"tracks DTI/NCSC case outcomes\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-484 (ensure controlled execution — SC/PWD/Solo Parent Eligibility & In-Store Discount Program (PA-85.1).)",
+     "- operational: rapid resolution and training"
+    ],
+    "Pain Points / Risks": [
+     "- **Reputational risk**: Publicized denial damages brand and invites DTI action; mitigated by rapid resolution and training"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Complaint workflow; DTI/NCSC case tracker; remediation log"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per complaint"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Lead",
+     "activity": "Customer Service logs complaint; investigates root cause (staff error, system, policy misunderstanding); documents",
+     "duration": "Per complaint",
+     "n": "1",
+     "r": "Customer Service"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Store Manager/Compliance resolves with customer; provides remedy (refund, apology) where warranted; responds to DTI/NCSC referral",
+     "duration": "Per complaint",
+     "n": "2",
+     "r": "Store Manager / Compliance"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance reports recurring issues; recommends training/config changes; tracks DTI/NCSC case outcomes",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

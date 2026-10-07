@@ -1,0 +1,685 @@
+{
+ "process_area": {
+  "id": "PA-35.1",
+  "title": "Asset Registration & Lifecycle Tracking"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-35-fixed-asset-management/PA-35.1-asset-registration-lifecycle.md",
+ "value_stream": {
+  "directory": "VS-35-fixed-asset-management",
+  "id": "VS-35",
+  "name": "Fixed Asset Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-219"
+   ],
+   "fields": {
+    "Frequency": "~200–300 new assets/month (store fixtures, IT equipment, vehicles, renovation components)",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Fixed Asset Accountant, Receiving Clerk, Department Head, CFO (for assets > threshold)",
+    "Trigger": "Purchase order receipt for capital asset or construction project completion per W40.3",
+    "Volume": "~2,500–3,500 new fixed assets/year"
+   },
+   "id": "W1690",
+   "level": 2,
+   "name": "New Fixed Asset Registration & Capitalization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters asset description, category, sub-category\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-219 (ensure fixed-asset register accuracy.)",
+     "- operational: Fixed Asset Accountant review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Cutoff errors**: Assets received near month-end may be expensed instead of capitalized if GR is delayed; strict \"ready-for-use\" date tracking required",
+     "- **Threshold gaming**: Department heads may split purchases to stay below PHP 20,000 threshold; system should flag repetitive purchases to same vendor/category within 30 days",
+     "- **Missing assets at startup**: 200 existing stores have legacy assets that may lack proper registration; migration of existing asset register is a one-time data migration challenge",
+     "- **Component vs. whole asset**: Large installations (e.g., 3 POS terminals per store = 600 total) can be registered as individual assets or as a store-level bundle; consistent policy required"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Auto-creation from PO receipt or capex project completion (W1690.1)",
+     "- Fixed asset master with full attribute set: cost, location, category, depreciation params, warranty, vendor (W1690.2)",
+     "- Capitalization threshold validation rules engine (W1690.3)",
+     "- Approval workflow for high-value assets with tiered authorization (W1690.4)",
+     "- Depreciation engine with start date = ready-for-use date (W1690.5)",
+     "- Asset tag / barcode / QR code generation module (W1690.6)"
+    ],
+    "Time Estimate": [
+     "15 min per new asset registration; ~250/month = ~63 hours/month (~8 business days/month at 8-hour days). Bulk registration during store openings (29 assets per new store) requires dedicated session.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "System auto-generates asset registration candidate from approved PO or capex project closure: (a) PO with asset category flag triggers asset creation workflow, (b) capex project completion triggers CIP-to-asset conversion per W40.3, (c) manual creation for donated, leased, or transferred assets",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Fixed Asset Accountant reviews and enriches asset record: (a) assigns unique asset number (format: BRD-XX-YYYY-NNNNN where XX = entity code, YYYY = year, NNNNN = sequential), (b) enters asset description, category, sub-category (POS terminal, forklift, fixture, vehicle, IT equipment, office furniture), (c) links to cost center, location (store/DC/HQ code), and responsible department, (d) records acquisition cost including non-recoverable VAT, delivery, installation, and testing costs per PFRS, (e) assigns useful life per category schedule (POS terminals: 5 years; forklifts: 7 years; store fixtures: 10 years; vehicles: 5 years; IT servers: 4 years; office furniture: 8 years), (f) assigns depreciation method (straight-line for all; declining balance for vehicles), (g) records vendor, PO reference, GR reference, and warranty expiry",
+     "duration": "15 min/asset",
+     "n": "2",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "System validates capitalization threshold: assets ≥ PHP 20,000 capitalized; assets < PHP 20,000 charged to expense (policy threshold reviewed annually). Threshold excludes low-value items like individual hand tools, cables, or accessories",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "For assets requiring capitalization approval (≥ PHP 500K): Accounting Manager reviews asset record, verifies capex approval per W1811, confirms classification and useful life; approves capitalization",
+     "duration": "10 min/asset",
+     "n": "4",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "—",
+     "activity": "System activates asset in fixed asset register; depreciation begins from the asset's ready-for-use date (not invoice date); asset appears in entity-specific fixed asset register and consolidated group register",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Asset tag generated and assigned per W1692; physical label applied to asset at receiving or installation",
+     "duration": "5 min/asset",
+     "n": "6",
+     "r": "Receiving Clerk / Fixed Asset Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1692",
+    "W1811",
+    "W40"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-346"
+   ],
+   "fields": {
+    "Frequency": "Continuous for new assets; annual review in Q4",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Fixed Asset Accountant, Accounting Manager, External Auditor",
+    "Trigger": "New asset registration (W1690) or annual classification review",
+    "Volume": "~2,500–3,500 new classifications/year + ~15,000–20,000 existing assets reviewed annually"
+   },
+   "id": "W1691",
+   "level": 2,
+   "name": "Asset Classification & Category Assignment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"System maintains standardized asset category tree aligned to PFRS/IAS\" (replaces manual Step 1).",
+     "- System auto-count of \"Accountant assigns category and sub-category during registration\" (replaces manual Step 2).",
+     "- System auto-review of \"review\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-346 (ensure controlled execution — Asset Registration & Lifecycle Tracking (PA-35.1).)",
+     "- operational: Fixed Asset Accountant review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Leasehold improvements**: New stores open in leased properties; lease terms vary (5–15 years); leasehold improvements must be depreciated over the shorter of useful life or lease term — tracking lease expiry dates is critical",
+     "- **Software capitalization**: PFRS distinguishes between software licenses (intangible asset) and software customization (may be part of hardware asset); classification requires judgment",
+     "- **Component accounting**: PFRS requires significant components with different useful lives to be depreciated separately (e.g., HVAC system in a store vs. the building shell)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Configurable asset category tree with default useful life and depreciation method (W1691.1)",
+     "- Override capability with mandatory justification and approval workflow (W1691.2)",
+     "- Annual review report: assets approaching end of useful life, assets with remaining book value > PHP 0 at end of useful life (W1691.3)"
+    ],
+    "Time Estimate": [
+     "Category assignment 5 min/asset × ~2,500–3,500 new classifications/year ≈ 210–290 hours/year; annual Q4 review of category assignments for ~15,000–20,000 existing assets 2–3 days ≈ 20 hours/year (category tree pre-configured; external-audit review at annual audit).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "System maintains standardized asset category tree aligned to PFRS/IAS 16 and Philippine tax rules: (a) Land (non-depreciable), (b) Buildings & Improvements (20–40 years), (c) Leasehold Improvements (shorter of useful life or lease term), (d) Plant & Machinery (7–15 years), (e) Vehicles (5 years), (f) Furniture, Fixtures & Equipment (5–10 years), (g) IT Equipment & Software (3–5 years), (h) POS & Retail Technology (5 years), (i) Warehouse Equipment (7–10 years)",
+     "duration": "Pre-configured",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Fixed Asset Accountant assigns category and sub-category during registration; system auto-populates default useful life and depreciation method; Accountant can override with justification (e.g., harsh environment may reduce useful life of DC forklifts from 7 to 5 years)",
+     "duration": "5 min/asset",
+     "n": "2",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Annual review (Q4): Fixed Asset Accountant reviews category assignments for material misclassifications; identifies assets with useful life that should be adjusted based on condition assessment; proposes reclassification to Accounting Manager",
+     "duration": "2–3 days/year",
+     "n": "3",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "External auditor reviews classification and useful life assumptions during annual audit; confirms PFRS compliance; any reclassification adjustments posted before year-end close",
+     "duration": "During annual audit",
+     "n": "4",
+     "r": "External Auditor / Fixed Asset Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1690"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-219"
+   ],
+   "fields": {
+    "Frequency": "~2,500–3,500 tags/year for new assets + ~500–1,000 replacement tags/year",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Fixed Asset Accountant, Receiving Clerk, Store Manager, DC Supervisor",
+    "Trigger": "New asset registration (W1690) or replacement of damaged/missing tag",
+    "Volume": "~3,000–4,500 tags/year"
+   },
+   "id": "W1692",
+   "level": 2,
+   "name": "Asset Tag & Label Generation & Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scanning during physical verification per W1706\" (replaces manual Step 1).",
+     "- System auto-generate of \"printed on durable polyester/Vinyl label\" (replaces manual Step 2).",
+     "- System auto-record of \"Store Manager / DC Supervisor confirms tag application via\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-219 (ensure fixed-asset register accuracy.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Tag durability**: DC and lumber yard environments (dust, moisture, UV exposure) degrade labels; metal/RFID tags recommended for these areas",
+     "- **Tag removal**: Assets may be moved between stores without updating location; physical verification per W1706 catches discrepancies",
+     "- **Cost of RFID**: RFID tags cost PHP 50–150 each vs. PHP 5 for labels; justified only for high-value or frequently moved assets"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- QR/barcode generation integrated with fixed asset register (W1692.1)",
+     "- Mobile app for tag scan confirmation (W1692.4)",
+     "- Tag replacement request and tracking via helpdesk (W1692.5)"
+    ],
+    "Time Estimate": [
+     "~5 min per tag (printing 2 min + application 2 min + confirmation scan 1 min) × ~3,000–4,500 tags/year ≈ 250–375 hours/year; missing/damaged tag replacement 15 min/case at realized volume (tag generation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System auto-generates asset tag upon asset registration: (a) QR code containing asset number, description, location, category, and acquisition date, (b) barcode (Code 128) for scanning during physical verification per W1706, (c) human-readable label with asset number and brief description",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Tag printed on durable polyester/Vinyl label (weather-resistant for DC/yard assets; tamper-evident for POS terminals and IT equipment); for high-value assets (≥ PHP 500K): engraved metal tag or RFID tag",
+     "duration": "2 min/tag",
+     "n": "2",
+     "r": "Fixed Asset Accountant / Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "Tag applied to asset at receiving or installation: (a) POS terminals: tag affixed to underside or back panel, (b) forklifts: metal tag riveted to frame, (c) store fixtures: tag on non-visible surface, (d) vehicles: tag in glove compartment + windshield sticker, (e) IT equipment: tag on back panel, (f) DC racking: tag at aisle end",
+     "duration": "2 min/tag",
+     "n": "3",
+     "r": "Receiving Clerk / Store Maintenance"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager / DC Supervisor confirms tag application via mobile app scan; system updates asset record with \"Tag Applied\" status and date",
+     "duration": "1 min/scan",
+     "n": "4",
+     "r": "Store Manager / DC Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Missing/damaged tag replacement: any employee reports missing tag via helpdesk ticket; Fixed Asset Accountant verifies asset existence, generates replacement tag, ships to location; location confirms re-application",
+     "duration": "15 min/case",
+     "n": "5",
+     "r": "Fixed Asset Accountant / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1690",
+    "W1706"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-346"
+   ],
+   "fields": {
+    "Frequency": "~50–100 transfers/month",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Fixed Asset Accountant, Sending Location Manager, Receiving Location Manager, Logistics",
+    "Trigger": "Business need to relocate asset (store closure, new store needs equipment, DC rebalancing, departmental reorganization)",
+    "Volume": "~600–1,200 transfers/year"
+   },
+   "id": "W1693",
+   "level": 2,
+   "name": "Asset Transfer Between Locations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"asset transfer request\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews transfer request\" (replaces manual Step 2).",
+     "- System auto-generate of \"prepares asset for transport\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-346 (ensure controlled execution — Asset Registration & Lifecycle Tracking (PA-35.1).)",
+     "- operational: Fixed Asset Accountant review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Unauthorized moves**: Store managers may move assets (e.g., POS terminals, display racks) without informing Finance; physical verification per W1706 catches these",
+     "- **Inter-entity complexity**: Transfer between BuildRight Depot Inc. and BuildRight Logistics Inc. requires transfer pricing documentation for BIR compliance",
+     "- **In-transit assets**: Assets in transit between locations should be tracked in an \"in-transit\" status to avoid double-counting or loss"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Asset transfer request with approval workflow (W1693.1–2)",
+     "- Asset location master update triggered by scan confirmation (W1693.4)",
+     "- Intercompany journal entry auto-generation for cross-entity transfers (W1693.5)",
+     "- Asset movement history log for audit trail (W1693.1–5)"
+    ],
+    "Time Estimate": [
+     "~25–30 min per transfer (initiation 10 min + Fixed Asset Accountant review 10 min + receiving scan 5 min/asset; physical movement by logistics) × ~50–100 transfers/month ≈ 250–600 hours/year (inter-entity journal entries automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "Sending location initiates asset transfer request in system: (a) selects asset(s) to transfer, (b) specifies destination location and reason, (c) for inter-entity transfers (e.g., Depot Inc. → Logistics Inc.): triggers intercompany transfer pricing review",
+     "duration": "10 min/request",
+     "n": "1",
+     "r": "Sending Location Manager"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Fixed Asset Accountant reviews transfer request: (a) verifies asset exists and is active at sending location, (b) confirms asset is not pledged as collateral or subject to legal hold, (c) for inter-entity: ensures arm's-length valuation (book value or fair value per transfer pricing policy), (d) approves or rejects transfer",
+     "duration": "10 min/request",
+     "n": "2",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "System generates asset transfer order; logistics arranges physical movement if needed (forklifts, large fixtures); sending location prepares asset for transport",
+     "duration": "Variable",
+     "n": "3",
+     "r": "Logistics / Sending Location"
+    },
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "Receiving location scans asset tag upon arrival; confirms asset identity and condition; system updates: (a) asset location code changed to receiving location, (b) cost center reassigned, (c) physical inventory record updated, (d) depreciation continues without interruption (same useful life and method)",
+     "duration": "5 min/asset",
+     "n": "4",
+     "r": "Receiving Location Manager"
+    },
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "For inter-entity transfers: system generates intercompany journal entry — asset removed from sending entity's register, added to receiving entity's register; any gain/loss on transfer recognized in sending entity if transfer price ≠ book value",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1706"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-346"
+   ],
+   "fields": {
+    "Frequency": "~3–5 component structures/month (10–15 new store builds/year per W1427 plus ~30–40 remodels/year per W109.2)",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Fixed Asset Accountant, COO, Project Engineer",
+    "Trigger": "Asset installation with identifiable components of different useful lives, or major component replacement",
+    "Volume": "~40–60/year"
+   },
+   "id": "W1694",
+   "level": 2,
+   "name": "Asset Component & Sub-Asset Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant decomposes the project into component assets per PFRS component…\" (replaces manual Step 1).",
+     "- System auto-record of \"record with sub-asset components, each with its own\" (replaces manual Step 2).",
+     "- System auto-review of \"review\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-346 (ensure controlled execution — Asset Registration & Lifecycle Tracking (PA-35.1).)",
+     "- operational: Fixed Asset Accountant review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost allocation subjectivity**: Allocating total project cost across components requires judgment (e.g., what % of PHP 50M store build is HVAC vs. electrical vs. structure?)",
+     "- **Administrative burden**: Component accounting adds significant record-keeping complexity; justified only for material components (policy: components ≥ 10% of total asset cost or ≥ PHP 500K)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Parent-child asset hierarchy with independent depreciation per component (W1694.2)",
+     "- Component derecognition and new component capitalization workflow (W1694.3)",
+     "- Component replacement scheduling linked to maintenance planning (W1694.4)"
+    ],
+    "Time Estimate": [
+     "~2–3 hours per componentization (project decomposition 1–2 hours + parent-record setup 30 min; component replacements 15 min/component at realized events) × ~40–60 component structures/year ≈ 80–180 hours/year; annual structure review 1 day.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "During new store build or major renovation, Fixed Asset Accountant decomposes the project into component assets per PFRS component accounting: (a) building structure / leasehold improvements (10–20 years or lease term), (b) HVAC system (10–15 years), (c) electrical installation (15–20 years), (d) plumbing (15–20 years), (e) racking and shelving (10 years), (f) POS system (5 years), (g) signage (7–10 years), (h) paint and cosmetic finishes (3–5 years)",
+     "duration": "1–2 hours/store",
+     "n": "1",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "System creates parent asset record with sub-asset components, each with its own: (a) acquisition cost allocation (proportion of total project cost), (b) useful life, (c) depreciation method and schedule, (d) replacement schedule",
+     "duration": "30 min/store",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "When a component is replaced (e.g., HVAC replacement after 12 years): (a) old component derecognized — remaining book value written off, (b) new component capitalized as sub-asset with its own useful life, (c) parent asset and other components unaffected",
+     "duration": "15 min/component",
+     "n": "3",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Annual review: Fixed Asset Accountant reviews component structures for assets approaching component replacement; coordinates with Facilities for planned replacement budget",
+     "duration": "1 day/year",
+     "n": "4",
+     "r": "Fixed Asset Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W109",
+    "W1427"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-346"
+   ],
+   "fields": {
+    "Frequency": "Continuous — ~4,000–6,000 maintenance events/month across all assets",
+    "Owner": "Maintenance Supervisor (DC) / Store Maintenance (stores) / IT Helpdesk (IT assets)",
+    "Participants": "Maintenance Supervisor, Store Maintenance, IT Helpdesk, Fixed Asset Accountant",
+    "Trigger": "Asset registration (W1690), manufacturer warranty requirement, or regulatory mandate (e.g., forklift annual inspection)",
+    "Volume": "~50,000–70,000 maintenance records/year"
+   },
+   "id": "W1695",
+   "level": 2,
+   "name": "Asset Maintenance Schedule & History Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspection, annual comprehensive service\" (replaces manual Step 1).",
+     "- System auto-record of \"records in system\" (replaces manual Step 2).",
+     "- System auto-update of \"updated\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-346 (ensure controlled execution — Asset Registration & Lifecycle Tracking (PA-35.1).)",
+     "- operational: Maintenance Supervisor (DC) / Store Maintenance (stores) / IT Helpdesk (IT assets) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Forklifts, elevators, and fire suppression systems have regulatory inspection requirements; missed inspections can result in DOLE/DENR penalties; mitigated by the Maintenance Supervisor (DC) / Store Maintenance (stores) / IT Helpdesk (IT assets) review and approval gate",
+     "- **Capitalization judgments**: Distinguishing between \"repair\" (expense) and \"improvement\" (capitalize) requires accounting judgment; policy guidelines needed with examples",
+     "- **Spare parts linkage**: Maintenance parts consumed from inventory must be properly costed and linked to the asset for total cost of ownership analysis"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Preventive maintenance scheduling engine with configurable rules per asset category (W1695.1)",
+     "- Maintenance work order module with cost tracking (W1695.2–3)",
+     "- Capitalization vs. expense decision support (W1695.4)",
+     "- Asset maintenance history dashboard (W1695.5)"
+    ],
+    "Time Estimate": [
+     "Scheduled maintenance 30 min–4 hours/event executed by maintenance teams across ~4,000–6,000 events/month — standing maintenance staffing within Facilities, not incremental admin effort; monthly capitalized-maintenance review 2 hours ≈ 24 hours/year (preventive schedules auto-generated; histories on-demand).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Maintenance Supervisor",
+     "activity": "System auto-generates preventive maintenance schedule based on asset category rules: (a) forklifts: monthly inspection, annual comprehensive service, (b) HVAC: quarterly filter change, annual full service, (c) POS terminals: quarterly cleaning and calibration, (d) delivery vehicles: every 5,000 km oil change, annual registration renewal, (e) generators: monthly test run, quarterly full load test, (f) fire suppression systems: annual certification",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Maintenance Supervisor",
+     "activity": "Maintenance team performs scheduled maintenance; records in system: (a) date, technician, work performed, parts used (linked to spare parts inventory), (b) cost (labor hours + parts) — categorized as maintenance expense (not capitalized), (c) next service due date updated automatically",
+     "duration": "30 min–4 hours/event",
+     "n": "2",
+     "r": "Maintenance Technician"
+    },
+    {
+     "a": "Maintenance Supervisor",
+     "activity": "Emergency/breakdown maintenance: (a) asset user reports failure via helpdesk, (b) maintenance team responds and diagnoses, (c) repair or replacement performed, (d) if repair extends useful life or increases capacity → cost capitalized as asset improvement per W1690; if repair merely restores function → expensed, (e) maintenance history updated",
+     "duration": "Variable",
+     "n": "3",
+     "r": "Maintenance Technician"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Fixed Asset Accountant reviews capitalized maintenance costs monthly to ensure proper capitalization vs. expense treatment per PFRS",
+     "duration": "2 hours/month",
+     "n": "4",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "Asset maintenance history available for: (a) physical verification condition assessment per W1706, (b) vendor warranty claims, (c) replacement decision support (frequency and cost of repairs vs. replacement)",
+     "duration": "On-demand",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1690",
+    "W1706"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-346"
+   ],
+   "fields": {
+    "Frequency": "~20–30 lease-vs-buy decisions/year for material assets",
+    "Owner": "FP&A Manager",
+    "Participants": "FP&A Manager, CFO, Department Head, Treasury",
+    "Trigger": "Need for new asset (vehicle, equipment, IT hardware) identified during budgeting or operational planning",
+    "Volume": "Low volume but high value — each decision may involve PHP 1–20M"
+   },
+   "id": "W1696",
+   "level": 2,
+   "name": "Asset Lease vs. Buy Decision & Recording",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"recorded as asset and liability on balance sheet per PFRS 16\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant records right-of-use asset and lease liability at inception\" (replaces manual Step 3).",
+     "- System auto-schedule of \"scheduled in treasury system\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-346 (ensure controlled execution — Asset Registration & Lifecycle Tracking (PA-35.1).)",
+     "- operational: FP&A Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **PFRS 16 complexity**: All leases > 12 months must be on-balance-sheet; this significantly increases reported assets and liabilities; requires careful tracking of lease terms, renewal options, and discount rates",
+     "- **Lease portfolio**: BuildRight leases all 200+ store locations; the lease portfolio represents the largest \"asset\" class by number and requires dedicated lease accounting functionality",
+     "- **Embedded leases**: Service contracts with embedded leases (e.g., copier contracts, IT equipment as-a-service) must be identified and evaluated per PFRS 16"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-vs-buy NPV calculator template (W1696.1)",
+     "- PFRS 16 lease accounting module: right-of-use asset and lease liability management (W1696.3)",
+     "- Lease payment scheduling with auto-split of principal and interest (W1696.4)"
+    ],
+    "Time Estimate": [
+     "~3–5 hours per lease-vs-buy decision (FP&A analysis 2–4 hours + CFO decision 30 min + right-of-use recording 30 min/lease) × ~20–30 decisions/year ≈ 60–150 hours/year on PHP 1–20M decisions; lease payments scheduled automated monthly.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Department Head identifies need for new asset; FP&A performs lease-vs-buy analysis: (a) total cost of ownership (purchase price + maintenance + disposal vs. lease payments + maintenance), (b) NPV comparison using company's incremental borrowing rate, (c) cash flow impact (upfront purchase vs. monthly lease), (d) tax implications (depreciation vs. lease expense deductibility), (e) flexibility (lease allows upgrade; purchase builds equity), (f) balance sheet impact per PFRS 16 (most leases now on-balance-sheet)",
+     "duration": "2–4 hours/decision",
+     "n": "1",
+     "r": "FP&A Manager"
+    },
+    {
+     "a": "CEO (if > PHP 5M)",
+     "activity": "CFO reviews analysis and decides: (a) purchase — triggers capex request per W1811, (b) finance lease — recorded as asset and liability on balance sheet per PFRS 16, (c) operating lease (short-term ≤ 12 months or low-value) — recorded as expense on straight-line basis",
+     "duration": "30 min/decision",
+     "n": "2",
+     "r": "CFO"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "For leased assets: Fixed Asset Accountant records right-of-use asset and lease liability at inception: (a) right-of-use asset = present value of lease payments, (b) lease liability = same present value, (c) asset depreciated over lease term, (d) liability reduced by lease payments with interest expense on outstanding balance",
+     "duration": "30 min/lease",
+     "n": "3",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Fixed Asset Accountant",
+     "activity": "Lease payments scheduled in treasury system; monthly: (a) lease payment processed to lessor, (b) system splits payment into principal reduction and interest expense, (c) right-of-use asset depreciated monthly",
+     "duration": "Automated monthly",
+     "n": "4",
+     "r": "Treasury / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1811"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-219"
+   ],
+   "fields": {
+    "Frequency": "Continuous for new assets; annual policy renewal review",
+    "Owner": "Insurance & Risk Officer",
+    "Participants": "Insurance & Risk Officer, Fixed Asset Accountant, Treasury, Insurance Broker",
+    "Trigger": "New asset registration (W1690), annual insurance renewal, or significant asset addition/disposal",
+    "Volume": "~2,500–3,500 coverage updates/year"
+   },
+   "id": "W1697",
+   "level": 2,
+   "name": "Asset Insurance Coverage Tracking & Linkage",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"System auto-flags new assets above coverage threshold for insurance\" (replaces manual Step 2).",
+     "- System auto-update of \"Asset disposal/retirement per W1708 triggers insurance schedule update\" (replaces manual Step 3).",
+     "- System auto-submit of \"submits updated schedule to broker with renewal instructions\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-219 (ensure fixed-asset register accuracy.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Underinsurance**: Rapid store expansion (10–15/year) may outpace insurance schedule updates; blanket policies help but must be reviewed for aggregate limits",
+     "- **Claims recovery lag**: When insured assets are damaged/destroyed, claim settlement can take 3–6 months; temporary assets may be needed while claim is pending",
+     "- **Policy fragmentation**: 5 entities × multiple policy types = 15–20 policies to manage; centralized tracking essential to avoid gaps"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance coverage matrix by asset category with policy details (W1697.1)",
+     "- Auto-flag for new assets requiring insurance enrollment (W1697.2)",
+     "- Asset disposal triggers insurance schedule update (W1697.3)",
+     "- Asset register export for insurance renewal (W1697.4)",
+     "- Monthly asset register vs. insurance coverage reconciliation report (W1697.5)"
+    ],
+    "Time Estimate": [
+     "Coverage-matrix updates continuous at new-asset enrollment (auto-flagged above threshold); disposal-triggered insurance schedule updates 10 min/disposal; annual insurance renewal 2–3 days ≈ 20 hours/year; monthly asset-register-to-insurance reconciliation 2 hours ≈ 24 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Insurance & Risk Officer maintains insurance coverage matrix by asset category: (a) property insurance (buildings, leasehold improvements, fixtures) — blanket policy per entity, (b) motor vehicle insurance — per-vehicle policy, (c) equipment breakdown / boiler & machinery — DC equipment, generators, HVAC, (d) electronic equipment insurance — POS terminals, servers, RF guns, (e) transit / inland marine — assets in transit between locations, (f) business interruption — linked to property coverage",
+     "duration": "Maintained continuously",
+     "n": "1",
+     "r": "Insurance & Risk Officer"
+    },
+    {
+     "a": "Insurance & Risk Officer",
+     "activity": "System auto-flags new assets above coverage threshold for insurance enrollment: (a) vehicles: auto-enrolled in motor fleet policy within 7 days of registration, (b) high-value assets ≥ PHP 1M: reported to broker for schedule update, (c) DC equipment: added to equipment breakdown schedule",
+     "duration": "Automated flag; manual update",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Asset disposal/retirement per W1708 triggers insurance schedule update: (a) vehicle retired → motor policy endorsement to remove, (b) asset written off due to damage → insurance claim initiated per W837 (VS-26), (c) blanket policy: no change needed for individual assets unless approaching aggregate limit",
+     "duration": "10 min/disposal",
+     "n": "3",
+     "r": "Fixed Asset Accountant / Insurance & Risk Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual insurance renewal: (a) Insurance & Risk Officer exports asset register summary by category and entity, (b) compares with insurance schedule to identify coverage gaps or over-insurance, (c) submits updated schedule to broker with renewal instructions, (d) Treasury processes premium payment",
+     "duration": "2–3 days/year",
+     "n": "4",
+     "r": "Insurance & Risk Officer"
+    },
+    {
+     "a": "Insurance & Risk Officer",
+     "activity": "Monthly reconciliation: Fixed Asset Accountant reconciles asset register totals with insurance coverage amounts; material variances (> 10%) reported to Insurance & Risk Officer for schedule correction",
+     "duration": "2 hours/month",
+     "n": "5",
+     "r": "Fixed Asset Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1690",
+    "W1708",
+    "W837"
+   ]
+  }
+ ]
+}

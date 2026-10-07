@@ -1,0 +1,1299 @@
+{
+ "process_area": {
+  "id": "PA-10.3",
+  "title": "Marketplace & Social Commerce"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-10-ecommerce-digital/PA-10.3-marketplace-and-social-commerce.md",
+ "value_stream": {
+  "directory": "VS-10-ecommerce-digital",
+  "id": "VS-10",
+  "name": "Ecommerce & Digital Channels"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "High; ~9,000–13,000 orders/month (one register with W724/W1470's ~30% share)",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "System (Middleware), DC Picker, Marketplace Courier",
+    "Trigger": "Order placed on external marketplace (Lazada/Shopee)",
+    "Volume": "Avg 2–3 items per order; avg order value PHP 1,500–3,000"
+   },
+   "id": "W180",
+   "level": 2,
+   "name": "E-commerce Marketplace Integration (Lazada/Shopee)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"creates Sales Orders in ERP\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks DC stock\" (replaces manual Step 2).",
+     "- System auto-scan of \"scans each item\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Commission and fee opacity**: Lazada and Shopee deduct platform commission (2–5%), payment gateway fees, promotional contributions, and penalty fees (late shipping, order cancellation) from gross settlement before remitting net payment; reconciling net settlement to individual orders is extremely complex, and BuildRight typically cannot identify overcharged fees until the monthly deep reconciliation",
+     "- **Inventory sync lag causing overselling**: marketplace inventory sync via middleware has inherent latency (5–15 minutes); during flash sales or high-traffic events, marketplace sells items that BuildRight's DC has already allocated to other channels (POS, own website), resulting in forced cancellations, marketplace penalty fees, and seller rating damage",
+     "- **Marketplace seller rating sensitivity**: Lazada and Shopee algorithms penalize sellers with cancellation rates > 2% or late shipment rates > 5% by reducing search ranking and removing eligibility for flash sale events; a single inventory sync failure can cascade into weeks of reduced marketplace visibility and lost sales",
+     "- **Returns and dispute asymmetry**: marketplace platforms overwhelmingly side with the buyer in return disputes; BuildRight has limited ability to reject returns or contest \"item not as described\" claims, resulting in higher return rates on marketplace orders (~8–12%) compared to own-website orders (~3–5%)"
+    ],
+    "Staffing Implication": [
+     "- **DC Pickers/Packers**: ~9,000–13,000 marketplace orders/month (per the Frequency) ÷ 30 days = ~300–430 orders/day; at ~15 min pick+pack per order, that's ~42–67 labor-hours/day across all DCs; absorbed within the existing DC pick/pack team that also handles W19 home delivery orders, as marketplace orders use the same pick/pack infrastructure",
+     "- **Finance Clerk (settlement reconciliation)**: bi-weekly settlement reconciliation (4 hours/cycle) + monthly commission/fee audit (2 hours/month) = ~10 hours/month; absorbed by existing Finance Clerk within W7 AP processing duties",
+     "- **Ecommerce Operations Manager**: oversees marketplace channel health, seller rating, and inventory sync; approximately 5–10 hours/week dedicated to marketplace operations including exception handling and promotional coordination; this is a shared responsibility within the existing Ecommerce Operations Manager role",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- API integration (Middleware) for Order, Inventory, and Status sync",
+     "- Marketplace-specific shipping label generation",
+     "- Automated commission/fee deduction accounting"
+    ],
+    "Time Estimate": [
+     "- Order sync and ATP verification: automated (real-time)",
+     "- Picking and packaging: ~15 min/order",
+     "- Handover to marketplace courier: ~5 min/batch",
+     "- Bi-weekly settlement reconciliation: 4 hours per cycle",
+     "- Monthly commission/fee audit: 2 hours/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Order Sync**: Middleware pulls orders from Lazada/Shopee APIs; creates Sales Orders in ERP",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**ATP Verification**: System checks DC stock; if unavailable, system auto-notifies marketplace to cancel or delay",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Picking**: DC Picker receives marketplace pick task; scans each item",
+     "duration": "10 min",
+     "n": "3",
+     "r": "DC Picker"
+    },
+    {
+     "a": "—",
+     "activity": "**Packaging**: Items packed in marketplace-specific packaging; marketplace shipping labels printed from middleware",
+     "duration": "5 min",
+     "n": "4",
+     "r": "DC Packer"
+    },
+    {
+     "a": "—",
+     "activity": "**Handover**: Marketplace Courier (Lex/Shopee Xpress) picks up from DC; pickup confirmation synced to marketplace",
+     "duration": "5 min",
+     "n": "5",
+     "r": "DC Dispatch"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Settlement**: Bi-weekly: Marketplace remits payment (net of commission/fees); Finance reconciles with ERP Sales Orders",
+     "duration": "4 hours",
+     "n": "6",
+     "r": "Finance Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1470",
+    "W19",
+    "W7",
+    "W724"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "Daily; real-time order notifications throughout the day",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Marketplace Specialist, Warehouse Picker, DC Dispatcher, Finance (reconciliation), Customer Service",
+    "Trigger": "Daily marketplace order processing cycle; or real-time order notification from marketplace platform",
+    "Volume": "~300–430 marketplace orders/day (~9,000–13,000/month); ~30% of total ecommerce volume (per W1470)"
+   },
+   "id": "W724",
+   "level": 2,
+   "name": "Marketplace Channel Daily Operations & Order Management (Lazada/Shopee)",
+   "parent": null,
+   "req_refs": [
+    "ECOM-001"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews order queue\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitors for sync errors and resolves within 1 hour\" (replaces manual Step 2).",
+     "- System auto-log of \"logistics\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W180 covers the initial integration setup with marketplace platforms (Lazada, Shopee). This workflow covers the daily operational management of marketplace orders — the highest-volume daily ecommerce activity that the integration alone does not address. Marketplace channels have unique requirements: platform-specific fulfillment SLAs (Lazada requires ship-within-24h for standard items), platform commission structures (2–5% for BuildRight's home-improvement categories, per W180), platform-specific promotional mechanics (Shopee 9.9 sale, Lazada Mid-Year Sale), and platform-managed logistics options that differ from BuildRight's own fulfillment. With marketplace channels representing ~30% of ecommerce volume (per W1470 and the Volume), dedicated daily operations are essential."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: early morning order processing and DC priority for marketplace orders; operational: safety stock buffer dedicated to marketplace channel per W105"
+    ],
+    "Pain Points / Risks": [
+     "- **Platform SLA pressure**: Lazada and Shopee impose strict ship-within-24h requirements; failure results in order cancellation, seller penalty points, and reduced search ranking; mitigated by early morning order processing and DC priority for marketplace orders",
+     "- **Commission impact on margins**: marketplace commissions (2–5% for BuildRight's categories) plus payment processing fees reduce gross margin significantly compared to own-channel sales; requires careful SKU selection for marketplace — avoid listing low-margin items where commission eliminates profit",
+     "- **Inventory overselling risk**: if inventory sync fails or is delayed, marketplace may sell items already committed to in-store or ecommerce orders; mitigated by safety stock buffer dedicated to marketplace channel per W105",
+     "- **Platform policy volatility**: Lazada and Shopee frequently change seller policies, commission rates, and promotional requirements; requires constant monitoring and rapid adaptation",
+     "- **Account suspension risk**: marketplace platforms can suspend seller accounts for policy violations (late shipping, customer complaints, counterfeit claims); suspension halts all marketplace revenue immediately; mitigated by CTL-271 (controlled execution — Marketplace & Social Commerce (PA-10.3))"
+    ],
+    "Staffing Implication": [
+     "Marketplace Specialist: 1 FTE dedicated to marketplace daily operations (order processing, customer service, platform management). Ecommerce Operations Manager: ~1–2 hours/day oversight. Customer Service: ~1 hour/day on marketplace inquiries. No incremental headcount beyond existing ecommerce team."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Marketplace API integration per W180 (Lazada Seller Center API, Shopee Open Platform API)",
+     "- ERP order management for unified order processing",
+     "- Real-time inventory sync per ECOM-001",
+     "- Price sync engine per W678 (multi-channel pricing consistency)",
+     "- Fulfillment routing engine per W536 (unified order management)",
+     "- Carrier integration for platform-specific logistics",
+     "- Settlement reconciliation per W99 (payment settlement)",
+     "- Customer service platform integration per W258"
+    ],
+    "Time Estimate": [
+     "**Total daily**: 4-6 hours (30-45 min order sync + ongoing inventory/price management + 15-20 min routing + fulfillment per W19 + 1-2 hours customer service + 30-45 min reconciliation).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Morning order sync and prioritization**: at start of business day: (a) system syncs overnight marketplace orders from Lazada and Shopee via API integration per W180; (b) Marketplace Specialist reviews order queue: (i) orders requiring ship-today (received before cutoff, platform SLA requires same-day ship); (ii) orders pending inventory confirmation (ATP check against ERP); (iii) orders with address issues or customer notes requiring clarification; (iv) promotional orders with special fulfillment requirements; (c) prioritize ship-today orders for immediate DC pick",
+     "duration": "30-45 min/day",
+     "n": "1",
+     "r": "Marketplace Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Inventory and price synchronization**: throughout the day, system maintains real-time sync: (a) inventory levels: ERP inventory changes (POS sales per W533, DC shipments) pushed to marketplace platforms within 5 minutes to prevent overselling; (b) price sync: promotional pricing per W13 activated simultaneously on marketplace and own channels per W678; (c) listing management: new product listings activated per W569 pushed to marketplace; discontinued items delisted; (d) Marketplace Specialist monitors for sync errors and resolves within 1 hour",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "System / Marketplace Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Fulfillment routing**: for each marketplace order: (a) system determines fulfillment method: (i) DC fulfillment: item picked from nearest DC per W19; (ii) drop-ship: routed to vendor for direct shipment per W246; (iii) ship-from-store: routed to store with inventory per W19B (if marketplace allows); (b) platform-specific logistics: (i) Lazada: choose between BuildRight own logistics or Lazada Logistics (LEX); (ii) Shopee: choose between own logistics or Shopee Xpress (SPX); (c) Marketplace Specialist reviews system routing decisions and adjusts if needed for SLA compliance",
+     "duration": "15-20 min/day",
+     "n": "3",
+     "r": "System / Marketplace Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Order fulfillment and shipment tracking**: marketplace orders enter standard fulfillment pipeline: (a) DC pick and pack per W19 (home delivery) or W11 (BOPIS equivalent); (b) marketplace-specific label generation: platform-required shipping labels with tracking barcodes; (c) handoff to carrier: for platform logistics, schedule pickup per carrier SLA; for own logistics, dispatch per W106; (d) upload tracking number to marketplace platform via API; (e) monitor delivery status: system tracks marketplace-specific milestones (Ready to Ship → Shipped → Out for Delivery → Delivered)",
+     "duration": "Per W19/W246",
+     "n": "4",
+     "r": "DC Picker / Dispatcher"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Customer service coordination**: for marketplace-specific customer issues: (a) respond to marketplace chat/inquiries within platform SLA (Lazada: 1 hour, Shopee: 30 min); (b) handle order cancellation requests: cancel in marketplace platform and ERP simultaneously; (c) process marketplace-initiated returns per W215 with platform-specific return procedures; (d) manage marketplace seller ratings and dispute resolution; (e) escalate platform account issues (listing takedowns, policy violations) to Ecommerce Operations Manager",
+     "duration": "1-2 hours/day",
+     "n": "5",
+     "r": "Marketplace Specialist / Customer Service"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Daily settlement reconciliation**: at end of day: (a) reconcile marketplace orders shipped vs. orders in ERP; (b) verify tracking number upload completion for all shipped orders; (c) review platform commission calculations: order value × commission rate per category; (d) flag discrepancies: orders in platform but not in ERP (sync failure) or vice versa; (e) Finance receives daily marketplace settlement summary for monthly reconciliation per W99",
+     "duration": "30-45 min/day",
+     "n": "6",
+     "r": "Marketplace Specialist / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W105",
+    "W106",
+    "W11",
+    "W13",
+    "W1470",
+    "W180",
+    "W19",
+    "W19B",
+    "W215",
+    "W246",
+    "W258",
+    "W533",
+    "W536",
+    "W569",
+    "W678",
+    "W99"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "4–6 live sessions/week chain-wide (2–3 on Facebook Live, 1–2 on TikTok Live, 1 on buildright.com.ph); ~20–24 sessions/month",
+    "Owner": "Digital Commerce Manager",
+    "Participants": "Marketing Host/Presenter, Category Manager (product expert), Ecommerce Fulfillment Team (W19, W11), Social Media Manager (W142), Customer Service (W258)",
+    "Trigger": "Scheduled live commerce session on social media platform (Facebook Live, TikTok Live); flash product launch; seasonal campaign event",
+    "Volume": "Average 500–2,000 live viewers per session; ~200–500 orders per session; average order value PHP 2,500–4,000"
+   },
+   "id": "W917",
+   "level": 2,
+   "name": "Ecommerce Live Commerce & Social Selling Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"presenter assigned, product samples prepared for studio/staging area, backdrop and…\" (replaces manual Step 1).",
+     "- System auto-count of \"Pre-Live Promotion & Audience Building\" (replaces manual Step 2).",
+     "- System auto-validate of \"Live Session Execution\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Live commerce (selling products through live video streaming on social media) has exploded in the Philippines — the country ranks among the highest in Southeast Asia for social media engagement and live commerce adoption. Facebook Live and TikTok Live are dominant platforms, with Filipino consumers actively purchasing during live streams through integrated checkout (TikTok Shop) or comment-to-order (Facebook Live). For BuildRight, live commerce presents a unique opportunity: (a) demonstrate products in real-time — show how a power drill handles concrete, how paint colors look on actual walls, how tiles appear under different lighting; (b) answer customer questions live — technical advice on product selection for specific projects; (c) drive urgency through limited-time live-only promotions and flash discounts; (d) reach customers in areas without a nearby BuildRight store; (e) build community and trust through authentic, unscripted product demonstrations. Home improvement is particularly suited to live commerce because products are tactile and benefit from visual demonstration. This workflow covers the full live commerce cycle from session planning to order fulfillment and analytics."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: backup internet (mobile hotspot), backup camera, and platform-specific contingency (switch to alternate platform mid-stream); operational: inventory pre-reservation, real-time inventory display on product overlay during stream, and immediate backorder communication; operational: Category Manager monitoring comments and flagging to host for live response"
+    ],
+    "Pain Points / Risks": [
+     "- **Technical failure during live stream**: internet outage, camera malfunction, or platform crash disrupts session; mitigated by backup internet (mobile hotspot), backup camera, and platform-specific contingency (switch to alternate platform mid-stream); session rescheduled if unrecoverable",
+     "- **Higher-than-expected demand**: stock-outs during live session create customer disappointment visible to all viewers; mitigated by inventory pre-reservation, real-time inventory display on product overlay during stream, and immediate backorder communication",
+     "- **Negative live comments**: dissatisfied customers may post negative comments visible to all viewers; mitigated by Category Manager monitoring comments and flagging to host for live response; Customer Service immediate follow-up per W258; negative comment pattern triggers session pause",
+     "- **Host performance inconsistency**: not all hosts are equally engaging or knowledgeable; mitigated by host training, Category Manager earpiece support, and monthly host performance rating per W31",
+     "- **Payment failures**: comment-to-order customers may not complete payment; mitigated by 24-hour payment deadline with automated reminder, and 2 payment reminders before order cancellation",
+     "- **Regulatory compliance**: DTI Sales Promotion Permit required for live-only promotions per W427; prices displayed must comply with Consumer Act per W731; \"live-only\" claims must be genuine (price available only during live session, not simultaneously on website)"
+    ],
+    "Staffing Implication": [
+     "- **Marketing Host/Presenter**: 1 dedicated FTE at HQ for live commerce hosting (4–6 sessions/week × 1 hour + preparation = ~20–25 hours/week); new role or absorbed by existing Marketing staff with live commerce aptitude",
+     "- **Digital Commerce Manager**: ~4–6 hours/week on planning and analytics; absorbed by existing role",
+     "- **Category Manager**: ~1–2 hours/week providing product expertise during sessions; absorbed by existing role",
+     "- **Customer Service**: ~2–3 hours/session on live order processing; absorbed by existing call center capacity per W259",
+     "- **Ecommerce Fulfillment Team**: live commerce orders integrated into standard fulfillment with priority flag; absorbed with incremental volume",
+     "- **Net new**: 1 Marketing Host (PHP 360–480K/year) or absorbed by existing Marketing team"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce platform with TikTok Shop and Facebook Live integration",
+     "- Unified order management (W536) for live commerce order routing",
+     "- Inventory/ATP system for real-time stock reservation and availability check",
+     "- Payment gateway (W611) for payment link generation and reconciliation",
+     "- Social media management system (W142) for pre-live promotion and session management",
+     "- Customer communication module (W708) for order notifications",
+     "- Loyalty system (W17) for segment-based email targeting",
+     "- Mobile app (W615) for push notification delivery",
+     "- Product catalog (W50) for product page \"Watch Live\" integration",
+     "- Promotional pricing system (W300) for live-only discount configuration with automatic expiry",
+     "- BI dashboard for live commerce analytics",
+     "- CDP (W156) for audience targeting and repeat shopper tracking"
+    ],
+    "Time Estimate": [
+     "- Session planning: 4–6 hours/week (consolidated)",
+     "- Pre-live promotion: 2–3 hours/session",
+     "- Live session execution: 30–60 min/session",
+     "- Post-session processing: 2–3 hours/session",
+     "- Monthly analytics: 4–6 hours",
+     "- **Total per session**: ~6–9 hours of staff time (planning + execution + post-session)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Marketing",
+     "activity": "**Live Commerce Session Planning**: (a) weekly: Digital Commerce Manager and Category Manager select products for upcoming live sessions based on: seasonal calendar per W264 (rainy season = waterproofing products; ber months = holiday décor), trending products from POS data per W522, new product launches per W569, and vendor co-sponsorship availability per W513; (b) session format selection: (i) product demo + Q&A (30–45 min), (ii) flash sale with countdown (15–20 min), (iii) DIY tutorial + product selling (45–60 min), (iv) contractor pro-tips session (30 min, targeting B2B); (c) product selection criteria: visually demonstrable, available ATP at fulfillment DC per W536, live-only promotional pricing approved per W300, and inventory depth sufficient for expected demand (minimum 200 units per featured SKU); (d) promotional pricing: live-only discount (10–20% off SRP) or bundle offer per W910; discount approved by Category Manager per discount authority matrix; (e) session logistics: host/presenter assigned, product samples prepared for studio/staging area, backdrop and lighting set up in ecommerce studio at HQ",
+     "duration": "4–6 hours/week",
+     "n": "1",
+     "r": "Digital Commerce Manager / Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Pre-Live Promotion & Audience Building**: (a) 48 hours before session: promotional posts on Facebook page, Instagram stories, and TikTok teaser video per W142 announcing date/time, featured products, and live-only discount; (b) email notification to loyalty members in relevant segment per W673 (e.g., DIY enthusiasts for tool demos, contractors for pro-tips sessions); (c) push notification via BuildRight mobile app per W615; (d) session event page created on Facebook with RSVP; (e) product page on buildright.com.ph updated with \"Watch Live\" badge linking to stream; (f) inventory pre-reservation: system reserves minimum expected quantity for live session orders (released after session if unsold)",
+     "duration": "2–3 hours/session",
+     "n": "2",
+     "r": "Social Media Manager / Digital Commerce Manager"
+    },
+    {
+     "a": "Digital Commerce Manager",
+     "activity": "**Live Session Execution**: (a) host goes live on scheduled platform; (b) session flow: introduction and agenda (2 min), product demonstration with close-up camera work (15–20 min), live Q&A from viewer comments (10 min), flash sale announcement with countdown timer (5 min), closing with next session teaser (2 min); (c) purchasing mechanism: (i) TikTok Shop: direct purchase via TikTok Shop integration with real-time inventory check; (ii) Facebook Live: comment-to-order (customer comments \"ORDER [product code] [quantity]\") → system captures order from comment feed and creates ecommerce order → customer receives DM with payment link; (iii) buildright.com.ph: embedded live stream with \"Buy Now\" button synced to ecommerce checkout; (d) Category Manager monitors comments and provides technical answers to host via earpiece; (e) Customer Service team monitors order queue and handles payment failures or customer inquiries in real-time; (f) system enforces live-only pricing with automatic price revert when session ends",
+     "duration": "30–60 min/session",
+     "n": "3",
+     "r": "Marketing Host / Category Manager / Customer Service / System"
+    },
+    {
+     "a": "Digital Commerce Manager",
+     "activity": "**Post-Session Order Processing & Fulfillment**: (a) within 1 hour of session end: all live commerce orders compiled and batch-processed in unified order management per W536; (b) orders routed to fulfillment: DC pick/pack/ship per W19 for home delivery, or BOPIS per W11; (c) fulfillment SLA: live commerce orders shipped within 24 hours (priority flag over standard ecommerce orders); (d) customer notifications: order confirmation (within 1 hour), shipping confirmation with tracking (within 24 hours), delivery notification per W592; (e) payment reconciliation: all live session payments reconciled against order records per W611; (f) unfilled orders (stock-out from higher-than-expected demand): customer notified with apology and offered: (i) backorder with expected ship date, (ii) substitute product per W279, or (iii) refund per W101",
+     "duration": "2–3 hours post-session",
+     "n": "4",
+     "r": "Ecommerce Fulfillment Team / System / Customer Service"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Live Commerce Analytics & Optimization**: (a) per session: viewership metrics (peak concurrent viewers, average view duration, total unique viewers), engagement rate (comments, reactions, shares), conversion rate (viewers → orders), average order value, total GMV, top-selling products, cart abandonment rate during session; (b) weekly: session comparison — which format, time slot, and product category performs best; audience growth trend; repeat live-commerce shopper rate; (c) monthly: live commerce as % of total ecommerce revenue, customer acquisition cost via live commerce vs. other channels, return rate for live commerce orders (indicative of product expectation vs. reality), and host/presenter performance rating; (d) quarterly: platform mix optimization (Facebook vs. TikTok vs. own site), vendor co-sponsorship ROI per W513, and live commerce content calendar for next quarter aligned with seasonal calendar per W306; (e) annual: live commerce program ROI, investment in studio equipment and talent, and expansion plan (new platforms, new session formats, regional-language sessions for VisMin markets)",
+     "duration": "4–6 hours/month",
+     "n": "5",
+     "r": "Digital Commerce Manager / Social Media Manager / System"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W101",
+    "W11",
+    "W142",
+    "W156",
+    "W17",
+    "W19",
+    "W258",
+    "W259",
+    "W264",
+    "W279",
+    "W300",
+    "W306",
+    "W31",
+    "W427",
+    "W50",
+    "W513",
+    "W522",
+    "W536",
+    "W569",
+    "W592",
+    "W611",
+    "W615",
+    "W673",
+    "W708",
+    "W731",
+    "W910"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "~2,000–3,000 sessions/month",
+    "Owner": "Ecommerce Manager",
+    "Participants": "Customer, Video Shopping Associate, Category Specialist (on-call), Ecommerce Operations, Payment Gateway",
+    "Trigger": "Customer schedules or initiates a live video shopping session via BuildRight mobile app or website",
+    "Volume": "1 customer per session; average session duration 15–30 min; average order value PHP 4,500 (higher than standard ecommerce AOV of PHP 3,500)"
+   },
+   "id": "W947",
+   "level": 2,
+   "name": "Ecommerce Live Video Shopping & Virtual Store Walkthrough",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"catalog pages, current promotions, and inventory availability for customer's…\" (replaces manual Step 1).",
+     "- System auto-schedule of \"Session Initiation & Customer Need Assessment\" (replaces manual Step 2).",
+     "- System auto-validate of \"checks real-time inventory per W533 during session\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Live video commerce is a rapidly growing channel in Southeast Asian retail, driven by social media platforms and the desire for interactive, trust-building shopping experiences. For BuildRight's home improvement customers — especially those undertaking first-time renovation projects — seeing and discussing products in real-time with a knowledgeable associate builds confidence and reduces purchase hesitation. Live video shopping bridges the gap between the tactile in-store experience and the convenience of ecommerce. Customers can request to see specific products, compare items side-by-side, ask questions about specifications and compatibility, and receive real-time recommendations. This service is particularly valuable for: (a) provincial customers who live far from BuildRight stores; (b) overseas Filipino workers (OFWs) purchasing materials for home construction projects in the Philippines; (c) B2B trade customers who want to verify product specifications before placing bulk orders; and (d) elderly or PWD customers who find in-store shopping challenging."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: per store"
+    ],
+    "Pain Points / Risks": [
+     "- **Store floor disruption**: Video Shopping Associate walking store aisles with camera may disrupt other customers and staff; scheduling sessions during lower-traffic periods (weekday mornings) minimizes disruption; dedicated \"video shopping zone\" in top stores for popular categories",
+     "- **Internet connectivity**: Store WiFi must support stable live video streaming; Philippine internet reliability varies; backup cellular connectivity (4G/5G hotspot) required per store; session quality monitoring with automatic bandwidth adjustment",
+     "- **Associate product knowledge**: Associates must have broad product knowledge across multiple categories; structured training program per W51 with category rotation; escalation to Category Specialist for deep technical questions",
+     "- **Customer no-show**: Booked sessions with no customer attendance waste associate time; SMS reminder 1 hour before session; no-show rate estimated at 15–20%; overbooking by 10% during peak periods",
+     "- **Session recording privacy**: Recording customer faces and voices requires explicit consent per RA 10173 (Data Privacy Act); consent captured at booking; recordings stored securely with 30-day auto-deletion; used only for customer reference and quality training",
+     "- **Conversion measurement**: Attributing purchases to live video sessions requires channel tagging; offline purchases influenced by video sessions (customer visits store after video session) are harder to track; loyalty card linkage provides partial attribution"
+    ],
+    "Staffing Implication": [
+     "- **Video Shopping Associates**: 10–12 dedicated associates (HQ-based, serving all stores virtually); each handles 8–10 sessions/day; peak periods (weekends, payday weekends, sale events) may require additional staffing from store Sales Associates with video training",
+     "- **Training**: 40-hour product knowledge + video presentation skills per W51; monthly category deep-dive training sessions",
+     "- **Equipment**: Mobile device with stabilizer/gimbal, quality microphone, earpiece, and backup cellular hotspot per associate; estimated PHP 25,000 per associate setup cost",
+     "- **Net new headcount**: 10–12 Video Shopping Associates (new role, HQ-based)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Video shopping platform (integrated with mobile app and website)",
+     "- Real-time inventory availability per store (W533)",
+     "- POS/ecommerce order creation module (W536)",
+     "- Payment gateway integration (credit card, GCash, Maya)",
+     "- Loyalty system for member identification and points crediting",
+     "- Customer communication module (W708) for post-session follow-up",
+     "- Product catalog and PIM system (W50) for specification lookup",
+     "- BI dashboard for video commerce channel analytics",
+     "- Session recording storage (RA 10173 compliant, 30-day retention)"
+    ],
+    "Time Estimate": [
+     "- Session scheduling: 5 min (automated)",
+     "- Session initiation & needs assessment: 5–10 min",
+     "- Live product demo & consultation: 10–20 min",
+     "- Order creation & payment: 5–10 min",
+     "- Post-session follow-up: 10 min",
+     "- **Total per session**: 35–55 min of associate time",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Session Scheduling & Preparation**: Customer books live video session via: (a) mobile app — selects date/time slot, product category of interest, and specific items or project description; (b) website — same booking flow; (c) walk-in scheduling at customer service counter (for future session); system confirms availability of Video Shopping Associate and sends calendar invite with video link; for project-specific sessions (e.g., \"complete bathroom renovation\"): system pre-loads relevant product catalog pages, current promotions, and inventory availability for customer's preferred store; customer receives pre-session email with: video link, session agenda, and project checklist to prepare dimensions/requirements",
+     "duration": "5 min (automated)",
+     "n": "1",
+     "r": "System / Ecommerce Ops"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Session Initiation & Customer Need Assessment**: Video Shopping Associate joins video call at scheduled time; conducts brief needs assessment: (a) project type (new build, renovation, repair, DIY); (b) budget range; (c) timeline; (d) product categories of interest; (e) store preference for BOPIS pickup or home delivery; associate uses mobile device with gimbal/stabilizer to walk store aisles, showing products in real-time; customer can direct associate to specific departments or products",
+     "duration": "5–10 min",
+     "n": "2",
+     "r": "Video Shopping Associate"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Live Product Demonstration & Consultation**: Associate presents products per customer interest: (a) physical product demonstration — showing dimensions, material quality, color options, weight, packaging; (b) side-by-side product comparison — placing items next to each other for visual comparison; (c) specification explanation — reading labels, showing technical specs, explaining compatibility; (d) project advice — recommending complementary products, suggesting alternatives when preferred item is out of stock, providing installation tips; for technical questions beyond associate's expertise, system enables instant escalation to Category Specialist (via 3-way video call or chat relay); associate checks real-time inventory per W533 during session",
+     "duration": "10–20 min",
+     "n": "3",
+     "r": "Video Shopping Associate / Category Specialist"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Real-Time Order Creation & Payment**: Associate adds selected items to shared digital cart visible to customer on screen; customer reviews cart — quantities, prices, product specifications; system applies: (a) current promotional pricing; (b) loyalty member discounts; (c) trade account pricing (if verified per W897); customer confirms order and pays via: (a) in-app payment (credit card, GCash, Maya); (b) payment link sent to customer's email/SMS; order created in ERP with \"Live Video\" channel tag; fulfillment routed per W536 (BOPIS or home delivery)",
+     "duration": "5–10 min",
+     "n": "4",
+     "r": "Video Shopping Associate / System / Customer"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Post-Session Follow-Up**: System sends post-session communication within 2 hours: (a) order confirmation with delivery/pickup details; (b) session recording link (with customer consent per RA 10173) for customer reference; (c) related product recommendations based on items viewed during session; (d) satisfaction survey (3 questions); (e) loyalty points credited for session attendance (50 points); for sessions that did not result in immediate purchase: abandoned cart reminder sent within 24 hours per W557; Video Shopping Associate makes personal follow-up call within 48 hours for high-value sessions (order value > PHP 10,000 or project-based inquiries)",
+     "duration": "10 min",
+     "n": "5",
+     "r": "System / Video Shopping Associate"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W50",
+    "W51",
+    "W533",
+    "W536",
+    "W557",
+    "W708",
+    "W897"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "~8,000–12,000 orders/month (growing 15–20% quarterly)",
+    "Owner": "Ecommerce Manager",
+    "Participants": "Social Commerce Associate, Customer, Ecommerce Operations, Payment Gateway, Fulfillment Team, Category Manager",
+    "Trigger": "Customer places order or expresses purchase intent via social media channel (Facebook Marketplace, Instagram Shopping, TikTok Shop, Facebook page DM, or Instagram DM)",
+    "Volume": "1–5 items per order; average order value PHP 2,200 (lower than web/app AOV)"
+   },
+   "id": "W948",
+   "level": 2,
+   "name": "Social Commerce Order Processing (Facebook, Instagram, TikTok Shop)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-escalate of \"escalates complex inquiries to human associate during business hours\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews order, and pays online\" (replaces manual Step 2).",
+     "- System auto-validate of \"Direct Platform Order Processing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Social commerce — selling directly through social media platforms — is the fastest-growing ecommerce channel in the Philippines. Filipino consumers are among the world's heaviest social media users (average 3–4 hours/day), and platforms like Facebook Marketplace, TikTok Shop, and Instagram Shopping have become primary product discovery and purchase channels, especially for younger demographics (25–40 age group). For BuildRight, social commerce extends the brand's digital reach beyond the website and mobile app. Products are showcased through: (a) shoppable posts on Instagram and Facebook; (b) TikTok product videos and live selling events (W917); (c) Facebook Marketplace listings for high-visibility items; (d) direct messaging for inquiry-to-order conversion. Social commerce orders must be seamlessly integrated with BuildRight's ERP for inventory allocation, order management, fulfillment, and financial reconciliation — the same backend processes as web/app orders but through different storefronts."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: (W50) serves as single source of truth"
+    ],
+    "Pain Points / Risks": [
+     "- **Platform dependency and policy changes**: Social media platforms frequently change APIs, commission rates, and policies; TikTok Shop seller policies changed 3× in 2024; BuildRight must maintain platform compliance while diversifying across multiple platforms to reduce single-platform risk",
+     "- **Inventory overselling**: Real-time inventory sync between ERP and multiple social platforms is critical; latency between platforms can cause overselling; centralized inventory pool with buffer reservations (5% of fast-moving items reserved for social commerce) mitigates",
+     "- **Customer service fragmentation**: Customers messaging on social media expect rapid, conversational responses distinct from formal email/ticket support; dedicated Social Commerce Associates (not general call center agents) required; cross-training with W259 call center operations",
+     "- **Return/refund complexity**: Platform-specific return policies may conflict with BuildRight's return policy (W12); TikTok Shop mandatory return windows, Facebook Marketplace buyer protection, and Instagram Shopping return flows each require separate handling; unified refund processing per W101 with platform-specific documentation",
+     "- **Brand consistency**: Product descriptions, images, and pricing must be consistent across all platforms and BuildRight's own channels; PIM system (W50) serves as single source of truth; platform-specific content adaptations (vertical video for TikTok, lifestyle images for Instagram) managed per W726",
+     "- **Platform fee margin erosion**: Combined platform commissions + payment processing fees + shipping subsidies can reach 8–12% of order value; must be factored into social commerce pricing strategy; category-specific minimum margins enforced at order creation"
+    ],
+    "Staffing Implication": [
+     "- **Social Commerce Associates**: 6–8 dedicated associates (HQ-based, reporting to Ecommerce Manager); each handles 30–50 inquiries/day + monitors platform order feeds; bilingual (English/Filipino) required; social media native (comfortable with TikTok, Instagram, Facebook)",
+     "- **Chatbot development**: One-time development cost for automated inquiry capture; ongoing maintenance by IT per W616",
+     "- **Net new headcount**: 6–8 Social Commerce Associates (new role, HQ-based); absorbed into existing Ecommerce team structure under BuildRight Digital Commerce, Inc."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Social media platform APIs (Facebook Commerce, Instagram Shopping, TikTok Shop) for order ingestion",
+     "- ERP order management module with social channel tagging",
+     "- Real-time inventory availability (W533) for availability confirmation",
+     "- Secure payment page for DM-based order conversion",
+     "- Payment gateway for multi-platform settlement",
+     "- Loyalty system for member identification and points earning",
+     "- Fulfillment routing engine (W536) for BOPIS/delivery assignment",
+     "- Financial reconciliation module (W99) for platform settlement",
+     "- BI dashboard for social commerce analytics",
+     "- Chatbot integration for 24/7 inquiry capture",
+     "- Product catalog sync (PIM/W50) for platform product feeds",
+     "- Customer communication module (W708) for order updates"
+    ],
+    "Time Estimate": [
+     "- Channel monitoring: continuous",
+     "- Inquiry-to-order conversion: 5–15 min/inquiry",
+     "- Direct order processing: 2–5 min (mostly automated)",
+     "- Fulfillment routing: per W11, W19",
+     "- Financial reconciliation: automated daily + 4 hours/month manual",
+     "- Channel analytics: 2–3 hours/week",
+     "- **Total per inquiry-based order**: 20–30 min of associate time",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Channel Monitoring & Inquiry Capture**: Social Commerce Associate monitors all active channels: (a) Facebook page messages and Marketplace inquiries; (b) Instagram DMs and Shopping tags; (c) TikTok Shop orders and comments; (d) automated chatbot captures basic inquiries (product availability, price, store location) 24/7 and escalates complex inquiries to human associate during business hours; (e) system ingests platform order feeds via API integration (TikTok Shop API, Facebook Commerce API, Instagram Shopping API) for direct platform orders",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Social Commerce Associate / Chatbot"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Inquiry-to-Order Conversion**: For DM-based inquiries: (a) Social Commerce Associate responds within SLA (30 min during business hours, 2 hours off-hours); (b) identifies product(s) requested — uses product search by name, SKU, photo matching, or description; (c) confirms availability at customer's preferred store (real-time inventory per W533) or DC; (d) provides product details, pricing, and fulfillment options (BOPIS, home delivery); (e) for order confirmation: creates order link via BuildRight's secure payment page and sends to customer via DM; customer clicks link, reviews order, and pays online; order flows into ERP",
+     "duration": "5–15 min/inquiry",
+     "n": "2",
+     "r": "Social Commerce Associate / System"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Direct Platform Order Processing**: For TikTok Shop and Facebook/Instagram Shopping direct orders: (a) platform API pushes order to ERP in near-real-time; (b) system validates: (i) product availability — if unavailable, auto-responds to customer with alternatives or refund initiation; (ii) price sync — verifies order price matches current BuildRight price; (iii) shipping address validity — Philippine address validation per W310 master; (c) system creates order in ERP with social channel tag (TikTok/Facebook/Instagram), platform order ID, and customer data; (d) if customer is existing loyalty member (matched by mobile number), system links order to loyalty account for points earning",
+     "duration": "2–5 min (mostly automated)",
+     "n": "3",
+     "r": "System / Ecommerce Ops"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Fulfillment Routing & Execution**: Order routed to fulfillment per W536: (a) BOPIS → nearest store picks and stages per W11; (b) home delivery → DC or ship-from-store per W19/W19B; platform-specific shipping labels generated (TikTok Shop, FB/IG require platform-specific tracking numbers); fulfillment team packs and ships; tracking number pushed back to platform via API; customer receives platform-native tracking notification",
+     "duration": "Per W11, W19",
+     "n": "4",
+     "r": "System / Fulfillment Team"
+    },
+    {
+     "a": "Ecommerce Manager / CFO",
+     "activity": "**Financial Reconciliation & Settlement**: (a) platform settlement: each platform has different settlement cycles — TikTok Shop (T+3 to T+7), Facebook/Instagram (varies by payment method); system reconciles platform settlement reports against ERP order records; discrepancies (returns, cancellations, platform fees, shipping subsidies) flagged for review; (b) platform fee tracking: commission rates vary (TikTok Shop 1–5%, Facebook/Instagram Marketplace 5% per item); system records platform fees per order for margin analysis; (c) monthly: Social Commerce Associate reconciles all platform settlements against bank deposits and ERP revenue records per W99",
+     "duration": "Monthly (ongoing daily reconciliation automated)",
+     "n": "5",
+     "r": "Ecommerce Ops / Finance"
+    },
+    {
+     "a": "CMO",
+     "activity": "**Channel Performance Analytics**: Weekly: Ecommerce Manager reviews channel performance — (a) orders, revenue, AOV by platform; (b) conversion rate (inquiry → order); (c) customer acquisition cost by channel; (d) return rate by platform; (e) platform fee as % of revenue; (f) top-performing product categories by platform; (g) content performance — which posts, videos, and live sessions generate the most orders; insights feed back to Marketing (W676) for content strategy and Merchandising (W1) for assortment decisions",
+     "duration": "2–3 hours/week",
+     "n": "6",
+     "r": "Ecommerce Manager / Social Commerce Associate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W101",
+    "W11",
+    "W12",
+    "W19",
+    "W19B",
+    "W259",
+    "W310",
+    "W50",
+    "W533",
+    "W536",
+    "W616",
+    "W676",
+    "W708",
+    "W726",
+    "W917",
+    "W99"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "~28 sale events per year (24 payday sales on the 15th and 30th + 4 major platform campaigns, per the Background); ~8–10 per year are full-mobilization major events (per the Time Estimate)",
+    "Owner": "Ecommerce Manager",
+    "Participants": "Ecommerce Manager, Category Manager, Pricing Analyst, DC Fulfillment Supervisor, Logistics Dispatcher, Customer Service Rep, Finance Manager, Marketing Coordinator",
+    "Trigger": "Marketplace platform announces mega-sale campaign dates (9.9, 10.10, 11.11, 12.12, Payday Sale, Lazada Birthday Sale, Shopee Super Shopping Day); typically 4–6 weeks before event",
+    "Volume": "3.5–10× normal daily order volume (payday events at the low end, platform mega-sales at the high end, on the ~1,430 orders/day baseline); projected ~7,000–14,000 orders on a major event day"
+   },
+   "id": "W1209",
+   "level": 2,
+   "name": "E-Commerce Mega-Sale Event Preparation & Execution (Lazada/Shopee 9.9, 11.11, 12.12)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Event planning kickoff\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify pricing consistency with own-site and in-store promotions per W523\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews projected mega-sale demand per SKU\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine e-commerce is dominated by mega-sale events where Lazada and Shopee offer platform-wide discounts, free shipping vouchers, and flash sales. These events drive 5–10× normal order volume in a single day. For BuildRight Depot, with ~PHP 150M/month in ecommerce GMV and growing, mega-sale events represent significant revenue opportunities but also operational stress tests: inventory must be pre-positioned, fulfillment capacity must scale, pricing must be coordinated across marketplace and own-site channels, and customer service must handle post-event inquiries and returns. Major events include: 9.9 (September 9), 10.10 (October 10), 11.11 (November 11 — the biggest), 12.12 (December 12), plus monthly Payday Sales (15th and 30th) and platform anniversary sales. This workflow governs the end-to-end preparation, execution, and post-event analysis for these campaigns."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: Ecommerce Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory overselling** — marketplace platforms do not real-time sync with ERP; if stock sells faster than sync interval, overselling occurs leading to cancellations, negative reviews, and platform penalties (account suspension for high cancellation rates)",
+     "- **Fulfillment SLA breach** — platforms penalize sellers for late shipping (Shopee: order cancellation if not shipped within D+2; Lazada: seller rating deduction); 5–10× volume can overwhelm DC capacity",
+     "- **Margin erosion** — aggressive discounting + platform commission + co-funding contribution can push net margin negative on some SKUs; real-time margin monitoring essential",
+     "- **Platform rule changes** — Lazada and Shopee frequently change campaign mechanics, commission rates, and logistics requirements with short notice; adaptation requires flexibility",
+     "- **Price parity conflicts** — marketplace promotional pricing that undercuts own-site or in-store prices causes channel conflict with Store Managers; pricing governance needed",
+     "- **Return surge** — mega-sale events generate 2–3× normal return rates in the 7–14 days post-event; DC and CS must be prepared for reverse logistics volume"
+    ],
+    "Staffing Implication": [
+     "- Ecommerce Manager: ~20 hours/event for preparation + full day execution + 8 hours post-event = ~36 hours per major event",
+     "- Category Manager: ~8 hours/event for product selection and pricing",
+     "- DC Fulfillment: additional 5–10 seasonal temps per event day at the primary ecommerce fulfillment DC",
+     "- Customer Service: additional 3–5 CS reps for 3 days post-event",
+     "- At 8–10 full-mobilization events/year (per the Time Estimate), total incremental labor: ~640–1,000 hours/year for the core team (per the Time Estimate) + ~80–100 temp-days for DC and CS"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Marketplace seller center portals (Lazada Seller Center, Shopee Seller Centre) for product listing, pricing, stock management, and campaign configuration",
+     "- ERP ecommerce module for inventory sync, order ingestion, and fulfillment processing (W536)",
+     "- Marketplace API integration per W180 for automated order pull and status push",
+     "- DC WMS for pick-pack-ship queue management and capacity tracking",
+     "- Pricing engine for cross-channel promotional price consistency (W523)",
+     "- BI platform for post-event performance analysis (W879 dashboard)",
+     "- Finance module for platform settlement reconciliation per W261 (e-wallet/marketplace settlement)"
+    ],
+    "Time Estimate": [
+     "- Pre-event preparation: 4–6 weeks lead time, ~60–80 hours of core team time",
+     "- Event Day: full-day commitment from Ecommerce Manager + DC Supervisor",
+     "- Post-event: 6–8 hours reconciliation + lessons learned",
+     "- **Per event: ~80–100 person-hours of core team time**",
+     "- **Annual estimate: 8–10 full-mobilization events × 80–100 hours = 640–1,000 person-hours/year** (the lighter payday events are absorbed in BAU operations)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CMO",
+     "activity": "**Event planning kickoff** (4–6 weeks before): Ecommerce Manager receives platform campaign brief from Lazada/Shopee account manager: campaign dates, available marketing tools (flash sale slots, banner placements, brand rewards), platform co-funding opportunities, commission rates, logistics support (free shipping vouchers); Ecommerce Manager convenes cross-functional preparation team",
+     "duration": "2 hours",
+     "n": "1",
+     "r": "Ecommerce Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Product selection & pricing**: Category Manager selects participating SKUs (typically 500–1,000 items per event): (a) identify items with platform co-funding subsidies, (b) select clearance/seasonal items for flash sale, (c) bundle best-sellers for mega-deal packages, (d) Pricing Analyst calculates margin-acceptable promotional prices considering: platform commission (2–5%), co-funding offset, VAT impact, and target margin floor; (e) verify pricing consistency with own-site and in-store promotions per W523",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "Category Manager / Pricing Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Inventory pre-positioning**: Supply Planning Analyst reviews projected mega-sale demand per SKU: (a) estimate event-day demand (5–10× daily average for participating SKUs), (b) verify available stock at DC fulfilling ecommerce orders, (c) initiate emergency replenishment or transfer orders for at-risk SKUs, (d) for top 50 event SKUs: pre-pick and stage in ecommerce fulfillment zone at DC to accelerate Day-of processing",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Supply Planning Analyst / DC Supervisor"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**System & content preparation**: Ecommerce team: (a) uploads promotional pricing to marketplace seller center portals, (b) creates campaign-specific product listings with enhanced images and descriptions, (c) configures flash sale time slots, (d) sets stock caps per promo tier to prevent overselling, (e) tests voucher codes and promotional mechanics in staging environment, (f) updates own-site banners and landing pages for cross-channel consistency",
+     "duration": "3–5 days",
+     "n": "4",
+     "r": "Ecommerce Coordinator"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Fulfillment capacity planning**: DC Fulfillment Supervisor plans Day-of staffing: (a) schedule additional pickers and packers (seasonal temps or cross-deployed from DC operations), (b) pre-print shipping labels for top 100 predicted SKUs, (c) coordinate with 3PL partners for additional delivery vehicle availability, (d) set up overflow packing stations, (e) brief team on event-day priority and escalation procedures",
+     "duration": "2 days",
+     "n": "5",
+     "r": "DC Fulfillment Supervisor"
+    },
+    {
+     "a": "CX Manager",
+     "activity": "**Customer service readiness**: Customer Service Manager briefs CS team: (a) prepare FAQ templates for mega-sale-specific inquiries (shipping delays, stock availability, voucher usage), (b) pre-configure auto-reply rules for common queries, (c) schedule additional CS reps for event day and 3 days post-event, (d) prepare return/exchange surge capacity per W12A/W12B",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Customer Service Manager"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Event Day execution**: System monitors real-time order flow: (a) Ecommerce Manager monitors seller center dashboards for order volume, stock levels, and flash sale sell-through rates, (b) DC Fulfillment Supervisor monitors pick-pack-ship queue against SLA targets (target: all orders shipped within 24 hours), (c) Logistics Dispatcher manages delivery dispatch for completed orders, (d) Category Manager monitors margin real-time — triggers stock cap reduction if margin floor breached by higher-than-expected volume, (e) Customer Service handles real-time inquiries",
+     "duration": "Full day",
+     "n": "7",
+     "r": "All Participants"
+    },
+    {
+     "a": "CMO",
+     "activity": "**Post-event reconciliation** (within 48 hours): (a) Ecommerce Manager compiles event performance: total GMV, order count, ASP, sell-through rate by SKU, new customer acquisition, platform commission cost, co-funding received, net margin; (b) DC Supervisor reports fulfillment metrics: orders shipped on-time, packing errors, stockout rate; (c) Finance Manager reconciles platform settlement vs. orders (Lazada/Shopee settle T+7 to T+14); (d) Customer Service reports return rate and top complaint categories",
+     "duration": "4–6 hours",
+     "n": "8",
+     "r": "Ecommerce Manager / Finance Manager"
+    },
+    {
+     "a": "CMO",
+     "activity": "**Post-event lessons learned** (within 1 week): Ecommerce Manager conducts retrospective: (a) what sold well vs. forecast, (b) fulfillment bottlenecks, (c) pricing effectiveness, (d) platform tool utilization, (e) customer feedback themes; documents action items for next mega-sale event",
+     "duration": "2 hours",
+     "n": "9",
+     "r": "Ecommerce Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12A",
+    "W12B",
+    "W180",
+    "W261",
+    "W523",
+    "W536",
+    "W879"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "Daily order management; weekly livestream events (1–2/week)",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Social Commerce Specialist, Content Creator, DC Picker, TikTok Logistics Partner",
+    "Trigger": "TikTok Shop order; or scheduled livestream selling event",
+    "Volume": "~3,000–5,000 TikTok Shop orders/month; livestream events generate 200–500 orders each"
+   },
+   "id": "W1463",
+   "level": 2,
+   "name": "TikTok Shop Integration, Content-to-Commerce & Livestream Selling Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Catalog sync\" (replaces manual Step 1).",
+     "- System auto-create of \"Create 15–60 sec videos\" (replaces manual Step 2).",
+     "- System auto-generate of \"prepare demos and flash deals\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "TikTok Shop is a significant Philippine ecommerce channel for impulse-driven purchases of home décor, appliances, power tools, and DIY accessories. BuildRight's target customers (25–45 year-old homeowners/DIYers) are active TikTok users. Livestream selling is especially effective for demonstrating power tools, tile installation, and paint finishes that generate immediate purchase intent."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: Ecommerce Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Higher return rate**: 8–12% for impulse purchases vs. 3–5% for intentional purchases",
+     "- **Content production cost**: ~PHP 200K–300K/month including host, equipment, studio",
+     "- **Algorithm dependency**: organic reach can change overnight; paid promotion may be needed",
+     "- **Logistics SLA**: TikTok logistics partners may not cover all 200-store areas"
+    ],
+    "Staffing Implication": [
+     "- Social Commerce Specialist: full-time; Content Creator: 8–10 hours/week; Ecommerce Ops Manager: 3–4 hours/week. Absorbed. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- TikTok Shop Seller Center API for catalog sync, order pull, tracking push; Livestream studio with product links and flash deals; ERP middleware (same as W180); Content analytics with video-level revenue attribution; Integration with W180, W676, W19"
+    ],
+    "Time Estimate": [
+     "- **Annual effort**: ~800–1,000 hours/year",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**Catalog sync**: Syndicate approved listings to TikTok Shop every 4 hours; new listings with category tags (#BuildRightPH #DIY)",
+     "duration": "1–2 hours/week",
+     "n": "1",
+     "r": "Social Commerce Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**Content creation**: Create 15–60 sec videos (product demos, quick tips, before/after); tag with shoppable links",
+     "duration": "8–10 hours/week",
+     "n": "2",
+     "r": "Social Commerce Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**Livestream preparation**: Schedule 1–2×/week (Thursday 7–9 PM, Saturday 10 AM–12 PM); select 10–15 products; prepare demos and flash deals",
+     "duration": "4 hours/session",
+     "n": "3",
+     "r": "Social Commerce Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**Livestream execution**: Host conducts live demo with Q&A; post shoppable links; activate flash deals; 60–90 min per session",
+     "duration": "90 min/session",
+     "n": "4",
+     "r": "Content Creator"
+    },
+    {
+     "a": "—",
+     "activity": "**Order fulfillment**: Orders pushed to ERP via middleware (same as W180); DC pick/pack/ship per W19; tracking pushed to TikTok Shop",
+     "duration": "Per W19",
+     "n": "5",
+     "r": "Ecommerce Ops Manager / DC Picker"
+    },
+    {
+     "a": "CMO",
+     "activity": "**Weekly performance review**: Revenue, orders, AOV, top videos/sessions, return rate (8–12% for impulse purchases), CAC vs. Lazada/Shopee",
+     "duration": "1 hour/week",
+     "n": "6",
+     "r": "Ecommerce Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W180",
+    "W19",
+    "W676"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "Price sync: every 4 hours; New listing: as activated; Catalog audit: monthly",
+    "Owner": "Ecommerce Catalog Specialist",
+    "Participants": "Ecommerce Catalog Specialist, Category Manager, Pricing Analyst, Ecommerce Operations Manager",
+    "Trigger": "Product price change in ERP; new product activation; product discontinuation; marketplace promotional event",
+    "Volume": "~10,000–15,000 active SKUs across Lazada, Shopee, TikTok Shop; ~200–500 price changes/week"
+   },
+   "id": "W1464",
+   "level": 2,
+   "name": "Marketplace Product Listing Syndication, Pricing Synchronization & Catalog Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs all changes\" (replaces manual Step 1).",
+     "- System auto-monitor of \"Price conflict monitoring\" (replaces manual Step 2).",
+     "- System auto-generate of \"New product listing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight maintains ~10,000–15,000 SKU listings across 3 Philippine marketplaces (Lazada, Shopee, TikTok Shop) plus owned ecommerce. Maintaining consistent pricing, accurate product information, and appropriate availability across all channels is operationally challenging. Catalog governance ensures brand consistency and Consumer Act (RA 7394) price display compliance."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: Ecommerce Catalog Specialist review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Price sync lag**: 4-hour cycle shows stale prices during promotions; pre-load prices before campaigns",
+     "- **Manual overrides**: marketplace sellers may change prices not reflected to ERP",
+     "- **Catalog size**: 30,000–45,000 listings; requires automated governance",
+     "- **LazMall/Shopee Mall compliance**: premium tiers require strict branding and SLAs"
+    ],
+    "Staffing Implication": [
+     "- Ecommerce Catalog Specialist: full-time; Pricing Analyst: 2 hours/month. Absorbed. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Multi-marketplace price sync engine with 4-hour cycle and conflict detection; Listing syndication with platform-specific templates; Lifecycle management linked to item master; Cross-channel audit dashboard; Integration with W180, W1463, W676, W8"
+    ],
+    "Time Estimate": [
+     "- **Annual effort**: ~650–750 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Catalog Specialist",
+     "activity": "**Automated price sync**: System pushes price changes from ERP to all marketplaces every 4 hours; logs all changes",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**Price conflict monitoring**: Detect: marketplace price deviates > 2% from ERP; marketplace price below owned ecommerce; price above SRP (RA 7394 risk); alerts for resolution",
+     "duration": "Automated + 15 min/alert",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**New product listing**: System auto-generates draft; Catalog Specialist enriches per platform; submit for marketplace approval",
+     "duration": "20–30 min/SKU",
+     "n": "3",
+     "r": "Ecommerce Catalog Specialist"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Product delisting**: Discontinued SKUs set to Inactive (preserve history); remaining inventory evaluated for clearance; once depleted, archived",
+     "duration": "10 min/SKU",
+     "n": "4",
+     "r": "Ecommerce Catalog Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**Monthly catalog audit**: Cross-channel consistency check (titles, descriptions, images, pricing); identify orphan and missing listings; update scorecard",
+     "duration": "4–6 hours/month",
+     "n": "5",
+     "r": "Ecommerce Catalog Specialist"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Marketplace margin analysis**: Monthly: gross margin per SKU per marketplace (price – COGS – commission 8–15% – fulfillment); recommend channel-specific pricing or exclusions",
+     "duration": "2 hours/month",
+     "n": "6",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1463",
+    "W180",
+    "W676",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "~50–100 inquiries/store/week via Facebook; ~20–30 converted orders/store/week",
+    "Owner": "Sales Associate (Social Commerce)",
+    "Participants": "Sales Associate, Customer, CSR (order processing), Stock Associate (fulfillment), Marketing (content), Store Manager",
+    "Trigger": "Customer inquiry via Facebook Marketplace listing or community buy/sell group; or scheduled community group flash promotion",
+    "Volume": "~200 stores × ~20–30 Facebook-sourced orders/week = ~4,000–6,000 orders/week chain-wide (~17,000–26,000/month; per the Frequency and Time Estimate)"
+   },
+   "id": "W1469",
+   "level": 2,
+   "name": "Facebook Marketplace & Community Group Selling Operations, Order Capture & Fulfillment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors and responds to comments and inquiries within 1 hour during business…\" (replaces manual Step 1).",
+     "- System auto-post of \"posts project tips\" (replaces manual Step 2).",
+     "- System auto-record of \"recorded in sales channel\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "In the Philippines, Facebook is the dominant social platform with ~90M users, and Facebook Marketplace plus local community buy/sell groups (e.g., \"Davao Buy & Sell,\" \"Cebu Home Improvement\") are significant informal commerce channels. Many Filipino homeowners — especially in provincial areas — prefer browsing Facebook for product recommendations before visiting a physical store. BuildRight store associates actively maintain Facebook Marketplace listings for their store's high-demand products (cement, paint, tiles, tools) and participate in local community groups. Unlike Shopee/Lazada marketplace integration per W180, Facebook selling is semi-informal: inquiries come via Messenger, orders are confirmed via chat, and payment/fulfillment may be BOPIS or cash-on-delivery. This workflow manages the Facebook-driven social selling process from listing through order capture, payment, and fulfillment — ensuring these transactions are properly recorded in the ERP system rather than remaining as off-book sales."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: social order module and Store Manager oversight; operational: listing templates from Marketing with current pricing; operational: real-time inventory check at order creation"
+    ],
+    "Pain Points / Risks": [
+     "- **Off-book sales risk**: Sales Associates may complete Facebook-sourced transactions without recording in ERP (cash transaction, no receipt), creating inventory shrinkage and revenue leakage; mitigated by social order module and Store Manager oversight",
+     "- **Pricing inconsistency** — Sales Associates may quote different prices via Messenger than the current SRP in the system, especially during promotions; mitigated by listing templates from Marketing with current pricing",
+     "- **Customer expectation management** — Facebook Marketplace customers expect rapid Messenger responses and flexible payment/delivery; slow response or rigid policies drive customers to competitors",
+     "- **Inventory visibility** — Sales Associate quoting stock availability that is outdated (item sold in-store since listing was posted); mitigated by real-time inventory check at order creation"
+    ],
+    "Staffing Implication": [
+     "- **Sales Associate**: ~1 hour/day on Facebook listing management, community engagement, and order capture; absorbed within existing sales floor duties",
+     "- **Marketing**: ~2 hours/week on listing templates and analytics review; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store operations app \"Social Order\" module — order creation from social channel with inventory check (W1469.3)",
+     "- POS system — payment processing for social-sourced BOPIS orders (W1469.4)",
+     "- Delivery scheduling module per W668 — delivery order creation for social-sourced delivery orders (W1469.4)",
+     "- Sales channel analytics — Facebook channel performance tracking (W1469.5)",
+     "- Integration with W5B (POS transaction), W668 (delivery), W13 (promotions), W180 (marketplace), W1346 (bilingual content)"
+    ],
+    "Time Estimate": [
+     "- Daily listing management: 30 min/store",
+     "- Community engagement: 20 min/store",
+     "- Per order capture: 10 min × ~25 orders/week = ~250 min/week",
+     "- Weekly analytics: 1 hour",
+     "- **Per store: ~8 hours/week · Chain-wide: ~1,600 hours/week · Annual: ~83,000 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Facebook Marketplace listing management**: (a) Marketing provides weekly listing templates per store: featured products, promotional pricing, lifestyle images, and product descriptions in Filipino per W1346; (b) Sales Associate posts listings on the store's Facebook page and Marketplace: 10–20 product listings per week, rotated based on inventory availability and promotions per W13; (c) Sales Associate monitors and responds to comments and inquiries within 1 hour during business hours; (d) listings include: product photo, price, store location, availability (\"Message for stock\"), and link to BuildRight ecommerce page for detailed specs",
+     "duration": "30 min/day",
+     "n": "1",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Marketing",
+     "activity": "**Community group engagement**: (a) Sales Associate participates in 3–5 local community buy/sell groups relevant to home improvement: answers product questions, shares BuildRight promotions, posts project tips; (b) when community members post \"looking for\" requests (e.g., \"Where can I find affordable tiles in Cagayan de Oro?\"), Sales Associate responds with product availability and pricing; (c) Marketing monitors community group trends and seasonal demand signals (e.g., spike in waterproofing inquiries signals rainy season preparation demand)",
+     "duration": "20 min/day",
+     "n": "2",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Messenger order capture**: (a) when customer confirms purchase intent via Messenger: Sales Associate creates order in ERP via store operations app \"Social Order\" function: (i) customer name, phone, delivery preference (BOPIS or delivery), item list, quantity, agreed price; (b) system checks real-time inventory availability at store; (c) system generates order confirmation with order number; (d) Sales Associate sends order confirmation to customer via Messenger with: pickup/delivery instructions, payment options (GCash, cash on pickup, bank transfer); (e) order recorded in sales channel = \"Facebook Social\" for analytics tracking",
+     "duration": "10 min/order",
+     "n": "3",
+     "r": "Sales Associate / System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Payment & fulfillment**: (a) **BOPIS**: customer arrives at store, presents order number, CSR processes payment at POS per standard W5B, Stock Associate hands over items; (b) **Delivery**: customer pays via GCash/bank transfer (Sales Associate sends payment link from system), Stock Associate prepares items for delivery per W668 delivery scheduling; (c) for cash-on-delivery: delivery partner collects payment per W668.3 and remits to store; (d) all payment types recorded in POS/ERP for proper revenue recognition and inventory deduction",
+     "duration": "Per W5B/W668",
+     "n": "4",
+     "r": "CSR / Stock Associate / Sales Associate"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Weekly social selling analytics**: (a) system compiles weekly social selling report per store: inquiries received, conversion rate (inquiries → orders), average order value, top products, customer feedback; (b) Store Manager reviews with Sales Associate: optimize listing strategy, adjust product selection for Facebook audience; (c) Marketing aggregates chain-wide social selling data to measure Facebook channel ROI vs. other channels (Shopee, Lazada, organic ecommerce)",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "System / Sales Associate / Marketing"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W1346",
+    "W180",
+    "W5B",
+    "W668"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "~500–800 new reviews/month across all marketplace channels; ~50–80 marketplace disputes/month",
+    "Owner": "Ecommerce Manager",
+    "Participants": "Ecommerce Associate, Customer Service Representative, Store Manager (for fulfillment issues), Category Manager (for product quality issues), Vendor (for product defects)",
+    "Trigger": "Customer posts product review on Shopee/Lazada/TikTok Shop; or BuildRight's seller rating drops below 4.5 stars; or marketplace dispute/return request received",
+    "Volume": "~42,900 ecommerce orders/month (per model company profile), of which ~30% fulfilled via marketplace = ~12,800 marketplace orders/month generating reviews"
+   },
+   "id": "W1470",
+   "level": 2,
+   "name": "Marketplace Customer Review Management, Seller Rating Optimization & Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Review monitoring & triage\" (replaces manual Step 1).",
+     "- System auto-log of \"apologize, offer resolution\" (replaces manual Step 2).",
+     "- System auto-record of \"records disposition per W12\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Marketplace seller ratings on Shopee, Lazada, and TikTok Shop directly impact product visibility, search ranking, and eligibility for platform promotional events (9.9, 11.11, 12.12 mega sales per W1209). A rating below 4.5 stars can result in: reduced search placement, exclusion from platform campaigns, and potential account suspension. Negative reviews — especially those citing fulfillment failures (wrong item, damaged product, late delivery) or product quality issues — must be addressed promptly to protect BuildRight's marketplace reputation. With ~12,800 marketplace orders/month, even a 2% negative review rate generates ~250 negative reviews/month that require response. This workflow manages the end-to-end marketplace review response, rating optimization, and dispute resolution process."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- operational: Ecommerce Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Volume overwhelm** — with ~12,800 marketplace orders/month and a typical 4–6% review rate, ~500–800 reviews/month (per the Frequency) require monitoring; a viral negative review can attract dozens of follow-up complaints",
+     "- **Platform bias against sellers** — marketplace platforms (especially Shopee) tend to favor buyers in dispute resolution; sellers must provide extensive documentation to win disputes",
+     "- **Serial returners** — some customers exploit marketplace return policies to use products and return them used; pattern detection needed per W841 return fraud workflow",
+     "- **Cross-platform consistency** — different marketplace platforms have different dispute processes, review formats, and seller requirements; managing 3+ platforms with different rules is operationally complex"
+    ],
+    "Staffing Implication": [
+     "- **Ecommerce Associate**: ~3–4 hours/day on review monitoring, response, and dispute handling; absorbed",
+     "- **Ecommerce Manager**: ~4 hours/month on analytics and optimization; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Marketplace review aggregation — API-based review collection from Shopee, Lazada, TikTok Shop (W1470.1)",
+     "- Review response management system — templated and personalized responses with SLA tracking (W1470.2)",
+     "- Marketplace dispute API integration — return/dispute notification, status tracking, and resolution (W1470.3)",
+     "- Marketplace seller performance dashboard — rating, response rate, ship-on-time, cancellation rate by platform (W1470.5)",
+     "- Integration with W180 (marketplace integration), W1209 (mega sale events), W12 (returns), W50 (product content), W17 (loyalty), W67 (store review), W1464 (marketplace listing governance)"
+    ],
+    "Time Estimate": [
+     "- Daily review monitoring: 1 hour",
+     "- Negative review response: 15 min × ~50–80/month = ~15 hours/month",
+     "- Dispute resolution: 20 min × ~50–80/month = ~20 hours/month",
+     "- Monthly analytics: 4 hours",
+     "- **Annual estimate: ~650–800 hours**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Review monitoring & triage**: (a) system aggregates customer reviews from all marketplace channels (Shopee, Lazada, TikTok Shop) via API integration; (b) Ecommerce Associate reviews incoming reviews daily: (i) **Positive (4–5 stars)**: auto-thank response with loyalty program invitation per W17; (ii) **Neutral (3 stars)**: personalized response acknowledging feedback, offering assistance; (iii) **Negative (1–2 stars)**: escalation to resolution workflow — prioritize by severity (product safety > fulfillment failure > late delivery > minor complaint); (c) weekly: Ecommerce Manager reviews rating trend across all platforms; if any platform rating drops below 4.5 stars, initiate root cause analysis",
+     "duration": "1 hour/day",
+     "n": "1",
+     "r": "System / Ecommerce Associate"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Negative review response & resolution**: For each negative review: (a) Ecommerce Associate investigates: (i) order lookup in ERP — what was ordered, what was shipped, delivery timeline; (ii) root cause categorization: fulfillment error (wrong item, missing parts), product quality (defective, not as described), delivery issue (late, damaged in transit), customer service issue (slow response, unhelpful); (b) Ecommerce Associate responds to customer via marketplace chat within 24 hours: (i) acknowledge the issue, apologize, offer resolution (replacement, refund, store credit), (ii) request customer to update review if issue resolved; (c) for product quality issues: notify Category Manager — if defective product from specific batch, trigger W1347 recall assessment",
+     "duration": "15 min/review",
+     "n": "2",
+     "r": "Ecommerce Associate / Category Manager"
+    },
+    {
+     "a": "Ecommerce Manager",
+     "activity": "**Marketplace dispute & return management**: (a) when customer initiates marketplace return/dispute: system receives dispute notification via API; (b) Ecommerce Associate reviews: (i) is the return valid (product genuinely defective/wrong)? (ii) is the customer a serial returner? (iii) what is the marketplace platform's dispute resolution timeline? (c) process return per marketplace rules: (i) approve return and issue refund via marketplace, (ii) customer ships item back or drops at BuildRight store, (iii) Stock Associate inspects returned item and records disposition per W12; (d) dispute resolution within platform SLA (typically 3–5 days) to avoid automatic refund in customer's favor",
+     "duration": "20 min/dispute",
+     "n": "3",
+     "r": "Ecommerce Associate / CSR"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Rating optimization actions**: (a) Ecommerce Manager identifies systemic issues from review patterns: (i) specific store with high fulfillment error rate → Store Manager coaching per W67, (ii) specific product category with quality complaints → Category Manager review vendor quality per W688, (iii) delivery partner with high damage rate → renegotiate or switch partner per W668, (iv) listing accuracy issues (product not as described) → Content Manager update per W50; (b) monthly: Ecommerce Manager compiles marketplace performance report: rating by platform, review response rate and time, dispute resolution rate, NPS by channel",
+     "duration": "4 hours/month",
+     "n": "4",
+     "r": "Ecommerce Manager"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Seller metrics compliance**: (a) each marketplace platform has seller performance metrics: response rate (> 90%), ship-on-time rate (> 95%), order cancellation rate (< 5%), dispute rate (< 2%); (b) Ecommerce Associate monitors daily: any metric approaching threshold triggers preventive action; (c) if metric breaches threshold: Ecommerce Manager escalates to VP Marketing for corrective action plan to avoid platform penalties",
+     "duration": "30 min/day",
+     "n": "5",
+     "r": "Ecommerce Associate / Ecommerce Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W12",
+    "W1209",
+    "W1347",
+    "W1464",
+    "W17",
+    "W180",
+    "W50",
+    "W668",
+    "W67",
+    "W688",
+    "W841"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-200",
+    "CTL-271"
+   ],
+   "fields": {
+    "Frequency": "Full or partial suspensions: rare, ~1–2 events/year across all platforms; lower-tier enforcement (mass listing takedowns, campaign exclusion, settlement holds): ~10–20 events/year",
+    "Owner": "Ecommerce Manager (event commander); GM, Digital Commerce Inc. (posture decisions)",
+    "Participants": "Ecommerce Associate, Content Manager, Category Manager (IP authorization letters), Finance Controller (settlement recovery), Customer Service Representative (order comms), VP Legal (IP/policy appeals), VP Marketing, IT (channel integration flags)",
+    "Trigger": "A marketplace platform (Shopee/Lazada/TikTok Shop) issues an account-level enforcement action against BuildRight's seller account: seller-metric failure or penalty-point breach, listing-violation strike, IP/counterfeit complaint takedown, fraud-suspicion payout freeze, or full selling-privilege suspension/account deactivation",
+    "Volume": "1 event × the affected platform's share of ~12,800 marketplace orders/month (≈30% of ~42,900 ecommerce orders/month per W1470) — a full Shopee-class suspension removes ~40–50% of marketplace demand overnight; settlement freezes hold PHP 15–40M of platform receivables"
+   },
+   "id": "W5550",
+   "level": 2,
+   "name": "Marketplace Account Suspension, Enforcement Freeze & Appeal Recovery Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Account-health API ingestion auto-opens the event ticket with severity classification and an appeal-deadline countdown (replaces manual Step-1 monitoring)",
+     "- Suspension-detected auto-pause of marketplace campaigns, listing pushes and inventory allocation (replaces manual Step-2 coordination)"
+    ],
+    "Background": [
+     "W1470 owns the preventive layer — seller-metrics compliance with escalation *to avoid* platform penalties — and W659 owns incidents on BuildRight's own platform; 'account suspension', 'account health' and 'delisting' appear in zero PA files with no owner of the enforcement event itself. A platform suspension is the marketplace analog of the W5547/W5548 platform-outage class — same channel, different cause (enforcement, not downtime): the platform can switch the channel off unilaterally and instantly, the appeal runs on the platform's own clock, and the settlement freeze strands receivables while it runs. This protocol owns detection, containment, the appeal, the payout-freeze accounting, and the reinstatement gate; the steady-state metric discipline stays in W1470 and the listing governance in W1464."
+    ],
+    "Controls": [
+     "- CTL-271 (ensure controlled execution — Marketplace & Social Commerce (PA-10.3).)",
+     "- CTL-200 (ensure marketplace order & settlement reconciliation.)",
+     "- operational: no appeal is filed without the corrective-action statement attached; ad spend is not re-enabled until seller metrics re-cross platform thresholds"
+    ],
+    "Pain Points / Risks": [
+     "- **Channel-dependency risk**: ~30% of ecommerce demand rides platforms whose enforcement is unilateral and instant, with no negotiated cure period; mitigated by the Step-3 own-channel redirection playbook and the channel-risk register's platform-dependency review",
+     "- **Appeal-deadline risk**: platforms treat an unappealed violation as confirmed, converting a recoverable event into escalation or deactivation; mitigated by the <4-hour detection SLA and Step-4 deadline tracking",
+     "- **Evidence risk**: fulfillment proof (POD, chat logs) not retained forfeits appeals even when BuildRight is right; mitigated by the W2414-class order-record retention feeding the appeal pack",
+     "- **Settlement-freeze risk**: a payout hold strands receivables while platform deductions silently net against them; mitigated by Step-5 recognition and daily reconciliation for the freeze's duration",
+     "- **Recurrence risk**: paying the penalty without fixing the metric or listing defect invites escalation to full suspension; mitigated by the Step-6 remediation gate ahead of Step-7 re-enablement"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by the Ecommerce Manager/Associate bench with Finance settlement support and Legal on appeals; rare events riding existing channel-operations capacity. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Marketplace Seller Center/Console account-health & penalty notices (API-fed to the ecommerce operations dashboard)",
+     "- Channel-integration inventory-allocation flags (links to W2412/W2409)",
+     "- Platform settlement statement vs ERP settlement reconciliation (links to W2414)",
+     "- Listing-governance pipeline policy-clause checklist (links to W1464/W2408)",
+     "- Own-channel demand-redirection campaign tooling (links to W569)",
+     "- Channel-risk register (platform dependency, appeal outcome, days-down log)"
+    ],
+    "Time Estimate": [
+     "Per event: full-suspension class ≈ 60–100 staff-hours over the event life (Steps 1–5 ≈ 25–40 in week 1; Steps 6–8 ≈ 35–60 across weeks); listing-level events ≈ 4–8 staff-hours each × ~10–20/year ≈ 60–140 hours/year. Steady state: the channel-risk register and platform-rule watch ride the quarterly W1470 review — no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Detection & classification**: Seller Center / Seller Console notice, account-health dashboard alert, or platform partner-manager call; classify severity: (a) listing-level takedown (SKU strikes), (b) feature suspension (campaign exclusion), (c) settlement/payout freeze, (d) selling-privilege suspension, (e) account deactivation; capture the cited policy clause, evidence links, and the appeal window (typically 3–14 days); open the event record",
+     "duration": "< 4 h",
+     "n": "1",
+     "r": "Ecommerce Associate / Ecommerce Manager"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Freeze-scope containment**: pause marketplace ad spend; stop new listing pushes (W1464) and scheduled campaign participation (W1209); decide the order-acceptance posture (auto-pause storefront vs. honor in-flight orders); flag the channel integration so inventory allocation stops honoring the suspended storefront (W2412)",
+     "duration": "< 8 h",
+     "n": "2",
+     "r": "Ecommerce Manager / IT"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Demand & inventory re-routing**: redirect demand to the own webstore/app (W569-class own-channel listing) for marketplace-fulfillable SKUs; release stranded allocation; customer comms for in-flight orders, cancellation handling per W98 where needed",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Ecommerce Manager / Supply Planning"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Evidence assembly & appeal**: build the appeal pack — order logs and fulfillment proof (POD, chat records), brand-authorization letters from the Category Manager for IP complaints, the corrective-action statement citing the W1470 metric-remediation plan; file within the platform deadline; engage the platform partner manager at severity (c)+; track appeal status daily",
+     "duration": "1–3 days (+ appeal window)",
+     "n": "4",
+     "r": "Ecommerce Manager / VP Legal / Category Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Settlement-freeze accounting**: recognize frozen platform receivables; reconcile platform settlement statements against ERP records per the W2414-class settlement chain; dispute improperly deducted penalties; re-forecast cash timing with Treasury when a freeze exceeds 30 days",
+     "duration": "Per event",
+     "n": "5",
+     "r": "Finance Controller / Ecommerce Associate"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Root-cause remediation**: fix the underlying defect before re-enablement — seller-metric corrective plan (W1470), listing/catalog corrections (W1464/W2408), the IP-takedown chain for counterfeit complaints (W3268), or the account-takeover chain where the enforcement stems from a compromised seller account (W3871)",
+     "duration": "1–4 weeks",
+     "n": "6",
+     "r": "Ecommerce Manager / Content Manager"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Reinstatement & verification**: selling privileges restored (appeal won, penalty points expired, or suspension lifted); verify listing integrity, search placement, order flow and settlement resumption; re-enable ad spend only after seller metrics re-cross thresholds; confirm in the event record",
+     "duration": "1–3 days",
+     "n": "7",
+     "r": "Ecommerce Associate / Ecommerce Manager"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Post-event register & prevention**: log the event (platform, clause, appeal outcome, financial impact, days-down) in the channel-risk register feeding the platform-dependency review; add the violated policy clause to the listing-governance checklist (W1464) and the quarterly platform-rule watch (W1470)",
+     "duration": "4 h",
+     "n": "8",
+     "r": "Ecommerce Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1209",
+    "W1464",
+    "W1470",
+    "W2408",
+    "W2409",
+    "W2412",
+    "W2414",
+    "W3268",
+    "W3871",
+    "W5547",
+    "W5548",
+    "W569",
+    "W659",
+    "W98"
+   ]
+  }
+ ]
+}

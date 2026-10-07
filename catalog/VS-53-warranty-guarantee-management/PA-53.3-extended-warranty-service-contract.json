@@ -1,0 +1,540 @@
+{
+ "process_area": {
+  "id": "PA-53.3",
+  "title": "Extended Warranty & Service Contract Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-53-warranty-guarantee-management/PA-53.3-extended-warranty-service-contract.md",
+ "value_stream": {
+  "directory": "VS-53-warranty-guarantee-management",
+  "id": "VS-53",
+  "name": "Warranty & Guarantee Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "Quarterly review; new category as needed",
+    "Owner": "Category Manager",
+    "Participants": "Finance, VP Merchandising, Legal",
+    "Trigger": "Annual review or new category launch",
+    "Volume": "~10–15 products across 6 categories"
+   },
+   "id": "W2134",
+   "level": 2,
+   "name": "Extended Warranty Product Design & Pricing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Pricing auto-suggested from the historical claim-rate + repair-cost data; RA 7394-compliance auto-checked"
+    ],
+    "Controls": [
+     "- CTL-390 (ensure controlled execution — Extended Warranty & Service Contract Management (PA-53.3).)",
+     "- CTL-390: extended-warranty pricing adequacy — links to VS-157; service-contract terms conform to the Consumer Act (RA 7394) — links to VS-22; operational: VP Merchandising sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Pricing-inadequacy risk**: the claim rate exceeds the pricing assumption, making the product unprofitable; mitigated by the annual re-pricing and the claim-rate monitoring (W2136)",
+     "- **RA 7394-non-compliance risk**: the contract terms don't meet the Consumer Act (e.g., unfair exclusion clauses); mitigated by the Legal review in step 2"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item/warranty master (links to VS-29 / W296 service-item master, W2122 warranty config) — the extended-warranty SKU",
+     "- Pricing (links to VS-29 / W289, VS-57 / W2232) — the pricing model (claim rate + repair cost + margin)",
+     "- Legal/compliance (links to VS-22 / W22.1, VS-88) — the RA 7394 contract-terms review"
+    ],
+    "Time Estimate": [
+     "~3.5 days/review × 4 + per-category = **~120 hours/year** Category Manager + Finance + Legal."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager identifies eligible categories; Finance calculates pricing based on claim rate, repair cost, target margin (40–60%)",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "Category Mgr / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Legal reviews contract terms for Consumer Act compliance; Manager configures in ERP with service SKU, pricing tiers, POS upsell rules",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Legal / Category Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2122",
+    "W2136",
+    "W22",
+    "W2232",
+    "W289",
+    "W296"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "~42,000 upsell opportunities/month",
+    "Owner": "Cashier",
+    "Participants": "Store Manager, Analytics Manager",
+    "Trigger": "Customer purchases eligible item at POS",
+    "Volume": "~42K/month; target 15–20% attach rate"
+   },
+   "id": "W2135",
+   "level": 2,
+   "name": "Extended Warranty POS Upsell",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Prompt auto-displayed; acceptance auto-registered; attach-rate auto-tracked"
+    ],
+    "Controls": [
+     "- CTL-390 (ensure controlled execution — Extended Warranty & Service Contract Management (PA-53.3).)",
+     "- operational: Store Manager attach-rate review"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer-annoyance risk**: the upsell prompt frustrates customers who don't want it; mitigated by the no-repeated-offers rule and the brief trained script",
+     "- **Low-attach-rate risk**: the attach rate is below the 15–20% target; mitigated by the script training and the incentive (links to VS-19 / W228 sales commission)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / upsell (links to VS-08 / W5B, POS-013, VS-10 / W794 ecommerce upsell) — the auto-prompt and acceptance",
+     "- CRM (links to VS-13 / W17, VS-53 / W2118) — the auto-registration",
+     "- Analytics (links to VS-27 / W113) — the attach-rate and decline-rate tracking"
+    ],
+    "Time Estimate": [
+     "~45 sec/transaction × ~42,000/month ≈ ~1,890,000 sec ≈ **~525 hours/month Cashier** (absorbed into checkout, ~30 sec incremental)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "POS auto-prompts with warranty options and price; cashier presents offer using trained script",
+     "duration": "30–60 sec",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Cashier",
+     "activity": "Customer accepts: warranty added to transaction, contract printed on receipt, digital acknowledgment signed; auto-registered in CRM",
+     "duration": "30 sec",
+     "n": "2",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "Analytics Manager",
+     "activity": "Customer declines: recorded for analytics; no repeated offers to protect customer experience",
+     "duration": "Automated",
+     "n": "3",
+     "r": "POS System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W17",
+    "W2118",
+    "W228",
+    "W5B",
+    "W794"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-390",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "~75,000–100,000 active contracts",
+    "Owner": "Warranty Administrator",
+    "Participants": "Finance, Finance Manager, Warranty Admin, VP Merchandising",
+    "Trigger": "Contract active through coverage period",
+    "Volume": "~75K–100K active contracts at any time"
+   },
+   "id": "W2136",
+   "level": 2,
+   "name": "Extended Warranty Contract Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Liability accrual auto-generated monthly; portfolio-metrics auto-computed quarterly"
+    ],
+    "Controls": [
+     "- CTL-390: PFRS 15 deferred-revenue accuracy — links to VS-157; CTL-44 (contract-count integrity); operational: Finance Manager monthly sign-off; VP Merchandising quarterly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Liability-accrual-inaccuracy risk**: the PFRS 15 deferred-revenue accrual doesn't match the actual revenue-recognition pattern (straight-line vs. claims-weighted); mitigated by the quarterly review and the methodology calibration",
+     "- **Portfolio-loss risk**: the claim-rate-vs-estimate divergence across the portfolio makes the program unprofitable; mitigated by the quarterly review and the re-pricing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Warranty contract/liability (links to VS-17 / W28, VS-157 / PFRS 15, VS-54 / W2156 breakage pattern) — the deferred-revenue/liability accrual",
+     "- Analytics (links to VS-27 / W113) — the portfolio review dataset",
+     "- Pricing (links to VS-53 / W2134) — the annual re-pricing input"
+    ],
+    "Time Estimate": [
+     "~5 hours/month + ~5 hours/quarter = **~80 hours/year** Warranty Administrator + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "System maintains contract lifecycle (active/approaching expiry/expired/cancelled); monthly liability accrual journal generated",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "System / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Quarterly: review contract portfolio (renewal rate, claim rate vs. estimate, cancellation rate, revenue vs. cost); annual re-pricing",
+     "duration": "4–6 hours/quarter",
+     "n": "2",
+     "r": "Warranty Admin / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2134",
+    "W2156",
+    "W28"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "~1,500–2,500 extended warranty claims/month",
+    "Owner": "Extended Warranty Claims Specialist",
+    "Participants": "Specialist, CS Director, Finance Manager",
+    "Trigger": "Customer files claim on product covered by extended warranty",
+    "Volume": "~1.5K–2.5K/month; higher avg value"
+   },
+   "id": "W2137",
+   "level": 2,
+   "name": "Extended Warranty Claim Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Contract auto-verified; coverage auto-checked against the contract terms; claim-cost auto-tracked vs. accrual"
+    ],
+    "Controls": [
+     "- CTL-390 (ensure controlled execution — Extended Warranty & Service Contract Management (PA-53.3).)",
+     "- operational: CS Director sign-off; Finance Manager accrual review"
+    ],
+    "Pain Points / Risks": [
+     "- **Coverage-dispute risk**: the customer believes the claim is covered but the contract excludes it (wear, accidental); mitigated by the clear coverage-scope documentation at sale and the Specialist's evidence-based validation",
+     "- **Accrual-depletion risk**: the claim cost exceeds the accrued revenue for the contract, making it a loss; mitigated by the quarterly portfolio review (W2136) and the re-pricing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Warranty contract (links to VS-53 / W2136) — the active-contract verification",
+     "- Claim system (links to VS-53 / W2126–W2131) — the claim processing",
+     "- Finance/accrual (links to VS-17 / W28, VS-157) — the claim-cost-vs-accrual tracking"
+    ],
+    "Time Estimate": [
+     "~35 min/claim × ~2,000/month = **~1,170 hours/month Specialist** (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CS Director",
+     "activity": "System verifies active contract, coverage period, claim type; Specialist validates defect is covered (not wear/misuse/accidental)",
+     "duration": "20–30 min",
+     "n": "1",
+     "r": "System / Specialist"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Specialist authorizes: repair at service center, replacement (>70% of replacement cost), or store credit; Finance tracks vs. accrual",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Specialist"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2126",
+    "W2131",
+    "W2136",
+    "W28"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "~6,000–8,000 renewal opportunities/month",
+    "Owner": "Warranty Administrator",
+    "Participants": "Warranty Admin, Customer, CSR",
+    "Trigger": "Contract approaching expiry (90/30/7-day alerts)",
+    "Volume": "~6K–8K/month; target 25–30% renewal"
+   },
+   "id": "W2138",
+   "level": 2,
+   "name": "Extended Warranty Renewal & Extension",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Renewal notices auto-sent at 90/30/7; contract auto-extended on payment"
+    ],
+    "Controls": [
+     "- CTL-390 (ensure controlled execution — Extended Warranty & Service Contract Management (PA-53.3).)",
+     "- operational: Warranty Admin renewal-rate review"
+    ],
+    "Pain Points / Risks": [
+     "- **Renewal-fatigue risk**: too many renewal notices annoy the customer; mitigated by the 3-touch cadence (90/30/7) and the easy-renewal-link",
+     "- **Low-renewal-rate risk**: the renewal rate is below the 25–30% target; mitigated by the pricing (renewal priced attractively) and the multi-channel ease"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Warranty contract lifecycle (links to VS-53 / W2136) — the renewal/extension",
+     "- Customer comms (links to VS-75 app, VS-10 email) — the renewal notices",
+     "- Payment (links to VS-08 / W5B, VS-16 / W8) — the renewal payment"
+    ],
+    "Time Estimate": [
+     "Automated + ~12 min/phone-renewal × ~700/month = **~140 hours/month** CSR + Warranty Admin (phone subset)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Warranty Admin",
+     "activity": "System auto-sends renewal notices at 90, 30, and 7 days with pricing and easy renewal link (online/in-store/phone)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Warranty Admin",
+     "activity": "Customer renews via online payment, in-store, or phone; system extends contract, generates new certificate, schedules next expiry cycle",
+     "duration": "10–15 min (phone)",
+     "n": "2",
+     "r": "Customer / CSR"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2136",
+    "W5B",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "~200–400 cancellations/month (~3–5%)",
+    "Owner": "Customer Service Rep",
+    "Participants": "CSR, CS Supervisor, Finance, Finance Manager",
+    "Trigger": "Customer requests cancellation",
+    "Volume": "~200–400/month"
+   },
+   "id": "W2139",
+   "level": 2,
+   "name": "Extended Warranty Cancellation & Refund",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Proration auto-calculated; refund auto-processed; accrual auto-adjusted"
+    ],
+    "Controls": [
+     "- CTL-390 (ensure controlled execution — Extended Warranty & Service Contract Management (PA-53.3).)",
+     "- operational: CS Supervisor sign-off; Finance Manager accrual-adjustment sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Proration-dispute risk**: the customer disputes the prorated refund (expected full refund after the cooling-off); mitigated by the proration-policy disclosed at sale",
+     "- **Refund-abuse risk**: a customer cancels after a large claim, getting a prorated refund despite the claim cost exceeding the premium; mitigated by the proration-minus-claims formula (the refund deducts claims paid)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Warranty contract (links to VS-53 / W2136) — the contract termination",
+     "- Refund (links to VS-16 / W101, VS-17 / W9) — the refund processing",
+     "- Liability/accrual (links to VS-17 / W28, VS-157) — the accrual adjustment"
+    ],
+    "Time Estimate": [
+     "~15 min/cancellation × ~300/month = **~75 hours/month CSR** + system."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CS Supervisor",
+     "activity": "CSR verifies contract; within 30-day cooling-off: full refund; after: prorated (remaining months / total × price minus claims)",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "System processes refund to original payment method; terminates contract; adjusts warranty liability accrual; posts GL entries",
+     "duration": "5 min",
+     "n": "2",
+     "r": "System / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W101",
+    "W2136",
+    "W28",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "~500–800 guarantee claims/month; peaks rainy season",
+    "Owner": "Building Materials Category Manager",
+    "Participants": "Technical Specialist, Category Manager, VP Merchandising",
+    "Trigger": "Customer invokes building material performance guarantee",
+    "Volume": "~500–800/month; high value (house repaint, re-tile)"
+   },
+   "id": "W2140",
+   "level": 2,
+   "name": "Performance Guarantee Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Claim auto-routed to Technical Specialist; site-inspection report auto-templated; vendor-recovery auto-initiated on product-defect finding"
+    ],
+    "Controls": [
+     "- CTL-390 (ensure controlled execution — Extended Warranty & Service Contract Management (PA-53.3).)",
+     "- operational: Category Manager sign-off on claims >PHP 50K"
+    ],
+    "Pain Points / Risks": [
+     "- **Attribution-dispute risk**: the customer attributes the failure to the product (guarantee claim) but the root cause is installation error (not covered); mitigated by the Technical Specialist's site inspection and the evidence-based attribution",
+     "- **High-cost-claim risk**: a full-house repaint or re-tile is a high-value claim that strains the guarantee reserve; mitigated by the vendor-cost-recovery (the manufacturer funds the material) and the insurance partner (W2141)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Guarantee claim (links to VS-53 / W2126 claim system, VS-31 / W110 quality) — the claim record and quality data",
+     "- Vendor recovery (links to VS-53 / W2128 vendor escalation, VS-03 / W88 RTV) — the vendor cost-recovery",
+     "- Installation/contractor (links to VS-12 / W12 installation services, VS-172 contractor network) — the installation-error assessment"
+    ],
+    "Time Estimate": [
+     "~3 hours/site-inspection + ~1.5 days report + ~10 days resolution × ~650/month = **~2,000 hours/month** Technical Specialist + Category Manager (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Technical Specialist dispatched to customer site: inspects conditions, takes samples/photos, assesses product defect vs. installation error vs. environmental",
+     "duration": "2–4 hours",
+     "n": "1",
+     "r": "Technical Specialist"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Specialist submits report: product defect → full claim (material + labor); installation error → deny; mixed cause → partial coverage",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Technical Specialist"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "For approved claims: processes material replacement and coordinates re-application; vendor notified for cost recovery",
+     "duration": "7–14 days resolution",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W110",
+    "W12",
+    "W2126",
+    "W2128",
+    "W2141",
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-37",
+    "CTL-390"
+   ],
+   "fields": {
+    "Frequency": "Annual renewal; quarterly reviews",
+    "Owner": "VP Merchandising",
+    "Participants": "Finance Controller, CFO, Insurance Partner, Legal, CEO",
+    "Trigger": "Annual contract renewal or quarterly review",
+    "Volume": "1–2 warranty insurance partners; ~PHP 15–20M annual premium"
+   },
+   "id": "W2141",
+   "level": 2,
+   "name": "Warranty Partner & Insurer Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Program financials auto-assembled; loss-ratio auto-computed; partner-performance auto-scored"
+    ],
+    "Controls": [
+     "- CTL-390: insurance-program accuracy — links to VS-26; CTL-37 (partner-claim integrity); operational: CFO quarterly sign-off; CEO annual strategy sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Self-insure-vs-partner-misjudgment risk**: BuildRight self-insures a category that turns out to have high claim rates (more expensive than a partner premium); mitigated by the quarterly loss-ratio review and the flexibility to switch",
+     "- **Partner-approval-rate risk**: the insurance partner denies too many claims, eroding customer satisfaction; mitigated by the quarterly performance review and the approval-rate SLA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance (links to VS-26 / W59 insurance policy lifecycle, W610 claims) — the warranty-insurance partner",
+     "- Finance (links to VS-17 / W26 budget, VS-158 / W85) — the program financials",
+     "- Vendor scorecard (links to VS-67 / W2458) — the partner-performance review"
+    ],
+    "Time Estimate": [
+     "~5 hours/quarter + ~3 days/year ≈ 20 + 24 hours = **~45 hours/year** VP Merchandising + Finance + Legal."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance reviews program financials: premium vs. claims recovered, loss ratio, admin costs; determines self-insure vs. partner by category",
+     "duration": "4–6 hours/quarter",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "VP Merchandising conducts quarterly performance review with partner: claim approval rate, turnaround, customer satisfaction, loss ratio",
+     "duration": "2–3 hours/quarter",
+     "n": "2",
+     "r": "VP Merchandising"
+    },
+    {
+     "a": "CEO",
+     "activity": "Annual: contract renewal negotiation; Legal reviews terms; VP presents strategy to Executive Committee",
+     "duration": "2–3 days/year",
+     "n": "3",
+     "r": "VP Merch / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2458",
+    "W26",
+    "W59",
+    "W610",
+    "W85"
+   ]
+  }
+ ]
+}

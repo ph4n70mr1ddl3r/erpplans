@@ -1,0 +1,639 @@
+{
+ "process_area": {
+  "id": "PA-89.1",
+  "title": "Recall Initiation, Risk Assessment & Regulatory Notification"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-89-product-recall-safety-corrective-action/PA-89.1-recall-initiation-risk-assessment-regulatory-notification.md",
+ "value_stream": {
+  "directory": "VS-89-product-recall-safety-corrective-action",
+  "id": "VS-89",
+  "name": "Product Recall & Safety Corrective Action Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Event-driven (~30–60 candidate issues/year)",
+    "Owner": "Product Safety & Compliance Manager",
+    "Participants": "Product Safety Mgr, Quality, Customer Service, Vendor Mgmt, Legal, Store Ops",
+    "Trigger": "Safety complaint, regulator alert, vendor notice, or field incident",
+    "Volume": "~30–60 issues triaged; ~3–8 escalate to formal recall"
+   },
+   "id": "W2993",
+   "level": 2,
+   "name": "Product Safety Issue Intake, Triage & Hazard Classification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs safety issue in recall case system\" (replaces manual Step 1).",
+     "- System auto-assign of \"assigns preliminary severity\" (replaces manual Step 2).",
+     "- System auto-issue of \"issue is isolated or systemic\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: mandatory hazard-classification field and dedicated triage queue; operational: hazard-classification field and dedicated triage queue"
+    ],
+    "Pain Points / Risks": [
+     "- **Detection risk**: Safety issues lost in generic complaint queues; mitigated by mandatory hazard-classification field and dedicated triage queue"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Recall case management; quality non-conformance module; item/lot/serial master; vendor master linkage"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per issue"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "Customer Service / Store Ops / Quality logs safety issue in recall case system (source, SKU, lot, incident description, photos, injury/property damage flag)",
+     "duration": "Per issue (<24 hr)",
+     "n": "1",
+     "r": "Customer Service / Store Ops / Quality"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Product Safety Mgr triages and classifies hazard (electrical/fire, chemical/toxic, mechanical/laceration, structural/failure, labeling/allergen) and assigns preliminary severity (Class I–III per Consumer Act / DTI-BPS)",
+     "duration": "Per issue",
+     "n": "2",
+     "r": "Product Safety & Compliance Manager"
+    },
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "Quality/Vendor Mgmt confirms affected SKU, lot, vendor, and whether the issue is isolated or systemic; duplicates against existing open recalls",
+     "duration": "Per issue",
+     "n": "3",
+     "r": "Quality / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-152"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Product Safety & Compliance Manager",
+    "Participants": "Product Safety Mgr, Quality, Legal, Merchandising, Insurance, DPO",
+    "Trigger": "Triaged issue flagged Class I/II or systemic",
+    "Volume": "~8–15 risk assessments/year"
+   },
+   "id": "W2994",
+   "level": 2,
+   "name": "Recall Risk Assessment & Corrective Action Decision",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documents likelihood of regulatory mandatory action\" (replaces manual Step 1).",
+     "- System auto-review of \"Recall Committee reviews assessment\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-152 (ensure recall regulatory reporting & closure.)",
+     "- operational: documented severity matrix and committee review"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-reaction risk**: Classifying a serious hazard as lower-tier; mitigated by documented severity matrix and committee review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Risk assessment template; decision/authority log; document repository"
+    ],
+    "Time Estimate": [
+     "- 2–5 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "Product Safety Mgr performs risk assessment: probability of harm × severity × exposure (units in market, time since sale); documents likelihood of regulatory mandatory action",
+     "duration": "1–3 days",
+     "n": "1",
+     "r": "Product Safety & Compliance Manager"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Legal/Insurance assesses liability, product-liability exposure, and policy notification triggers; DPO screens affected-customer data needed for notification",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Legal / Insurance / DPO"
+    },
+    {
+     "a": "VP Legal & Compliance / COO",
+     "activity": "Recall Committee reviews assessment; decides corrective action type (full recall, stop-sale, field repair, consumer notice, no-action); documents rationale and decision authority",
+     "duration": "Per decision",
+     "n": "3",
+     "r": "Recall Committee"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Per recall event",
+    "Owner": "Regulatory Compliance Officer",
+    "Participants": "Regulatory Officer, Product Safety Mgr, Legal, Tax/Records",
+    "Trigger": "Recall decision confirmed (Class I/II)",
+    "Volume": "~3–8 recalls/year"
+   },
+   "id": "W2995",
+   "level": 2,
+   "name": "DTI-BPS / FDA Regulatory Notification & Filing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares and files notification with DTI-BPS\" (replaces manual Step 1).",
+     "- System auto-count of \"Legal/Regulatory notifies relevant LGUs and, for imports, Bureau of\" (replaces manual Step 2).",
+     "- System auto-record of \"Records Mgr retains regulatory correspondence and filings per BIR/SEC 10-year…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: compliance calendar and pre-cleared templates"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Late or incomplete regulator notification triggers penalties; mitigated by compliance calendar and pre-cleared templates"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Regulatory filing portal integration; records retention; compliance calendar"
+    ],
+    "Time Estimate": [
+     "- 1–3 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Regulatory Compliance Manager",
+     "activity": "Regulatory Compliance Officer prepares and files notification with DTI-BPS (consumer product safety) and/or FDA (regulated goods), within mandated timelines, including product, hazard, scope, and remedy",
+     "duration": "Per filing (<48 hr for mandatory, per the W1618 convention)",
+     "n": "1",
+     "r": "Regulatory Compliance Officer"
+    },
+    {
+     "a": "Regulatory Compliance Manager",
+     "activity": "Legal/Regulatory notifies relevant LGUs and, for imports, Bureau of Customs and country-of-origin regulators; confirms any PS/ICC mark suspension",
+     "duration": "Per recall",
+     "n": "2",
+     "r": "Legal / Regulatory"
+    },
+    {
+     "a": "Regulatory Compliance Manager",
+     "activity": "Records Mgr retains regulatory correspondence and filings per BIR/SEC 10-year and Consumer Act retention rules",
+     "duration": "Per recall",
+     "n": "3",
+     "r": "Records Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1618"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Per recall event",
+    "Owner": "Supply Chain Planning Manager",
+    "Participants": "Supply Planning, Quality, Merchandising, IT, Store Ops, Ecommerce",
+    "Trigger": "Recall decision + regulatory notification filed",
+    "Volume": "~3–8 recalls/year"
+   },
+   "id": "W2996",
+   "level": 2,
+   "name": "Recall Strategy, Scope & Lot/Shipment Traceability Definition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Merchandising/Supply Planning sets recall strategy\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: full chain-of-custody traceability and IT-assisted queries"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope risk**: Incomplete lot/trace data leaves affected units in market; mitigated by full chain-of-custody traceability and IT-assisted queries"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lot/serial/shipment traceability; inventory & sales history; omnichannel order history; recall scope record"
+    ],
+    "Time Estimate": [
+     "- 1–3 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Chain Planning Manager",
+     "activity": "Supply Planning defines recall scope: affected SKU(s), lots/batches, date ranges, receiving locations (DCs, stores), and sales channel exposure (in-store, ecommerce, marketplace, B2B)",
+     "duration": "Per recall",
+     "n": "1",
+     "r": "Supply Planning"
+    },
+    {
+     "a": "Supply Chain Planning Manager",
+     "activity": "IT/Supply Planning traces affected lots/serials through inventory and sales history (DC receipts, store transfers, POS sales, ecommerce orders, trade/gov deliveries) to quantify units in-field vs. on-hand",
+     "duration": "Per recall",
+     "n": "2",
+     "r": "IT / Supply Planning"
+    },
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "Merchandising/Supply Planning sets recall strategy: full retrieval, consumer replacement, refund, or repair; defines remedy matrix and recovery logistics",
+     "duration": "Per recall",
+     "n": "3",
+     "r": "Merchandising / Supply Planning"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Per recall event",
+    "Owner": "VP Legal & Compliance",
+    "Participants": "VP Legal & Compliance, COO, CMO, CIO, Product Safety, Quality, Supply Chain, LP, Finance, HR/Comms",
+    "Trigger": "Confirmed Class I/II recall",
+    "Volume": "~3–8 activations/year"
+   },
+   "id": "W2997",
+   "level": 2,
+   "name": "Recall Committee Activation & Cross-Functional Command",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"assigns incident commander\" (replaces manual Step 1).",
+     "- System auto-report of \"Committee sets recall KPIs and status reporting\" (replaces manual Step 2).",
+     "- System workflow orchestration of \"coordinates internal and external spokesperson, media holding statement, and store/DC staff briefing script\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: pre-defined activation authority and standing committee roster"
+    ],
+    "Pain Points / Risks": [
+     "- **Coordination risk**: Slow committee activation delays response; mitigated by pre-defined activation authority and standing committee roster"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Incident command / war-room tooling; status dashboard; communication broadcast (links to VS-63)"
+    ],
+    "Time Estimate": [
+     "- Activation <1 day; ongoing through recall"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO / COO",
+     "activity": "VP Legal & Compliance activates Recall Committee; confirms roles, decision authority, and cadence (daily war-room for high-severity); assigns incident commander",
+     "duration": "Per activation (<24 hr)",
+     "n": "1",
+     "r": "VP Legal & Compliance"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Committee sets recall KPIs and status reporting: units recovered vs. in-field, % notification reach, customer contact rate, SLA to resolution",
+     "duration": "Per recall",
+     "n": "2",
+     "r": "Recall Committee"
+    },
+    {
+     "a": "CMO",
+     "activity": "Comms/HR coordinates internal and external spokesperson, media holding statement, and store/DC staff briefing script",
+     "duration": "Per recall",
+     "n": "3",
+     "r": "Comms / HR"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Per recall event",
+    "Owner": "Vendor Management Manager",
+    "Participants": "Vendor Mgmt, Merchandising, Legal, Quality, Finance",
+    "Trigger": "Recall scope confirms vendor/manufacturer responsibility",
+    "Volume": "~3–8 vendor engagements/year"
+   },
+   "id": "W2998",
+   "level": 2,
+   "name": "Vendor / Manufacturer Coordination & Corrective Action Agreement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"Vendor Mgmt formally notifies vendor/manufacturer of recall decision\" (replaces manual Step 1).",
+     "- System auto-log of \"Legal/Vendor Mgmt negotiates and executes corrective action agreement covering\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: purchase contract recall/indemnification clauses and documented evidence package"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-recovery risk**: Vendor disputes liability; mitigated by purchase contract recall/indemnification clauses and documented evidence package"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor portal; contract/agreement repository; vendor scorecard linkage (links to VS-67)"
+    ],
+    "Time Estimate": [
+     "- 1–4 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Vendor Mgmt formally notifies vendor/manufacturer of recall decision; demands corrective action, cost responsibility, and root-cause report",
+     "duration": "Per recall (<48 hr)",
+     "n": "1",
+     "r": "Vendor Mgmt"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Legal/Vendor Mgmt negotiates and executes corrective action agreement covering recovery logistics, reimbursement (refund + recall costs), and remedy supply (replacements)",
+     "duration": "Per recall",
+     "n": "2",
+     "r": "Legal / Vendor Mgmt"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality/Vendor Mgmt agrees vendor CAPA (design change, QA process change) and sets timeline for requalification of corrected product per W447 (DTI-BPS certification)",
+     "duration": "Per recall",
+     "n": "3",
+     "r": "Quality / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W447"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Per recall event",
+    "Owner": "Product Safety & Compliance Manager",
+    "Participants": "Product Safety Mgr, Quality, Data Analytics, Store Ops",
+    "Trigger": "Recall execution underway",
+    "Volume": "~3–8 plans/year"
+   },
+   "id": "W2999",
+   "level": 2,
+   "name": "Recall Effectiveness Check Planning & Sample Design",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Product Safety Mgr defines effectiveness-check criteria\" (replaces manual Step 1).",
+     "- System continuous audit of \"Data Analytics/Store Ops designs audit sample\" (replaces manual Step 2).",
+     "- System auto-document of \"documents effectiveness results\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: quantitative effectiveness targets and independent sampling"
+    ],
+    "Pain Points / Risks": [
+     "- **Effectiveness risk**: Recall declared complete while units remain in market; mitigated by quantitative effectiveness targets and independent sampling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Recall effectiveness analytics; POS block verification report; sample design tool"
+    ],
+    "Time Estimate": [
+     "- Through recall duration"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "Product Safety Mgr defines effectiveness-check criteria (target recovery %, time-bound targets per regulator guidance) and sampling approach to verify customer reach",
+     "duration": "Per recall",
+     "n": "1",
+     "r": "Product Safety & Compliance Manager"
+    },
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "Data Analytics/Store Ops designs audit sample (stores, channels, customer segments) and verifies POS block, shelf removal, and notification delivery",
+     "duration": "Per recall",
+     "n": "2",
+     "r": "Data Analytics / Store Ops"
+    },
+    {
+     "a": "Regulatory Compliance Manager",
+     "activity": "Product Safety Mgr documents effectiveness results; identifies gaps; drives corrective follow-up before regulator close-out",
+     "duration": "Per recall",
+     "n": "3",
+     "r": "Product Safety & Compliance Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "Per recall event",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control, DC Ops, Store Ops, Ecommerce, IT",
+    "Trigger": "Recall decision (or pre-decision precautionary hold)",
+    "Volume": "~3–8 holds/year affecting 200 stores + 4 DCs + ecommerce"
+   },
+   "id": "W3000",
+   "level": 2,
+   "name": "Stop-Sale, Quarantine & Inventory Hold Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-reconcile of \"reconciles quarantined quantities vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: immediate system-wide block before physical quarantine"
+    ],
+    "Pain Points / Risks": [
+     "- **Leakage risk**: Stock sold after stop-sale decision; mitigated by immediate system-wide block before physical quarantine"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory hold/quarantine status; POS item block; ecommerce/marketplace listing control (links to VS-10/VS-65); WMS recall bin"
+    ],
+    "Time Estimate": [
+     "- <24 hr to execute chain-wide"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control/IT places system-wide stop-sale (POS block, ecommerce/marketplace listing suspension, PO/replenishment freeze) on affected SKU/lot across all locations",
+     "duration": "<4 hr",
+     "n": "1",
+     "r": "Inventory Control / IT"
+    },
+    {
+     "a": "DC Operations Manager / Store Manager",
+     "activity": "DC Ops/Store Ops physically quarantine on-hand stock to segregated recall bin/area; apply recall hold labels; prevent sale or shipment",
+     "duration": "<24 hr",
+     "n": "2",
+     "r": "DC Ops / Store Ops"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control reconciles quarantined quantities vs. system stock; investigates variances; secures high-value/regulated goods under additional LP control",
+     "duration": "Per recall",
+     "n": "3",
+     "r": "Inventory Control / Loss Prevention"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-496"
+   ],
+   "fields": {
+    "Frequency": "The rarest integrity-event class in the product-safety estate: years can pass chain-wide without a credible episode; the sweep-decision discipline is exercised through the W627 mock-recall rotation",
+    "Owner": "Product Safety & Compliance Manager",
+    "Participants": "Recall Committee chair (W2997), VP Legal (extortion/no-ransom posture), Store Operations leadership (sweep task campaigns), Loss Prevention (evidence and W1337 law-enforcement coordination), Corporate Communications (W3001-class customer-communication discipline), HSE Manager (VS-24), Category Manager (affected SKUs), PNP anti-cybercrime / economic-crime units",
+    "Trigger": "A threat, extortion demand, or malicious claim that BuildRight merchandise on shelves has been or will be contaminated, tampered with, or booby-trapped — by call, letter, email, social post, or in-person note — with or without a money demand",
+    "Volume": "1 event × the threat's claimed scope (a single SKU, a category, one store, or the whole chain) × the sweep surface (targeted SKU pulls at ~200 stores, hours to a full-day campaign if ordered) × the notification set (PNP assessment, DTI-BPS/FDA per W2995 where consumers are at risk, the W2997 committee)"
+   },
+   "id": "W5556",
+   "level": 2,
+   "name": "Product-Tampering Threat, Extortion Demand & Merchandise-Integrity Sweep Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Threat-case template with a built-in sweep-decision gate (assessment fields, decision, basis, approver) that must be completed before any W3000 stop-sale object can be raised from the case",
+     "- Auto-generated targeted store sweep task campaign on the credible path, with sample-pull and chain-of-custody forms attached (replaces manual store-by-store calls)"
+    ],
+    "Background": [
+     "VS-89 owns product-safety intake (W2993), the recall decision (W2994), regulatory notification (W2995), committee command (W2997), and stop-sale execution (W3000) — but every one of those triggers on a defect found or a vendor/regulator notice. 'Tampering threat'/'contamination threat'/'extortion' appear in zero dedicated headers anywhere: nobody owns the *threat* — the caller who claims needles in the cement bags unless paid, the letter claiming bleach was injected into a paint line — where the distinctive decisions are the never-pay rule, the specificity-gated sweep-or-monitor decision (the W5538 bomb-threat decision law transposed to merchandise: sweeping the whole chain on every vague threat trains extortionists and burns a full trading day across ~200 stores, while dismissing a specific one is the consumer-harm catastrophe), and the W3000 stop-sale canon executing only on the credible path. This workflow is that event owner; if altered product is actually found, W2994's recall machinery takes over and this protocol becomes its evidence and communications spine."
+    ],
+    "Controls": [
+     "- CTL-496 (ensure controlled execution — Recall Initiation, Risk Assessment & Regulatory Notification (PA-89.1).)",
+     "- operational: never-pay rule with VP Legal sign-off recorded on the case; sweep/stop-sale decision and its documented basis precede execution; altered units preserved under chain of custody, never re-shelved"
+    ],
+    "Pain Points / Risks": [
+     "- **Panic-sweep risk**: a chain-wide stop-sale ordered on every vague threat trains extortionists and costs a full trading day across ~200 stores; mitigated by Step 4's specificity-gated decision documented before execution",
+     "- **Under-reaction risk**: dismissing a specific threat that proves real is the consumer-harm and RA 7394/DTI-enforcement catastrophe; mitigated by Step 3's mandatory law-enforcement assessment on every case",
+     "- **Evidence-destruction risk**: the letter discarded, the email deleted, or the inspected unit re-shelved destroys both the criminal case and the recall basis; mitigated by Step 1/5 custody rules",
+     "- **Admission-in-communication risk**: improvised statements implying prior knowledge of contamination; mitigated by Step 2/7 scripted-channel discipline",
+     "- **Copycat risk**: paying once, or visibly over-reacting once, invites the next demand; mitigated by the never-pay rule with VP Legal sign-off recorded on every case"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by Product Safety & Compliance, the W2997 committee bench, and store task-campaign capacity; no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Threat/case log with evidence attachments and restricted visibility",
+     "- Stop-sale, quarantine, and POS block objects on the targeted-SKU path (links to W3000)",
+     "- Sample-pull task campaigns with chain-of-custody records (links to W63-class store task tooling)",
+     "- Regulatory notification objects (links to W2995) and recall-decision records (links to W2994)",
+     "- Customer-notice channels and script version control (links to W3001)"
+    ],
+    "Time Estimate": [
+     "Per event: ≈ 40–80 staff-hours over the first week (committee, legal, LP, store task campaigns) plus store sweep labor scaled to the targeted-SKU surface. Readiness rides the W627 mock rotation — no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "**Threat capture & preservation**: verbatim record of every contact attempt; caller-line capture, envelope, email headers, and screenshots preserved in the case file; if the caller is live, keep them talking without negotiating",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Store Manager / Contact-center Agent / LP Duty"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "**Posture decision — never pay, never improvise public statements**: VP Legal with Product Safety confirm the no-payment rule and route all public communication through the W3001 discipline (no confirmation, no denial, no speculation outside scripted channels)",
+     "duration": "Same day",
+     "n": "2",
+     "r": "VP Legal / Product Safety & Compliance Manager"
+    },
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "**Credibility assessment with law enforcement**: specificity of SKU/store/timing claimed, the claimant's knowledge of real product detail, prior-contact history, and platform metadata assessed jointly with PNP; the assessment feeds and is filed with the sweep decision",
+     "duration": "4–24 hours",
+     "n": "3",
+     "r": "Product Safety & Compliance Manager / LP Investigator"
+    },
+    {
+     "a": "COO (chain-wide sweep only)",
+     "activity": "**Sweep-or-monitor decision (documented either way)**: specific and credible → targeted sweep/quarantine of the named SKUs via W3000 stop-sale and quarantine at affected sites; vague or not credible → heightened monitoring and sample pulls only — the decision and its basis recorded on the case before execution",
+     "duration": "4–24 hours",
+     "n": "4",
+     "r": "Product Safety & Compliance Manager / Recall Committee chair"
+    },
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "**Physical verification & chain of custody**: sample units pulled and inspected for seal/pack integrity; laboratory testing where contamination is chemically plausible; any altered unit found is preserved as evidence, never re-shelved or destroyed",
+     "duration": "1–3 days",
+     "n": "5",
+     "r": "Store Operations / Quality / LP"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "**Regulatory posture**: W2995 DTI-BPS/FDA notification where a credible contamination risk to consumers exists; if altered product is verified, the W2994 recall decision runs on this evidence",
+     "duration": "Per W2995",
+     "n": "6",
+     "r": "Product Safety & Compliance Manager"
+    },
+    {
+     "a": "Corporate Communications Director",
+     "activity": "**Customer & store communication**: scripted, no-speculation customer guidance per W3001 if a sweep is public-visible; store briefing pack so counter staff never improvise answers",
+     "duration": "Per event",
+     "n": "7",
+     "r": "Corporate Communications / Store Operations"
+    },
+    {
+     "a": "Product Safety & Compliance Manager",
+     "activity": "**Case file, hardening & recurrence watch**: packaging/sealing review on tamper-prone SKUs, camera coverage review on affected aisles, threat intelligence filed to W1337, and the episode folded into the W627 mock rotation",
+     "duration": "2–6 weeks",
+     "n": "8",
+     "r": "Product Safety & Compliance Manager / LP"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1337",
+    "W2993",
+    "W2994",
+    "W2995",
+    "W2997",
+    "W3000",
+    "W3001",
+    "W5538",
+    "W627",
+    "W63"
+   ]
+  }
+ ]
+}

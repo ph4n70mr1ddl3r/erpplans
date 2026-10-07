@@ -1,0 +1,1787 @@
+{
+ "process_area": {
+  "id": "PA-05.3",
+  "title": "Inventory Disposition & Optimization"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md",
+ "value_stream": {
+  "directory": "VS-05-inventory-lifecycle",
+  "id": "VS-05",
+  "name": "Inventory Lifecycle"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "~3,200–5,400 damaged/defective units/month across all locations",
+    "Owner": "Store Manager (store-level); DC Supervisor (DC-level)",
+    "Participants": "Store Manager, DC Supervisor, Stock Associate, Receiving Clerk, Buyer, Category Manager, Controller",
+    "Trigger": "Damaged or defective goods identified during receiving (W3, W18), cycle counting (W6), daily operations (W5), or customer return (W12)",
+    "Volume": "~15–25 per store per month; ~50–100 per DC per month"
+   },
+   "id": "W91",
+   "level": 2,
+   "name": "Damaged & Defective Goods Disposition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans item barcode and selects damage type\" (replaces manual Step 1).",
+     "- System auto-route of \"route to W88\" (replaces manual Step 3).",
+     "- System auto-document of \"documentation\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "Damaged and defective goods are an inevitable part of retail operations — items damaged in transit (DC→Store or vendor→DC), in-store handling damage, customer-caused damage on display items, vendor manufacturing defects, and age-related deterioration (paint expiry, adhesive hardening). While W88 (Return to Vendor) handles the vendor-liability path and W92 (Inventory Adjustment) handles the accounting authorization, this workflow governs the physical identification, documentation, and disposition decision-making for damaged/defective goods regardless of liability. It fills the gap between discovering damaged inventory and the final resolution."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Store Manager (store-level); DC Supervisor (DC-level) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Quarantine space at store level is limited — with ~15–25 damaged items/store/month accumulating pending disposition decisions, the designated damaged goods area in the backroom can overflow, leading to commingling with saleable stock and accidental re-shelving of damaged items.",
+     "- Liability assessment (step 3) for transit damage from DC to store requires distinguishing between carrier-caused damage and in-store handling damage; without photographic evidence at the point of DC dispatch, Store Managers are incentivized to classify all damage as transit damage to recover cost from the carrier or DC.",
+     "- DC-level consolidation of damaged items from 200 stores (via W22B return) creates a high-volume sorting operation that requires dedicated DC labor weekly; during peak damage periods (post-typhoon, post-promo), the consolidation queue delays vendor RTV processing (W88).",
+     "- Hazardous material disposal (paint, chemicals per W82) from damaged goods requires licensed waste haulers with 5–10 day lead time for pickup; accumulated hazardous damaged goods in store backrooms pose safety and compliance risks during the waiting period.",
+     "- Monthly damage rate targets (< 0.5% of inventory value) are difficult to enforce at store level because damage reporting compliance varies significantly — some Store Managers under-report to protect their shrinkage KPIs, distorting the Category Manager's ability to identify systemic vendor quality issues."
+    ],
+    "Staffing Implication": [
+     "- **Store Associates / Stock Associates**: ~15–25 damaged items/store/month × ~20 min each (steps 1–4 at 5 min apiece) = ~5–8 hours/store/month. Absorbed.",
+     "- **DC Supervisor**: 1 hour/week for consolidation. Absorbed.",
+     "- **Category Manager / Controller**: 1 hour/month for damage review. Absorbed.",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Damage report creation with barcode scan, damage type classification, and photo evidence (W91.1)",
+     "- Inventory status change to \"Damaged/Defective\" (blocked from sale and allocation) (W91.2)",
+     "- Liability assessment routing: W88 (vendor), carrier claim, or BuildRight (W91.3)",
+     "- Disposition decision workflow: markdown (W93), donate, scrap/dispose, or reinstate (W91.4)",
+     "- Damage/defective register with value tracking by type, location, category (W91.6)",
+     "- Monthly damage analysis dashboard with rate tracking and trend analysis (W91.7)",
+     "- Integration with W3 (DC receiving — transit damage from vendor), W4 (DC→Store transit damage), W6 (cycle count — discovered damage), W12 (customer returns — damaged items), W18 (DSD — transit damage), W22 (transfers — in-transit damage), W37 (loss prevention — damage as shrinkage component), W44 (vendor scorecard — vendor defect rate), W52/W62B (carrier performance — transit damage rate), W66 (inter-island — transit damage), W82 (hazardous waste disposal), W88 (RTV — vendor liability path), W92 (inventory adjustment — accounting authorization), W93 (markdown — sellable damaged goods)"
+    ],
+    "Time Estimate": [
+     "Identification and documentation (step 1): 5 min/item. Quarantine and segregation (step 2): 5 min/item. Liability assessment (step 3): 5 min/item. Disposition decision (step 4): 5 min/item. DC consolidation (step 5): 1 hour/week. Monthly analysis (step 7): 1 hour/month. Total per store: ~5–8 hours/month (at the 20-min/item basis). Total per DC: ~4–6 hours/week for consolidation and disposition (DC Supervisor 1 h/week + 3–5 h/week of DC execution labor)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dept. Supervisor / DC Supervisor",
+     "activity": "**Identification and documentation**: (a) Store Associate, Stock Associate, or Receiving Clerk discovers damaged/defective item; (b) scans item barcode and selects damage type: (i) transit damage (DC→Store or vendor→DC/Store), (ii) in-store handling damage (dropped, shelving collapse, water damage), (iii) customer-caused damage (opened package, broken seal on display), (iv) vendor manufacturing defect (functional failure, missing parts, cosmetic defect out of box), (v) age/expiry deterioration (expired paint, hardened adhesive, rusted hardware), (vi) environmental damage (flood, typhoon — W49); (c) takes photo of damage; (d) system creates damage report with timestamp, location, item, quantity, damage type, and photo evidence",
+     "duration": "5 min/item",
+     "n": "1",
+     "r": "Stock Associate / Receiving Clerk"
+    },
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "**Quarantine and physical segregation**: System moves damaged items to \"Damaged/Defective\" inventory status (unavailable for sale, unavailable for replenishment calculation); physical items moved to designated damaged goods area in store backroom or DC quarantine zone",
+     "duration": "5 min/item",
+     "n": "2",
+     "r": "Stock Associate / Receiving Clerk"
+    },
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "**Liability assessment**: (a) **Vendor liability** — damage type is vendor defect, transit damage from vendor, or wrong item received: route to W88 (Return to Vendor) for vendor credit or replacement; (b) **Carrier liability** — damage type is transit damage from DC to store or 3PL delivery to customer: route to carrier claim (W19.12b for ecommerce, W66 for inter-island, W52 for fleet); (c) **BuildRight liability** — in-store handling damage, customer-caused damage, environmental damage: no external recovery possible; proceed to disposition decision; (d) **Undetermined** — route to Buyer for vendor negotiation or DC Supervisor for carrier investigation",
+     "duration": "5 min/item",
+     "n": "3",
+     "r": "Dept. Supervisor / DC Supervisor"
+    },
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "**Disposition decision** (BuildRight-liability items only — vendor/carrier items follow W88 or carrier claim): (a) **Markdown and sell at discount** — item is cosmetically damaged but functionally usable (e.g., dented can of paint, scratched tile, box-damaged appliance); system routes to W93 (Markdown & Clearance) for discounted sale; (b) **Donate** — item is functional but not saleable at any price (e.g., display model replaced by newer version); coordinate with CSR for community donation program; requires Controller approval; (c) **Scrap/dispose** — item is non-functional, hazardous (paint/chemical per W82), or broken beyond any use; system routes to disposal with proper documentation; (d) **Return to regular stock** — item was incorrectly flagged (e.g., packaging scuff but product perfect); system reverses damage status",
+     "duration": "5 min/item",
+     "n": "4",
+     "r": "Dept. Supervisor / Store Manager / DC Supervisor"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "**DC-level consolidation**: DC Supervisor consolidates damaged/defective items from DC operations and items returned from stores (via W22B store-to-DC return); sorts by vendor for potential consolidated RTV shipment per W88; disposes of scrap items in bulk per W82 (hazardous materials) or general waste protocols",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "DC Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Financial impact recording**: System calculates damage/defective value at WAC per item; records in damage/defective register: total value by damage type, by location, by category; feeds into shrinkage report per W37 (loss prevention) and W92 (inventory adjustment)",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising / CFO",
+     "activity": "**Monthly damage analysis**: Category Manager and Controller review monthly damage/defective report: (a) damage rate by category (target: < 0.5% of inventory value), (b) damage rate by location (flag stores > 1% rate), (c) damage rate by damage type (trend analysis), (d) top 20 items by damage frequency (possible packaging improvement or vendor quality issue), (e) vendor defect rate feeds into W44 vendor scorecard; (f) transit damage rate by carrier feeds into W52/W62B carrier performance",
+     "duration": "1 hour/month",
+     "n": "7",
+     "r": "Category Manager / Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12",
+    "W18",
+    "W19",
+    "W22",
+    "W22B",
+    "W3",
+    "W37",
+    "W4",
+    "W44",
+    "W49",
+    "W5",
+    "W52",
+    "W6",
+    "W62B",
+    "W66",
+    "W82",
+    "W88",
+    "W92",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-11",
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "~1,700–2,600 adjustments/month (200 stores × 8–12 + 4 DCs × 30–50) across all locations (mostly from cycle counts)",
+    "Owner": "Controller",
+    "Participants": "Stock Associate, Store Manager, DC Supervisor, Cost Accountant, Controller, Internal Audit",
+    "Trigger": "Cycle count discrepancy identified (W6); annual physical inventory variance (W42); confirmed theft or loss (W37); damaged goods write-off (W91); RTV write-off (W88); or system correction needed (negative inventory, data entry error)",
+    "Volume": "~8–12 adjustments per store per month; ~30–50 per DC per month"
+   },
+   "id": "W92",
+   "level": 2,
+   "name": "Inventory Adjustment & Shrinkage Authorization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"creates adjustment request with reason code and supporting documentation\" (replaces manual Step 1).",
+     "- System auto-classify of \"classifies the adjustment reason\" (replaces manual Step 2).",
+     "- System auto-log of \"check transfer records, review CCTV if theft suspected\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W6 (Cycle Counting) identifies discrepancies between system and physical inventory, and W42 (Annual Physical Inventory) produces wall-to-wall variances. However, the resolution — investigating the root cause, authorizing the adjustment, and posting the accounting entry — requires a separate control workflow. Inventory adjustments directly impact the GL (inventory asset and COGS/shrinkage expense), so they require proper authorization tiers, documentation, and segregation of duties. This workflow also covers adjustments from confirmed theft (W37), damage write-offs (W91), and system corrections."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Controller review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Authorization tier bypass is a persistent control risk — Level 1 Store Managers sometimes split large adjustments into multiple sub-PHP 5,000 entries to avoid Cost Accountant review, circumventing the tiered approval design and obscuring material shrinkage.",
+     "- Negative inventory auto-block on further sales (step 6) can create customer-facing stockout situations when the root cause is a timing lag (POS sold before GR posted) rather than actual inventory loss; the 24-hour resolution SLA is aspirational during peak trading periods.",
+     "- Root cause classification accuracy (step 2) is inconsistent across 200 stores — Department Supervisors select generic reason codes (\"other\") when they lack time to investigate, degrading the value of monthly shrinkage reporting for loss prevention action (W37).",
+     "- The 20-adjustment/month limit per location without escalation (step 4) is easily exceeded during post-physical-inventory periods (W42), creating an approval backlog at the Cost Accountant level that delays GL posting and month-end close.",
+     "- Segregation of duties (requestor not equal authorizer for Level 2+) is difficult to enforce in small stores with only 3–4 management-level staff — the Stock Associate who identifies the variance, the Department Supervisor who investigates, and the Store Manager who approves may all have overlapping roles."
+    ],
+    "Staffing Implication": [
+     "- **Cost Accountant**: adds ~2 hours/month for shrinkage reporting and Level 2 approvals. Absorbed.",
+     "- **Controller**: adds ~1 hour/month for Level 3 approvals and shrinkage review. Absorbed.",
+     "- **Internal Audit**: adds ~4 hours/quarter for adjustment testing. Absorbed.",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Auto-adjustment request creation from cycle count variances, physical inventory variances, negative inventory detection (W92.1)",
+     "- Reason code classification with mandatory documentation per code type (W92.2)",
+     "- Tiered approval workflow with amount-based routing and authorization trail (W92.4)",
+     "- GL posting with WAC recalculation and proper debit/credit routing (W92.5)",
+     "- Negative inventory alerting with auto-block on further sales (W92.6)",
+     "- Monthly shrinkage report: by reason, location, category, SKU (W92.7)",
+     "- Adjustment authorization compliance dashboard for Internal Audit (W92.8)",
+     "- Integration with W3 (DC receiving — short-shipment adjustments), W4 (replenishment — in-transit variances), W6 (cycle counting — primary source of adjustments), W12 (returns — cross-store adjustments), W22 (transfers — discrepancy adjustments), W37 (loss prevention — confirmed theft write-offs), W42 (annual physical inventory — major adjustments), W44 (vendor scorecard — vendor short-shipment rate), W88 (RTV — unresolved write-offs), W91 (damaged goods — disposition-driven adjustments)"
+    ],
+    "Time Estimate": [
+     "Adjustment request creation (step 1): 5 min. Root cause classification (step 2): 5 min. Investigation for material adjustments (step 3): 15 min. Authorization (step 4): 5–15 min per approval tier. Negative inventory resolution (step 6): 15 min/case. Monthly shrinkage reporting (step 7): 2 hours. Quarterly audit review (step 8): 4 hours. Total ongoing: ~8–12 adjustments/store/month × ~20 min average = ~3–4 hours/store/month across all involved roles."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "**Adjustment request creation**: System automatically creates adjustment request when: (a) cycle count (W6) reveals variance exceeding threshold (±1 unit for A-items, ±3 for B-items, ±5 for C-items), (b) physical inventory (W42) variance confirmed, (c) confirmed theft reported (W37), (d) damaged goods disposition completed (W91 — markdown, scrap, or donate), (e) RTV unresolved > 90 days (W88.9 — auto-write-off), (f) negative inventory detected (system shows on-hand < 0). Alternatively, Stock Associate or DC Supervisor manually creates adjustment request with reason code and supporting documentation",
+     "duration": "5 min/request",
+     "n": "1",
+     "r": "System / Stock Associate / DC Supervisor"
+    },
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "**Root cause classification**: Initiator or Supervisor classifies the adjustment reason: (a) shrinkage/theft (unexplained loss), (b) receiving/putaway error (item received but put in wrong location), (c) POS scanning error (wrong item scanned at checkout), (d) damage/spoilage (per W91), (e) vendor short-shipment (received less than PO — per W3), (f) data entry error (incorrect quantity or SKU entered), (g) negative inventory correction (overselling or system timing), (h) RTV write-off (per W88), (i) intercompany/transfer discrepancy (per W22), (j) other (with explanation)",
+     "duration": "5 min/request",
+     "n": "2",
+     "r": "Dept. Supervisor / DC Supervisor"
+    },
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "**Investigation** (for material adjustments): (a) A-items with variance > PHP 10,000: Dept. Supervisor investigates — review POS transactions for scanning errors, review receiving logs, check transfer records, review CCTV if theft suspected; (b) confirmed theft: escalate to Loss Prevention per W37; (c) receiving/putaway error: check if item is in adjacent bin location (common in big-box with 35,000 SKUs); (d) document findings in adjustment request",
+     "duration": "15 min/investigation",
+     "n": "3",
+     "r": "Dept. Supervisor / DC Supervisor"
+    },
+    {
+     "a": "Per tier above",
+     "activity": "**Authorization** (tiered approval): (a) **Level 1 — Store Manager / DC Supervisor**: adjustments ≤ PHP 5,000 per SKU per count event; max 20 adjustments/month per location without escalation; (b) **Level 2 — Cost Accountant**: adjustments > PHP 5,000 and ≤ PHP 50,000; validates GL impact and cost center allocation; (c) **Level 3 — Controller**: adjustments > PHP 50,000; reviews root cause documentation and investigation quality; approves or requests additional investigation; (d) **Level 4 — CFO**: adjustments > PHP 500,000 (typically annual physical inventory major variances); requires Internal Audit observation per CTL-11 in Internal Controls Matrix (counting/adjustment segregation)",
+     "duration": "5–15 min/approval",
+     "n": "4",
+     "r": "Per tier above"
+    },
+    {
+     "a": "Cost Accountant",
+     "activity": "**System posting**: Upon authorization, system posts inventory adjustment: (a) Dr. COGS-Shrinkage / Cr. Inventory (at WAC) — for losses, theft, damage write-offs; (b) Dr. Inventory / Cr. COGS-Shrinkage — for gains (found items, receiving errors corrected); (c) Dr. Vendor Claim Receivable / Cr. Inventory — for vendor short-shipment (pending vendor credit per W88); (d) Dr. Carrier Claim Receivable / Cr. Inventory — for carrier damage (pending carrier claim); (e) adjustment posted with authorization trail, reason code, supporting evidence reference, and GL impact",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Negative inventory resolution**: Special handling for negative inventory (system shows < 0 on-hand): (a) system auto-creates adjustment request flagged as high priority; (b) immediate investigation by Dept. Supervisor — most common causes: (i) POS sold item not yet received (timing), (ii) POS sold wrong SKU (scanning error), (iii) cycle count in progress but not posted; (c) resolution within 24 hours; if unresolved, system blocks further sales of that SKU at that location until resolved (prevents cascading negative inventory)",
+     "duration": "15 min/case",
+     "n": "6",
+     "r": "System / Dept. Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Monthly shrinkage reporting**: Cost Accountant prepares monthly shrinkage report: (a) total adjustments by reason code, by location, by category; (b) shrinkage as % of sales (target: < 1.5% per company profile); (c) shrinkage trend by store — identify stores exceeding target; (d) adjustment authorization compliance — verify all adjustments properly approved per tier; (e) top 20 SKUs by shrinkage value; submits to Controller for management reporting per W35",
+     "duration": "2 hours/month",
+     "n": "7",
+     "r": "Cost Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly Internal Audit review**: Internal Audit samples adjustments quarterly: (a) verify authorization compliance (right approval tier used), (b) verify documentation completeness (reason code, investigation, evidence), (c) verify segregation of duties (requestor ≠ authorizer for Level 2+), (d) test negative inventory resolution timeliness; findings reported to CFO and Audit Committee",
+     "duration": "4 hours/quarter",
+     "n": "8",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12",
+    "W22",
+    "W3",
+    "W35",
+    "W37",
+    "W4",
+    "W42",
+    "W44",
+    "W6",
+    "W88",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Daily across all stores",
+    "Owner": "Store Quality Inspector",
+    "Participants": "Store Quality Inspector, Stock Associate, Store Manager, Category Manager",
+    "Trigger": "Customer return (W12), cycle count discrepancy, or receive inspection identifies suspected, damaged, or expired stock",
+    "Volume": "~20–50 items/store/month"
+   },
+   "id": "W219",
+   "level": 2,
+   "name": "Store Inventory Quarantine & Recertification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-flag of \"flags stock\" (replaces manual Step 1).",
+     "- System auto-generate of \"prints\" (replaces manual Step 2).",
+     "- System auto-inspect of \"Inspection & Evaluation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Store Quality Inspector review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Quarantine cage space is limited in stores; during high-damage periods (typhoon season, post-promo returns), physically segregating all suspect items becomes impractical, leading to commingling with saleable stock.",
+     "- Quality Inspector role is often filled by a Department Supervisor as a collateral duty, creating inspection backlogs during peak periods and inconsistent defect classification.",
+     "- Refurbishment (repacking, cleaning, testing) requires labor and materials that may exceed the recovered item value, especially for low-cost SKUs, making the refurbish path uneconomical.",
+     "- Monthly defect reports are not consistently actioned by Category Managers — recurring SKU failures from specific vendors persist without systematic vendor quality escalation (W44).",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Store Quality Inspector**: ~20–50 items/store/month × 25 min average (inspection + disposition) = ~8–20 hours/store/month. Role is typically a collateral duty filled by Department Supervisor; high-volume stores may require dedicated hours.",
+     "- **Stock Associates**: ~15 min per item for quarantine segregation and action execution. With ~20–50 items/month, this is ~5–12 hours/store/month. Absorbed.",
+     "- **Store Manager**: ~5 min approval per disposition. Absorbed.",
+     "- **No incremental headcount**, but stores processing > 40 items/month should consider formalizing the Quality Inspector collateral duty with protected time allocation."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Segregated quarantine inventory status (non-ATP)",
+     "- Photographic upload and defect category logging in system",
+     "- Automated financial posting for status transitions and write-offs",
+     "- Integration with W93 (markdowns), W88 (RTV), and W82 (hazmat/scrap)"
+    ],
+    "Time Estimate": [
+     "~55 min per item from quarantine creation through disposition (5 min flag + 10 min segregation + 15 min inspection + 10 min disposition + 15 min action execution). Quality Inspector spends ~1 hour/month on discrepancy reporting. Stores processing 20–50 items/month spend ~15–35 hours/month total."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Quarantine Creation**: CSR or Stock Associate flags stock as \"Damaged\" or \"Suspect\"; system moves inventory from \"Saleable\" status to \"Quarantined\" status (Dr. Quarantined Inventory / Cr. Saleable Inventory) and moves to quarantine location",
+     "duration": "5 min",
+     "n": "1",
+     "r": "CSR / Stock Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "**Physical Segregation**: Stock Associate prints \"Quarantine Label\" from system; attaches to item and physically moves to the secure store quarantine cage",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Inspection & Evaluation**: Store Quality Inspector performs physical inspection; uploads photo evidence to system; classifies defect (e.g., cosmetic package damage, internal mechanical fault, paint tint mismatch)",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Quality Inspector"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Disposition Determination**: Inspector enters recommended disposition: (a) *Refurbish & Recertify* (repackage, clean, test); (b) *B-Grade Downgrade* (cosmetic damage, sell on discount); (c) *Scrap / Write-off*; (d) *Return to Vendor (RTV)*",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Quality Inspector"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Action Execution**: <br>• (a) *Refurbish*: Stock Associate performs repacking; system updates status to \"Saleable\" (Dr. Saleable Inventory / Cr. Quarantined Inventory);<br>• (b) *B-Grade*: System moves SKU to \"B-Grade/Clearance\" status and auto-applies standard clearance markdown (W93);<br>• (c) *Scrap*: Store Manager approves; system posts inventory adjustment (Dr. Scrap Expense / Cr. Quarantined Inventory) and schedules disposal (W82);<br>• (d) *RTV*: System generates Return to Vendor request (W88)",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Stock Associate / System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Discrepancy Reporting**: Quality Inspector generates monthly quarantine velocity and defect report to highlight recurring SKU failures to Category Managers",
+     "duration": "1 hour/month",
+     "n": "6",
+     "r": "Quality Inspector"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12",
+    "W44",
+    "W82",
+    "W88",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control Manager, Category Manager, CFO, VP Merchandising, Store Managers",
+    "Trigger": "Monthly inventory aging cycle or system alert on aging thresholds",
+    "Volume": "Reviewing ~500–1,000 slow-moving SKUs chain-wide"
+   },
+   "id": "W220",
+   "level": 2,
+   "name": "Slow-Moving & Obsolete Inventory (SLOB) Provisioning & Liquidation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly aging report showing SKUs with > 180 days since last sale or…\" (replaces manual Step 1).",
+     "- System auto-log of \"logic\" (replaces manual Step 2).",
+     "- System auto-route of \"routes the aging SKU list to the respective Category Manager with recommended…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Inventory Control Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Category Managers resist markdown decisions on SLOB items because aggressive discounting hurts category margin KPIs, creating organizational friction that delays liquidation and deepens write-downs.",
+     "- Standardized provisioning logic (50% at 180–270 days, 100% at 270+) is a blunt instrument that does not differentiate between seasonal items with predictable recovery (e.g., construction materials with dry-season demand) and genuinely obsolete products.",
+     "- Bulk wholesaler buy-out prices (W146) are typically 20–40% of cost, representing significant loss; the decision between holding for in-store clearance (slow recovery) vs. quick wholesale disposal (fast but steeper loss) is contentious.",
+     "- SLOB allowance release timing creates P&L volatility — large scrap events or bulk liquidation in a single month can materially distort monthly margin reporting for affected categories."
+    ],
+    "Staffing Implication": [
+     "- **Inventory Control Manager**: ~4 hours/month for aging report review, campaign proposal routing, and execution tracking. Absorbed.",
+     "- **Financial Analyst**: ~2 hours/month for SLOB provisioning calculation. Absorbed.",
+     "- **Category Manager**: 1–2 days/month for liquidation strategy selection and approval. Absorbed within existing merchandising workload.",
+     "- **CFO / VP Merchandising**: ~30 min/month for approvals on margin impact > PHP 100K. Absorbed.",
+     "- **Store Managers**: minimal — execution is system-driven (markdowns, transfer orders).",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated Inventory Aging Engine (180, 270, 360+ days)",
+     "- Financial provisioning logic matrix",
+     "- Automated GL posting for obsolescence reserves and allowance release",
+     "- Integration with W93 (markdowns), W204 (transfers), and W146 (wholesale sales)"
+    ],
+    "Time Estimate": [
+     "Monthly cycle: ~4 hours for Inventory Control Manager (report review + campaign proposal routing + execution tracking) + 2 hours for Financial Analyst (provisioning calculation) + 1–2 days for Category Manager approval. Campaign execution: 1 hour system setup."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Mgr",
+     "activity": "**Aging Detection**: System generates monthly aging report showing SKUs with > 180 days since last sale or inventory age exceeding category-specific thresholds (e.g., lumber shelf life, paint expiry)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Obsolescence Provisioning**: Finance automatically calculates SLOB provision using standardized logic (e.g., 50% provision for 180–270 days age, 100% provision for > 270 days); system posts journal (Dr. Inventory Obsolescence Expense / Cr. SLOB Inventory Allowance)",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "System / Financial Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Liquidation Campaign Proposal**: Inventory Control Manager routes the aging SKU list to the respective Category Manager with recommended liquidation strategies: (a) in-store clearance markdown (W93); (b) bulk wholesaler buy-out (W146); (c) stock transfer to high-velocity stores (W204); (d) vendor buy-back",
+     "duration": "2 days",
+     "n": "3",
+     "r": "Inventory Control Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Strategy Approval**: Category Manager selects liquidation route; CFO/VP Merchandising approves any margin impact exceeding PHP 100K",
+     "duration": "1 day",
+     "n": "4",
+     "r": "Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Campaign Execution**: <br>• For in-store clearance: system applies pricing markdown;<br>• For redistribution: system auto-generates transfer orders (W204);<br>• For wholesaler: system creates Wholesale Sales Order (W146)",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "System / Category Manager"
+    },
+    {
+     "a": "Financial Analyst",
+     "activity": "**Allowance Release**: Upon actual sale of liquidated items or approved physical scrap write-off: system releases the provision allowance (Dr. SLOB Inventory Allowance / Cr. Inventory Asset) to realize the final inventory value",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W146",
+    "W204",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Weekly or as needed per department",
+    "Owner": "Department Supervisor",
+    "Participants": "Stock Associate, Receiving Clerk, Department Supervisor",
+    "Trigger": "Store inventory of retail-sized packs (e.g., 1kg nails) falls below ROP while bulk stock (e.g., 50kg crate) is available",
+    "Volume": "~10–30 SKUs repacked per week per store"
+   },
+   "id": "W439",
+   "level": 2,
+   "name": "In-Store Bulk-to-Retail Repackaging Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspection shows retail SKU stockout\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates\" (replaces manual Step 2).",
+     "- System auto-measure of \"measures bulk stock into retail units\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Inaccurate weighing leading to inventory discrepancies and customer complaints (under-weight packs).",
+     "- High labor cost for manual repacking; if not tracked, the true margin of retail-sized items is overstated.",
+     "- Labeling errors (wrong SKU or price) leading to POS issues."
+    ],
+    "Staffing Implication": [
+     "~1–2 hours per session, typically 2 sessions/week per department. Absorbed by existing Stock Associates during low-traffic hours."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory conversion module (Bulk-to-Retail) supporting 1-to-many SKU relationships",
+     "- Automated label printing linked to repack orders",
+     "- Consumable tracking (packaging materials) deducted as part of repack cost",
+     "- Shrinkage/loss capture per repack transaction"
+    ],
+    "Time Estimate": [
+     "~1.3–1.8 hours per repack order (need identification 5 min + order generation 5 min + bulk release 10 min + repackaging 30–60 min + labeling 15 min + verification 10 min + shrinkage recording 2 min); at ~10–30 SKU repacks per store weekly ≈ 13–54 hours/store/week of floor labor (≈ 135,000–560,000 hours/year chain-wide at 200 stores), absorbed by department staff within regular shifts.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dept Supervisor",
+     "activity": "**Identify Need**: System alert or visual inspection shows retail SKU stockout; Stock Associate confirms bulk SKU availability",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Repack Order**: System generates a \"Repack/Conversion Order\" linking Bulk SKU (source) to Retail SKU (target)",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Dept Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Bulk Release**: Warehouse/Stockroom releases bulk unit (e.g., 1 crate) to the designated repacking area",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Repackaging**: Associate weighs/measures bulk stock into retail units (bags, coils); applies consumables (plastic bags, ties, labels)",
+     "duration": "30–60 min",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Labeling**: System generates and prints retail barcodes for each unit; Associate applies labels",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Dept Supervisor",
+     "activity": "**Verification & Posting**: Supervisor verifies count and weight; posts completion in ERP; system reduces bulk inventory and increases retail inventory",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Dept Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Waste/Loss Recording**: Any weighing loss or \"dust\" recorded as shrinkage within the repack order",
+     "duration": "2 min",
+     "n": "7",
+     "r": "Dept Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Monthly candidate review; quarterly bulk write-off execution",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control Manager, Financial Analyst, Cost Accountant, Controller, CFO, Category Manager, Store Manager, VP Merchandising, Legal Counsel (for BIR documentation), Board Secretary (for material write-offs)",
+    "Trigger": "Monthly SLOB aging review identifies items that have exhausted all disposition channels (markdown, clearance, RTV, liquidation); or quarterly obsolescence review cycle",
+    "Volume": "~150–300 SKU-locations per monthly review (~50–100 truly obsolete requiring write-off); annual write-off value estimated at PHP 30–60M (0.05–0.10% of PHP 62.3B revenue)"
+   },
+   "id": "W587",
+   "level": 2,
+   "name": "Inventory Obsolescence Identification & Write-Off Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly obsolescence candidate report filtering SLOB items where ALL…\" (replaces manual Step 1).",
+     "- System auto-document of \"Inventory Control Manager review\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews and concurs — confirming the item has no strategic assortment value\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W220 (SLOB Provisioning & Liquidation) identifies slow-moving and obsolete inventory and attempts disposition through markdown (W93), RTV (W88), wholesaler bulk buy-out (W146), inter-store rebalancing (W204), and liquidation campaigns. However, not all SLOB items can be recovered through these channels. Some items reach a terminal state: they cannot be sold at any price, vendors refuse return, liquidators decline them, and they have no residual market value. These items must be formally written off the books and physically disposed of. Philippine Bureau of Internal Revenue (BIR) requires documented evidence for inventory write-offs claimed as deductible losses under Section 34(D)(1) of the National Internal Revenue Code — including board resolution for material amounts, physical inventory count documentation, and proof that all reasonable recovery efforts were exhausted. This workflow governs that final disposition step: identifying truly obsolete inventory, securing approvals, preparing BIR-compliant documentation, executing the system write-off, and managing physical disposal."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: documentation, the recovery income is lost and poses a fraud risk"
+    ],
+    "Pain Points / Risks": [
+     "- **Premature write-off of seasonal items**: items flagged as obsolete (no sales in 12 months) may be seasonal with demand in the upcoming season window; the W32 seasonal calendar cross-reference mitigates this but relies on accurate seasonal classification in the item master — misclassified seasonal items risk being written off before their next selling window.",
+     "- **Board resolution bottleneck**: material write-offs (> PHP 5M per category) require board resolution that can only be obtained at scheduled quarterly board meetings; if the write-off batch is prepared after the board meeting, it must wait up to 3 months, during which obsolete inventory continues to occupy physical space and distort inventory metrics.",
+     "- **BIR documentation completeness risk**: if physical disposal occurs before BIR documentation is fully assembled (photographs, vendor refusal letters, board resolution), the company may lack sufficient evidence to defend the deductible loss claim during a BIR audit; tight coordination between Legal Counsel and Store/DC operations is critical. mitigated by CTL-255 (controlled execution — Inventory Disposition & Optimization (PA-05.3))",
+     "- **Physical disposal lag**: items written off in the system (on-hand = 0) but not yet physically removed from premises create a gap between book records and physical reality; during this lag, cycle counts (W6) or physical inventory (W42) will flag variances for items that are physically present but systemically at zero, wasting investigation effort.",
+     "- **Scrap recovery leakage**: residual value from scrap metal items (steel bar, copper wire) is small but aggregated across 200 stores and 4 DCs can reach PHP 500K–1M annually; if scrap dealers pay cash to store-level staff without system documentation, the recovery income is lost and poses a fraud risk.",
+     "- **Category Manager resistance to concurrence**: write-offs directly reduce category margin KPIs; Category Managers may delay concurrence (step 3) by requesting \"one more attempt\" at markdown or liquidation, extending the aging timeline and inflating the eventual write-off amount as holding costs accumulate.",
+     "- **Inter-entity complexity for DC-held obsolete inventory**: DC facilities are operated by Logistics Inc. per W14; obsolete inventory written off from DC locations requires coordination with Logistics Inc. for physical disposal from their premises and potential IC adjustment if warehousing fees were charged on already-provisioned inventory."
+    ],
+    "Staffing Implication": [
+     "- **Inventory Control Manager**: ~12–16 hours/quarter for candidate review, validation, and coordination. This is the heaviest incremental load and is concentrated in the final 2 weeks of each quarter. Absorbed within existing role but competes with W220 monthly SLOB review (combined SLOB + obsolescence workload is ~20–24 hours/quarter).",
+     "- **Financial Analyst**: ~9–12 hours/quarter for financial impact assessment and BIR documentation compilation; ~8–10 hours/year for annual tax filing support. Absorbed within existing Finance team.",
+     "- **Cost Accountant**: ~6–9 hours/quarter for write-off batch execution and GL posting. Absorbed.",
+     "- **Controller**: ~3 hours/quarter for quarterly write-off reporting and CFO presentation. Absorbed.",
+     "- **Legal Counsel**: ~4–6 hours/quarter for BIR documentation review, board resolution preparation, and affidavit of loss/destuction notarization coordination. Absorbed within existing legal function.",
+     "- **Category Managers**: ~2 hours/quarter for concurrence review. Absorbed within existing merchandising workload.",
+     "- **Store/DC Staff**: ~2–4 hours/location/quarter for physical disposal of written-off items. With ~150–300 SKU-locations per quarterly batch distributed across ~205 locations, most locations handle < 5 items per quarter. Absorbed by existing Stock Associates.",
+     "- **No incremental headcount**; however, the combined W220 + W587 quarterly cycle (~30–40 hours) creates peak workload for the Inventory Control Manager that should be monitored for sustainability."
+    ],
+    "Steps": [],
+    "System Touchpoints (W587 — Obsolescence Write-Off)": [
+     "- Obsolescence candidate identification engine with multi-condition filter: no sale > 365 days, failed markdown, failed RTV, no liquidation interest, WAC threshold (W587.1)",
+     "- Disposition history aggregation per SKU: markdown history (W93), RTV history (W88), liquidation attempts (W220), age timeline, linked to candidate report for audit trail (W587.1)",
+     "- Seasonal calendar cross-reference to prevent premature write-off of seasonal items with upcoming demand window per W32 (W587.2)",
+     "- Pending backorder and B2B quote check to prevent write-off of items with active customer commitments (W587.2)",
+     "- Financial impact calculator: WAC value, existing SLOB provision offset, net P&L impact, tax benefit estimation (W587.4)",
+     "- Tiered approval workflow with amount-based routing (Store Manager → Regional → VP → CFO → Board) and digital signature capture (W587.5)",
+     "- Board resolution template generation with auto-populated write-off amounts and SKU summaries (W587.6)",
+     "- Batch write-off GL posting engine: handles provision offset (W220), residual loss recognition, inventory removal, ATP and allocation purge, item master status update (W587.7)",
+     "- Physical disposal tracking with method (waste hauler, hazardous disposal per W82, scrap sale, donation), hauler reference, and completion confirmation (W587.8)",
+     "- Quarterly write-off reporting dashboard: by category, root cause, location, provision adequacy, disposal completion rate (W587.9)",
+     "- Annual BIR deductible loss schedule compilation from quarterly write-off data (W587.10)",
+     "- Integration with W6 (cycle count — physical existence confirmation), W42 (annual physical inventory — wall-to-wall count as write-off evidence), W56 (backorder — pending commitment check), W58 (B2B quotes — active quote check), W82 (hazardous waste — regulated disposal), W88 (RTV — disposition history and vendor refusal evidence), W91 (damaged goods — damage-driven obsolescence), W93 (markdown — disposition history and sell-through failure evidence), W146 (wholesale — liquidation attempt history), W220 (SLOB provisioning — provision offset and aging analysis), W32 (seasonal planning — seasonal demand check), W204 (rebalancing — inter-store transfer attempt history)"
+    ],
+    "Time Estimate": [
+     "Monthly cycle 8–9 hours (candidate review 3–4 hours + category concurrence 2 hours + financial-impact assessment 3 hours) ≈ 96–108 hours/year; approval routing 5–15 min per write-off × ~50–100 write-offs/month ≈ 50–300 hours/year (Board-level batches add 1 board meeting/quarter); BIR documentation 4–6 hours/quarter ≈ 16–24 hours/year; system execution 2–3 hours per quarterly batch ≈ 8–12 hours/year; physical disposal 2–4 hours per location per quarterly batch at the realized location count; quarterly reporting 3 hours ≈ 12 hours/year; annual tax-filing support 8–10 hours — total ≈ 190–466 hours/year plus disposal labor.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "**Obsolescence candidate identification**: System generates monthly obsolescence candidate report filtering SLOB items where ALL of the following conditions are met: (a) item age > 365 days since last sale across ALL locations (no store has sold a unit in the past 12 months), (b) item has been through at least one markdown cycle per W93 with < 10% sell-through, (c) RTV attempt per W88 was either rejected by vendor or vendor is unresponsive (> 90 days), (d) no active liquidation campaign or wholesaler interest per W220 step 3, (e) current WAC value per unit < PHP 100 (below economic threshold for further disposition effort) OR item is damaged/defective per W91 and classified as scrap, (f) system flags each candidate as \"Obsolescence Candidate\" with full disposition history attached (markdown attempts, RTV attempts, liquidation offers, aging timeline)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Inventory Control Manager review**: Inventory Control Manager reviews obsolescence candidate list; for each SKU validates: (a) confirms disposition history is complete — all channels attempted with documented results, (b) checks if any upcoming seasonal demand per W32 seasonal calendar might recover value (e.g., rainy season items flagged in January may still sell in June), (c) confirms no pending customer backorders (W56) or B2B quotes (W58) referencing the SKU, (d) for high-value items (WAC > PHP 50,000 total across all locations): requests Category Manager to make one final vendor buy-back attempt before write-off, (e) classifies each candidate: \"Approve for Write-Off\" or \"Defer — Recovery Possible\" with deferral reason and re-review date",
+     "duration": "3–4 hours/month",
+     "n": "2",
+     "r": "Inventory Control Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Category Manager concurrence**: For items \"Approved for Write-Off,\" Category Manager reviews and concurs — confirming the item has no strategic assortment value (not part of future seasonal plan per W32, not a core assortment staple, vendor relationship does not require continued stocking). Category Manager may override and request extended markdown or one final disposition attempt. For items with total WAC value > PHP 200,000 per SKU: Category Manager documents rationale for write-off and submits to VP Merchandising for concurrence",
+     "duration": "2 hours/month",
+     "n": "3",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Financial impact assessment**: Financial Analyst prepares write-off financial impact summary: (a) total units and WAC value by SKU, by category, by location (store vs. DC), (b) SLOB provision already booked per W220 step 2 — net incremental P&L impact (write-off value less existing provision), (c) tax impact — estimated deductible loss under NIRC Section 34(D)(1) and tax savings at the 25% regular corporate income tax rate (RCIT per CREATE), (d) impact on inventory turns (current vs. projected post-write-off), (e) cumulative write-off YTD vs. budget; Financial Analyst groups write-offs into tiers for approval routing",
+     "duration": "3 hours/month",
+     "n": "4",
+     "r": "Financial Analyst"
+    },
+    {
+     "a": "Controller (overall accountability)",
+     "activity": "**Approval matrix execution**: Write-off requests routed per value threshold: (a) **Store Manager** approves individual store write-offs ≤ PHP 50,000 per SKU per location — limited to items physically located at their store; (b) **Regional Manager** approves cumulative store-level write-offs > PHP 50,000 and ≤ PHP 200,000 per SKU within their region; (c) **VP Supply Chain** approves write-offs > PHP 200,000 and ≤ PHP 1,000,000 per SKU chain-wide; (d) **CFO** approves write-offs > PHP 1,000,000 per SKU chain-wide; (e) **Board of Directors** approves aggregate quarterly write-offs exceeding PHP 5,000,000 per category or PHP 20,000,000 total via board resolution — required for BIR documentation of material inventory losses; each approver reviews financial impact summary and dispositions history before signing; approval documented in system with digital signature and timestamp",
+     "duration": "5–15 min/approval; Board resolution: 1 board meeting/quarter",
+     "n": "5",
+     "r": "Per tier above"
+    },
+    {
+     "a": "Controller",
+     "activity": "**BIR documentation preparation**: For approved write-offs, Legal Counsel and Financial Analyst prepare BIR-compliant documentation package: (a) **Physical inventory count documentation** — system-generated count report confirming physical existence of items to be written off (tied to most recent cycle count per W6 or annual physical inventory per W42), (b) **Disposition history report** — system-generated audit trail showing all recovery attempts: markdown history per W93, RTV attempts per W88, liquidation offers per W220, with dates, prices offered, and outcomes, (c) **Board resolution** (for write-offs > PHP 5M per category) — Board Secretary prepares resolution citing: reason for write-off, total amount, certification that all reasonable recovery efforts were made, authorization for Controller to execute write-off and file BIR deduction, (d) **Affidavit of loss / destruction** (for physical disposal) — notarized statement confirming items were unsalvageable and will be or have been physically destroyed, (e) **Supporting evidence** — photographs of obsolete/damaged items, vendor refusal letters or emails, liquidation broker decline documentation, (f) documentation filed in tax records with retention per BIR requirement (10 years from filing date)",
+     "duration": "4–6 hours/quarter for documentation package",
+     "n": "6",
+     "r": "Legal Counsel / Financial Analyst / Board Secretary"
+    },
+    {
+     "a": "Controller",
+     "activity": "**System write-off execution**: Upon final approval: (a) Cost Accountant executes write-off batch in system per approved list; (b) system posts GL entries per item: Dr. Inventory Obsolescence Expense (or Dr. SLOB Inventory Allowance if provision exists per W220) / Cr. Inventory Asset — at WAC per unit × quantity; (c) for items with existing SLOB provision per W220 step 2: Dr. SLOB Inventory Allowance / Cr. Inventory Asset (net impact reduces the provision and removes the asset), with residual (Dr. Inventory Obsolescence Expense / Cr. SLOB Inventory Allowance) for any shortfall between provision and write-off value; (d) system updates inventory on-hand to zero at all affected locations; (e) system removes items from ATP, replenishment planning, and allocation engines; (f) system marks item master status as \"Obsolete — Written Off\" for items with zero remaining chain-wide inventory; (g) system generates write-off posting report with GL entry references for audit trail",
+     "duration": "2–3 hours/batch (quarterly)",
+     "n": "7",
+     "r": "Cost Accountant"
+    },
+    {
+     "a": "Store Manager / DC Manager",
+     "activity": "**Post-write-off physical disposal**: After system write-off, physical items must be removed from stores and DCs: (a) **Non-hazardous items** (hardware, tools, tiles, fixtures): Stock Associate stages written-off items at receiving dock; DC or store arranges disposal via licensed waste hauler or donation to charitable organization (with donation receipt for documentation — no tax benefit since already written off, but supports CSR); (b) **Hazardous items** (paint, adhesives, chemicals, solvents): disposal per W82 hazardous waste protocol — licensed hazardous waste hauler required; disposal certificate obtained and filed with BIR documentation; (c) **Metal/scrap items** (steel bar, copper wire, aluminum): sold to scrap metal dealer for residual value; residual recovery recorded as other income (Dr. Cash / Cr. Other Income — Scrap Recovery); (d) Department Supervisor confirms physical disposal in system with disposal date, method, and hauler/dealer reference; (e) system closes write-off case",
+     "duration": "2–4 hours/location per quarterly batch",
+     "n": "8",
+     "r": "Stock Associate / DC Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly write-off reporting**: Controller prepares quarterly inventory write-off report for CFO and Audit Committee: (a) total write-offs by category, by location type (store vs. DC), by root cause (obsolescence, damage, vendor refusal, expired), (b) write-off as % of beginning inventory value (target: < 0.15% of inventory per quarter), (c) SLOB provision adequacy — compare actual write-offs to provisions booked per W220; identify under/over-provisioned categories, (d) aging of write-offs from initial SLOB identification to final write-off (target: < 12 months), (e) physical disposal completion rate — items written off but not yet physically removed from premises, (f) BIR documentation completeness audit — confirm all write-off events have complete documentation packages",
+     "duration": "3 hours/quarter",
+     "n": "9",
+     "r": "Controller"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Annual tax filing support**: At year-end tax filing, Financial Analyst compiles all quarterly write-off documentation into annual BIR deductible loss schedule: (a) aggregate inventory write-off claimed as deductible loss per Section 34(D)(1), (b) cross-referenced to board resolutions, physical count reports, and disposal certificates, (c) submitted to external tax advisor for review before BIR filing; external auditor confirms write-off testing as part of annual audit per W9B",
+     "duration": "8–10 hours/year",
+     "n": "10",
+     "r": "Financial Analyst / External Tax Advisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W146",
+    "W204",
+    "W220",
+    "W32",
+    "W42",
+    "W56",
+    "W58",
+    "W6",
+    "W82",
+    "W88",
+    "W91",
+    "W93",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "4 major seasonal build-downs/year: Christmas (build-down starts November week 1), Summer (starts April week 1), Back-to-School (starts July week 1), Rainy Season (starts October week 1); each covering ~500–800 seasonal SKUs (per the §6.2 seasonal canon)",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Buyer, Supply Planner, Pricing Analyst, VP Merchandising, Store Manager, Department Supervisor, Stock Associate, Visual Merchandising Coordinator, Inventory Control Manager, Controller",
+    "Trigger": "Seasonal calendar countdown — 8 weeks before official season end date per W32 seasonal calendar; or Category Manager-initiated early build-down for underperforming seasonal categories",
+    "Volume": "~500–800 seasonal SKUs per build-down across 200 stores; ~100,000–160,000 store-SKU transitions per cycle; estimated seasonal inventory at build-down start: PHP 800M–1.5B (12–24% of total inventory at peak seasonal stocking)"
+   },
+   "id": "W588",
+   "level": 2,
+   "name": "Seasonal Inventory Build-Down & Transition Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Pre-season-end inventory review\" (replaces manual Step 1).",
+     "- System auto-schedule of \"schedule — first tier\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates build-down dashboard\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W264 (Seasonal Merchandise Transition & Display Rotation) covers the overall seasonal transition process including incoming season setup, and W32 (Seasonal Buy Planning) governs pre-season procurement. However, the critical final phase of each season — systematically reducing seasonal inventory to minimize residual dead stock while maximizing sell-through at acceptable margins — lacks a dedicated operational workflow. Without a structured build-down process, seasonal inventory reduction is reactive: markdowns are applied too late, disposition decisions are made inconsistently across 200 stores, and seasonal displays are torn down ad-hoc, leaving valuable retail space underutilized during the transition gap. This workflow operates in the final 8 weeks of each season and orchestrates: (a) pre-season-end inventory assessment, (b) markdown escalation schedule, (c) remaining stock disposition decision tree, (d) display teardown coordination, and (e) new season inventory receipt and staging. It works in concert with W574 (store closing), W583 (promo transition), and W554 (shelf replenishment) at the store level."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Category Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Markdown timing vs. margin preservation tension**: starting markdowns too early (T-8) on items that might still sell at full price sacrifices margin; starting too late (T-2) risks being unable to clear stock before season end — the 8-week build-down window attempts to balance this, but Category Manager judgment remains critical and fallible, especially for weather-dependent seasons (rainy season demand is erratic and typhoon-driven).",
+     "- **Store execution variability across 200 locations**: teardown and new season setup require coordinated physical labor at all 200 stores simultaneously; stores with staff shortages (absenteeism, high turnover in provincial locations) lag behind, creating a patchwork where some stores are fully transitioned while others still display outgoing seasonal merchandise weeks into the new season, confusing customers and distorting sell-through data.",
+     "- **Incoming and outgoing season overlap risk**: the 2-week overlap window (T-2 to T+0) where both incoming seasonal stock arrives and outgoing seasonal stock is being cleared creates backroom congestion — stores with limited staging space must manage dual seasonal inventory physically separated, increasing the risk of commingling (incoming stock sold at old-season clearance prices or vice versa). mitigated by CTL-255 (controlled execution — Inventory Disposition & Optimization (PA-05.3))",
+     "- **Disposition decision paralysis at T-1**: the Category Manager's final disposition call (step 5) is often delayed by reluctance to commit to write-offs or deep discounts; every week of delay at T-1 reduces the remaining selling window and increases the volume routed to W587 write-off, creating a self-reinforcing spiral of mounting losses.",
+     "- **Carry-forward items becoming SLOB**: items classified as \"carry-forward\" to next season often sit in backroom storage for 6–10 months occupying space needed for core replenishment; when the next season arrives, demand has shifted and these items end up as SLOB per W220, merely deferring rather than resolving the seasonal excess problem — the W588.10 cross-seasonal learning step tracks this but cannot prevent it.",
+     "- **Multi-seasonal overlap in Philippines climate**: unlike temperate markets with clean seasonal transitions, Philippine seasons overlap (rainy season transitions directly to Christmas \"ber\" months; Back-to-School coincides with summer end); the W32 seasonal calendar defines distinct build-down windows, but stores in Visayas and Mindanao with different climate patterns may not align neatly with the Luzon-centric calendar, requiring regional flexibility that complicates the chain-wide markdown schedule.",
+     "- **Donation logistics for seasonal items**: bulk donation of seasonal items (e.g., 5,000 umbrellas after rainy season, 2,000 school supply kits after Back-to-School) requires coordination with CSR partners who may lack capacity to receive and distribute large volumes on short notice; items awaiting donation pickup occupy valuable store receiving space."
+    ],
+    "Staffing Implication": [
+     "- **Category Managers**: ~18–26 hours per seasonal build-down cycle × 4 cycles/year = ~72–104 hours/year (~9–13 days/year). This is the single largest incremental workload from this workflow. With 5 Category Managers, each handles ~2 days/season. Absorbed within existing merchandising team but creates peak workload overlapping with W264 transition execution.",
+     "- **Pricing Analysts**: ~7–10 hours per seasonal build-down × 4 cycles = ~28–40 hours/year. Concentrated in the T-8, T-4, and T-2 markdown execution windows. Absorbed.",
+     "- **Supply Planners**: ~3–4 hours per cycle for \"Surprise hit\" replenishment and inter-store consolidation coordination. Absorbed.",
+     "- **Inventory Control Manager**: ~5–6 hours per cycle for disposition decision support and post-transition reconciliation. Absorbed (combined with W220 + W587 workload, total ~35–50 hours/quarter).",
+     "- **Buyers**: ~2–4 hours per cycle for vendor RTV coordination on seasonal items. Absorbed.",
+     "- **Store-level labor**: ~12–21 hours/store per transition cycle (teardown 4–8 hours + staging 2–3 hours + new season setup 6–10 hours) × 4 cycles/year = ~40–72 hours/store/year. With 4 Department Supervisors and 4 Stock Associates per store, this is ~5–9 hours per person per transition, concentrated in the T-1 to T+1 week. This competes with W554 daily shelf replenishment and W574 closing procedures during the transition window — stores should plan dedicated transition shifts to avoid degradation of daily operations.",
+     "- **Visual Merchandising Coordinators**: ~2 days per cycle for setup guide distribution and compliance photo review × 4 cycles = ~8 days/year. Absorbed.",
+     "- **No incremental headcount**, but the seasonal build-down window (T-1 to T+1) represents the highest-intensity store labor period of the year outside of peak holiday trading; Store Managers should schedule transition shifts and minimize time-off approvals during this window."
+    ],
+    "Steps": [],
+    "System Touchpoints (W588 — Seasonal Build-Down)": [
+     "- Seasonal inventory position report with sell-through vs. plan, weeks of supply, and WAC value at risk by SKU by store cluster (W588.1)",
+     "- Seasonal SKU disposition classification engine: on-track, behind plan, significantly behind, surprise hit (W588.1)",
+     "- Markdown escalation scheduler with pre-configured tier timing (T-8, T-4, T-2, T-1 weeks) linked to W93 authorization workflow (W588.2–4)",
+     "- Multi-channel clearance activation: POS markdown, ecommerce flash sale, social media clearance (W588.4)",
+     "- Disposition decision tree with routing to W88 (RTV), W220 (wholesaler liquidation), W204 (inter-store consolidation), donation, or W587 (write-off) (W588.4–5)",
+     "- Final remaining stock disposition dashboard with recovery potential per SKU (W588.5)",
+     "- Store-level teardown instruction distribution with per-SKU disposition routing (W588.6)",
+     "- Incoming seasonal stock receipt tracking vs. allocation plan (W588.7)",
+     "- Planogram compliance photo capture and system confirmation (W588.8)",
+     "- Seasonal build-down outcome report: original value, sold (full + markdown tiers), RTV, donated, written off, carry-forward, markdown cost, disposition cost, recovery rate (W588.9)",
+     "- Cross-seasonal learning knowledge base linked to W32 seasonal buy planning (W588.10)",
+     "- Integration with W4 (replenishment — incoming seasonal stock delivery), W13 (promotions — flash sale and bundle promotions for clearance), W22 (transfers — inter-store consolidation of remaining seasonal stock), W31 (demand forecasting — seasonal demand curve recalibration), W32 (seasonal buy planning — feed-in to next year's plan and post-mortem), W40 (price changes — new season SRP setup), W57 (promotional stock allocation — incoming season pre-positioning), W88 (RTV — vendor return for seasonal items), W91 (damaged goods — disposal of unsaleable seasonal items), W93 (markdown — tiered markdown escalation), W146 (wholesale — bulk liquidation of seasonal excess), W204 (rebalancing — inter-store seasonal consolidation), W220 (SLOB — items not cleared become SLOB candidates), W262 (promotional setup — signage and shelf labels for new season), W264 (seasonal transition — overall transition framework), W554 (shelf replenishment — incoming seasonal stock shelving), W574 (store closing — end-of-day procedures during transition), W583 (promo transition — display reset coordination), W587 (obsolescence write-off — terminal disposition for unsalvageable seasonal items)"
+    ],
+    "Time Estimate": [
+     "HQ effort ~34–40 hours per season cycle (pre-season inventory review 1 day + markdown scheduling 3–4 hours + mid-cycle review 4 hours + aggressive clearance 4–6 hours + disposition decision 3–4 hours + post-transition reconciliation 1 day + learning integration 4–6 hours); store labor ~12–21 hours per store per transition (teardown 4–8 hours + new-season receipt 2–3 hours + planogram execution 6–10 hours); at 4 build-downs/year ≈ 136–160 HQ hours/year and ~9,600–16,800 store-labor hours/year across 200 stores.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Pre-season-end inventory review (T-8 weeks)**: Category Manager initiates build-down review 8 weeks before official season end: (a) system generates seasonal inventory position report by SKU by store cluster: current on-hand, weeks of supply at current sell-through rate, total WAC value at risk; (b) system compares current seasonal sell-through to plan per W32 step 10 mid-season review; (c) Category Manager classifies each seasonal SKU into disposition categories: (i) **On-track** — sell-through ≥ 80% of plan, projected to clear before season end with no intervention, (ii) **Behind plan** — sell-through 50–80% of plan, needs markdown acceleration, (iii) **Significantly behind** — sell-through < 50% of plan, needs aggressive intervention or early disposition, (iv) **Surprise hit** — sell-through > 120% of plan, may need supplemental replenishment from other stores or expedited PO; (d) Category Manager presents build-down strategy to VP Merchandising with recommended markdown schedule and projected total markdown/disposition cost",
+     "duration": "1 day/season",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Markdown escalation schedule — first tier (T-8 to T-4 weeks)**: For \"Behind plan\" and \"Significantly behind\" SKUs: (a) Pricing Analyst applies first-tier markdown per W93 authorization workflow: typically 15–25% off seasonal SRP for \"Behind plan\" items, 25–35% for \"Significantly behind\"; (b) system pushes markdown prices to POS, ecommerce, and shelf label generation per W93 step 4; (c) Category Manager targets markdown depth to achieve a sell-through rate that will clear 70–80% of remaining seasonal stock by T-4 weeks; (d) for \"Surprise hit\" items: Supply Planner identifies stores with excess seasonal stock and initiates inter-store transfers per W204 to stores with higher demand; Buyer evaluates expedited PO from domestic vendor if lead time allows",
+     "duration": "3–4 hours/season",
+     "n": "2",
+     "r": "Pricing Analyst / Supply Planner / Buyer"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Mid-build-down review (T-4 weeks)**: Category Manager and Pricing Analyst review markdown sell-through at T-4: (a) system generates build-down dashboard: markdown price, units sold since markdown, remaining on-hand, sell-through % since markdown, projected weeks to clear at current velocity; (b) Category Manager reclassifies remaining SKUs: (i) **Clearing** — on track to sell out at current markdown, no further action, (ii) **Stuck** — sell-through < 30% since first markdown, needs deeper markdown or alternative disposition; (c) for \"Stuck\" items: Pricing Analyst applies second-tier markdown per W93: additional 20–30% off (cumulative markdown typically 40–60% off original SRP); requires VP Merchandising approval if cumulative markdown > 50% or below-cost per W93 step 3; (d) Category Manager identifies items for early removal from seasonal display and relocation to clearance area to free prime retail space for incoming season",
+     "duration": "4 hours/season",
+     "n": "3",
+     "r": "Category Manager / Pricing Analyst"
+    },
+    {
+     "a": "VP Merchandising / CFO",
+     "activity": "**Aggressive clearance (T-2 weeks)**: Final push for remaining seasonal stock: (a) Pricing Analyst applies final markdown tier: cumulative 50–75% off original SRP for items still in stock; below-cost markdowns require CFO approval per W93 step 3; (b) system activates multi-channel clearance: (i) in-store clearance section or dump bin display for remaining units, (ii) ecommerce flash sale or bundle promotion per W13, (iii) Store Manager-initiated local clearance via social media (company-approved Facebook post with seasonal clearance pricing); (c) Category Manager activates disposition decision tree for items unlikely to clear at any markdown: (i) **RTV** — coordinate with Buyer for vendor return per W88 (seasonal vendors may accept return for restocking if item is not season-specific, e.g., power tools vs. Christmas lights), (ii) **Wholesaler bulk sale** — Inventory Control Manager contacts liquidation wholesalers per W220 step 3 for bulk purchase of remaining seasonal stock, (iii) **Inter-store consolidation** — consolidate remaining stock from 200 stores to 20–30 high-traffic clearance stores to maximize sell-through density per W204, (iv) **Donate** — coordinate with CSR for donation of functional seasonal items (e.g., school supplies after Back-to-School, umbrellas after rainy season) to community partners; requires Controller approval; (v) **Write-off** — items with no recovery path routed to W587 obsolescence write-off",
+     "duration": "4–6 hours/season",
+     "n": "4",
+     "r": "Pricing Analyst / Category Manager / Buyer / Inventory Control Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Final remaining stock disposition decision (T-1 week)**: Category Manager makes final disposition call for each remaining seasonal SKU: (a) system generates final remaining stock report: SKU, quantity, location, current markdown price, WAC value, remaining recovery potential; (b) for items with < 50 units chain-wide: Category Manager approves disposal route (clearance, donate, write-off) — decision is pragmatic, not strategic; (c) for items with > 50 units chain-wide: Category Manager and VP Merchandising jointly decide: (i) continue selling into next season (carry-forward items — perennial seasonal like garden tools, rain gear), (ii) deep discount to PHP 0 recovery threshold and clear through clearance stores, (iii) bulk RTV or write-off; (d) system updates each SKU's disposition status: \"Seasonal — Cleared,\" \"Seasonal — Carry Forward,\" \"Seasonal — RTV,\" \"Seasonal — Donated,\" or \"Seasonal — Write-Off (W587)\"",
+     "duration": "3–4 hours/season",
+     "n": "5",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Seasonal display teardown (T-1 week to T+0)**: At store level: (a) Department Supervisor receives teardown instruction from VM Coordinator per W264 step 5: list of outgoing seasonal SKUs, teardown schedule, and disposition for each item (clearance rack, carry-forward shelf position, staging for RTV/donation/disposal); (b) Stock Associates disassemble seasonal displays: endcaps, island displays, promotional fixtures, and seasonal signage per W583; (c) outgoing seasonal stock physically sorted by disposition: (i) clearance items → moved to designated clearance area or dump bins, (ii) carry-forward items → returned to regular shelf position in appropriate category aisle, (iii) RTV/consolidation items → packed and staged at receiving dock for store-to-DC return per W22B or inter-store transfer per W204, (iv) donation items → boxed with itemized list for CSR pickup coordination, (v) disposal items → moved to damaged goods area for disposal per W91/W82; (d) Department Supervisor confirms teardown completion in system with photo evidence of cleared display area",
+     "duration": "4–8 hours/store per transition",
+     "n": "6",
+     "r": "Department Supervisor / Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**New season inventory receipt and staging (T-2 weeks to T+0)**: Overlapping with outgoing season teardown: (a) DC ships incoming seasonal stock per W4 replenishment with seasonal allocation priority per W57; system schedules deliveries to arrive during the T-2 to T+0 window; (b) Store Receiving Clerk receives incoming seasonal stock; Stock Associate stages in backroom or designated seasonal staging area (NOT placed on sales floor until outgoing display teardown is complete to avoid commingling); (c) system tracks incoming seasonal stock receipt vs. allocation plan per W57 step 7; flags stores behind on incoming receipt",
+     "duration": "Per W4 receiving; 2–3 hours/store for staging",
+     "n": "7",
+     "r": "Receiving Clerk / Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**New season planogram execution (T+0 to T+1 week)**: After teardown completion: (a) VM Coordinator distributes new season planogram and setup guide to all stores per W264 step 4; (b) Department Supervisor and Stock Associates build new seasonal displays per planogram: (i) high-impact endcap or island display for top 10 incoming seasonal items, (ii) category aisle seasonal section for secondary items, (iii) seasonal cross-merchandising displays (e.g., Christmas: lights + extension cords + outdoor decorations displayed together); (c) Stock Associates place shelf tags and promotional signage per W262; (d) Department Supervisor confirms setup completion in system with planogram compliance photo; (e) system updates shelf labels with new season SRP (not promotional pricing — regular seasonal price per W40); (f) new season merchandise goes live on seasonal calendar start date; system enables full ATP availability for incoming seasonal items across all channels",
+     "duration": "6–10 hours/store per transition",
+     "n": "8",
+     "r": "Department Supervisor / Stock Associate / VM Coordinator"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-transition inventory reconciliation (T+2 weeks)**: Category Manager and Inventory Control Manager review post-transition state: (a) system generates seasonal build-down outcome report: (i) original seasonal inventory value at T-8 weeks, (ii) total sold at full margin, (iii) total sold at markdown (by markdown tier), (iv) total RTV'd, (v) total donated, (vi) total written off per W587, (vii) total carry-forward to next season, (viii) total markdown cost, (ix) total disposition cost; (b) Category Manager calculates seasonal inventory recovery rate: (revenue from sold items + RTV credits + scrap recovery) ÷ original seasonal inventory value; target: > 70% recovery; (c) Inventory Control Manager verifies all disposition actions are physically completed: items marked \"cleared\" have zero physical on-hand, items marked \"RTV\" have been shipped, items marked \"write-off\" have been physically disposed; (d) post-mortem feed into next year's seasonal buy plan per W32 step 11",
+     "duration": "1 day/season",
+     "n": "9",
+     "r": "Category Manager / Inventory Control Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Cross-seasonal learning integration**: Category Manager documents build-down lessons learned for integration into next year's seasonal planning cycle: (a) markdown timing effectiveness — which markdown tier at which week drove highest sell-through, (b) store cluster performance — which regions cleared faster and why (climate, local events, store execution quality), (c) vendor RTV willingness by vendor — which seasonal vendors accepted returns vs. refused, (d) carry-forward vs. write-off decision quality — were carry-forward items actually sold in next season or did they become SLOB per W220, (e) updated seasonal demand curve per SKU for W31 forecast model recalibration; lessons learned stored in seasonal planning knowledge base linked to W32",
+     "duration": "4–6 hours/season",
+     "n": "10",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W146",
+    "W204",
+    "W22",
+    "W220",
+    "W22B",
+    "W262",
+    "W264",
+    "W31",
+    "W32",
+    "W4",
+    "W40",
+    "W554",
+    "W57",
+    "W574",
+    "W583",
+    "W587",
+    "W82",
+    "W88",
+    "W91",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring; weekly proactive markdown execution",
+    "Owner": "Category Manager (Building Materials)",
+    "Participants": "Category Manager, Store Manager, Inventory Accountant, Pricing Analyst, Purchasing Manager",
+    "Trigger": "System shelf life monitoring job (daily batch check)",
+    "Volume": "~500–800 cement/bagged material lots across 200 stores + 4 DCs at any time; ~20–50 lots approaching expiry monthly"
+   },
+   "id": "W1189",
+   "level": 2,
+   "name": "Cement & Bagged Material Shelf Life Expiry Monitoring & Proactive Markdown",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scanning all cement/bagged material lots\" (replaces manual Step 1).",
+     "- System auto-generate of \"Weekly expiry report distribution\" (replaces manual Step 2).",
+     "- System auto-schedule of \"Proactive markdown at T-30\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Cement, mortar mix, tile adhesive, grout, and other bagged construction materials have limited shelf life — typically 3–6 months from manufacturing date depending on storage conditions. Once expired, cement loses compressive strength and cannot be sold for structural use, creating both a safety liability and a write-off cost. BuildRight Depot stocks these materials across all 200 stores and 4 DCs. This workflow monitors shelf life, triggers proactive markdowns for approaching-expiry stock, and manages the disposition of expired materials, ensuring customer safety and minimizing write-off losses."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: automated POS block in Step 5 and graduated markdown in Step 3 to ensure stock sells before expiry; operational: using conservative shelf life settings (90 days vs. 120 days) and palletized covered storage; operational: smaller, more frequent orders and vendor-managed inventory (W20) for high-volume cement brands"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer safety liability**: selling expired cement for structural use (e.g., building construction) can cause structural failure, injury, and massive legal liability; mitigated by automated POS block in Step 5 and graduated markdown in Step 3 to ensure stock sells before expiry",
+     "- **Storage condition impact**: high humidity and exposure to moisture accelerate cement degradation; Philippine storage conditions (open-air lumber yards, unsealed backrooms) may cause effective shelf life to be shorter than manufacturer specification; mitigated by using conservative shelf life settings (90 days vs. 120 days) and storing bagged materials on pallets in covered areas",
+     "- **Procurement lot sizing**: ordering too much cement in one PO creates expiry risk; mitigated by smaller, more frequent orders and vendor-managed inventory (W20) for high-volume cement brands"
+    ],
+    "Staffing Implication": [
+     "- **Category Manager (Building Materials)**: ~4 hours/week on expiry monitoring and rebalancing decisions. Absorbed within existing role.",
+     "- **Pricing Analyst**: ~1 hour/week on markdown execution. Absorbed within existing role.",
+     "- **Store Managers**: ~30 min/week on re-tagging and quarantine for affected stores. Absorbed within existing store duties.",
+     "- **No permanent incremental headcount**.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Shelf life tracking in lot/batch master with configurable expiry periods per SKU (W1189.1)",
+     "- Daily automated shelf life batch job with three-threshold alert system (W1189.1)",
+     "- Graduated markdown automation with price update and shelf label generation (W1189.3)",
+     "- FIFO dispatch enforcement for bagged material SKUs (W1189.4)",
+     "- Automatic sale-blocking at expiry date (POS rejection of expired lot) (W1189.5)"
+    ],
+    "Time Estimate": [
+     "Weekly proactive cycle 3 hours (T-30 markdown application 1 hour + inter-store/DC rebalancing 2 hours) ≈ 156 hours/year; expired-lot handling 45 min/lot (quarantine and block 15 min + disposition 30 min) × ~20–50 lots/month ≈ 180–450 hours/year; monthly root-cause review 2 hours ≈ 24 hours/year — total ≈ 360–630 hours/year (daily batch check and weekly report distribution automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Daily shelf life batch check**: System runs daily batch job scanning all cement/bagged material lots; calculates days remaining to expiry based on manufacturing date + shelf life months (configurable per SKU: cement 90 days, tile adhesive 180 days, grout 180 days, mortar mix 90 days); flags lots at three thresholds: (a) T-60 days (amber alert — approaching expiry), (b) T-30 days (red alert — markdown trigger), (c) T-0 days (expired — block from sale)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Weekly expiry report distribution**: Every Monday, system generates \"Bagged Material Shelf Life Report\" showing: (a) all lots at T-60 and T-30, (b) by store/DC, (c) by vendor/brand, (d) quantity and value at risk; distributes to Category Manager, affected Store Managers, and Purchasing Manager",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Proactive markdown at T-30**: For lots at T-30 threshold: Pricing Analyst applies graduated markdown schedule: (a) T-30: 20% off SRP, (b) T-15: 40% off SRP, (c) T-7: 60% off SRP; system updates price and generates shelf labels; store staff re-tags items; POS applies markdown automatically; markdowns are promoted in-store as \"Closeout — Best Before [date]\" to maintain transparency",
+     "duration": "1 hour/week",
+     "n": "3",
+     "r": "Pricing Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Inter-store/DC rebalancing**: For lots at T-60 in low-demand stores with surplus: Category Manager initiates inter-store or store-to-DC transfer to high-demand stores where sell-through rate is faster; system prioritizes FIFO (First In, First Out) dispatch for all bagged materials",
+     "duration": "2 hours/week",
+     "n": "4",
+     "r": "Category Manager / Supply Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Expired lot quarantine and block**: At T-0: system automatically changes inventory status to \"Expired — Blocked from Sale\"; POS rejects scan of expired lot; Store Manager physically quarantines expired items in designated area; items cannot be sold for structural use",
+     "duration": "15 min/lot",
+     "n": "5",
+     "r": "System / Store Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Expired material disposition**: (a) **Vendor return**: if vendor accepts expired stock for recycling (cement can be ground and reprocessed), coordinate RTV per W88 with vendor credit; (b) **Non-structural donation**: expired cement can be donated to LGUs for non-structural use (road base, landfill cover); coordinate with CSR team per W1106; (c) **Disposal**: if no recovery option, dispose per non-hazardous waste protocol (W502); system writes off inventory per W92",
+     "duration": "30 min/lot",
+     "n": "6",
+     "r": "Category Manager / Inventory Accountant"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Root cause analysis**: Monthly: Category Manager and Purchasing Manager review expiry write-off report: (a) write-off rate by vendor (target: < 1% of bagged material purchases), (b) write-off rate by store (flag stores > 2%), (c) purchasing lot size vs. sell-through rate; adjust purchase order quantities and safety stock levels for high-expiry SKUs; vendor quality issues (e.g., short shelf life on delivery) feed into vendor scorecard per W44",
+     "duration": "2 hours/month",
+     "n": "7",
+     "r": "Category Manager / Purchasing Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1106",
+    "W20",
+    "W44",
+    "W502",
+    "W88",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring; weekly exception review with VMI vendors",
+    "Owner": "Supply Planning Analyst",
+    "Participants": "Supply Planning Analyst, Vendor VMI Coordinator, DC Supervisor, Merchandise Planner, Category Manager",
+    "Trigger": "VMI vendor transmits replenishment proposal or ASN; or system detects VMI SKU inventory below safety stock without vendor replenishment; or daily VMI dashboard review",
+    "Volume": "~300 SKUs from 12 VMI vendors across 200 stores and 4 DCs = ~60,000 SKU-location combinations"
+   },
+   "id": "W1216",
+   "level": 2,
+   "name": "Vendor-Managed Inventory (VMI) Replenishment Monitoring & Exception Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Daily VMI dashboard review\" (replaces manual Step 1).",
+     "- System auto-validate of \"check if vendor has transmitted ASN for replenishment — if yes, verify ETA is…\" (replaces manual Step 2).",
+     "- System auto-create of \"creates expected receipt in WMS per W109\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight Depot operates Vendor-Managed Inventory for ~300 SKUs from 12 key vendors (per model company profile). Under VMI, vendors are responsible for monitoring BuildRight's inventory levels (via system data sharing) and generating replenishment orders within agreed parameters (min/max stock levels, order frequency, delivery lead time). VMI benefits BuildRight by: (a) reducing planning workload for high-volume staple items, (b) improving in-stock rates through vendor's direct visibility, (c) enabling just-in-time replenishment for fast-moving items. However, VMI requires active monitoring to ensure vendors are performing — stockouts on VMI items represent a vendor management failure, not just a supply chain event. This workflow governs the daily monitoring of VMI performance, exception handling when vendors fail to replenish, and the periodic review of VMI program parameters."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Supply Planning Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor dependency risk**: VMI items that vendor fails to replenish create stockouts with no backup plan; Supply Planning Analyst must be ready to generate manual POs per W3 for critical VMI failures",
+     "- **Data sharing security** — providing vendors with real-time inventory data requires secure data exchange; vendor portal access controls and data usage agreements essential",
+     "- **VMI parameter misalignment** — min/max levels set at program inception may not reflect current demand; quarterly review prevents parameter drift",
+     "- **Vendor over-shipping** — some VMI vendors ship to max regardless of current stock to increase their sales; overstock ties up working capital; strict parameter enforcement and overstock chargeback clauses mitigate",
+     "- **New store onboarding** — adding new stores to VMI program requires initial parameter setting without demand history; Category Manager must set conservative initial parameters and tighten after 3 months of data"
+    ],
+    "Staffing Implication": [
+     "- Supply Planning Analyst: ~1 hour/day on VMI monitoring + 1 hour/week scorecard + parameter reviews = ~400 hours/year; absorbed by existing planning team",
+     "- Category Manager: ~2 hours/vendor/quarter for parameter review + 1 day/year for program evaluation = ~100 hours/year",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- VMI monitoring dashboard: real-time stock levels vs. min/max, exception alerts, fill rate trends",
+     "- Vendor data sharing portal: inventory visibility feed to VMI vendors (stock levels, demand, forecasts)",
+     "- ASN integration: automated receipt, validation against VMI parameters, auto-approval",
+     "- VMI vendor scorecard: weekly automated compilation with manual analyst review",
+     "- Integration with W109 (goods receiving), W31 (demand forecasting), W44 (vendor scorecard), W42 (cycle counting — verify VMI stock accuracy)"
+    ],
+    "Time Estimate": [
+     "- Daily monitoring: ~1 hour/day",
+     "- Weekly scorecard: 1 hour/week",
+     "- Quarterly parameter review: 2 hours/vendor × ~12 VMI vendors (per the Volume) = 24 hours/quarter",
+     "- Annual program evaluation: 8 hours",
+     "- **Annual estimate: ~400 hours (analyst) + ~100 hours (Category Manager) = ~500 hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**Daily VMI dashboard review**: Supply Planning Analyst opens VMI monitoring dashboard showing: (a) all VMI SKU-locations with current stock level vs. min/max, (b) items below minimum (replenishment overdue), (c) items at zero stock (critical stockout), (d) pending vendor ASNs and expected delivery dates, (e) items above maximum (potential overstock — vendor over-shipping), (f) VMI fill rate trend (target: ≥ 98%)",
+     "duration": "30 min/day",
+     "n": "1",
+     "r": "Supply Planning Analyst"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**Exception triage**: for items below minimum or at zero stock: (a) check if vendor has transmitted ASN for replenishment — if yes, verify ETA is within acceptable window; (b) if no ASN received and stock below minimum for > 2 days: system generates automated alert to vendor VMI Coordinator; (c) for zero-stock critical items: Supply Planning Analyst contacts vendor VMI Coordinator immediately for expedited replenishment",
+     "duration": "30 min/day",
+     "n": "2",
+     "r": "Supply Planning Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Overstock management**: for items above maximum stock level: (a) Supply Planning Analyst notifies vendor to pause replenishment shipments; (b) if vendor has already shipped over-max quantity: DC Supervisor holds excess in receiving (not putaway) per agreement; (c) Category Manager evaluates if overstock is due to demand drop — may need min/max parameter adjustment",
+     "duration": "15 min/day",
+     "n": "3",
+     "r": "Supply Planning Analyst / DC Supervisor"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**Vendor ASN validation**: when vendor transmits replenishment ASN: (a) system auto-compares ASN quantities against VMI min/max parameters — flags if quantity exceeds max or is below minimum, (b) system validates SKU, quantity, location, and expected ship date against VMI agreement terms, (c) if ASN is within parameters: system auto-approves and creates expected receipt in WMS per W109, (d) if ASN is out of parameters: routes to Supply Planning Analyst for manual review",
+     "duration": "Automated + 15 min/day manual review",
+     "n": "4",
+     "r": "System / Supply Planning Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Weekly VMI vendor scorecard review**: Supply Planning Analyst compiles weekly scorecard per VMI vendor: (a) fill rate (orders fulfilled vs. demanded), (b) on-time delivery rate, (c) overstock frequency, (d) ASN accuracy, (e) average days below minimum; shares with Category Manager for vendor relationship management per W44",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "Supply Planning Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly VMI parameter review**: Category Manager and Supply Planning Analyst review VMI parameters with each vendor: (a) are min/max levels still appropriate based on current demand trends?, (b) should SKUs be added or removed from VMI program?, (c) is order frequency optimal?, (d) review and adjust safety stock calculations based on demand variability; update VMI agreement parameters in system",
+     "duration": "2 hours/vendor/quarter",
+     "n": "6",
+     "r": "Category Manager / Supply Planning Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Annual VMI program evaluation**: Category Manager evaluates overall VMI program: (a) compare VMI item in-stock rate vs. non-VMI items, (b) total VMI savings (reduced planning labor, improved turns) vs. VMI management cost, (c) identify candidates for VMI expansion (additional vendors/SKUs) or VMI removal (vendors not meeting SLA), (d) present recommendation to VP Merchandising",
+     "duration": "1 day/year",
+     "n": "7",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W109",
+    "W3",
+    "W31",
+    "W42",
+    "W44"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "6 major seasonal cycles per year + ad-hoc pre-positioning events; forward-buy execution per import PO cycle",
+    "Owner": "Merchandise Planner / Category Manager",
+    "Participants": "Buyer, Demand Planner, Import Coordinator, DC Operations Manager, Store Manager, Finance Controller",
+    "Trigger": "Scheduled — triggered by seasonal merchandise calendar milestones (6 major seasonal transitions per year); ad-hoc triggered by PAGASA weather advisory, commodity price surge, or competitor stock-out opportunity",
+    "Volume": "~500 seasonal/promotional SKUs per cycle; forward-buy quantities of 3–6 months' supply for select A-class seasonal items; phase-out of ~100–200 SKUs per seasonal transition"
+   },
+   "id": "W1257",
+   "level": 2,
+   "name": "Seasonal Inventory Pre-Positioning, Forward-Buy Execution & Phase-Out Calendar Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Seasonal demand planning & forward-buy decision\" (replaces manual Step 1).",
+     "- System auto-generate of \"generate store allocation plan based\" (replaces manual Step 2).",
+     "- System auto-capture of \"enter markdown countdown\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's seasonal merchandise strategy is driven by the Philippine climate and cultural calendar: (a) January–February post-holiday renovation season (paint, tiles, tools); (b) March–May summer/dry season (garden, outdoor, aircon, water tanks); (c) June–August rainy season preparation (waterproofing, flood control, tarps); (d) September–October ber-months home improvement (holiday décor, home furniture, lighting); (e) November–December Christmas peak (Christmas lights, gift items, appliances). Each transition requires: (i) pre-positioning inventory at DCs and stores before the season starts — especially for import items with 45–90 day lead times; (ii) executing forward-buy decisions when favorable import pricing or currency rates allow bulk procurement at lower cost; (iii) managing phase-out of expiring seasonal items through markdown, clearance, or return-to-vendor before the next season's goods arrive. Failure to pre-position results in stock-outs during peak demand; failure to phase out results in carrying costs and obsolescence. This workflow coordinates the seasonal inventory lifecycle from pre-positioning through peak sales to phase-out."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Merchandise Planner / Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Philippine weather is increasingly unpredictable — typhoon season may start early or extend late, making seasonal timing uncertain",
+     "- Forward-buy decisions lock in inventory that may not sell if the season underperforms — sunk cost risk",
+     "- DC storage capacity is constrained — seasonal inventory competes with standard stock for space",
+     "- Provincial stores may have different seasonal patterns than Metro Manila — one-size-fits-all allocation is suboptimal",
+     "- Import forward-buy requires early capital commitment — working capital impact for 45–90 day lead times"
+    ],
+    "Staffing Implication": [
+     "- Category Managers: 8 hours/season for planning + 2 hours/week in-season monitoring",
+     "- Demand Planner: 4 hours/season for forecast preparation",
+     "- Import Coordinator: 16 hours/season for positioning logistics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Demand Planning Module** — seasonal forecast, forward-buy planning",
+     "- **Procurement Module** — seasonal import PO, forward-buy order creation",
+     "- **WMS** — DC seasonal storage zone, pre-positioning inventory tracking",
+     "- **Replenishment Module** — seasonal allocation to stores, priority replenishment",
+     "- **Price Management Module** — seasonal markdown, clearance pricing",
+     "- **BI Platform** — seasonal sell-through dashboard, forecast vs. actual analytics"
+    ],
+    "Time Estimate": [
+     "- Per season: ~40 hours planning + ~80 hours execution + ~30 hours monitoring + ~8 hours review = ~158 hours",
+     "- **Annual estimate: 6 seasons × 158 hours = ~948 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Seasonal demand planning & forward-buy decision**: 90 days before season start, Category Manager and Demand Planner review: (a) prior year seasonal sales by SKU and store cluster; (b) current inventory on-hand of seasonal SKUs; (c) import PO lead time requirements (45–90 days); (d) commodity price trends and FX rates for import items; (e) decide forward-buy quantity: (i) standard buy: cover 60% of forecasted demand (remaining 40% from local vendors with shorter lead times), (ii) aggressive forward-buy: cover 100% of forecast if import pricing is favorable and storage capacity exists; (f) create seasonal buy plan with SKU-level quantities and delivery schedule",
+     "duration": "8 hours/season",
+     "n": "1",
+     "r": "Category Manager / Demand Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**DC pre-positioning execution**: Import Coordinator and DC Operations Manager coordinate pre-season inventory positioning: (a) reserve DC storage space for incoming seasonal inventory — negotiate with standard stock allocation; (b) receive seasonal imports at DC per import PO schedule; (c) QC seasonal items (especially Christmas lights, flood control pumps, seasonal paint colors) for quality and compliance; (d) stage pre-positioned inventory in designated seasonal zone at each DC; (e) generate store allocation plan based on: (i) regional demand patterns (rainy season items higher in flood-prone areas, garden higher in Metro Manila), (ii) store size tier, (iii) prior year sell-through performance",
+     "duration": "16 hours/season",
+     "n": "2",
+     "r": "Import Coordinator / DC Operations Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Seasonal transition execution**: 2 weeks before season start, execute store-level transition: (a) push first allocation of seasonal stock to stores via replenishment order; (b) store receives seasonal goods and sets up seasonal display per planogram; (c) markdown previous season's remaining inventory per W93 — target: 50% markdown for items within 2 weeks of season end; (d) transfer remaining previous-season inventory to clearance stores or central clearance zone per W220; (e) system updates seasonal flag on items — active season items get priority replenishment, expiring season items enter markdown countdown",
+     "duration": "4 hours/store allocation + 2 hours/store transition",
+     "n": "3",
+     "r": "Category Manager / Store Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**In-season monitoring & replenishment**: During active season: (a) weekly sell-through review for seasonal SKUs — compare actual to forecast; (b) for overperforming SKUs (sell-through > 120% of forecast): trigger emergency replenishment from local vendors or reallocate from lower-performing stores; (c) for underperforming SKUs (sell-through < 60% of forecast): reduce replenishment, increase markdown depth, or initiate return-to-vendor; (d) monitor competitor seasonal activity — adjust pricing or promotion if competitor undercuts; (e) 4 weeks before season end: begin aggressive markdown for remaining seasonal stock",
+     "duration": "2 hours/week during season",
+     "n": "4",
+     "r": "Category Manager / Demand Planner"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-season phase-out & lessons learned**: Within 2 weeks of season end: (a) final disposition of remaining seasonal inventory: markdown to clearance, return-to-vendor (if agreement permits), or donate (CSR tax benefit per W193); (b) conduct post-season review: (i) forecast accuracy by SKU, (ii) forward-buy ROI — did bulk import purchase save cost vs. spot buying? (iii) markdown cost vs. inventory carrying cost — was forward-buy quantity optimal? (iv) store-level performance variation; (c) document lessons learned for next season's buy plan; (d) update seasonal planning parameters in system per W312",
+     "duration": "8 hours/season",
+     "n": "5",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W193",
+    "W220",
+    "W312",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Monthly aging analysis; weekly dashboard refresh; quarter-end write-down review",
+    "Owner": "Inventory Controller / Finance Analyst",
+    "Participants": "Category Manager, Store Manager, DC Operations Manager, Finance Controller, VP Merchandising",
+    "Trigger": "Scheduled — monthly aging analysis refresh; weekly dashboard update; ad-hoc triggered by NRV (Net Realizable Value) threshold breach or write-down accrual requirement at month-end",
+    "Volume": "35,000 active SKUs across ~205 locations (200 stores + 4 DCs); ~7M inventory records in aging analysis"
+   },
+   "id": "W1258",
+   "level": 2,
+   "name": "Multi-Location Inventory Aging Dashboard & Automated Write-Down Recommendation Engine",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates inventory aging for all SKU-locations\" (replaces manual Step 1).",
+     "- System auto-review of \"Monthly NRV analysis\" (replaces manual Step 2).",
+     "- System auto-record of \"records to reflect new carrying value\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot holds ~PHP 5.5–7.5 billion in inventory (consistent with the 6–8x turns canon) across 200 stores and 4 DCs, valued using Weighted Average Cost (WAC). Philippine Financial Reporting Standards (PFRS) require inventory to be carried at the lower of cost or net realizable value (NRV), meaning BuildRight must regularly assess whether aging or slow-moving inventory requires a write-down. With 35,000 active SKUs across ~205 locations, manual aging analysis is impractical — the company needs an automated system that: (a) calculates inventory age (days since last receipt) for every SKU at every location; (b) applies aging thresholds (e.g., > 90 days: review, > 180 days: provision, > 365 days: write-down candidate); (c) calculates NRV by comparing current WAC to current market price/SRP less selling costs; (d) generates automated write-down recommendations for Finance review at month-end; (e) provides a multi-location dashboard showing aging distribution, write-down exposure, and trending. This workflow operationalizes the inventory aging analysis and write-down process, ensuring PFRS compliance and proactive inventory optimization."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Inventory Controller / Finance Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Accurate age calculation requires clean receipt date data — batch receipts and transfers may not accurately reflect true inventory age",
+     "- NRV estimation for unique/specialized SKUs (custom tiles, imported fixtures) is subjective — may require manual assessment",
+     "- Write-down postings affect store and category P&L — Store Managers may resist write-downs that negatively impact their performance metrics",
+     "- Quarterly concentration of write-downs can create significant month-end close workload for Finance",
+     "- Aging thresholds may need to be different by category (hardware turns faster than appliances) — one set of thresholds is suboptimal"
+    ],
+    "Staffing Implication": [
+     "- Finance Analyst: 8 hours/month on NRV analysis",
+     "- Inventory Controller: 1 hour/week dashboard review + 8 hours/quarter trend analysis",
+     "- Category Managers: 6 hours/month on aging exception management"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Inventory Module** — perpetual inventory records with receipt date for age calculation",
+     "- **Finance Module** — NRV calculation engine, write-down posting, GL integration",
+     "- **Price Management Module** — current SRP, clearance price, markdown history for NRV estimation",
+     "- **BI Platform** — aging dashboard, trend analytics, write-down exposure visualization",
+     "- **Procurement Module** — vendor return authorization for write-down candidates"
+    ],
+    "Time Estimate": [
+     "- Weekly dashboard: 1 hour/week = 52 hours/year",
+     "- Monthly NRV analysis: 8 hours/month = 96 hours/year",
+     "- Quarterly trends: 8 hours/quarter = 32 hours/year",
+     "- Category action: 6 hours/month × 5 categories = 360 hours/year",
+     "- **Annual estimate: ~540 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "**Weekly aging dashboard refresh**: System automatically calculates inventory aging for all SKU-locations: (a) age bucket distribution: 0–30 days (current), 31–90 days (aging), 91–180 days (slow-moving), 181–365 days (obsolescence risk), > 365 days (write-down candidate); (b) aging value by bucket: total WAC value in each aging bucket by location, category, and vendor; (c) trend vs. prior week: is aging inventory increasing or decreasing?; (d) flag SKU-locations where aging crossed a threshold in the past week (e.g., moved from 31–90 to 91–180 days)",
+     "duration": "1 hour/week (review)",
+     "n": "1",
+     "r": "System / Inventory Controller"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly NRV analysis**: At month-end, Finance Analyst runs NRV analysis for aging inventory: (a) for SKU-locations in 91–180 day bucket: calculate NRV = current SRP × (1 – expected selling cost %) – expected disposal cost; (b) for SKU-locations in > 180 day bucket: calculate NRV using clearance/markdown price (expected realizable value); (c) compare NRV to WAC — flag items where NRV < WAC (write-down required); (d) calculate total write-down exposure by category and location; (e) generate write-down recommendation report for Finance Controller review",
+     "duration": "8 hours/month",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Write-down approval & posting**: Finance Controller reviews write-down recommendations: (a) validate NRV assumptions — are the clearance prices realistic? are the selling cost estimates accurate?; (b) approve or adjust write-down amounts; (c) for write-downs > PHP 500,000 per category: escalate to CFO for approval; (d) post approved write-downs to GL — debit inventory write-down expense, credit inventory reserve; (e) update item cost records to reflect new carrying value",
+     "duration": "4 hours/month",
+     "n": "3",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Aging exception management**: Category Manager reviews aging exceptions and takes action: (a) for items in 91–180 day bucket: evaluate markdown, promotional bundle, or store-to-store transfer to higher-demand location; (b) for items in > 180 day bucket: initiate clearance sale, return-to-vendor negotiation, or donation for tax benefit; (c) for items in > 365 day bucket: approve for disposal per W91/W587; (d) system tracks action taken per aging exception — target: all exceptions addressed within 30 days",
+     "duration": "6 hours/month",
+     "n": "4",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Quarterly aging trend analysis**: Inventory Controller produces quarterly trend report: (a) aging distribution trend — is the proportion of aging inventory increasing?; (b) write-down trend — is write-down expense increasing by category?; (c) top 20 aging SKUs by value — what's driving the aging? (slow category, wrong assortment, import over-buy?); (d) location-level aging heat map — which stores and DCs have the highest aging concentration?; (e) present findings to CFO and VP Merchandising with recommendations",
+     "duration": "8 hours/quarter",
+     "n": "5",
+     "r": "Inventory Controller"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W587",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Weekly per store; bi-weekly consolidated RTV shipments from DCs",
+    "Owner": "Category Manager",
+    "Participants": "Department Supervisor, Store Receiving Clerk, DC Returns Coordinator, AP Clerk, Vendor",
+    "Trigger": "Accumulation of defective, damaged, or excess merchandise qualifying for vendor return per vendor agreement terms",
+    "Volume": "~200–300 RTV line items/month chain-wide; ~5–10 vendor return shipments/month from DCs"
+   },
+   "id": "W1280",
+   "level": 2,
+   "name": "Vendor Return-to-Vendor (RTV) Defective & Excess Merchandise Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans item barcode to check RTV eligibility in system\" (replaces manual Step 1).",
+     "- System auto-capture of \"enters return reason\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews RTV request\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "In hardware and home improvement retail, vendor returns are common due to: manufacturing defects (power tools, plumbing fittings), shipping damage (tiles, glass, fragile items), overstock of seasonal items, and vendor-authorized returns for discontinued products. BuildRight's vendor agreements (per W688) typically include RTV clauses allowing return of defective goods within 30–90 days and excess inventory within specific windows. Effective RTV processing recovers cost (crediting AP), frees up selling space, and maintains vendor relationships. With 35,000 active SKUs and ~800–1,000 vendors, systematic RTV management is essential to prevent accumulation of unsellable stock."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Category Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor RMA delays** — some vendors take 2–4 weeks to issue RMA numbers, during which defective inventory occupies valuable backroom space; especially problematic for seasonal items where return windows expire",
+     "- **Credit disputes** — vendors may reject returns claiming customer damage rather than manufacturing defect, or deduct restocking fees (15–25%) not clearly documented in agreements; photo evidence at time of discovery is critical",
+     "- **Backhaul logistics** — store-originated RTV items depend on DC delivery truck backhaul; if delivery schedule doesn't align, RTV items accumulate in store backroom",
+     "- **Destruction-in-place** — for hazardous items (paint, chemicals) or bulky damaged goods, shipping back to vendor may cost more than the credit value; destroy-in-place with vendor authorization and credit is preferred but requires robust documentation"
+    ],
+    "Staffing Implication": [
+     "- **Department Supervisors**: ~15 min/week per store on RTV identification and request creation. Absorbed.",
+     "- **Category Managers**: ~30 min/week on RTV approvals + 2 hours/month on analytics. Absorbed.",
+     "- **DC Returns Coordinator**: ~4 hours/week on RTV staging and shipment. Absorbed by existing role.",
+     "- **AP Clerks**: ~15 min/credit × ~50 credits/month = ~12.5 hours/month. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- RTV eligibility engine with vendor return policy parameters (W1280.1)",
+     "- RTV request workflow with photo evidence attachment (W1280.2)",
+     "- Supplier portal RMA management (W224, W1280.4)",
+     "- Inventory status tracking (Available → RTV Staged → RTV In Transit → RTV Closed)",
+     "- AP credit memo matching (W7, W1280.7)",
+     "- Vendor scorecard integration (W44, W1280.8)"
+    ],
+    "Time Estimate": [
+     "- Per RTV item: ~20 min (identification 5 min + request 5 min + staging 5 min + AP credit 5 min)",
+     "- Per vendor shipment: ~1 hour (staging 30 min + documentation 30 min)",
+     "- Monthly chain-wide: ~200 items × 20 min + 10 shipments × 60 min = ~77 hours",
+     "- HQ analysis: ~6 hours/month",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**RTV eligibility identification**: Department Supervisor identifies merchandise qualifying for vendor return during daily walkthrough or cycle count per W276: (a) defective items (manufacturing defect, DOA for power tools/appliances), (b) shipping damage identified at receiving per W3, (c) excess seasonal inventory per vendor markdown agreement, (d) discontinued items with vendor-authorized return window; scans item barcode to check RTV eligibility in system (vendor return window, return type, required condition)",
+     "duration": "15 min/week",
+     "n": "1",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**RTV request creation**: Department Supervisor creates RTV request in ERP: (a) selects item and quantity, (b) enters return reason code (defective, damaged, excess, discontinued), (c) attaches photo evidence of defect/damage, (d) system validates against vendor return policy (within return window, condition requirements met); request routes to Category Manager for approval",
+     "duration": "5 min/item",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**RTV approval & vendor authorization**: Category Manager reviews RTV request: (a) verifies return reason and evidence, (b) confirms vendor return terms per W688, (c) for excess/discontinued: confirms return is more cost-effective than markdown per W93; approves or rejects; for items >PHP 50K: routes to VP Merchandising; system sends RMA (Return Merchandise Authorization) request to vendor via supplier portal per W224",
+     "duration": "10 min/batch",
+     "n": "3",
+     "r": "Category Manager / VP Merchandising"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor RMA confirmation**: Vendor reviews RMA request via supplier portal; issues RMA number with shipping instructions (return to vendor warehouse, return to DC on next delivery, or destroy-in-place with credit); system records RMA number and return method",
+     "duration": "1–5 business days",
+     "n": "4",
+     "r": "Vendor / Category Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**RTV staging & shipment**: (a) For store-originated RTV: Store Receiving Clerk stages RTV items in designated returns area; items consolidated with next DC delivery truck backhaul; (b) For DC-originated RTV: DC Returns Coordinator stages items per vendor; consolidates into RTV shipment when RMA confirmed; schedules pickup or adds to vendor's next inbound delivery backhaul",
+     "duration": "30 min/batch",
+     "n": "5",
+     "r": "Store Receiving Clerk / DC Returns Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Goods shipment & tracking**: RTV items shipped to vendor (or picked up by vendor); system generates RTV packing list and shipping document; inventory moved from \"RTV Staged\" to \"RTV In Transit\"; vendor confirms receipt of returned goods",
+     "duration": "Per shipment",
+     "n": "6",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor credit & AP reconciliation**: Vendor issues credit memo upon receipt and inspection of returned goods; AP Clerk matches credit memo against RTV shipment: (a) verifies credit amount matches expected (full cost, partial, or restocking fee deduction), (b) posts credit to AP vendor account, (c) if discrepancy: escalates to Category Manager for vendor negotiation per W7",
+     "duration": "15 min/credit",
+     "n": "7",
+     "r": "AP Clerk / Vendor"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Monthly RTV analytics**: Category Manager compiles monthly RTV report: (a) RTV value by vendor and reason code, (b) vendor RTV processing time (request to credit), (c) credit recovery rate, (d) top defect categories feeding into vendor quality scorecard per W44; identifies vendors with chronic quality issues requiring sourcing review per W36",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W224",
+    "W276",
+    "W3",
+    "W36",
+    "W44",
+    "W688",
+    "W7",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "Monthly reconciliation per vendor; weekly sales data transmission to consignment vendors",
+    "Owner": "Category Manager (Merchandising)",
+    "Participants": "Category Manager, AP Clerk, Store Department Supervisor, Vendor Consignment Coordinator, Finance Controller",
+    "Trigger": "Monthly consignment reconciliation cycle; or vendor request for sales report; or inventory count discrepancy",
+    "Volume": "~300 consignment SKUs across 200 stores; ~15–25 consignment vendors (per the register); ~PHP 150–200M in consignment inventory at any time"
+   },
+   "id": "W1298",
+   "level": 2,
+   "name": "Consignment Inventory Reconciliation, Settlement & Ownership Transfer Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles weekly consignment sales report per vendor\" (replaces manual Step 1).",
+     "- System auto-scan of \"scanning error — item scanned against wrong SKU\" (replaces manual Step 2).",
+     "- System auto-record of \"Monthly settlement & AP processing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot carries ~300 SKUs on consignment from ~15–25 vendors (per the register), primarily major appliances (fans, aircons, water heaters) and select premium tiles. Under consignment terms, BuildRight does not own the inventory — the vendor retains ownership until the item is sold to a customer. At that point, ownership transfers from vendor to BuildRight (for a fraction of a second) and then to the customer; BuildRight pays the vendor the agreed consignment cost. Consignment reduces BuildRight's inventory carrying cost and shifts slow-moving risk to the vendor, but it introduces complexity: (a) consignment inventory must be tracked separately from owned inventory in the ERP; (b) sales of consignment items trigger automatic vendor payables at the consignment cost; (c) physical inventory counts must reconcile both owned and consignment stock; (d) inventory damaged in-store or stolen must be addressed per the consignment agreement (vendor typically bears loss for consignment items still in their ownership); (e) items transferred from consignment to owned stock (e.g., vendor agrees to sell remaining consignment stock at a discount) require ownership transfer processing. This workflow manages the end-to-end consignment lifecycle including reconciliation, settlement, and ownership transfer."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Category Manager (Merchandising) review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory tracking complexity** — consignment items physically co-mingled with owned stock on the sales floor; if POS scanning assigns the wrong SKU (consignment vs. owned equivalent), settlement is incorrect; distinct SKUs for consignment items are essential",
+     "- **Damage disputes** — vendor and BuildRight may disagree on damage responsibility; photographic evidence at receiving (W3) and clear consignment agreement terms on damage liability reduce disputes",
+     "- **Reconciliation effort** — monthly reconciliation with ~15–25 vendors × ~300 SKUs × 200 stores is labor-intensive; automated reporting reduces but does not eliminate manual reconciliation effort",
+     "- **Balance sheet impact** — consignment inventory must be excluded from BuildRight's inventory valuation on the balance sheet; proper ERP configuration ensures consignment stock is tracked off-balance-sheet"
+    ],
+    "Staffing Implication": [
+     "- **Category Manager**: ~4–8 hours/vendor/month on reconciliation and program management × ~15–25 vendors = ~60–200 hours/month. Absorbed by existing Category Managers handling consignment categories.",
+     "- **AP Clerk**: ~2–3 hours/month on consignment settlement processing. Absorbed.",
+     "- **Store Department Supervisors**: ~15–30 min per damage incident. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment inventory module — separate inventory bucket from owned stock, linked to vendor agreement",
+     "- POS integration — consignment item sale triggers automatic ownership transfer and AP creation",
+     "- Supplier portal — weekly sales reports, damage reports, reconciliation data exchange",
+     "- AP module — consignment settlement invoice processing per W7",
+     "- Inventory count module — consignment physical count adjustments per W276",
+     "- BI dashboard — consignment inventory aging, sell-through rate, margin analysis"
+    ],
+    "Time Estimate": [
+     "- Weekly transmission: automated",
+     "- Monthly reconciliation: ~48–96 hours total across all consignment vendors",
+     "- Monthly settlement: ~24–36 hours total",
+     "- Damage processing: ~30 min per incident × ~50 incidents/month = ~25 hours",
+     "- Quarterly review: ~2 hours/vendor × ~15–25 vendors = ~30–50 hours/quarter",
+     "- **Annual estimate**: ~1,250–2,000 person-hours/year (per the itemization)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Weekly consignment sales data transmission**: System automatically compiles weekly consignment sales report per vendor: (a) items sold (SKU, quantity, store, date, POS transaction number), (b) consignment cost per unit and total cost payable, (c) retail price and BuildRight margin, (d) current consignment inventory on-hand by store; report transmitted to vendor via supplier portal per W224",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Monthly consignment inventory reconciliation**: Monthly, Category Manager and Vendor Consignment Coordinator reconcile: (a) system-generated consignment inventory report vs. vendor's own inventory records, (b) identify discrepancies: (i) system shows sold but vendor disagrees (possible POS scanning error — item scanned against wrong SKU), (ii) vendor shows sold but system does not (possible unreported sale or inventory shrinkage), (iii) quantity mismatch at specific stores; (c) for discrepancies: Store Department Supervisor conducts physical count of affected consignment SKUs; (d) reconciliation target: discrepancies resolved within 5 business days; (e) system-adjusted consignment inventory quantities posted with Category Manager approval",
+     "duration": "4–8 hours/vendor/month",
+     "n": "2",
+     "r": "Category Manager / Vendor Consignment Coordinator"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly settlement & AP processing**: (a) upon reconciliation agreement, system generates consignment settlement invoice: total units sold × consignment cost per unit = amount payable to vendor; (b) AP Clerk reviews settlement invoice against reconciliation report and POS sales records; (c) system creates AP voucher per vendor with payment terms per consignment agreement (typically Net 30 from settlement date); (d) Finance Controller approves payment batch; (e) payment released per standard AP calendar per W7",
+     "duration": "2–3 hours/vendor/month",
+     "n": "3",
+     "r": "System / AP Clerk"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Damaged / defective consignment inventory processing**: (a) Store Department Supervisor identifies damaged consignment item (display damage, customer damage, DOA for appliances); (b) creates damage report with photos in ERP; (c) system routes damage report to vendor via supplier portal with request for disposition: (i) vendor picks up and replaces — most common for major appliances, (ii) vendor authorizes destroy-in-place with full credit — for fragile items where return shipping exceeds value, (iii) vendor authorizes markdown-at-cost — BuildRight sells at reduced price, vendor accepts reduced settlement; (d) damaged items segregated in backroom pending vendor response (not mixed with owned damaged goods)",
+     "duration": "15–30 min per incident",
+     "n": "4",
+     "r": "Department Supervisor / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Consignment-to-owned inventory transfer**: When vendor agrees to convert consignment stock to owned inventory (e.g., vendor discontinues consignment arrangement or offers a discounted buyout): (a) Category Manager negotiates transfer terms — typically at a discount to regular consignment cost (10–25% below consignment rate) to incentivize BuildRight to take ownership; (b) system processes inventory ownership transfer: (i) remove items from consignment inventory bucket, (ii) add to owned inventory at transfer cost (becomes new WAC), (iii) create AP voucher for transferred items payable per agreed terms; (c) Finance Controller approves transfer and payment; (d) transferred items become regular inventory managed per standard replenishment and markdown processes",
+     "duration": "2–4 hours per transfer event",
+     "n": "5",
+     "r": "Category Manager / Finance Controller"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly consignment program performance review**: Category Manager reviews consignment program ROI: (a) consignment inventory turn rate vs. owned inventory turn rate, (b) margin comparison: consignment margin vs. owned margin for similar categories, (c) shrinkage and damage cost allocation (vendor vs. BuildRight), (d) working capital benefit: consignment inventory value not on BuildRight's balance sheet, (e) recommend to VP Merchandising: expand consignment to additional vendors/SKUs, convert underperforming consignment to owned, or terminate consignment with vendors not meeting SLA",
+     "duration": "2 hours/quarter",
+     "n": "6",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W224",
+    "W276",
+    "W3",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "~4–8 items per store per month with reconditionable damage; ~800–1,600 items/month chain-wide (~200–370/week; a ~25–35% subset of W91's total damage volume)",
+    "Owner": "Department Supervisor",
+    "Participants": "Department Supervisor, Stock Associate, Store Manager, Category Manager (for markdown decisions)",
+    "Trigger": "Store Associate identifies merchandise with damaged packaging but intact product during shelf replenishment or customer return; or weekly damaged goods review cycle",
+    "Volume": "~60–80% of items with packaging damage can be reconditioned and resold at full or reduced price; ~PHP 2,000–5,000 average item value for building materials"
+   },
+   "id": "W1437",
+   "level": 2,
+   "name": "Store-Level Building Material Damaged Package Reconditioning & Resaleable Recovery Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route to W91\" (replaces manual Step 1).",
+     "- System auto-generate of \"printed replacement label\" (replaces manual Step 2).",
+     "- System auto-scan of \"scans original barcode\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's product mix includes many construction materials sold in packaging that is easily damaged during transit, handling, and in-store display: cement bags (torn), tile boxes (crushed), lumber wrap (torn), paint cans (dented), hardware blister packs (torn), and pipe bundles (strapping broken). Unlike consumer electronics or fashion retail where damaged packaging renders the product unsellable, most building materials remain fully functional despite packaging damage — a dented paint can still contains usable paint, a torn cement bag can be re-bagged. Currently, many stores default to writing off damaged-packaging items as shrinkage or returning them to vendors (RTV per W88), even when the product itself is perfectly saleable. This workflow establishes a structured reconditioning process to maximize recovery value: full-price resale for minor packaging damage (re-bagged, re-labeled), reduced-price resale for visible cosmetic damage, and RTV/disposition only as a last resort. At ~800–1,600 items/month chain-wide (per the Frequency) with ~60–80% recovery potential, this represents ~PHP 12M–75M/year in recovered revenue (9,600–19,200 items/yr × 60–80% × PHP 2,000–5,000)."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: manager authorization requirement for markdowns > 20% and audit trail per W1174"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconditioning labor vs. recovery value**: spending 10 minutes reconditioning a PHP 50 item may not be cost-effective; Department Supervisors should prioritize reconditioning for items > PHP 200 retail value",
+     "- **Customer perception**: some customers may be reluctant to purchase reconditioned items at full price if they perceive the packaging damage as indicative of product quality issues; clear signage (\"Product intact — new packaging\") mitigates this",
+     "- **Markdown abuse risk**: staff could classify items as Level 2 to purchase at markdown for personal use; mitigated by manager authorization requirement for markdowns > 20% and audit trail per W1174"
+    ],
+    "Staffing Implication": [
+     "- Stock Associates: ~3–5 min/day per store (1–2 hours/month at 4–8 items/month). Absorbed into existing shelf replenishment duties.",
+     "- Department Supervisors: ~30 min/week on markdown authorization and reporting. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Damage classification module — Level 1/2/3 tagging with barcode (W1437.1)",
+     "- Markdown authorization workflow — Level 2 markdown price generation with manager approval (W1437.3)",
+     "- Reconditioning supply inventory — tracked as consumables in store inventory (W1437.4)",
+     "- Integration with W91 (damaged goods disposition), W88 (RTV), W13 (pricing/markdown), W276 (cycle count)"
+    ],
+    "Time Estimate": [
+     "- Per item classification: 3 min × ~200–370 items/week (per the Frequency) = ~10–18 hours/week chain-wide",
+     "- Per item reconditioning (L1, ~half of the 60–80% recoverable): 5 min × ~120–290 items/week = ~10–24 hours/week",
+     "- Per item reconditioning (L2, the other half): 5–10 min × ~120–290 items/week = ~10–48 hours/week",
+     "- Weekly reporting: 30 min × 200 stores = 100 hours/week",
+     "- **Annual chain-wide estimate: ~7,500–10,000 hours/year (absorbed by Stock Associates)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Damage identification and classification**: Stock Associate or Department Supervisor identifies item with damaged packaging during shelf replenishment or customer return; classify damage severity: (a) Level 1 (minor): label damage, minor box creasing, blister pack torn but product intact — reconditionable for full price, (b) Level 2 (moderate): significant box damage, dented can, torn bag but product intact — reconditionable at markdown, (c) Level 3 (severe): product damaged or contaminated — route to W91 (damaged goods disposition)",
+     "duration": "3 min per item",
+     "n": "1",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Level 1 reconditioning (full-price resale)**: For Level 1 items: (a) Stock Associate replaces damaged label with system-printed replacement label (barcode, SRP, item description), (b) re-boxes or re-bags item using generic packaging supplies stocked at each store (brown wrapping paper, plain boxes, cable ties, packing tape), (c) verifies product integrity (weigh/measure if catch-weight), (d) returns to shelf with standard SRP — no markdown required",
+     "duration": "5 min per item",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Level 2 reconditioning (markdown resale)**: For Level 2 items: (a) Department Supervisor determines markdown percentage: 10–20% for cosmetic packaging damage, 20–30% for significant packaging damage with exposed product, (b) Store Manager authorizes markdown if > 20%, (c) system generates markdown label with original SRP and markdown price clearly displayed, (d) item placed on dedicated \"Open Box / Damaged Packaging\" rack near checkout or in applicable department, (e) POS scans original barcode; system applies markdown price from markdown authorization",
+     "duration": "5–10 min per item",
+     "n": "3",
+     "r": "Department Supervisor / Stock Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Reconditioning supplies management**: Store maintains reconditioning supply kit: (a) replacement labels (thermal printer stock), (b) generic boxes (5 sizes), (c) brown wrapping paper and bubble wrap, (d) cable ties and strapping, (e) packing tape, (f) \"Open Box\" shelf tags; Stock Associate monitors supply levels and requests replenishment from DC via standard replenishment order when supplies run low",
+     "duration": "15 min/week",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "**Weekly reconditioning report**: Store Manager compiles weekly reconditioning summary: (a) items reconditioned by level (L1, L2), (b) recovery value: L1 items at full price, L2 items at markdown — total revenue recovered, (c) items routed to disposition (L3) — unrecoverable loss, (d) report submitted to Regional Manager for trend analysis; stores with high L3 rates flagged for root cause investigation (receiving damage, vendor packaging quality)",
+     "duration": "30 min/week",
+     "n": "5",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1174",
+    "W13",
+    "W276",
+    "W88",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-255"
+   ],
+   "fields": {
+    "Frequency": "4–6 major seasonal transitions per year (Jan–Feb post-holiday renovation, Mar–Apr summer, Jun–Aug rainy season, Sep–Oct ber-months, Nov–Dec Christmas); each transition involves ~500–800 seasonal SKUs",
+    "Owner": "Category Manager (Merchandising)",
+    "Participants": "Category Manager, Merchandise Planner, Pricing Analyst, Store Managers, VP Merchandising, Marketing Campaign Manager",
+    "Trigger": "Seasonal calendar transition (e.g., rainy season → ber-months); or seasonal SKU sell-through falls below 30% of initial allocation with 4 weeks remaining in season",
+    "Volume": "~500–800 seasonal SKUs per transition; ~200 stores; ~100,000–160,000 store-level SKU-location combinations requiring disposition decision"
+   },
+   "id": "W1438",
+   "level": 2,
+   "name": "Seasonal SKU End-of-Life Transition, Markdown Cadence & Remaining Stock Balancing Across Stores",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates weekly sell-through report by SKU by store\" (replaces manual Step 1).",
+     "- System auto-create of \"create inter-store transfer orders per W22\" (replaces manual Step 2).",
+     "- System auto-count of \"discount retailers, liquidators, or LGU donation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot operates with a seasonal merchandise calendar aligned to Philippine construction and consumer patterns: summer (aircon, garden, outdoor), rainy season (waterproofing, flood control, tarps), and ber-months (holiday décor, lighting, home renovation). Seasonal SKUs (~500–800 per season, including Christmas lights, flood control items, garden furniture, and promotional bundles) must be cleared before the next seasonal reset to avoid carrying over stale inventory that occupies valuable shelf space. Unlike core SKUs that are perpetually replenished, seasonal SKUs have a finite selling window; once the window closes, remaining inventory must be aggressively marked down and cleared. This workflow manages the structured end-of-life transition: progressive markdown cadence (25% → 40% → 60% → clearance), cross-store inventory balancing (move excess from low-selling stores to high-selling stores), and final disposition (clearance sale, donation, or write-off)."
+    ],
+    "Controls": [
+     "- CTL-255 (ensure controlled execution — Inventory Disposition & Optimization (PA-05.3).)",
+     "- operational: Category Manager (Merchandising) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Markdown timing trade-off**: marking down too early sacrifices margin on items that would have sold at full price; marking down too late leaves excess inventory that must be written off; the progressive cadence (25% → 40% → 60%) balances margin preservation with clearance urgency",
+     "- **Cross-store transfer cost**: transferring seasonal inventory between stores incurs freight cost that may exceed the margin recovery; transfers should only be executed for items where freight cost < expected margin recovery at destination store",
+     "- **Store Manager resistance**: Store Managers may resist dedicating prime shelf space to clearance merchandise, preferring to stock core items instead; VP Merchandising must enforce seasonal clearance compliance"
+    ],
+    "Staffing Implication": [
+     "- Merchandise Planner: ~3–5 hours/week during active seasonal transitions. Absorbed within existing role.",
+     "- Category Managers: ~4–6 hours per seasonal transition for markdown decisions and review. Absorbed.",
+     "- Pricing Analyst: ~2 hours per markdown phase execution. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seasonal sell-through dashboard — real-time sell-through rate by SKU by store with automated alerting (W1438.1)",
+     "- Progressive markdown engine — scheduled markdown phases with automatic POS price update (W1438.3)",
+     "- Inter-store transfer module — seasonal inventory balancing order creation (W1438.2)",
+     "- Integration with W1 (assortment planning), W13 (pricing), W22 (transfers), W92 (shrinkage), W86 (planogram reset)"
+    ],
+    "Time Estimate": [
+     "- Weekly monitoring (in-season): 2 hours/week × 8 weeks/season × 4–6 seasons = 64–96 hours/year",
+     "- Cross-store balancing: 4 hours/transition × 4–6 transitions = 16–24 hours/year",
+     "- Markdown phases: 2 hours × 3 phases × 4–6 seasons = 24–36 hours/year",
+     "- Post-season review: 4 hours/season × 4–6 seasons = 16–24 hours/year",
+     "- **Annual estimate: ~120–180 hours/year**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Seasonal sell-through monitoring**: Merchandise Planner monitors weekly sell-through rate for all seasonal SKUs: (a) system generates weekly sell-through report by SKU by store, (b) flag SKUs with < 30% sell-through at midpoint of selling window, (c) flag SKUs with < 60% sell-through at 75% of selling window, (d) flag stores with disproportionate remaining inventory vs. chain average",
+     "duration": "2 hours/week",
+     "n": "1",
+     "r": "Merchandise Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Cross-store inventory balancing**: For SKUs with high remaining inventory at specific stores but strong sell-through at other stores: (a) Merchandise Planner identifies transfer candidates: stores with > 2 weeks supply of seasonal SKU AND stores with < 1 week supply still receiving customer inquiries, (b) create inter-store transfer orders per W22 (transfer process) — seasonal inventory transferred from overstocked to understocked stores, (c) prioritize transfers for bulky items (garden furniture, Christmas displays) that consume shelf space at slow-selling locations, (d) target: complete balancing within 1 week of identification",
+     "duration": "4 hours/transition",
+     "n": "2",
+     "r": "Merchandise Planner / Logistics Coordinator"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Progressive markdown cadence activation**: Based on sell-through monitoring: (a) **Phase 1 markdown (25% off)**: triggered at 75% of selling window for SKUs with < 50% sell-through; applies to all stores chain-wide, (b) **Phase 2 markdown (40% off)**: triggered at 85% of selling window for SKUs with < 70% sell-through, (c) **Phase 3 markdown (60% off)**: triggered at 95% of selling window for ALL remaining seasonal SKUs regardless of sell-through; final clearance push, (d) **Phase 4 clearance/bulk-out**: any remaining inventory after selling window closes — offer to discount retailers, liquidators, or LGU donation; Pricing Analyst executes markdown in ERP with effective dates; POS auto-applies markdown price",
+     "duration": "2 hours per markdown phase",
+     "n": "3",
+     "r": "Pricing Analyst / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-season write-off and shelf reset**: After selling window closes: (a) Merchandise Planner compiles remaining seasonal inventory report by store, (b) for items not sold at Phase 3 clearance: Category Manager approves write-off per W92 (shrinkage authorization) or donation per W1106, (c) Store Managers execute shelf reset: remove seasonal signage, clear seasonal shelves, restock with next-season merchandise per planogram, (d) system updates seasonal SKU status to \"inactive\" until next season's assortment planning per W1",
+     "duration": "1–2 days per store",
+     "n": "4",
+     "r": "Category Manager / Store Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-season performance review**: Category Manager conducts seasonal performance review: (a) sell-through rate by SKU, (b) markdown cost (margin erosion from progressive markdowns), (c) leftover inventory value and write-off cost, (d) cross-store transfer effectiveness, (e) total seasonal category revenue vs. plan, (f) recommend adjustments for next year's seasonal buy quantities and allocation by store",
+     "duration": "4 hours/season",
+     "n": "5",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W1106",
+    "W13",
+    "W22",
+    "W86",
+    "W92"
+   ]
+  }
+ ]
+}

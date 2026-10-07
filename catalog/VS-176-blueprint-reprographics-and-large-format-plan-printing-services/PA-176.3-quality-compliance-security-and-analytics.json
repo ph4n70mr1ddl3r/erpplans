@@ -1,0 +1,587 @@
+{
+ "process_area": {
+  "id": "PA-176.3",
+  "title": "Print Quality, Compliance, Document Security & Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-176-blueprint-reprographics-and-large-format-plan-printing-services/PA-176.3-quality-compliance-security-and-analytics.md",
+ "value_stream": {
+  "directory": "VS-176-blueprint-reprographics-and-large-format-plan-printing-services",
+  "id": "VS-176",
+  "name": "Blueprint, Reprographics & Large-Format Plan Printing Services"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-101",
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Per job + calibration cycle",
+    "Owner": "Reprographics Operator / Quality / Metrology (VS-115)",
+    "Participants": "Operator, Quality, Metrology (VS-115), Store Services Lead",
+    "Trigger": "Each completed job (W5090/W5092); calibration cycle; defect/complaint",
+    "Volume": "~all jobs × QC"
+   },
+   "id": "W5097",
+   "level": 2,
+   "name": "Print Quality, Color/Scale Accuracy & Dimensional Verification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-scale/color verification; defect-rate analytics; calibration-due auto-alert (W5088)"
+    ],
+    "Controls": [
+     "- CTL-101 (ensure reprographics IP & file-handling control.)",
+     "- CTL-760: QC before release; scale verified (VS-115); calibration current (W5088)"
+    ],
+    "Cross-references": [
+     "- links to VS-115 (calibration); W5088 (maintenance), W5090 (printing), W5099 (analytics), W5102 (complaints)"
+    ],
+    "Pain Points / Risks": [
+     "- **Scale-error risk**: Wrong print scale → jobsite/construction error (high-consequence for B2B); mitigated by dimensional verification (VS-115)",
+     "- **Defect-acceptance risk**: Defective print accepted → complaint/rework; mitigated by QC before release",
+     "- **Calibration-drift risk**: Color/scale drift unnoticed; mitigated by calibration cycle (W5088/VS-115)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Quality/dimensional check; calibration/metrology (VS-115); print-management (W5086); analytics (W5099); maintenance (W5088)"
+    ],
+    "Time Estimate": [
+     "- ~QC per job (minutes)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Services Lead",
+     "activity": "Verify print quality: line definition, color accuracy (profile), no banding/bleed/smudge, media integrity, and finishing quality (binding/folding)",
+     "duration": "Per job",
+     "n": "1",
+     "r": "Operator / Quality"
+    },
+    {
+     "a": "Store Services Lead",
+     "activity": "Verify scale/dimensional accuracy: print-to-scale correctness (critical for construction plans — a wrong scale is a jobsite error), using calibrated measurement (VS-115)",
+     "duration": "Per job",
+     "n": "2",
+     "r": "Operator / Metrology"
+    },
+    {
+     "a": "Store Services Lead",
+     "activity": "Defect handling & rework: re-print defects (W5090), log defect rate, and feed calibration/maintenance (W5088) + analytics (W5099)",
+     "duration": "Per defect",
+     "n": "3",
+     "r": "Operator / Quality"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5086",
+    "W5088",
+    "W5090",
+    "W5092",
+    "W5099",
+    "W5102"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Analytics/Facilities (VS-28/VS-138) / Director Store Services",
+    "Participants": "Analytics (VS-28), Facilities (VS-138), IT (VS-27), Store Services Lead",
+    "Trigger": "Monthly analytics; downtime incident; capacity planning (W5103)",
+    "Volume": "~all plotters/scanners × monthly"
+   },
+   "id": "W5098",
+   "level": 2,
+   "name": "Reprographics Equipment Performance, Utilization & Downtime Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Equipment telemetry → uptime/utilization dashboard; downtime auto-alert; reliability analytics"
+    ],
+    "Controls": [
+     "- CTL-760 (ensure controlled execution — Print Quality, Compliance, Document Security & Analytics (PA-176.3).)",
+     "- CTL-760: uptime SLA tracked (W5088); utilization reconciled to jobs; PM adherence (VS-138)"
+    ],
+    "Cross-references": [
+     "- links to VS-138 (CMMS), VS-28 (analytics), VS-27 (IT); W5082 (equipment), W5088 (maintenance), W5103 (capacity), W5104 (ROI)"
+    ],
+    "Pain Points / Risks": [
+     "- **Uptime risk**: Frequent downtime → service unreliability & customer loss; mitigated by PM + SLA (W5088)",
+     "- **Utilization-blindness risk**: Under-/over-utilized equipment; mitigated by utilization analytics → rebalancing",
+     "- **Capacity-shortfall risk**: Capacity insufficient at peak (bid cycle); mitigated by capacity planning (W5103)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Print-management telemetry (W5086); CMMS (VS-138); analytics/BI (VS-28); IT (VS-27); capex (VS-35)"
+    ],
+    "Time Estimate": [
+     "- ~monthly analytics cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Store Services",
+     "activity": "Track performance KPIs: uptime, utilization (% busy), throughput (sqm/hr), MTBF, and downtime hours per equipment/site",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Analytics / Facilities"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Diagnose downtime: root-cause (breakdown/supply/PM), SLA adherence (W5088), and substitute-capacity effectiveness",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "Facilities / IT / Analytics"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Drive reliability & capacity: PM/capex plan (W5088/W5082), capacity expansion/rebalancing (W5103), and feed program ROI (W5104)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Director Store Services / Facilities / Analytics"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5082",
+    "W5086",
+    "W5088",
+    "W5103",
+    "W5104"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Analytics/FP&A (VS-28/VS-17.4) / Director Store Services",
+    "Participants": "Analytics (VS-28), Inventory (VS-05), FP&A (VS-17.4), Store Services Lead, Cost Accounting (VS-158)",
+    "Trigger": "Monthly analytics; costing cycle; margin review",
+    "Volume": "~all jobs × cost"
+   },
+   "id": "W5099",
+   "level": 2,
+   "name": "Consumables Yield, Print-Cost Accounting & Margin Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Consumables-yield auto-accounting; per-job cost auto-calc; margin dashboard"
+    ],
+    "Controls": [
+     "- CTL-760 (ensure controlled execution — Print Quality, Compliance, Document Security & Analytics (PA-176.3).)",
+     "- CTL-760: consumables reconciled to jobs (W5084); cost-per-sqm validated (VS-158); margin reconciled (VS-17.4)"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-05 (inventory), VS-158 (cost), VS-17.4 (FP&A); W5083 (pricing), W5084 (consumables), W5097 (quality)"
+    ],
+    "Pain Points / Risks": [
+     "- **Yield-loss risk**: Excess ink/media consumption → margin leakage; mitigated by yield analytics + calibration",
+     "- **Cost-blindness risk**: Jobs costed without full burden → margin illusion; mitigated by cost-per-sqm accounting",
+     "- **Waste risk**: High waste %; mitigated by defect reduction (W5097)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (VS-28); inventory (VS-05); cost/landed cost (VS-158); pricing (VS-01.2); FP&A (VS-17.4); print-management (W5086)"
+    ],
+    "Time Estimate": [
+     "- ~monthly analytics cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Store Services",
+     "activity": "Track consumables yield: ink/media consumption per sqm/job, yield variance, waste %, and consumables inventory accuracy (W5084)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Analytics / Inventory"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Cost-account each job: media + ink + machine + labor + overhead per job (cost-per-sqm — W5083), landed cost of consumables (VS-158), and waste cost",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Analytics / Cost Accounting / FP&A"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Analyse margin & act: gross margin by service/media/site, feed pricing (W5083), consumables sourcing (W5084), and FP&A (VS-17.4)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Analytics / FP&A / Pricing"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5083",
+    "W5084",
+    "W5086",
+    "W5097"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic disposal",
+    "Owner": "IT/Privacy (VS-27/VS-91) / Director Store Services",
+    "Participants": "IT (VS-27), Privacy/DPO (VS-91), Legal (VS-100), Compliance (VS-22), Store Services Lead",
+    "Trigger": "Job intake/retention (W5089); disposal cycle; privacy refresh; DSAR",
+    "Volume": "~all stored customer documents"
+   },
+   "id": "W5100",
+   "level": 2,
+   "name": "Customer Document Confidentiality, RA 10173 Data-Privacy & Secure Disposal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Retention auto-purge; access-control logging; DSAR workflow; breach-detection (VS-91)"
+    ],
+    "Controls": [
+     "- CTL-760 (ensure controlled execution — Print Quality, Compliance, Document Security & Analytics (PA-176.3).)",
+     "- CTL-760: consent at intake (RA 10173/VS-91); retention enforced; access controlled (VS-27); secure-disposal with chain-of-custody; DSAR handled"
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT), VS-91 (privacy/DPO), VS-100 (legal), VS-22 (compliance), VS-21 (audit), VS-88 (records); W5087 (IP), W5089 (intake), W5093 (storage)"
+    ],
+    "Pain Points / Risks": [
+     "- **Retention-violation risk**: Holding documents beyond consent (RA 10173); mitigated by retention policy + auto-purge",
+     "- **Breach risk**: Customer plan/bid data leaked; mitigated by encryption + access control + breach response (VS-91)",
+     "- **Disposal-compliance risk**: Insecure shred/purge; mitigated by secure-disposal protocol + chain-of-custody"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT security/access control (VS-27); privacy/DPO (VS-91); print-management retention (W5086); secure-disposal; records (VS-88); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~policy at setup; periodic disposal cycle; per DSAR/incident"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Store Services / DPO",
+     "activity": "Govern document confidentiality & RA 10173: consent at intake (W5087/W5089), purpose/retention limits, access control on stored files (W5093), and sealed-bid/sensitive handling",
+     "duration": "At setup + ongoing",
+     "n": "1",
+     "r": "Privacy/DPO / IT / Legal"
+    },
+    {
+     "a": "Director Store Services / DPO",
+     "activity": "Secure-dispose: physical-document secure shred, digital-file secure-purge per retention policy, and chain-of-custody documentation",
+     "duration": "Per cycle",
+     "n": "2",
+     "r": "IT / Privacy / Store Services Lead"
+    },
+    {
+     "a": "Director Store Services / DPO",
+     "activity": "Handle DSAR/incident: data-subject access requests (RA 10173), breach response (VS-91), and audit evidence (VS-21)",
+     "duration": "Per request",
+     "n": "3",
+     "r": "Privacy/DPO / Legal / Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5086",
+    "W5087",
+    "W5089",
+    "W5093"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-101",
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "At setup + ongoing admin + renewal",
+    "Owner": "IT (VS-27/VS-99/VS-135) / Director Store Services",
+    "Participants": "IT (VS-27), IT-Asset/SAM (VS-99), TBM/FinOps (VS-135), Legal (license — VS-100)",
+    "Trigger": "Software/cloud setup; license renewal; system admin",
+    "Volume": "~3–5 print-management software + cloud + RIP licenses per site"
+   },
+   "id": "W5101",
+   "level": 2,
+   "name": "Software License, Cloud Subscription & Print-Management System Administration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- License-utilization monitoring (VS-99); cloud-spend FinOps (VS-135); patching automation"
+    ],
+    "Controls": [
+     "- CTL-101 (ensure reprographics IP & file-handling control.)",
+     "- CTL-760: licenses compliant (VS-99); spend within budget (VS-135); system patched/secured (VS-27)"
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT), VS-99 (SAM), VS-135 (FinOps), VS-03 (vendor); W5086 (portal), W5083 (pricing config)"
+    ],
+    "Pain Points / Risks": [
+     "- **License-compliance risk**: Under-licensed software → audit penalty; mitigated by SAM (VS-99)",
+     "- **Spend-leakage risk**: Under-used cloud/licenses; mitigated by FinOps/utilization (VS-135)",
+     "- **Integration/security risk**: Mis-configured system/integration; mitigated by IT admin + patching (VS-27)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT/SAM (VS-99); TBM/FinOps (VS-135); IT operations (VS-27); print-management config (W5086); procurement/vendor (VS-03)"
+    ],
+    "Time Estimate": [
+     "- ~ongoing admin; ~quarterly cost review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Store Services / CIO",
+     "activity": "Manage licenses & subscriptions: print-management software, RIP (raster image processor), cloud (W5086), license count vs usage, and renewal/true-up (links VS-99/VS-135)",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "IT / IT-Asset / TBM"
+    },
+    {
+     "a": "CIO",
+     "activity": "Administer the print-management system: user/role access, job-queue, pricing/tariff config (W5083), integrations (POS/O2C VS-08/VS-16), and security patching",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "Director Store Services / CIO",
+     "activity": "Cost-optimize & govern: software/cloud spend vs budget (VS-135), license utilization (eliminate shelfware), and vendor management (VS-03)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "IT / TBM / Procurement"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5083",
+    "W5086"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Customer Service (VS-13) / Store Services Lead",
+    "Participants": "Customer Service (VS-13), Store Services Lead, Operator/Quality, CX assurance (VS-146)",
+    "Trigger": "Customer complaint/defect; VOC; rework",
+    "Volume": "~10–30 complaint/rework cases per year"
+   },
+   "id": "W5102",
+   "level": 2,
+   "name": "Reprographics Customer Satisfaction, Complaint & Rework Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Ticket auto-routing; VOC→program analytics; defect-root-cause trending"
+    ],
+    "Controls": [
+     "- CTL-760 (ensure controlled execution — Print Quality, Compliance, Document Security & Analytics (PA-176.3).)",
+     "- CTL-760: SLA + escalation (VS-13); refunds O2C-controlled (VS-16); systemic defects fed to program (W5104)"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (CX), VS-146 (CX assurance), VS-16 (O2C); W5090 (reprint), W5097 (quality), W5099 (analytics), W5104 (program)"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-breach risk**: Slow resolution → customer churn (B2B account loss); mitigated by SLA + escalation (VS-13)",
+     "- **Repeat-defect risk**: Systemic quality defect unresolved; mitigated by root-cause + feedback (W5097/W5099)",
+     "- **B2B-account-loss risk**: A bad reprographics experience on bid day loses a trade account; mitigated by priority B2B handling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CX/ticketing (VS-13.1); print-management (W5086); O2C/refund (VS-16); VOC analytics (VS-28); CX assurance (VS-146)"
+    ],
+    "Time Estimate": [
+     "- ~per case; ~continuous"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "Intake & triage: capture complaint (quality/late/defect/billing), classify, route, and acknowledge within SLA (VS-13)",
+     "duration": "Per case",
+     "n": "1",
+     "r": "Customer Service / Store Services Lead"
+    },
+    {
+     "a": "Store Services Lead / Customer Service Manager",
+     "activity": "Resolve & rework: address the issue (re-print W5090, refund W5096, expedite), root-cause the defect (links W5097/W5099), and confirm resolution with customer",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Store Services Lead / Operator / O2C"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "Close & learn: record VOC/resolution (VS-13), feed CX analytics & mystery-shopping (VS-146), and flag systemic defects to the program (W5104)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Customer Service / Analytics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5086",
+    "W5090",
+    "W5096",
+    "W5097",
+    "W5099",
+    "W5104"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Monthly/quarterly",
+    "Owner": "Analytics/Store Ops (VS-28/VS-07) / Director Store Services",
+    "Participants": "Analytics (VS-28), Store Ops (VS-07), Trade Pro (VS-43), S&OP (VS-127), HR/Staffing (VS-19.3)",
+    "Trigger": "Planning cycle; bid/permit season; capacity review",
+    "Volume": "~15–25 service sites × demand forecast"
+   },
+   "id": "W5103",
+   "level": 2,
+   "name": "Service Demand Seasonality, Capacity Forecasting & Staffing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Time-series demand model; bid-cycle scenario planning; staffing recommendation"
+    ],
+    "Controls": [
+     "- CTL-760 (ensure controlled execution — Print Quality, Compliance, Document Security & Analytics (PA-176.3).)",
+     "- CTL-760: forecast reconciled to actuals; capacity/staffing within budget; feeds S&OP (VS-127)"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-19.3 (WFM), VS-127 (S&OP), VS-43 (trade pro); W5084 (consumables), W5095 (bid-set), W5098 (capacity)"
+    ],
+    "Pain Points / Risks": [
+     "- **Peak-capacity risk**: Insufficient capacity at bid cycle → deadline-miss/customer loss (W5095); mitigated by seasonality forecast",
+     "- **Over-staffing risk**: Excess staff in low season; mitigated by demand-driven staffing (VS-19.3)",
+     "- **Consumables-shortage risk**: Ink/media out at peak; mitigated by demand-linked replenishment (W5084)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/forecasting (VS-28); WFM/staffing (VS-19.3); S&OP (VS-127); CRM/account pipeline (VS-43/VS-107); consumables (W5084)"
+    ],
+    "Time Estimate": [
+     "- ~continuous model; ~quarterly planning"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Store Services",
+     "activity": "Forecast demand: model job seasonality (bid/permit cycles, construction season, government fiscal-year bidding), trade-pro account pipeline (VS-43), and external drivers",
+     "duration": "Monthly/Quarterly",
+     "n": "1",
+     "r": "Analytics / Trade Pro"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Plan capacity & staffing: translate demand to equipment capacity (W5098), consumables (W5084), and counter staffing (VS-19.3) for peak windows",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Analytics / Store Ops / HR"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Reconcile & refine: compare forecast to actual, adjust capacity/staffing, and feed S&OP (VS-127)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Analytics / FP&A"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5084",
+    "W5095",
+    "W5098"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-760"
+   ],
+   "fields": {
+    "Frequency": "Quarterly/annual",
+    "Owner": "Director Store Services / FP&A (VS-17.4)",
+    "Participants": "FP&A (VS-17.4), Analytics (VS-28), Trade Pro (VS-43), Strategy (VS-33), Store Ops (VS-07)",
+    "Trigger": "Executive review; annual strategy (W5081)",
+    "Volume": "1 program × all service sites"
+   },
+   "id": "W5104",
+   "level": 2,
+   "name": "Reprographics Program Performance, ROI & Cross-Sell Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Reprographics↔account transaction linkage; ROI dashboard; scenario/planning model"
+    ],
+    "Controls": [
+     "- CTL-760 (ensure controlled execution — Print Quality, Compliance, Document Security & Analytics (PA-176.3).)",
+     "- CTL-760: program P&L reconciled to FP&A (VS-17.4); capex within VS-35 envelope; cross-sell measured consistently"
+    ],
+    "Cross-references": [
+     "- links to VS-17.4 (FP&A), VS-28 (analytics), VS-43/VS-107 (trade/B2B), VS-33 (strategy), VS-13 (CRM); W5081 (strategy), W5083 (pricing), W5098 (capacity), W5102 (CX)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stranded-capex risk**: Under-performing sites not exited; mitigated by site-level ROI review",
+     "- **Cross-sell-blindness risk**: Service viewed in isolation vs its B2B-attach contribution; mitigated by linkage analytics",
+     "- **Strategic-drift risk**: Program not adapting to B2B demand/tech; mitigated by annual refresh (W5081)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FP&A (VS-17.4); analytics/BI (VS-28); CRM/account (VS-43/VS-107); capex (VS-35); strategy (VS-33); CX (VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 weeks/quarter ROI + analytics; ~annual steer"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Store Services / CFO",
+     "activity": "Measure program ROI & P&L: revenue, gross margin, equipment/utilization, operating cost, and program P&L vs business case (W5081)",
+     "duration": "Quarterly/Annual",
+     "n": "1",
+     "r": "FP&A / Analytics / Director Store Services"
+    },
+    {
+     "a": "Director Store Services",
+     "activity": "Quantify cross-sell & attach: reprographics→trade-pro/B2B account linkage (VS-43/VS-107), bid-set→project-win correlation, and store-traffic/dwell lift",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Analytics / Trade Pro / Store Ops"
+    },
+    {
+     "a": "Director Store Services / CFO",
+     "activity": "Steer & improve: site expansion/pause/exit, pricing/yield (W5083), capacity (W5098), corrective from complaints (W5102), and strategy refresh (W5081)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Director Store Services / Strategy / FP&A"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5081",
+    "W5083",
+    "W5098",
+    "W5102"
+   ]
+  }
+ ]
+}

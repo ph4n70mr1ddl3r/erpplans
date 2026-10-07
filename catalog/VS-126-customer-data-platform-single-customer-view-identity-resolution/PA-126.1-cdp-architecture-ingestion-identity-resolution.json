@@ -1,0 +1,561 @@
+{
+ "process_area": {
+  "id": "PA-126.1",
+  "title": "CDP Architecture, Ingestion & Identity Resolution"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.1-cdp-architecture-ingestion-identity-resolution.md",
+ "value_stream": {
+  "directory": "VS-126-customer-data-platform-single-customer-view-identity-resolution",
+  "id": "VS-126",
+  "name": "Customer Data Platform, Single Customer View & Identity Resolution"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-146"
+   ],
+   "fields": {
+    "Frequency": "Annual + on change",
+    "Owner": "CDP / Data & Analytics",
+    "Participants": "CDP Team, Data & Analytics (links to VS-28), Enterprise Architecture (links to VS-113), Marketing (links to VS-14), Loyalty (links to VS-13), Ecommerce (links to VS-10), IT (links to VS-27), Privacy/DPO (links to VS-91), Security (links to VS-27.3), Key Account (links to VS-107), Finance (links to VS-17.4)",
+    "Trigger": "Digital/data strategy (links to VS-28/VS-113); clienteling need (links to VS-124)",
+    "Volume": "1 enterprise CDP program"
+   },
+   "id": "W3881",
+   "level": 2,
+   "name": "CDP Strategy, Architecture & Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enterprise data architecture\" (replaces manual Step 1).",
+     "- System auto-record of \"record vs source masters\" (replaces manual Step 2).",
+     "- System auto-count of \"CIO/Executive ratify the strategy, approve the CDP budget\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-146 (ensure consented single-customer-view governance.)",
+     "- operational: architecture review (links to VS-113); operational: CDP strategy and golden-record ownership"
+    ],
+    "Pain Points / Risks": [
+     "- **Build-vs-buy risk**: Custom CDP built when SaaS would suffice (or vice-versa); mitigated by architecture review (links to VS-113)",
+     "- **No-owner risk**: Customer data fragmented with no accountable platform owner; mitigated by CDP strategy and golden-record ownership"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Data architecture (links to VS-113); data warehouse/BI (links to VS-28); privacy/DPIA (links to VS-91); security (links to VS-27.3); loyalty (links to VS-13); ecommerce (links to VS-10); key account (links to VS-107); enablement (links to VS-124)"
+    ],
+    "Time Estimate": [
+     "- 3–4 weeks annual strategy + ongoing governance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO / CIO",
+     "activity": "CDP/Data define the CDP strategy and architecture: the single-customer-view vision, source systems (POS/loyalty/ecommerce/trade/app/CX), the platform build-vs-buy decision, real-time vs batch activation, and alignment to enterprise data architecture (links to VS-113) and data warehouse (links to VS-28)",
+     "duration": "Annual",
+     "n": "1",
+     "r": "CDP / Data / EA"
+    },
+    {
+     "a": "CIO",
+     "activity": "CDP establish governance: CDP steering (Marketing, Loyalty, Ecommerce, Privacy, IT), ownership of the golden record vs source masters (links to VS-29), consent authority (links to VS-91/W3885), data-sharing with partners, and KPIs (resolution rate, activation, CLV uplift, consent coverage)",
+     "duration": "Annual",
+     "n": "2",
+     "r": "CDP / Data / Privacy"
+    },
+    {
+     "a": "CEO / CMO",
+     "activity": "CIO/Executive ratify the strategy, approve the CDP budget (links to W3904), and cascade to consuming functions (Marketing links to VS-14, Loyalty links to VS-13, Key Account links to VS-107, Sales Enablement links to VS-124)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "CIO / CDP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3885",
+    "W3904"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-607"
+   ],
+   "fields": {
+    "Frequency": "Near-real-time (POS/ecommerce events) + batch (nightly)",
+    "Owner": "CDP / IT",
+    "Participants": "CDP Team, IT/Data Engineering (links to VS-27/VS-28), EA (links to VS-113), POS (links to VS-08), Ecommerce (links to VS-10), Loyalty (links to VS-13), Trade/AR (links to VS-16/VS-11), Mobile App (links to VS-75), CX (links to VS-13), Privacy (links to VS-91)",
+    "Trigger": "Source event / batch cycle",
+    "Volume": "2.8M POS txns/month + ~42,900 ecommerce orders/month + ~600K loyalty + trade/app/CX events"
+   },
+   "id": "W3882",
+   "level": 2,
+   "name": "Customer Data Ingestion & Source-System Integration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-flag of \"CDP/Privacy ingest with lawful basis and consent tags attached\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitor pipeline health and data freshness\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-607 (ensure controlled execution — CDP Architecture, Ingestion & Identity Resolution (PA-126.1).)",
+     "- operational: event-stream ingestion; operational: consent-at-ingestion control (links to VS-91)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stale-data risk**: Batch-only ingestion delays personalization; mitigated by event-stream ingestion",
+     "- **Consent-detachment risk**: Data ingested without consent tags; mitigated by consent-at-ingestion control (links to VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Integration layer/API gateway (links to VS-113/W257); data warehouse/ETL (links to VS-28/W614); POS (links to VS-08); ecommerce (links to VS-10); loyalty (links to VS-13); AR/trade (links to VS-16); app (links to VS-75); privacy (links to VS-91); IT ops (links to VS-27)"
+    ],
+    "Time Estimate": [
+     "- Maintained pipelines + ~2–5 days per new source"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/IT engineer ingestion from all customer-touching sources: POS (links to VS-08, near-real-time event stream), ecommerce (links to VS-10), loyalty engine (links to VS-13), trade/AR (links to VS-16/VS-11), mobile app (links to VS-75), CX/complaints (links to VS-13), marketing/email (links to VS-14), and service/installation (links to VS-12) — via the integration layer (links to VS-113/W257)",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "CDP / Data Engineering / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Privacy ingest with lawful basis and consent tags attached at the point of ingestion (links to VS-91/W3885), apply minimization/pseudonymization where appropriate, and handle data-subject rights flags",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Privacy / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/IT operate ingestion SLA, monitor pipeline health and data freshness (links to VS-27 W595/W614), and handle source-schema changes (links to VS-27.1/W616)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W257",
+    "W3885",
+    "W595",
+    "W614",
+    "W616"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-607"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "CDP / Data Science",
+    "Participants": "CDP Team, Data Science (links to VS-30.2), Data Engineering (links to VS-28/VS-27), Loyalty (links to VS-13), Ecommerce (links to VS-10), Trade (links to VS-11/VS-16), Privacy (links to VS-91), Fraud (links to VS-125/W3861)",
+    "Trigger": "Ingestion (W3882); new identifier",
+    "Volume": "~600K loyalty + ~515K ecommerce customers/yr + cash walk-ins; identity graph maintained"
+   },
+   "id": "W3883",
+   "level": 2,
+   "name": "Customer Identity Resolution & Profile Stitching",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"account, card token\" (replaces manual Step 1).",
+     "- System auto-review of \"review, and handle household/B2B-account-group resolution\" (replaces manual Step 2).",
+     "- System auto-log of \"logic for DSAR response\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-607 (ensure controlled execution — CDP Architecture, Ingestion & Identity Resolution (PA-126.1).)",
+     "- operational: confidence thresholds and survivorship rules; operational: deterministic-first matching"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-merge risk**: Probabilistic match merges two distinct customers (wrong personalization, privacy breach); mitigated by confidence thresholds and survivorship rules",
+     "- **Under-merge risk**: Same customer split across records defeats the single view; mitigated by deterministic-first matching"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Identity graph engine; data warehouse (links to VS-28); loyalty (links to VS-13); ecommerce (links to VS-10); trade/AR (links to VS-16); key account (links to VS-107); fraud device graph (links to VS-125); privacy (links to VS-91)"
+    ],
+    "Time Estimate": [
+     "- Maintained identity graph + continuous tuning"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data Science build identity resolution: deterministic matching on verified identifiers (loyalty ID, email, phone, trade account, card token) and probabilistic matching on device/behavior/name/address for anonymous-to-known stitching (links to VS-125 device graph for fraud), with confidence scoring and survivorship rules",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "CDP / Data Science"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP stitch profiles into the resolved identity graph, surface duplicate/split identities for review, and handle household/B2B-account-group resolution (links to VS-107 key account hierarchy)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Data Science"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Privacy ensure resolution complies with RA 10173 (lawful basis, no unlawful re-identification of anonymized data, cross-entity sharing limits — links to VS-91/VS-72) and document the resolution logic for DSAR response (links to W3900)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Privacy"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3861",
+    "W3882",
+    "W3900"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-607"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "CDP / Data Governance",
+    "Participants": "CDP Team, Data Governance (links to VS-29/VS-28.2), Loyalty (links to VS-13), Ecommerce (links to VS-10), Trade (links to VS-11/VS-16), Marketing (links to VS-14), Privacy (links to VS-91), Insights (links to VS-28.1)",
+    "Trigger": "Resolution (W3883); profile update",
+    "Volume": "~600K–1M+ resolved customer profiles"
+   },
+   "id": "W3884",
+   "level": 2,
+   "name": "Customer Golden Record & Master Profile Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"CDP/Data-Governance define and maintain the golden customer record\" (replaces manual Step 1).",
+     "- System auto-capture of \"CDP publish the golden record as the system-of-truth for\" (replaces manual Step 2).",
+     "- System auto-file of \"profile with computed attributes\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-607 (ensure controlled execution — CDP Architecture, Ingestion & Identity Resolution (PA-126.1).)",
+     "- operational: explicit survivorship rules; operational: bidirectional sync and governance (links to VS-29)"
+    ],
+    "Pain Points / Risks": [
+     "- **Survivorship-conflict risk**: Conflicting attributes across sources; mitigated by explicit survivorship rules",
+     "- **Source-drift risk**: Source masters diverge from golden record; mitigated by bidirectional sync and governance (links to VS-29)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Golden record/profile API; customer master (links to VS-29); POS lookup (links to VS-08); ecommerce (links to VS-10); clienteling (links to VS-124); key account (links to VS-107); contact center (links to VS-13); data governance (links to VS-28.2)"
+    ],
+    "Time Estimate": [
+     "- Maintained golden record + continuous enrichment"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data-Governance define and maintain the golden customer record: the canonical attributes (identity, contact, preferences, segments, CLV, lifecycle stage, consent), survivorship rules across sources (which source wins for each attribute), and the relationship to the foundational customer master (links to VS-29)",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "CDP / Data Governance"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP publish the golden record as the system-of-truth for consuming channels (POS customer lookup links to VS-08, ecommerce links to VS-10, clienteling links to VS-124, key account links to VS-107, contact center links to VS-13) via real-time profile API",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Insights enrich the profile with computed attributes (RFM, lifetime value links to W3894, churn risk, next-best-action, propensities) and lifecycle events (first-purchase, trade-onboarding, lapse)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Data Science / Insights"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3883",
+    "W3894"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-146"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "CDP / Privacy",
+    "Participants": "CDP Team, Privacy/DPO (links to VS-91), Marketing (links to VS-14), Loyalty (links to VS-13), Ecommerce (links to VS-10), Mobile App (links to VS-75), Legal (links to VS-100), IT (links to VS-27)",
+    "Trigger": "Customer consent change; channel engagement; privacy requirement",
+    "Volume": "~600K+ consent records; per-channel/per-purpose preferences"
+   },
+   "id": "W3885",
+   "level": 2,
+   "name": "Customer Consent, Preference & Compliance Center",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"operate the consent-and-preference center\" (replaces manual Step 1).",
+     "- System workflow notification of \"suppress non-consented contacts from campaigns\" (replaces manual Step 2).",
+     "- System continuous audit of \"maintain the consent audit trail\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-146 (ensure consented single-customer-view governance.)",
+     "- operational: consent-at-activation enforcement; operational: central consent center"
+    ],
+    "Pain Points / Risks": [
+     "- **Consent-drift risk**: Marketing contacts customers without valid consent (NPC exposure under RA 10173); mitigated by consent-at-activation enforcement",
+     "- **Fragmented-consent risk**: Consent captured per-channel not unified; mitigated by central consent center"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consent/preference center; golden profile (links to W3884); marketing/email (links to VS-14); loyalty (links to VS-13); app (links to VS-75); ecommerce (links to VS-10); privacy/NPC (links to VS-91); legal (links to VS-100)"
+    ],
+    "Time Estimate": [
+     "- Maintained consent center + continuous enforcement"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Privacy operate the consent-and-preference center: capture per-purpose consent (marketing email/SMS/push, profiling, third-party sharing, location), per-channel preferences, and age/parental-consent where applicable (links to VS-91), with the consent record attached to the golden profile (links to W3884)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "CDP / Privacy / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing enforce consent at activation: suppress non-consented contacts from campaigns (links to VS-14/W1184), honor channel preferences and frequency caps, and support preference-center self-service (links to VS-75 app / VS-10 web)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Marketing / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Privacy/Legal maintain the consent audit trail (who/when/what/for-what-purpose) for NPC compliance and DSAR (links to W3900), handle consent expiry/renewal, and respond to regulator inquiries (links to VS-91)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Privacy / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1184",
+    "W3884",
+    "W3900"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-607"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic hygiene",
+    "Owner": "CDP / Data Governance",
+    "Participants": "CDP Team, Data Governance (links to VS-29/VS-28.2), Data Engineering (links to VS-27/VS-28), Loyalty (links to VS-13), Ecommerce (links to VS-10), Trade (links to VS-11/VS-16), Insights (links to VS-28.1)",
+    "Trigger": "Ingestion (W3882); DQ cycle",
+    "Volume": "~600K–1M records; DQ rules across identity/contact/transaction"
+   },
+   "id": "W3886",
+   "level": 2,
+   "name": "Customer Data Quality, Deduplication & Hygiene",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-post of \"CDP/Data-Governance run continuous customer DQ\" (replaces manual Step 1).",
+     "- System auto-count of \"account verification refresh\" (replaces manual Step 2).",
+     "- System auto-route of \"route source-system fixes to source owners\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-607 (ensure controlled execution — CDP Architecture, Ingestion & Identity Resolution (PA-126.1).)",
+     "- operational: engagement-based hygiene; operational: continuous dedup and source controls (links to VS-29)"
+    ],
+    "Pain Points / Risks": [
+     "- **Decay risk**: Philippine contact data decays fast (high churn); mitigated by engagement-based hygiene",
+     "- **Duplicate-creep risk**: New duplicates outpace resolution; mitigated by continuous dedup and source controls (links to VS-29)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- DQ rules/dashboards (links to VS-28.2/W734); data governance (links to VS-29); marketing (links to VS-14); trade/KYB (links to VS-16/VS-86); data engineering (links to VS-27/VS-28)"
+    ],
+    "Time Estimate": [
+     "- Continuous DQ + ~1 week/quarter hygiene"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data-Governance run continuous customer DQ: completeness (email/phone/address), validity (format/Philippine-mobile/Postal), accuracy (NCOA-equivalent/bounce), uniqueness (deduplication links to W3883), and consistency (across sources), with DQ dashboards (links to VS-28.2/W734)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "CDP / Data Governance"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP run periodic hygiene: bounce/engagement suppressions for marketing (links to VS-14), deceased/do-not-contact handling, returned-mail/invalid-address cleanup, and trade-account verification refresh (links to VS-16/VS-86 KYB)",
+     "duration": "Periodic",
+     "n": "2",
+     "r": "CDP / Marketing / Trade"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP triage and remediate DQ issues (links to VS-27 W734 data-quality triage), route source-system fixes to source owners (links to VS-29), and report DQ KPIs (validity %, duplicate rate)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Data Governance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3882",
+    "W3883",
+    "W734"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-607"
+   ],
+   "fields": {
+    "Frequency": "Maintained + on change",
+    "Owner": "CDP / Data Architecture",
+    "Participants": "CDP Team, Data Architecture (links to VS-113/VS-28), Marketing (links to VS-14), Loyalty (links to VS-13), Merchandising (links to VS-01), Trade (links to VS-11/VS-107), Insights (links to VS-28.1/VS-44), Data Science (links to VS-30.2)",
+    "Trigger": "Architecture (W3881); segmentation need",
+    "Volume": "1 CDP data model + taxonomy"
+   },
+   "id": "W3887",
+   "level": 2,
+   "name": "CDP Data Model, Taxonomy & Segmentation Foundation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"profile/identity/event/consent/segment entities, the event taxonomy\" (replaces manual Step 1).",
+     "- System auto-log of \"catalog for self-service activation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-607 (ensure controlled execution — CDP Architecture, Ingestion & Identity Resolution (PA-126.1).)",
+     "- operational: governed segment catalog; operational: dual customer-type modeling"
+    ],
+    "Pain Points / Risks": [
+     "- **Taxonomy-drift risk**: Free-form segments proliferate; mitigated by governed segment catalog",
+     "- **B2C-B2B conflation risk**: Trade and retail modeled the same; mitigated by dual customer-type modeling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CDP data model; data architecture (links to VS-113); merchandising/assortment (links to VS-01); loyalty (links to VS-13); trade (links to VS-11/VS-107); analytics (links to VS-28.1); data governance (links to VS-28.2)"
+    ],
+    "Time Estimate": [
+     "- Maintained model + continuous segment lifecycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Data-Architecture design the CDP data model and taxonomy: profile/identity/event/consent/segment entities, the event taxonomy (purchase/return/browse/abandon/service/complaint/app-engagement), category-affinity mapping (links to VS-01 assortment), and trade-vs-retail customer modeling (links to VS-11/VS-107)",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "CDP / Data Architecture"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Marketing/Loyalty define the segmentation foundation: standard segments (RFM, lifecycle, tier, trade-pro vs DIY, category-affinity, channel-preference, value-tier), computed and refreshed on the profile (links to W3884)",
+     "duration": "Maintained",
+     "n": "2",
+     "r": "CDP / Marketing / Loyalty"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Insights publish the segment catalog for self-service activation (links to W3891), with governance on segment definition and usage (links to VS-28.2/W1177)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CDP / Insights / Data Governance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1177",
+    "W3881",
+    "W3884",
+    "W3891"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-146"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "CDP / IT",
+    "Participants": "CDP Team, IT (links to VS-27), Security (links to VS-27.3), Enterprise Architecture (links to VS-113), Privacy (links to VS-91), Vendor/Cloud (links to VS-27 W369), Finance (links to VS-17.4/FinOps W373)",
+    "Trigger": "Platform lifecycle; access request; security event",
+    "Volume": "1 CDP platform; ~100–300 entitled users across functions"
+   },
+   "id": "W3888",
+   "level": 2,
+   "name": "CDP Platform Operations, Security & Access Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- workflow automation; system-driven processing with exception handling"
+    ],
+    "Controls": [
+     "- CTL-146 (ensure consented single-customer-view governance.)",
+     "- operational: least-privilege and field masking (links to VS-91); operational: SLA and fallback"
+    ],
+    "Pain Points / Risks": [
+     "- **PII-exposure risk**: Over-entitled users access full PII; mitigated by least-privilege and field masking (links to VS-91)",
+     "- **Vendor-lockout risk**: CDP SaaS outage blocks personalization; mitigated by SLA and fallback"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT ops (links to VS-27.2); security/PAM (links to VS-27.3); access recertification (links to VS-27 W832/W1408); privacy/DPIA (links to VS-91); vendor/SLA (links to VS-27 W369); FinOps (links to VS-27.2 W373)"
+    ],
+    "Time Estimate": [
+     "- Continuous ops + quarterly access review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/IT operate the CDP platform: availability, performance, environment management (links to VS-27.2), backup/recovery (links to VS-27.2 W382), patch/release (links to VS-27.1 W495), and FinOps/cloud cost (links to VS-27.2 W373)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "CDP / IT"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Security govern access: role-based access, least-privilege, quarterly recertification (links to VS-27 W832/W1408), segregation of duties, field-level masking for sensitive attributes (links to VS-91), and PII encryption/tokenization",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CDP / Security / Privacy"
+    },
+    {
+     "a": "CDP Lead",
+     "activity": "CDP/Vendor manage the CDP SaaS/vendor contract (links to VS-34/VS-100.3), SLA (links to VS-27 W369), and DPIA for vendor data-processing (links to VS-91/W389), and handle incident response (links to VS-27.3/W53)",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "CDP / IT / Privacy / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1408",
+    "W369",
+    "W373",
+    "W382",
+    "W389",
+    "W495",
+    "W53",
+    "W832"
+   ]
+  }
+ ]
+}

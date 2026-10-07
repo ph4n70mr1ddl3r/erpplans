@@ -1,0 +1,602 @@
+{
+ "process_area": {
+  "id": "PA-164.3",
+  "title": "Maintenance, Integration, Compliance & Network Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-164-smart-locker-and-automated-parcel-collection-network/PA-164.3-maintenance-integration-compliance-and-network-analytics.md",
+ "value_stream": {
+  "directory": "VS-164-smart-locker-and-automated-parcel-collection-network",
+  "id": "VS-164",
+  "name": "Smart Locker & Automated Parcel Collection Network"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-724"
+   ],
+   "fields": {
+    "Frequency": "Per bank monthly + continuous monitoring",
+    "Owner": "Locker Program Manager / Facilities (VS-138)",
+    "Participants": "Facilities, Locker vendor (W4794), Store Ops (VS-07)",
+    "Trigger": "Calendar interval; platform health alert (W4807); post-storm (VS-69)",
+    "Volume": "~all locker banks across the network"
+   },
+   "id": "W4809",
+   "level": 2,
+   "name": "Locker Preventive Maintenance, Cleaning & Hardware Health",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Platform-health-driven PM scheduling; predictive-fault from pattern analytics; auto-fault ticketing (W4810)"
+    ],
+    "Controls": [
+     "- CTL-724 (ensure controlled execution — Maintenance, Integration, Compliance & Network Analytics (PA-164.3).)",
+     "- CTL-724: monthly PM per bank; locks/sensors/readers tested; bank cleaned/maintained; refrigeration checked (W4806)"
+    ],
+    "Cross-references": [
+     "- links to VS-138 (facilities PM), VS-35 (asset), VS-69 (typhoon), W4807 (platform health), W4810 (fault response), W4815 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Lock-mechanism-failure risk**: Failed locks → compartments stuck (W4808) or security gap (VS-23); mitigated by lock testing & PM",
+     "- **Degradation risk**: Unnoticed gradual sensor/reader degradation → failed pickups; mitigated by health monitoring + predictive maintenance (VS-133)",
+     "- **Storm-damage risk**: Typhoon/water damage to outdoor lockers (VS-69); mitigated by weatherproofing + post-storm inspection"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Facilities/PM (VS-138 W240 pattern); platform health (W4807); asset register (VS-35); vendor SLA (W4794); analytics (W4815)"
+    ],
+    "Time Estimate": [
+     "- ~per bank PM 1–2 hrs; ~continuous monitoring absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Locker Program Manager / Facilities Lead",
+     "activity": "Run the PM schedule per bank: lock/door mechanism test, compartment sensors, screen/camera/reader functionality, refrigeration check (W4806) where applicable, structural/weatherproofing (outdoor), and firmware/platform health (W4807); trigger from the asset register",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Facilities / Locker Technician"
+    },
+    {
+     "a": "Locker Program Manager",
+     "activity": "Monitor hardware health continuously via the platform (W4807): lock-failure rate, sensor faults, connectivity, and reader/camera issues; auto-flag degradation before failure; coordinate with the vendor SLA (W4794)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT / Facilities / Locker Program"
+    },
+    {
+     "a": "Facilities Lead",
+     "activity": "Clean and maintain the bank: compartment interiors, screens, cameras, signage/wayfinding (VS-14), and the surrounding area; post-typhoon inspection (VS-69) for outdoor lockers; keep the bank safe/presentable (CX VS-13)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Facilities / Store Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W240",
+    "W4794",
+    "W4806",
+    "W4807",
+    "W4808",
+    "W4810",
+    "W4815"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724"
+   ],
+   "fields": {
+    "Frequency": "Per fault",
+    "Owner": "Locker Program Manager / Facilities (VS-138) / IT (VS-27)",
+    "Participants": "Locker technician, Vendor (W4794), Store Ops (VS-07), IT (VS-27), CX (VS-13)",
+    "Trigger": "Platform fault alert (W4807); customer-reported fault; failed pickup",
+    "Volume": "~40–100 locker faults/month at scale (scales with network size)"
+   },
+   "id": "W4810",
+   "level": 2,
+   "name": "Reactive Fault Triage, Field Repair & Vendor Dispatch",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Platform auto-fault-ticket + dispatch; parts-availability check; pickup-test automation; root-cause analytics"
+    ],
+    "Controls": [
+     "- CTL-724 (ensure controlled execution — Maintenance, Integration, Compliance & Network Analytics (PA-164.3).)",
+     "- CTL-724: faults triaged & dispatched per SLA; security faults responded immediately; fixes retested; root-cause fed to PM"
+    ],
+    "Cross-references": [
+     "- links to VS-138 (facilities), VS-31 (parts), VS-27 (IT), W4794 (vendor SLA), W4807 (platform), W4804/W4805 (customer impact), W4811 (security), W4815 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Long-downtime risk**: Slow fault response → failed pickups + poor CX; mitigated by SLA + spare-parts availability",
+     "- **Security-fault risk**: A lock/security fault → theft exposure (VS-23/W4811); mitigated by immediate response",
+     "- **Recurring-defect risk**: Same fault repeating across banks; mitigated by root-cause → vendor escalation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Platform fault/asset (W4807); facilities/service (VS-138); parts (VS-31); vendor SLA (W4794); CX (VS-13); analytics (W4815)"
+    ],
+    "Time Estimate": [
+     "- ~per fault 1 hr–1 day depending on severity/parts"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Locker Program Manager",
+     "activity": "Triage the fault from platform data: classify (lock/sensor/screen/reader/connectivity/refrigeration/security), severity (safety/security-critical vs degraded), and scope (single compartment/bank/site/network); safety/security faults → immediate response (W4811)",
+     "duration": "Per fault",
+     "n": "1",
+     "r": "Facilities / IT / Locker Program"
+    },
+    {
+     "a": "Locker Program Manager",
+     "activity": "Dispatch repair: in-house technician for simple fixes (lock/sensor/clean/restart) or vendor field service under SLA (W4794); manage spare-parts (VS-31), customer impact (re-route orders W4804, notify affected customers W4805), and the repair SLA",
+     "duration": "Per fault",
+     "n": "2",
+     "r": "Facilities / Vendor / Procurement / CX"
+    },
+    {
+     "a": "Locker Program Manager",
+     "activity": "Restore, retest, and return to service: verify the fix end-to-end (pickup test), update the asset/fault record (VS-35/W4807), feed root-cause to PM/analytics (W4809/W4815), and escalate recurring manufacturer defects to vendor/warranty (W4794)",
+     "duration": "Per fault",
+     "n": "3",
+     "r": "Facilities / Locker Program"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4794",
+    "W4804",
+    "W4805",
+    "W4807",
+    "W4809",
+    "W4811",
+    "W4815"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724"
+   ],
+   "fields": {
+    "Frequency": "Per event",
+    "Owner": "LP Director (VS-23) / Locker Program",
+    "Participants": "LP (VS-23), Store Ops (VS-07), Police (VS-159 pattern), Vendor, Insurance (VS-26)",
+    "Trigger": "Security event; tamper alert; theft/vandalism report; fault (W4810)",
+    "Volume": "~20–60 security events/year scaling with network (esp. outdoor/off-site W4798)"
+   },
+   "id": "W4811",
+   "level": 2,
+   "name": "Security, Vandalism, Theft & Loss Prevention at Lockers",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Tamper auto-alert + camera capture; authentication-log forensics; fraud-pattern detection (VS-125)"
+    ],
+    "Controls": [
+     "- CTL-724 (ensure controlled execution — Maintenance, Integration, Compliance & Network Analytics (PA-164.3).)",
+     "- CTL-724: security events responded immediately; camera/auth evidence preserved; police engaged for theft; losses recovered/insured (VS-26)"
+    ],
+    "Cross-references": [
+     "- links to VS-23 (LP/CCTV), VS-125 (fraud), VS-159 (police coordination pattern), VS-26 (insurance), VS-101/VS-32 (refund/returns), W4802 (auth logs), W4809/W4810 (PM/fault), W4815 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Theft-vandalism risk**: Outdoor/off-site lockers targeted → merchandise/access loss + downtime; mitigated by camera/tamper security and rapid response",
+     "- **Customer-fraud risk**: Wrong-person pickup via shared codes (VS-125); mitigated by authenticated one-time credentials (W4802)",
+     "- **Evidence-loss risk**: Lost camera/log evidence → failed investigation; mitigated by evidence preservation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LP/CCTV (VS-23 W538/W207); platform authentication logs (W4802); police coordination (VS-159); insurance (VS-26); refund (VS-101); analytics (W4815)"
+    ],
+    "Time Estimate": [
+     "- ~per event 2–8 hrs response + investigation days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Director / Locker Program Manager",
+     "activity": "Respond to the security event: tamper/vandalism/theft at a locker (especially outdoor/off-site W4798); preserve camera evidence (VS-23), secure the bank, and assess customer/merchandise impact; coordinate with police for theft/vandalism (VS-159 pattern)",
+     "duration": "Per event",
+     "n": "1",
+     "r": "LP / Store Ops / Police"
+    },
+    {
+     "a": "LP Director",
+     "activity": "Investigate: review camera/platform logs (who opened what, when — W4802 authentication), determine whether it was customer-side fraud (VS-125 wrong-person pickup), external theft/vandalism, or an internal/process gap; recover stolen items/compartment access and manage the customer refund/replacement (VS-101/VS-32) for any loss",
+     "duration": "Per event",
+     "n": "2",
+     "r": "LP / IT / CX / Police"
+    },
+    {
+     "a": "LP Director / Locker Program Manager",
+     "activity": "Remediate and prevent: harden the affected bank/site (camera coverage, anti-tamper, relocation if repeatedly targeted), update the security case, feed lessons to LP analytics (VS-23) and improvement (VS-133), and manage insurance claims (VS-26) for unrecovered loss",
+     "duration": "Per event",
+     "n": "3",
+     "r": "LP / Facilities / Insurance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W207",
+    "W4798",
+    "W4802",
+    "W4809",
+    "W4810",
+    "W4815",
+    "W538"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724",
+    "CTL-95"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic audit",
+    "Owner": "Locker Program Manager / Compliance (VS-22) / Store Ops (VS-07)",
+    "Participants": "Compliance (VS-22), Store Ops (VS-07), CX (VS-13), Facilities (VS-138)",
+    "Trigger": "Site launch (W4816); accessibility audit (VS-76/VS-21); assistance need",
+    "Volume": "~1,000–2,000 PWD/senior locker customers/month across the network"
+   },
+   "id": "W4812",
+   "level": 2,
+   "name": "Accessibility (PWD/Senior) Compliance & Inclusive Locker Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Accessibility-audit checklist; compartment-height monitoring; assistance-request button → store-team alert"
+    ],
+    "Controls": [
+     "- CTL-95 (ensure locker network custody & uptime.)",
+     "- CTL-724: PWD-accessible compartments/placement per RA 7277/BP 344; assistance available; eligible customers treated per VS-85; audited periodically"
+    ],
+    "Cross-references": [
+     "- links to VS-07 (store ops), VS-76/VS-22 (accessibility compliance), VS-13 (CX/NPS), VS-85 (mandatory discount/eligible), VS-133 (improvement), W4805 (assistance), W4816 (OCM/training)"
+    ],
+    "Pain Points / Risks": [
+     "- **Accessibility-non-compliance risk**: Compartments/placement not RA 7277/BP 344 compliant → regulatory + exclusion; mitigated by accessible spec and audit",
+     "- **Assistance-gap risk**: Customers who can't self-service → poor CX; mitigated by store-team assistance + help button",
+     "- **Mandatory-treatment risk**: Eligible customers (VS-85) not served correctly; mitigated by compliance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store ops (VS-07); compliance/LGU accessibility (VS-22/VS-76); CX/NPS (VS-13); facilities (VS-138); mandatory discount (VS-85)"
+    ],
+    "Time Estimate": [
+     "- ~continuous; ~periodic audit absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Locker Program Manager / Compliance",
+     "activity": "Maintain PWD/senior-accessible locker compartments and placement: lower compartments at reachable height (RA 7277/BP 344), accessible screen/reader/QR placement, clear wayfinding/signage, and accessible path to the bank (no steps, ≥1.2 m clearance per VS-76 pattern); audit periodically",
+     "duration": "Continuous + periodic",
+     "n": "1",
+     "r": "Facilities / Compliance / LP"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Provide customer assistance: store-team help for PWD/senior/less-tech-savvy customers (start pickup, retrieve from a high compartment, carry a bulky item), an on-site help button (W4805), and priority service for mandatory-discount-eligible segments (VS-85); brief per OCM (W4816)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Store Ops / CX"
+    },
+    {
+     "a": "Locker Program Manager / CX",
+     "activity": "Manage the accessibility CX and feedback: capture accessibility feedback/NPS (VS-13), remediate barriers (VS-133), and ensure mandatory-discount/treatment-compliant service for eligible customers (VS-85) at the locker channel",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CX / Store Ops / Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4805",
+    "W4816"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724"
+   ],
+   "fields": {
+    "Frequency": "Continuous + per DSAR + annual review",
+    "Owner": "Locker Program Manager (joint with DPO VS-91)",
+    "Participants": "DPO (VS-91), Cyber (VS-27.3), Legal (VS-100.3), TPRM (VS-161)",
+    "Trigger": "Network launch (privacy-by-design); DSAR; periodic privacy review (VS-91); breach",
+    "Volume": "~all locker transactions collect customer/recipient PII; ~DSARs per year"
+   },
+   "id": "W4813",
+   "level": 2,
+   "name": "Data Privacy & Consent for Locker Customer/Recipient Data",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Consent registry auto-update; DSAR workflow (VS-91.2 W271); retention-auto-purge; breach playbook (VS-91)"
+    ],
+    "Controls": [
+     "- CTL-724 (ensure controlled execution — Maintenance, Integration, Compliance & Network Analytics (PA-164.3).)",
+     "- CTL-724: data minimized & classified; camera/3P-sharing consent + DPA; secured (VS-27.3); retention per VS-88 then purge; DSAR handled (VS-91.2)"
+    ],
+    "Cross-references": [
+     "- links to VS-91/VS-91.2 (privacy/DPIA/DSAR W271/W3052), VS-27.3 (cyber), VS-88 (records), VS-161 (TPRM), VS-23 (camera/LP), W4799 (3P sharing/DPA)"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-collection risk**: Collecting more PII/camera data than needed → RA 10173 exposure; mitigated by data minimization",
+     "- **3P-sharing risk**: Recipient data shared with carriers without a DPA (VS-91); mitigated by carrier DPAs (W4799)",
+     "- **Breach risk**: Compromised access/camera data → privacy harm; mitigated by VS-27.3 security + DPIA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Privacy/consent registry (VS-91.2); DPIA (VS-91.2 W3052); cyber (VS-27.3); records/retention (VS-88); DSAR workflow (VS-91.2 W271); TPRM (VS-161)"
+    ],
+    "Time Estimate": [
+     "- ~DPIA 2–4 weeks at launch; ~DSAR per SLA; ~annual review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO / Locker Program Manager",
+     "activity": "Govern the personal data the locker program collects: customer/recipient identity, contact (app/SMS/email), access codes/biometrics if used, order/parcel data, camera footage (VS-23), and 3P-recipient data (W4799) — classify per VS-91, minimize collection, secure storage (VS-27.3), retention aligned to operational/legal need then purge (VS-88)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Privacy / Cyber / Locker Program"
+    },
+    {
+     "a": "DPO",
+     "activity": "Handle DSAR per RA 10173 (VS-91.2 W271): access, correction, erasure (where legally permissible), objection; manage consent for camera/recording ( signage notice), 3P-recipient data sharing (W4799 DPA), and the do-not-track/opt-out; coordinate with the DPO",
+     "duration": "Per DSAR",
+     "n": "2",
+     "r": "Privacy / Locker Program / IT"
+    },
+    {
+     "a": "DPO / Locker Program Manager",
+     "activity": "Run the breach-response path if locker PII/access/camera data is compromised (VS-91 breach, NPC 72-hour); DPIA for high-risk processing (biometrics, large-scale recipient data, 3P-sharing); annual privacy review with the DPO and Cyber (VS-27.3); manage the locker vendor as TPRM (VS-161)",
+     "duration": "On event + annual",
+     "n": "3",
+     "r": "Privacy / Cyber / TPRM / DPO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W271",
+    "W3052",
+    "W4799"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724",
+    "CTL-95"
+   ],
+   "fields": {
+    "Frequency": "Continuous + monthly",
+    "Owner": "Locker Program Manager / IT (VS-27)",
+    "Participants": "Locker vendor (W4794), IT (VS-27), Finance (VS-17), Legal (VS-100.3)",
+    "Trigger": "Continuous SLA monitoring; monthly vendor review; SLA breach",
+    "Volume": "1 network SLA across all locker banks (uptime target ≥ 98%)"
+   },
+   "id": "W4814",
+   "level": 2,
+   "name": "Uptime/SLA Management, Availability Reporting & Vendor Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Platform availability auto-dashboard; SLA-breach auto-penalty; live availability feed to app"
+    ],
+    "Controls": [
+     "- CTL-95 (ensure locker network custody & uptime.)",
+     "- CTL-724: uptime monitored vs SLA; penalties/credits administered; live availability published; performance feeds strategy"
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT), W4794 (vendor SLA), W4807 (platform), W4810 (repair), W4811 (security), VS-75 (app), W4793/W4815 (strategy/analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-underperformance risk**: Persistent vendor underperformance → poor CX + lost revenue; mitigated by penalty administration and re-compete",
+     "- **Availability-opacity risk**: Customers not seeing live status → failed trips; mitigated by live availability publishing",
+     "- **Penalty-dispute risk**: Disputed SLA measurements; mitigated by platform-sourced authoritative metrics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Platform availability (W4807); vendor SLA/governance (W4794); finance (VS-17); legal (VS-100.3); app (VS-75); analytics (W4815)"
+    ],
+    "Time Estimate": [
+     "- ~continuous monitoring; ~monthly review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Locker Program Manager",
+     "activity": "Monitor uptime/SLA per the vendor contract (W4794) and internal targets: per-bank and network availability, compartment fault rate, session-success (W4802), time-to-repair (W4810), and security-event rate (W4811); track against SLA thresholds via the platform (W4807)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "IT / Locker Program"
+    },
+    {
+     "a": "Locker Program Manager / Legal",
+     "activity": "Administer SLA penalties/credits and vendor governance: where the vendor underperforms, apply contractual credits/penalties (W4794), manage performance improvement plans, and escalate persistent underperformance to re-compete (W4794); reconcile with Finance",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Locker Program / Finance / Legal"
+    },
+    {
+     "a": "Locker Program Manager",
+     "activity": "Report availability internally (store ops, leadership) and publish locker availability to customers (app VS-75) so customers see live status before traveling; feed uptime to analytics (W4815) and the network-strategy review (W4793)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "IT / Locker Program / App team"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4793",
+    "W4794",
+    "W4802",
+    "W4807",
+    "W4810",
+    "W4811",
+    "W4815"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly + annual",
+    "Owner": "Locker Program Manager / Analytics (VS-28)",
+    "Participants": "Ecommerce (VS-10), Finance (VS-17.4), Marketing (VS-14), CX (VS-13)",
+    "Trigger": "Monthly/quarterly review; annual strategy/capex (W4793/W4800); CX program (VS-13)",
+    "Volume": "1 group analytics view"
+   },
+   "id": "W4815",
+   "level": 2,
+   "name": "Network Analytics, Utilization & Footfall-to-Basket Measurement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Platform-to-analytics auto-feed; footfall-to-basket attribution (POS × pickup); cost-per-pickup; capex-reallocation recommendations"
+    ],
+    "Controls": [
+     "- CTL-724 (ensure controlled execution — Maintenance, Integration, Compliance & Network Analytics (PA-164.3).)",
+     "- CTL-724: network performance + footfall-to-basket + abandonment reported; outcomes feed strategy/capex/improvement"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-10 (ecommerce), VS-08 (POS/basket), VS-17.4 (FP&A), VS-13 (CX/NPS), VS-118 (revenue assurance), W4793/W4800 (strategy/capex), W4804/W4808/W4814 (inputs)"
+    ],
+    "Pain Points / Risks": [
+     "- **Strategic-invisibility risk**: If footfall/basket uplift not measured, the program is cut; mitigated by the KPI set",
+     "- **Attribution-error risk**: Mis-attributing basket to locker pickup; mitigated by rigorous attribution methodology (VS-28)",
+     "- **Utilization-blindspot risk**: Idle compartments at some banks; mitigated by the reallocation loop"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (VS-28); platform data (W4807); ecommerce/OMS (VS-10); POS/basket (VS-08); finance/FP&A (VS-17.4); CX/NPS (VS-13); revenue assurance (VS-118)"
+    ],
+    "Time Estimate": [
+     "- ~monthly 2–3 days; ~quarterly leadership review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Locker Program Manager",
+     "activity": "Track network performance: banks live, availability/uptime (W4814), utilization (pickups/compartment/day, returns via locker, 3P parcels), session-success, abandonment rate (W4804), pickup-success/time-to-pickup (W4805), exception rate (W4808), and cost per pickup; benchmark across sites",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Analytics / Ecommerce / Locker Program"
+    },
+    {
+     "a": "Locker Program Manager / GM, Digital Commerce Inc.",
+     "activity": "Track the footfall/basket impact: incremental store visits from locker pickups, basket attach during pickup, conversion of pickup-visits to purchases, returns-channel shift (counter → locker cost saving), and 3P revenue; attribute basket uplift via POS × locker-pickup data (links VS-28/VS-118)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Analytics / Marketing / Finance"
+    },
+    {
+     "a": "GM, Digital Commerce Inc. / COO",
+     "activity": "Report to leadership quarterly and feed the annual strategy/capex case (W4793/W4800): reallocate capex from under- to over-performing sites, adjust own/partner and in-store/off-site mix, drive improvement (VS-133), and report CX/NPS impact (VS-13)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Analytics / Locker Program / Strategy"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4793",
+    "W4800",
+    "W4804",
+    "W4805",
+    "W4807",
+    "W4808",
+    "W4814"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-724"
+   ],
+   "fields": {
+    "Frequency": "Per site",
+    "Owner": "Locker Program Manager / PMO (VS-112) / Store Ops (VS-07)",
+    "Participants": "PMO (VS-112), Facilities (VS-138), IT (VS-27), OCM (VS-134), CX (VS-13)",
+    "Trigger": "Commissioning complete (W4797); site about to go live",
+    "Volume": "~each site at launch"
+   },
+   "id": "W4816",
+   "level": 2,
+   "name": "Go-Live Readiness, Site Acceptance & Hypercare for New Locker Sites",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SAT checklist automation; platform-health dashboard; fault-rate-gated hypercare-exit; OCM training module"
+    ],
+    "Controls": [
+     "- CTL-724 (ensure controlled execution — Maintenance, Integration, Compliance & Network Analytics (PA-164.3).)",
+     "- CTL-724: SAT passed before public launch; store team trained (VS-134); hypercare exited only on stability criteria"
+    ],
+    "Cross-references": [
+     "- links to VS-112 (PMO/go-live), VS-134 (OCM/training), VS-07 (store ops), VS-27/W4807 (platform), VS-138 (facilities), VS-13 (CX), VS-133 (lessons), W4809/W4810 (steady-state ops)"
+    ],
+    "Pain Points / Risks": [
+     "- **Premature-go-live risk**: Launching with unresolved integration/security faults → poor first impression; mitigated by the SAT gate",
+     "- **Store-team-unprepared risk**: Staff can't stage/assist/escalate → customer frustration; mitigated by OCM training (VS-134)",
+     "- **Hypercare-exit-too-early risk**: Moving to steady-state before stability → recurring faults; mitigated by stability criteria"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PMO/go-live (VS-112); OCM/training (VS-134); IT/platform (VS-27/W4807); store ops (VS-07); facilities (VS-138); CX (VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~per site SAT + hypercare 2–4 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Locker Program Manager",
+     "activity": "Run the go-live readiness & site-acceptance test (SAT): end-to-end test (order→compartment→access-code→pickup→confirm→OMS/inventory update; returns; 3P; security/tamper; accessibility), integration health (W4807), signage/wayfinding (VS-14), and store-team readiness; obtain sign-off before public launch",
+     "duration": "Per site",
+     "n": "1",
+     "r": "Locker Program / Facilities / IT / OCM"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Train the store team (VS-134 OCM): staging/replenishment (W4801), assisting pickups/returns (W4805), exception handling (W4808), accessibility assistance (W4812), and security/fault escalation (W4810/W4811); brief on the customer journey and the cross-sell opportunity",
+     "duration": "Per site",
+     "n": "2",
+     "r": "OCM / Store Ops / Locker Program"
+    },
+    {
+     "a": "Locker Program Manager",
+     "activity": "Enter hypercare: intensified monitoring (uptime, faults, session-success, pickup-success) for the first weeks, rapid-issue resolution with the vendor, and transition to steady-state operations (W4809/W4810) once stable; capture lessons for the next site (VS-133)",
+     "duration": "Per site",
+     "n": "3",
+     "r": "Locker Program / IT / Vendor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4797",
+    "W4801",
+    "W4805",
+    "W4807",
+    "W4808",
+    "W4809",
+    "W4810",
+    "W4811",
+    "W4812"
+   ]
+  }
+ ]
+}

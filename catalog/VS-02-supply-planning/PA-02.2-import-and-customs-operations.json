@@ -1,0 +1,876 @@
+{
+ "process_area": {
+  "id": "PA-02.2",
+  "title": "Import & Customs Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-02-supply-planning/PA-02.2-import-and-customs-operations.md",
+ "value_stream": {
+  "directory": "VS-02-supply-planning",
+  "id": "VS-02",
+  "name": "Supply Planning"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "Weekly; ~20–30 import shipments/month (multiple containers per shipment; ~400–600 TEUs/month)",
+    "Owner": "Import Coordinator",
+    "Participants": "Buyer, Import Coordinator, Freight Forwarder, Customs Broker, Finance, DC Receiving",
+    "Trigger": "Import Purchase Order (W2B) approved and sent to overseas vendor",
+    "Volume": "Primary sourcing from China, Vietnam, Thailand, and Europe"
+   },
+   "id": "W144",
+   "level": 2,
+   "name": "International Logistics & Import Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review\" (replaces manual Step 1).",
+     "- System auto-send of \"sends L/C to vendor bank\" (replaces manual Step 2).",
+     "- System auto-import of \"Import Coordinator coordinates with Freight Forwarder for vessel booking\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: processing times vary widely"
+    ],
+    "Pain Points / Risks": [
+     "- **Philippine port congestion**: Manila International Container Terminal (MICT) and South Harbor experience chronic congestion, especially during pre-Christmas peak (August–October); container dwell times can double, triggering demurrage charges (W249) and delaying DC replenishment",
+     "- **Customs clearance unpredictability**: BOC E2M system processing times vary widely; non-compliant documentation (incorrect HS code, missing Certificate of Origin) can add 3–7 days of clearance delay per shipment",
+     "- **Foreign exchange exposure**: Import POs are denominated in USD or CNY while revenue is in PHP; the 4–8 week shipment cycle exposes BuildRight to significant FX variance between PO creation and actual payment",
+     "- **Container damage and pilferage risk**: Long transit times and multiple handling points (origin port, transshipment, destination port, haulage) increase the risk of cargo damage; inadequate container seal verification at DC receiving can mask pilferage; mitigated by CTL-244 (controlled execution — Import & Customs Operations (PA-02.2))",
+     "---"
+    ],
+    "Staffing Implication": [
+     "1 Import Coordinator full-time managing 20–30 containers/month (~40–60 hours/week). Finance (Treasury): ~2–3 days/month for L/C opening and duty payments across active shipments. Customs Broker: external partner, budgeted as logistics cost. DC Receiving: ~4 hours/container for stripping and blind count, absorbed by existing DC receiving crew. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import Shipment Tracker (Container level)",
+     "- Landed Cost Module (aggregating multiple invoices to a single PO line)",
+     "- Integration with BOC E2M (if via API) or manual entry of entry numbers",
+     "- Demurrage/Detention alert system based on \"Last Free Day\""
+    ],
+    "Time Estimate": [
+     "- Proforma Invoice review: 1 hour/shipment",
+     "- L/C opening (if applicable): 2–3 days (Finance/Treasury + bank processing)",
+     "- Production confirmation and vessel booking: 2–5 days",
+     "- Shipping document collection: 1 day",
+     "- In-transit tracking: Ongoing (~15 min/day/active shipment)",
+     "- Customs entry filing: 1–2 days",
+     "- Duty payment processing: 4 hours",
+     "- Cargo release and haulage: 1–3 days",
+     "- DC container stripping and blind count: 4 hours/container",
+     "- Landed cost finalization: Automated",
+     "- **Total cycle time (order to DC receipt)**: 4–8 weeks depending on origin and shipping mode"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Proforma Invoice (PI) Review**: Receive PI from vendor; verify against PO (W2B); check payment terms (L/C, T/T, CAD)",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Buyer"
+    },
+    {
+     "a": "CFO",
+     "activity": "**L/C Opening (if applicable)**: Finance coordinates with Bank to open Letter of Credit; sends L/C to vendor bank",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "Finance (Treasury)"
+    },
+    {
+     "a": "—",
+     "activity": "**Production & Booking**: Vendor confirms production completion; Import Coordinator coordinates with Freight Forwarder for vessel booking (FCL/LCL)",
+     "duration": "2–5 days",
+     "n": "3",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Shipping Documents**: Receive set of documents: Bill of Lading (B/L), Commercial Invoice, Packing List, Certificate of Origin (for FTA benefits like ATIGA/ACFTA)",
+     "duration": "1 day",
+     "n": "4",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**In-Transit Tracking**: Update system with vessel name, container ID, and ETA; monitor \"Estimated vs. Actual\" arrival dates",
+     "duration": "Ongoing",
+     "n": "5",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "**Customs Entry**: Customs Broker files entry via BOC E2M system; calculates Duties & Taxes (VAT + Import Duty)",
+     "duration": "1–2 days",
+     "n": "6",
+     "r": "Customs Broker"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Payment of Duties**: Finance processes payment of duties/taxes to BOC via bank portal; system records as \"Inventory in Transit\" cost component",
+     "duration": "4 hours",
+     "n": "7",
+     "r": "Finance"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Release & Haulage**: BOC releases cargo; Forwarder coordinates haulage from Port to DC; monitor \"Port Out\" to avoid demurrage/detention fees",
+     "duration": "1–3 days",
+     "n": "8",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**DC Arrival & Stripping**: DC receives container; verifies seal integrity; strips container and performs \"Blind Count\" against Packing List",
+     "duration": "4 hours",
+     "n": "9",
+     "r": "DC Receiving"
+    },
+    {
+     "a": "Cost Accountant",
+     "activity": "**Cost Finalization**: System aggregates all landed costs (Product + Freight + Duties + Brokerage + Wharfage) to calculate final Landed WAC",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W249",
+    "W2B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "Ongoing per import shipment",
+    "Owner": "Import Coordinator",
+    "Participants": "Buyer, Insurance Provider, Finance, Freight Forwarder",
+    "Trigger": "Import PO creation (W2B) or Shipment Booking (W144)",
+    "Volume": "~400–600 TEUs/month"
+   },
+   "id": "W191",
+   "level": 2,
+   "name": "Global Supply Chain — Incoterm & Marine Insurance Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates risk transfer point\" (replaces manual Step 1).",
+     "- System auto-import of \"Import Coordinator issues\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks shipment location vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Insurance coverage gaps on FOB/EXW shipments**: If Import Coordinator fails to issue the Marine Insurance Declaration promptly after booking, cargo may transit without coverage; a total loss during the gap period is uninsured and directly hits the P&L",
+     "- **Claim documentation complexity**: Marine insurance claims require synchronized documentation (Bill of Lading, Survey Report, Commercial Invoice, Packing List) within strict time windows; Philippine port conditions (humidity, handling) make damage claims common but documentation is often incomplete",
+     "- **Incoterm misunderstanding**: Buyers negotiating EXW terms may not account for the full cost of arranging origin pickup, export clearance, and inland transport; actual landed costs can significantly exceed the quoted FOB equivalent",
+     "- **Insurance recovery timeline**: Marine insurance claim settlement can take 3–6 months, tying up working capital in the insurance receivable ledger and complicating period-end inventory valuation",
+     "---"
+    ],
+    "Staffing Implication": [
+     "~150–300 entries/month (multiple TEUs per entry; 400–600 TEUs/month) × 45 min routine processing = ~110–220 hours/month. Insurance claims: ad-hoc, ~4 hours each. Import Coordinator manages this as part of W144 import operations (~30 min/shipment for insurance booking). Finance Manager reviews claims. Absorbed by existing Import Coordinator and Finance roles. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Incoterm Master Data in Vendor/PO (W191.1)",
+     "- Marine Insurance Declaration Portal (W191.2)",
+     "- Risk Transfer Point Monitoring (W191.3)",
+     "- Insurance Claim Tracking Module (W191.5)"
+    ],
+    "Time Estimate": [
+     "- Incoterm selection and risk transfer setup: 15 min/PO",
+     "- Insurance booking (marine declaration): 30 min/shipment",
+     "- Risk monitoring: Automated",
+     "- Claim initiation (damage/loss): 2 hours/claim",
+     "- Claim filing with provider: 1 hour/claim",
+     "- Settlement recording: 30 min/claim",
+     "- **Total per shipment**: ~45 min routine processing; ~4 hours if claim required"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Incoterm Selection**: Buyer selects Incoterm (EXW, FOB, CFR, CIF) during PO negotiation (W2B); system calculates risk transfer point",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Buyer"
+    },
+    {
+     "a": "—",
+     "activity": "**Insurance Booking**: If Incoterm requires BuildRight to provide insurance (EXW, FOB, CFR), Import Coordinator issues \"Marine Insurance Declaration\"",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Risk Monitoring**: System tracks shipment location vs. risk transfer point (e.g., \"On Board\" for FOB); alerts if insurance coverage gap exists",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Claim Initiation**: If damage/loss occurs during transit (W3.6a), Import Coordinator gathers B/L, Survey Report, and Invoice",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Finance Mgr",
+     "activity": "**Claim Filing**: Submit claim to Marine Insurance provider; track status in ERP",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Settlement**: Finance records insurance recovery; offsets against inventory loss (W3.6a)",
+     "duration": "30 min",
+     "n": "6",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W144",
+    "W2B",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "Ongoing per import shipment (~20–30 shipments/month)",
+    "Owner": "Logistics Manager",
+    "Participants": "Import Coordinator, Customs Broker, Finance Specialist, Shipping Line",
+    "Trigger": "Import container vessel arrival at Philippine port (Manila/Cebu/Davao) (W144)",
+    "Volume": "Covers ~400–600 TEUs/month"
+   },
+   "id": "W249",
+   "level": 2,
+   "name": "Import Port Demurrage & Detention Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates free-time expiration date\" (replaces manual Step 1).",
+     "- System auto-track of \"tracking\" (replaces manual Step 2).",
+     "- System auto-log of \"Logistics Manager to prioritize pickup.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: Logistics Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Demurrage cost escalation**: Philippine port free time is typically only 5 days; customs clearance delays of even 1–2 days (common during BOC system outages or document queries) can trigger PHP 5,000–15,000/day demurrage charges per container, adding 2–5% to landed cost",
+     "- **Shipping line detention fee opacity**: Container detention fees (charged by shipping lines for late empty return) are calculated on different schedules than port demurrage; the dual-clock system is confusing and shipping line invoices are difficult to audit without precise gate-in/gate-out timestamps",
+     "- **Weekend and holiday compounding**: Philippine holidays (average 18 national holidays/year plus local LGU holidays) reduce effective working days for clearance and haulage; containers arriving mid-week before a long weekend are especially vulnerable to demurrage",
+     "- **Dispute resolution leverage**: BuildRight has limited negotiating power against major shipping lines (Maersk, CMA CGM, COSCO) when disputing demurrage charges; disputes are time-consuming and shipping lines may hold subsequent container releases pending payment",
+     "---"
+    ],
+    "Staffing Implication": [
+     "~20–30 shipments/month with routine monitoring absorbed by Import Coordinator as part of W144. Demurrage/detention incidents: ~5–10/month × 3 hours = ~15–30 hours/month from Finance Specialist for auditing and disputes. Logistics Manager provides oversight. Absorbed by existing Import Coordinator and Finance roles. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Port Authority vessel tracking API integration",
+     "- Automated demurrage/detention free-time calculations and system alerting",
+     "- Hauler empty container gate-in/gate-out logs tracking",
+     "- Landed cost integration for port penalty allocations (W2B/W13)"
+    ],
+    "Time Estimate": [
+     "- Vessel arrival tracking and free-time calculation: Automated",
+     "- Clearance progress monitoring: 10 min/shipment/day during clearance window",
+     "- Demurrage alert review: Automated",
+     "- Gate-out and container return coordination: 1–2 days",
+     "- Demurrage/detention charge auditing: 1 hour/charge",
+     "- Dispute or payment processing: 2 hours/charge",
+     "- **Total**: ~15 min/shipment routine monitoring; ~3 hours per demurrage/detention incident"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Vessel Arrival**: System pulls actual arrival time from Port Authority API; calculates free-time expiration date (standard: 5 days demurrage, 3 days detention).",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Mgr",
+     "activity": "**Clearance Tracking**: Import Coordinator monitors customs brokerage clearance progress (W239). If delayed (> 3 days), triggers warning.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "**Demurrage Alert**: System auto-calculates potential demurrage fees if containers are not gate-outed before free-time expiry; alerts Logistics Manager to prioritize pickup.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Mgr",
+     "activity": "**Gate-Out & Return**: Containers are hauled to DC (W3). Hauler returns empty container to designated port yard within shipping line's free-time window.",
+     "duration": "1–2 days",
+     "n": "4",
+     "r": "Hauler / DC Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Charges Auditing**: If demurrage/detention occurs: Shipping line issues invoice; Finance Specialist audits charges against system-captured arrival/gate-out/gate-in logs.",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Finance Specialist"
+    },
+    {
+     "a": "Logistics Mgr",
+     "activity": "**Dispute / Payment**: If charges valid, approve payment to avoid port hold; if invalid, initiate dispute via shipping line portal with log evidence.",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "Finance Specialist"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W144",
+    "W239",
+    "W2B",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "Weekly",
+    "Owner": "Logistics Manager / Import Compliance",
+    "Participants": "Customs Broker, Bureau of Customs (BOC), DC Manager, Finance",
+    "Trigger": "Arrival of imported goods designated for the CBW to defer customs duties until final store allocation.",
+    "Volume": "10-20 containers per week"
+   },
+   "id": "W284",
+   "level": 2,
+   "name": "Customs Bonded Warehouse (CBW) Operations & Duty Deferral",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logical/physical CBW location in the WMS without paying duties\" (replaces manual Step 1).",
+     "- System auto-generate of \"When store replenishment\" (replaces manual Step 3).",
+     "- System rule-based auto-approval of \"approves, and the WMS releases the stock from the CBW location to the standard…\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: Logistics Manager / Import Compliance review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Massive BOC penalties or license revocation if bonded stock is accidentally shipped without duty payment",
+     "- Duty rate changes between import date and withdrawal date can cause landed cost variances not captured at original import",
+     "- CBW storage capacity limits — if bonded inventory accumulates beyond CBW physical capacity, overflow must be re-routed to standard duty-paid locations, negating the deferral benefit",
+     "- Withdrawal approval delays from BOC can block urgent store replenishment, forcing expedited duty payments that compress the cash flow advantage of the deferral program"
+    ],
+    "Staffing Implication": [
+     "10–20 containers/week × ~5 hours receipt processing = ~50–100 hours/week. Withdrawal requests: ~5–10/week × 30 min each = ~3–5 hours. Duty payments: ~5–10/week × 2 hours = ~10–20 hours. 1 Import Compliance Manager + 1 Logistics Coordinator dedicated. Finance Specialist support for duty payments absorbed by existing AP team.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS (Bonded Locations) — logical segregation of duty-unpaid inventory with CBW zone management",
+     "- AP (Duties) — duty payment processing linked to withdrawal quantity",
+     "- Logistics Management — container receipt and CBW location assignment",
+     "- BOC E2M Integration — electronic lodgment of withdrawal declarations and duty calculations",
+     "- Customs Bond Tracking — bond utilization monitoring against total CBW capacity"
+    ],
+    "Time Estimate": [
+     "**Total per withdrawal**: 1–2 days for BOC approval + 4 hours container receipt + 1 hour system tagging + 30 min withdrawal request + 2 hours duty payment. Routine container receipt: ~5 hours. Withdrawal cycle: ~2–3 days elapsed. Weekly management: ~8–12 hours for Import Compliance Mgr across 10–20 containers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Import Compliance Mgr",
+     "activity": "Import container arrives and is received into a designated logical/physical CBW location in the WMS without paying duties (under customs bond).",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Logistics Coordinator"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "System tags the inventory as bonded and unavailable for standard retail sale.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Warehouse Supervisor"
+    },
+    {
+     "a": "Import Compliance Mgr",
+     "activity": "When store replenishment (W4) demands the stock, a formal withdrawal request is generated.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance pays the specific duties/taxes for only the withdrawn quantity (W239).",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Finance Specialist"
+    },
+    {
+     "a": "Import Compliance Mgr",
+     "activity": "BOC approves, and the WMS releases the stock from the CBW location to the standard picking area.",
+     "duration": "1–2 days",
+     "n": "5",
+     "r": "Import Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W239",
+    "W4"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "~400–600 TEUs/month",
+    "Owner": "Import Coordinator (Licensed Broker)",
+    "Participants": "Customs Broker (In-house), Logistics Manager, BOC, Haulier (Trucker)",
+    "Trigger": "Import container arrives at port (Manila/Davao/Cebu)",
+    "Volume": "High; multiple containers per day"
+   },
+   "id": "W464",
+   "level": 2,
+   "name": "In-House Customs Brokerage & Port Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates duties/taxes\" (replaces manual Step 1).",
+     "- System auto-document of \"Documentary Review\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspection\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: Import Coordinator (Licensed Broker) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Demurrage & Detention**: Delays in BOC release or haulier availability lead to heavy per-day fines (W249).",
+     "- **Misclassification**: Incorrect HS Code selection leads to re-assessment and BOC penalties."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOC e2m System Integration",
+     "- Landed Cost Module (Duty/Tax/Hauling allocation)",
+     "- Container Tracking Dashboard (Port Arrival -> Released -> DC Received -> Empty Returned)"
+    ],
+    "Time Estimate": [
+     "~8–12 hours of broker effort per import entry (e2m lodgment 4 hours + drayage coordination 4–8 hours) with a 2–4 day elapsed clearance-and-release timeline (documentary review 1–2 days + physical inspection 1 day + gate pass 1 day + empty return 1 day); throughput runs ~400–600 TEUs/month with multiple TEUs per entry, so annual effort annualizes at the realized entry count (entries ≠ TEUs).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Entry Lodgment**: Broker submits \"Import Entry\" via BOC e2m system; calculates duties/taxes (W239)",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "In-house Broker"
+    },
+    {
+     "a": "—",
+     "activity": "**Documentary Review**: BOC verifies manifest vs. packing list and commercial invoice",
+     "duration": "1-2 days",
+     "n": "2",
+     "r": "BOC Officer"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "**Physical Inspection**: If flagged (Red/Yellow lane), Broker attends physical inspection at the port",
+     "duration": "1 day",
+     "n": "3",
+     "r": "In-house Broker"
+    },
+    {
+     "a": "—",
+     "activity": "**Gate Pass & Release**: Upon payment of duties (W239), BOC issues \"Release Instruction\" and Port Gate Pass",
+     "duration": "1 day",
+     "n": "4",
+     "r": "BOC / Broker"
+    },
+    {
+     "a": "Logistics Mgr",
+     "activity": "**Drayage (Hauling)**: Broker coordinates with haulier to pick up container and deliver to DC",
+     "duration": "4-8 hours",
+     "n": "5",
+     "r": "In-house Broker"
+    },
+    {
+     "a": "—",
+     "activity": "**Empty Return**: Haulier returns empty container to port/yard to avoid detention fees (W249)",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Haulier"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W239",
+    "W249"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "Daily review; real-time status updates from customs broker",
+    "Owner": "Import Coordinator",
+    "Participants": "Customs Broker, Logistics Manager, Finance (LC/duty payments), Warehouse Manager",
+    "Trigger": "Start of supply chain operations day; or customs/broker status update",
+    "Volume": "~400–600 TEUs/month import containers; ~15–25 containers in clearance pipeline at any time"
+   },
+   "id": "W728",
+   "level": 2,
+   "name": "Port & Customs Clearance Daily Status Tracking & Escalation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Morning import pipeline status review\" (replaces manual Step 1).",
+     "- System auto-document of \"documentation, customs hold, examination required, assessment dispute, BOC…\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify all documentation submitted\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W144 covers international logistics and import operations at the strategic level. W464 covers in-house customs brokerage operations. W249 covers port demurrage management. This workflow addresses the daily operational tracking of import containers through the Philippine Bureau of Customs (BOC) clearance process — the critical path for ~40% of BuildRight's COGS. Philippine port clearance is notoriously complex (average 5-10 days from vessel arrival to gate-out) with multiple handoff points (discharge → customs examination → assessment → payment → release → haulage). Daily status tracking enables early identification of bottlenecks and proactive escalation to prevent demurrage and stockouts."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: Import Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **BOC system downtime**: the Bureau of Customs electronic system (e2m) frequently experiences downtime, halting the entire clearance process with no workaround; BuildRight has no control over this",
+     "- **Red lane examination randomness**: BOC randomly selects containers for physical examination (red lane), adding 3-7 days to clearance time unpredictably; cannot be anticipated in supply planning",
+     "- **Port congestion**: Manila ports (South Harbor, North Harbor) regularly experience congestion, especially during peak import seasons (pre-Christmas, pre-back-to-school), extending vessel waiting time to 3-5 days before discharge",
+     "- **Customs broker capacity constraints**: during peak periods, customs brokers are overloaded with multiple clients, slowing document processing and examination coordination for BuildRight containers",
+     "- **Document accuracy dependency**: a single error in customs documentation (wrong HS code, missing certificate of origin, incorrect declared value) can trigger examination, assessment dispute, or rejection, adding 5-15 days to clearance"
+    ],
+    "Staffing Implication": [
+     "Import Coordinator: ~1–2 hours/day on import pipeline tracking. Customs Broker: external service, cost absorbed in brokerage fees. Finance: ~15–30 min/day on duty payment processing. Absorbed within existing team. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import container tracking system with BOC status integration",
+     "- Customs broker communication portal with status update workflow",
+     "- Shipping line tracking integration for vessel ETA and container availability",
+     "- W250 supply chain control tower for in-transit visibility",
+     "- W249 demurrage management for cost tracking",
+     "- Finance integration for duty payment processing per W239",
+     "- Supply chain planning module for stock impact assessment",
+     "- W680 supply chain cost analysis for demurrage cost analytics"
+    ],
+    "Time Estimate": [
+     "**Total daily**: ~70–115 min (20-30 min pipeline review + 15-30 min broker update + 15-30 min escalation + 10-15 min impact assessment + 10 min demurrage tracking).",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "**Morning import pipeline status review**: Import Coordinator reviews import pipeline dashboard: (a) vessels expected to arrive in next 7 days: vessel name, ETA, number of BuildRight containers, port of discharge (Manila South Harbor, Manila North Harbor, Cebu, Davao, Clark); (b) containers currently at port: days since vessel arrival, current clearance status (discharged, under customs examination, assessed, payment pending, released for haulage, gated out); (c) containers in transit to DC: estimated arrival at DC per W250 tracking; (d) containers exceeding standard clearance timeline (>7 days from discharge): flag as potential demurrage risk per W249",
+     "duration": "20-30 min/day",
+     "n": "1",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "**Customs broker status update**: Import Coordinator obtains daily status from customs broker: (a) for each container in clearance pipeline: (i) current status and next step; (ii) expected timeline for next milestone; (iii) any issues: missing documentation, customs hold, examination required, assessment dispute, BOC system downtime; (b) for containers requiring customs examination: (i) examination type: green lane (no exam), yellow lane (document exam), red lane (physical exam); (ii) red lane: coordinate with broker for examination scheduling, prepare supporting documentation; (iii) estimate additional clearance time for examinations; (c) document all status updates in tracking system with timestamps",
+     "duration": "15-30 min/day",
+     "n": "2",
+     "r": "Import Coordinator / Customs Broker"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "**Escalation management**: for containers stuck at specific stages: (a) stuck at discharge (>2 days): contact shipping line for container availability; (b) stuck awaiting customs examination (>3 days): escalate to broker for examination scheduling; contact BOC if broker unable to resolve; (c) stuck at assessment (>2 days): verify all documentation submitted; escalate duty assessment disputes per W239; (d) stuck at payment: coordinate with Finance for immediate duty payment via IPAY/Pass5 per W239 step 1; (e) stuck at release (>1 day after payment): escalate to broker for gate-out coordination; (f) for each escalation: document actions taken and timeline for resolution",
+     "duration": "15-30 min/day",
+     "n": "3",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Supply chain impact assessment**: Import Coordinator communicates clearance timeline impact: (a) for containers carrying critical stock (A-items, promotional items per W57): notify Supply Chain Planner of expected DC receipt date; (b) assess impact on store replenishment: will clearance delays cause stockouts at stores?; (c) for promotional items: alert Merchandising if promotional launch per W13 may be affected by delayed import receipt; (d) for seasonal items per W32: assess whether seasonal buy will arrive in time for seasonal window",
+     "duration": "10-15 min/day",
+     "n": "4",
+     "r": "Import Coordinator / Supply Chain Planner"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Demurrage and storage cost monitoring**: daily, Import Coordinator tracks cost exposure: (a) containers exceeding free time at port (typically 5-7 days free, then PHP 5,000-8,000/day demurrage): calculate daily cost exposure; (b) total monthly demurrage cost vs. budget; (c) identify root causes of demurrage incidents: documentation delays, customs holds, payment delays, carrier no-show for haulage; (d) demurrage cost data feeds into W680 supply chain cost analysis",
+     "duration": "10 min/day",
+     "n": "5",
+     "r": "Import Coordinator"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W13",
+    "W144",
+    "W239",
+    "W249",
+    "W250",
+    "W32",
+    "W464",
+    "W57",
+    "W680"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "~400–600 TEUs/month; ~15–30 containers/working day",
+    "Owner": "Customs Broker / Import Specialist",
+    "Participants": "Customs Broker, Import Specialist, Category Manager, Finance – Tax, Freight Forwarder, Bureau of Customs",
+    "Trigger": "Import container arrival at Philippine port (Manila, Cebu, Davao, or Subic/Clark)",
+    "Volume": "~1,800–3,600 import entries/year across all import vendors (multiple TEUs consolidated per entry per W464)"
+   },
+   "id": "W1233",
+   "level": 2,
+   "name": "Philippine Bureau of Customs Import Entry Processing & Duty Assessment Automation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documents from vendor/freight forwarder\" (replaces manual Step 1).",
+     "- System auto-review of \"Automated HS code classification\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculates CIF value\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot imports ~40% of COGS (PHP 1.4B/month) from China, Taiwan, Indonesia, Malaysia, Japan, and Europe. Each import shipment requires a formal customs entry with the Philippine Bureau of Customs (BOC): tariff classification (AHTN/HS codes), duty rate determination, VAT assessment (12%), excise tax (if applicable), and customs value declaration (CIF — Cost, Insurance, Freight). With ~400–600 TEUs/month, manual entry processing is labor-intensive and error-prone. Common errors include: incorrect HS code classification leading to over/under-payment of duties, misdeclared customs value triggering BOC audit, missing documents (commercial invoice, packing list, bill of lading, certificate of origin) delaying release, and failure to claim preferential tariff rates under ASEAN FTAs (ATIGA, ACFTA). Errors result in surcharges of 250% of duties/taxes due for negligence (up to 500% for fraud) per CMTA (RA 10863) Sec. 2102, shipment delays (demurrage per W249), and potential smuggling charges. Automating the entry processing and duty assessment reduces errors, speeds clearance, and ensures accurate landed cost calculation for inventory valuation per WAC."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)"
+    ],
+    "Pain Points / Risks": [
+     "- **HS code misclassification risk**: incorrect HS code leads to either overpayment of duties (reducing margin) or underpayment (triggering BOC audit, penalties of 40–100%, and potential blacklisting); automated classification reduces but does not eliminate this risk for new or unusual items; mitigated by CTL-244 (controlled execution — Import & Customs Operations (PA-02.2))",
+     "- **BOC system downtime** — the BOC e2m system experiences periodic downtime; during peak clearance periods, delays cascade into demurrage charges per W249",
+     "- **Red lane inspection delays** — physical inspections (Red Lane) add 2–5 days to clearance; no advance warning; contingency plans must account for variable lead times in replenishment planning per W31",
+     "- **FTA utilization gaps** — failure to obtain valid certificate of origin from vendors results in paying standard duty rates instead of preferential (often 0%) ASEAN rates; BuildRight may leave significant savings unclaimed",
+     "- **Exchange rate volatility** — customs value is declared in PHP (converting from USD/CNY); exchange rate fluctuations between PO date and customs entry date create landed cost variance"
+    ],
+    "Staffing Implication": [
+     "- 1 dedicated Customs Broker (licensed) + 2 Import Specialists: absorbed within existing Supply Chain team. Finance – Tax: ~6 hours/month on duty reconciliation. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W464 in-house customs brokerage for port operations coordination",
+     "- W284 customs bonded warehouse for duty-deferred imports",
+     "- W249 demurrage & detention for port storage cost management",
+     "- W3 goods receipt for landed cost posting and WAC calculation",
+     "- W90 tax filing for BIR input VAT reconciliation",
+     "- W293 tax master for HS code and tariff rate governance",
+     "- W2B import PO management for shipment tracking",
+     "- W239 customs duty reconciliation for monthly duty audit",
+     "- W144 import PO management for container tracking"
+    ],
+    "Time Estimate": [
+     "- Per entry: 3–6 hours from document receipt to BOC filing. Monthly: ~150–300 entries (multiple TEUs per entry per W464) × 4 hours avg = ~600–1,200 hours/month (shared across Customs Broker, Import Specialists, and the brokerage partner). Duty reconciliation: ~6 hours/month.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customs Broker",
+     "activity": "**Shipment pre-arrival preparation**: Import Specialist receives advance shipping documents from vendor/freight forwarder: (a) commercial invoice, (b) packing list, (c) bill of lading (B/L) or airway bill, (d) certificate of origin (if FTA claim), (e) import permit or clearance (for regulated items per W467)",
+     "duration": "1–2 hours/entry",
+     "n": "1",
+     "r": "Import Specialist"
+    },
+    {
+     "a": "Customs Broker",
+     "activity": "**Automated HS code classification**: ERP system auto-matches item SKUs to HS codes from item master (maintained per W293 tax master): (a) system validates HS code against BOC latest tariff schedule; (b) system checks for preferential tariff eligibility (ASEAN, ACFTA); (c) system flags items with classification ambiguity for Customs Broker review; (d) system calculates estimated duty: duty amount = CIF value × duty rate (0–30% depending on HS chapter)",
+     "duration": "15 min/entry",
+     "n": "2",
+     "r": "System / Import Specialist"
+    },
+    {
+     "a": "Customs Broker",
+     "activity": "**Customs value declaration preparation**: (a) system calculates CIF value: invoice value + freight + insurance; (b) add dutiable ancillary costs (royalties, assists, packaging); (c) deduct non-dutiable items where applicable; (d) generate customs value declaration worksheet with supporting documentation",
+     "duration": "30 min/entry",
+     "n": "3",
+     "r": "Import Specialist"
+    },
+    {
+     "a": "—",
+     "activity": "**BOC e2m (Electronic-to-Mobile) system filing**: Customs Broker files import entry via BOC e2m system: (a) select entry type (formal consumption, informal, warehousing per W284); (b) upload HS classifications, quantities, and values; (c) attach supporting documents electronically; (d) system auto-calculates duties, VAT, and other charges; (e) select payment mode (direct debit via AAB, or cash/manager's check)",
+     "duration": "30–60 min/entry",
+     "n": "4",
+     "r": "Customs Broker"
+    },
+    {
+     "a": "—",
+     "activity": "**Duty payment & assessment**: (a) BOC assesses entry; system calculates total duty liability; (b) Customs Broker authorizes payment via accredited bank (BDO/BPI); (c) BOC issues Single Administrative Document (SAD) with assessment; (d) for select shipments: BOC Green Lane (auto-release), Yellow Lane (document check), or Red Lane (physical inspection)",
+     "duration": "1–4 hours",
+     "n": "5",
+     "r": "Customs Broker"
+    },
+    {
+     "a": "—",
+     "activity": "**Cargo release & delivery order**: (a) once assessed and duty paid: BOC releases cargo; (b) Customs Broker obtains delivery order from shipping line; (c) arranges trucking from port to DC per W464; (d) system updates import PO status to \"Customs Cleared\" with duty and landed cost details",
+     "duration": "2–4 hours",
+     "n": "6",
+     "r": "Customs Broker / Import Specialist"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Landed cost posting & WAC update**: (a) system calculates final landed cost per SKU: invoice cost + freight + insurance + duty + port charges + brokerage fees; (b) system posts landed cost to inventory receipt per W3; (c) WAC recalculated for received quantity; (d) duty and VAT posted to appropriate GL accounts per W90",
+     "duration": "Automated + 15 min review",
+     "n": "7",
+     "r": "System / Finance – Tax"
+    },
+    {
+     "a": "Customs Broker",
+     "activity": "**Monthly duty reconciliation**: Finance – Tax reconciles monthly: (a) total duties paid vs. BOC assessment; (b) VAT paid at customs vs. input VAT claimed on BIR 2550M; (c) FTA preferential duty savings vs. standard rates; (d) identify classification discrepancies for correction",
+     "duration": "4–6 hours/month",
+     "n": "8",
+     "r": "Finance – Tax"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W144",
+    "W239",
+    "W249",
+    "W284",
+    "W293",
+    "W2B",
+    "W3",
+    "W31",
+    "W464",
+    "W467",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-244"
+   ],
+   "fields": {
+    "Frequency": "Weekly consolidation planning; ~400–600 TEUs/month across all import origins",
+    "Owner": "Import Coordinator",
+    "Participants": "Buyer, Freight Forwarder, Customs Broker, DC Operations Manager, Finance Controller",
+    "Trigger": "Scheduled — weekly container consolidation cycle; triggered when multiple LCL (less-than-container-load) import POs from the same origin region can be consolidated into FCL (full container load)",
+    "Volume": "~20–30 container bookings per week; ~60% currently FCL, ~40% LCL — target: reduce LCL to 20% through consolidation"
+   },
+   "id": "W1264",
+   "level": 2,
+   "name": "Import Container Consolidation, Multi-Vendor FCL Assembly & Space Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews all open import POs\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify container loading plan\" (replaces manual Step 2).",
+     "- System auto-route of \"Rate negotiation & booking\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot imports ~40% of COGS from international vendors in China, Taiwan, Indonesia, Malaysia, Japan, and Europe, representing ~400–600 TEUs (twenty-foot equivalent units) per month. Import procurement generates a ~40% share of the ~1,200 monthly merchandise POs (the ~400 international vendors of the §6.5 base), many of which are individually too small to fill a container (LCL — less than container load). LCL shipments cost 30–50% more per CBM than FCL (full container load) because: (a) LCL freight rate per CBM is higher, (b) LCL requires additional handling (consolidation/deconsolidation at CFS — container freight station), (c) LCL has longer transit time (7–14 days additional for consolidation), (d) LCL has higher damage risk from additional handling. This workflow systematically consolidates multiple vendor POs from the same origin region into FCL shipments to: (i) reduce per-unit import freight cost by 20–35%, (ii) reduce transit time by consolidating into direct vessel bookings, (iii) reduce damage claims from fewer handling touches, (iv) improve container utilization rate (target: > 85% CBM utilization per container)."
+    ],
+    "Controls": [
+     "- CTL-244 (ensure controlled execution — Import & Customs Operations (PA-02.2).)",
+     "- operational: Import Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Multi-vendor coordination requires all vendors to deliver to consolidation warehouse by the same cut-off date — delayed vendor holds up entire container",
+     "- Vendors may resist shipping to consolidation warehouse instead of direct to port — adds inland transport cost at origin",
+     "- Consolidated container customs declaration is more complex — must list all vendors and POs in single entry",
+     "- Container utilization depends on PO mix — mismatched item sizes (tiles + power tools) may leave wasted space",
+     "- If one vendor's goods fail QC at consolidation warehouse, container may ship incomplete or be delayed"
+    ],
+    "Staffing Implication": [
+     "- Import Coordinator: 4 hours/week on consolidation planning",
+     "- Freight Forwarder: managed service (vendor cost)",
+     "- Finance Analyst: 2 hours per consolidation for cost allocation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Procurement Module** — import PO management, vendor origin tracking, consolidation grouping",
+     "- **Freight Forwarder Portal** — consolidation warehouse management, container loading plan",
+     "- **Finance Module** — freight cost allocation, landed cost calculation, CBM-based allocation",
+     "- **BI Platform** — consolidation analytics, FCL/LCL ratio, freight cost benchmarking",
+     "- **WMS** — expected receipt planning for consolidated containers"
+    ],
+    "Time Estimate": [
+     "- Weekly planning: 4 hours/week = 208 hours/year",
+     "- Per consolidation: 5 hours × ~15 consolidations/month = 75 hours/month",
+     "- Monthly review: 4 hours/month = 48 hours/year",
+     "- **Annual estimate: ~1,156 person-hours/year**",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Procurement Manager",
+     "activity": "**Weekly consolidation planning**: Import Coordinator reviews all open import POs: (a) group POs by origin port/region (South China, East China, Taiwan, Southeast Asia, Europe); (b) for each region, calculate total CBM and weight of all open POs; (c) identify consolidation opportunities: (i) if total CBM for a region ≥ 28 CBM (FCL 20ft) or ≥ 58 CBM (FCL 40ft), consolidate into FCL; (ii) if near FCL threshold, check with Buyer for additional POs that could be pulled forward to fill the container; (iii) if below threshold, evaluate holding POs for 1 week to accumulate more volume vs. shipping LCL to meet DC delivery schedule",
+     "duration": "4 hours/week",
+     "n": "1",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "**Multi-vendor FCL assembly**: For consolidated FCL shipments: (a) coordinate with freight forwarder to arrange vendor factory delivery to consolidation warehouse at origin; (b) communicate required delivery date to each vendor — all PO goods must arrive at consolidation warehouse by cut-off date; (c) freight forwarder receives goods from multiple vendors, inspects quantity and packaging, and loads into single container; (d) system generates consolidated packing list with per-vendor breakdown and per-PO breakdown; (e) verify container loading plan: heavy items at bottom, fragile items protected, maximum CBM utilization",
+     "duration": "3 hours per consolidation",
+     "n": "2",
+     "r": "Import Coordinator / Freight Forwarder"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Rate negotiation & booking**: Import Coordinator negotiates FCL freight rate and books vessel space: (a) obtain FCL rates from 2–3 freight forwarders for the route; (b) compare FCL consolidated rate vs. sum of individual LCL rates — confirm consolidation savings; (c) book earliest available vessel with transit time meeting DC delivery schedule; (d) confirm container type: standard 20ft/40ft, high-cube (for voluminous but light items like insulation), or open-top (for oversized items); (e) issue booking confirmation to all vendors in the consolidation",
+     "duration": "2 hours per booking",
+     "n": "3",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Consolidation cost allocation**: Finance team allocates consolidated freight cost to individual POs: (a) total freight cost = FCL rate + origin consolidation warehouse fee + documentation fee; (b) allocate to each PO proportionally by: (i) CBM (volumetric allocation), or (ii) weight (weight allocation), whichever produces the charge; (c) add allocated freight cost to each PO's landed cost calculation per W2B.12; (d) system updates PO landed cost estimate for accurate margin calculation",
+     "duration": "2 hours per consolidation",
+     "n": "4",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "**Monthly consolidation performance review**: Import Coordinator reviews monthly consolidation metrics: (a) container utilization rate — average CBM per container vs. capacity; (b) FCL vs. LCL ratio — trend towards higher FCL percentage; (c) freight cost per CBM — compare consolidated vs. non-consolidated; (d) transit time comparison — consolidated FCL vs. LCL; (e) consolidation savings — total PHP saved per month from FCL consolidation vs. LCL alternative; (f) present results to Procurement Manager and Finance Controller",
+     "duration": "4 hours/month",
+     "n": "5",
+     "r": "Import Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2B"
+   ]
+  }
+ ]
+}

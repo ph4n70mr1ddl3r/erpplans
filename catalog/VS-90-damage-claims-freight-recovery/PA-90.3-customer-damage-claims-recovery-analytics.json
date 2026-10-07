@@ -1,0 +1,536 @@
+{
+ "process_area": {
+  "id": "PA-90.3",
+  "title": "Customer Damage/Shortage Claims & Recovery Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-90-damage-claims-freight-recovery/PA-90.3-customer-damage-claims-recovery-analytics.md",
+ "value_stream": {
+  "directory": "VS-90-damage-claims-freight-recovery",
+  "id": "VS-90",
+  "name": "Damage, Claims & Freight Recovery Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Customer Service Manager",
+    "Participants": "Customer Service, Ecommerce, Logistics, Store Ops",
+    "Trigger": "Customer reports damaged/short delivery",
+    "Volume": "~42,900 ecommerce orders/month + B2B/trade deliveries"
+   },
+   "id": "W3033",
+   "level": 2,
+   "name": "Customer Delivery Damage & Shortage Claim Intake",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs damage/shortage claim from customer\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify against order, delivery POD, and fulfillment source\" (replaces manual Step 2).",
+     "- System auto-route of \"Customer Service routes claim\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: 24-hr SLA and goodwill authority tiers"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer-experience risk**: Slow claim handling damages loyalty; mitigated by 24-hr SLA and goodwill authority tiers"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer claim case (links to VS-13); order/POD lookup (links to VS-10/VS-06); ecommerce messaging"
+    ],
+    "Time Estimate": [
+     "- 5–15 min per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "Customer Service logs damage/shortage claim from customer (phone/chat/email/in-store): order, SKU, qty, photo, delivery date, carrier",
+     "duration": "Per claim (<24 hr)",
+     "n": "1",
+     "r": "Customer Service"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "Customer Service/Ecommerce verify against order, delivery POD, and fulfillment source (store/DC/3PL); determines responsibility indicator",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Customer Service / Ecommerce"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "Customer Service routes claim: goodwill replacement/refund (W3035), investigation (W3034), or denial with explanation; communicates to customer",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Customer Service"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3034",
+    "W3035"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Trade Sales Manager",
+    "Participants": "Trade Sales, Logistics, Project Mgmt, QC, Customer Service",
+    "Trigger": "B2B/trade/government account reports damage/shortage",
+    "Volume": "~5,400 B2B accounts; trade/project deliveries"
+   },
+   "id": "W3034",
+   "level": 2,
+   "name": "B2B / Trade Delivery Damage Claim Investigation & Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Trade Sales/Project Mgmt investigate B2B claim against delivery POD\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics determine liability\" (replaces manual Step 2).",
+     "- System auto-count of \"Trade Sales negotiates resolution with account\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: documented investigation and tiered resolution authority"
+    ],
+    "Pain Points / Risks": [
+     "- **Relationship risk**: Disputed B2B claims strain trade relationships; mitigated by documented investigation and tiered resolution authority"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- B2B order/project records (links to VS-11/VS-40); claim case; project billing adjustment (links to VS-40)"
+    ],
+    "Time Estimate": [
+     "- Per claim; faster for low-value"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Trade Sales/Project Mgmt investigate B2B claim against delivery POD, jobsite receipt, and project records; document with photos/witnesses",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Trade Sales / Project Mgmt"
+    },
+    {
+     "a": "Trade Sales Manager",
+     "activity": "QC/Logistics determine liability (vendor, carrier, jobsite handling, customer); quantify loss including project-delay impact where applicable",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "QC / Logistics"
+    },
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Trade Sales negotiates resolution with account (replacement, credit, price adjustment, retention-money adjustment); coordinates subrogation (W3038)",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Trade Sales"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3038"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Customer Service Manager",
+    "Participants": "Customer Service, Store Ops, Finance, LP",
+    "Trigger": "Customer claim routed to the goodwill path (W3033 step 3)",
+    "Volume": "Subset of customer claims"
+   },
+   "id": "W3035",
+   "level": 2,
+   "name": "Customer Goodwill & Damage Replacement Authorization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System rule-based authorization of \"authorize replacement/refund without full investigation\" (replaces manual Step 1).",
+     "- System auto-log of \"fulfill replacement (store pick / re-delivery / BOPIS)\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates anomalies to VS-23\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: authority tiers and LP pattern monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Abuse/fraud risk**: Goodwill exploited by fraudsters; mitigated by authority tiers and LP pattern monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Goodwill authorization matrix; replacement order (links to VS-07/VS-10); LP abuse analytics (links to VS-23)"
+    ],
+    "Time Estimate": [
+     "- 5–15 min per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "Customer Service applies goodwill authority matrix (value tier, customer lifetime, loyalty tier) to authorize replacement/refund without full investigation",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Customer Service"
+    },
+    {
+     "a": "Store Operations Manager",
+     "activity": "Store Ops/Ecommerce fulfill replacement (store pick / re-delivery / BOPIS); coordinates logistics; updates order",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Store Ops / Ecommerce"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP samples goodwill authorizations for abuse patterns (serial claimants, fraud rings); escalates anomalies to VS-23; tracks goodwill cost",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Loss Prevention"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3033"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-75"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Finance Manager (AR)",
+    "Participants": "Finance/AR, Customer Service, AP",
+    "Trigger": "Claim resolved with refund/credit",
+    "Volume": "Enterprise resolved claims"
+   },
+   "id": "W3036",
+   "level": 2,
+   "name": "Damage Claim Refund, Credit Note & Financial Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"account or one-off refund\" (replaces manual Step 1).",
+     "- System auto-allocate of \"allocates cost to damage case with liability flag\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles claim P&L impact\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-75 (detect and recover freight & receiving damage.)",
+     "- operational: liability flag and subrogation follow-through (W3038)"
+    ],
+    "Pain Points / Risks": [
+     "- **Net-cost risk**: Customer refunds posted without pursuing vendor/carrier recovery inflate damage cost; mitigated by liability flag and subrogation follow-through (W3038)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Refund/credit note (links to W101); AR posting (links to W8); damage case cost ledger"
+    ],
+    "Time Estimate": [
+     "- Per claim; batch monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Finance/AR processes refund via original tender or BIR-compliant credit note (links to W101); posts to customer account or one-off refund",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Finance / AR"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance allocates cost to damage case with liability flag; offsets recovered amounts from vendor/carrier/insurer subrogation",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance reconciles claim P&L impact (net of recovery) at month-end; reports unrecovered damage cost to management",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101",
+    "W3038",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Logistics Manager",
+    "Participants": "Logistics, Customer Service, Finance, 3PL Partner",
+    "Trigger": "3PL last-mile delivery damage/loss",
+    "Volume": "Last-mile partners (links to VS-56)"
+   },
+   "id": "W3037",
+   "level": 2,
+   "name": "Third-Party Delivery Partner (Lalamove / Transportify) Damage Recovery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics/Customer Service file damage claim with 3PL partner per partner SLA…\" (replaces manual Step 1).",
+     "- System auto-track of \"track 3PL recovery\" (replaces manual Step 2).",
+     "- System auto-review of \"review or partner change\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: partner insurance requirements and SLA penalties"
+    ],
+    "Pain Points / Risks": [
+     "- **Partner-coverage risk**: 3PL liability cap below value; mitigated by partner insurance requirements and SLA penalties"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 3PL partner claim (links to VS-56); damage case; partner scorecard"
+    ],
+    "Time Estimate": [
+     "- Per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics/Customer Service file damage claim with 3PL partner per partner SLA within notice window; provides POD, photos, and order",
+     "duration": "Per claim (<window)",
+     "n": "1",
+     "r": "Logistics / Customer Service"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics track 3PL recovery (reimbursement, partner insurance, SLA penalty); reconcile against damage case and customer resolution",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Logistics"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics feed 3PL damage performance into partner scorecard (links to VS-56); drives partner performance review or partner change",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Logistics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Claims Manager",
+    "Participants": "Claims Mgr, Vendor Mgmt, Logistics, Finance",
+    "Trigger": "Customer damage resolved but liability lies with vendor/carrier",
+    "Volume": "Subset of customer claims"
+   },
+   "id": "W3038",
+   "level": 2,
+   "name": "Damage Claims Subrogation to Vendor / Carrier",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares subrogation claim with evidence\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics file vendor claim\" (replaces manual Step 2).",
+     "- System auto-report of \"reports net damage cost\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: mandatory liability-flag at resolution; operational: liability-flag at resolution"
+    ],
+    "Pain Points / Risks": [
+     "- **Recovery-gap risk**: Customer-resolved damage not subrogated; mitigated by mandatory liability-flag at resolution"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Subrogation linkage to vendor/carrier claims (W3025/3026); damage case net-cost; insurance reconciliation (W3030)"
+    ],
+    "Time Estimate": [
+     "- Per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Mgr identifies customer-resolved damage where root cause is vendor/carrier; prepares subrogation claim with evidence (W3028)",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Claims Mgr"
+    },
+    {
+     "a": "Claims Manager",
+     "activity": "Vendor Mgmt/Logistics file vendor claim (W3025) or carrier claim (W3026) to recover customer-resolution cost",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Vendor Mgmt / Logistics"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance nets subrogation recovery against damage case; reports net damage cost; coordinates with insurance (W3030) to avoid double-recovery",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3025",
+    "W3026",
+    "W3028",
+    "W3030"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Weekly + monthly + executive",
+    "Owner": "Supply Chain Analytics Manager",
+    "Participants": "Supply Chain Analytics, Claims Mgr, Finance, Executives",
+    "Trigger": "Weekly/monthly/executive reporting",
+    "Volume": "Enterprise damage & claims"
+   },
+   "id": "W3039",
+   "level": 2,
+   "name": "Enterprise Damage & Claims Recovery Dashboard & KPI Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enterprise damage & claims dashboard\" (replaces manual Step 1).",
+     "- System auto-report of \"report KPIs vs. targets\" (replaces manual Step 2).",
+     "- System auto-review of \"review damage cost as % of COGS and margin impact\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: consolidated damage case ledger and dashboard"
+    ],
+    "Pain Points / Risks": [
+     "- **Visibility risk**: Damage cost hidden across GL accounts; mitigated by consolidated damage case ledger and dashboard"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Enterprise damage/claims dashboard (links to VS-28); executive scorecard"
+    ],
+    "Time Estimate": [
+     "- Weekly/monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Chain Analytics Manager",
+     "activity": "Supply Chain Analytics maintains enterprise damage & claims dashboard: damage rate, claim volume, recovery %, net damage cost, by channel/lane/vendor",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "Supply Chain Analytics"
+    },
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Mgr/Finance report KPIs vs. targets (shrinkage <1.5%, recovery %, aging); identify outliers and corrective priorities",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Claims Mgr / Finance"
+    },
+    {
+     "a": "COO",
+     "activity": "Executives review damage cost as % of COGS and margin impact; sponsor systemic initiatives (packaging, lane, partner) where warranted",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Executives"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-501"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Manager (FP&A)",
+    "Participants": "FP&A, Supply Chain Analytics, Merchandising, Vendor Mgmt",
+    "Trigger": "Monthly close + margin review",
+    "Volume": "Enterprise"
+   },
+   "id": "W3040",
+   "level": 2,
+   "name": "Damage Cost Allocation, Vendor Recovery Rate & Margin Impact Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-allocate of \"allocates net damage cost to category/vendor/lane/SKU\" (replaces manual Step 1).",
+     "- System auto-report of \"reports margin impact of damage\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-501 (ensure controlled execution — Customer Damage/Shortage Claims & Recovery Analytics (PA-90.3).)",
+     "- operational: full-cost allocation to category/vendor"
+    ],
+    "Pain Points / Risks": [
+     "- **Margin-erosion risk**: Net damage cost not reflected in category margins drives poor decisions; mitigated by full-cost allocation to category/vendor"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Margin/category analytics (links to W85/VS-28); damage cost allocation; vendor negotiation (links to VS-03/VS-39)"
+    ],
+    "Time Estimate": [
+     "- Monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "FP&A allocates net damage cost to category/vendor/lane/SKU; computes vendor recovery rate and unrecovered damage cost",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "FP&A"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Merchandising/Vendor Mgmt incorporate damage cost and recovery into category margin analysis (links to W85) and vendor negotiation (rebates/allowances)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Merchandising / Vendor Mgmt"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "FP&A reports margin impact of damage; recommends pricing/packaging/sourcing actions to recover net damage cost",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "FP&A"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W85"
+   ]
+  }
+ ]
+}

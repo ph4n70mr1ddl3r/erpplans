@@ -1,0 +1,585 @@
+{
+ "process_area": {
+  "id": "PA-148.2",
+  "title": "ROU Asset & Lease Liability Measurement, Modification & Reporting"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/PA-148.2-rou-asset-and-lease-liability-measurement-modification-and-reporting.md",
+ "value_stream": {
+  "directory": "VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management",
+  "id": "VS-148",
+  "name": "Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Monthly per lease",
+    "Owner": "Lease Accounting / Controller",
+    "Participants": "Controller, Finance (VS-17.4), Treasury (VS-18), IT (VS-27), Audit (VS-21)",
+    "Trigger": "Monthly close cycle",
+    "Volume": "~205+ on-balance-sheet leases × 12 months"
+   },
+   "id": "W4417",
+   "level": 2,
+   "name": "Subsequent Measurement — Depreciation, Interest & Payment Unwind",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Automated monthly engine; auto-journal posting to GL; AP/cash reconciliation; EBITDA-impact dashboard"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: system-calculated depreciation/interest; reconciled to GL/AP/cash (W4425); variances investigated; reviewed monthly"
+    ],
+    "Cross-references": [
+     "- links to VS-17 (GL/R2R), VS-15 (AP), VS-18 (treasury), VS-21 (audit), W4412 (rate), W4414 (recognition), W4425 (close), W4428 (controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **Engine-error risk**: wrong depreciation/interest → mis-stated P&L/balance sheet; mitigated by system engine & reconciliation",
+     "- **P&L-distortion risk**: EBITDA jump from rent→depreciation+interest misunderstood by stakeholders; mitigated by clear reporting/communication"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting engine (W4427); GL (VS-17); AP/cash (VS-15/VS-18); BI (VS-28); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- Engine-run hours monthly across portfolio; ~1–2 days close"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting run the monthly engine — depreciation of ROU asset on straight-line over lease term; interest on lease liability (effective-interest method at discount rate W4412); reduction of liability for lease payment",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Lease Accounting / System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting post journals (DR depreciation / CR ROU; DR interest / CR liability; DR liability / CR cash/AP) to GL (VS-17) and reconcile to lease-accounting system & AP/cash (VS-15/VS-18)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Lease Accounting / Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Controller/Audit review the monthly P&L split (depreciation + interest, replacing former straight-line rent expense — a key PFRS 16 EBITDA effect), and investigate variances",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Controller / Finance / Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4412",
+    "W4414",
+    "W4425",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Per modification (~tens–hundreds/yr)",
+    "Owner": "Lease Accounting / Lease Admin (VS-42) / Controller",
+    "Participants": "Lease Admin (VS-42), Legal (VS-100), Treasury (VS-18), Real Estate (VS-97/VS-20), Audit (VS-21)",
+    "Trigger": "Lease change (scope/payment/term); judgment change",
+    "Volume": "Modifications across the ~205+ lease portfolio"
+   },
+   "id": "W4418",
+   "level": 2,
+   "name": "Lease Modification, Reassessment & Remeasurement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Lease-change intake & classification decision-tree; remeasurement engine; abstract/repository auto-update; disclosure flag"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: modifications identified & classified; liability remeasured at revised discount rate; ROU adjusted per PFRS 16; abstract/repository updated; reviewed (W4428)"
+    ],
+    "Cross-references": [
+     "- links to VS-42 (lease admin), VS-100 (legal), VS-18 (treasury), W4411 (abstract), W4412 (rate), W4425 (disclosure), W4426 (repository)"
+    ],
+    "Pain Points / Risks": [
+     "- **Missed-modification risk**: side-letter/amendment not captured → stale liability; mitigated by lease-admin change-feed & periodic sweep",
+     "- **Mis-classification risk**: separate-lease vs modification mis-called → wrong accounting; mitigated by classification guidance & review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting engine (W4427); lease admin/contract (VS-42/VS-100); GL (VS-17); repository (W4426); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~2–4 hrs per modification"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Admin/Legal identify & classify the modification — *separate* lease (additional ROU for added scope/rights) vs *modification/remasurement* of the existing lease (payment/term/Scope change)",
+     "duration": "Per change",
+     "n": "1",
+     "r": "Lease Admin / Legal / Lease Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting remeasure the lease liability (revised payments at revised discount rate) and adjust the ROU asset correspondingly (or P&L for certain decreases), per PFRS 16",
+     "duration": "Per change",
+     "n": "2",
+     "r": "Lease Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting post the remeasurement journal, update the abstract (W4411) & repository (W4426), and disclose material modifications (W4425)",
+     "duration": "Per change",
+     "n": "3",
+     "r": "Lease Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4411",
+    "W4412",
+    "W4425",
+    "W4426",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-111",
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Per event (~10–15 store openings + closures/yr + renewals)",
+    "Owner": "Lease Accounting / Lease Admin (VS-42) / Real Estate (VS-97)",
+    "Participants": "Lease Admin (VS-42), Real Estate (VS-97/VS-20), Store Ops (VS-07), Closure (VS-59), Legal (VS-100), Controller",
+    "Trigger": "Renewal exercised; termination; early exit; store closure (VS-59)",
+    "Volume": "Renewals/terminations across the portfolio"
+   },
+   "id": "W4419",
+   "level": 2,
+   "name": "Lease Renewal, Termination & Early-Exit Accounting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Renewal/termination event-trigger; remeasurement/derecognition engine; MAKE-GOOD provision calculator; closure coordination"
+    ],
+    "Controls": [
+     "- CTL-111 (ensure PFRS 16 lease-accounting completeness.)",
+     "- CTL-675: renewals reassessed; terminations derecognized with penalty/MAKE-GOOD provisioned; disposal coordinated (VS-35/VS-59); reviewed"
+    ],
+    "Cross-references": [
+     "- links to VS-42 (lease admin), VS-97/VS-20 (RE), VS-59 (closure), VS-35 (FA), W4412 (term), W4418 (remeasurement), W4423 (derecognition)"
+    ],
+    "Pain Points / Risks": [
+     "- **Termination-cost-miss risk**: penalty/MAKE-GOOD not accrued → earnings surprise; mitigated by full-clause capture (W4411) & provisioning",
+     "- **Renewal-judgment-staleness risk**: renewal certainty not refreshed → wrong term; mitigated by reassessment trigger"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting engine (W4427); lease admin (VS-42); closure (VS-59); FA (VS-35); GL (VS-17); repository (W4426)"
+    ],
+    "Time Estimate": [
+     "- ~2–4 hrs per renewal/termination"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting/Lease Admin account for **renewal** — reassess term/options (W4412), remeasure liability/ROU (W4418) if reasonably-certain determination changes",
+     "duration": "Per renewal",
+     "n": "1",
+     "r": "Lease Accounting"
+    },
+    {
+     "a": "Controller / COO",
+     "activity": "Lease Accounting/Real Estate account for **termination/early-exit** — derecognize ROU/liability (W4423), recognize termination penalty/early-exit payment, and handle MAKE-GOOD/restoration provision",
+     "duration": "Per termination",
+     "n": "2",
+     "r": "Lease Accounting / Real Estate / Legal"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting coordinate with store closure (VS-59), trigger fixed-asset/ROU disposal (VS-35/W4423), and update repository (W4426)",
+     "duration": "Per closure",
+     "n": "3",
+     "r": "Lease Accounting / Store Ops / Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4411",
+    "W4412",
+    "W4418",
+    "W4423",
+    "W4426",
+    "W4427"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Per index revision / rent review (often annual)",
+    "Owner": "Lease Accounting / Lease Admin (VS-42) / Treasury (VS-18)",
+    "Participants": "Lease Admin (VS-42), Treasury (VS-18), Finance (VS-17.4), Audit (VS-21), Real Estate (VS-97)",
+    "Trigger": "Index/CPI revision; turnover/usage variable; rent review",
+    "Volume": "Leases with index-linked/escalation clauses (~170–190 of the ~205 leases; the majority carry CPI or fixed-step escalators)"
+   },
+   "id": "W4420",
+   "level": 2,
+   "name": "Variable & Index-Based Lease Payment Reassessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Index/CPI feed auto-trigger; variable-vs-index classification rule; remeasurement engine; variable-payment accrual"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: index-linked payments remeasured on revision; variable performance/usage expensed; distinction documented; reconciled to AP"
+    ],
+    "Cross-references": [
+     "- links to VS-42 (lease admin), VS-18 (treasury), VS-15 (AP), W4411 (abstract), W4418 (remeasurement), W4428 (controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **Variable-vs-index-mis-classification risk**: turnover rent wrongly capitalized → mis-statement; mitigated by PFRS 16 distinction & documentation",
+     "- **Late-remeasurement risk**: index revision missed → stale liability; mitigated by index-feed trigger"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting engine (W4427); index/CPI data feed; lease admin (VS-42); AP (VS-15); GL (VS-17); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 hrs per reassessment"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting/Lease Admin identify index-linked/escalation triggers (CPI, fixed escalation ladder) and variable payments based on index/rate — remeasure when the future payment adjusts",
+     "duration": "Per trigger",
+     "n": "1",
+     "r": "Lease Accounting / Lease Admin"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting distinguish variable-based-on-index/rate (remeasure liability) from variable-based-on-performance/usage (expense as incurred, e.g. turnover rent) per PFRS 16",
+     "duration": "Per lease",
+     "n": "2",
+     "r": "Lease Accounting / Audit"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting post remeasurement (W4418), accrue variable performance/usage payments to P&L, and reconcile to AP (VS-15)",
+     "duration": "Per period",
+     "n": "3",
+     "r": "Lease Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4411",
+    "W4418",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Per transaction (~few/yr)",
+    "Owner": "Lease Accounting / Controller / Real Estate (VS-97)",
+    "Participants": "Real Estate (VS-97), Legal (VS-100), Finance (VS-17.4), Treasury (VS-18), Audit (VS-21), Tax (VS-79)",
+    "Trigger": "Sublease executed; sale-and-leaseback (SLB) transaction",
+    "Volume": "Subleases (e.g. BuildRight subletting surplus space) + occasional SLB"
+   },
+   "id": "W4421",
+   "level": 2,
+   "name": "Sublease & Sale-and-Leaseback (Lessor-Side) Accounting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sublease/SLB classification engine; PFRS 15 sale-assessment tool; lessor-income calculation; disclosure auto-gen"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: sublease accounted as intermediate lessor; SLB sale-assessment per PFRS 15; lessor classification documented; disclosed & reviewed"
+    ],
+    "Cross-references": [
+     "- links to VS-97 (lessor/RE), VS-35 (FA), VS-100 (legal), VS-79 (tax), W4413 (classification), W4425 (disclosure), W4430 (settlement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Sale-mis-classification risk** (SLB): wrong sale/not-sale call → mis-statement; mitigated by PFRS 15 assessment & review",
+     "- **Sublease-income-mis-recognition risk**: wrong lessor classification (finance vs operating); mitigated by IFRS 16 lessor model application"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting system (W4427); RE/lessor (VS-97); FA (VS-35); GL (VS-17); tax (VS-79); legal (VS-100); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~4–8 hrs per sublease/SLB"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / COO",
+     "activity": "Lease Accounting classify the sublease — BuildRight as **intermediate lessor**: retain lessee ROU/liability (scaled for right subleased) and recognize sublease income (finance or operating per IFRS 16 lessor model)",
+     "duration": "Per sublease",
+     "n": "1",
+     "r": "Lease Accounting / Real Estate"
+    },
+    {
+     "a": "Controller / CFO / VP Legal",
+     "activity": "For SLB, Lease Accounting/Legal determine if the transfer qualifies as a **sale** under PFRS 15 — if sale: seller-lessee recognizes only proportionate ROU, buyer-lessor recognizes the asset; if not-sale: accounted as a financing",
+     "duration": "Per SLB",
+     "n": "2",
+     "r": "Lease Accounting / Legal / Finance"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting post lessor-side/sublease journals, disclose (W4425), and coordinate with Property Mgmt (VS-97) for the lessor operating model",
+     "duration": "Per transaction",
+     "n": "3",
+     "r": "Lease Accounting / Real Estate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4413",
+    "W4425",
+    "W4427",
+    "W4430"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Per lease + periodic review",
+    "Owner": "Lease Accounting / Controller / Procurement (VS-34)",
+    "Participants": "Procurement (VS-34), ITAM (VS-99), Lease Admin (VS-42), Finance (VS-17.4), Audit (VS-21)",
+    "Trigger": "New lease (W4413); policy threshold change",
+    "Volume": "Short-term & low-value leases (small equipment, IT, short tenancies) across portfolio"
+   },
+   "id": "W4422",
+   "level": 2,
+   "name": "Short-Term & Low-Value Lease Exemption Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Exemption-rule engine; low-value threshold register; extension-monitor alert; expense-on-straight-line"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: exemptions applied per policy threshold; expensed straight-line; disclosed; monitored for extension; tested periodically (W4428)"
+    ],
+    "Cross-references": [
+     "- links to VS-34 (procurement), VS-99 (ITAM), VS-17 (GL), W4409 (policy), W4413 (classification), W4425 (disclosure)"
+    ],
+    "Pain Points / Risks": [
+     "- **Exemption-overuse risk**: leases wrongly exempted to avoid balance-sheet impact → audit finding; mitigated by threshold discipline & testing",
+     "- **Extension-blindness risk**: short-term lease extended >12 mo but still expensed → mis-statement; mitigated by extension monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting system (W4427); procurement (VS-34); ITAM (VS-99); GL (VS-17); audit (VS-21); repository (W4426)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per exempt lease; periodic testing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting/Procurement identify leases qualifying for short-term (≤12 mo, no purchase option) or low-value (below threshold, e.g. <USD 5,000 standalone) exemption per policy (W4409)",
+     "duration": "Per lease",
+     "n": "1",
+     "r": "Lease Accounting / Procurement / ITAM"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting account for exempt leases on a **straight-line expense** basis (no ROU/liability), disclose the expense (W4425), and monitor for changes (extension beyond 12 mo) that remove the exemption",
+     "duration": "Per period",
+     "n": "2",
+     "r": "Lease Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting/Audit periodically test the low-value threshold & short-term assessment, and reclassify if a lease no longer qualifies",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Lease Accounting / Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4409",
+    "W4413",
+    "W4425",
+    "W4426",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Per event",
+    "Owner": "Lease Accounting / Controller / Fixed Assets (VS-35)",
+    "Participants": "Controller, Fixed Assets (VS-35), Store Ops (VS-07), Closure (VS-59), Real Estate (VS-97), Audit (VS-21)",
+    "Trigger": "Closure (VS-59); abandonment; impairment indicator; lease end",
+    "Volume": "Derecognition/impairment events across portfolio (~10–15 closures/yr + lease ends)"
+   },
+   "id": "W4423",
+   "level": 2,
+   "name": "Lease Impairment, Derecognition & Disposal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Impairment-indicator alerts (closure trigger); derecognition engine; MAKE-GOOD settlement calculator; disposal coordination"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: ROU impairment tested at indicators; derecognized at end/termination; MAKE-GOOD settled; disposed via FA register; disclosed & reviewed"
+    ],
+    "Cross-references": [
+     "- links to VS-35 (FA), VS-59 (closure), VS-97 (RE), W4411 (abstract), W4419 (termination), W4425 (disclosure), W4426 (repository)"
+    ],
+    "Pain Points / Risks": [
+     "- **Impairment-miss risk**: ROU not impaired at closure → overstated assets; mitigated by impairment-indicator testing at closure",
+     "- **Derecognition-residual risk**: MAKE-GOOD/residual settlement mishandled; mitigated by full-clause capture (W4411)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting system (W4427); FA (VS-35); closure (VS-59); GL (VS-17); repository (W4426); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~2–4 hrs per impairment/derecognition event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / CFO",
+     "activity": "Lease Accounting test ROU assets for impairment when indicators exist (closure, abandonment, under-performance), per IAS 36, and recognize impairment to P&L",
+     "duration": "Per indicator",
+     "n": "1",
+     "r": "Lease Accounting / Fixed Assets"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting derecognize ROU/liability at lease end/termination (W4419), account for residual/MAKE-GOOD settlement, and dispose via fixed-asset register (VS-35)",
+     "duration": "Per end/termination",
+     "n": "2",
+     "r": "Lease Accounting / Fixed Assets"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting coordinate disposal with closure program (VS-59), update repository (W4426), and disclose material impairments (W4425)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Lease Accounting / Store Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4411",
+    "W4419",
+    "W4425",
+    "W4426",
+    "W4427"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-675"
+   ],
+   "fields": {
+    "Frequency": "Monthly per consolidation cycle",
+    "Owner": "Consolidation (VS-17) / Lease Accounting / Intercompany (VS-72)",
+    "Participants": "Consolidation (VS-17), Intercompany (VS-72), Lease Accounting, Treasury (VS-18), Audit (VS-21), Controller",
+    "Trigger": "Monthly consolidation; intercompany lease change",
+    "Volume": "Intercompany leases across 5 entities (e.g. Property Mgmt → Depot)"
+   },
+   "id": "W4424",
+   "level": 2,
+   "name": "Intercompany Lease Elimination & Consolidation Entries",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Intercompany-lease auto-match; elimination rules engine; consolidated ROU/liability validation; exception workflow"
+    ],
+    "Controls": [
+     "- CTL-675 (ensure controlled execution — ROU Asset & Lease Liability Measurement, Modification & Reporting (PA-148.2).)",
+     "- CTL-675: intercompany leases identified & matched; eliminations posted; consolidated ROU/liability validated; reconciled to group FS; reviewed (W4428)"
+    ],
+    "Cross-references": [
+     "- links to VS-17 (consolidation/GL), VS-72 (intercompany), VS-97 (lessor), W4416 (multi-entity setup), W4425 (close), W4430 (settlement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unmatched-intercompany risk**: lessor & lessee sides not matched → failed elimination → double-count; mitigated by intercompany-lease map & auto-match",
+     "- **Unrealized-profit-error risk**: profit on intercompany lease not eliminated; mitigated by elimination rules"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consolidation system (VS-17); intercompany (VS-72); lease-accounting (W4427); lessor/RE (VS-97); GL (VS-17); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~monthly consolidation hours"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Consolidation/Intercompany identify intercompany leases (lessor & lessee within the 5-entity group — primarily Property Mgmt as lessor), and match lessee-ROU/liability to lessor-asset/income",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Consolidation / Intercompany / Lease Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Consolidation post elimination entries — eliminate intercompany lease income/expense, eliminate intercompany ROU/lease-liability vs lessor-asset, eliminate unrealized profit, and eliminate intercompany receivable/payable",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Consolidation / Lease Accounting"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Consolidation validate the consolidated ROU/liability, reconcile to group FS (VS-17), and resolve any unmatched intercompany lease",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Consolidation / Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4416",
+    "W4425",
+    "W4427",
+    "W4428",
+    "W4430"
+   ]
+  }
+ ]
+}

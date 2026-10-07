@@ -1,0 +1,1555 @@
+{
+ "process_area": {
+  "id": "PA-05.1",
+  "title": "Inventory Accuracy & Counting"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-05-inventory-lifecycle/PA-05.1-inventory-accuracy-and-counting.md",
+ "value_stream": {
+  "directory": "VS-05-inventory-lifecycle",
+  "id": "VS-05",
+  "name": "Inventory Lifecycle"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-25"
+   ],
+   "fields": {
+    "Frequency": "2–3 physical deliveries per store per week; ~5,000 replenishment orders/month total (each delivery truck carries 2–3 orders consolidated for that store)",
+    "Owner": "Supply Planner",
+    "Participants": "Supply Planner, DC Pick/Pack/Ship team, Truck Driver, Store Receiving Clerk, Store Manager",
+    "Trigger": "System generates replenishment suggestion based on min/max or demand forecast",
+    "Volume": "~167 orders/day across all DCs (~42 per DC/day); avg ~50 lines per order"
+   },
+   "id": "W4",
+   "level": 2,
+   "name": "Store Replenishment (DC → Store)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates replenishment needs per store\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews suggested orders each morning\" (replaces manual Step 2).",
+     "- System auto-route of \"Planner confirms orders\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-25 (safeguard inventory in transit.)",
+     "- operational: Supply Planner review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Constrained allocation disputes: when DC stock is insufficient, Supply Planners face pressure from Store Managers and Regional Managers to prioritize their stores, creating internal friction that the allocation governance framework (W105) attempts to mediate but cannot fully eliminate.",
+     "- New store ramp-up overstocking risk: during the 90-day ramp-up period, manually overriding auto-replenishment parameters is labor-intensive and prone to error — early overestimation ties up working capital in slow-moving stock at new locations.",
+     "- Dual-sourced SKU replenishment conflicts: when both DC delivery (W4) and DSD (W18) supply channels are active for the same SKU, timing mismatches can result in double-ordering, especially if the DSD schedule changes after the DC transfer order is already confirmed.",
+     "- FEFO picking compliance is inconsistent — WMS directs pickers to earliest-expiring batch, but in high-volume waves pickers sometimes bypass FEFO sequence to meet productivity targets, leading to aged stock accumulation in DC.",
+     "- In-transit inventory visibility gaps for inter-island deliveries (W66) mean Supply Planners cannot provide accurate ETAs to Store Managers during typhoon-related delays."
+    ],
+    "Staffing Implication": [
+     "- **2–3 Supply Planners** (in HQ): ~167 orders/day to review. At 2–3 hours/day for review + 1 hour for wave management = 3–4 hours/day. 2–3 planners share this plus demand forecasting. Reasonable within the 40-person Supply Chain & Logistics team (per profile §3.3).",
+     "- **Per DC**: 15–20 Pickers, 8–10 Packers, 4–6 Loading Crew (working in shifts to handle ~42 orders/day with ~50 lines each). Fits within ~150 DC headcount.",
+     "- **Store Receiving Clerks**: 30–60 min per delivery × 2–3 deliveries/week = ~1–3 hours/week. Absorbed by existing store receiving staff.",
+     "- **No incremental headcount beyond planned staffing.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Dual-sourced item management: for SKUs that are replenished through both DC delivery (W4) and DSD (W18) — typically cement, lumber, and bulky building materials — system maintains a primary/secondary supply channel indicator per SKU per store; ATP calculation aggregates on-hand + incoming DC replenishment + incoming DSD orders; when auto-replenishment (W4.1) generates a transfer order for a dual-sourced SKU, system checks if a DSD delivery is already scheduled within the replenishment lead time and adjusts the transfer order quantity accordingly to avoid overstocking; Store Manager can override the default supply channel per SKU via handheld; monthly: Supply Planner reviews dual-sourced SKU inventory levels to identify overstocking or conflicting deliveries (W4, W18)",
+     "- Replenishment calculation engine (min/max, forecast-based) (W4.1)",
+     "- Constrained allocation rules: when available supply is insufficient for all stores, system applies configurable allocation logic (e.g., equal distribution, rank by store revenue, prioritize A-stores) — Planner reviews and adjusts before confirming (W4.2)",
+     "- Store order creation and wave planning (W4.3)",
+     "- WMS pick/pack/ship with RF scanning (W4.4–6)",
+     "- In-transit inventory visibility (W4.8)",
+     "- Store receiving with discrepancy handling (W4.10–12)",
+     "- Real-time inventory update at both DC and store (W4.8, W4.12)",
+     "- FEFO (First Expired First Out) directed picking: for items with shelf-life tracking (paint, adhesives, chemicals, cement), WMS directs pickers to pick the earliest-expiring batch first; system sequences pick tasks by expiry date within the same SKU; ensures fresher stock remains in DC for later dispatch (W4.5)",
+     "- Inventory ownership clarification: goods moving from DC to store in W4 are Depot Inc. inventory at both locations; DC facilities are operated by Logistics Inc. (which charges monthly warehousing/distribution fees per W14), but Depot Inc. owns the merchandise throughout; W4 transfer orders are intra-entity inventory movements (no per-TO IC invoice); IC invoicing applies only to inter-entity goods transfers (W22) or service fees (W14)",
+     "- New store demand ramp-up (first 90 days): for newly opened stores (W16), auto-replenishment parameters (ROP, safety stock, min/max) derived from comparable store averages may not reflect actual local demand patterns during the ramp-up period; during the first 90 days post-opening, Supply Planner overrides auto-replenishment with manual review — (a) system flags all replenishment orders for new stores with \"Ramp-Up\" status requiring Planner confirmation (no auto-release), (b) Planner reviews suggested orders daily against early sell-through data and adjusts quantities based on actual demand velocity observed in the first weeks, (c) Store Manager provides daily feedback on fast-moving and slow-moving items via the W4B store-initiated replenishment request channel, (d) after 90 days, Demand Planner analyzes accumulated sales data to calculate store-specific ROP/safety stock parameters per W31.8; system transitions the store from \"Ramp-Up\" to standard auto-replenishment; parameters reviewed again at 180 days; this manual override period prevents both overstocking (tying up working capital in a new store) and stockouts (damaging customer first impressions)",
+     "- Constrained allocation rule governance: when available supply is insufficient for all stores, system applies configurable allocation logic; Supply Planning Manager defines allocation method per SKU or category (equal distribution, rank by store revenue, prioritize A-stores, proportional to historical demand); allocation rules reviewed and approved by VP Supply Chain; rule changes logged with old method, new method, reason, approver, and effective date; monthly: Supply Planning Manager reviews allocation fairness dashboard showing per-store fill rate and allocation share; fairness disputes escalated by Store Managers through W4B channel feed into allocation rule review; quarterly: allocation methodology reviewed as part of W31.8 parameter governance cycle (W4.2)"
+    ],
+    "Time Estimate": [
+     "Daily replenishment review (steps 2–3): 2–4 hours/day for 2–3 Supply Planners. DC pick/pack/ship (steps 4–7): 4–8 hours per wave across shifts. Store receiving (steps 10–12): 30–60 min per delivery. Total end-to-end cycle: 1–3 days from order creation to store shelf."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System calculates replenishment needs per store: current stock vs. min/max or forecast",
+     "duration": "Automated (nightly)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Supply Planner reviews suggested orders each morning; adjusts for promotions, seasonality, store-specific factors",
+     "duration": "2–3 hours/day",
+     "n": "2",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Planner confirms orders; system groups into waves by DC and delivery route",
+     "duration": "1 hour/day",
+     "n": "3",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC receives pick wave; WMS assigns pick tasks to staff by zone",
+     "duration": "5 min (assignment)",
+     "n": "4",
+     "r": "WMS / DC Supervisor"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Picker pick items from bins per RF gun direction; scan-confirm each item",
+     "duration": "2–4 hours/wave",
+     "n": "5",
+     "r": "Picker"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Packers pack into store-labeled totes/cases; scan-confirm shipment",
+     "duration": "1–2 hours/wave",
+     "n": "6",
+     "r": "Packer"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Load truck per route sequence (multi-drop)",
+     "duration": "30–60 min",
+     "n": "7",
+     "r": "Loading Crew"
+    },
+    {
+     "a": "—",
+     "activity": "System creates Transfer Order; in-transit inventory created",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "DC Dispatch",
+     "activity": "Truck departs DC; ETA communicated to store",
+     "duration": "—",
+     "n": "9",
+     "r": "Driver"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Receiving Clerk unloads truck; scans each item/case against Transfer Order",
+     "duration": "30–60 min",
+     "n": "10",
+     "r": "Receiving Clerk (Store)"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Discrepancies (shortage, damage) flagged in system; DC notified",
+     "duration": "5 min if any",
+     "n": "11",
+     "r": "Receiving Clerk (Store)"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store confirms receipt; in-transit inventory becomes store inventory",
+     "duration": "5 min",
+     "n": "12",
+     "r": "Receiving Clerk (Store)"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Replenishment moved to sales floor or backroom stock",
+     "duration": "30–60 min",
+     "n": "13",
+     "r": "Stock Associate"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W105",
+    "W14",
+    "W16",
+    "W18",
+    "W22",
+    "W31",
+    "W4B",
+    "W66"
+   ]
+  },
+  {
+   "ctl_refs": [],
+   "fields": {
+    "Frequency": "~100–200 store-initiated requests/month chain-wide; ~0.5–1 per store per month",
+    "Owner": "Supply Planner",
+    "Participants": "Store Manager / Dept. Supervisor, Supply Planner, Buyer (if new PO needed)",
+    "Trigger": "Store Manager or Department Supervisor identifies local demand that exceeds current replenishment plan (e.g., nearby construction project, local event, weather-driven spike)",
+    "Volume": "Typically 5–20 SKUs per request"
+   },
+   "id": "W4B",
+   "level": 3,
+   "name": "Store-Initiated Replenishment Request",
+   "parent": "W4",
+   "req_refs": [],
+   "sections": {
+    "Pain Points / Risks": [
+     "- Store Managers in remote or provincial locations (Visayas, Mindanao) submit a disproportionate share of ad-hoc requests because demand patterns are less predictable than Metro Manila stores, stretching Supply Planner review capacity.",
+     "- Denied requests create friction with Store Managers who have local market knowledge that the central planning team may lack; escalation to Regional Manager adds a political dimension that can slow the standard W4 replenishment cycle.",
+     "- High-frequency ad-hoc requests for the same SKUs signal that ROP/safety stock parameters are misconfigured (W31.8), but the feedback loop from W4B analytics to parameter adjustment can take 30–60 days, during which stores experience repeated stockouts.",
+     "- Emergency expedited requests that require a separate shipment (not riding the next wave) incur incremental 3PL freight cost of PHP 5,000–15,000 per trip, which is rarely tracked back to the requesting store's P&L."
+    ],
+    "Staffing Implication": [
+     "- **Supply Planner**: ~100–200 requests/month ÷ 20 working days = ~5–10/day. At ~10 min each for review = ~1 hour/day incremental. Absorbed within existing 2–3 planner team.",
+     "- **Store Managers**: ~0.5–1 requests/month × 10 min = negligible."
+    ],
+    "Staffing Implication (W4 overall)": [
+     "- **2–3 Supply Planners** (in HQ): ~167 orders/day to review. At 2–3 hours/day for review + 1 hour for wave management = 3–4 hours/day. 2–3 planners share this plus demand forecasting. Reasonable within the 40-person Supply Chain & Logistics team (per profile §3.3).",
+     "- **Per DC**: 15–20 Pickers, 8–10 Packers, 4–6 Loading Crew (working in shifts to handle ~42 orders/day with ~50 lines each). Fits within ~150 DC headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store-initiated replenishment request form in POS/terminal/handheld with SKU selection, quantity, urgency, and justification fields (W4B.1)",
+     "- Supply Planner dashboard showing request alongside current supply position (on-hand, ATP, open POs, pending replenishment) (W4B.2)",
+     "- Request status lifecycle: Submitted → Under Review → Approved (Scheduled / Pending Supply) / Denied → Fulfilled / Closed (W4B.3–7)",
+     "- Weekly request analytics: approval rate, requesting stores, frequently requested items feeding into ROP parameter review (W31.8) (W4B.8)",
+     "- Integration with W4 (replenishment order creation), W2A (expedited PO), W22 (inter-DC transfer), W31 (forecast and ROP adjustment)"
+    ],
+    "Time Estimate": [
+     "Request submission (step 1): 10 min per request. Supply Planner review (steps 3–6): 5–15 min per request. Weekly analytics (step 8): 30 min/week for Supply Planning Manager. Total chain-wide: ~1 hour/day incremental for Supply Planners reviewing ~5–10 requests/day."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager or Dept. Supervisor identifies items needing additional stock beyond automated replenishment; opens replenishment request in system (handheld or terminal) — selects SKUs, enters requested quantity, urgency (routine / expedited / emergency), and business justification (e.g., \"new subdivision project starting 2 km away\")",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Store Manager / Dept. Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System checks: (a) current on-hand at store, (b) current on-hand at serving DC, (c) open POs and incoming replenishment orders, (d) ATP at DC after existing commitments; presents Supply Planner with a dashboard showing the request alongside existing supply position",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Supply Planner reviews request each morning alongside standard replenishment review (W4 step 2); evaluates: (a) is the demand legitimate and near-term, (b) does DC have available stock to fulfill without depriving other stores, (c) if expedited — can it ride on the next wave, or does it need a separate shipment",
+     "duration": "5–10 min/request",
+     "n": "3",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**If approved — DC has stock**: Supply Planner adds requested quantities to the next replenishment order for that store (W4 step 2); system creates a pick task in the next wave; request status updated to \"Approved — Scheduled\"",
+     "duration": "2 min",
+     "n": "4",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**If approved — DC has insufficient stock**: Supply Planner requests Buyer to expedite a PO (W2A) or arrange an inter-DC transfer (W22); request status updated to \"Approved — Pending Supply\"; Supply Planner tracks until supply arrives",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Supply Planner / Buyer"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**If denied**: Supply Planner rejects request with reason (insufficient DC stock, lower priority than other stores, demand not validated); system notifies Store Manager; Store Manager may escalate to Regional Manager if disagreement",
+     "duration": "2 min",
+     "n": "6",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "—",
+     "activity": "Fulfillment follows standard W4 pick/pack/ship process; request closed when goods received at store",
+     "duration": "Per W4",
+     "n": "7",
+     "r": "Per W4"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Weekly: Supply Planning Manager reviews store-initiated request report — approval rate, top requesting stores, frequently requested items; flags items with high ad-hoc request frequency for ROP/safety stock adjustment per W31.8",
+     "duration": "30 min/week",
+     "n": "8",
+     "r": "Supply Planning Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W22",
+    "W2A",
+    "W31",
+    "W4"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-11",
+    "CTL-21"
+   ],
+   "fields": {
+    "Frequency": "Daily per store; each SKU counted at least once per quarter",
+    "Owner": "Department Supervisor",
+    "Participants": "Stock Associate (counter), Department Supervisor (reviewer), Store Manager (approver for adjustments)",
+    "Trigger": "Daily schedule (rolling through all sections)",
+    "Volume": "~700 SKUs/day per store; 200 stores × 700 = 140,000 SKU counts/day chain-wide"
+   },
+   "id": "W6",
+   "level": 2,
+   "name": "Cycle Counting & Inventory Accuracy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"count assignment by section/aisle\" (replaces manual Step 1).",
+     "- System auto-capture of \"enter quantity into device\" (replaces manual Step 3).",
+     "- System auto-flag of \"compares physical count to system count\" (Step 4, already system-executed)."
+    ],
+    "Controls": [
+     "- CTL-11 (separate inventory counting from adjustment approval.); CTL-21 (ensure inventory accuracy.)",
+     "- operational: Department Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- With only 4 Stock Associates per store (per profile §12.1) and no slack for absenteeism, cycle counting is the first task deferred during peak trading hours, causing accuracy degradation that compounds over weeks.",
+     "- Negative inventory resolution requires immediate investigation that competes with customer-facing duties; unresolved negative inventory blocks ecommerce ATP availability (W11), directly impacting online sales.",
+     "- Near-expiry alerting during cycle counts generates disposition decisions (markdown, RTV, scrap) that require Department Supervisor approval — if the Supervisor is unavailable, expired stock accumulates on shelves in categories like paint and adhesives.",
+     "- Blind recount process adds 15–30 min per flagged section; during high-variance periods (post-promo, post-typhoon), the recount workload can exceed Stock Associate capacity, causing counting backlogs.",
+     "- In-store damage discovery (W6.8a) during cycle counts creates a dual workflow burden — the associate must simultaneously complete the count and document damage with photos and cause codes, slowing both processes."
+    ],
+    "Staffing Implication": [
+     "- **4 Stock Associates per store (per profile §12.1)**: Each counts ~175 SKUs/day (~40 min; 700 ÷ 4 associates), with remainder of time on replenishment, receiving, damage reporting, and BOPIS picking. The count of 4 (per §12.1) covers the counting plan with modest slack, though peak absenteeism still defers counting (per the pain point).",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated count assignment by zone/section (W6.1)",
+     "- RF device / handheld count entry (W6.3)",
+     "- Variance detection and blind recount workflow (W6.4–5)",
+     "- Inventory adjustment with tiered approval (W6.6–7)",
+     "- Immutable audit trail for all adjustments (W6.8)",
+     "- In-store damage discovery reporting with photo, cause code, and disposition workflow (W6.8a)",
+     "- Near-expiry alerting: during cycle counts, system flags items approaching expiry (configurable threshold per category, e.g., 90 days for paint, 60 days for cement); Department Supervisor reviews flagged items and initiates disposition per W13.9a (markdown), W3.6a (RTV), or W13.9b (scrap/liquidation) (W6)",
+     "- Negative inventory resolution: system generates daily negative inventory alert listing all SKU-locations where on-hand < 0; at store level, Stock Associate investigates root cause (timing lag from offline POS transactions per W5G, receiving error, mispick, or cycle count needed); at DC level, Inventory Control clerk investigates (pending GR posting, allocation error, picking error); resolution action depends on cause — recount and adjust (W6), wait for pending transaction posting, or force adjustment with supervisor approval; system blocks negative-inventory locations from ecommerce ATP availability until resolved; monthly report of negative inventory frequency by location feeds into inventory accuracy improvement initiatives"
+    ],
+    "Time Estimate": [
+     "Daily count per Stock Associate: ~40 min for ~175 SKUs (700 ÷ 4 associates). Blind recount: 15–30 min additional for flagged items. Adjustment processing: 5–15 min per adjustment (including approvals). Total per store per day: ~2–3 hours across 4 Stock Associates (counting + recounts + adjustments)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System generates daily count assignment by section/aisle",
+     "duration": "Automated (nightly)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Stock Associate retrieves count sheet on handheld/RF device",
+     "duration": "—",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Physically count each SKU in assigned section; enter quantity into device (4 Stock Associates each count ~175 SKUs/day, taking ~30 min each at ~10 sec/SKU)",
+     "duration": "~40 min per associate",
+     "n": "3",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "System compares physical count to system count; flags variances",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "For flagged items: Stock Associate recounts (blind recount)",
+     "duration": "15–30 min",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If variance confirmed: Department Supervisor reviews and approves adjustment",
+     "duration": "15 min",
+     "n": "6",
+     "r": "Dept. Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If adjustment > PHP 10,000 or > 5% of SKU value: Store Manager approval required",
+     "duration": "5 min each",
+     "n": "7",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "System posts inventory adjustment; audit trail recorded",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**In-store damage discovered during operations**: Stock Associate identifies damaged item on sales floor (customer drop, water damage, forklift damage, yard weather damage); creates damage report in system with photo and cause code; Department Supervisor reviews and approves disposition: (a) markdown and sell at reduced price, (b) scrap with supervisor authorization, (c) Return to Vendor per W3.6a process; system posts inventory adjustment and loss to damage/scrapping account",
+     "duration": "10 min",
+     "n": "8a",
+     "r": "Stock Associate / Dept. Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Root cause analysis for recurring variances (theft, damage, receiving errors)",
+     "duration": "Weekly review",
+     "n": "9",
+     "r": "Dept. Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W11",
+    "W13",
+    "W3",
+    "W5G"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-38"
+   ],
+   "fields": {
+    "Frequency": "~15–25 consignment vendors; settlement monthly",
+    "Owner": "Buyer (consignment agreements)",
+    "Participants": "Buyer, Receiving Clerk, Cashier, AP Clerk, Consignment Vendor",
+    "Trigger": "Consignment goods received at store/DC; or consignment goods sold",
+    "Volume": "~300 consignment SKUs from ~15–25 consignment vendors (primarily appliances, select tiles, fixtures; one register with W1188/W1275/W925)"
+   },
+   "id": "W23",
+   "level": 2,
+   "name": "Consignment Inventory Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-flag of \"flags consignment items in item master with vendor ownership indicator\" (replaces manual Step 2).",
+     "- System auto-record of \"records consignment receipt as non-valuated inventory\" (replaces manual Step 4).",
+     "- System auto-scan of \"scans barcode normally\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-38 (ensure consignment settlement accuracy.)",
+     "- operational: Buyer (consignment agreements) review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- Quarterly vendor reconciliation discrepancies are common — consignment vendors track sell-through independently and their records frequently differ from BuildRight's POS data, requiring 15 business days to resolve and tying up AP resources.",
+     "- Consignment items displayed alongside BuildRight-owned stock on the sales floor are visually indistinguishable to customers and staff; accidental damage to consignment goods creates liability disputes with vendors who expect full consignment price reimbursement.",
+     "- Non-valuated inventory tracking for consignment items is prone to errors during cycle counts (W6) and annual physical inventory (W42) — count teams must correctly classify items as vendor-owned vs. BuildRight-owned, and misclassification distorts both the consignment payable and owned inventory valuation.",
+     "- Slow-moving consignment SKUs that vendors refuse to collect after quarterly review (W23.10) occupy valuable shelf and backroom space in stores with no financial incentive for the vendor to expedite retrieval.",
+     "- Period-end accrual complexity: at month-end close (W9), the system must accurately accrue consignment liability for all sold-but-unsettled items across 15–25 vendors and 200 stores; timing differences between POS sell-through and vendor settlement create reconciliation work for Cost Accountant."
+    ],
+    "Staffing Implication": [
+     "- Consignment management adds ~15–25 hours/month to Buyer workload (review + settlement). Spread across ~10 buyers handling their respective vendor portfolios, this is ~2 hours/buyer/month. Absorbed within existing headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment item flagging in item master (W23.2)",
+     "- Non-valuated inventory receipt and tracking (W23.4)",
+     "- Ownership transfer at point of sale with automatic GL posting (Dr. COGS / Cr. Consignment Payable) (W23.6)",
+     "- Period-end accrual for sold-but-unsettled consignment goods (W23.6a)",
+     "- Consignment payable sub-ledger reconciliation to GL (W23.6a)",
+     "- Consignment sell-through report generation (W23.7)",
+     "- AP settlement from sell-through data with GL posting (Dr. Consignment Payable / Cr. Cash) (W23.9)",
+     "- Consignment return logistics: return shipment processing with non-valuated inventory reduction (no GL impact); vendor confirmation and updated stock list; on-hand quantity adjustment (W23.10)",
+     "- Quarterly consignment vendor statement reconciliation: Cost Accountant generates consignment reconciliation report per vendor — compares BuildRight's recorded consignment sell-through (units sold × consignment cost) to vendor's statement; reconciles on-hand quantities (system record vs. vendor record of goods shipped minus goods sold); investigates discrepancies (unrecorded sell-through, unreported returns, missing receipts, timing gaps); reconciling items documented and resolved within 15 business days; unreconciled differences > PHP 50,000 escalated to Controller; results feed into vendor scorecard (W44) (W23)"
+    ],
+    "Time Estimate": [
+     "Vendor setup (steps 1–2): 30–60 min per vendor. Monthly settlement review and confirmation (steps 7–8): 1–2 hours per vendor per month. Quarterly performance review and slow-mover returns (step 10): 2 hours/quarter per vendor. Reconciliation (W23): 30 min/month per vendor. Total ongoing: ~30–80 hours/month across the ~15–25 consignment vendors."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Buyer establishes consignment agreement: vendor, SKUs, consignment price, settlement terms",
+     "duration": "Per vendor setup",
+     "n": "1",
+     "r": "Buyer"
+    },
+    {
+     "a": "Buyer",
+     "activity": "System flags consignment items in item master with vendor ownership indicator",
+     "duration": "5 min/SKU",
+     "n": "2",
+     "r": "Merchandise Planner"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Vendor delivers consignment goods; Receiving Clerk processes GR (standard receiving)",
+     "duration": "Per W3/W18",
+     "n": "3",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System records consignment receipt as non-valuated inventory (vendor-owned)",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Consignment items displayed and sold on sales floor; POS scans barcode normally",
+     "duration": "Part of sale",
+     "n": "5",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "At sale: system records sell-through event; ownership transfers from vendor to company to customer; system posts GL entries: Dr. Cost of Goods Sold / Cr. Consignment Vendor Payable (at consignment cost); simultaneously Dr. Cash or Accounts Receivable / Cr. Revenue (at selling price)",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "At month-end close (W9): system accrues consignment liability for all consignment goods sold but not yet settled with vendor; Finance reconciles consignment payable sub-ledger to GL",
+     "duration": "Automated + 30 min/month",
+     "n": "6a",
+     "r": "System / Cost Accountant"
+    },
+    {
+     "a": "Buyer",
+     "activity": "Monthly: system generates consignment sell-through report per vendor (units sold × consignment price)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Buyer reviews and confirms settlement report",
+     "duration": "1 hour/vendor/month",
+     "n": "8",
+     "r": "Buyer"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk processes consignment vendor payment based on confirmed sell-through; system generates AP invoice from sell-through data: Dr. Consignment Vendor Payable / Cr. Cash (settles the accrued liability from step 6)",
+     "duration": "Per W7",
+     "n": "9",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Quarterly: Buyer reviews consignment SKU performance; identifies slow movers for return to vendor; coordinates physical pickup with vendor (vendor arranges collection or Buyer schedules transport); Receiving Clerk processes return shipment in system (reduces non-valuated consignment inventory; no GL posting since goods remain vendor-owned throughout); vendor confirms received quantities and issues updated consignment stock list; system updates consignment on-hand quantities",
+     "duration": "2 hours/quarter",
+     "n": "10",
+     "r": "Buyer / Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1188",
+    "W1275",
+    "W18",
+    "W3",
+    "W42",
+    "W44",
+    "W6",
+    "W7",
+    "W9",
+    "W925"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-21"
+   ],
+   "fields": {
+    "Frequency": "Annual; each store and DC counted once per year",
+    "Owner": "Cost Accountant (overall); Store Manager (per store); DC Manager (per DC)",
+    "Participants": "Cost Accountant, Store Managers, DC Managers, all store staff, inventory count teams, IT, Internal Audit",
+    "Trigger": "Year-end close calendar (typically December 31 or last business day of fiscal year)",
+    "Volume": "35,000 SKUs × ~205 locations (200 stores + 4 DCs); executed in coordinated 3–5 day window per region"
+   },
+   "id": "W42",
+   "level": 2,
+   "name": "Annual Physical Inventory Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- auto-report generation and distribution",
+     "- workflow automation; rule-based routing"
+    ],
+    "Controls": [
+     "- CTL-21 (ensure inventory accuracy.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Count Execution (Day 1 — full count; Days 2–3 — recounts and adjustments; Days 4–5 — residual clean-up if needed)": [
+     "> **Feasibility note**: Counting 35,000 SKUs per store with the ~29 store staff in 2 days is infeasible for a full wall-to-wall count. BuildRight addresses this with a **tiered counting strategy** (counting tiers are value-based cuts and deliberately tighter than the profile §6.6 ABC classes, whose A+B band is 50% of SKUs / 17,500): (a) **count-tier-1 items** — all A items plus the highest-value B items (~10,500 SKUs, ~95% of inventory value) — receive full physical count during the annual window; (b) **count-tier-2 items** — the remaining lower-value B/C items (~24,500 SKUs, referred to below as the C-tier) — are validated by extrapolating from rolling cycle counts (W6) conducted throughout the year — the annual process confirms that cycle count accuracy for C-tier items meets the ≥ 97% threshold, rather than recounting every C-tier item. This reduces the per-store counting burden to ~10,500 SKUs ÷ ~29 staff ÷ 2 days ≈ ~180 SKUs/person/day, achievable at ~3 min/SKU including travel between locations. DCs, with higher item density and forklift-access racking, allocate 3–5 days for a full count of all SKUs.",
+     ">",
+     "> **C-tier extrapolation methodology**: C-tier inventory accuracy is validated using a statistical sampling approach — (a) throughout the year, W6 cycle counts cover all C-tier SKUs at least once per quarter (per the quarterly cycle in W6); (b) each C-tier SKU's cycle count accuracy (physical vs. system quantity) is recorded per count event; (c) at year-end, Cost Accountant computes the aggregate C-tier accuracy rate = (total C-tier SKU-locations where physical matched system within tolerance) ÷ (total C-tier SKU-locations counted during the year); (d) if aggregate accuracy ≥ 97%, C-tier items are considered validated and no additional count is required at year-end; (e) if aggregate accuracy < 97%, Cost Accountant identifies the worst-performing C-tier categories (by variance rate) and adds them to the annual count scope; (f) sample size for interim confidence: to achieve 95% confidence that the true accuracy rate is within ±1% of the observed rate, a minimum of ~500 C-tier SKU-locations must be cycle-counted per quarter per store (approximately 2% of C-tier SKU-locations, achievable within W6 daily count volume of ~700 SKUs/day); (g) this methodology is reviewed and approved by Internal Audit annually as part of the W42 physical inventory observation; (h) **below-threshold contingency**: if aggregate C-tier accuracy falls below 97%, Cost Accountant quantifies the gap and identifies worst-performing C-tier categories by variance rate; additional items added to the annual count scope in priority order (highest-variance categories counted first); if additional scope threatens the 2-day count window, Cost Accountant escalates to Controller with a proposed extended count schedule (up to 5 days with staggered zone freezing per W42 system freeze mitigation); Controller approves or denies extension; if extension denied, Cost Accountant counts the highest-risk C-tier items within the standard window and accepts a qualified inventory opinion for the remaining C-tier items — Controller discloses the qualification in the year-end close package (W9B); Internal Audit documents the below-threshold outcome and includes it in the W42 observation report."
+    ],
+    "Pain Points / Risks": [
+     "- Full store closure or skeleton-crew operation during the 2-day count window generates revenue loss estimated at PHP 200,000–500,000 per store; the staggered zone freezing alternative mitigates this but adds counting complexity and extends the count window.",
+     "- C-tier extrapolation methodology carries audit risk — if the aggregate C-tier accuracy falls below 97%, the below-threshold contingency requires extended counting that may disrupt post-count operations; Controller must issue a qualified inventory opinion for any uncounted C-tier items, which external auditors scrutinize.",
+     "- Queued replenishment orders during the system freeze (auto-generated per W4) create a post-unfreeze surge in DC pick/pack/ship workload that can overwhelm DC capacity in the 2–3 days following count completion.",
+     "- New store ramp-up overlap: stores in their first 90 days (W4 new store ramp-up) that undergo annual physical inventory simultaneously face manual replenishment overrides AND count freezes, creating a perfect storm of inventory uncertainty.",
+     "- Internal Audit travel to 20–30 sampled locations across the Philippine archipelago during the coordinated 3–5 day count window requires meticulous logistics planning; typhoon season disruption can prevent auditor observation at critical locations."
+    ],
+    "Post-Count (1 week after)": [],
+    "Pre-Count Planning (2–3 weeks before count)": [],
+    "Staffing Implication": [
+     "- **All store staff (29/store per the profile §4 register)**: Mobilized for 2-day count. Stores may close early or operate with skeleton crew during count.",
+     "- **DC staff (~150/DC)**: Full DC count requires 1–2 days. Operations paused during count.",
+     "- **Cost Accountant**: 20–30 hours for planning, execution support, and reconciliation. Heaviest workload of the year for this role.",
+     "- **Internal Audit (3–5 auditors)**: Travel to sampled locations. Absorbed within annual audit plan.",
+     "- **IT**: 1 day for count sheet configuration + system freeze/unfreeze support.",
+     "---"
+    ],
+    "System Touchpoints": [
+     "- System inventory transaction freeze per location (W42.6, W42.15); auto-replenishment orders for frozen stores are automatically queued by the system and released upon unfreeze — no replenishment orders are lost during the count window; queued orders visible on Supply Planner dashboard with \"Pending — Store Count Freeze\" status",
+     "- Zone-based count sheet generation with blind count mode (W42.2, W42.7–8)",
+     "- RF device / handheld count entry (W42.7)",
+     "- Variance detection after count submission (W42.9)",
+     "- Recount tracking (W42.10)",
+     "- Adjustment approval workflow with tiered authorization (W42.12)",
+     "- Bulk inventory adjustment posting and GL impact (W42.14)",
+     "- Vendor-owned inventory (consignment/VMI) during physical count: count teams count consignment (W23) and VMI (W20) items using separate count sheets flagged as \"Vendor-Owned — Non-Valuated\"; system records vendor-owned counts separately from BuildRight-owned (valuated) inventory; after count, system reconciles physical count of vendor-owned items to vendor's expected quantities per W23/W20 records; discrepancies investigated — if physical < system, potential unrecorded sell-through requiring W20/W23 settlement adjustment; if physical > system, potential unrecorded receipt requiring investigation; vendor-owned count results shared with respective vendors for reconciliation; Internal Audit (W42 step 13) verifies that all counted items are correctly classified as owned (valuated) or vendor-owned (non-valuated) for audit evidence (W42.7–8)",
+     "- Physical inventory summary reporting (W42.17)",
+     "- System freeze mitigation: to minimize operational disruption during the counting window, system supports **staggered zone freezing** as an alternative to full-location freeze — (a) stores may remain open during count using zone-by-zone freeze: zone being counted is frozen for transactions (no sales, receiving, or transfers for items in that zone); remaining zones continue normal operations; as each zone's count is submitted, system unfreezes that zone; full count completed over 2 days with rotating zone freezes; (b) for DCs: system supports module-by-module freeze (e.g., count inbound module while outbound module continues shipping); critical outbound shipments for same-day delivery commitments are prioritized before the freeze window; (c) if full-location freeze is required (smaller stores or DCs with high inventory interdependency): system freeze window is minimized to non-business hours where possible (overnight freeze with count starting at close of business; completed before next day opening); IT monitors system performance during zone freeze/unfreeze cycles to ensure no transaction loss; Store Manager communicates freeze zones to staff in real-time via handheld notifications (W42)",
+     "- Continuous counting alternative for high-volume stores: for the top 20 stores by revenue (where even a 2-day partial disruption is significant), the annual wall-to-wall count may be replaced by a **perpetual inventory validation** program — system generates weekly count tasks covering 1/52 of all SKUs per week (completing a full cycle in 1 year, overlapping with W6 cycle counts); Cost Accountant validates perpetual counts quarterly and Internal Audit observes the process semi-annually; this alternative requires Controller approval and is only available for stores with demonstrated ≥ 98% cycle count accuracy over the prior 12 months (W42)"
+    ],
+    "Time Estimate": [
+     "Pre-count planning: 2–3 weeks (4 hours instructions + 1 day IT setup + 2 hours/store team organization + 4 hours/store transaction posting). Count execution: 2 days per store, 3–5 days per DC. Post-count reconciliation: 1 week (4 hours GL reconciliation + 2 hours reporting + 2 hours management review). Internal Audit observation report: 1 week after count. Total project duration: ~4–6 weeks from planning to final report."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Cost Accountant issues physical inventory instructions: count dates, methodology, team assignments, system freeze schedule",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Cost Accountant"
+    },
+    {
+     "a": "Cost Accountant",
+     "activity": "IT configures count sheets in system: generate zone-based count sheets per location with expected system quantities (hidden for blind count)",
+     "duration": "1 day",
+     "n": "2",
+     "r": "IT Team"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Store Managers organize count teams: assign zones (8 zones per store), designate team leaders, schedule shifts for 2-day count",
+     "duration": "2 hours/store",
+     "n": "3",
+     "r": "Store Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Store Managers ensure all receiving and shipments are posted before count; process pending transactions; stage goods in correct locations",
+     "duration": "4 hours/store",
+     "n": "4",
+     "r": "Store Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Internal Audit prepares to observe counts at selected locations (sample: 20–30 stores + all DCs)",
+     "duration": "1 week",
+     "n": "5",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "Cost Accountant",
+     "activity": "System freezes inventory transactions at count locations (no sales, receiving, or transfers during count window)",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System / IT"
+    },
+    {
+     "a": "Team Leader",
+     "activity": "Count teams physically count every SKU in assigned zone: two-person teams (one counts, one records on RF device/count sheet)",
+     "duration": "6–10 hours/location",
+     "n": "7",
+     "r": "Count Teams"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Team leaders submit zone counts; system compares to system quantities (blind count — system quantity only revealed after team submits)",
+     "duration": "Per zone",
+     "n": "8",
+     "r": "Team Leader"
+    },
+    {
+     "a": "—",
+     "activity": "System generates variance report per zone: items where physical count differs from system count",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "For items with variance: recount team (different from original) performs blind recount",
+     "duration": "2–4 hours/location",
+     "n": "10",
+     "r": "Recount Team"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If recount confirms variance: Team Leader investigates and documents root cause (theft, damage, receiving error, data entry error)",
+     "duration": "15 min/item",
+     "n": "11",
+     "r": "Team Leader"
+    },
+    {
+     "a": "Approver",
+     "activity": "Store Manager reviews and approves adjustments per tier: (a) adjustment ≤ PHP 10,000: Store Manager, (b) adjustment PHP 10,001–100,000: Regional Manager, (c) adjustment > PHP 100,000: Controller",
+     "duration": "5–15 min/adjustment",
+     "n": "12",
+     "r": "Approver"
+    },
+    {
+     "a": "CFO",
+     "activity": "Internal Audit observes counts at sampled locations; validates methodology compliance and count accuracy",
+     "duration": "Full count day",
+     "n": "13",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "—",
+     "activity": "System posts approved inventory adjustments; updates inventory valuation; posts to GL (gain/loss on inventory)",
+     "duration": "Automated",
+     "n": "14",
+     "r": "System"
+    },
+    {
+     "a": "Cost Accountant",
+     "activity": "System unfreezes inventory transactions; normal operations resume",
+     "duration": "Automated",
+     "n": "15",
+     "r": "IT Team"
+    },
+    {
+     "a": "Controller",
+     "activity": "Cost Accountant reconciles total inventory valuation post-adjustment to GL inventory accounts",
+     "duration": "4 hours",
+     "n": "16",
+     "r": "Cost Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "Cost Accountant generates physical inventory summary report: total adjustments by location, by category, by variance type (gain/loss), shrinkage as % of sales",
+     "duration": "2 hours",
+     "n": "17",
+     "r": "Cost Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Controller and CFO review physical inventory results; identify high-shrinkage locations for loss prevention action (W37)",
+     "duration": "2 hours",
+     "n": "18",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Internal Audit issues observation report with recommendations for count process improvement",
+     "duration": "1 week",
+     "n": "19",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W20",
+    "W23",
+    "W37",
+    "W4",
+    "W6",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-253"
+   ],
+   "fields": {
+    "Frequency": "~2,000–3,000 backorder requests/month (primarily B2B trade accounts)",
+    "Owner": "Sales Associate (intake); Supply Planner (fulfillment)",
+    "Participants": "Sales Associate, Supply Planner, Buyer, Store Manager, Customer",
+    "Trigger": "Customer requests an item that is out of stock at the store and/or DC level",
+    "Volume": "Concentrated in fast-moving commodity categories (cement, lumber, paint, plumbing fittings, electrical wire) during peak construction season"
+   },
+   "id": "W56",
+   "level": 2,
+   "name": "Customer Backorder Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks real-time inventory across all locations\" (replaces manual Step 1).",
+     "- System auto-count of \"account or trade account\" (replaces manual Step 3).",
+     "- System auto-import of \"import item — shows import PO ETA\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-253 (ensure controlled execution — Inventory Accuracy & Counting (PA-05.1).)",
+     "- operational: Sales Associate (intake); Supply Planner (fulfillment) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Backorder allocation reserves stock against incoming PO/replenishment (step 5) before general store replenishment — during constrained supply periods, this priority mechanism (also reflected in W105 allocation hierarchy) causes routine replenishment shortfalls that cascade across non-backorder stores.",
+     "- Auto-cancellation after maximum wait time (step 12) generates customer dissatisfaction when items were nearly available; the 7-day response window is too short for trade account customers (B2B) who may be waiting on project financing confirmation.",
+     "- Import item backorders (step 4c — linked to W2B import POs) have ETAs of 30–60 days, far exceeding most customer-stated maximum wait times; the system auto-cancels these prematurely unless the customer explicitly extends, losing sales on high-value import orders.",
+     "- Backorder price protection (customer-friendly policy) means the company absorbs margin erosion when promotional pricing activates between creation and fulfillment; during major promos (W13), the volume of backorders receiving retroactive discounts can be material.",
+     "- Inter-store transfer alternative (step 2) offered to the customer adds 3PL courier cost and extends the conversation at the Sales Associate level, increasing per-customer interaction time during already-busy trading hours."
+    ],
+    "Staffing Implication": [
+     "- **Sales Associates**: ~2,000–3,000 backorders/month ÷ 200 stores = ~10–15/store/month × ~10 min each = ~2 hours/store/month. Absorbed.",
+     "- **Supply Planner**: 1 hour/week for backorder review. Absorbed within existing planning duties.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time inventory visibility across all locations with cross-store lookup (W56.1)",
+     "- Backorder creation linked to customer account (loyalty or trade) with estimated availability (W56.3–4)",
+     "- Allocation reservation against incoming PO/replenishment with backorder priority (W56.5)",
+     "- Automated customer notification at each status change: created, allocated, in transit, ready for pickup (W56.8–9)",
+     "- Backorder aging report with escalation triggers (W56.13)",
+     "- Backorder price protection: if a promotional price (W13) or regular price reduction (W40) becomes effective between backorder creation and fulfillment, system automatically applies the lower price to the backorder at fulfillment (customer-friendly policy); system logs the price adjustment with original backorder price, new lower price, and price source (promo or price change); if price increases, the original backorder price is honored (locked at creation); this rule applies to both trade account and retail backorders",
+     "- Auto-cancellation after maximum wait time with customer notification (W56.12)",
+     "- Integration with W2 (PO creation trigger), W4 (replenishment allocation), W13 (promotional pricing — backorder price protection), W19 (home delivery option), W22 (inter-store transfer alternative), W38 (special order for non-stock items — backorder is for stock items, special order is for non-stock items), W68 (product discontinuation — system auto-cancels open backorders for discontinued SKUs and notifies customers)"
+    ],
+    "Time Estimate": [
+     "Customer intake (steps 1–3): 10–13 min per backorder. Automated steps (steps 4–5, 8): real-time. Customer communication (step 6): 2 min. Weekly aging review (step 13): 1 hour/week for Supply Planner. Total ongoing: ~2 hours/store/month for Sales Associates + 1 hour/week for Supply Planner."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Customer requests out-of-stock item at store or via Sales Rep; Sales Associate checks real-time inventory across all locations (stores + DCs) via handheld",
+     "duration": "3 min",
+     "n": "1",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If available at another store: offer customer-initiated inter-store transfer per W22 (customer-initiated transfer)",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "If unavailable chain-wide or customer prefers to wait: Sales Associate creates backorder in system — item, quantity, customer details (loyalty account or trade account), preferred store for pickup, delivery preference, maximum wait time (customer-stated)",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "—",
+     "activity": "System links backorder to next expected replenishment: (a) if PO already in progress (W2) with expected GR date — system shows estimated availability date, (b) if no PO exists — system flags to Supply Planner for PO creation (W2A), (c) if import item — shows import PO ETA (W2B)",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System reserves backorder quantity against incoming PO or replenishment order (allocates to backorder before general store replenishment); backorder takes priority over routine replenishment allocation",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Sales Associate communicates estimated availability date to customer; for trade/corporate accounts, Sales Rep manages the communication",
+     "duration": "2 min",
+     "n": "6",
+     "r": "Sales Associate / Sales Rep"
+    },
+    {
+     "a": "Supply Planner",
+     "activity": "When goods are received at DC and backorder allocation is fulfilled: system routes allocated quantity to the customer's preferred store in the next replenishment wave (W4); or if customer prefers delivery, system creates home delivery order (W19)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System sends customer notification (SMS/email/app): \"Your item is on the way to [Store Name], expected availability [date]\"",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Item arrives at store; Stock Associate stages for customer pickup (similar to BOPIS W11); system sends \"Ready for pickup\" notification",
+     "duration": "5 min + automated",
+     "n": "9",
+     "r": "Stock Associate / System"
+    },
+    {
+     "a": "—",
+     "activity": "Customer picks up item; sale processed at POS (standard transaction or trade account per W5B.4c); backorder closed in system",
+     "duration": "5 min",
+     "n": "10",
+     "r": "Cashier / Customer"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "If customer cancels backorder before fulfillment: Sales Associate cancels in system; allocation released back to general inventory",
+     "duration": "2 min",
+     "n": "11",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "—",
+     "activity": "If backorder exceeds customer-stated maximum wait time: system auto-notifies customer with options to (a) extend wait, (b) accept substitute item, or (c) cancel; if no response in 7 days, system auto-cancels and releases allocation",
+     "duration": "Automated",
+     "n": "12",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Weekly: Supply Planner reviews open backorder aging report: items with no incoming PO (step 4b — no supply planned), long-wait backorders (> 14 days), and backorders at risk of cancellation; escalates to Buyer for expedited procurement",
+     "duration": "1 hour/week",
+     "n": "13",
+     "r": "Supply Planner"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W105",
+    "W11",
+    "W13",
+    "W19",
+    "W2",
+    "W22",
+    "W2A",
+    "W2B",
+    "W38",
+    "W4",
+    "W40",
+    "W5B",
+    "W68"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-253"
+   ],
+   "fields": {
+    "Frequency": "Weekly per store (from daily cycle counts); annually from wall-to-wall physical inventory",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Store Manager, Stock Associate, Inventory Analyst, Loss Prevention Officer",
+    "Trigger": "Cycle count (W6) or physical inventory (W42) completion reveals variance exceeding configurable thresholds",
+    "Volume": "~200–300 variance investigations/month across 200 stores; ~50–80 requiring full root cause analysis"
+   },
+   "id": "W514",
+   "level": 2,
+   "name": "Inventory Count Reconciliation & Variance Root Cause Analysis",
+   "parent": null,
+   "req_refs": [
+    "INV-004",
+    "INV-022"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counts against configurable thresholds\" (replaces manual Step 1).",
+     "- System auto-scan of \"Store Manager reviews variance exception report for their store\" (replaces manual Step 2).",
+     "- System auto-match of \"mismatch at GR\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-253 (ensure controlled execution — Inventory Accuracy & Counting (PA-05.1).)",
+     "- operational: mandatory investigation documentation for variances >PHP 5K and quarterly unknown-rate target (<15%); operational: investigation documentation for variances >PHP 5K and quarterly unknown-rate target (<15%); operational: tiered approach (A-items prioritized, C-items batch-processed monthly)"
+    ],
+    "Pain Points / Risks": [
+     "- Root cause \"unknown\" selected too frequently, undermining analysis value — mitigated by mandatory investigation documentation for variances >PHP 5K and quarterly unknown-rate target (<15%)",
+     "- Variance investigation backlog when multiple stores flag simultaneously — mitigated by tiered approach (A-items prioritized, C-items batch-processed monthly)",
+     "- Corrective actions not implemented, causing recurring variances — mitigated by corrective action completion tracking and quarterly trend review"
+    ],
+    "Staffing Implication": [
+     "- 1 Inventory Control Manager and the 3 Inventory Planning Analysts (profile §3.3) at HQ absorb this within existing FTE.",
+     "- Store Managers spend ~30 min/week on initial variance review (absorbed in daily duties).",
+     "- LP Officers involved for ~10–15 theft-related escalations/month (absorbed within existing LP team of 20).",
+     "---",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated variance flagging against ABC-classified thresholds (INV-022, INV-004)",
+     "- Variance investigation case management with structured root cause taxonomy (INV-022)",
+     "- Transaction history retrieval for variance tracing (INV-022)",
+     "- Receiving error traceability to original GR document (W3, W18)",
+     "- LP escalation integration for theft-related variances (W248, INV-022)",
+     "- Corrective action tracking with completion monitoring (INV-022)",
+     "- Monthly variance root cause dashboard by store, category, and cause (INV-022)",
+     "- Quarterly trend analysis with shrinkage rate tracking (INV-022)",
+     "- Integration with cycle counting (W6) and physical inventory (W42)"
+    ],
+    "Time Estimate": [
+     "Initial review: ~30 min/store/week. Full root cause analysis: ~30–60 min/case × ~80 cases/month = ~40–80 staff-hours/month. Monthly dashboard: ~2 hours. Total: ~475–515 staff-hours/month (incl. ~433 store-level initial review; ~50–90 HQ/central). Absorbed by Inventory Control Manager and Inventory Analysts within existing FTE."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System flags variances from completed counts against configurable thresholds: A-items >±0.5% or >±PHP 5K; B-items >±1% or >±PHP 3K; C-items >±2% or >±PHP 1K; generates variance exception report per store",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Store Manager reviews variance exception report for their store; performs initial assessment: (a) obvious data entry error (transposed digits, wrong SKU scanned) → immediate correction with documentation; (b) legitimate unexplained variance → route to Inventory Analyst",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "For unexplained variances: Inventory Analyst opens variance investigation case; system auto-populates: SKU details, count vs. system quantity, dollar value of variance, last 3 count results for this SKU, recent transaction history (receipts, transfers, sales, adjustments)",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Inventory Analyst"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Analyst categorizes suspected root cause: (a) Receiving error (quantity mismatch at GR); (b) Miscount (counter error, counted wrong SKU); (c) Unit-of-measure confusion (case vs. piece); (d) System error (integration failure, duplicate posting); (e) Unpicked/unstorable inventory in wrong location; (f) Shrinkage/theft (no other explanation)",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Inventory Analyst"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "For receiving errors: Inventory Analyst traces to original GR document; contacts DC or vendor to verify shipment quantity; if confirmed short shipment, initiates vendor claim (W88) or DC discrepancy resolution",
+     "duration": "20 min",
+     "n": "5",
+     "r": "Inventory Analyst"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "For suspected shrinkage/theft (variance >PHP 10K or pattern across multiple counts): Inventory Analyst escalates to Loss Prevention Officer for investigation (W248); LP Officer reviews CCTV, EBR exceptions, and employee access logs",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Inventory Analyst"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Analyst documents root cause finding and recommended corrective action in variance case: (a) process improvement (receiving checklist, count procedure update); (b) system fix (integration correction, master data update); (c) LP referral; (d) no action (within acceptable tolerance)",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Inventory Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Inventory Control Manager reviews and closes variance case; approves corrective action; system updates inventory with approved adjustment (W92) referencing variance case number",
+     "duration": "5 min",
+     "n": "8",
+     "r": "Inventory Control Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly: Inventory Control Manager generates variance root cause dashboard: variance rate by store, category, and root cause; top 20 stores by variance rate; top 20 SKUs by recurrence; corrective action completion rate",
+     "duration": "2 hours",
+     "n": "9",
+     "r": "Inventory Control Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quarterly: Inventory Control Manager presents variance trend analysis to operations leadership: variance rate trend (goal: <1.5% shrinkage), root cause distribution, most improved/declined stores, systemic issues requiring capital investment (e.g., CCTV upgrades, receiving process redesign)",
+     "duration": "4 hours/quarter",
+     "n": "10",
+     "r": "Inventory Control Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W18",
+    "W248",
+    "W3",
+    "W42",
+    "W6",
+    "W88",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-253"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Inventory Accountant",
+    "Participants": "Inventory Accountant, Category Manager, AP Clerk, Vendor (consignment partner), Store Manager",
+    "Trigger": "Monthly consignment settlement cycle (last business day of month)",
+    "Volume": "~300 consignment SKUs from ~15–25 consignment vendors across 200 stores; ~60,000 SKU-location consignment records"
+   },
+   "id": "W1188",
+   "level": 2,
+   "name": "Consignment Inventory Monthly Reconciliation & Vendor Settlement Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"System sell-through extraction\" (replaces manual Step 1).",
+     "- System auto-count of \"Physical count reconciliation\" (replaces manual Step 2).",
+     "- System auto-scan of \"scan miss\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot carries ~300 SKUs on consignment (major appliances, select tiles) where the vendor retains ownership until the item is sold to a customer. Consignment inventory represents ~3–5% of total inventory value. This workflow governs the monthly reconciliation of consignment stock (comparing system sell-through to physical count), settlement of payment to vendors for sold items, and investigation of discrepancies. It ensures that consignment inventory is accurately tracked, vendors are paid only for items actually sold, and aging consignment stock is identified for return or markdown."
+    ],
+    "Controls": [
+     "- CTL-253 (ensure controlled execution — Inventory Accuracy & Counting (PA-05.1).)",
+     "- operational: attaching POS transaction detail as evidence in Step 4; operational: monthly top-50-per-store consignment spot count with variance investigation and adjustment per W92; operational: distinct consignment SKU numbering and receiving protocol in W23"
+    ],
+    "Pain Points / Risks": [
+     "- **Consignor vs. consignee ownership disputes**: if physical counts don't match system records, vendors may dispute settlement quantities; mitigated by attaching POS transaction detail as evidence in Step 4",
+     "- **Inventory mix between owned and consignment**: risk of selling consignment stock as owned (or vice versa) if items are not properly segregated or system-tagged; mitigated by distinct consignment SKU numbering and receiving protocol in W23",
+     "- **Aging consignment crowding warehouse space**: slow-moving consignment items occupy valuable shelf space without generating revenue; mitigated by aging review and return triggers in Step 7",
+     "- **VAT and revenue recognition complexity**: for consignment, BuildRight recognizes revenue at sale to end customer but the cost of goods is recognized only upon settlement; requires separate GL posting rules; mitigated by automated consignment settlement journal entries"
+    ],
+    "Staffing Implication": [
+     "- **Inventory Accountant**: ~12 hours/month (reconciliation + variance investigation + settlement review + aging analysis). Absorbed within existing role.",
+     "- **AP Clerk**: ~7.5–12.5 hours/month (~15–25 vendors × 30 min settlement processing). Absorbed within existing role.",
+     "- **Store Managers**: ~2 hours/store/month for spot counts (200 stores × 2 hours = 400 hours/month); distributed among store staff as part of cycle counting duties.",
+     "- **No permanent incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment inventory flag in item master (separate from owned inventory for valuation)",
+     "- POS transaction tagging for consignment SKUs (W1188.1)",
+     "- Monthly consignment settlement report with auto-calculation (W1188.4)",
+     "- Vendor portal settlement report sharing (W705)",
+     "- Consignment aging report with escalation thresholds (W1188.7)"
+    ],
+    "Time Estimate": [
+     "Physical-count reconciliation 2 hours/store/month × 200 stores ≈ 400 hours/month (~4,800 store-labor hours/year on the top-50 consignment SKUs per store); variance investigation 2 hours/week ≈ 104 hours/year; settlement cycle 1.5 hours/vendor/month (report generation review 1 hour + payment processing 30 min) × ~15–25 vendors ≈ 270–450 hours/year; aging review 2 hours/month ≈ 24 hours/year; quarterly vendor reviews 2 hours/vendor/quarter × ~15–25 vendors ≈ 120–200 hours/year — total ≈ 5,320–5,580 hours/year, dominated by store-level counting (sell-through extraction automated)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Accountant",
+     "activity": "**System sell-through extraction**: System extracts consignment SKU sales for the month by vendor by store; generates \"Sold Consignment Report\" with quantity sold, POS transaction references, and selling price",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Inventory Accountant",
+     "activity": "**Physical count reconciliation**: For top 50 consignment SKUs (by value) at each store: Store Manager conducts spot count of consignment inventory on hand; system compares physical on-hand vs. system on-hand (received − sold); flags variances > 2 units or > PHP 5,000",
+     "duration": "2 hours/store/month (200 stores × 2 hours = 400 hours/month; distributed across store staff)",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Variance investigation**: For flagged variances: Inventory Accountant investigates — (a) unrecorded sales (POS scan miss), (b) damage/defect not reported, (c) theft/shrinkage, (d) receiving count error; resolves and adjusts system inventory per W92 (inventory adjustment)",
+     "duration": "2 hours/week",
+     "n": "3",
+     "r": "Inventory Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Vendor settlement report generation**: System generates monthly \"Consignment Settlement Report\" per vendor: (a) opening balance (units and value), (b) units received during month, (c) units sold during month (settlement quantity), (d) units on hand (closing balance), (e) settlement amount = units sold × consignment cost price; attaches POS transaction detail as supporting evidence",
+     "duration": "1 hour/vendor",
+     "n": "4",
+     "r": "System / Inventory Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Vendor review and confirmation**: Vendor reviews settlement report via vendor portal (W705) within 5 business days; confirms quantities or disputes; disputes routed to W869 (vendor dispute resolution)",
+     "duration": "Vendor-side",
+     "n": "5",
+     "r": "Vendor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Settlement payment processing**: Upon vendor confirmation (or after 5-business-day auto-acceptance): AP Clerk processes consignment settlement payment per vendor payment terms (typically Net 15 from settlement date); system creates AP invoice linked to settlement report",
+     "duration": "30 min/vendor",
+     "n": "6",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Aging consignment review**: Inventory Accountant reviews consignment inventory aging: (a) items on hand > 180 days flagged for discussion with Category Manager, (b) items on hand > 365 days flagged for return-to-vendor per W88 or markdown per W93, (c) items on hand > 540 days automatically trigger vendor return notification",
+     "duration": "2 hours/month",
+     "n": "7",
+     "r": "Inventory Accountant / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly vendor consignment review**: Category Manager conducts quarterly consignment program review with each vendor: (a) sell-through rate by SKU, (b) days on hand, (c) margin contribution, (d) decision to continue, expand, or discontinue consignment for specific SKUs",
+     "duration": "2 hours/vendor/quarter",
+     "n": "8",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W23",
+    "W705",
+    "W869",
+    "W88",
+    "W92",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-253"
+   ],
+   "fields": {
+    "Frequency": "Daily per store; consolidated vendor reports generated weekly and monthly",
+    "Owner": "Cash Office Clerk (store-level); Merchandise Admin (HQ vendor reporting)",
+    "Participants": "Cash Office Clerk, Store Manager, Merchandise Admin, AP Clerk (vendor settlement), Category Manager",
+    "Trigger": "Daily store closing reconciliation; consignment sell-through data accumulation",
+    "Volume": "~300 consignment SKUs across 200 stores from ~12 key vendors; ~5,000–8,000 consignment units sold daily chain-wide"
+   },
+   "id": "W1275",
+   "level": 2,
+   "name": "Store-Level Daily Consignment Inventory Sales Reconciliation & Vendor Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates daily consignment sales report\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews consignment report as part of daily cash office routine\" (replaces manual Step 2).",
+     "- System auto-log of \"log as consignment loss — BuildRight liable to vendor at consignment cost price\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot carries ~300 consignment SKUs from 12 key vendors, primarily in major appliances and select tiles (§6.4). Consignment inventory is owned by the vendor until sold to the customer — BuildRight does not carry the inventory cost or ownership risk. W23 covers consignment inventory operations generally. W543 covers consignment sell-through processing at the POS level. W925 covers consignment shelf space performance monitoring. W1188 and W1230 cover monthly consignment reconciliation and vendor settlement. However, there is no workflow covering the daily store-level reconciliation of consignment sales — the process of verifying that consignment inventory recorded as sold at POS matches actual physical movement, and that the daily consignment sell-through data is accurate before it accumulates into monthly vendor settlement reports. Daily reconciliation is critical because: (a) consignment ownership transfers at the moment of sale (W543.2) — any POS error creates a vendor settlement discrepancy, (b) consignment shrinkage (theft, damage) is BuildRight's responsibility if it occurs on BuildRight premises, requiring daily detection, (c) vendor settlement disputes (W1230) are most easily resolved with daily-level data rather than trying to reconcile at month-end. With ~5,000–8,000 consignment units sold daily across 200 stores, daily reconciliation ensures data integrity before settlement."
+    ],
+    "Controls": [
+     "- CTL-253 (ensure controlled execution — Inventory Accuracy & Counting (PA-05.1).)",
+     "- operational: on-hand is understated, creating apparent shrinkage"
+    ],
+    "Pain Points / Risks": [
+     "- **Consignment shrinkage liability** — BuildRight is contractually responsible for consignment inventory on its premises; major appliances (PHP 10K–50K per unit) are high-value theft targets; daily physical checks of 20 top SKUs take 10–15 min but don't cover all consignment items; full cycle count of consignment stock occurs monthly (W6)",
+     "- **Receiving errors propagating to settlement** — if a consignment delivery is received incorrectly (wrong quantity, wrong SKU scanned), the error compounds through daily sell-through data into monthly vendor settlement; daily reconciliation catches sell-through anomalies but not receiving errors (receiving errors caught at W109 goods receipt)",
+     "- **Vendor-provided replenishment timing** — consignment vendors replenish their own stock at BuildRight stores; if vendor delivers new stock but the delivery is not processed through BuildRight's receiving (W109), system on-hand is understated, creating apparent shrinkage; strict receiving compliance for vendor self-replenishment is essential",
+     "- **Manual shrinkage checking effort** — daily physical checking of top 20 consignment SKUs across 200 stores = ~1,000–1,500 store-hours/month; stores may deprioritize this during busy periods, increasing risk of undetected shrinkage; mitigated by CTL-253 (controlled execution — Inventory Accuracy & Counting (PA-05.1))"
+    ],
+    "Staffing Implication": [
+     "- **Cash Office Clerks**: ~10 min/day additional for consignment report review. Absorbed within W541 daily routine.",
+     "- **Department Supervisors**: ~10–15 min/day for high-value consignment shrinkage check. Absorbed within existing floor duties.",
+     "- **Merchandise Admin**: ~1–2 hours/week on vendor reporting. Absorbed.",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Daily consignment sales report generation per store (W1275.1)",
+     "- POS consignment sales verification against Z-report totals (W1275.2)",
+     "- Consignment on-hand balance display with daily snapshot (W1275.1, W1275.3)",
+     "- Daily consignment shrinkage logging with CCTV integration for investigation (W1275.3)",
+     "- Vendor settlement accumulation table updated with daily reconciled data (W1275.4)",
+     "- Weekly vendor consignment report generation and portal publication (W1275.5)",
+     "- Monthly vendor reconciliation data aggregation for W1188/W1230 (W1275.6)",
+     "- Integration with W23 (consignment operations), W543 (POS consignment processing), W925 (shelf space monitoring), W1188 (monthly reconciliation), W1230 (vendor settlement), W562 (loss prevention daily routine), W541 (cash office operations), W574 (store closing), W705 (vendor portal)"
+    ],
+    "Time Estimate": [
+     "- Daily per store: ~17–27 minutes (report review 5–10 min + shrinkage check 10–15 min + confirmation 2 min)",
+     "- Per store: ~8–13 hours/month on daily reconciliation (17–27 min/day) × 200 stores = ~1,700–2,700 hours/month chain-wide",
+     "- Weekly vendor reporting (HQ): ~1–2 hours/week",
+     "- Monthly reconciliation preparation (HQ): ~2–3 hours/month",
+     "- **Total annual**: ~20,000–32,000 store-hours/year + ~80 HQ hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**End-of-day consignment report generation**: at store closing per W574, system generates daily consignment sales report: (a) list of all consignment items sold today at this store: SKU, description, quantity, unit price, total amount, transaction reference, (b) summary by vendor: vendor name, total units sold, total sales value, (c) any consignment returns processed today (reversals), (d) current consignment on-hand balance per SKU (system)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Cash Office Clerk verification**: Cash Office Clerk reviews consignment report as part of daily cash office routine (W541): (a) verifies consignment sales total on report matches POS consignment tender/sales totals from Z-report, (b) flags any line items with quantity > 5 units of a single consignment SKU in one day (unusual; may indicate error or theft), (c) checks for consignment returns > 2 units (may indicate quality issue or return fraud), (d) if discrepancies found between consignment report and POS totals: escalates to Store Manager",
+     "duration": "5–10 min/store",
+     "n": "2",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Consignment shrinkage check**: Store Manager or Department Supervisor performs daily visual check of high-value consignment items (major appliances, premium tiles): (a) physical count of display units in appliance section and tile gallery for top 20 consignment SKUs by value, (b) compare physical count to system on-hand balance, (c) if physical count < system count (missing item): (i) check if item was sold but POS not processed (system error), (ii) check CCTV for the specific SKU location, (iii) if confirmed shrinkage: log as consignment loss — BuildRight liable to vendor at consignment cost price; report per W562 (loss prevention daily routine), (d) if physical count > system count (extra item): verify receiving — may be unreceived vendor replenishment",
+     "duration": "10–15 min/day",
+     "n": "3",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Daily data confirmation**: Cash Office Clerk confirms daily consignment reconciliation in system: (a) confirms consignment report verified — no discrepancies, or documents discrepancies with resolution notes, (b) system publishes daily consignment sell-through data to vendor settlement accumulation table (used by W1188/W1230 for monthly settlement), (c) data flagged as \"reconciled\" or \"has exception\"",
+     "duration": "2 min",
+     "n": "4",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Weekly vendor consignment report**: Merchandise Admin generates weekly consignment sell-through report per vendor: (a) total units sold by SKU across all 200 stores, (b) total sales value and consignment cost value, (c) store-level detail for any stores flagged with exceptions, (d) inventory balance by SKU by store vs. vendor-provided replenishment quantities, (e) report shared with Category Manager and vendor via vendor portal (W705)",
+     "duration": "1–2 hours/week",
+     "n": "5",
+     "r": "Merchandise Admin"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Monthly vendor reconciliation preparation**: Merchandise Admin prepares month-end consignment data for vendor settlement per W1188/W1230: (a) aggregate daily reconciled data into monthly summary per vendor per SKU, (b) include: units sold, sales value, consignment cost, BuildRight shrinkage liability (step 3), any pending disputes, (c) generate vendor settlement statement for AP processing per W1230",
+     "duration": "2–3 hours/month",
+     "n": "6",
+     "r": "Merchandise Admin"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W109",
+    "W1188",
+    "W1230",
+    "W23",
+    "W541",
+    "W543",
+    "W562",
+    "W574",
+    "W6",
+    "W705",
+    "W925"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-253"
+   ],
+   "fields": {
+    "Frequency": "Triggered — approximately 5–10% of daily cycle counts produce actionable variances at 4 DCs; ~80–100 discrepancy investigations/month (per the Time Estimate ≈25/DC/month)",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Operations Manager, Inventory Control Clerk, Warehouse Supervisor, LP Officer, Supply Planner",
+    "Trigger": "Cycle count variance exceeds threshold (> 1% by value or > 3 units per SKU); or recurring variance on same SKU/location across consecutive counts",
+    "Volume": "~1,000–1,200 DC cycle count discrepancy investigations/year (≈100/month per the Time Estimate); recurring discrepancy patterns affect ~50–100 SKU-locations"
+   },
+   "id": "W1413",
+   "level": 2,
+   "name": "DC-Level Cycle Count Discrepancy Root Cause Analysis, Corrective Action & Recount Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Cycle count completes\" (replaces manual Step 1).",
+     "- System auto-alert of \"alert with details\" (replaces manual Step 2).",
+     "- System auto-match of \"matches original physical count\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "While W6 covers the cycle counting process itself, W1413 addresses the structured investigation process that must follow when a cycle count reveals a discrepancy beyond acceptable thresholds. DCs are the central inventory control point for BuildRight — inaccurate DC inventory cascades into incorrect store replenishment, missed BOPIS fulfillment, and distorted demand signals. Without rigorous root cause analysis, the same discrepancies recur, masking systemic issues (putaway errors, pick errors, receiving count errors, theft). This workflow ensures every significant DC inventory variance is investigated, root-caused, and corrected at the source."
+    ],
+    "Controls": [
+     "- CTL-253 (ensure controlled execution — Inventory Accuracy & Counting (PA-05.1).)",
+     "- operational: DC Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Investigation backlog**: at 5–10% of daily cycle counts producing actionable variances, 4 DCs generating ~1,000 counts/day produce ~3–5 investigation alerts/day chain-wide (≈80–100/month per the Frequency); Inventory Control Clerks process ~15–20 investigations/day across the 4 DCs, creating a persistent backlog during peak periods",
+     "- **\"Catch-all\" root cause classification**: investigators may default to \"Documentation Error\" as the root cause rather than conducting thorough investigation; this masks systemic issues and prevents meaningful corrective action",
+     "- **LP escalation threshold too high**: the 3-variance-in-12-months threshold for theft escalation means a slow, sustained pilferage of 1–2 units per month per SKU is not flagged for LP investigation for a full year; the cumulative loss may be significant for high-value items (power tools, appliances)",
+     "- **Adjacent location search time**: expanding the search to alternate locations (step 4) is time-consuming in a 35,000 sqm DC with thousands of bin locations; without WMS bin-search tools, the investigator may abandon the search prematurely"
+    ],
+    "Staffing Implication": [
+     "- Inventory Control Clerks: 1 per DC (4 total); ~30 hours/month each on discrepancy investigation; primary responsibility within existing role",
+     "- DC Operations Manager: ~2 hours/week per DC on review and approval; absorbed",
+     "- LP Officers: ~10 hours/month across 4 DCs on theft escalation investigations; absorbed",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated variance flagging: threshold-based triggers (% value, quantity, recurring SKU flag) with investigation hold on adjustment posting (W1413.1)",
+     "- Investigation workspace: SKU details, count history, transaction history (receipts, picks, transfers, adjustments) for past 7 days (W1413.2, W1413.5)",
+     "- Root cause classification: standardized dropdown with 8 categories mapping to corrective action templates (W1413.6–7)",
+     "- Inventory adjustment posting: root cause-coded journal entry with GL impact; approval tiered by value threshold (W1413.8)",
+     "- Recurring variance tracker: 12-month rolling count history per SKU-location with auto-flag at 3+ variances (W1413.9)",
+     "- Monthly discrepancy analysis dashboard: root cause distribution, value impact, top recurring SKU-locations, accuracy trend (W1413.10)",
+     "- Integration with W6 (cycle counting — count data source), W3 (DC receiving — receiving error investigation), W4 (store replenishment — pick error investigation), W22 (inter-DC transfer — transfer error investigation), W37/W23 (loss prevention — theft escalation), W92 (inventory adjustment — adjustment posting), W109 (store receiving — parallel store process), W48 (IT helpdesk — system error reporting)"
+    ],
+    "Time Estimate": [
+     "- Per investigation: ~75 min average (5 min alert + 15 min recount + 20 min location search + 30 min transaction analysis + 5 min classification)",
+     "- Monthly volume: ~25 investigations/DC × 4 DCs = ~100 investigations/month",
+     "- Corrective action implementation: ~30 min per investigation",
+     "- Monthly report: ~2 hours/month",
+     "- Total: ~175 hours/month (~8 hours/business-day across 4 DCs)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Cycle count completes (W6); system compares physical count to system on-hand; if variance exceeds threshold: (a) value variance > 1% of SKU value at that location, or (b) quantity variance > 3 units, or (c) SKU has been flagged as \"recurring variance\" in previous 3 counts: system automatically flags count for investigation and holds the adjustment from posting",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Inventory Control Clerk receives investigation alert with details: SKU, location (bin/slot), system on-hand, physical count, variance (units and value), SKU velocity (A/B/C), and count history (number of variances on this SKU/location in last 12 months)",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Inventory Control Clerk"
+    },
+    {
+     "a": "Warehouse Supervisor",
+     "activity": "**Immediate recount**: Inventory Control Clerk performs blind recount of the flagged SKU at the flagged location (does not see expected count); if recount matches original physical count: variance confirmed; if recount matches system on-hand: original count was in error, variance cleared, no further investigation needed",
+     "duration": "15 min/SKU",
+     "n": "3",
+     "r": "Inventory Control Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "If variance confirmed after recount: Inventory Control Clerk expands search to adjacent locations (same SKU may be in multiple bins): (a) check reserve storage locations for the SKU, (b) check staging areas for pending outbound shipments, (c) check dock area for recently received but not-yet-putaway inventory; if missing quantity is found in an alternate location: location error identified, bin-to-bin transfer posted, root cause = \"Putaway Location Error\"",
+     "duration": "20 min/SKU",
+     "n": "4",
+     "r": "Inventory Control Clerk"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "If missing quantity not found in alternate locations: Inventory Control Clerk checks transaction history for the SKU at that location for the past 7 days: (a) all inbound receipts (W3), (b) all outbound picks (W4, W22), (c) any bin-to-bin transfers, (d) any returns processing (W651), (e) any adjustments posted; looks for unconfirmed picks (picked but not shipped), uncompleted putaways (received but not confirmed to bin), or quantity entry errors",
+     "duration": "30 min/SKU",
+     "n": "5",
+     "r": "Inventory Control Clerk"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "Inventory Control Clerk classifies root cause from standardized dropdown: (a) **Receiving Error** — GR quantity incorrect vs. actual received; (b) **Putaway Error** — items put to wrong bin/location; (c) **Pick Error** — wrong quantity picked for outbound order; (d) **Shipping Error** — quantity shipped differs from pick quantity; (e) **Damaged/Destroyed** — items damaged and removed but not recorded; (f) **Theft/Shrinkage** — no operational explanation found; escalate to LP; (g) **System Error** — software processing error (rare); (h) **Documentation Error** — transaction entered incorrectly",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Inventory Control Clerk"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Corrective action by root cause**: (a) Receiving Error — retrain Receiving Clerk on count verification, add dual-count protocol for high-value items; (b) Putaway Error — verify WMS directed putaway accuracy, retrain putaway staff; (c) Pick Error — check pick path accuracy, verify RF scanner calibration, retrain picker; (d) Shipping Error — add pack verification scan before dispatch; (e) Damaged — update damage reporting process, add damage chute signage; (f) Theft — escalate to LP Officer for investigation per W37, review CCTV, check employee access logs; (g) System Error — report to IT Helpdesk (W48) for investigation; (h) Documentation Error — retrain on transaction entry",
+     "duration": "30 min",
+     "n": "7",
+     "r": "DC Operations Manager / Warehouse Supervisor"
+    },
+    {
+     "a": "Controller (if value > PHP 50,000)",
+     "activity": "DC Operations Manager approves inventory adjustment: system posts adjustment to correct on-hand; adjustment journal entry created with root cause code, investigation notes, and corrective action reference; GL impact: Dr/Cr Inventory with offset to Shrinkage/Damage/Loss account per chart of accounts",
+     "duration": "10 min",
+     "n": "8",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Recurring variance escalation**: if same SKU/location has 3+ variances in 12 months: system flags as chronic; DC Operations Manager initiates deep investigation: (a) 30-day intensive monitoring with daily micro-counts of the SKU/location, (b) process observation — DC Operations Manager physically observes receiving, putaway, and picking activities for the SKU, (c) bin location physical audit — verify bin dimensions and capacity match WMS configuration, (d) if theft suspected: LP Officer installs targeted CCTV or conducts covert surveillance per W23",
+     "duration": "4 hours/SKU",
+     "n": "9",
+     "r": "DC Operations Manager / LP Officer"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly: DC Operations Manager generates cycle count discrepancy analysis report: (a) total variances by root cause category, (b) total inventory value adjustment, (c) top 20 SKU-locations by recurring variance frequency, (d) corrective action closure rate, (e) DC inventory accuracy trend (target ≥ 99% for A-items, ≥ 97% overall); report shared with VP Supply Chain and Controller",
+     "duration": "2 hours/month",
+     "n": "10",
+     "r": "DC Operations Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W109",
+    "W22",
+    "W23",
+    "W3",
+    "W37",
+    "W4",
+    "W48",
+    "W6",
+    "W651",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-253"
+   ],
+   "fields": {
+    "Frequency": "Weekly cycle count; per-shipment verification on receipt; monthly full yard reconciliation",
+    "Owner": "Lumber Yard Supervisor",
+    "Participants": "Lumber Yard Associate, Stock Associate, Department Supervisor",
+    "Trigger": "Weekly cycle count schedule for lumber yard; also triggered upon receipt of lumber shipments and when discrepancy between system quantity and physical count exceeds 3%",
+    "Volume": "~50–80 SKUs per store in lumber/builder's wood; ~15–30 lumber receipts/store/month; weekly spot-check of 10–15 SKUs"
+   },
+   "id": "W1486",
+   "level": 2,
+   "name": "Lumber Yard Inventory Measurement, Board Foot Calculation & Dimensional Grading Verification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"recorded and board foot calculated per piece\" (replaces manual Step 1).",
+     "- System auto-count of \"Weekly lumber yard cycle count\" (replaces manual Step 2).",
+     "- System auto-log of \"logged in system for shrinkage tracking\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight stores maintain a lumber yard carrying 50–80 SKUs of dimensional lumber (tanguile, apitong, yakal), plywood, cement boards, and engineered wood products. Lumber is sold by the piece but priced by board foot (bf) for many species, creating a measurement challenge: actual dimensions of Philippine-sawn lumber often vary from nominal dimensions by ±5–10%, and moisture content affects weight and warping. Unlike boxed merchandise, lumber cannot be barcoded individually; it is managed by bundle count and species/size. Inventory accuracy in the lumber yard is historically the lowest of any department (typically 75–85% vs. 90–95% target for dry goods), driven by: (a) physical difficulty of counting bundles in outdoor yards, (b) moisture-induced swelling/shrinkage altering dimensions, (c) pilferage of individual pieces from bundles, (d) customer selectivity — customers pull pieces from bundles, rejecting warped or split boards, which breaks bundle integrity."
+    ],
+    "Controls": [
+     "- CTL-253 (ensure controlled execution — Inventory Accuracy & Counting (PA-05.1).)",
+     "- operational: must clearly distinguish nominal (for ordering) from actual (for pricing and inventory)"
+    ],
+    "Pain Points / Risks": [
+     "- **Nominal vs. actual dimension variance**: Philippine \"2×4\" lumber is typically 1.5×3.5 inches actual; pricing by board foot with actual dimensions creates confusion; system must clearly distinguish nominal (for ordering) from actual (for pricing and inventory)",
+     "- **Seasonal moisture variation**: lumber stored in outdoor yards swells during rainy season (June–November) and shrinks during dry season (March–May); weight-based inventory is unreliable",
+     "- **Customer cherry-picking**: high-grade lumber pieces get picked first, leaving lower-grade pieces that are harder to sell; eventually the bundle's average grade drops below what was paid for",
+     "- **Physical counting difficulty**: counting lumber pieces in outdoor yard during rain or extreme heat is unpleasant; associates may rush counts leading to inaccuracy"
+    ],
+    "Staffing Implication": [
+     "- Lumber Yard Associate: ~90 min/week on cycle count + 20 min/day bundle monitoring + ~45 min/receipt verification × ~20 receipts/month = ~25–30 hours/month. Absorbed within existing lumber yard staffing.",
+     "- Lumber Yard Supervisor: ~3 hours/month on reconciliation + ~1 hour/week oversight. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lumber SKU master with nominal dimensions, species, grade, and board foot formula (W1486.1)",
+     "- Mobile cycle count terminal with piece-count entry and dimension override (W1486.2)",
+     "- Bundle tracking with receipt date, supplier, and piece count per bundle (W1486.1–3)",
+     "- Moisture meter reading capture field on receiving transaction (W1486.1)",
+     "- Board foot inventory valuation with dimensional shrinkage adjustment (W1486.4)",
+     "- Lumber supplier scorecard integration for quality/dimension disputes (W1486.1, .4)"
+    ],
+    "Time Estimate": [
+     "- Receipt verification: 30–45 min × ~20 receipts/month = 10–15 hours/store/month",
+     "- Weekly cycle count: 60–90 min × 4 = 4–6 hours/store/month",
+     "- Bundle monitoring: 20 min/day × 25 days = ~8 hours/store/month",
+     "- Monthly reconciliation: 2–3 hours",
+     "- **Total: ~25–33 hours/store/month**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lumber Yard Supervisor",
+     "activity": "**Lumber receipt dimensional verification**: When lumber shipment arrives: (a) Lumber Yard Associate counts bundles per delivery receipt; (b) for each species/size, associate measures a sample of 5 pieces from different bundles using tape measure; (c) actual dimensions recorded and board foot calculated per piece; (d) average bf per piece × piece count × bundles = received bf; (e) variance > 5% from supplier invoice triggers dispute per PA-15.1; (f) moisture meter reading taken from 3 random pieces per species; (g) if moisture > 20% for kiln-dried lumber: shipment may be rejected or accepted at discount",
+     "duration": "30–45 min per shipment",
+     "n": "1",
+     "r": "Lumber Yard Associate"
+    },
+    {
+     "a": "Lumber Yard Supervisor",
+     "activity": "**Weekly lumber yard cycle count**: Weekly: (a) system selects 10–15 lumber SKUs for spot count based on ABC classification and time since last count; (b) Lumber Yard Associate physically counts pieces per SKU in the yard; (c) for high-value species (yakal, apitong), associate verifies dimensions of 3 random pieces per bundle to confirm grading; (d) system compares physical count to book quantity; (e) variance > 3% triggers recount and root cause investigation; (f) adjustment posted per PA-05.1 cycle count adjustment workflow with supervisor approval required for adjustments > PHP 10,000",
+     "duration": "60–90 min/week",
+     "n": "2",
+     "r": "Lumber Yard Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Bundle integrity monitoring**: Daily: (a) Lumber Yard Associate walks the yard checking bundle bands/strapping; (b) opened or partially depleted bundles re-tallied; (c) loose pieces identified and returned to correct bundles or written off as damaged; (d) customer-rejected pieces (warped, split, knotty beyond grade) set aside for markdown per PA-05.3 disposition rules; (e) findings logged in system for shrinkage tracking",
+     "duration": "20 min/day",
+     "n": "3",
+     "r": "Lumber Yard Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Monthly board foot reconciliation**: Monthly: (a) system generates lumber inventory valuation report showing book bf vs. theoretical bf based on receipts minus sales; (b) Lumber Yard Supervisor reconciles with physical yard inventory; (c) dimensional shrinkage factor applied (Philippine lumber typically shrinks 2–5% from green to air-dry state); (d) unexplained loss > 2% of monthly lumber COGS escalated to LP team per PA-23.3; (e) findings feed into vendor performance scorecard for lumber suppliers",
+     "duration": "2–3 hours/month",
+     "n": "4",
+     "r": "Lumber Yard Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

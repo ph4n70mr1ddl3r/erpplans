@@ -1,0 +1,594 @@
+{
+ "process_area": {
+  "id": "PA-74.2",
+  "title": "Job Site Delivery Execution & Material Handling"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-74-contractor-jobsite-delivery/PA-74.2-jobsite-delivery-execution-material-handling.md",
+ "value_stream": {
+  "directory": "VS-74-contractor-jobsite-delivery",
+  "id": "VS-74",
+  "name": "Professional Contractor Job Site Delivery"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "~300–500 deliveries/month",
+    "Owner": "Driver / Delivery Crew",
+    "Participants": "Driver, Delivery Crew, Contractor Site Foreman",
+    "Trigger": "Truck arrives at construction site",
+    "Volume": "~300–500/month"
+   },
+   "id": "W2630",
+   "level": 2,
+   "name": "Job Site Delivery Unloading & Material Placement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Delivery scheduling auto-optimized from the route/dock/traffic data; real-time tracking auto-pushed to customer and store; POD auto-captured digitally"
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Driver / Delivery Crew sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~15–20 min per occurrence",
+     "- Volume: ~300–500/month",
+     "- Frequency: ~300–500 deliveries/month",
+     "- Absorbed into the Driver / Delivery Crew role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver arrives at site: contacts foreman, confirms unloading location, verifies site access and safety (hard hat area, PPE required); positions truck",
+     "duration": "15–20 min",
+     "n": "1",
+     "r": "Driver"
+    },
+    {
+     "a": "Driver",
+     "activity": "Delivery crew and contractor personnel unload: hand-bomb materials if no forklift/crane; place in designated staging area per contractor direction; separate by type and phase",
+     "duration": "30–90 min",
+     "n": "2",
+     "r": "Delivery Crew / Contractor Personnel"
+    },
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Site foreman verifies delivery against manifest: counts items, notes damage or shortage, signs receipt; Driver photographs delivered materials as proof",
+     "duration": "15–20 min",
+     "n": "3",
+     "r": "Site Foreman / Driver"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W291",
+    "W3",
+    "W52",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~30–50 incidents/month",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Coord, Driver, Trade Sales Rep, Contractor, LP",
+    "Trigger": "Contractor reports discrepancy",
+    "Volume": "~30–50/month"
+   },
+   "id": "W2631",
+   "level": 2,
+   "name": "Job Site Delivery Damage & Shortage Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Delivery scheduling auto-optimized from the route/dock/traffic data; real-time tracking auto-pushed to customer and store; POD auto-captured digitally"
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Logistics Coordinator sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per occurrence",
+     "- Volume: ~30–50/month",
+     "- Frequency: Ad-hoc; ~30–50 incidents/month",
+     "- Absorbed into the Logistics Coordinator role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Regional Sales Manager",
+     "activity": "Contractor reports damage or shortage with photos; Trade Sales Rep logs incident in ERP; severity classification: minor (<PHP 5K), moderate, major (>PHP 50K)",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Contractor / Trade Sales Rep"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics Coordinator investigates: reviews driver photos, checks loading records; determines responsibility (BuildRight, 3PL, contractor)",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Logistics Coordinator"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Resolution: replacement within 48 hours for BuildRight-caused issues; credit note for shortages; LP investigates patterns; 3PL liability claim for carrier damage",
+     "duration": "2–5 days",
+     "n": "3",
+     "r": "Logistics Coord / Trade Sales Rep / LP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W291",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~50–100 returns/month",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Coord, Trade Sales Rep, Contractor, Receiving Clerk",
+    "Trigger": "Contractor has excess materials for return",
+    "Volume": "~50–100/month"
+   },
+   "id": "W2632",
+   "level": 2,
+   "name": "Delivery Return & Excess Material Pickup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"verifies eligibility (within 30 days, unused condition)\" (replaces manual Step 1).",
+     "- System auto-generate of \"processes goods receipt; Finance issues credit note\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Logistics Coordinator sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~15–20 min per occurrence",
+     "- Volume: ~50–100/month",
+     "- Frequency: Ad-hoc; ~50–100 returns/month",
+     "- Absorbed into the Logistics Coordinator role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Regional Sales Manager",
+     "activity": "Contractor requests return: provides PO reference, item list; Rep verifies eligibility (within 30 days, unused condition); creates return authorization",
+     "duration": "15–20 min",
+     "n": "1",
+     "r": "Contractor / Trade Sales Rep"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics Coordinator schedules pickup: combines with next delivery to same area; driver collects with return manifest",
+     "duration": "1–3 days",
+     "n": "2",
+     "r": "Logistics Coordinator / Driver"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Receiving Clerk processes return: inspects condition, verifies against authorization, processes goods receipt; Finance issues credit note",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Receiving Clerk / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W291",
+    "W3",
+    "W52",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Per delivery; ~300–500/month",
+    "Owner": "Driver",
+    "Participants": "Driver, Logistics Coordinator, Trade Sales Rep, Finance",
+    "Trigger": "Delivery completion",
+    "Volume": "~300–500/month"
+   },
+   "id": "W2633",
+   "level": 2,
+   "name": "Job Site Delivery Proof of Delivery & Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Delivery scheduling auto-optimized from the route/dock/traffic data; real-time tracking auto-pushed to customer and store; POD auto-captured digitally"
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Driver sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~10 min per occurrence",
+     "- Volume: ~300–500/month",
+     "- Frequency: Per delivery; ~300–500/month",
+     "- Absorbed into the Driver role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver collects POD: signed receipt from foreman (paper or electronic), photographs of materials at placement, GPS coordinates, delivery timestamp",
+     "duration": "10 min per delivery",
+     "n": "1",
+     "r": "Driver"
+    },
+    {
+     "a": "Logistics Coordinator",
+     "activity": "System uploads POD data: matches to delivery order, records GPS and timestamp, stores photos; auto-matches to sales order for billing",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System / Driver"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance uses POD for billing: triggers invoice for trade accounts; settles 3PL payment upon confirmed delivery; archives for 10 years per BIR",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W291",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Per delivery to active sites",
+    "Owner": "Driver",
+    "Participants": "Driver, Safety Officer, Contractor Site Safety Manager",
+    "Trigger": "Truck arrives at active construction site",
+    "Volume": "~200–300/month"
+   },
+   "id": "W2634",
+   "level": 2,
+   "name": "Contractor Site Safety Compliance During Delivery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Delivery scheduling auto-optimized from the route/dock/traffic data; real-time tracking auto-pushed to customer and store; POD auto-captured digitally"
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- CTL-452 (compliance-monitoring — links to VS-22); Operational: Driver sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Non-compliance risk**: a regulatory requirement is missed (DTI permit, data privacy, AML), creating a fine or complaint; mitigated by the compliance-checklist and the regulatory-monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)"
+    ],
+    "Time Estimate": [
+     "- ~10–15 min per occurrence",
+     "- Volume: ~200–300/month",
+     "- Frequency: Per delivery to active sites",
+     "- Absorbed into the Driver role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver dons required PPE: hard hat, safety vest, safety shoes; attends site safety briefing; identifies hazards (excavations, overhead work, equipment)",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "Driver"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Driver follows site-specific safety rules: speed limit, designated routes, prohibited areas, emergency assembly point; reports unsafe conditions",
+     "duration": "During delivery",
+     "n": "2",
+     "r": "Driver / Safety Officer"
+    },
+    {
+     "a": "COO",
+     "activity": "Safety Officer conducts random compliance checks; tracks safety incident rate (target: zero); incorporates into driver training",
+     "duration": "Monthly review",
+     "n": "3",
+     "r": "Safety Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2286",
+    "W3",
+    "W52",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~50–80 bulk deliveries/month",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Coord, Driver, Contractor, 3PL Dump Truck Partner",
+    "Trigger": "Delivery of bulk construction materials",
+    "Volume": "~50–80/month"
+   },
+   "id": "W2635",
+   "level": 2,
+   "name": "Bulk Material Handling at Job Site",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Material-demand auto-forecast from the project schedule; delivery-phasing auto-sequenced; site-reconciliation auto-tracked from the delivery-vs-installed delta"
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Logistics Coordinator sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Execution risk**: process variability or system failure disrupts the workflow's output; mitigated by the documented procedure and the system controls",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~1 day per occurrence",
+     "- Volume: ~50–80/month",
+     "- Frequency: Ad-hoc; ~50–80 bulk deliveries/month",
+     "- Absorbed into the Logistics Coordinator role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics Coordinator arranges bulk delivery (sand, gravel, cement): requires dump trucks; coordinates with DSD vendor or 3PL; confirms contractor has designated dump area",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Logistics Coordinator"
+    },
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver delivers: positions dump truck, tips load carefully; contractor foreman visually estimates quantity; photographs tipped load",
+     "duration": "30–60 min",
+     "n": "2",
+     "r": "Driver / Contractor Foreman"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "System processes bulk delivery: catch-weight recorded with estimated weight; Finance bills based on delivered weight; Logistics tracks cost per cubic meter",
+     "duration": "Per delivery",
+     "n": "3",
+     "r": "System / Finance / Logistics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W291",
+    "W3",
+    "W52"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; 10–20 issues/month",
+    "Owner": "Trade Sales Representative",
+    "Participants": "Trade Sales Rep, Quality Inspector, Contractor, Category Manager",
+    "Trigger": "Contractor questions material quality",
+    "Volume": "~10–20/month"
+   },
+   "id": "W2636",
+   "level": 2,
+   "name": "Job Site Delivery Quality Verification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Delivery scheduling auto-optimized from the route/dock/traffic data; real-time tracking auto-pushed to customer and store; POD auto-captured digitally"
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Trade Sales Representative sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per occurrence",
+     "- Volume: ~10–20/month",
+     "- Frequency: Ad-hoc; 10–20 issues/month",
+     "- Absorbed into the Trade Sales Representative role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Regional Sales Manager",
+     "activity": "Contractor identifies quality concern at delivery: lumber grade mismatch, tile color variation, cement moisture damage, steel dimension off-spec; refuses affected items",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Contractor / Trade Sales Rep"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Trade Sales Rep escalates: Quality Inspector visits site within 24 hours to assess; compares against specification and order agreement",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Trade Sales Rep / Quality Inspector"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Resolution: valid issue — replacement within 48 hours, vendor claim filed; specification misunderstanding — clarifies and offers exchange; Category Manager updates product description",
+     "duration": "2–5 days",
+     "n": "3",
+     "r": "Trade Sales Rep / Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W291",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-452"
+   ],
+   "fields": {
+    "Frequency": "Per delivery",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Coord, Driver, Contractor, Trade Sales Rep",
+    "Trigger": "Delivery dispatched from DC or store",
+    "Volume": "~300–500/month"
+   },
+   "id": "W2637",
+   "level": 2,
+   "name": "Job Site Delivery Real-Time Tracking & ETA Communication",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-notify of \"sends automated ETA notification to contractor when dispatched\" (replaces manual Step 1).",
+     "- System auto-track of \"updates status in mobile app\" (replaces manual Step 2).",
+     "- System auto-alert of \"notifies contractor with updated ETA\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-452 (ensure controlled execution — Job Site Delivery Execution & Material Handling (PA-74.2).)",
+     "- operational: Logistics Coordinator sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Delivery-failure risk**: a delivery misses its window (traffic, access, scheduling), disrupting the customer/project; mitigated by the real-time tracking and the rescheduling protocol",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~varies per occurrence",
+     "- Volume: ~300–500/month",
+     "- Frequency: Per delivery",
+     "- Absorbed into the Logistics Coordinator role; not incremental headcount unless volume scales significantly.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Coordinator",
+     "activity": "System sends automated ETA notification to contractor when dispatched: estimated arrival, driver name and contact, vehicle plate, delivery contents summary",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver updates status in mobile app: departed, en route (GPS tracking), arrived, unloading started, complete; contractor tracks via app",
+     "duration": "Per status update",
+     "n": "2",
+     "r": "Driver / System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics Coordinator manages ETA exceptions: if delayed >30 min, notifies contractor with updated ETA; tracks on-time delivery rate (target: ≥90%)",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Logistics Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W291",
+    "W536"
+   ]
+  }
+ ]
+}

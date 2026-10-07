@@ -1,0 +1,2604 @@
+{
+ "process_area": {
+  "id": "PA-15.1",
+  "title": "Invoice Processing & Matching"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-15-procure-to-pay/PA-15.1-invoice-processing-and-matching.md",
+ "value_stream": {
+  "directory": "VS-15-procure-to-pay",
+  "id": "VS-15",
+  "name": "Procure-to-Pay"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-09",
+    "CTL-10",
+    "CTL-14",
+    "CTL-17",
+    "CTL-42",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "~6,715 invoices/month",
+    "Owner": "AP Supervisor",
+    "Participants": "AP Clerk, Buyer (for discrepancies), Treasury (for payment), AP Supervisor",
+    "Trigger": "Vendor invoice received (email, mail, or vendor portal)",
+    "Volume": "~305 invoices/business day (6,715 ÷ 22; ~217/day on a calendar basis); peaks at month-end (+50%)"
+   },
+   "id": "W7",
+   "level": 2,
+   "name": "Accounts Payable — Vendor Invoice Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans/logs vendor invoice\" (replaces manual Step 1).",
+     "- System auto-match of \"System attempts auto-match\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approve for payment\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-09 (separate purchasing from receiving.); CTL-10 (separate payment initiation from approval.); CTL-14 (ensure AP invoices match PO and GR.); CTL-17 (ensure GRNI completeness.); CTL-44 (detect and prevent duplicate vendor payments.)",
+     "- operational: for permanent accrual"
+    ],
+    "Pain Points / Risks": [
+     "- **Duplicate invoice detection failures for recurring vendor invoices**: vendors that submit monthly recurring invoices (utilities, security services) often reuse reference numbers or submit with slight variations; the auto-duplicate check may miss these, leading to double payments that are only caught during vendor statement reconciliation (W7D) — sometimes months later",
+     "- **EWT computation errors for new 2307 forms**: changes in BIR Alphanumeric Tax Codes (ATCs) or incorrect ATC configuration in vendor master lead to under- or over-withholding; correcting EWT errors requires filing amended 1601-EQ returns and re-issuing vendor 2307 certificates, creating significant rework during tax season",
+     "- **GRNI aging escalation fatigue**: with ~217 invoices/day and goods often arriving before vendor invoices, GRNI balances grow steadily; AP Clerks may become desensitized to aging alerts, allowing items to reach 90+ days where Controller intervention is required for permanent accrual",
+     "- **Month-end invoice surge overwhelming AP capacity**: the +50% volume spike during close week (460–550 invoices/day) forces AP Clerks into overtime and requires redeployment of 2–3 other Finance staff, disrupting their own close responsibilities and increasing error rates under time pressure",
+     "- **Early payment discount leakage**: despite the system identifying eligible discounts (step 7a), Treasury may not consistently authorize early payments due to competing cash priorities; missed discounts on high-volume vendor invoices can represent PHP 5–10M in annual foregone savings"
+    ],
+    "Staffing Implication": [
+     "- **8–10 AP Clerks**: total ~395–440 invoices/business-day across merchandise (~305/day per W7: 6,715 invoices/month ÷ 22 business days) and non-PO (~91–136/day per W7C: 2,000–3,000/month ÷ 22); at 5 min logging each = ~33–37 hours for basic processing; with ~20% requiring manual resolution at 25 min each = ~20–30 additional hours; total ~53–67 hours/business-day; with 10 clerks that's ~5–6 hours each; reasonable with payment runs, GRNI follow-up, vendor statement reconciliation (W7D), and other duties; note that month-end peaks (+50% per W7) push daily volume to ~590–660 invoices/day during close week, requiring temporary overtime or redeployment of 2–3 other Finance staff (Cost Accountant, Treasury Analyst) to AP to maintain processing SLA; peak staffing contingency documented in W7",
+     "- **1 AP Supervisor**: Oversight, aging review, GRNI escalation management, escalations.",
+     "- **2 Treasury Analysts**: Payment approval, bank file transmission, LC management. Shared with AR and other treasury duties."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Invoice scanning / OCR / digital capture from email, mail, or vendor portal (W7.1)",
+     "- 3-way match engine (PO → GR → Invoice) (W7.2)",
+     "- Auto-approval with tolerance thresholds (W7.3)",
+     "- Exception routing and workflow (W7.4–6)",
+     "- Exception aging tracker with SLA enforcement and auto-escalation at day 5 (W7.6a–b)",
+     "- Early payment discount detection: system identifies invoices eligible for discount, calculates annualized ROI, and highlights during payment run; decision criteria — Treasury Analyst authorizes taking discount when (a) annualized ROI exceeds BuildRight's weighted average cost of capital (currently ~8–10%, configurable), (b) cash position (W30) supports early payment without creating liquidity risk, and (c) vendor is rated A or B on vendor scorecard (W44) — discounts for C/D-rated vendors are deferred to standard terms to preserve cash leverage; system auto-calculates annualized ROI per discount offer as: (discount % ÷ (365 ÷ days saved)) × 100 and displays alongside cash position impact in payment run review screen (W7.7a)",
+     "- AP aging report (W7.8)",
+     "- Payment file generation (bank formats) (W7.9–10)",
+     "- Expanded Withholding Tax (EWT): auto-computation per ATC in vendor master, net payment calculation (invoice − EWT), EWT Payable tracking, BIR 1601-EQ file generation (W7.9a)",
+     "- Vendor credit memo processing: credit note entry with source reference (RTV, rebate, price protection), auto-matching to original transactions, automatic application to open invoices, credit balance management (W7.9b)",
+     "- Non-PO / recurring expense invoice processing: 2-way match (invoice vs. contract or budget), store manager / department head approval routing, cost center allocation, utility and service bill capture (W7C.1–6)",
+     "- Shelf-life / expiry date management: capture manufacturing date and shelf-life at GR for date-sensitive items; system tracks expiry per batch; FEFO (First Expired First Out) pick direction in DC; alerting for near-expiry items; periodic expiry review feeds into slow-mover disposition (W3, W4, W6)",
+     "- GRNI aging management: AP Clerk runs weekly GRNI aging report showing all GRs without matching vendor invoices, grouped by aging bucket (0–30, 31–60, 61–90, 90+ days); items > 30 days flagged for Buyer follow-up with vendor; items > 60 days escalated to AP Supervisor for direct vendor contact; items > 90 days reviewed by Controller for potential permanent accrual or write-off; system tracks GRNI aging with vendor-level drill-down; weekly GRNI aging dashboard visible to AP Supervisor and Controller (W7, W9A.2a)",
+     "- Duplicate vendor invoice detection: system automatically checks incoming vendor invoices against the AP sub-ledger for duplicate invoice number, duplicate vendor + amount + date combinations, and duplicate PO reference + invoice number; if a potential duplicate is detected, system blocks the invoice and alerts AP Clerk with the matching existing invoice reference; AP Clerk investigates (true duplicate vs. sequential invoice numbers from same vendor) and either rejects the duplicate or overrides with documentation; monthly: AP Supervisor reviews duplicate detection override log as part of AP controls review (cross-reference CTL-42 in Internal Controls Matrix) (W7)",
+     "- Evaluated Receipt Settlement (ERS): for configured VMI vendors (W20) and select blanket PO vendors (W2C), system auto-generates vendor invoice from PO + Goods Receipt data without requiring vendor invoice submission; AP Clerk validates auto-generated invoice against PO and GR; if within tolerance, auto-approved for payment; reduces GRNI accumulation and manual invoice processing for high-volume, trusted vendor relationships"
+    ],
+    "Time Estimate": [
+     "- Invoice scanning/logging: ~25–31 hours/business-day (305–370 invoices × 5 min)",
+     "- Manual exception resolution (20% of invoices): ~25–30 hours/business-day (~70 invoices × 25 min avg)",
+     "- Payment run (twice weekly): ~2 hours/run (1 hour AP Clerk + 1 hour Treasury review)",
+     "- AP aging review: ~2 hours/week (AP Supervisor)",
+     "- GRNI aging follow-up: ~3 hours/week (AP Clerk + Buyer coordination)",
+     "- EWT validation per payment run: ~15 min/run",
+     "- Total AP processing: ~60–70 hours/business-day across 8–10 AP Clerks (~6–8 hours each/day)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk receives and scans/logs vendor invoice (via email, mail, or vendor portal submission)",
+     "duration": "5 min/invoice",
+     "n": "1",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System attempts auto-match: PO → Goods Receipt → Invoice (3-way match)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "If matched (quantities and price within tolerance): auto-approve for payment",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "If mismatch (price, quantity, or missing GR): route to AP Clerk for review",
+     "duration": "10 min/invoice",
+     "n": "4",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Buyer",
+     "activity": "If price discrepancy: AP Clerk contacts Buyer for resolution",
+     "duration": "15 min/invoice",
+     "n": "5",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "If quantity discrepancy (partial receipt): verify GR status; wait for remaining delivery or adjust",
+     "duration": "10 min/invoice",
+     "n": "6",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "Exception SLA: all unmatched invoices must be resolved within 5 business days; system tracks aging of exceptions",
+     "duration": "Automated",
+     "n": "6a",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "If exception unresolved after 5 days: system escalates to AP Supervisor; AP Supervisor coordinates with Buyer and vendor for resolution",
+     "duration": "15 min/invoice",
+     "n": "6b",
+     "r": "AP Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Approved invoices queued for payment per vendor terms (Net 30, Net 60)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "System identifies invoices eligible for early payment discount (e.g., 2/10 Net 30); displays discount amount, discount deadline, and annualized return on taking discount; Treasury Analyst includes discount opportunities in weekly cash flow planning (W30 step 8); AP Supervisor prioritizes discounted invoices in payment run when Treasury authorizes",
+     "duration": "15 min/review",
+     "n": "7a",
+     "r": "System / AP Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "AP Supervisor reviews AP aging weekly; prioritize payments by due date and vendor relationship",
+     "duration": "2 hours/week",
+     "n": "8",
+     "r": "AP Supervisor"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "Twice-weekly payment run: system generates payment file (checks, bank transfers)",
+     "duration": "1 hour/run",
+     "n": "9",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "System calculates Expanded Withholding Tax (EWT) per vendor invoice based on configured Alphanumeric Tax Code (ATC) in vendor master (e.g., WI010 for purchases of goods at 1%, WI020 for services at 2%, WC010 for rentals at 5%); net payment to vendor = invoice amount − EWT; system posts EWT to Withholding Tax Payable (liability); AP Clerk validates EWT computation before payment run",
+     "duration": "Automated + 15 min validation/run",
+     "n": "9a",
+     "r": "System / AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "Vendor credit memo processing: AP Clerk receives vendor credit note (mail, email, portal); selects source — RTV reference (W3.6a), rebate settlement (W27.9), price protection (W40.11), or manual entry; system attempts auto-match to original PO/invoice/RTV; AP Clerk posts credit memo: system reduces vendor balance and posts to GL (Dr. Accounts Payable / Cr. COGS or appropriate expense); if vendor has open invoices, system applies credit memo against oldest open invoice; if net vendor credit balance results, AP Clerk decides to request refund, apply to next invoice, or offset",
+     "duration": "10 min/credit memo",
+     "n": "9b",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury reviews and approves payment batch; transmits to bank",
+     "duration": "30 min/run",
+     "n": "10",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "System posts payment; updates vendor balance",
+     "duration": "Automated",
+     "n": "11",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W20",
+    "W27",
+    "W2C",
+    "W3",
+    "W30",
+    "W4",
+    "W40",
+    "W44",
+    "W6",
+    "W7C",
+    "W7D",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [],
+   "fields": {
+    "Frequency": "~2,000–3,000 non-PO invoices/month across all locations (200 stores + 4 DCs + HQ); combined with ~6,715 merchandise/vendor invoices (W7), total AP invoice volume is ~8,500–9,500/month; the ~6,715 figure in model-company-profile §10.2 refers to merchandise/vendor invoices only",
+    "Owner": "AP Supervisor",
+    "Participants": "AP Clerk, Store Manager / Department Head (approval), AP Supervisor",
+    "Trigger": "Utility bill, service invoice, rent, or other recurring expense received without a Purchase Order",
+    "Volume": "~10–15 recurring vendor invoices per store per month (electricity, water, internet, rent to Property Mgmt Inc., security, cleaning, waste disposal)"
+   },
+   "id": "W7C",
+   "level": 3,
+   "name": "Non-PO / Recurring Expense Invoice Processing",
+   "parent": "W7",
+   "req_refs": [],
+   "sections": {
+    "Pain Points / Risks": [
+     "- **Contract coverage gaps**: ~30% of non-PO invoices have no matching contract in the system; every uncovered invoice requires manual review by the cost center owner, slowing throughput during month-end peaks when ~3,000 non-PO invoices land simultaneously across 200 stores + 4 DCs + HQ",
+     "- **Store-level variance investigation burden**: unusual expense patterns at individual stores (e.g., electricity spike at a Visayas store due to aging HVAC) require Facilities Coordinator follow-up that spans Finance, Store Ops, and Property Mgmt Inc., often taking weeks to resolve",
+     "- **Rent-to-related-party scrutiny**: all 200 store rent payments flow to Property Mgmt Inc. (IC); BIR transfer pricing audit risk is high if lease rates are not documented at arm's-length market benchmarks per W14 annual review",
+     "- **Recurring service invoice delays**: security, cleaning, and waste disposal vendors for 200+ locations often submit invoices late or with incomplete details, causing month-end accrual estimation errors that require subsequent period adjustments"
+    ],
+    "Staffing Implication": [
+     "- **Shared AP Clerks (from W7 pool)**: non-PO invoice processing adds ~20–25 hours/business-day to the existing AP team; with 8–10 clerks handling both W7 and W7C, this is ~2–3 additional hours per clerk per day; absorbed within current headcount but contributes to month-end overtime",
+     "- **1 AP Supervisor**: non-PO expense summary review adds ~1 hour/month; contract coverage gap remediation (coordinating with Facilities/Store Ops) adds ~2–3 hours/month; absorbed within existing role",
+     "- **No incremental headcount**: non-PO volume is predictable and spread across locations; peaks are seasonal (utility spikes in summer) and manageable"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Non-PO invoice capture and logging: AP Clerk enters or scans utility bills, service invoices, and lease payments; system classifies as recurring or one-time based on vendor and expense type (W7C.1)",
+     "- 2-way match engine: invoice amount matched against contract amount or budget allocation per cost center; configurable tolerance thresholds (e.g., ±5% for utilities, ±2% for rent); auto-approve if within tolerance (W7C.2)",
+     "- Budget validation engine: system checks invoice amount against remaining cost center budget; flags over-budget invoices for cost center owner review with variance explanation (W7C.4)",
+     "- Cost center routing: approved invoices automatically routed to cost center owner (Store Manager for store expenses, Department Head for HQ expenses) based on GL account and location mapping; auto-approval for contract-matched invoices within tolerance (W7C.3)",
+     "- EWT computation for service invoices: system calculates Expanded Withholding Tax per ATC code (e.g., WC080 for professional services at 10%, WC010 for rentals at 5%) based on vendor master and expense type; net payment = invoice amount − EWT (W7C.5)",
+     "- Payment queue integration: approved non-PO invoices fed into standard payment run alongside PO-based invoices (W7.9–11); EWT, early payment discounts, and payment terms applied uniformly (W7C.5)",
+     "- Monthly non-PO expense summary: system generates cost center expense summary by expense category (utilities, rent, security, cleaning, waste disposal) with period-over-period comparison; flags locations with unusual expense patterns (> 20% variance from prior month) for AP Supervisor management review (W7C.6)",
+     "- Contract master data: recurring vendor contracts stored with billing schedule, tolerance bands, cost center allocation, and EWT ATC; enables auto-matching for contract-based invoices and identifies invoices without matching contract (W7C.2, W7C.4)",
+     "- Integration with W7 (AP invoice processing), W14 (intercompany rent to Property Mgmt Inc.), W89 (bank reconciliation for non-PO payments)"
+    ],
+    "Time Estimate": [
+     "- Non-PO invoice logging: ~8–11 hours/business-day (~91–136 invoices × 5 min)",
+     "- Manual review for uncovered invoices (~30%): ~7–10 hours/business-day (~40 invoices × 12 min avg)",
+     "- Cost center owner approval routing: ~1 min/auto-approved, ~5 min/manual review",
+     "- Monthly expense summary review (AP Supervisor): ~1 hour/month",
+     "- Non-PO processing during month-end peak: +50% volume surge requires ~4–6 additional hours/day for 3–5 days",
+     "- Total non-PO AP effort: ~20–25 hours/business-day (shared with W7 AP Clerks)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk receives and logs non-PO invoice (utility bill, service invoice, lease payment); classifies as recurring or one-time",
+     "duration": "5 min/invoice",
+     "n": "1",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System attempts 2-way match: invoice amount vs. contract amount or budget allocation per cost center",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Cost center owner",
+     "activity": "If invoice within tolerance of contract/budget: route to cost center owner for approval (Store Manager for store expenses, Department Head for HQ expenses)",
+     "duration": "1 min/auto-approved",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "If invoice exceeds budget or no contract on file: route to cost center owner for review with explanation of variance",
+     "duration": "5 min/invoice",
+     "n": "4",
+     "r": "AP Clerk / Cost center owner"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "Approved non-PO invoices queued for payment in standard payment run (W7.9–11); EWT computed per ATC for service invoices (W7.9a)",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Monthly: AP Supervisor reviews non-PO expense summary by cost center; flags locations with unusual expense patterns for management review",
+     "duration": "1 hour/month",
+     "n": "6",
+     "r": "AP Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W7",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-42"
+   ],
+   "fields": {
+    "Frequency": "Monthly for top 100 vendors by spend (per W100); quarterly for remaining active vendors",
+    "Owner": "AP Clerk",
+    "Participants": "AP Clerk, AP Supervisor, Buyer (for discrepancies)",
+    "Trigger": "Monthly vendor statement received (email, mail, or vendor portal)",
+    "Volume": "~100 monthly reconciliations + ~700–900 quarterly reconciliations; top 20 = 45% of COGS (profile §6.5), top 100 ≈ 60–70%"
+   },
+   "id": "W7D",
+   "level": 3,
+   "name": "AP Vendor Statement Reconciliation",
+   "parent": "W7",
+   "req_refs": [],
+   "sections": {
+    "Pain Points / Risks": [
+     "- **Vendor statement format inconsistency**: top 50 vendors each submit statements in different formats (PDF, Excel, EDI, printed) with varying levels of detail; the auto-reconciliation engine struggles with non-standard formats, forcing AP Clerks to manually parse ~30% of vendor statements",
+     "- **Unreconciled items aging beyond 90 days**: EWT deductions not reflected on vendor statements are the most common reconciling item; Philippine vendors frequently omit EWT amounts from their statements, creating persistent unmatched AP lines that require manual explanation every month",
+     "- **Resource contention with month-end close**: vendor statement reconciliation for top 50 vendors is due monthly, coinciding with the W9A close cycle; AP Clerks already stretched by invoice processing peaks must split attention between close support and vendor reconciliation, degrading quality on both",
+     "- **Chronic discrepancy vendors eroding trust**: 5–10 vendors consistently show discrepancies (partial shipments, pricing errors, late credit memos); each monthly reconciliation repeats the same investigation, consuming disproportionate AP Clerk time without resolution until Buyer escalates per W44"
+    ],
+    "Staffing Implication": [
+     "- **AP Clerks (shared with W7)**: vendor reconciliation adds ~90–160 hours/month averaged across the team; with 8–10 clerks, this is ~9–20 hours each/month (~1–2.5 hours/week); absorbed but contributes to workload pressure during close week when monthly reconciliations are due",
+     "- **1 AP Supervisor**: vendor reconciliation oversight adds ~1.5 hours/month; absorbed within existing role",
+     "- **No incremental headcount**: reconciliation volume is predictable and can be staggered across the month for non-top-50 vendors",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor statement import: AP Clerk uploads vendor statement (PDF, Excel, or EDI); system parses line items for auto-matching (W7D.1–2)",
+     "- Auto-reconciliation engine: matches vendor statement lines to AP sub-ledger by invoice number, date, and amount with configurable tolerance (W7D.2)",
+     "- Reconciliation summary dashboard: matched, unmatched (vendor-side), unmatched (AP-side), and variance items with drill-down (W7D.3)",
+     "- Reconciliation documentation: auditor-ready log showing reconciliation result per vendor per period with aging of reconciling items (W7D.5)",
+     "- Vendor reconciliation analytics: match rate, average reconciliation time, recurring discrepancy vendors, aging of unresolved items (W7D.6)",
+     "- Integration with W7 (AP invoice processing), W7C (non-PO invoices), W44 (vendor performance — chronic reconciliation issues affect vendor scorecard)"
+    ],
+    "Time Estimate": [
+     "- Monthly reconciliation (top 50 vendors): ~25–38 hours/month (50 vendors × 30–45 min avg including investigation)",
+     "- Quarterly reconciliation (~750 remaining vendors): ~187–375 hours/quarter (~15–30 min/vendor), spread across 13 weeks = ~15–29 hours/week",
+     "- AP Supervisor monthly review: ~1 hour/month (top 50 summary)",
+     "- AP Supervisor quarterly controls review: ~30 min/quarter",
+     "- Total vendor reconciliation effort: ~30–45 hours/month (monthly) + ~60–115 hours/month (quarterly cycle average)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Supervisor",
+     "activity": "Vendor submits monthly or quarterly statement showing all invoices, credit memos, and payments for the period; AP Clerk receives and logs statement in system",
+     "duration": "5 min/vendor",
+     "n": "1",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System attempts auto-reconciliation: matches vendor statement line items to AP sub-ledger transactions (invoices, credit memos, payments) by invoice number, date, and amount",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System generates reconciliation summary: matched items, unmatched vendor lines (vendor shows invoice not in AP), unmatched AP lines (AP shows invoice not on vendor statement), and amount variances",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk investigates unmatched items: (a) **unmatched vendor lines** — vendor invoice not yet received or not yet entered in AP; if invoice is valid and GR exists, AP Clerk enters invoice per W7; if no GR, flags for Buyer follow-up with vendor; (b) **unmatched AP lines** — payment made but vendor did not credit; AP Clerk provides payment reference (bank transfer date, amount) for vendor to apply; (c) **amount variances** — typically partial payments, discounts taken, or EWT deduction not reflected on vendor statement; AP Clerk explains variance with supporting documentation",
+     "duration": "15–30 min/vendor",
+     "n": "4",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk documents reconciliation result: matched amount, unmatched items with explanation, and net variance; flags reconciling items > PHP 50,000 or items > 60 days unresolved for AP Supervisor review",
+     "duration": "10 min/vendor",
+     "n": "5",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "Monthly: AP Supervisor reviews vendor reconciliation summary for top 50 vendors — total matched vs. unmatched, aging of reconciling items, recurring discrepancy patterns; escalating chronic discrepancies to Buyer for vendor relationship review per W44",
+     "duration": "1 hour/month",
+     "n": "6",
+     "r": "AP Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "Quarterly: AP Supervisor includes vendor reconciliation metrics in AP controls review (cross-reference CTL-42 in Internal Controls Matrix); unreconciled balances > 90 days escalated to Controller for potential write-off or accrual adjustment",
+     "duration": "30 min/quarter",
+     "n": "7",
+     "r": "AP Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W100",
+    "W44",
+    "W7",
+    "W7C",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Monthly for top 100 vendors (by spend); quarterly for remaining active vendors",
+    "Owner": "AP Supervisor",
+    "Participants": "AP Clerk, AP Supervisor, Buyer (discrepancy resolution), Controller (escalation)",
+    "Trigger": "Monthly reconciliation calendar (10th business day of following month)",
+    "Volume": "Top 100 vendors = ~80% of AP spend; remaining ~700–900 vendors reconciled quarterly"
+   },
+   "id": "W100",
+   "level": 2,
+   "name": "Vendor Statement Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"AP Clerk requests or receives vendor statement of account\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares BuildRight's AP sub-ledger summary per vendor for the reconciliation…\" (replaces manual Step 2).",
+     "- System auto-record of \"AP Clerk compares vendor SOA to BuildRight's AP sub-ledger\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Referenced as \"W7D\" in W3 (RTV credit note aging report feeding into vendor statement reconciliation), this workflow fills a critical AP control gap. Without systematic vendor statement reconciliation, the company risks overpayment (duplicate invoices not caught by auto-matching), underpayment (vendor disputes damaging relationships), and inaccurate liability reporting (AP sub-ledger diverges from actual amounts owed). This is a standard month-end close control for any company with 800–1,000 active vendors and ~8,500–9,500 monthly invoices."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: AP Supervisor review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor statement availability delays**: not all vendors submit monthly statements on time; top 100 vendors may be compliant, but the remaining ~800 vendors are contacted quarterly and often do not maintain systematic SOA generation, making reconciliation reliant on BuildRight's AP sub-ledger alone",
+     "- **Currency and unit-of-measure mismatches**: imported goods are invoiced in USD but paid in PHP; vendor statements from international suppliers may show USD amounts while BuildRight's AP sub-ledger shows PHP, creating reconciliation complexity that requires FX rate verification per transaction",
+     "- **Duplicate payment detection gaps**: while W7 has duplicate invoice detection, vendor statement reconciliation is the last line of defense for catching duplicate payments that bypass automated checks; if reconciliation is skipped or superficial for smaller vendors, duplicate payments may go undetected indefinitely",
+     "- **Chronic discrepancy vendors consuming disproportionate effort**: 10–20 vendors consistently show reconciling items month after month; each monthly reconciliation repeats the same investigation cycle, consuming AP Clerk time without resolution until the Buyer escalates per W44 vendor scorecard"
+    ],
+    "Staffing Implication": [
+     "- **AP Clerks**: Top 100 vendors × 15 min average = ~25 hours/month for monthly reconciliation. Remaining ~800 vendors quarterly × 15 min ÷ 3 months = ~67 hours/quarter = ~22 hours/month. Total ~47 hours/month. With 8–10 AP Clerks, this is ~5–6 hours each/month. Absorbed within existing team, with some overtime during peak month-end close periods.",
+     "- **AP Supervisor**: 1 hour/month for top-20 review + 1 hour/quarter for KPI report. Absorbed.",
+     "- **Controller**: 30 min/month for escalations. Absorbed.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor AP sub-ledger summary generation per vendor per period (W100.2)",
+     "- Reconciliation workspace: side-by-side comparison of vendor SOA vs. BuildRight AP records with line-level matching (W100.3)",
+     "- Reconciling item classification and documentation: timing, missing invoice, missing payment, unrecorded credit, disputed (W100.5)",
+     "- Integration with W7 (invoice and payment records), W27 (rebate credits), W70 (debit note aging), W88 (RTV credit notes), W44 (vendor scorecard — reconciliation complexity as quality metric)",
+     "- Aging tracker for unresolved reconciling items with auto-escalation at 60 days (W100.9)",
+     "- Reconciliation KPI dashboard (W100.10)",
+     "- Audit trail: all reconciliation actions logged with AP Clerk ID, timestamp, and documentation"
+    ],
+    "Time Estimate": [
+     "- Top 100 vendor monthly reconciliation: ~37–38 hours/month (50 vendors × 15 min avg for matched; 50 × 30 min for discrepancies)",
+     "- Remaining ~800 vendor quarterly reconciliation: ~200 hours/quarter (800 × 15 min), spread across 13 weeks = ~15 hours/week",
+     "- AP Supervisor top-20 review: ~1 hour/month",
+     "- Controller escalation review: ~30 min/month",
+     "- Quarterly KPI report: ~1 hour/quarter",
+     "- Total vendor reconciliation: ~40–50 hours/month (monthly cycle) + ~15 hours/week (quarterly cycle ongoing)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk requests or receives vendor statement of account (SOA) — via email, vendor portal, or mail; top vendors provide monthly SOA automatically; for remaining vendors, AP Clerk sends batch request at month-end",
+     "duration": "30 min/batch (top 100)",
+     "n": "1",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System prepares BuildRight's AP sub-ledger summary per vendor for the reconciliation period: total invoices received, payments made, credit memos applied, debit memos issued, and resulting AP balance",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk compares vendor SOA to BuildRight's AP sub-ledger per vendor: (a) match invoices — vendor SOA invoices vs. BuildRight recorded invoices, (b) match payments — vendor SOA payments received vs. BuildRight payments issued, (c) match credit/debit memos — vendor SOA adjustments vs. BuildRight credit memos (W7.9b) and debit notes (W70), (d) compare ending balances",
+     "duration": "15 min/vendor",
+     "n": "3",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**If balances match**: AP Clerk marks vendor as reconciled for the period; no further action",
+     "duration": "2 min/vendor",
+     "n": "4",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**If balances do not match**: AP Clerk documents reconciling items by type: (a) **Timing differences** — payments in transit (BuildRight issued but vendor not yet received), invoices received after SOA cutoff, GRs posted but vendor invoices not yet received (GRNI per W7), (b) **Missing invoices** — vendor shows invoice not in BuildRight's system (possible loss, email misrouted, or vendor error), (c) **Missing payments** — BuildRight shows payment not on vendor SOA (check not cleared, bank transfer not yet credited to vendor), (d) **Unrecorded credit memos** — vendor issued credit not yet in BuildRight's system (RTV credit note pending per W3, rebate settlement pending per W27), (e) **Disputed items** — vendor shows charge that BuildRight disputes (quality rejection, pricing discrepancy, unauthorized charge)",
+     "duration": "15–30 min/vendor with variances",
+     "n": "5",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk resolves reconciling items: (a) timing differences — document and carry forward to next period, (b) missing invoices — request from vendor; if legitimate, process per W7, (c) missing payments — provide payment proof (bank reference, check copy) to vendor, (d) unrecorded credits — verify against RTV log (W88), rebate settlement log (W27), price protection log (W40); if valid, request vendor credit memo or record in system, (e) disputed items — route to Buyer for resolution with vendor per W44 dispute process",
+     "duration": "15–60 min/item",
+     "n": "6",
+     "r": "AP Clerk / Buyer"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk prepares reconciliation summary per vendor: BuildRight balance, vendor SOA balance, reconciling items (with aging), net agreed balance; system stores reconciliation record with full documentation",
+     "duration": "5 min/vendor",
+     "n": "7",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "AP Supervisor reviews reconciliation summary for top 20 vendors (by spend or by reconciliation complexity); approves or requests additional investigation",
+     "duration": "1 hour/month",
+     "n": "8",
+     "r": "AP Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Unresolved items > 60 days auto-escalate to Controller for review; Controller decides: write-off, pursue with vendor, or adjust AP balance",
+     "duration": "30 min/month",
+     "n": "9",
+     "r": "Controller"
+    },
+    {
+     "a": "Controller",
+     "activity": "Quarterly: AP Supervisor generates vendor reconciliation KPI report: (a) reconciliation completion rate (% of top 100 vendors reconciled within SLA), (b) average reconciling items per vendor, (c) aging of unresolved items, (d) top vendors by reconciliation complexity (chronic discrepancies signal vendor billing quality issues — feed into W44 vendor scorecard), (e) duplicate payment recovery amount (if any duplicates caught during reconciliation)",
+     "duration": "1 hour/quarter",
+     "n": "10",
+     "r": "AP Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W27",
+    "W3",
+    "W40",
+    "W44",
+    "W7",
+    "W70",
+    "W7D",
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Weekly / Monthly",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "Logistics Finance Analyst, Logistics Manager (rate card negotiation), 3PL Account Manager (dispute resolution), AP Clerk (payment processing), Controller (variance approval)",
+    "Trigger": "3PL or freight forwarder submits a consolidated invoice for hundreds of deliveries/transfers.",
+    "Volume": "Thousands of lines per invoice; estimated ~1,700–2,600 DC-to-store delivery shipments/month (W4: 2–3 deliveries/store/week × 200 stores) + ~30–40 inter-DC transfers/month (W22 canon) + ~10,000–17,000 home delivery shipments/month (W19) = ~12,000–20,000 freight-billable movements/month across 4 DCs and multiple 3PL carriers"
+   },
+   "id": "W277",
+   "level": 2,
+   "name": "Freight Bill Audit & Payment (FBAP) Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits an EDI or portal-based invoice containing freight charges, fuel…\" (replaces manual Step 1).",
+     "- System auto-route of \"ERP Transportation Management module automatically audits the invoice against\" (replaces manual Step 2).",
+     "- System auto-flag of \"System flags discrepancies\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: audit engine is the only viable control; operational: routing is ambiguous"
+    ],
+    "Pain Points / Risks": [
+     "- **Overpaying millions in freight due to complex tariff structures**: 3PL rate cards include base rates per zone, weight breaks, fuel surcharges (adjusted monthly based on DOE pump prices), accessorial fees (loading/unloading wait time, oversized surcharges, weekend/holiday premiums), and volume-based rebates; manual auditing is impossible at ~12,000–20,000 shipments/month scale — the system audit engine is the only viable control",
+     "- **Rate card staleness**: negotiated rate cards expire or become uncompetitive as fuel prices and market rates change; if the Logistics Manager does not renegotiate rates quarterly, BuildRight pays above-market freight for months before the next scheduled rate review",
+     "- **Duplicate billing across carriers**: inter-DC transfers (W22) may be billed by both the originating DC's carrier and the receiving DC's carrier if system routing is ambiguous; duplicate detection must cross-reference shipment IDs across carrier invoices",
+     "- **Accessorial fee disputes**: 3PL carriers frequently charge for \"detention\" (driver waiting beyond free time) and \"re-delivery\" without providing timestamped evidence; disputing these charges requires TMS GPS/timestamp data that is not always captured for local Philippine trucking carriers with limited telematics"
+    ],
+    "Staffing Implication": [
+     "- **1 Logistics Finance Analyst**: freight bill audit and reconciliation for ~12,000–20,000 monthly shipments across multiple 3PL carriers requires a dedicated analyst role; weekly billing cycles for top carriers consume ~1–2 days/week; monthly cycles for smaller carriers consume ~2 days/month; total ~6–10 days/month — this is a full-time role",
+     "- **1 Logistics Manager**: rate card negotiation and dispute escalation add ~2–4 hours/week; absorbed within existing Logistics management duties",
+     "- **1 Controller**: variance approval for disputed freight charges > threshold adds ~1–2 hours/month; absorbed",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Transportation Management System (TMS)**: shipment record with origin, destination, carrier, weight, cube, distance, service level; rate card engine with negotiated rates per lane (DC-to-store zone), per weight break, and per service type (standard, express, oversized); automatic freight cost computation per shipment for audit comparison",
+     "- **Accounts Payable (W7)**: reconciled and approved freight invoices released to AP payment queue; 3PL vendor master with payment terms (typically Net 30); AP Clerk processes payment via standard payment run",
+     "- **EDI / Vendor Portal**: electronic invoice receipt from 3PL carriers (e.g., 2GO, Xignex, local truckers) in standardized format; portal-based invoice submission for smaller carriers without EDI capability; reconciliation workspace showing carrier invoice vs. TMS-computed cost per line",
+     "- **Integration with W4 (DC-to-store replenishment)**: each store replenishment shipment generates a TMS record with expected freight cost; at month-end, total freight cost per DC feeds into Logistics Inc. IC fee calculation (W14)",
+     "- **Integration with W19 (home delivery)**: 3PL carrier invoices for last-mile delivery (Lalamove, Transportify) reconciled against per-order delivery records; freight cost per order feeds into ecommerce fulfillment IC fee",
+     "- **Integration with W44 (vendor scorecard)**: 3PL carrier freight billing accuracy (% of lines matching within tolerance) feeds into carrier performance scorecard; chronic overbilling carriers flagged for rate renegotiation or contract termination"
+    ],
+    "Time Estimate": [
+     "1–2 days per billing cycle (weekly for top 3PL carriers; monthly for smaller carriers)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Finance Analyst",
+     "activity": "3PL submits an EDI or portal-based invoice containing freight charges, fuel surcharges, and accessorial fees.",
+     "duration": "30 min/import",
+     "n": "1",
+     "r": "3PL / Logistics Finance Analyst"
+    },
+    {
+     "a": "Logistics Finance Analyst",
+     "activity": "ERP Transportation Management module automatically audits the invoice against the negotiated rate cards, actual weight/cube, and route distance.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Finance Analyst",
+     "activity": "System flags discrepancies (e.g., overcharges, duplicate billings) beyond a tolerance of 1%.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Analyst reviews flagged exceptions and issues a dispute/short-pay notice to the 3PL.",
+     "duration": "1–2 hours",
+     "n": "4",
+     "r": "Logistics Finance Analyst"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "Approved, reconciled amounts are released to AP for payment.",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Logistics Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W19",
+    "W22",
+    "W4",
+    "W44",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Intercompany Accountant",
+    "Participants": "Controller, DC Managers, Ecom Manager, Finance Managers",
+    "Trigger": "Month-end close cycle (W9A)",
+    "Volume": "5 Legal Entities"
+   },
+   "id": "W435",
+   "level": 2,
+   "name": "Intercompany Service Level Agreement (SLA) Fee Billing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logistics\" (replaces manual Step 1).",
+     "- System rule-based auto-approval of \"approved SLA rates\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates Intercompany Invoices\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "With 5 legal entities—**Holdings (Group), Depot (Retail), Logistics (DC), Digital (Ecom), and Property (Lease)**—there are significant cross-entity services. To maintain \"arm's length\" transfer pricing compliance (W235), the service-providing entities must bill the service-consuming entities (primarily BuildRight Depot) based on actual consumption or fixed SLA rates."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: Intercompany Accountant review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Transfer Pricing Audit**: Failure to document the *basis* of these fees (actual volumes vs. arbitrary percentages) leads to BIR transfer pricing adjustments and penalties.",
+     "- **GL Misalignment**: If the service entity posts revenue in Period 1 but the retail entity posts expense in Period 2, the consolidated group profit will be distorted."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Intercompany Transfer Pricing Master (W305)",
+     "- Automated IC Invoicing Engine (W14)",
+     "- SLA Performance Dashboard (W35)",
+     "- Warehouse Management System (WMS) for pallet volume data"
+    ],
+    "Time Estimate": [
+     "~15 hours per monthly cycle across the 5 legal entities (service-volume data extraction 1 day + SLA fee calculation 4 hours + SLA performance review 2 hours + intercompany settlement 1 hour) ≈ 180 hours/year (intercompany invoice generation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Data Extraction**: Extract monthly service volumes: (a) Logistics: pallets stored/moved, (b) Digital: ecom orders fulfilled, (c) Property: sqm leased, (d) Holdings: management service hours",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Intercompany Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Fee Calculation**: Apply the pre-approved SLA rates (per W305 rule master) to the actual volumes to determine the monthly fee per entity",
+     "duration": "4 hours",
+     "n": "2",
+     "r": "Intercompany Accountant"
+    },
+    {
+     "a": "Intercompany Accountant",
+     "activity": "**Intercompany Invoice**: System auto-generates Intercompany Invoices (Dr. Expense / Cr. IC Payable for Depot; Dr. IC Receivable / Cr. Service Revenue for service entity)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**SLA Performance Review**: Compare actual volumes vs. budget; if variances > 20%, provide justification for the management report (W35)",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Intercompany Accountant"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Settlement**: Trigger intercompany cash settlement per W14.8 to clear the IC balances",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Intercompany Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W235",
+    "W305",
+    "W35",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Intercompany Accountant",
+    "Participants": "Logistics Finance, Ecom Finance, Controller",
+    "Trigger": "Month-end close cycle",
+    "Volume": "~12,000–20,000 movements/month (W4, W19, W22; per W277)"
+   },
+   "id": "W461",
+   "level": 2,
+   "name": "Intercompany Fulfillment & Logistics Fee Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-extract of \"Extract all DC receipts, pick-and-pack events, and outbound shipments from…\" (replaces manual Step 1).",
+     "- System auto-log of \"Compare computed total vs. Logistics Inc. operating costs\" (replaces manual Step 4).",
+     "- System auto-post of \"Post IC Netting entries\" (replaces manual Step 5)."
+    ],
+    "Background": [
+     "While W435 handles high-level SLA billing, W461 focuses on the **itemized execution** and reconciliation of logistics and fulfillment fees between **BuildRight Logistics, Inc.** (the service provider) and **BuildRight Depot, Inc.** (the inventory owner)."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Rate-table-misapplication risk**: a stale Per-Pallet-Receipt / Per-Case-Pick / Per-Drop-Delivery rate in the Transfer Pricing Master mis-prices ~12,000–20,000 monthly intercompany movements across the 5 entities; mitigated by version-controlled effective-dated rates and the month-end reconciliation of computed fees vs. Logistics Inc. actual cost (step 4)",
+     "- **Extract-completeness risk**: settlement computed off an incomplete WMS/ERP extract (missed pick events or BOPIS orders) understates intercompany charges and skews the Cost+Markup check; mitigated by the step-1 transactional audit extracting from WMS/ERP source events and the month-end close cut-off reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS Transaction Logs (Pick/Pack/Ship)",
+     "- Intercompany Pricing Engine",
+     "- Automated IC Netting and Settlement (W14)"
+    ],
+    "Time Estimate": [
+     "12 hours per occurrence (per-step effort 4 hours + 2 hours + 1 hour + 4 hours + 1 hour) — at Monthly ≈ 12 occurrences/year ≈ 144 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Transactional Audit**: Extract all DC receipts, pick-and-pack events, and outbound shipments from WMS/ERP",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Intercompany Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Unit Cost Application**: Apply \"Per-Pallet Receipt,\" \"Per-Case Pick,\" and \"Per-Drop Delivery\" rates per the Transfer Pricing Master",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "System / IC Accountant"
+    },
+    {
+     "a": "Ecom Manager",
+     "activity": "**Ecom Fulfillment Fee**: Apply \"Per-Order\" fulfillment fee for Digital Commerce Inc. services (BOPIS/Delivery)",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "IC Accountant"
+    },
+    {
+     "a": "Logistics Mgr",
+     "activity": "**Reconciliation**: Compare computed total vs. Logistics Inc. operating costs to ensure \"Cost + Markup\" target is met",
+     "duration": "4 hours",
+     "n": "4",
+     "r": "IC Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Settlement Journal**: Post IC Netting entries; trigger cash settlement via W14.8",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "System / IC Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W19",
+    "W22",
+    "W277",
+    "W4",
+    "W435"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Daily cash application; monthly collections review; quarterly tax filing",
+    "Owner": "AR Accountant",
+    "Participants": "B2B Customers, AR Supervisor, Collector, Tax Accountant, Controller",
+    "Trigger": "B2B/Trade customer submits payment net of withholding tax (withholds 1% or 2% Expanded Withholding Tax)",
+    "Volume": "~3,500 trade/corporate invoices monthly across 5,200 active B2B accounts"
+   },
+   "id": "W475",
+   "level": 2,
+   "name": "Customer Creditable Withholding Tax (CWT) Certificate (BIR 2307) Collection & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check, bank transfer, or PDC\" (replaces manual Step 1).",
+     "- System auto-request of \"Form 2307 Request\" (replaces manual Step 2).",
+     "- System auto-document of \"Document Validation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "When trade and corporate customers pay BuildRight Depot Corp., they withhold 1% or 2% as Creditable Withholding Tax (CWT) per BIR rules. The customer pays the net amount and is legally required to issue a BIR Form 2307 to BuildRight. The AR Accountant must place the withheld amount in a dedicated CWT clearing account in the customer's ledger. BuildRight can only clear the customer's AR balance and claim the tax credit once the physical or electronic Form 2307 is received, validated, and logged."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Lost Tax Credits**: If customers fail to provide Form 2307, BuildRight cannot claim the credit, resulting in direct write-offs to tax expense (W81).",
+     "- **Manual Data Validation**: Manually matching thousands of paper certificates to ERP invoices is a massive bottleneck.",
+     "- **Entity Mismatches**: B2B customers often issue the Form 2307 to the wrong BuildRight legal entity (e.g. issuing to BuildRight Depot, Inc. instead of BuildRight Digital Commerce, Inc. for online sales), rendering the certificate invalid."
+    ],
+    "Staffing Implication": [
+     "- **AR Accountant**: Accountable for daily entry, matching, and logging. ~20 hours/month of active processing.",
+     "- **Collector**: Responsible for customer follow-up. ~10 hours/month.",
+     "- **Tax Accountant**: Accountable for quarterly reconciliation and BIR Form 1702Q reporting. ~4 hours/quarter."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Accounts Receivable Module (Partial payment posting, customer suspense clearing)",
+     "- ERP Tax Module (BIR Form 2307 registry, ATC mapping, tax credit ledger)",
+     "- Document Management System (W255) for scanned certificates",
+     "- Integration with W8 (B2B Accounts), W24 (Credit application), W90 (Monthly Tax Filing), W108 (Collections), W140 (Corporate Income Tax Return), W260 (eFPS filing)"
+    ],
+    "Time Estimate": [
+     "~45 min per creditable payment cycle (payment posting 15 min + Form 2307 request 10 min + document validation 10 min/certificate + ERP logging and AR clearance 10 min) at the realized 2307-backed share of ~3,500 monthly trade/corporate invoices; monthly CWT clearing aging and follow-up 2 hours ≈ 24 hours/year; quarterly tax-credit reconciliation 4 hours plus audit filing/archiving 1 hour per quarter ≈ 20 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "**Payment Posting (Net)**: Upon receipt of check, bank transfer, or PDC (W1380), AR Accountant posts the cash received (98% or 99% of invoice) and moves the withheld 1% or 2% to a \"CWT Clearing - Customer Suspense\" account under that specific customer sub-ledger, keeping the invoice partially open.",
+     "duration": "15 min",
+     "n": "1",
+     "r": "AR Accountant"
+    },
+    {
+     "a": "AR Accountant",
+     "activity": "**Form 2307 Request**: Collector requests the BIR Form 2307 from the customer. The customer must provide it either: (a) upon payment release (for check pickups), or (b) quarterly (within 20 days after the end of the quarter).",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Collector"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Document Validation**: Upon receipt, AR Accountant validates the Form 2307: (a) Correct registered name and TIN of BuildRight Depot entity, (b) Correct customer name and TIN, (c) Matching Alphanumeric Tax Code (ATC) and withholding rate (1% or 2%), (d) Matching gross sales amount and tax withheld, (e) Valid signature of customer representative.",
+     "duration": "10 min/cert",
+     "n": "3",
+     "r": "AR Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**ERP Logging & AR Clearance**: AR Accountant enters the Form 2307 details (Certificate Number, Customer TIN, ATC, gross amount, tax withheld) into the ERP's Tax Module; uploads the scanned certificate (W255); system automatically posts a journal entry: *Dr. Creditable Withholding Tax Asset / Cr. CWT Clearing - Customer Suspense*, fully closing the customer's outstanding invoice balance.",
+     "duration": "10 min",
+     "n": "4",
+     "r": "AR Accountant"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Form 2307 Aging & Follow-up**: Monthly, AR Accountant runs the CWT Clearing Aging Report. For any pending certificates > 45 days, Collector sends formal demand letters to customers. Unresolved items > 90 days are blocked from further credit sales (W24/W328) until the certificate is submitted.",
+     "duration": "2 hours/month",
+     "n": "5",
+     "r": "AR Accountant / Collector"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Tax Credit Claim Reconciliation**: Quarterly, Tax Accountant reconciles total balance in *Creditable Withholding Tax Asset* account against the physical/digital Form 2307 register. The total sum is claimed as a tax credit in the Quarterly Corporate Income Tax Return (BIR Form 1702Q). Only validated, physically held certificates are claimed.",
+     "duration": "4 hours/quarter",
+     "n": "6",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Audit Prep & Archiving**: Original Form 2307 certificates are filed and archived by the Tax Team per the 10-year retention policy (W256) for potential BIR audits (W77).",
+     "duration": "1 hour/quarter",
+     "n": "7",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W108",
+    "W1380",
+    "W140",
+    "W24",
+    "W255",
+    "W256",
+    "W260",
+    "W328",
+    "W77",
+    "W8",
+    "W81",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Quarterly (disclosure schedule update); annual (PAS 24 note preparation for AFS)",
+    "Owner": "Controller",
+    "Participants": "CFO, Tax Manager, Corporate Secretary, VP Legal, External Auditor",
+    "Trigger": "Quarterly financial reporting cycle; year-end close (W9B); material related party transaction event",
+    "Volume": "5 legal entities with extensive intercompany activity; ~20–30 material related party transactions/quarter"
+   },
+   "id": "W486",
+   "level": 2,
+   "name": "Related Party Transaction Disclosure & Reporting (PAS 24)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-classify of \"Related Party Register Maintenance\" (replaces manual Step 1).",
+     "- System auto-log of \"logistics fees, ecommerce fees, leasing income\" (replaces manual Step 2).",
+     "- System auto-document of \"Arm's-Length Pricing Verification\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine Accounting Standard 24 (PAS 24) — Related Party Disclosures requires BuildRight to disclose all material related party relationships and transactions in its financial statement notes. With 5 legal entities under a holding company structure and significant intercompany activity (leasing from BuildRight Property Management, logistics services from BuildRight Logistics, ecommerce services from BuildRight Digital Commerce), the volume and complexity of related party disclosures is substantial. W14 covers intercompany transaction processing operationally, and W234/W235 cover transfer pricing, but neither addresses the PAS 24 disclosure and reporting requirement — the financial statement note preparation, management compensation disclosure, and key management personnel identification required by the standard."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: Controller review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Completeness risk**: Related party identification is only as good as the Related Party Register; if key management personnel have undisclosed related entities or if new intercompany arrangements are established without updating the register, material transactions may be omitted from disclosure — a PFRS violation that triggers SEC scrutiny; mitigated by the Controller review and approval gate",
+     "- **Management compensation sensitivity**: PAS 24 requires disclosure of key management personnel compensation in aggregate by category; while individual amounts are not disclosed, the aggregate figure can be politically sensitive in a family-owned corporation and may require Board-level approval before inclusion in the AFS",
+     "- **Arm's-length documentation burden**: Each material IC transaction requires transfer pricing documentation (W235) to support the arm's-length assertion in the PAS 24 note; for 5 entities with diverse IC flows, the documentation volume is significant",
+     "- **Intercompany balance reconciliation**: PAS 24 requires disclosure of outstanding IC balances; if IC reconciliation (W14.4–5) is not completed before quarter-end, the disclosed balances may be inconsistent between entities"
+    ],
+    "Staffing Implication": [
+     "- **Controller**: ~25–35 days/year for PAS 24 compliance. Significant portion of annual workload; absorbed within existing Controller duties with support from Tax Manager.",
+     "- **Tax Manager**: ~5–10 days/year for arm's-length pricing verification support. Absorbed.",
+     "- **Corporate Secretary**: ~2 days/year for Related Party Register updates. Absorbed within W124 duties.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Intercompany Module (W14): IC transaction extraction",
+     "- ERP Financial Reporting: disclosure note templates",
+     "- Transfer Pricing Documentation (W235): arm's-length pricing reference",
+     "- Payroll System (W10): management compensation data extraction",
+     "- Treasury Module (W137, W325): IC loan and guarantee data",
+     "- Location/Entity Master (W254): entity relationship hierarchy",
+     "- Integration with W14 (IC transactions), W234 (IC profit elimination), W235 (transfer pricing), W435 (IC SLA billing), W9B (year-end close), W481 (SEC filings), W95/W351 (external audit)"
+    ],
+    "Time Estimate": [
+     "- Quarterly disclosure schedule update: 3–5 days/quarter",
+     "- Annual PAS 24 note preparation: 3–5 days",
+     "- External audit coordination: 2–3 days/annual",
+     "- **Total annual**: ~25–35 days/year for Controller"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "**Related Party Register Maintenance**: Controller maintains the Related Party Register: (a) identify all related parties per PAS 24 definition: 5 legal entities, key management personnel (CEO, CFO, COO, CIO, CMO, CHRO, VP Legal, Board members), entities controlled or significantly influenced by key management personnel, associates and joint ventures; (b) classify relationships: parent-subsidiary, fellow subsidiaries, key management personnel, post-employment benefit plans; (c) update register for any changes (new board members, new related entities) quarterly",
+     "duration": "1 day/quarter",
+     "n": "1",
+     "r": "Controller"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Transaction Capture & Classification**: Each quarter, Controller extracts all intercompany transactions from the ERP: (a) IC revenue and expense (W14 — intercompany logistics fees, ecommerce fees, leasing income); (b) IC receivables and payables balances; (c) IC loans and interest (W137); (d) IC guarantees and contingencies (W325); (e) IC dividends (W327); (f) management compensation and benefits per key management personnel (aggregated from payroll W10); (g) classify each transaction by related party, nature of relationship, and transaction type",
+     "duration": "2–3 days/quarter",
+     "n": "2",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Arm's-Length Pricing Verification**: Controller verifies that all material related party transactions are conducted at arm's-length terms: (a) cross-reference transfer pricing documentation (W235) for goods and services; (b) verify IC leasing rates against market benchmarks (W275 — IFRS 16 disclosures); (c) verify IC service fees against SLA billing rates (W435); (d) flag any transactions where pricing deviates significantly from arm's-length; (e) document justification for any non-arm's-length terms",
+     "duration": "2 days/quarter",
+     "n": "3",
+     "r": "Controller / Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly Disclosure Schedule Update**: Controller updates the Related Party Disclosure Schedule: (a) tabulate all material related party transactions by type, counterparty, and amount; (b) compute outstanding balances (receivable/payable) at quarter-end; (c) compute provisions for doubtful IC receivables; (d) compute management compensation per key management personnel category (short-term employee benefits, post-employment benefits, other long-term benefits, termination benefits — per PAS 19 categories)",
+     "duration": "1–2 days/quarter",
+     "n": "4",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**PAS 24 Note Preparation (Annual)**: For the annual AFS (W9B), Controller prepares the PAS 24 note: (a) describe the related party relationship nature; (b) disclose all material transaction types and amounts; (c) disclose outstanding balances and terms/conditions; (d) disclose provisions for doubtful IC receivables; (e) disclose key management personnel compensation (aggregated by category, not by individual — per PAS 24 paragraph 17); (f) disclose any guarantees provided or received; (g) ensure consistency with the W481 GIS beneficial-ownership/affiliate disclosures",
+     "duration": "3–5 days/annual",
+     "n": "5",
+     "r": "Controller"
+    },
+    {
+     "a": "External Auditor",
+     "activity": "**External Audit Coordination**: Controller coordinates with External Auditor on PAS 24 disclosures: (a) provide Related Party Register and Disclosure Schedule; (b) respond to auditor queries on specific transactions; (c) provide supporting documentation for arm's-length pricing; (d) incorporate auditor feedback into final disclosure note",
+     "duration": "2–3 days/annual",
+     "n": "6",
+     "r": "Controller"
+    },
+    {
+     "a": "Board",
+     "activity": "**Board Reporting**: CFO presents related party transaction summary to Board (W124/W482): (a) quarterly: summary of material IC transactions; (b) annual: full PAS 24 disclosure note for Board approval before AFS filing (W481)",
+     "duration": "Per W124",
+     "n": "7",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W124",
+    "W137",
+    "W14",
+    "W234",
+    "W235",
+    "W254",
+    "W275",
+    "W325",
+    "W327",
+    "W351",
+    "W435",
+    "W481",
+    "W482",
+    "W95",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Quarterly (review); annual (comprehensive assessment)",
+    "Owner": "Controller",
+    "Participants": "CFO, VP Merchandising, VP Store Operations, COO, Tax Manager, External Auditor",
+    "Trigger": "Quarterly financial close (W9A); year-end close (W9B); new revenue stream launch",
+    "Volume": "~10–15 complex revenue scenarios reviewed per quarter across 5 entities"
+   },
+   "id": "W487",
+   "level": 2,
+   "name": "Revenue Recognition Review (PFRS 15 Complex Scenarios)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-register of \"register of all revenue streams requiring PFRS 15 assessment\" (replaces manual Step 1).",
+     "- System auto-document of \"document the accounting treatment and rationale per PFRS 15\" (replaces manual Step 2).",
+     "- System auto-review of \"review outstanding layaway agreements\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "PFRS 15 (Revenue from Contracts with Customers) introduces a five-step revenue recognition model that requires careful assessment of complex scenarios common in BuildRight's operations. While standard POS retail sales (cash-and-carry) have straightforward revenue recognition (point of sale), several revenue streams require periodic assessment: (a) gift card breakage (W28 — when can unredeemed gift card balances be recognized as revenue?); (b) loyalty points deferred revenue (W17 — loyalty points are a separate performance obligation requiring allocation of transaction price); (c) bundled goods and services (W138 + W5B — installation services bundled with product sales require allocation); (d) consignment revenue timing (W23 — revenue recognized at sell-through, not at receipt); (e) layaway revenue recognition (W75 — revenue at delivery vs. at deposit); (f) subscription billing for recurring services (W282 — revenue over service period); (g) vendor rebates and incentives (W27 — reduction of cost of goods sold vs. revenue?); (h) project-based sales with milestone billing (W165 — over time vs. at a point in time). Existing workflows cover the operational execution of these revenue streams but not the PFRS 15 accounting assessment."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: Controller review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Loyalty points deferred revenue complexity**: With 600,000 loyalty members earning points on every transaction, the deferred revenue liability is significant and dynamically changing; calculating the standalone selling price of loyalty points (which have a nominal cash value but drive customer behavior) requires actuarial-style estimation that is difficult to audit",
+     "- **Gift card breakage estimation**: PFRS 15 requires that breakage revenue be recognized only when the likelihood of redemption is remote; estimating the breakage rate for a relatively new gift card program (BuildRight launched gift cards recently) is based on limited historical data, creating estimation uncertainty",
+     "- **Bundle allocation subjectivity**: Determining standalone selling prices for installation services (which are never sold separately) requires significant judgment; if the External Auditor disagrees with the SSP methodology, it could result in a prior-period adjustment",
+     "- **New revenue stream risk**: As BuildRight launches new services (marketplace integration W180, subscription services W282, retail media network W153), each new revenue stream requires a fresh PFRS 15 assessment before revenue can be recognized; delays in assessment can result in deferred revenue piling up or premature revenue recognition; mitigated by the Controller review and approval gate and operational: periodic reconciliation against source documents"
+    ],
+    "Staffing Implication": [
+     "- **Controller**: ~25–35 days/year for PFRS 15 review. Absorbed within existing Controller duties with support from CFO.",
+     "- **External Auditor**: PFRS 15 review is a standard audit procedure. No incremental cost.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Revenue Module: revenue stream tracking, deferred revenue ledger",
+     "- Gift Card Module (W28): outstanding balance, redemption history, breakage calculation",
+     "- Loyalty Engine (W17/W104): points liability, deferred revenue allocation",
+     "- POS System (W5B): transaction-level data for bundle analysis",
+     "- Consignment Module (W23): sell-through reporting",
+     "- Layaway Module (W75): outstanding agreements and deposit tracking",
+     "- Subscription Billing Module (W282): deferred revenue schedule",
+     "- Integration with W9A (month-end close), W9B (year-end close), W28 (gift cards), W17 (loyalty), W104 (loyalty financial governance), W23 (consignment), W75 (layaway), W138 (installation), W165 (project billing), W282 (subscriptions)"
+    ],
+    "Time Estimate": [
+     "- Quarterly review and journal entries: 4–7 days/quarter",
+     "- Annual comprehensive review: 5–7 days",
+     "- **Total annual**: ~25–35 days/year for Controller"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "**Revenue Stream Inventory**: Controller maintains a register of all revenue streams requiring PFRS 15 assessment: (a) standard retail POS sales (straightforward — recognized at POS); (b) gift card sales and redemptions (W28); (c) loyalty points earning (W17); (d) bundled product + installation (W138); (e) consignment sell-through (W23); (f) layaway sales (W75); (g) subscription services (W282); (h) project-based sales with staged billing (W165); (i) vendor rebates and co-op advertising (W27, W153); (j) tool rental (W139); (k) marketplace commissions (W180)",
+     "duration": "1 day/annual",
+     "n": "1",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Performance Obligation Assessment**: For each complex revenue stream, Controller assesses: (a) identify distinct performance obligations in each arrangement; (b) determine standalone selling price allocation (SSP) for each obligation; (c) determine revenue recognition timing (at a point in time vs. over time); (d) document the accounting treatment and rationale per PFRS 15",
+     "duration": "2–3 days/annual",
+     "n": "2",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Deferred Revenue Calculation**: Each quarter, Controller calculates deferred revenue balances: (a) **Gift cards**: outstanding unredeemed gift card balance (W28); estimate breakage rate based on historical redemption patterns; recognize breakage revenue for gift cards where likelihood of redemption is remote (per PFRS 15 paragraph B43); (b) **Loyalty points**: calculate total outstanding loyalty points liability (W104); allocate transaction price to points earned; adjust deferred revenue for points expiration and forfeiture; (c) **Layaway deposits**: review outstanding layaway agreements (W75) where customer has paid deposit but not taken delivery; assess whether revenue should be recognized; (d) **Subscription services**: review deferred revenue from pre-paid service contracts (W282); recognize revenue over service delivery period",
+     "duration": "2–3 days/quarter",
+     "n": "3",
+     "r": "Controller"
+    },
+    {
+     "a": "COO",
+     "activity": "**Bundle Allocation Review**: Each quarter, Controller reviews bundled revenue allocations: (a) product + installation bundles: verify SSP allocation between product (recognized at delivery/POS) and installation service (recognized at installation completion); (b) promotional bundles (W13): verify that the bundle discount is allocated proportionally across all items; (c) tool rental + maintenance: separate rental revenue (over time) from maintenance revenue (as incurred)",
+     "duration": "1 day/quarter",
+     "n": "4",
+     "r": "Controller"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Consignment Revenue Timing Verification**: Each quarter, Controller verifies consignment revenue recognition: (a) confirm that consignment goods remain vendor-owned until sold (W23); (b) verify that revenue is recognized only at point of customer sale (not at store receipt); (c) reconcile consignment inventory balance (vendor-owned) with consignment revenue recognized; (d) verify consignment settlement timing matches sell-through reports",
+     "duration": "1 day/quarter",
+     "n": "5",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Journal Entry Posting**: Controller posts quarterly PFRS 15 adjustment journal entries: (a) gift card breakage revenue recognition; (b) loyalty points deferred revenue adjustment; (c) bundle SSP allocation corrections; (d) subscription deferred revenue amortization; (e) any revenue timing corrections identified during review; all entries posted during month-end close (W9A) with supporting schedules",
+     "duration": "1 day/quarter",
+     "n": "6",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Annual Comprehensive Review**: At year-end (W9B): (a) review all PFRS 15 accounting policies for continued appropriateness; (b) recalculate breakage rates, SSP allocations, and deferred revenue balances using full-year data; (c) coordinate with External Auditor on PFRS 15 audit approach and sampling; (d) prepare PFRS 15 disclosure note for AFS (including disaggregated revenue by nature, timing, and transfer point); (e) assess any new revenue streams launched during the year (e.g., new marketplace channels, new service offerings) for PFRS 15 treatment",
+     "duration": "5–7 days/annual",
+     "n": "7",
+     "r": "Controller / External Auditor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W104",
+    "W13",
+    "W138",
+    "W139",
+    "W153",
+    "W165",
+    "W17",
+    "W180",
+    "W23",
+    "W27",
+    "W28",
+    "W282",
+    "W5B",
+    "W75",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "~30–50 advance payments/month (primarily for import vendors)",
+    "Owner": "AP Supervisor",
+    "Participants": "Buyer, Treasury Analyst, AP Clerk, Controller",
+    "Trigger": "Import vendor requires advance payment before shipment; or vendor agreement specifies prepayment terms",
+    "Volume": "~40 average/month; peaks during seasonal buy periods (+30%)"
+   },
+   "id": "W498",
+   "level": 2,
+   "name": "Vendor Advance Payment & Prepayment Management",
+   "parent": null,
+   "req_refs": [
+    "FIN-001",
+    "FIN-014",
+    "FIN-041"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System rule-based auto-approval of \"approved import PO\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates\" (replaces manual Step 2).",
+     "- System auto-route of \"routes advance payment request through approval workflow\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: vendor risk tiering (W491)"
+    ],
+    "Pain Points / Risks": [
+     "- Vendor ships partial quantity after receiving full advance — advance overpayment risk requires manual reconciliation",
+     "- Vendor defaults after receiving advance — no goods received and advance must be recovered through legal channels; mitigated by vendor risk tiering (W491)",
+     "- Exchange rate fluctuation between advance payment date and invoice date for import advances in USD — FX gain/loss must be posted (FIN-014)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within existing AP Clerk and Treasury Analyst FTEs. No incremental headcount.",
+     "- Monthly advance aging review adds ~1 hour to AP Supervisor's monthly workload.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Advance payment request linked to approved PO (W2, W2B)",
+     "- Tiered approval workflow with amount-based routing (FIN-041)",
+     "- Bank transfer execution via electronic banking module (W320)",
+     "- Vendor Advance asset account tracking separate from AP (FIN-001)",
+     "- Automatic advance application at goods receipt / invoice matching (W7)",
+     "- Advance aging dashboard with escalation alerts (FIN-041)",
+     "- Integration with LC management (W232) — advances are alternative to LC for trusted vendors"
+    ],
+    "Time Estimate": [
+     "~30 minutes per advance payment (request + approval + execution). At ~40/month = ~20 staff-hours/month. Absorbed by AP Clerk and Treasury Analyst within existing FTE."
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Supervisor",
+     "activity": "Buyer requests advance payment linked to approved import PO; specifies amount (percentage or fixed), vendor bank details, and expected shipment date",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Buyer"
+    },
+    {
+     "a": "—",
+     "activity": "System validates: PO is approved, vendor is active, advance amount within PO value, vendor bank details verified against vendor master",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "CFO (tiered)",
+     "activity": "System routes advance payment request through approval workflow: ≤PHP 500K → AP Supervisor; ≤PHP 2M → Controller; >PHP 2M → CFO",
+     "duration": "5 min review",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Supervisor or Treasury Analyst executes bank transfer via electronic banking (W320); system records advance payment with link to PO",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "System posts journal entry: Dr. Vendor Advance (asset) / Cr. Bank; advance tracked separately from regular AP balance",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "System monitors advance aging: advance outstanding >30 days past expected shipment date → alert to Buyer; >60 days → escalation to AP Supervisor",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "At goods receipt against the PO: system automatically applies advance payment against vendor invoice (partial or full settlement)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "If advance exceeds invoice: system creates vendor credit balance; AP Clerk decides on refund request or application to next PO",
+     "duration": "10 min",
+     "n": "8",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "Monthly: AP Supervisor reviews advance aging report; follows up on unapplied advances >60 days; escalates to Controller for potential write-off",
+     "duration": "1 hour/month",
+     "n": "9",
+     "r": "AP Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2",
+    "W232",
+    "W2B",
+    "W320",
+    "W491",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Quarterly per entity; annual monitoring",
+    "Owner": "Tax Accountant",
+    "Participants": "Controller, Treasury Analyst",
+    "Trigger": "Quarterly percentage tax filing deadline (BIR Form 2551Q, due within 25 days after end of quarter)",
+    "Volume": "Up to 5 entities × 4 quarters = 20 filings/year; most entities are VAT-registered so percentage tax applies only to specific revenue streams"
+   },
+   "id": "W499",
+   "level": 2,
+   "name": "BIR Percentage Tax Computation & Payment",
+   "parent": null,
+   "req_refs": [
+    "FIN-001",
+    "FIN-008",
+    "FIN-042"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews percentage tax computation\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates BIR Form 2551Q per entity with required fields\" (replaces manual Step 3).",
+     "- System auto-validate of \"validates against GL revenue accounts and supporting schedules\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: VAT registration creates retroactive compliance requirements"
+    ],
+    "Pain Points / Risks": [
+     "- Revenue misclassification between VAT and percentage tax — leads to underpayment penalties if not caught during review",
+     "- Entity threshold crossing mid-year — if a previously non-VAT entity exceeds PHP 3M threshold, mandatory VAT registration creates retroactive compliance requirements",
+     "- BIR eFPS downtime near filing deadline — manual filing with AAB as fallback"
+    ],
+    "Staffing Implication": [
+     "- Fully absorbed within existing Tax Accountant and Controller FTEs. No incremental headcount.",
+     "- Adds ~2 hours per quarter to Tax Accountant's workload.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Revenue stream tax classification in tax master (W293, FIN-042)",
+     "- Automated percentage tax computation per entity per quarter (FIN-042)",
+     "- BIR Form 2551Q generation with BIR-prescribed format (FIN-008)",
+     "- eFPS submission integration (W260)",
+     "- VAT threshold monitoring dashboard per entity (FIN-042)",
+     "- GL posting for percentage tax payment (FIN-001)"
+    ],
+    "Time Estimate": [
+     "~2 hours per quarter for all entities combined (computation + review + filing + payment). Annual total: ~8 staff-hours. Absorbed by Tax Accountant within existing FTE."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System computes quarterly gross receipts per entity; identifies revenue streams subject to percentage tax (3%) vs. VAT (12%) based on tax master configuration (W293)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Tax Accountant reviews percentage tax computation: validates revenue classification, confirms entity registration status (VAT vs. non-VAT), checks threshold monitoring",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "System generates BIR Form 2551Q per entity with required fields: gross receipts, exempt amounts, tax base, percentage tax due, prior quarter payments",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Tax Accountant reviews generated form; validates against GL revenue accounts and supporting schedules; identifies any misclassified transactions",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "Controller approves percentage tax return",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Controller"
+    },
+    {
+     "a": "Controller",
+     "activity": "Tax Accountant submits via BIR eFPS (W260); generates Payment Reference Number (PRN)",
+     "duration": "15 min",
+     "n": "6",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "Treasury Analyst processes payment via Authorized Agent Bank (AAB) or electronic payment",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "System posts payment: Dr. Percentage Tax Expense / Cr. Bank",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Annual: Tax Accountant monitors VAT registration threshold per entity (currently PHP 3M annual gross receipts); if entity approaches threshold, escalates to Controller for VAT registration evaluation",
+     "duration": "30 min/year",
+     "n": "9",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W260",
+    "W293"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "~80–120 damage incidents/month across all DC→Store and Store→Store transfers",
+    "Owner": "Logistics Supervisor (DC-originated) / Store Manager (store-originated)",
+    "Participants": "Receiving Clerk, Logistics Supervisor, Carrier Account Manager, Insurance Coordinator, AP Clerk",
+    "Trigger": "Receiving location (store or DC) discovers damaged goods during transfer order receipt",
+    "Volume": "~100 average/month; ~1,200/year; higher during rainy season (+20%)"
+   },
+   "id": "W500",
+   "level": 2,
+   "name": "Transfer Order In-Transit Damage Claim & Resolution",
+   "parent": null,
+   "req_refs": [
+    "FIN-004",
+    "FIN-023",
+    "INV-001",
+    "INV-021"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records damage in system against transfer order line\" (replaces manual Step 1)."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: photographic evidence at receiving; operational: carrier liability clauses in 3PL contracts (W62B)"
+    ],
+    "Pain Points / Risks": [
+     "- Damage not discovered at receiving — if store accepts goods without inspection and discovers damage later, carrier claim is difficult to prove",
+     "- Carrier disputes liability — delays resolution and inventory remains in damaged status; mitigated by photographic evidence at receiving",
+     "- High-value damage on uninsured shipments — company absorbs full loss; mitigated by carrier liability clauses in 3PL contracts (W62B)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within existing Receiving Clerk and Logistics Supervisor FTEs across 4 DCs and 200 stores.",
+     "- Monthly damage review adds ~1 hour to Logistics Supervisor's monthly workload.",
+     "- Insurance Coordinator involvement for ~10% of incidents (insured shipments).",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Damage capture during transfer order goods receipt with photo attachment (INV-021)",
+     "- Damage severity classification with automated inventory status update (INV-021, INV-001)",
+     "- Carrier damage claim generation with evidence package (INV-021)",
+     "- Insurance claim integration (W59, FIN-023)",
+     "- Inventory adjustment linked to damage claim reference (W92, INV-021)",
+     "- Carrier chargeback / debit memo processing (W7, FIN-004)",
+     "- Damage trend analytics dashboard by carrier, route, category (INV-021)"
+    ],
+    "Time Estimate": [
+     "~30 minutes per damage incident (documentation + classification + claim initiation). At ~100/month = ~50 staff-hours/month. Absorbed by Receiving Clerks and Logistics Supervisors within existing FTE."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Receiving Clerk identifies damaged items during transfer order goods receipt; documents damage with photos (minimum 3: overview, close-up of damage, shipping label); records damage in system against transfer order line",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System captures: damage quantity, damage severity (minor — saleable at discount; major — unsaleable but salvageable; total loss), transfer order number, originating location, carrier, driver name",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System identifies responsible party based on carrier assignment on transfer order: owned fleet → Logistics Supervisor investigates; 3PL carrier → carrier claim process initiated; inter-DC → DC operations investigates",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Supervisor",
+     "activity": "Logistics Supervisor reviews damage report and photos; confirms damage classification; determines if insurance claim applies (shipments above PHP 50K declared value or insured cargo)",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Logistics Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "If carrier-responsible: system generates carrier damage claim notification with evidence package (photos, transfer order, delivery receipt); sends to carrier with 10-day response SLA",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Logistics Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "If insurance-applicable: Insurance Coordinator initiates insurance claim (W59) with supporting documentation",
+     "duration": "30 min",
+     "n": "6",
+     "r": "Insurance Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "System adjusts inventory at receiving location: minor damage → inventory status changed to \"damaged - pending disposition\"; major/total loss → inventory written off with transfer order reference",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk processes carrier chargeback or credit: if carrier accepts liability → debit memo to carrier (reduces carrier AP); if carrier disputes → escalation to Logistics Supervisor for resolution",
+     "duration": "20 min",
+     "n": "8",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly: Logistics Supervisor reviews damage trend dashboard — damage rate by carrier, route, product category, and severity; identifies chronic carriers or problem routes for corrective action",
+     "duration": "1 hour/month",
+     "n": "9",
+     "r": "Logistics Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W59",
+    "W62B",
+    "W7",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Manager (Consolidation)",
+    "Participants": "FP&A Analyst, Finance Manager, Entity Controllers, Treasury (W30)",
+    "Trigger": "Monthly IC billing cycle (1st business day of month)",
+    "Volume": "5 legal entities × management fee allocations"
+   },
+   "id": "W752",
+   "level": 2,
+   "name": "Intercompany Management Fee Allocation & Monthly Billing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles monthly shared services cost pool\" (replaces manual Step 1).",
+     "- System auto-log of \"Allocation methodology application\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculated amount, and month-over-month variance\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot Corp. operates 5 legal entities (Holdings, Depot Inc., Logistics Inc., Digital Commerce Inc., Property Management Inc.). Holdings provides shared corporate services (executive management, finance, HR, IT, legal) to the operating entities. These shared services must be allocated and billed as management fees at arm's length per transfer pricing requirements (W235) and PAS 24 related party disclosure (W486). This workflow manages the monthly allocation, billing, and settlement of management fees."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: Finance Manager (Consolidation) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Transfer pricing risk — if management fee allocation methodology is not defensible, BIR may challenge the deductions claimed by operating entities",
+     "- Allocation disputes — operating entity controllers may contest their allocation share, especially if their entity's profitability is under pressure",
+     "- Cost pool definition changes — new shared services (e.g., ERP implementation team) need to be added to the cost pool and allocation methodology updated",
+     "- Timing mismatch — management fees are billed monthly but actual HQ costs are finalized during month-end close (W9A), creating a 1–2 day lag"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing FP&A and consolidation team. Monthly time investment: ~7 hours by FP&A Analyst and Finance Manager. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost pool compilation module with GL account grouping and classification",
+     "- Allocation engine with configurable methodologies (headcount, revenue, volume, square footage)",
+     "- IC invoice auto-generation linked to W14 IC transaction processing",
+     "- W235 transfer pricing documentation — monthly allocation data feed",
+     "- W486 related party disclosure — management fee disclosure data",
+     "- W234 IC profit elimination — management fee elimination on consolidation",
+     "- W26 budget — management fee budget vs. actual tracking"
+    ],
+    "Time Estimate": [
+     "Monthly: Cost pool compilation (4 hours) + review (2 hours) + IC recording (1 hour) = 7 hours. Quarterly: +4 hours benchmarking. Annual: +8 hours methodology review."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "**Cost pool compilation**: FP&A Analyst compiles monthly shared services cost pool: HQ salaries, corporate overhead, shared IT systems, shared services (finance, HR, legal), and corporate insurance",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "FP&A Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Allocation methodology application**: System applies approved allocation methodology: (a) headcount-based for HR/admin costs, (b) revenue-based for executive/corporate costs, (c) transaction-volume-based for IT/finance shared services, (d) square-footage-based for property-related shared costs",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Entity allocation calculation**: System generates entity-level management fee allocation schedule with supporting calculations; each entity's allocation shows: cost pool, allocation basis, calculated amount, and month-over-month variance",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Review and adjustment**: Finance Manager reviews allocation schedule; adjusts for one-time items (e.g., corporate restructuring, ERP implementation costs); documents adjustments with transfer pricing justification (W235)",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**IC invoice generation**: System auto-generates intercompany management fee invoices from Holdings to each operating entity; invoices include allocation methodology, calculation detail, and supporting documentation",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**IC recording and settlement**: Each entity records IC payable (Holdings records IC receivable); settled via IC net settlement process (W14) along with other IC transactions",
+     "duration": "1 hour",
+     "n": "6",
+     "r": "Entity Controllers"
+    },
+    {
+     "a": "FP&A Analyst",
+     "activity": "**Transfer pricing documentation**: Monthly allocation added to annual transfer pricing documentation file (W235); supports PAS 24 related party disclosure (W486)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly benchmarking review**: Quarterly: Finance reviews management fee rates against external benchmarks; adjusts if rates fall outside arm's-length range per transfer pricing guidelines",
+     "duration": "4 hours/quarter",
+     "n": "8",
+     "r": "Finance Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W234",
+    "W235",
+    "W26",
+    "W30",
+    "W486",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Monthly for top vendors; quarterly for standard vendors",
+    "Owner": "Procurement Analyst",
+    "Participants": "Category Manager, Procurement Analyst, AP Accountant, Vendor",
+    "Trigger": "Rebate qualifying period end (monthly/quarterly/annual per vendor agreement)",
+    "Volume": "~20–30 rebate claims per month representing ~PHP 30-50M in rebate accruals"
+   },
+   "id": "W767",
+   "level": 2,
+   "name": "Vendor Rebate Claim Filing & Settlement Documentation Processing",
+   "parent": null,
+   "req_refs": [
+    "FIN-026",
+    "MER-009"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates qualifying purchases per vendor agreement\" (replaces manual Step 1).",
+     "- System auto-document of \"Documentation package compilation\" (replaces manual Step 2).",
+     "- System auto-submit of \"submits claim through vendor portal\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's vendor agreements (W62) include rebate provisions — volume-based incentives, promotional support, and market development funds that represent ~PHP 300-500M annually. While W27 covers rebate accrual and settlement at a high level and MER-009 covers vendor trade fund management, this workflow addresses the detailed operational process of filing rebate claims with vendors, compiling supporting documentation, resolving disputes, and processing settlement — the critical execution step that converts accrued rebates into actual cash recovery."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: Procurement Analyst review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- Documentation burden — vendors require extensive supporting documentation; incomplete packages delay settlement; procurement must maintain meticulous records",
+     "- Vendor dispute frequency — vendors frequently dispute claim amounts citing contract interpretation differences; disputes can take months to resolve",
+     "- Accrual vs. settlement variance — significant variance between accrued and settled amounts distorts gross margin reporting; must be analyzed and explained per FIN-026",
+     "- Settlement timing — vendors may delay settlement beyond contract terms; aging tracking and escalation essential",
+     "- Contract complexity — rebate structures vary significantly by vendor (tiered, flat rate, growth-based, promotional); each requires different calculation logic and documentation"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing Procurement Analyst and Category Manager roles. Procurement Analyst: ~15–20 hours/month on rebate processing. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor rebate module — accrual calculation, claim tracking, settlement processing",
+     "- W27 vendor rebate accrual & settlement — rebate agreement and accrual management",
+     "- W705 vendor self-service portal — claim submission and tracking",
+     "- W7 AP processing — settlement credit note application",
+     "- W556 AP payment run — settlement payment processing",
+     "- W669 vendor contract compliance — contract term verification",
+     "- W161 vendor price protection — price protection rebate claim integration",
+     "- W513 vendor-funded promotional activity — promotional rebate sell-through data",
+     "- W680 supply chain cost analysis — rebate income impact on cost metrics"
+    ],
+    "Time Estimate": [
+     "Monthly: Eligibility calculation (automated) + documentation (2-4 hours/claim × 20-30 claims = 40-120 hours distributed across Category Managers) + submission (1 hour/claim) + settlement (1 hour/claim) = significant but distributed. Quarterly: +4 hours analytics. Focused Procurement Analyst time: ~15–20 hours/month."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Procurement Analyst",
+     "activity": "**Rebate eligibility calculation**: System calculates qualifying purchases per vendor agreement: (a) volume-based rebates: total purchases vs. tier thresholds, (b) growth rebates: current period vs. same period prior year, (c) promotional rebates: qualifying SKU sell-through per W513, (d) new product launch support per W761",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Documentation package compilation**: Procurement Analyst compiles claim documentation: (a) purchase history report (PO numbers, dates, quantities, values), (b) goods receipt confirmations, (c) qualifying sell-through data for promotional rebates, (d) price list verification for price protection rebates per W161",
+     "duration": "2-4 hours/claim",
+     "n": "2",
+     "r": "Procurement Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Claim submission**: Procurement Analyst submits claim through vendor portal (W705) or direct communication: (a) claim form per vendor requirements, (b) supporting documentation, (c) claim amount with calculation detail, (d) settlement preference (credit note against AP, wire transfer, or deduction from next payment)",
+     "duration": "1 hour/claim",
+     "n": "3",
+     "r": "Procurement Analyst"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "**Vendor dispute resolution**: If vendor disputes claim: (a) Category Manager engages vendor for resolution meeting, (b) review disputed line items against contract terms per W669, (c) agree on revised claim amount or provide additional documentation, (d) document resolution for audit trail per W351",
+     "duration": "2-8 hours",
+     "n": "4",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Settlement processing**: Upon vendor approval: (a) AP Accountant records settlement per agreed method: credit note reduces AP balance, wire transfer recorded per W89, or payment deduction applied per W556; (b) system reconciles against original accrual per W27; (c) variance between accrual and settlement posted to P&L",
+     "duration": "1 hour/claim",
+     "n": "5",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "Procurement Analyst",
+     "activity": "**Rebate tracking dashboard update**: System updates rebate tracking: (a) total accruals vs. settlements by vendor, (b) outstanding claims aging, (c) disputed claims, (d) settlement rate (target: 95% of accruals settled within 60 days)",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Quarterly rebate analytics**: Procurement Analyst reports: (a) total rebate income by category and vendor, (b) settlement rate and average time-to-settlement, (c) disputed claim analysis, (d) rebate income as % of COGS, (e) accrual accuracy (accrued vs. settled variance)",
+     "duration": "4 hours/quarter",
+     "n": "7",
+     "r": "Procurement Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W161",
+    "W27",
+    "W351",
+    "W513",
+    "W556",
+    "W62",
+    "W669",
+    "W680",
+    "W7",
+    "W705",
+    "W761",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Quarterly review; annual or ad-hoc claim filing",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Finance Manager, CFO, External Tax Counsel, BIR",
+    "Trigger": "Quarterly VAT review identifies excess input VAT over output VAT; or annual VAT reconciliation per W590",
+    "Volume": "1-2 VAT refund claims per year per entity (primarily entities with significant imports but low domestic revenue — e.g., Logistics Inc. during early years)"
+   },
+   "id": "W768",
+   "level": 2,
+   "name": "BIR VAT Refund Claim Processing & Input VAT Recovery",
+   "parent": null,
+   "req_refs": [
+    "FIN-006",
+    "REG-001"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews quarterly VAT reconciliation per W590\" (replaces manual Step 1).",
+     "- System auto-document of \"Claim feasibility assessment\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant compiles BIR-required documentation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Under Philippine tax law, when a taxpayer's input VAT (VAT on purchases) exceeds output VAT (VAT on sales) in a given quarter, the excess may be carried forward or claimed as a tax credit/refund per BIR Revenue Regulations. For BuildRight's import-heavy operations (40% of COGS from imports per W2B, with 12% VAT on customs value including duty and freight), certain entities — particularly BuildRight Logistics Inc. during years when warehouse fee revenue is lower than import-related input VAT — may generate excess input VAT. This workflow manages the BIR VAT refund claim process, which is known for lengthy processing times (6-24 months) and strict documentation requirements."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: Tax Accountant review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- BIR processing time — Philippine BIR VAT refund claims historically take 6-24 months; cash is tied up during processing, impacting working capital per W30",
+     "- Documentation stringency — BIR requires original documents; any missing invoice or customs declaration can result in partial or full denial",
+     "- BIR audit risk — filing a VAT refund claim increases probability of BIR tax audit per W77; entity must ensure all tax positions are defensible",
+     "- Carry-forward vs. refund decision — carrying forward excess input VAT is administratively simpler but delays cash recovery; refund claim provides cash but requires significant documentation effort",
+     "- Entity-level complexity — each of 5 entities has separate VAT registration and may have different refund positions; cross-entity analysis needed to optimize group-level VAT strategy"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing Tax Accountant role. Per-claim time: 30-60 hours plus ongoing follow-up. External tax counsel engaged on retainer. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax module — VAT input/output tracking per FIN-006, quarterly reconciliation per W590",
+     "- W260 BIR eFPS filing — VAT return filing and input VAT reporting",
+     "- W473 BIR EIS e-invoicing — sales invoice VAT documentation",
+     "- REG-001 BIR branch registration — entity RDO tracking",
+     "- W351 external audit coordination — VAT refund claim audit support",
+     "- AP module — input VAT from vendor invoices per W7",
+     "- Import module — customs VAT per W144/W239",
+     "- Treasury module — refund receipt and bank reconciliation per W89"
+    ],
+    "Time Estimate": [
+     "Quarterly review: 4 hours. Per claim: Feasibility (2 hours) + documentation (20-40 hours) + counsel review (8-16 hours) + filing (4 hours) + monthly follow-up (2-4 hours/month × 6-18 months) = significant. Annual tracking: 4 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "**Excess input VAT identification**: Tax Accountant reviews quarterly VAT reconciliation per W590: (a) input VAT from purchases (domestic and import per FIN-006), (b) output VAT from sales, (c) net VAT position; if excess input VAT > PHP 1M, evaluates claim feasibility",
+     "duration": "4 hours/quarter",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Claim feasibility assessment**: Tax Accountant assesses: (a) expected BIR processing time (historical 6-24 months), (b) probability of approval (BIR audit history, documentation strength), (c) alternative: carry forward to offset future output VAT vs. claim cash refund, (d) cost of external tax counsel for claim preparation (~PHP 200-500K per claim)",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "External Tax Counsel",
+     "activity": "**Documentation package preparation**: If proceeding with claim: Tax Accountant compiles BIR-required documentation: (a) BIR Form 2550M/Q showing excess input VAT, (b) schedule of input VAT claimed with supporting invoices/customs declarations, (c) proof of payment (bank receipts, customs payment receipts), (d) certificate of registration per REG-001, (e) sworn statement declaring no pending tax liabilities",
+     "duration": "20-40 hours",
+     "n": "3",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**External tax counsel review**: External tax counsel reviews documentation package for completeness and legal sufficiency; advises on claim strategy; prepares cover letter and legal memorandum supporting the refund claim",
+     "duration": "8-16 hours",
+     "n": "4",
+     "r": "External Tax Counsel"
+    },
+    {
+     "a": "—",
+     "activity": "**BIR claim submission**: Tax Accountant files claim with BIR Revenue District Office (RDO) where entity is registered per REG-001: (a) submits complete documentation package, (b) obtains BIR acknowledgment receipt with tracking number, (c) enters claim in BIR tracking log",
+     "duration": "4 hours",
+     "n": "5",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**BIR follow-up and audit coordination**: During BIR processing: (a) monthly follow-up with BIR RDO on claim status, (b) prepare for BIR audit of claimed input VAT — provide original invoices, customs declarations, and payment proofs on demand, (c) coordinate with External Tax Counsel for BIR queries",
+     "duration": "2-4 hours/month during processing",
+     "n": "6",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Claim resolution**: Upon BIR decision: (a) if approved: Tax Accountant records refund (DR Cash / CR Input VAT) or tax credit memo; (b) if partially approved: analyze disallowed amounts, adjust, and record net refund; (c) if denied: External Tax Counsel evaluates appeal via Court of Tax Appeals within 30 days",
+     "duration": "4 hours",
+     "n": "7",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Quarterly VAT refund tracking**: Tax Accountant maintains VAT refund tracking dashboard: (a) outstanding claims by entity and amount, (b) days since filing, (c) BIR audit status, (d) historical approval rate, (e) total input VAT carried forward vs. claimed",
+     "duration": "1 hour/quarter",
+     "n": "8",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W144",
+    "W239",
+    "W260",
+    "W2B",
+    "W30",
+    "W351",
+    "W473",
+    "W590",
+    "W7",
+    "W77",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Weekly; ~30–50 debit memos per month",
+    "Owner": "AP Accountant",
+    "Participants": "AP Accountant, Procurement Analyst, Finance Manager, Vendor",
+    "Trigger": "Vendor quality issue, pricing discrepancy, or contract compliance violation identified",
+    "Volume": "~30–50 debit memos per month (~PHP 5-15M in deductions)"
+   },
+   "id": "W770",
+   "level": 2,
+   "name": "AP Vendor Debit Memo Processing & Account Deduction Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant or Procurement Analyst identifies debit memo trigger\" (replaces manual Step 1).",
+     "- System auto-log of \"log with vendor\" (replaces manual Step 2).",
+     "- System auto-document of \"Debit memo creation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "When BuildRight Depot identifies vendor-caused issues — quality defects requiring CAPA per W110, pricing overcharges exceeding contract rates per W669, delivery short-ships, or damage claims per W500 — the company may issue a debit memo to reduce the vendor's AP balance instead of waiting for the vendor to issue a credit note. This is faster for cash flow and ensures deductions are not forgotten. However, debit memos create reconciliation complexity and can strain vendor relationships if not managed properly. This workflow manages the debit memo lifecycle from issuance through vendor agreement and settlement."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: must enforce one-to-one matching; operational: is preventive"
+    ],
+    "Pain Points / Risks": [
+     "- Vendor relationship strain — excessive or poorly documented debit memos damage vendor relationships; vendors may refuse to supply or reduce service levels",
+     "- Documentation quality — insufficient documentation weakens BuildRight's position in vendor disputes and may result in debit memo reversal",
+     "- Unresolved debit memos — vendor disputes that remain unresolved create aging items on vendor reconciliation per W100, complicating month-end close per W9A",
+     "- Double-deduction risk — if AP Accountant issues debit memo AND vendor issues credit note for same issue, double-deduction occurs; system must enforce one-to-one matching",
+     "- Contract interpretation — pricing disputes often arise from ambiguous contract terms; clear contract language per W688 CLM system is preventive"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing AP Accountant and Procurement Analyst roles. Weekly time: ~6–10 hours. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AP module — debit memo creation, application, and settlement",
+     "- W7 AP invoice processing — invoice reference and 3-way match data",
+     "- W244 vendor invoice dispute — dispute management workflow",
+     "- W669 vendor contract compliance — contract pricing verification",
+     "- W110 supplier quality CAPA — quality issue chargeback trigger",
+     "- W500 transfer order damage claim — damage documentation integration",
+     "- W705 vendor self-service portal — vendor notification and response",
+     "- W556 AP payment run — debit memo deduction from payment",
+     "- W100 vendor statement reconciliation — debit memo reconciliation on vendor statement"
+    ],
+    "Time Estimate": [
+     "Weekly: identification and creation (5-10 min/case × 10-12/week = 1-2 hours) + documentation (15-30 min/case = 2.5-6 hours) + vendor management (varies) = ~6–10 hours/week. Monthly analytics: 2 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Debit memo trigger identification**: AP Accountant or Procurement Analyst identifies debit memo trigger: (a) quality hold — vendor defect per W110 requiring chargeback, (b) pricing discrepancy — vendor invoice exceeds contract price per W669, (c) short-shipment — goods received quantity < invoiced quantity per W7, (d) transit damage — carrier damage claim with vendor responsibility per W500, (e) promotional rebate shortfall — vendor did not fund agreed promotional support per W513",
+     "duration": "5-10 min/case",
+     "n": "1",
+     "r": "AP Accountant / Procurement"
+    },
+    {
+     "a": "—",
+     "activity": "**Documentation and evidence compilation**: AP Accountant compiles supporting documentation: (a) original invoice and PO reference, (b) goods receipt discrepancy report, (c) quality inspection report per W681, (d) photo evidence of damage, (e) contract pricing schedule per W669, (f) communication log with vendor",
+     "duration": "15-30 min/case",
+     "n": "2",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Debit memo creation**: AP Accountant creates debit memo in AP module: (a) references original invoice, (b) specifies deduction amount with calculation detail, (c) links supporting documentation, (d) selects deduction type (quality, pricing, shortage, damage, promotional), (e) applies against vendor AP balance",
+     "duration": "10 min/case",
+     "n": "3",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Vendor notification**: System notifies vendor of debit memo via vendor portal (W705): (a) debit memo details and supporting documentation, (b) vendor response deadline (14 business days), (c) dispute mechanism if vendor disagrees",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Vendor response management**: (a) If vendor accepts: debit memo finalized; AP balance reduced; deduction reflected in next payment run per W556. (b) If vendor disputes: Procurement Analyst engages vendor per W244 invoice dispute resolution; negotiate resolution; adjust debit memo if warranted; document agreed resolution. (c) If no response within 14 days: debit memo auto-finalized per terms",
+     "duration": "1-4 hours/dispute",
+     "n": "5",
+     "r": "Procurement Analyst / AP Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Settlement and reconciliation**: Debit memo settled through: (a) deduction from next payment to vendor per W556, (b) offset against vendor credit memo if vendor issues one, (c) separate wire transfer if vendor disputes and partial resolution reached",
+     "duration": "5 min/case",
+     "n": "6",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Monthly debit memo analytics**: AP Accountant reports: (a) debit memo volume by type, vendor, and category, (b) vendor acceptance vs. dispute rate, (c) average time to resolution, (d) total deductions as % of total AP, (e) top 10 vendors by debit memo frequency (indicating systemic issues requiring W110 CAPA)",
+     "duration": "2 hours/month",
+     "n": "7",
+     "r": "AP Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W100",
+    "W110",
+    "W244",
+    "W500",
+    "W513",
+    "W556",
+    "W669",
+    "W681",
+    "W688",
+    "W7",
+    "W705",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~15–25 potential duplicates flagged per month",
+    "Owner": "AP Accountant",
+    "Participants": "AP Accountant, Finance Manager, Vendor",
+    "Trigger": "System auto-detects potential duplicate vendor invoice during AP invoice entry per W7",
+    "Volume": "~15–25 potential duplicates/month out of ~9,500 total invoices; ~60% are true duplicates"
+   },
+   "id": "W813",
+   "level": 2,
+   "name": "AP Vendor Invoice Duplicate Detection & Resolution",
+   "parent": null,
+   "req_refs": [
+    "FIN-020"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Automated duplicate detection during invoice entry\" (replaces manual Step 1).",
+     "- System auto-validate of \"AP Accountant review of flagged potential duplicate\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant confirms the second invoice is a true duplicate\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "FIN-020 requires BuildRight Depot to implement automatic duplicate vendor invoice detection as a core financial control. With ~8,500–9,500 vendor invoices processed monthly across 5 legal entities and ~800–1,000 active vendors (profile §6.5), duplicate invoice submissions are a recurring operational reality. Duplicates arise from multiple root causes: (a) vendor billing system errors where the same invoice is transmitted twice, (b) re-submission of previously paid invoices by vendor accounts receivable clerks following up on payment status, (c) PO line-level duplicates where the same PO lines appear on multiple vendor invoices (partial shipments billed incrementally vs. consolidated billing), and (d) inter-entity duplicates where the same vendor inadvertently invoices multiple BuildRight entities for the same goods or services. Manual duplicate detection is unreliable at this volume — a single AP Accountant processing 50-80 invoices daily cannot consistently identify duplicates across the full invoice population. Undetected duplicates result in overpayment, require costly recovery efforts per W244 dispute resolution, and represent a material internal control weakness. This workflow manages the systematic detection, review, resolution, and analytics of vendor invoice duplicates."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: duplicate-detection thresholds (incl. fuzzy matching) tuned quarterly against false-positive rates, per step 8e"
+    ],
+    "Pain Points / Risks": [
+     "- False positives blocking legitimate invoices — system detection rules may flag legitimate invoices as duplicates, delaying vendor payment and potentially triggering late payment penalties or supply disruption; override process must be efficient to avoid AP bottleneck",
+     "- Vendor workarounds — sophisticated vendors may slightly modify invoice numbers (append letter, change date) or split amounts across invoices to bypass duplicate detection; system must include fuzzy matching and vendor behavioral analysis",
+     "- Multi-entity duplicates — same vendor may invoice BuildRight Depot Inc. and BuildRight Logistics Inc. for the same shared service (e.g., facility maintenance, security); cross-entity duplicate detection requires consolidated vendor invoice register spanning all 5 legal entities",
+     "- Partial duplicates — 2 of 10 invoice lines may be duplicated while 8 are new; line-level duplicate detection requires granular matching beyond header-level checks and adds processing complexity",
+     "- Duplicate already paid — if both invoices pass through before detection triggers, the company has made a duplicate payment; recovery depends on vendor cooperation and can take 30-90 days per W244",
+     "- Detection rule tuning — overly aggressive matching creates excessive false positives and AP staff fatigue; overly lenient matching misses duplicates; requires periodic calibration based on analytics"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing AP Accountant role. Monthly time commitment: ~4–7 hours. No incremental headcount. Finance Manager provides quarterly review oversight (2 hours/quarter) within existing capacity.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W7 AP invoice processing — invoice entry and three-way match where duplicates are detected",
+     "- FIN-020 duplicate detection requirement — control framework mandating automated detection",
+     "- W244 vendor invoice dispute — recovery workflow for already-paid duplicates",
+     "- W100 vendor statement reconciliation — duplicate reconciliation items on vendor statements",
+     "- W705 vendor self-service portal — automated vendor notification of rejected duplicates",
+     "- W556 AP payment run — payment status verification and duplicate payment recovery offset",
+     "- W706 supplier performance scorecard — vendor duplicate billing performance metric",
+     "- W2 goods receipting — GR verification for legitimate partial shipments vs. duplicates",
+     "- W9A financial close — duplicate detection as period-end financial control"
+    ],
+    "Time Estimate": [
+     "Per review: 10-15 min × 20 potential duplicates/month = 3-5 hours/month. Recovery cases: 30-60 min × 4-6/year = 2-6 hours/year. Monthly analytics: 1 hour. Quarterly review: 2 hours/quarter. Total: ~4–7 hours/month + 2 hours/quarter."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Automated duplicate detection during invoice entry**: During AP invoice entry per W7, system automatically checks new invoice against existing invoices in the AP module using multi-criteria matching: (a) exact match: same vendor ID + same invoice number + same invoice amount — automatic hard block, (b) high-probability match: same vendor ID + same invoice amount + invoice date within 7 days — flagged for review, (c) PO reference match: same PO number + same PO line number already matched to another invoice — flagged for review, (d) fuzzy match: same vendor ID + similar amount (within 5%) + same invoice date — flagged for review. System prevents posting of hard-blocked invoices and queues flagged invoices for AP Accountant review",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**AP Accountant review of flagged potential duplicate**: AP Accountant reviews each flagged invoice pair or group: (a) pull original invoice: verify vendor name, invoice number, invoice date, line items, PO reference, and goods receipt status per W7 three-way match, (b) check payment status: is original invoice already paid per W556 payment run? If yes, risk of duplicate payment is high, (c) verify goods receipt: were goods received twice per W2 goods receipting? If two separate GRs exist for same PO, invoices may be legitimate partial shipments, (d) compare line-level detail: are identical SKUs, quantities, and unit prices repeated? Or are line items different despite similar totals?",
+     "duration": "10-15 min/review",
+     "n": "2",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Confirmed duplicate — reject second invoice**: If AP Accountant confirms the second invoice is a true duplicate: (a) reject invoice with duplicate reason code in AP module: system links rejected invoice to original paid/posted invoice, (b) add notation: \"Duplicate of invoice [number] dated [date], paid on [date] via payment run [reference]\", (c) system updates vendor duplicate counter for analytics, (d) no vendor communication required for unpaid duplicate rejection",
+     "duration": "5 min/rejection",
+     "n": "3",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Not a duplicate — approve with override**: If AP Accountant determines the flagged pair is not a true duplicate: (a) document reason for override: (i) different PO references — vendor issued separate invoices for separate POs that happen to have similar amounts, (ii) partial shipment — legitimate second invoice for remaining PO quantity, (iii) credit note re-invoice — vendor cancelled original invoice per mutual agreement and re-issued with corrected amounts, (iv) coincidental amount match — different goods/services that happen to total similar amount, (b) approve invoice with override notation in system, (c) override creates audit trail entry flagged for Finance Manager periodic review",
+     "duration": "5 min/override",
+     "n": "4",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Duplicate already paid — initiate recovery**: If duplicate invoice was already paid before detection (e.g., both invoices processed in same batch, or detection triggered retroactively): (a) AP Accountant confirms duplicate payment: two payments to same vendor for same invoice reference, (b) initiate recovery per W244 vendor invoice dispute: contact vendor accounts receivable with evidence of duplicate payment, (c) request either: (i) vendor refund via wire transfer, (ii) vendor credit note applied against next payment per W556, (iii) offset against other open vendor invoices, (d) track recovery status in AP module until resolved",
+     "duration": "30-60 min/recovery case",
+     "n": "5",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**Vendor notification of duplicate rejection**: For rejected duplicates where vendor may re-submit: (a) system generates automated vendor notification via W705 vendor self-service portal: \"Invoice [number] rejected — duplicate of invoice [original number] processed on [date]. Please do not resubmit.\", (b) for vendors not using portal: AP Accountant sends email notification with duplicate reference, (c) for repeat offenders (>3 duplicates in 6 months): Procurement Analyst addresses with vendor per W706 supplier performance scorecard",
+     "duration": "Automated + 5 min/email",
+     "n": "6",
+     "r": "System / AP Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Monthly duplicate analytics**: AP Accountant prepares monthly duplicate detection analytics: (a) total potential duplicates flagged vs. confirmed duplicates — detection precision rate, (b) duplicate rate by vendor: top 10 vendors by duplicate frequency, (c) root cause analysis: vendor billing error, re-submission of paid invoice, PO-level duplicate, inter-entity duplicate, (d) recovery status: total duplicate overpayments identified, amount recovered, amount outstanding, (e) override analysis: number of overrides and reasons — are any patterns emerging that suggest detection rules need tuning?",
+     "duration": "1 hour/month",
+     "n": "7",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Quarterly vendor duplicate rate review**: Finance Manager and AP Accountant conduct quarterly review with top offenders: (a) meet with Procurement to discuss vendors with persistent duplicate billing (>5 duplicates per quarter), (b) Procurement engages vendor accounts receivable contact to investigate root cause on vendor side — often indicates vendor ERP or billing system issue, (c) for systemic vendor issues: request vendor implement duplicate invoice controls on their side, (d) update vendor performance scorecard per W706 with duplicate billing metric, (e) adjust system detection rules if false positive rate exceeds 40% — tune matching thresholds",
+     "duration": "2 hours/quarter",
+     "n": "8",
+     "r": "AP Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W100",
+    "W2",
+    "W244",
+    "W556",
+    "W7",
+    "W705",
+    "W706",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "~5,000 store replenishment orders/month + ~30–40 inter-DC transfers/month + ~600 DSD receipts/month = ~5,630–5,640 IC inventory movements/month",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "DC Operations (BuildRight Logistics), Supply Planning, Logistics Finance Analyst, Intercompany Accountant, AP/AR Team",
+    "Trigger": "Goods movement between BuildRight Depot, Inc. (inventory owner) and BuildRight Logistics, Inc. (DC operator); inter-DC transfer; or store replenishment order dispatch from DC",
+    "Volume": "~PHP 3.5–4.0B/month in inventory value moving through IC supply chain"
+   },
+   "id": "W919",
+   "level": 2,
+   "name": "Intercompany Inventory Movement Accounting & Goods-in-Transit Reconciliation",
+   "parent": null,
+   "req_refs": [
+    "IC-001",
+    "IC-005",
+    "INV-001",
+    "INV-003",
+    "WMS-008"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"DC Outbound Dispatch & Goods-in-Transit Creation\" (replaces manual Step 1).",
+     "- System auto-record of \"record and posts\" (replaces manual Step 2).",
+     "- System auto-document of \"Inter-DC Transfer Accounting\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's corporate structure creates a unique inventory accounting challenge: BuildRight Depot, Inc. owns all merchandise inventory throughout the supply chain (at DCs and in stores), but the DCs are operated by BuildRight Logistics, Inc. under a service fee arrangement. This means every inventory movement — DC receiving, DC putaway, DC picking, DC-to-store shipment, inter-DC transfer — involves goods owned by one entity physically handled by another. While the intercompany service fee billing is handled by W435 (IC SLA fee billing) and W752 (IC management fee allocation), the inventory movement itself requires precise accounting treatment: (a) goods-in-transit accounting — when inventory leaves DC but has not yet been received at store, it must be tracked as \"in-transit\" inventory (still owned by Depot Inc., in the custody of Logistics Inc.); (b) IC custody transfer documentation — every movement must be documented for transfer pricing compliance per W235; (c) damage/loss accountability — goods damaged or lost while in Logistics Inc. custody must be charged to Logistics Inc. per W500; (d) inventory valuation reconciliation — Depot Inc.'s inventory subledger must reconcile with Logistics Inc.'s warehouse management system at month-end. This workflow ensures accurate intercompany inventory accounting across 4 DCs, 200 stores, and ~5,000+ monthly movements, supporting consolidation per W765 and external audit per W351."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: 7-day clearing SLA with daily aging report and Store Manager escalation for GIT > 14 days; operational: automated reconciliation system that matches WMS quantities to ERP balances daily, flagging exceptions for manual review; operational: that matches WMS quantities to ERP balances daily, flagging exceptions for manual review"
+    ],
+    "Pain Points / Risks": [
+     "- **GIT accumulation**: uncleared GIT records accumulate when stores delay GR processing; mitigated by 7-day clearing SLA with daily aging report and Store Manager escalation for GIT > 14 days",
+     "- **Reconciliation complexity**: reconciling Depot Inc. subledger against Logistics Inc. WMS across 205 locations is time-intensive; mitigated by automated reconciliation system that matches WMS quantities to ERP balances daily, flagging exceptions for manual review",
+     "- **Damage accountability disputes**: Logistics Inc. may dispute damage claims (arguing damage occurred after store receipt); mitigated by photographic evidence requirement at DC dispatch and store receiving, and independent LP investigation per W843",
+     "- **Month-end timing pressure**: IC inventory reconciliation is on the critical path for 5-day close per W9A; mitigated by daily reconciliation throughout the month (reducing month-end workload to exception resolution only) and dedicated Logistics Finance Analyst role",
+     "- **Audit complexity**: external auditors must understand the Depot/Logistics inventory ownership structure; mitigated by clear documentation in IC memo and process walkthrough during audit planning per W351"
+    ],
+    "Staffing Implication": [
+     "- **Logistics Finance Analyst**: primary owner of this workflow; ~20–25 hours/month on daily monitoring, reconciliation, and month-end close; dedicated role at HQ per model company profile",
+     "- **Intercompany Accountant**: ~4–6 hours/month on IC reconciliation support; absorbed by existing role",
+     "- **DC Operations**: reconciliation support ~2–3 hours/month per DC; absorbed by existing role",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP inventory management (INV-001) for perpetual inventory by location with GIT tracking",
+     "- WMS integration (WMS-008) for DC inventory and dispatch confirmation",
+     "- Store receiving system (W109) for GR processing and GIT clearing",
+     "- Supply chain control tower (W250) for GIT visibility",
+     "- Transfer order system (W22) for inter-DC movements",
+     "- GL system for IC inventory accounting entries",
+     "- Intercompany module (IC-001 through IC-005) for IC reconciliation",
+     "- Damage claim system (W500) for GIT loss/damage tracking",
+     "- Consolidation module (W765) for IC elimination",
+     "- BI dashboard for GIT aging and IC inventory analytics"
+    ],
+    "Time Estimate": [
+     "- Daily GIT monitoring: 30–60 min/day",
+     "- GIT clearing exception resolution: 30–60 min/day",
+     "- Month-end reconciliation: 8–12 hours",
+     "- Quarterly audit support: 20–30 hours/quarter",
+     "- **Total per month**: ~30–40 hours",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Finance Analyst",
+     "activity": "**DC Outbound Dispatch & Goods-in-Transit Creation**: (a) DC picks and dispatches store replenishment order per W106 (outbound dispatch); (b) at dispatch confirmation, system creates goods-in-transit (GIT) record: DR number, departure DC, destination store, SKU list, quantities, inventory value (WAC per INV-003), dispatch timestamp, and carrier/vehicle ID; (c) accounting entries in BuildRight Depot, Inc. books: Dr. Inventory – In-Transit / Cr. Inventory – DC [location]; no entry in BuildRight Logistics, Inc. books (Logistics Inc. does not own inventory — it handles physical movement); (d) custody acknowledgment: DC dispatches goods with electronic proof of dispatch (ePDD) signed by truck driver; Logistics Inc. acknowledges custody transfer of physical goods; (e) GIT inventory visible in supply chain control tower per W250 with estimated arrival date; (f) average GIT duration: 1–3 days (DC to store); GIT value at any point: ~PHP 150–250M (2–3 days of inventory in transit across 200 stores)",
+     "duration": "Automated per dispatch",
+     "n": "1",
+     "r": "DC Operations / System"
+    },
+    {
+     "a": "Logistics Finance Analyst",
+     "activity": "**Store Receiving & GIT Clearance**: (a) store receives goods and processes goods receipt per W109; (b) at GR confirmation, system clears GIT record and posts: Dr. Inventory – Store [location] / Cr. Inventory – In-Transit; (c) receiving discrepancy handling: (i) quantity shortage: GIT partially cleared — shortage quantity remains in GIT as \"pending investigation\"; (ii) damaged goods: GIT cleared to store inventory, damage claim created against Logistics Inc. or carrier per W500; (iii) wrong items: GIT not cleared — items returned to DC via W22B; (d) all GIT records must be cleared within 7 days of dispatch; uncleared GIT aged > 7 days flagged for investigation; aged > 14 days escalated to VP Supply Chain per W250; (e) daily GIT aging report transmitted to Logistics Finance Analyst",
+     "duration": "Automated per receipt",
+     "n": "2",
+     "r": "Receiving Clerk / System"
+    },
+    {
+     "a": "Logistics Finance Analyst",
+     "activity": "**Inter-DC Transfer Accounting**: (a) inter-DC transfer orders initiated by Supply Planning per W22; (b) since all inventory is owned by BuildRight Depot, Inc., inter-DC transfers are purely physical movements within the same entity — no IC accounting entries required for inventory ownership; (c) however, custody transfer between DCs (both operated by Logistics Inc.) is documented for: (i) warehouse management reconciliation, (ii) DC performance KPI tracking per W586 (inventory at each DC), and (iii) insurance coverage verification per W857 (which DC's insurance covers goods in transit); (d) inter-DC GIT tracked similarly to DC-to-store GIT with same clearing SLA; (e) monthly: inter-DC transfer volume, value, and average GIT duration reported in supply chain analytics per W680",
+     "duration": "Automated per transfer",
+     "n": "3",
+     "r": "Supply Planning / DC Operations / System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Month-End GIT Reconciliation & IC Inventory Verification**: (a) at month-end per W9A, Logistics Finance Analyst reconciles: (i) BuildRight Depot, Inc. inventory subledger (by location: DC1, DC2, DC3, DC4, Store 1–200, In-Transit) vs. (ii) BuildRight Logistics, Inc. WMS physical inventory records (by DC); (iii) any discrepancy investigated and resolved before close per W514; (b) GIT balance verification: sum of all uncleared GIT records must equal the \"Inventory – In-Transit\" GL balance; discrepancy indicates unprocessed receipts, system errors, or timing differences; (c) IC custody reconciliation: Logistics Inc. provides certificate of physical inventory held at each DC as of month-end; reconciled against Depot Inc.'s DC inventory balances; (d) damage/loss reconciliation: accumulated damage claims per W500 reconciled against Logistics Inc. monthly service fee deduction per W435; (e) GIT provisions: uncleared GIT aged > 30 days provisioned as potential loss per W92; (f) reconciliation sign-off: Logistics Finance Analyst + Intercompany Accountant + DC Operations Manager",
+     "duration": "8–12 hours/month",
+     "n": "4",
+     "r": "Logistics Finance Analyst / Intercompany Accountant / DC Operations"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly IC Inventory Audit & Annual Compliance**: (a) quarterly: Internal Audit per W342 selects 2–3 stores and 1 DC for surprise IC inventory count; physical count reconciled against Depot Inc. subledger and Logistics Inc. WMS; (b) annual: full IC inventory reconciliation as part of year-end close per W9B; external auditor observes IC inventory reconciliation per W351; (c) transfer pricing documentation: inventory movement patterns between Depot Inc. and Logistics Inc. documented for BIR per W235 and PAS 24 related party disclosure per W486; (d) annual IC inventory movement analysis: volume, value, GIT duration trends, damage rates, and reconciliation accuracy; (e) process improvement recommendations from Internal Audit findings per W333",
+     "duration": "20–30 hours/quarter",
+     "n": "5",
+     "r": "Internal Audit / Logistics Finance Analyst / CFO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W106",
+    "W109",
+    "W22",
+    "W22B",
+    "W235",
+    "W250",
+    "W333",
+    "W342",
+    "W351",
+    "W435",
+    "W486",
+    "W500",
+    "W514",
+    "W586",
+    "W680",
+    "W752",
+    "W765",
+    "W843",
+    "W857",
+    "W92",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "~200–400 price discrepancy incidents per month across all suppliers; ~3–8% of all invoices received have some price variance",
+    "Owner": "AP Associate",
+    "Participants": "AP Associate, Merchandise Planner, Buyer, Vendor Account Manager, AP Manager",
+    "Trigger": "Three-way match identifies a price discrepancy between PO unit price and supplier invoice unit price exceeding the tolerance threshold (PHP 50 or 2%, whichever is greater)",
+    "Volume": "~5,000–8,000 invoices processed per month chain-wide; ~200–400 with price discrepancies requiring investigation"
+   },
+   "id": "W1504",
+   "level": 2,
+   "name": "Supplier Invoice Price Discrepancy Investigation, Debit Note Issuance & Resolution Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-match of \"Automated price discrepancy detection\" (replaces manual Step 1).",
+     "- System auto-validate of \"Root cause investigation\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculates the overcharge amount\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "In a retail chain purchasing from 800+ vendors, price discrepancies between the agreed PO price and the invoiced price are common. Causes include: (a) vendor unilaterally applying a price increase that wasn't communicated or agreed; (b) promotional pricing confusion — vendor invoices at regular price when PO was placed at promotional price; (c) unit-of-measure errors — vendor invoices per piece when PO was per case (or vice versa); (d) tiered pricing errors — vendor applies wrong volume tier; (e) currency conversion discrepancies for import POs; (f) honest data entry errors at vendor's billing department. Left uninvestigated, these discrepancies cost BuildRight an estimated PHP 3–8M/year in overpayments. The three-way match (PO → Goods Receipt → Invoice) catches these discrepancies, but each one requires investigation to determine root cause and resolution."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: AP Associate review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Volume overwhelming AP team**: with 200–400 discrepancies/month, each requiring 15–30 min investigation, the AP team spends 50–200 hours/month on discrepancy resolution alone; this delays payment processing for undisputed invoices",
+     "- **Vendor relationship strain**: frequent debit notes strain vendor relationships, especially with smaller vendors who view the process as adversarial",
+     "- **Debit note aging**: some vendors ignore or delay responding to debit notes; open debit notes > 60 days old may need to be written off, absorbing the loss",
+     "- **PO price staleness**: if Buyers don't update PO prices when vendors communicate price increases, every subsequent invoice for that SKU will flag a discrepancy until the PO is corrected — creating a self-inflicted workload"
+    ],
+    "Staffing Implication": [
+     "- AP Associate: ~15–30 min per discrepancy × ~300/month = ~75–150 hours/month across the AP team. Across the 8–10 AP Clerks (per the W7 staffing), this is ~8–19 hours each/month. Significant portion of role. Absorbed.",
+     "- Buyer: ~1 hour/week on escalated commercial resolutions. Absorbed.",
+     "- AP Manager: ~2–3 hours/month on analytics + escalations. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Three-way match engine with configurable price tolerance thresholds (W1504.1)",
+     "- Automated invoice hold and AP queue notification for price discrepancies (W1504.1)",
+     "- Debit note generation module integrated with vendor portal (W1504.3)",
+     "- Credit note matching and invoice adjustment workflow (W1504.4)",
+     "- Open debit note aging report with escalation triggers (W1504.3–4)",
+     "- Monthly discrepancy analytics dashboard by vendor, category, and root cause (W1504.5)"
+    ],
+    "Time Estimate": [
+     "- Per discrepancy investigation + resolution: 25–65 min",
+     "- Monthly analytics: 2–3 hours",
+     "- **Chain-wide: ~85–430 hours/month for discrepancy processing** (200–400 discrepancies × 25–65 min; consistent with the 75–150 AP-team hours above)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Automated price discrepancy detection**: During three-way match: (a) system compares invoice line item price to PO line item price; (b) if variance > tolerance (PHP 50 or 2%, whichever greater): (i) invoice line flagged as \"Price Discrepancy\"; (ii) invoice held in AP queue — cannot be processed for payment until resolved; (iii) AP Associate notified with: PO number, SKU, PO price, invoiced price, quantity, and variance amount; (c) invoice remains in \"Disputed\" status with payment blocked",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AP Manager",
+     "activity": "**Root cause investigation**: AP Associate investigates the discrepancy: (a) checks PO: is the PO price correct? Was the PO based on a valid price list, quotation, or promotional agreement?; (b) checks vendor communication: was there a price increase notification? Did the buyer authorize a price change?; (c) checks unit of measure: does the discrepancy disappear if invoice price is multiplied by pack size?; (d) checks promotional calendar: was the PO placed during a promotional period with special pricing?; (e) common outcomes: (i) vendor error — invoice at wrong price; (ii) PO outdated — vendor price increased but PO wasn't updated; (iii) unit of measure mismatch — invoice is per piece, PO was per case; (iv) promotional price not applied — vendor forgot promotional terms",
+     "duration": "15–30 min per discrepancy",
+     "n": "2",
+     "r": "AP Associate"
+    },
+    {
+     "a": "AP Manager",
+     "activity": "**Debit note issuance**: For confirmed vendor errors (vendor overcharged): (a) AP Associate issues a debit note through the vendor portal: (i) references the disputed invoice number, PO number, and SKU; (ii) specifies the correct price per PO agreement; (iii) calculates the overcharge amount; (iv) requests credit note from vendor or deduction from next payment; (b) debit note automatically linked to the disputed invoice in the system; (c) vendor notified via portal + email; (d) debit note tracked in the \"Open Debit Notes\" aging report; (e) AP Associate follows up if vendor does not respond within 10 business days",
+     "duration": "10–15 min per debit note",
+     "n": "3",
+     "r": "AP Associate"
+    },
+    {
+     "a": "AP Manager",
+     "activity": "**Resolution & invoice release**: When vendor agrees to the debit note: (a) vendor issues credit note referencing the original invoice and debit note; (b) AP Associate matches credit note to the debit note in the system; (c) disputed invoice adjusted: (i) correct price applied; (ii) variance resolved; (d) invoice released from \"Disputed\" status to \"Approved for Payment\"; (e) payment processed in next scheduled payment run per PA-15.2; (f) if vendor disputes the debit note: (i) AP Associate escalates to Buyer for commercial resolution; (ii) Buyer negotiates with Vendor Account Manager; (iii) resolution options: vendor accepts debit note, partial compromise, or BuildRight absorbs the difference (if PO was genuinely outdated); (iv) AP Manager approves any write-off of the variance amount > PHP 5,000",
+     "duration": "10–20 min per resolution",
+     "n": "4",
+     "r": "AP Associate / Buyer"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Monthly discrepancy analytics**: Monthly: (a) AP Manager reviews price discrepancy analytics: (i) total number of discrepancies by vendor; (ii) total financial impact (overcharges identified and recovered); (iii) average resolution time (days from detection to resolution); (iv) repeat offender vendors (same vendor > 5 discrepancies/month); (b) repeat offenders escalated to Category Manager for vendor performance discussion per PA-03.3; (c) systemic issues identified: (i) if a specific product category has high discrepancy rates → price master may need updating; (ii) if a specific unit-of-measure conversion causes frequent errors → master data fix needed; (d) monthly report shared with CFO",
+     "duration": "2–3 hours/month",
+     "n": "5",
+     "r": "AP Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-284"
+   ],
+   "fields": {
+    "Frequency": "Continuous event logging; monthly statement + debit-memo cycle",
+    "Owner": "AP Accountant",
+    "Participants": "AP Clerk, Category Manager, Store Operations Manager (first-line dispute), Auto-ID Lead (event sources), Marketing Production Coordinator (collateral), Master Data Analyst (event evidence), Finance Manager, Legal (fee-schedule enforceability), Supplier",
+    "Trigger": "(a) Chargeable service event auto-logged at source — barcode/price-label print run, vendor-initiated barcode change, promotional-collateral production, source-tag re-application; (b) monthly supplier service-fee statement cycle ahead of the W556 payment calendar",
+    "Volume": "~1,500–3,000 chargeable events/month chain-wide (~55–60% new-item barcode/price labels beyond free allowance and vendor barcode changes; ~25–30% promotional collateral production; ~10–15% source-tag re-application for missed vendor tags), concentrated in ~150–300 of the ~800–1,000 active vendors (≈10 events per affected vendor-month); ~5–10% of statements attract a dispute (~10–25/month)"
+   },
+   "id": "W5510",
+   "level": 2,
+   "name": "Supplier Service-Fee Billing & Account Deduction for Store-Rendered Services (Barcode Labels & Promotional Collaterals)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-logging of chargeable events at source with evidence links and provisional-until-completed status (supports Step 2)",
+     "- Co-op-coverage auto-check before an event becomes chargeable (supports Step 2)",
+     "- Auto-aggregation into the monthly statement with free-allowance balances (supports Step 3)",
+     "- Portal statement auto-release 5 days pre-posting with in-portal dispute case creation (supports Step 4)",
+     "- Auto debit-memo creation per W770 and auto-application at the W556 payment run (supports Steps 5–6)",
+     "- Recovery analytics auto-computed from the event log and W4489/W181 cost data (supports Step 7)"
+    ],
+    "Background": [
+     "BuildRight renders in-store services that consume its own labor, label stock, and print capacity on suppliers' behalf: printing barcode and price labels for supplier items (new-item onboarding and re-labels per VS-151), producing promotional collaterals (posters, wobblers, shelf talkers, endcap headers), and re-applying EAS tags the supplier promised at source but shipped without (W4498). Two recovery paths already exist — co-op marketing funds (VS-39, pre-agreed campaign reimbursement per W513/W1799) and compliance chargebacks (W245, penalties for non-performance) — but neither fits *per-event, store-rendered services billed to the supplier's account*. This workflow transposes the concessionaire service-fee model (W5507) onto merchandise suppliers: events auto-log with evidence at the point of service, aggregate into a monthly statement with a vendor-portal dispute window, and settle as AP debit memos (W770) deducted from the supplier's account at the next payment run (W556) — with a co-op coverage guard so a campaign already funded through VS-39 is never billed twice."
+    ],
+    "Controls": [
+     "- CTL-284 (ensure controlled execution — Invoice Processing & Matching (PA-15.1).)",
+     "- operational: signed fee-schedule (vendor opt-in flag) required before any event becomes chargeable; provisional-event reversal before statement posting; dispute window precedes debit-memo posting; one-to-one debit-memo/credit-note matching"
+    ],
+    "Cross-references": [
+     "- W770 (the debit-memo mechanism this workflow drives), W7/W556 (AP and payment-run netting), W100 (statement reconciliation), W244 (disputes), W705 (vendor portal), W688 (trade-agreement/CLM home of the fee schedule)",
+     "- W4490/W181 (label print events & cost basis), W4493 (price-change re-labeling), W4488 (barcode change control), W4498 (source-tag re-application events), W4489 (consumable cost basis)",
+     "- W513/W1796/W1798/W1799 (vendor-funded promo & co-op settlement — the alternate recovery path this workflow must not double-bill), W27 (rebates — distinct), W245 (compliance penalties — distinct: non-performance, not services rendered)",
+     "- W473 (BIR e-invoicing), W8/W108 (AR fallback collection), W5507 (concessionaire analog), VS-67 (vendor scorecard context), VS-39/VS-151 (event-source value streams)",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Unenforceable-fee risk**: charging a vendor with no signed schedule (or at mid-term increased rates) is uncollectible and damages the trading relationship; mitigated by the opt-in flag gating event charging and schedule changes only at renewal (steps 1, 7)",
+     "- **Double-recovery risk**: the same collateral billed under both the service-fee schedule and the co-op fund claim (W1799), or offset twice when the vendor also issues a credit note; mitigated by the campaign coverage flag at event logging (step 2) and the one-to-one debit-memo/credit-note matching guard (step 5)",
+     "- **Phantom-event risk**: an event logged but not executed (rejected artwork, unreached label) still on the statement destroys portal credibility; mitigated by provisional-until-completed status with automatic reversal (step 2)",
+     "- **Netting-vs-BIR-evidence risk**: deducting service fees from AP means no cash payment, so a vendor needing to issue BIR 2307 on the service fee cannot do so on a netted deduction, and output VAT netted against input VAT on the vendor's invoices can confuse VAT reporting; mitigated by gross-up presentation (fee + VAT as separate statement lines) and the cash-settlement route where a 2307 is required (steps 5–6)",
+     "- **Un-nettable vendor risk**: consignment-only or seasonal suppliers with no open AP balance cannot be deducted, leaving fees unrecovered; mitigated by the AR invoice fallback per W8/W108 (step 6)",
+     "- **Overcharging perception**: fee schedules perceived as nickel-and-diming can push vendors to deprioritize BuildRight orders (the W245 retaliation risk); mitigated by free allowances, evidence-linked portal transparency, and Category Manager sign-off at renewal (steps 1, 4, 7)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor-master service-fee schedule (versioned, effective-dated, opt-in flag) on the trade-agreement/CLM record (W688)",
+     "- Chargeable-event log auto-fed from print management (W4490/W181), Auto-ID change control (W4488), campaign work orders (W1796/W1798), and source-tag receipt exceptions (W4498) — provisional-until-completed status with automatic reversal",
+     "- Co-op coverage flag from campaign funding records (W513) as the double-recovery guard against W1799 settlement",
+     "- Monthly statement generation with free-allowance balances and evidence links; vendor-portal (W705) statement view with 5-business-day dispute window and expedite-privilege suspension flag",
+     "- AP debit-memo creation per W770 (deduction type \"service fee\") with one-to-one credit-note matching guard; auto-application at the W556 payment run",
+     "- Service-revenue GL accounts separate from penalty income (W245) and co-op fund income (W1799); output VAT per BIR; e-invoicing integration (W473); AR fallback per W8/W108",
+     "- Quarterly recovery analytics: fee income vs. consumable/labor/production cost by event type"
+    ],
+    "Time Estimate": [
+     "- Setup ~1 hr per enrolled vendor at contracting (target: top ~200–300 vendors by SKU count and event frequency in year 1)",
+     "- Steady state: +10–15 min per vendor-month carrying fees (~150–300/month) = ~25–75 hours/month absorbed by the AP team on top of W770's existing debit-memo load; disputes ~20 min × 10–25/month = ~3–8 hours; quarterly recovery review ~2 hours",
+     "- No incremental headcount; label/collateral costs partially offset by fee income (tracked in step 7)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "**Fee-schedule & service-catalog setup at vendor contracting**: Category Manager and Legal record a versioned, effective-dated service-fee schedule on the trade agreement record (W688) with a vendor opt-in flag: free allowances (e.g., 50 barcode/price labels per new item at onboarding; 1 price-change re-label per item per quarter; standard shelf-edge label stock) and per-event fees (barcode/price label per tag; promotional collateral per piece by format; expedited same-week production surcharge; custom artwork/plate at cost + margin; source-tag re-application per tag; barcode change per SKU). The opt-in flag gates charging — events for non-enrolled vendors route to the Category Manager to absorb under co-op funding (W513) or decline the service. Schedule changes only at agreement renewal",
+     "duration": "~1 hr/enrolled vendor",
+     "n": "1",
+     "r": "Category Manager / Legal"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**Event capture at source (no manual billing entry)**: every chargeable event auto-logs with evidence — label print runs from print management (W4490/W181 print-run count, SKU, store); vendor-initiated barcode changes from Auto-ID change control (W4488); collateral production from the campaign work order (W1796/W1798 proof-of-performance, format, quantity); source-tag re-application from receipt-verification exceptions (W4498). Events are provisional until the underlying service completes (rejected artwork, unreached label, cancelled campaign log no fee). **Co-op coverage check**: events tied to a campaign carrying vendor co-op funding bill the co-op settlement path (W1799) instead and are excluded here — the event log carries the coverage flag as the double-recovery guard",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**Monthly aggregation & statement**: system aggregates finalized events by vendor into a monthly Supplier Service-Fee statement itemized by event type with evidence links (print-run IDs, campaign IDs, approval IDs) and free-allowance consumption per line so the vendor sees its remaining balance; gross fee, output VAT, and net lines shown separately; released to the vendor portal (W705)",
+     "duration": "+10–15 min/vendor-month",
+     "n": "3",
+     "r": "System / AP Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**Statement review & dispute window**: 5 business days between portal release and posting; disputes raised in-portal route Store Operations first (operational facts — did the print run / production happen), then Category Manager (commercial), then Finance (rate/application); unresolved contested lines are **withheld from posting** (not auto-credited) and escalate per the W244 dispute path; an active unresolved dispute suspends that supplier's expedited-service privilege",
+     "duration": "~20 min/dispute",
+     "n": "4",
+     "r": "Store Ops Manager / Category Manager / AP Clerk"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Debit-memo posting**: uncontested (or window-expired) statements post as AP debit memos per W770 with deduction type \"service fee\", referencing the statement; system posts Dr. Accounts Payable — Vendor / Cr. Service Fee Revenue (contra print & collateral cost) and Cr. Output VAT Payable; BIR service invoice issued per the e-invoicing path (W473) with 10-year evidence retention; one-to-one guard blocks double-deduction if the vendor also issues a credit note for the same events",
+     "duration": "5 min/statement",
+     "n": "5",
+     "r": "System / AP Accountant"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**Settlement netting & exceptions**: debit memos auto-apply as deductions at the next W556 payment run; if the vendor has no open AP balance (consignment-only, prepaid, seasonal supplier), the system falls back to an AR service invoice collected per W8/W108; where the vendor requires a BIR 2307 creditable-withholding certificate on service payments, Finance offers the cash-settlement route — netting produces no payment against which a 2307 can be issued",
+     "duration": "5 min/exception",
+     "n": "6",
+     "r": "System / AP Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Reconciliation, analytics & recovery review**: monthly W100 vendor statement reconciliation carries service-fee debit memos as a reconciling class; quarterly review compares fee income by event type against actual cost (W4489 label consumables & print amortization, store labor minutes per W181, collateral production cost); persistent under-recovery triggers a fee-schedule change at renewal — never mid-term; results feed the vendor scorecard (VS-67) as service-usage information only, distinct from compliance penalties (W245)",
+     "duration": "2 hrs/quarter",
+     "n": "7",
+     "r": "AP Accountant / Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W100",
+    "W108",
+    "W1796",
+    "W1798",
+    "W1799",
+    "W181",
+    "W244",
+    "W245",
+    "W27",
+    "W4488",
+    "W4489",
+    "W4490",
+    "W4493",
+    "W4498",
+    "W473",
+    "W513",
+    "W5507",
+    "W556",
+    "W688",
+    "W7",
+    "W705",
+    "W770",
+    "W8"
+   ]
+  }
+ ]
+}

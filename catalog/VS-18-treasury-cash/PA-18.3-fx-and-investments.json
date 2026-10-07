@@ -1,0 +1,1268 @@
+{
+ "process_area": {
+  "id": "PA-18.3",
+  "title": "FX & Investments"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-18-treasury-cash/PA-18.3-fx-and-investments.md",
+ "value_stream": {
+  "directory": "VS-18-treasury-cash",
+  "id": "VS-18",
+  "name": "Treasury & Cash"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-295"
+   ],
+   "fields": {
+    "Frequency": "Forward contracts placed as needed (typically monthly or quarterly aligned with import PO schedule); quarterly exposure review",
+    "Owner": "Treasury Analyst",
+    "Participants": "Treasury Analyst, CFO, Import Coordinator, Cost Accountant",
+    "Trigger": "Import purchase order confirmed with USD vendor (W2B); or quarterly FX exposure review",
+    "Volume": "~40% of COGS from imports ≈ PHP 1.4B/month; USD-denominated payables ~PHP 600M–1B/month at current exchange rates; ~10–20 active forward contracts at any time"
+   },
+   "id": "W80",
+   "level": 2,
+   "name": "FX Hedging & Forward Contract Management",
+   "parent": null,
+   "req_refs": [
+    "FIN-009"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates FX exposure report from open import POs\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews FX exposure report\" (replaces manual Step 2).",
+     "- System auto-count of \"counterparty banks for required tenors and amounts\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's import purchasing (~40% of COGS) is primarily denominated in USD, exposing the company to PHP/USD exchange rate fluctuations. With import lead times of 45–90 days (W2B), the company faces FX risk from PO creation through LC payment. The company's FX hedging policy is conservative: hedging is limited to covering committed import payables (no speculative positions). Forward contracts are the primary hedging instrument."
+    ],
+    "Controls": [
+     "- CTL-295 (ensure controlled execution — FX & Investments (PA-18.3).)",
+     "- operational: Treasury Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **PHP/USD volatility exceeding hedge coverage**: the hedging policy targets 50–80% coverage of forecasted USD payables; the remaining 20–50% is unhedged and exposed to spot rate movements; during periods of sharp PHP depreciation (e.g., PHP 58→62/USD), unhedged exposure can add PHP 60M+ to import costs per month",
+     "- **Forward contract MTM volatility hitting PFRS 9 reporting**: mark-to-market gains and losses on forward contracts are recognized per PFRS 9; large MTM swings between quarters can distort reported P&L even though the economic hedge is effective, requiring CFO explanation to the Board",
+     "- **Hedge documentation failure risk**: PFRS 9 hedge accounting requires contemporaneous documentation linking each forward contract to a specific import PO; if documentation is incomplete, hedge accounting is disallowed and all MTM changes flow through P&L, creating earnings volatility; mitigated by the Treasury Analyst review and approval gate",
+     "- **Counterparty bank credit risk concentration**: forward contracts are placed with 4 banks (BDO, BPI, Metrobank, Chinabank); if any bank experiences credit deterioration, the MTM gain on outstanding contracts with that bank becomes uncollectible; diversification is limited by the small Philippine banking market; mitigated by the Treasury Analyst review and approval gate"
+    ],
+    "Policy": [
+     "- **Hedging scope**: Only committed import payables (POs confirmed with vendor) — no speculative positions",
+     "- **Hedging ratio target**: 50–80% of forecasted USD payables for the next 90 days",
+     "- **Counterparty banks**: BDO, BPI, Metrobank, Chinabank (same banks used for operational accounts per FIN-009)",
+     "- **Maturity matching**: Forward contract maturity dates aligned with expected LC/TT payment dates per W2B",
+     "- **Approval**: Forward contracts ≤ USD 500K → CFO; > USD 500K → CEO"
+    ],
+    "Staffing Implication": [
+     "- **Treasury Analyst**: adds ~1–2 hours/week for FX exposure monitoring, forward contract management, and settlement. With 2 Treasury Analysts on the team, this is absorbed.",
+     "- **CFO**: adds ~1 hour/quarter for hedging effectiveness review. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FX exposure report from open import POs with unrealized gain/loss (W80.1)",
+     "- Forward contract register: contract number, counterparty, notional, forward rate, trade date, maturity, settlement type, linked PO(s) (W80.6)",
+     "- MTM (mark-to-market) calculation per forward contract using current spot rate (W80.7)",
+     "- Hedge coverage ratio dashboard: forward notional ÷ USD payables with trend (W80.7)",
+     "- Settlement posting with realized FX hedge result and PFRS 9 accounting (W80.9)",
+     "- Forward contract portfolio summary integrated into monthly cash position report (W80.10)",
+     "- Linkage to import PO lifecycle (W2B) and AP payment (W7) for full audit trail",
+     "- Integration with W2B (import POs — exposure source), W7 (AP payment), W9A.5a (month-end FX revaluation — forward contracts included in revaluation), W26 (budget — hedging costs budgeted), W30 (treasury — forward contract cash flows)"
+    ],
+    "Time Estimate": [
+     "- Weekly FX exposure report generation: automated",
+     "- Weekly exposure review and hedge decision: ~30 min/week (Treasury Analyst + CFO)",
+     "- Forward contract quotation and execution: ~1 hour/hedge (Treasury Analyst)",
+     "- Weekly forward contract portfolio monitoring: ~30 min/week",
+     "- Forward contract settlement at maturity: ~30 min/settlement",
+     "- Monthly portfolio summary for cash position report: ~30 min/month",
+     "- Quarterly hedging effectiveness review: ~1 hour/quarter (CFO)",
+     "- Early termination (exception): ~30 min/occurrence",
+     "- Total FX hedging effort: ~3–5 hours/week during active hedging periods; ~1–2 hours/week during quiet periods"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Analyst",
+     "activity": "**Exposure identification**: system generates FX exposure report from open import POs (W2B) — for each open import PO with USD or other foreign-currency denomination: PO number, vendor, foreign currency amount, PHP equivalent at budget rate, expected payment date, current spot rate, unrealized FX gain/loss",
+     "duration": "Automated (weekly)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury Analyst reviews FX exposure report; identifies payables requiring hedge coverage based on policy (hedging ratio target, maturity horizon)",
+     "duration": "30 min/week",
+     "n": "2",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury Analyst obtains forward contract quotations from 2–3 counterparty banks for required tenors and amounts",
+     "duration": "30 min/hedge",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury Analyst selects bank based on: (a) forward rate competitiveness, (b) counterparty credit risk (bank credit rating), (c) existing facility limits and available margin; prepares forward contract recommendation: notional amount, forward rate, maturity date, counterparty bank, corresponding import PO reference(s)",
+     "duration": "15 min/hedge",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO approves forward contract; if notional > USD 500K, CEO approval required",
+     "duration": "15 min/hedge",
+     "n": "5",
+     "r": "CFO / CEO"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury Analyst executes forward contract with selected bank; receives contract confirmation; records forward contract in system: contract number, counterparty bank, notional amount (USD), forward rate (PHP/USD), trade date, maturity date, settlement type (physical delivery or cash net settlement), linked import PO reference(s)",
+     "duration": "15 min/hedge",
+     "n": "6",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Ongoing monitoring**: weekly, Treasury Analyst reviews forward contract portfolio vs. open USD payables — (a) hedge coverage ratio (total forward notional ÷ total USD payables), (b) MTM (mark-to-market) gain/loss per forward contract using current spot rate, (c) maturity ladder — forward contracts maturing in next 30 days flagged for settlement planning",
+     "duration": "30 min/week",
+     "n": "7",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Settlement at maturity**: when import LC/TT payment is due (W2B step 13), Treasury Analyst coordinates forward contract settlement — (a) for physical delivery: forward contract provides USD at contracted rate; bank debits PHP account at forward rate and credits USD for LC/TT payment; (b) for cash net settlement: if spot rate at maturity differs from forward rate, bank pays or receives the difference; Treasury Analyst settles the actual import payment at spot rate and separately receives/pays the forward contract settlement",
+     "duration": "30 min/settlement",
+     "n": "8",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Controller",
+     "activity": "**System posting**: at settlement, system posts realized FX hedge result — (a) difference between forward rate and original PO budget rate allocated to the import PO's landed cost (W2B.12) or recognized as FX hedging gain/loss; (b) any premium or discount amortized over the contract period per PFRS 9; (c) system links forward contract settlement to corresponding AP payment for full audit trail",
+     "duration": "Automated + 15 min review",
+     "n": "9",
+     "r": "System / Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Monthly**: Treasury Analyst includes forward contract portfolio summary in monthly cash position report (W30) — total notional, weighted average forward rate, MTM gain/loss, hedge coverage ratio, upcoming maturities",
+     "duration": "30 min/month",
+     "n": "10",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Quarterly**: CFO reviews hedging effectiveness — (a) actual FX cost (hedged vs. unhedged payables), (b) hedge coverage ratio vs. policy target, (c) counterparty concentration, (d) recommendations for hedging strategy adjustments; results presented to CEO quarterly",
+     "duration": "1 hour/quarter",
+     "n": "11",
+     "r": "CFO"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Early termination** (exception): if an import PO is cancelled (W2A PO cancellation) and linked forward contract no longer has an underlying payable, Treasury Analyst may: (a) hold forward contract to maturity and use for another import PO (if tenor matches), (b) terminate early with bank and recognize termination gain/loss, or (c) sell forward contract to offset new exposure; early termination requires CFO approval",
+     "duration": "30 min/occurrence",
+     "n": "12",
+     "r": "Treasury Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W26",
+    "W2A",
+    "W2B",
+    "W30",
+    "W7",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-60"
+   ],
+   "fields": {
+    "Frequency": "Weekly assessment; placements made as needed (typically 2–4 placements/month)",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Manager, Treasury Analyst, CFO, Banks",
+    "Trigger": "Weekly cash flow forecast (W233) identifies surplus cash exceeding 14-day operational requirements; or ad-hoc surplus from large customer collection, asset sale, or dividend receipt",
+    "Volume": "Surplus cash availability varies; estimated average surplus of PHP 200–500M available for short-term placement at any given time across 5 entities"
+   },
+   "id": "W318",
+   "level": 2,
+   "name": "Short-Term Investment & Surplus Cash Placement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews weekly cash flow forecast\" (replaces manual Step 1).",
+     "- System auto-count of \"Account\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's high cash generation (PHP 62B annual revenue with ~42% cash sales) creates regular surplus cash that exceeds immediate operational needs. Placing surplus cash in short-term instruments earns interest income that contributes to net finance income. This workflow governs the identification, placement, monitoring, and redemption of short-term investments across all entities."
+    ],
+    "Controls": [
+     "- CTL-60 (ensure investment policy compliance.)",
+     "- operational: Treasury Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Surplus estimation error leading to premature placement**: if the weekly cash flow forecast (W233) overestimates surplus, funds may be locked in a 30-day time deposit when needed for an unexpected payment (large vendor early-payment discount opportunity per W7.7a, emergency capex per W60, or payroll shortfall); premature redemption incurs penalty and lost interest",
+     "- **Counterparty bank credit risk**: Philippine bank credit quality varies; while BDO, BPI, and Metrobank are systemically important, smaller banks offering higher yields carry higher credit risk; the 40% single-bank concentration limit mitigates but does not eliminate this exposure",
+     "- **Interest rate environment mismatch**: in a rising rate environment, locking surplus in 90-day time deposits at current rates means missing higher rates available in 30 days; conversely, in a falling rate environment, longer placements are advantageous; the tenor decision requires judgment on rate direction that Treasury may not consistently get right",
+     "- **Multi-entity surplus fragmentation**: surplus cash may be concentrated in one entity (e.g., Depot Inc.) while another entity has a deficit; intercompany sweeping (W233) must be executed before surplus at the holding entity can be invested, adding latency and intercompany loan complexity (W137)",
+     "- **PDIC insurance coverage limit**: Philippine Deposit Insurance Corporation (PDIC) covers deposits up to PHP 500,000 per depositor per bank; large placements exceeding this limit are partially uninsured, creating potential loss exposure in a bank failure scenario"
+    ],
+    "Staffing Implication": [
+     "2–4 placements/month requiring 30 min assessment + 15 min execution each = ~2–3 hours/month; weekly surplus review adds 30 min/week; monthly portfolio review adds 1 hour/month; quarterly policy review adds 1 hour/quarter. Total: ~6–8 hours/month, absorbed by the Treasury Manager and Treasury Analyst within existing headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Investment register: centralized tracking of all active placements across entities and banks with full details and maturity calendar (W318.5)",
+     "- Automated maturity alerting at 3 business days before maturity (W318.6)",
+     "- Surplus cash identification from cash flow forecast (W233) and daily cash position (W30) integration (W318.1)",
+     "- Interest income accrual and posting integration with GL (W9A month-end close) (W318.7)",
+     "- Counterparty bank exposure dashboard: total placement amount per bank with limit monitoring (W318.2, W318.8)",
+     "- Investment portfolio summary report with yield, duration, concentration, and maturity ladder analysis (W318.8)",
+     "- Integration with W30 (daily cash position — placement cash flows reflected), W233 (cash flow forecast — investment maturities and interest income included in forecast), W89 (bank reconciliation — placement redemptions and interest income matched), W9A (month-end — accrued interest posting)"
+    ],
+    "Time Estimate": [
+     "**Total**: Surplus assessment — 30 min/week; Placement decision and execution — 45 min/placement (2–4/month); Portfolio register maintenance — 30 min/week; Monthly portfolio review — 1 hour/month; Quarterly policy review — 1 hour/quarter",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Surplus identification**: Treasury Analyst reviews weekly cash flow forecast (W233) and daily cash position (W30); identifies cash balances exceeding 14-day projected operational requirements across each entity; calculates available surplus per entity and in total",
+     "duration": "30 min/week",
+     "n": "1",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Placement decision**: Treasury Manager evaluates placement options based on: (a) amount and duration of surplus (when is the cash needed next?), (b) available instruments: bank time deposits (7-day, 30-day, 60-day, 90-day), Philippine Treasury Bills (T-bills) via bank brokerage, money market placement (overnight to 7-day), Special Deposit Account (SDA) with BSP-qualified banks; (c) current market rates vs. BuildRight's weighted average cost of capital; (d) counterparty bank exposure limits (no single bank to hold > 40% of total investment portfolio); (e) entity-level cash needs (surplus at one entity cannot be invested if intercompany sweep to another entity is pending per W233)",
+     "duration": "30 min/placement",
+     "n": "2",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "Approver",
+     "activity": "**Approval**: placement approvals by tier — (a) ≤ PHP 50M: Treasury Manager approves; (b) PHP 50M–200M: CFO approves; (c) > PHP 200M: CEO approves; placement approval includes instrument type, amount, tenor, counterparty bank, and expected yield",
+     "duration": "15 min/placement",
+     "n": "3",
+     "r": "Approver"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Execution**: Treasury Analyst places investment via bank portal (electronic time deposit placement) or bank relationship manager; confirms placement details — principal, rate, maturity date, rollover instruction (auto-rollover or manual redemption); records placement in investment register",
+     "duration": "15 min/placement",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Investment register maintenance**: system tracks all active placements — institution, instrument type, principal amount, interest rate, placement date, maturity date, rollover status, entity, linked bank account; auto-generates maturity calendar",
+     "duration": "Ongoing (30 min/week)",
+     "n": "5",
+     "r": "System / Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Maturity monitoring**: system alerts Treasury Analyst 3 business days before each placement maturity; Treasury Analyst recommends action to Treasury Manager — (a) redeem to fund operational needs, (b) roll over at current market rate, or (c) roll over and adjust amount based on updated surplus calculation (step 1)",
+     "duration": "15 min/placement",
+     "n": "6",
+     "r": "System / Treasury Analyst"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Interest income tracking**: system records interest earned per placement; at maturity or periodic payout, posts interest income to GL (Dr. Cash / Cr. Interest Income); tracks accrued interest for month-end reporting (W9A)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Monthly portfolio review**: Treasury Manager prepares monthly investment portfolio summary for CFO — total portfolio value, weighted average yield, portfolio by instrument type and counterparty bank, maturity ladder (0–30, 31–60, 61–90, 90+ days), interest income month-to-date vs. budget, counterparty concentration analysis",
+     "duration": "1 hour/month",
+     "n": "8",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Quarterly investment policy review**: CFO reviews investment portfolio performance vs. policy parameters — (a) portfolio yield vs. benchmark (91-day T-bill rate), (b) counterparty concentration vs. limits, (c) average portfolio duration vs. liquidity needs, (d) any credit events at counterparty banks; adjusts policy parameters if needed",
+     "duration": "1 hour/quarter",
+     "n": "9",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W137",
+    "W233",
+    "W30",
+    "W60",
+    "W7",
+    "W89",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-61"
+   ],
+   "fields": {
+    "Frequency": "Ongoing monitoring; covenant testing quarterly; facility review annually; drawdowns as needed (estimated 4–8 per year for expansion-related capex and seasonal working capital)",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Manager, Treasury Analyst, CFO, Controller, Legal, Banks, External Auditors",
+    "Trigger": "Annual credit facility renewal; new loan drawdown request (capex, working capital); quarterly covenant testing date; or loan maturity",
+    "Volume": "Estimated 3–5 active credit facilities across the group: revolving credit line (working capital), term loan (store expansion capex), USD credit line (import LCs), and potentially a bilateral loan per major bank relationship"
+   },
+   "id": "W319",
+   "level": 2,
+   "name": "Debt Facility & Covenant Compliance Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"tracks all active credit facilities — lender, facility type\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares drawdown request\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's expansion plan of 10–15 new stores/year requires significant capital investment (estimated PHP 80–120M per new store for land, construction, fixtures, and initial inventory). This capital is funded through a combination of operating cash flow, credit facilities, and term loans. Managing the debt portfolio — drawdowns, repayments, covenant compliance, lender reporting, and facility renewals — is a core treasury responsibility that directly impacts the company's ability to fund growth."
+    ],
+    "Controls": [
+     "- CTL-61 (ensure debt covenant monitoring.)"
+    ],
+    "Pain Points / Risks": [
+     "- **Covenant breach during rapid expansion**: opening 10–15 stores/year increases both debt (to fund construction per W223–226) and capex (to fit out stores per W21); if revenue ramp at new stores lags projections, Debt-to-Equity and DSCR covenants may be breached, triggering lender remedies including accelerated repayment or facility freeze",
+     "- **Floating rate exposure on revolving credit**: if credit facilities are priced at PDSF (Philippine Dealing System Fixing Rate) or PHIBOR + spread, rising benchmark rates increase interest expense; BuildRight does not hedge interest rate risk (no interest rate swaps), making debt service cost volatile",
+     "- **Cross-entity facility allocation**: a revolving credit facility at BuildRight Holdings may fund operations at Depot Inc. or Logistics Inc.; tracking utilization per entity vs. facility-level covenants requires separate sub-ledgers that may not reconcile cleanly with lender reporting",
+     "- **Loan documentation compliance**: Philippine banks require extensive ongoing compliance — updated financial statements, board resolutions, SEC filings, and insurance certificates; missing any required document can trigger a technical default even when financial covenants are met",
+     "- **Refinancing risk at maturity**: if a major term loan matures during a period of tight credit conditions (e.g., BSP tightens monetary policy, Philippine credit rating downgrade), refinancing may be unavailable or available only at significantly higher rates, impacting BuildRight's ability to fund continued expansion; mitigated by CTL-61 (debt covenant monitoring)",
+     "- **Security and collateral tracking**: properties, receivables, or inventory pledged as collateral must be tracked per facility; if BuildRight disposes of pledged assets (W39) without lender consent, it constitutes a covenant breach"
+    ],
+    "Staffing Implication": [
+     "Ongoing monitoring adds ~2 hours/month for register maintenance + ~30 min/month for debt service management; quarterly covenant testing adds ~6 hours/quarter (4 hours Controller + 2 hours Treasury Manager); annual renewal negotiations add 8–16 hours per renewal; drawdown processing adds ~2 hours/drawdown (4–8 per year). Total: ~15–25 hours/month during peak periods, ~8–12 hours/month steady-state. Absorbed by Treasury Manager and Controller within existing headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Debt facility register: centralized tracking of all facilities across entities with committed/drawn amounts, interest rates, maturity, covenants, and collateral (W319.1)",
+     "- Loan drawdown workflow with approval tiers and covenant breach pre-check (W319.2–4)",
+     "- Debt service schedule auto-generation with payment calendar integration to W233 (cash flow forecast) and W30 (daily cash position) (W319.5)",
+     "- Covenant testing module: automated computation of financial ratios from GL and financial statement data; comparison against covenant thresholds; breach/near-breach alerting (W319.6)",
+     "- Compliance certificate generation in lender-required format (W319.7)",
+     "- Covenant breach escalation tracking with waiver management (W319.8)",
+     "- Debt maturity ladder: visualization of debt maturities over next 1–5 years (W319.1)",
+     "- Integration with W21 (capex — drawdown funding for approved capex), W30 (daily cash position — debt service payments), W89 (bank reconciliation — loan disbursements and repayments), W137 (intercompany loans — separate from external debt), W232 (LC — utilization counts against credit facility limits), W233 (cash flow forecast — debt service included), W9A (month-end — interest accrual and loan balance reconciliation), W9B (year-end — PFRS debt disclosures)"
+    ],
+    "Time Estimate": [
+     "**Total**: Facility register maintenance — 2 hours/month; Drawdown processing — 2 hours/drawdown (4–8/year); Debt service monitoring — 30 min/month; Quarterly covenant testing — 6 hours/quarter; Compliance reporting — 2 hours/quarter; Facility renewal — 8–16 hours/renewal; Annual relationship management — 4–8 hours/year",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Facility register maintenance**: system tracks all active credit facilities — lender, facility type (revolving credit, term loan, USD line, bilateral), committed amount, drawn amount, available headroom, interest rate (fixed or floating + benchmark), maturity date, covenants, and security/collateral pledged",
+     "duration": "Ongoing (2 hours/month)",
+     "n": "1",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Drawdown request**: triggered by capex funding need (W21 approved), seasonal working capital requirement, or LC issuance (W232) exceeding available bank limits — Treasury Manager prepares drawdown request: amount, purpose, facility to draw from, repayment source, and timeline",
+     "duration": "30 min/drawdown",
+     "n": "2",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "Approver",
+     "activity": "**Drawdown approval**: tiered by amount — (a) ≤ PHP 50M: CFO approves, (b) PHP 50M–200M: CEO approves, (c) > PHP 200M: Board approves; approval includes confirmation that drawdown will not breach any financial covenant",
+     "duration": "15 min/drawdown",
+     "n": "3",
+     "r": "Approver"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Execution**: Treasury Analyst coordinates drawdown with lender bank; confirms disbursement to designated bank account; system records drawdown with loan reference, amount, interest rate, repayment schedule (if term loan), and linked capex or working capital purpose",
+     "duration": "1 hour/drawdown",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Debt service management**: system generates debt service schedule per facility — monthly interest payments (for revolving credit and term loans), principal repayments (for term loans per agreed amortization), and balloon payments at maturity; Treasury Analyst confirms upcoming debt service payments are included in weekly cash flow forecast (W233) and daily cash position (W30)",
+     "duration": "30 min/month",
+     "n": "5",
+     "r": "System / Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly covenant testing**: within 30 days of each quarter-end, Controller computes financial covenants from consolidated and entity-level financial statements — typical covenants include: (a) Debt-to-Equity ratio (maximum, e.g., 2.0:1), (b) Current ratio (minimum, e.g., 1.5:1), (c) Debt Service Coverage Ratio (DSCR) (minimum, e.g., 1.5x), (d) Net Worth minimum, (e) Capital Expenditure ceiling (if applicable); system compares actual vs. covenant requirement per facility; flags any breach or near-breach (within 10% of limit)",
+     "duration": "4 hours/quarter",
+     "n": "6",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Covenant compliance reporting**: Treasury Manager prepares compliance certificate per lender's required format; CFO signs compliance certificate; Treasury Analyst transmits to lender within required timeframe (typically 45 days from quarter-end); Controller provides audited or reviewed financial statements if required by facility agreement",
+     "duration": "2 hours/quarter",
+     "n": "7",
+     "r": "Treasury Mgr / CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Covenant breach escalation**: if any covenant is breached or within 10% of the limit — (a) Treasury Manager immediately notifies CFO and CEO, (b) CFO assesses whether waiver negotiation with lender is required, (c) if waiver needed: Treasury Manager coordinates with Legal and CFO to prepare waiver request with remediation plan and timeline, (d) CFO negotiates waiver with lender, (e) system tracks all waiver requests, outcomes, and amended covenant terms",
+     "duration": "As needed",
+     "n": "8",
+     "r": "Treasury Mgr / CFO"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Facility renewal negotiation**: 6 months before facility maturity, Treasury Manager begins renewal discussions with lender — (a) reviews current utilization and headroom, (b) assesses whether facility size and terms remain appropriate for BuildRight's growth plans, (c) obtains competitive proposals from at least 2 other banks, (d) presents renewal recommendation to CFO with comparison of terms (interest rate, fees, covenants, commitment amount), (e) CFO approves renewal terms; if changes to security or covenants require Board approval, Legal prepares Board Resolution",
+     "duration": "8–16 hours/renewal",
+     "n": "9",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Annual lender relationship management**: Treasury Manager maintains relationship with lending banks — periodic meetings, information sharing, site visits to new stores; ensures BuildRight is positioned favorably for future credit needs and rate negotiations",
+     "duration": "4–8 hours/year",
+     "n": "10",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Year-end**: Controller includes long-term and short-term debt balances, debt maturity schedule, and covenant compliance status in year-end financial statement notes per PFRS requirements",
+     "duration": "Part of W9B",
+     "n": "11",
+     "r": "Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W137",
+    "W21",
+    "W223",
+    "W232",
+    "W233",
+    "W30",
+    "W39",
+    "W89",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-63",
+    "CTL-66"
+   ],
+   "fields": {
+    "Frequency": "Weekly exposure analysis; monthly BSP reporting; quarterly strategy review",
+    "Owner": "Treasury Analyst",
+    "Participants": "Treasury Analyst, Treasury Manager, CFO, Import Coordinator, Cost Accountant",
+    "Trigger": "Weekly FX exposure review; monthly BSP reporting cycle; or significant change in import purchasing pattern or exchange rate movement",
+    "Volume": "~40% of COGS from imports ≈ PHP 1.4B/month in foreign-currency payables; USD-denominated bank accounts across 5 entities; ~10–20 active forward contracts (W80)"
+   },
+   "id": "W321",
+   "level": 2,
+   "name": "FX Exposure Analysis & BSP Regulatory Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts per entity\" (replaces manual Step 1).",
+     "- System auto-import of \"import payment obligations\" (replaces manual Step 2).",
+     "- System auto-forecast of \"forecasted USD payables\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "While W80 covers FX hedging execution (forward contract placement and settlement), this workflow addresses the broader FX risk management framework: systematic identification of FX exposure across all entities, natural hedging strategy, exposure reporting, and compliance with Bangko Sentral ng Pilipinas (BSP) regulatory requirements for foreign exchange transactions. The Philippines maintains a managed float exchange rate regime with specific BSP reporting obligations for corporate foreign currency transactions."
+    ],
+    "Controls": [
+     "- CTL-63 (ensure FX exposure reporting accuracy.); CTL-66 (ensure treasury month-end close accuracy.)",
+     "- operational: Treasury Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **BSP regulatory changes catching BuildRight unprepared**: BSP periodically updates the FX Manual, reporting thresholds, and documentary requirements; if Treasury does not actively monitor BSP circulars, the company may fail to comply with new requirements, risking penalties, account restrictions, or adverse BSP examination findings",
+     "- **USD cash hoarding vs. investment trade-off**: maintaining large USD bank balances for natural hedging earns minimal interest (Philippine banks offer near-zero rates on USD deposits); Treasury must balance the natural hedge benefit against the opportunity cost of not converting surplus USD to PHP for investment (W318)",
+     "- **Multi-currency exposure beyond USD**: while ~85% of imports are USD-denominated, BuildRight sources some goods from China (CNY), Japan (JPY), and Europe (EUR); managing multiple currency exposures with limited hedging tool availability in the Philippine market (forward contracts readily available for USD/PHP only) creates residual unhedged exposure in minor currencies",
+     "- **BSP examination resource disruption**: a BSP FX compliance examination requires Treasury to compile extensive documentation across multiple months and entities; this disrupts normal treasury operations for 1–2 weeks during preparation and examination",
+     "- **Intercompany FX complexity**: intercompany transactions (W14) between BuildRight entities are PHP-denominated, but if any entity holds USD, the intercompany settlement creates internal FX transactions that must be tracked separately from external FX exposure for both BSP reporting and intercompany elimination (W234)"
+    ],
+    "Staffing Implication": [
+     "Weekly exposure analysis adds ~45 min/week; monthly BSP reporting adds 2–4 hours/month; quarterly strategy review adds 1 hour/quarter; annual policy update adds 2 hours/year; BSP examination preparation (if triggered) adds 8–16 hours. Total: ~5–7 hours/month steady-state, absorbed by Treasury Analyst and Treasury Manager within existing headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consolidated FX exposure report: auto-generated from import POs (W2B), AP open items, USD bank balances (W30), and forward contracts (W80) (W321.1)",
+     "- Natural hedging dashboard: USD bank balances vs. near-term USD payables; net USD position per entity (W321.2)",
+     "- Hedge coverage ratio: automated calculation of hedged vs. unhedged exposure with policy target comparison (W321.3)",
+     "- Monthly FX exposure summary with realized/unrealized FX gain/loss (W321.4)",
+     "- BSP reporting document tracker: FX transaction reports filed, supporting documents attached, BSP examination findings tracker (W321.5–7)",
+     "- FX policy document management: version-controlled policy with annual review tracking (W321.9)",
+     "- Integration with W2B (import POs — source of FX exposure), W30 (daily cash position — USD balances), W80 (FX hedging — forward contracts and MTM), W89 (bank reconciliation — FX transaction confirmation), W232 (LC — BSP reporting for import LCs), W233 (cash flow forecast — FX cash flow projections)"
+    ],
+    "Time Estimate": [
+     "**Total**: Weekly FX exposure review — 45 min/week; Monthly BSP reporting — 2–4 hours/month; Monthly FX exposure summary — 1 hour/month; Quarterly strategy review — 1 hour/quarter; Annual policy update — 2 hours/year; BSP examination preparation — 8–16 hours per examination (infrequent)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Analyst",
+     "activity": "**Weekly FX exposure report**: system generates consolidated FX exposure across all entities — (a) open foreign-currency payables by currency (USD, CNY, EUR) from import POs (W2B), (b) open foreign-currency receivables (if any), (c) foreign-currency bank balances (USD accounts per entity), (d) open forward contracts (W80) with notional amounts and forward rates, (e) net unhedged exposure per currency, (f) FX exposure trend over trailing 4 weeks",
+     "duration": "Automated (weekly)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Natural hedging assessment**: Treasury Analyst evaluates opportunities to offset FX payables with natural hedges — (a) maintain USD bank account balances to cover near-term (30–60 day) import payment obligations, (b) time USD conversions to take advantage of favorable spot rates when cash position (W30) permits, (c) negotiate with international vendors to invoice in PHP where commercially feasible (limited applicability but worth exploring for ASEAN-based suppliers)",
+     "duration": "30 min/week",
+     "n": "2",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Exposure-to-hedge gap analysis**: Treasury Analyst compares net unhedged exposure (step 1) against W80 hedging policy targets (50–80% coverage of forecasted USD payables); identifies any shortfall below 50% coverage and recommends additional forward contracts to Treasury Manager",
+     "duration": "15 min/week",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Monthly FX exposure summary**: Treasury Analyst prepares monthly FX exposure summary for CFO — (a) total FX exposure by currency and entity, (b) hedged vs. unhedged breakdown, (c) realized FX gain/loss for the month (from settled transactions), (d) unrealized FX gain/loss on open items (using month-end BSP closing rate), (e) FX impact on import landed cost vs. budget (variance analysis), (f) forward contract portfolio MTM (mark-to-market) summary (from W80)",
+     "duration": "1 hour/month",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**BSP reporting — FX transactions**: Treasury Analyst compiles and submits required BSP reports for foreign exchange transactions — (a) Foreign Exchange Transactions Report: all purchases and sales of foreign currency above BSP threshold (currently USD 500,000 single transaction or USD 1M aggregate monthly per entity) reported to authorized agent banks; (b) BSP Form 1 (Purchase/Sale of Foreign Exchange): for large FX conversions through banks; (c) Document compliance: all FX purchases above USD 10,000 require supporting documentation (import documents, PO, LC) per BSP Manual of Regulations on Foreign Exchange (FX Manual); Treasury Analyst maintains documentation file per BSP audit trail requirements",
+     "duration": "2–4 hours/month",
+     "n": "5",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**BSP reporting — cross-border payments**: for outward remittances related to import payments (LC/TT settlement per W232) and other cross-border fund transfers — (a) ensure all outward remittances above BSP threshold are reported through authorized agent banks, (b) maintain records of BSP-approved outward investment or lending (if any intercompany cross-border transactions arise), (c) confirm compliance with BSP rules on permissible outward remittances per FX Manual",
+     "duration": "Part of step 5",
+     "n": "6",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "**BSP examination preparation**: if BSP selects BuildRight for FX compliance examination, Treasury Manager coordinates preparation — (a) compile documentation file: FX transaction reports, supporting import documents, LC copies, bank confirmations, Board Resolutions authorizing FX transactions, (b) Legal reviews documentation completeness, (c) Treasury Manager and CFO attend BSP examination; (d) post-examination: address any BSP findings within required timeframe",
+     "duration": "As needed (8–16 hours per examination)",
+     "n": "7",
+     "r": "Treasury Mgr / CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Quarterly FX strategy review**: CFO reviews FX management strategy with Treasury Manager — (a) total FX cost (realized + unrealized) vs. budget and vs. prior quarter, (b) hedging effectiveness (W80 quarterly review feeds into this), (c) natural hedging utilization rate, (d) BSP regulatory environment changes (new FX rules, reporting threshold changes), (e) vendor currency mix analysis (opportunities to shift sourcing to PHP-denominated suppliers), (f) adjustment to hedging policy parameters if needed",
+     "duration": "1 hour/quarter",
+     "n": "8",
+     "r": "CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Annual FX policy update**: CFO documents and updates FX risk management policy — exposure limits, hedging instruments, counterparty limits, natural hedging strategy, BSP compliance procedures; policy approved by CEO; communicated to all Treasury staff",
+     "duration": "2 hours/year",
+     "n": "9",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W232",
+    "W233",
+    "W234",
+    "W2B",
+    "W30",
+    "W318",
+    "W80",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-65"
+   ],
+   "fields": {
+    "Frequency": "~10–15 new guarantees/bonds per year; annual comprehensive review; ongoing monitoring of contingent exposure",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Manager, Treasury Analyst, CFO, Legal, Procurement, Engineering (for construction bonds), Compliance",
+    "Trigger": "New corporate guarantee issuance request; performance bond requirement; bid bond for government procurement (W78); subsidiary covenant support; annual contingent liability review; or guarantee expiry/termination",
+    "Volume": "Estimated 20–30 active guarantees and contingent liabilities at any given time across 5 entities (construction performance bonds, government bid bonds, subsidiary corporate guarantees, lease guarantees)"
+   },
+   "id": "W325",
+   "level": 2,
+   "name": "Corporate Guarantee & Contingent Liability Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits guarantee request\" (replaces manual Step 1).",
+     "- System auto-count of \"counter-guarantee or holdback?\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W232 covers bank guarantees related to import LCs, but BuildRight issues and receives multiple other types of guarantees and contingent liabilities: (a) **Performance bonds** for store construction (W223–227) — contractors provide performance bonds to guarantee completion; BuildRight may also issue counter-guarantees to contractor banks; (b) **Bid bonds** for government/institutional procurement participation (W78) — guarantee that BuildRight will honor its bid if awarded; (c) **Corporate guarantees** for subsidiary entities — BuildRight Holdings may guarantee debt facilities of Depot Inc., Logistics Inc., or Property Inc.; (d) **Lease guarantees** — landlords of leased store locations (W117) may require corporate guarantees from BuildRight Holdings as lease security; (e) **Utility and vendor deposits** — guaranteed by parent entity. These contingent liabilities are not reflected on the balance sheet but must be tracked, monitored, and disclosed under PFRS (PAS 37 Provisions, Contingent Liabilities and Contingent Assets)."
+    ],
+    "Controls": [
+     "- CTL-65 (ensure corporate guarantee tracking.)",
+     "- operational: Treasury Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Forgotten guarantees remaining active after obligation fulfillment**: with 20–30 active guarantees and construction projects spanning 6–18 months, it is easy for a performance bond to remain active (and incurring annual issuance fees from the bank) after the construction is completed and commissioned (W227); without systematic expiry monitoring and release triggers, BuildRight pays unnecessary guarantee fees",
+     "- **Guarantee call liquidity impact**: if a major contractor fails to complete a store construction project (e.g., PHP 80–120M project) and BuildRight calls the performance bond, the bank may simultaneously call BuildRight's counter-guarantee; the sudden cash outflow (potentially PHP 50–100M) must be funded from operating cash or credit facility (W319), disrupting liquidity planning",
+     "- **Subsidiary guarantee cross-default risk**: if BuildRight Holdings guarantees a Depot Inc. credit facility and Depot Inc. experiences financial distress, the guarantee call could trigger cross-default provisions in Holdings' own debt facilities (W319), cascading liquidity pressure to the parent entity; mitigated by CTL-65 (corporate guarantee tracking)",
+     "- **Government procurement bid bond lock-up**: BuildRight participates in government/institutional procurement (W78); bid bonds are held by the government agency for the duration of the bidding process (often 3–6 months in the Philippines due to procurement delays); the bank's contingent exposure against BuildRight's credit facility reduces available headroom during the bid period",
+     "- **PFRS PAS 37 disclosure incompleteness**: if the contingent liability register is not comprehensive (e.g., verbal guarantees or informal commitments are not recorded), the financial statement disclosure under PAS 37 will be incomplete, creating audit qualification risk and SEC reporting non-compliance"
+    ],
+    "Staffing Implication": [
+     "~10–15 new guarantees per year requiring 1–2 hours each for risk assessment, documentation, and issuance = 15–30 hours/year. Ongoing monitoring requires 1 hour/month. PFRS disclosure preparation requires 2 hours/quarter. Annual review requires 4–6 hours. Total: ~6–8 hours/month, absorbed by Treasury Manager and Treasury Analyst within existing headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contingent liability register: centralized tracking of all guarantees, bonds, and contingent liabilities across entities with full lifecycle management (Issuance → Active → Expired/Called/Released) (W325.4)",
+     "- Guarantee expiry alerting: automated alerts at 60, 30, and 7 days before expiry (W325.5)",
+     "- Integration with underlying workflows: W223–227 (construction — performance bond tracking), W78 (government procurement — bid bond tracking), W117 (lease admin — lease guarantee tracking), W319 (debt facilities — subsidiary corporate guarantees), W230 (legal review — guarantee instrument drafting)",
+     "- PFRS PAS 37 disclosure report: auto-generated contingent liability movement schedule and probability assessment (W325.8)",
+     "- Guarantee call tracking: payment execution, recovery receivable creation, and resolution documentation (W325.6)",
+     "- Integration with W89 (bank reconciliation — guarantee fee payments), W9A (month-end — contingent liability disclosure), W9B (year-end — PAS 37 note), W120 (internal audit — contingent liability controls review), W322 (treasury policy — guarantee DOA)"
+    ],
+    "Time Estimate": [
+     "**Total**: Guarantee issuance — 1–2 days per guarantee (including legal documentation and bank processing); Risk assessment — 1–2 hours/guarantee; Ongoing monitoring — 1 hour/month; PFRS disclosure — 2 hours/quarter; Annual review — 4–6 hours/year; Guarantee call management — urgent, 4–8 hours per call event",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Guarantee issuance request**: triggered by contract award, lease signing, or subsidiary funding need — requesting department (Engineering for construction bonds, Procurement for bid bonds, Real Estate for lease guarantees, Treasury for subsidiary guarantees) submits guarantee request: type, beneficiary, amount, duration, underlying obligation, and expiry date",
+     "duration": "30 min/request",
+     "n": "1",
+     "r": "Requesting Dept"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Risk assessment**: Treasury Manager evaluates the guarantee request — (a) underlying obligation risk: what is the probability of the guarantee being called? (construction non-performance, bid withdrawal, subsidiary default); (b) maximum exposure: guaranteed amount plus any penalties or interest; (c) cross-guarantee netting: is the exposure offset by a counter-guarantee or holdback? (e.g., contractor performance bond offsets BuildRight's guarantee to the bank); (d) existing contingent liability portfolio concentration: does adding this guarantee create excessive exposure to a single beneficiary or contractor?",
+     "duration": "1–2 hours/guarantee",
+     "n": "2",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "Approver",
+     "activity": "**Approval**: tiered by guarantee amount and type — (a) ≤ PHP 50M standard guarantee: CFO approves; (b) PHP 50M–200M: CEO approves; (c) > PHP 200M or subsidiary debt guarantee: Board approves; (d) government bid bonds ≤ PHP 10M: Treasury Manager approves (routine, low risk)",
+     "duration": "15 min/guarantee",
+     "n": "3",
+     "r": "Approver"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Documentation and issuance**: Legal prepares guarantee instrument (per W230 review if non-standard); Treasury Manager coordinates with bank for bank-issued guarantees (bank charges issuance fee, typically 1–2% per annum of guaranteed amount) or executes corporate guarantee letter for direct entity guarantees; guarantee recorded in contingent liability register with: guarantor entity, beneficiary, amount, type, start date, expiry date, underlying reference (contract/lease/loan), and status (Active/Expired/Called/Released)",
+     "duration": "1–2 days",
+     "n": "4",
+     "r": "Legal / Treasury Mgr"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Ongoing monitoring**: Treasury Analyst monitors active guarantees — (a) track approaching expiry dates (system alerts 60 days before expiry); (b) confirm whether underlying obligation is fulfilled (construction completed per W227, lease terminated per W117, bid awarded/lost); (c) if underlying obligation is fulfilled, initiate guarantee release with beneficiary; (d) if underlying obligation is extended (e.g., construction delay), arrange guarantee extension with bank and beneficiary",
+     "duration": "1 hour/month",
+     "n": "5",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Guarantee call management**: if a beneficiary calls a guarantee — (a) Treasury Manager immediately notifies CFO and Legal; (b) Legal reviews call validity (is the call justified under guarantee terms?); (c) if valid: Treasury arranges payment to beneficiary within guarantee timeline; system records guarantee call as actual liability (Dr. Guarantee Call Expense / Cr. Cash, and if recoverable from contractor/subsidiary: Dr. Receivable from Contractor / Cr. Cash); (d) if disputed: Legal engages with beneficiary to contest the call; Treasury ensures cash is available for potential payment pending resolution",
+     "duration": "As needed (urgent)",
+     "n": "6",
+     "r": "Treasury Mgr / Legal"
+    },
+    {
+     "a": "Treasury Mgr",
+     "activity": "**Release and closure**: when underlying obligation is fulfilled and guarantee is no longer needed — (a) Treasury Analyst requests release confirmation from beneficiary; (b) for bank-issued guarantees, instructs bank to release and return any collateral; (c) updates contingent liability register status to \"Released\"; (d) for performance bonds: release is triggered by certificate of completion (W227)",
+     "duration": "30 min/guarantee",
+     "n": "7",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Controller",
+     "activity": "**PFRS disclosure preparation**: quarterly, Treasury Manager provides contingent liability summary to Controller for financial statement disclosure — (a) list of active guarantees with amounts and beneficiaries, (b) guarantees called during the period, (c) probability assessment of guarantee calls (per PAS 37: remote, possible, probable), (d) movement in contingent liabilities (new issuances, expirations, releases, calls), (e) contingent liability note for quarterly and annual financial statements",
+     "duration": "2 hours/quarter",
+     "n": "8",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Annual comprehensive review**: Treasury Manager reviews all contingent liabilities — (a) assess each active guarantee for continued necessity, (b) identify guarantees for underlying obligations that have been fulfilled but not yet released, (c) evaluate guarantee portfolio concentration (by beneficiary, contractor, entity), (d) review guarantee costs (bank issuance fees) vs. budget, (e) update risk assessments for each guarantee, (f) report to CFO and Audit & Risk Committee",
+     "duration": "4–6 hours/year",
+     "n": "9",
+     "r": "Treasury Mgr"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W117",
+    "W120",
+    "W223",
+    "W227",
+    "W230",
+    "W232",
+    "W319",
+    "W322",
+    "W78",
+    "W89",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-295"
+   ],
+   "fields": {
+    "Frequency": "~30–50 LC openings/month aligned with import PO schedule; ~5–10 LC amendments/month",
+    "Owner": "Treasury Analyst",
+    "Participants": "Treasury Analyst, Import Coordinator, Buyer, CFO (LC approval authority), Issuing Bank, Advising/Confirming Bank",
+    "Trigger": "Import purchase order confirmed with USD-denominated vendor per W2B; vendor requires LC as payment term; or LC amendment requested by vendor/buyer",
+    "Volume": "~400–600 TEUs/month of import goods; each LC typically covers PHP 2.5M–15M (USD 45K–270K) in merchandise; LC bank fees of 0.125–0.25% of LC amount per quarter"
+   },
+   "id": "W1455",
+   "level": 2,
+   "name": "Import Letter of Credit (LC) Opening, Amendment & Bank Fee Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"LC opening request\" (replaces manual Step 1).",
+     "- System auto-record of \"records LC in ERP as contingent liability with bank fees, LC number, and expiry…\" (replaces manual Step 2).",
+     "- System auto-submit of \"submits LC amendment to issuing bank\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight imports ~40% of its COGS from international vendors (China, Taiwan, Indonesia, Malaysia, Japan, Europe) per model company profile Section 6.5. Many international vendors — particularly for high-value shipments like tiles, power tools, appliances, and building materials — require payment via Letter of Credit (LC), a bank-guaranteed payment instrument that protects both buyer and seller. BuildRight opens LCs through its primary banking partners (BDO, BPI, Metrobank, Chinabank) per Section 10.4. The LC lifecycle includes: (a) LC application and issuance (with BuildRight's cash or credit line as collateral), (b) shipment and document presentation by vendor's bank, (c) document review by BuildRight's issuing bank, (d) payment to vendor's bank upon compliant document presentation, and (e) LC settlement with BuildRight. Each LC incurs bank fees (opening fee, amendment fee, discrepancy fee, advising fee) totaling 0.5–1.5% of LC value — a significant cost on PHP 1.4B/month of import spend. This workflow manages the LC opening process, amendments, fee tracking, and coordination between Treasury, Import Coordination, and banking partners."
+    ],
+    "Controls": [
+     "- CTL-295 (ensure controlled execution — FX & Investments (PA-18.3).)",
+     "- operational: Treasury Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **LC document discrepancy rate**: ~30% of LC presentations have discrepancies (late shipment, incorrect document, quantity mismatch) per banking industry data; each discrepancy delays payment by 3–7 days and incurs USD 50–150 bank fees",
+     "- **LC bank fee cost**: total LC fees of 0.5–1.5% of LC value on ~PHP 1.4B/month import spend = PHP 7M–21M/year in bank fees; significant cost that directly impacts import gross margin",
+     "- **Credit line utilization**: BuildRight's multi-entity structure means LC issuance across 5 legal entities must be managed against each entity's individual bank credit line; LC concentration in BuildRight Depot Inc. may exhaust credit line during peak import seasons",
+     "- **Physical document dependency**: despite SWIFT electronic transmission, original shipping documents (bill of lading) are still physically couriered, creating risk of document loss or delay in Philippine customs clearance"
+    ],
+    "Staffing Implication": [
+     "- Treasury Analyst: ~25–45 hours/month. Absorbed.",
+     "- Import Coordinator: ~20 min per LC for document coordination; absorbed into W2B workload.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LC management module in ERP tracking LC lifecycle (Application → Issued → Active → Document Received → Paid/Settled → Closed) with bank integration (W1455.2, 4–5)",
+     "- SWIFT message integration via banking portal for LC issuance (MT700) and amendments (MT707) (W1455.2–3)",
+     "- Contingent liability tracking with LC expiry monitoring and auto-reminders (W1455.2)",
+     "- LC fee tracker with automatic cost allocation to import PO landed cost (W1455.6)",
+     "- Integration with W2B (import PO), W7 (vendor payment), W80 (FX hedging), W18 (banking)"
+    ],
+    "Time Estimate": [
+     "- Per LC opening: 50–90 min; Per amendment: 15–20 min; Per document review: 1–2 hours",
+     "- **Annual effort**: ~500–600 hours/year",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Analyst",
+     "activity": "**LC opening request**: Import Coordinator submits LC opening request to Treasury after PO confirmation per W2B: (a) LC application form with vendor details, shipment details, commodity description, LC amount (USD), latest shipment date, document requirements (commercial invoice, packing list, bill of lading, certificate of origin, insurance certificate); (b) attach approved import PO and proforma invoice; (c) specify LC type (irrevocable, confirmed or unconfirmed, at sight or deferred payment); (d) Treasury verifies import PO approval status, vendor credit terms, and budget allocation",
+     "duration": "20–30 min",
+     "n": "1",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "CFO (if > USD 100K)",
+     "activity": "**LC approval & issuance**: (a) Treasury Analyst reviews LC request: verifies LC amount against approved PO, confirms availability under BuildRight's bank credit line, checks FX rate exposure; (b) LC amount > USD 100K (PHP ~5.6M): CFO approval required; (c) LC amount > USD 500K (PHP ~28M): CEO/Board approval required; (d) Treasury submits LC application to issuing bank via online banking portal; (e) bank reviews BuildRight's collateral position and credit line utilization; (f) bank issues LC and transmits SWIFT MT700 to vendor's advising bank; (g) Treasury records LC in ERP as contingent liability with bank fees, LC number, and expiry date",
+     "duration": "30–60 min",
+     "n": "2",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**LC amendment processing**: If LC terms require amendment (e.g., shipment date extension, quantity adjustment, price change per vendor negotiation): (a) Buyer or Import Coordinator requests amendment with justification; (b) Treasury submits LC amendment to issuing bank; (c) bank transmits SWIFT MT707 to advising bank; (d) amendment fee (typically USD 50–100) charged by bank; (e) Treasury updates LC record in ERP with amended terms and fee",
+     "duration": "15–20 min",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Document presentation & review**: Upon shipment, vendor's bank presents shipping documents to BuildRight's issuing bank: (a) issuing bank sends document copies to Treasury and Import Coordinator for review; (b) verify documents match LC terms: (i) correct quantities and descriptions match PO, (ii) shipment within LC latest shipment date, (iii) documents comply with LC requirements; (c) if discrepancies found: (i) notify vendor's bank of discrepancies, (ii) negotiate acceptance or rejection with Buyer, (iii) if acceptable discrepancy: issue discrepancy acceptance; (iv) discrepancy fee (USD 50–150) charged by bank",
+     "duration": "1–2 hours",
+     "n": "4",
+     "r": "Treasury Analyst / Import Coordinator"
+    },
+    {
+     "a": "CFO",
+     "activity": "**LC payment**: Upon compliant document presentation (or discrepancy acceptance): (a) issuing bank debits BuildRight's USD account for LC amount; (b) Treasury confirms payment in ERP; (c) system updates import PO payment status per W7; (d) actual FX rate recorded for cost accounting (may differ from hedged rate per W80)",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**LC fee tracking & cost allocation**: Treasury tracks all LC-related fees: (a) opening commission (0.125–0.25% per quarter of LC amount); (b) amendment fee (USD 50–100 per amendment); (c) discrepancy fee (USD 50–150); (d) advising/confirming bank fee; (e) courier fee for physical documents; (f) total LC fees allocated to import PO cost for accurate landed cost per W2B; (g) monthly LC fee report provided to Finance Controller for import cost analysis",
+     "duration": "2 hours/month",
+     "n": "6",
+     "r": "Treasury Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W18",
+    "W2B",
+    "W7",
+    "W80"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-295"
+   ],
+   "fields": {
+    "Frequency": "Monthly settlement; quarterly rate review",
+    "Owner": "Treasury Analyst",
+    "Participants": "Treasury Analyst, Finance Controller, Tax Accountant, Intercompany Accountant, CFO",
+    "Trigger": "Monthly intercompany settlement cycle; or IC payable/receivable balance exceeds PHP 10M threshold; or quarterly transfer pricing rate review",
+    "Volume": "~PHP 200–400M in monthly intercompany transactions across 5 entities; ~30–50 IC FX settlements/month"
+   },
+   "id": "W1456",
+   "level": 2,
+   "name": "Multi-Entity Intercompany FX Settlement & Transfer Pricing Rate Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly IC payable/receivable summary by entity pair\" (replaces manual Step 1).",
+     "- System rule-based auto-approval of \"Transfer pricing rate application\" (replaces manual Step 2).",
+     "- System auto-post of \"posts IC settlement entries in both entities' GLs with IC elimination tags\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight operates through 5 legal entities with significant intercompany (IC) transactions per model company profile Section 2: warehousing fees from Logistics to Depot, ecommerce fulfillment fees from Digital Commerce to Depot, lease payments from Depot to Property Management, and management fees from Holdings to subsidiaries. When IC transactions involve foreign currency, the IC settlement requires FX conversion at an appropriate transfer pricing rate. Philippine transfer pricing rules (BIR Revenue Regulation No. 02-2013, aligned with OECD guidelines) require arm's-length pricing, including the FX rate used for settlement. This workflow manages the monthly IC FX settlement process and quarterly transfer pricing rate governance."
+    ],
+    "Controls": [
+     "- CTL-295 (ensure controlled execution — FX & Investments (PA-18.3).)",
+     "- operational: Treasury Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **BIR transfer pricing audit exposure**: inconsistent FX rates across IC settlements create audit risk under RR 02-2013",
+     "- **FX gain/loss volatility**: ~PHP 200–400M monthly IC transactions; 1% PHP/USD movement = PHP 2–4M IC FX gain/loss per month",
+     "- **Multi-bank complexity**: 5 entities with accounts at 4 banks; cross-bank transfers with T+1 lag and FX rate mismatch",
+     "- **TP documentation burden**: all 5 entities exceed PHP 50M related-party threshold; annual documentation required"
+    ],
+    "Staffing Implication": [
+     "- Treasury Analyst: ~18 hours/year; Intercompany Accountant: ~12 hours/year; Tax Accountant: ~41 hours/year. All absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IC balance aggregation with currency identification (W1456.1)",
+     "- Transfer pricing rate table with BSP rate integration (W1456.2)",
+     "- IC settlement execution with inter-entity journal posting and elimination tags (W1456.3)",
+     "- IC FX gain/loss calculation and allocation engine (W1456.4)",
+     "- Integration with W17 (consolidation), W80 (FX hedging), W18 (banking), W29 (exchange rates)"
+    ],
+    "Time Estimate": [
+     "- **Annual effort**: ~71 hours/year (Treasury Analyst ~18 + Intercompany Accountant ~12 + Tax Accountant ~41)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly IC balance aggregation**: System generates monthly IC payable/receivable summary by entity pair; identify USD-denominated portion requiring FX settlement",
+     "duration": "Automated + 30 min",
+     "n": "1",
+     "r": "System / Intercompany Accountant"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Transfer pricing rate application**: Treasury Analyst applies approved rate: BSP spot rate, monthly average, or forward rate per W80; system converts USD IC balances to PHP at approved rate",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**IC settlement execution**: Treasury initiates inter-entity bank transfer (book entry for same-bank, T+1 for cross-bank); system posts IC settlement entries in both entities' GLs with IC elimination tags",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly IC FX gain/loss allocation**: System calculates FX gain/loss on each IC settlement; allocates to entity bearing FX risk per Transfer Pricing Policy",
+     "duration": "1 hour/month",
+     "n": "4",
+     "r": "Intercompany Accountant"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Quarterly transfer pricing rate review**: Tax Accountant and Finance Controller review IC FX rate methodology quarterly; verify BSP rate vs. actual settlement rates (variance < 1%); document rate methodology per RR 02-2013",
+     "duration": "4 hours/quarter",
+     "n": "5",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "VP Legal / CFO",
+     "activity": "**Annual transfer pricing documentation**: Tax Accountant prepares annual TP documentation per RR 02-2013: transaction summary, pricing method, benchmarking analysis, arm's-length justification",
+     "duration": "20–30 hours/year",
+     "n": "6",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W17",
+    "W18",
+    "W29",
+    "W80"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-295"
+   ],
+   "fields": {
+    "Frequency": "Monthly mark-to-market; quarterly hedge effectiveness testing; ad-hoc for significant FX movements",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Analyst, Controller, External Auditor, CFO",
+    "Trigger": "Month-end accounting close; or significant FX rate movement (> 2% in a week); or quarterly hedge effectiveness assessment",
+    "Volume": "~10–15 active FX forward contracts at any time; ~PHP 1.4B/month in import-related FX exposure"
+   },
+   "id": "W1473",
+   "level": 2,
+   "name": "FX Hedge Effectiveness Testing, Mark-to-Market Valuation & Accounting Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records MTM adjustment in GL\" (replaces manual Step 1).",
+     "- System auto-document of \"Settlement of maturing contracts\" (replaces manual Step 2).",
+     "- System auto-match of \"Quarterly hedge effectiveness testing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot imports ~40% of COGS (PHP 1.4B/month) from China, Taiwan, Indonesia, Malaysia, Japan, and Europe, creating significant USD and EUR exposure. Per W80, Treasury enters into FX forward contracts to hedge anticipated import payments. Philippine Financial Reporting Standards (PFRS 9 — Financial Instruments) requires that hedging instruments be measured at fair value (mark-to-market) and that hedge effectiveness be assessed prospectively and retrospectively. If a hedge is deemed ineffective, the change in fair value must be recognized in profit or loss immediately (rather than deferred in other comprehensive income), creating P&L volatility. This workflow manages the monthly mark-to-market valuation, quarterly hedge effectiveness testing, and accounting compliance for BuildRight's FX hedging program."
+    ],
+    "Controls": [
+     "- CTL-295 (ensure controlled execution — FX & Investments (PA-18.3).)",
+     "- operational: Treasury Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **PFRS 9 complexity** — hedge accounting under PFRS 9 requires extensive documentation (hedging relationship designation, risk management objective, effectiveness testing methodology); non-compliance results in all derivative changes hitting P&L, creating earnings volatility; mitigated by the Treasury Manager review and approval gate and operational: periodic reconciliation against source documents",
+     "- **Bank forward rate reliability** — MTM valuation depends on bank-quoted forward rates which may include spread markup; External Auditor may challenge valuation methodology",
+     "- **Forecast inaccuracy impact** — if actual import purchases differ significantly from forecasted amounts used to size hedge, the hedge becomes ineffective; close coordination with Supply Planning per W31 is essential",
+     "- **Auditor scrutiny** — hedging is a high-risk audit area; External Auditor requires full documentation trail for each contract from inception through settlement; mitigated by the Treasury Manager review and approval gate and operational: periodic reconciliation against source documents"
+    ],
+    "Staffing Implication": [
+     "- **Treasury Analyst**: ~4 hours/month on MTM + 2 hours/settlement × ~3 settlements/month = ~10 hours/month; absorbed",
+     "- **Treasury Manager**: ~1 day/quarter on effectiveness testing + ad-hoc exposure monitoring; absorbed",
+     "- **Controller**: ~2 days/quarter on disclosure preparation; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury management module — FX contract register with MTM calculation engine (W1473.1)",
+     "- Bank API — current forward rate retrieval for mark-to-market (W1473.1)",
+     "- Hedge effectiveness testing tool — dollar-offset calculation with threshold alerting (W1473.3)",
+     "- GL integration — derivative accounting entries with OCI/P&L classification per PFRS 9 (W1473.1–2)",
+     "- Integration with W80 (FX hedging), W86 (financial close), W31 (demand forecast), W321 (FX exposure reporting)"
+    ],
+    "Time Estimate": [
+     "- Monthly MTM: 4 hours",
+     "- Settlement processing: ~6 hours/month",
+     "- Quarterly effectiveness: 1 day",
+     "- Disclosure preparation: 2 days/quarter",
+     "- **Annual estimate: ~180–200 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Manager",
+     "activity": "**Monthly mark-to-market valuation** (during month-end close per W86): (a) Treasury Analyst retrieves current FX forward rates from bank counterparties for all open contracts: remaining tenor, contracted rate vs. current market rate, notional amount; (b) calculates unrealized gain/loss per contract: (contracted rate − current forward rate) × notional amount; (c) aggregates total mark-to-market position across all open contracts; (d) records MTM adjustment in GL: Dr./Cr. Derivative Financial Asset/Liability, Cr./Dr. Other Comprehensive Income (effective hedge) or P&L (ineffective hedge portion)",
+     "duration": "4 hours/month",
+     "n": "1",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Settlement of maturing contracts**: (a) when an FX forward contract matures: (i) bank settles the contract — BuildRight buys/sells foreign currency at contracted rate; (ii) Treasury Analyst verifies settlement amount matches contract terms; (iii) realized gain/loss = difference between contracted rate and spot rate at inception; (iv) system records: Dr. Cash (USD), Cr./Dr. Cash (PHP), Cr./Dr. Realized FX Gain/Loss; (b) Treasury Analyst reconciles settled contract with original hedge documentation (hedged item, risk, strategy) per PFRS 9 requirements",
+     "duration": "2 hours/settlement",
+     "n": "2",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly hedge effectiveness testing**: (a) Treasury Manager performs hedge effectiveness assessment using dollar-offset method: (i) cumulative change in fair value of hedging instrument ÷ cumulative change in fair value of hedged item = hedge ratio; (ii) hedge is effective if ratio is between 80% and 125% (PFRS 9 bright-line test); (b) if hedge fails effectiveness test: (i) reclassify deferred OCI amounts to P&L, (ii) assess whether hedging relationship should be discontinued, (iii) document reason for ineffectiveness (e.g., hedged item partially settled, timing mismatch); (c) prospective effectiveness: assess whether hedging strategy remains appropriate for next quarter based on updated import forecasts per W31",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**PFRS 9 disclosure preparation**: (a) Controller compiles FX hedge disclosures for quarterly and annual financial statements: (i) hedging instruments: notional amounts, fair values, remaining maturities, (ii) hedge effectiveness results, (iii) amounts reclassified from OCI to P&L, (iv) ineffectiveness gains/losses recognized in P&L; (b) External Auditor reviews hedge documentation and effectiveness testing as part of annual audit per W86",
+     "duration": "2 days/quarter",
+     "n": "4",
+     "r": "Controller / External Auditor"
+    },
+    {
+     "a": "CFO",
+     "activity": "**FX exposure monitoring & hedge adjustment**: (a) if PHP/USD moves > 2% in a week: Treasury Manager reassesses hedge coverage — is the current hedge ratio adequate for remaining import exposure? (b) if import forecast changes significantly (new large vendor order, cancelled shipment): adjust hedge position — roll forward contract, enter new contract, or allow partial hedge lapse per W80; (c) document hedge adjustments with updated hedge documentation per PFRS 9",
+     "duration": "Per trigger",
+     "n": "5",
+     "r": "Treasury Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W31",
+    "W321",
+    "W80",
+    "W86"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-295"
+   ],
+   "fields": {
+    "Frequency": "Monthly portfolio review; quarterly counterparty risk assessment; ad-hoc for cash surplus or market events",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Analyst, CFO, Bank Relationship Manager, Controller, Investment Committee (CFO + Controller + Treasury Manager)",
+    "Trigger": "Monthly investment review; or significant cash surplus identified in cash forecast per W76; or counterparty credit event",
+    "Volume": "Average surplus cash of PHP 500M–1B available for short-term investment; ~5–8 active investment placements at any time"
+   },
+   "id": "W1474",
+   "level": 2,
+   "name": "Surplus Cash Investment Portfolio Review, Counterparty Risk Assessment & Yield Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Monthly portfolio review\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify counterparty risk acceptable per step 3\" (replaces manual Step 2).",
+     "- System auto-count of \"Counterparty risk assessment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's daily cash receipts (~PHP 5B/month) frequently exceed immediate disbursement needs, creating surplus cash available for short-term investment. Per W318, Treasury places surplus cash in time deposits, money market funds, and government securities. However, the Philippine investment landscape requires balancing yield against: (a) counterparty risk (bank failures are not unheard of in the Philippines), (b) liquidity needs (surplus may be needed for vendor payments, capex, or seasonal inventory build-up), and (c) regulatory constraints (BSP regulations on corporate investments, PDIC deposit insurance limits of PHP 500K per depositor per bank). This workflow manages the systematic review of BuildRight's investment portfolio, counterparty risk assessment, and yield optimization to maximize returns while preserving capital and liquidity."
+    ],
+    "Controls": [
+     "- CTL-295 (ensure controlled execution — FX & Investments (PA-18.3).)",
+     "- operational: Treasury Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **PDIC insurance gap** — PDIC covers only PHP 500K per depositor per bank; BuildRight's PHP 500M–1B portfolio is largely uninsured; counterparty risk management is the primary protection; mitigated by the Treasury Manager review and approval gate",
+     "- **Yield vs. liquidity trade-off** — longer-term placements offer higher yields but lock up cash needed for seasonal inventory build-up (Q4 holiday season, summer construction season); sophisticated laddering required",
+     "- **Bank failure risk**: while rare for major Philippine banks (BDO, BPI, Metrobank), mid-size bank failures have occurred (e.g., Export Bank, LBC Bank); diversification limits mitigate concentration risk",
+     "- **Interest rate volatility** — BSP policy rate changes (2022–2024 rate hike cycle) create mark-to-market losses on fixed-rate placements if BuildRight needs to break a time deposit early (with penalty)"
+    ],
+    "Staffing Implication": [
+     "- **Treasury Analyst**: ~2 hours/month on portfolio monitoring + 30 min/maturity × ~8/month + 4 hours/quarter on counterparty review = ~60 hours/year; absorbed",
+     "- **Treasury Manager**: ~2 hours/month + 2 hours/quarter on yield optimization + Investment Committee meetings = ~40 hours/year; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Investment portfolio management module — placement register with yield tracking and maturity alerting (W1474.1, 4)",
+     "- Cash forecast integration per W76 — surplus identification for investment decisions (W1474.2)",
+     "- Counterparty risk rating system — internal risk assessment with diversification limit monitoring (W1474.3)",
+     "- Investment Committee approval workflow — digital approval with documentation trail (W1474.2)",
+     "- Benchmark analytics — yield comparison vs. market rates (W1474.5)",
+     "- Integration with W318 (investment placement), W76 (cash forecast), W86 (financial close), W319 (debt facility)"
+    ],
+    "Time Estimate": [
+     "- Monthly review: 2 hours",
+     "- Per placement decision: 1 hour × ~8/year = 8 hours",
+     "- Quarterly counterparty: 4 hours",
+     "- Quarterly yield optimization: 2 hours",
+     "- Maturity management: ~4 hours/month",
+     "- **Annual estimate: ~91 hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "**Monthly portfolio review**: (a) Treasury Analyst compiles investment portfolio summary: (i) all active placements — instrument type, bank/issuer, principal amount, interest rate, maturity date, days to maturity; (ii) portfolio yield vs. benchmark (91-day T-bill rate or PHP SONIA); (iii) laddering profile — maturities distributed to ensure liquidity windows; (iv) PDIC coverage analysis — ensure no single bank holds deposits exceeding practical insurance recovery threshold; (b) Treasury Manager reviews: is the portfolio appropriately positioned given current cash forecast per W76 and upcoming disbursement needs?",
+     "duration": "2 hours/month",
+     "n": "1",
+     "r": "Treasury Analyst / Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Surplus cash investment decision**: When cash forecast per W76 shows > PHP 200M surplus for > 30 days: (a) Treasury Manager proposes investment placement: (i) amount, (ii) instrument (time deposit 30/60/90 days, money market fund, T-bill), (iii) bank/issuer selection, (iv) target yield; (b) Investment Committee (CFO + Controller + Treasury Manager) approves placement: (i) verify counterparty risk acceptable per step 3, (ii) verify maturity aligns with forecasted cash needs, (iii) verify diversification limits not breached; (c) Treasury Analyst executes placement with approved bank",
+     "duration": "1 hour/decision",
+     "n": "2",
+     "r": "Treasury Manager / Investment Committee"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Counterparty risk assessment**: (a) quarterly: Treasury Analyst evaluates bank counterparties: (i) CAMELS rating (if available from BSP), (ii) capital adequacy ratio, (iii) non-performing loan ratio, (iv) credit rating from Philippine rating agencies (PhilRatings, CRIF), (v) PDIC membership status, (vi) any regulatory actions or negative news; (b) assign internal risk rating: Green (no concerns), Yellow (monitor — reduce exposure), Red (exit — withdraw funds at maturity); (c) maintain counterparty diversification limits: no single bank > 30% of total investment portfolio, minimum 3 active banking counterparties; (d) for government securities: BSP-registered PD participants only",
+     "duration": "4 hours/quarter",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Maturity & rollover management**: (a) system alerts Treasury Analyst 5 days before each investment maturity; (b) Treasury Analyst assesses: (i) does BuildRight need the cash at maturity? If yes: let placement mature, funds returned to operating account; (ii) can BuildRight afford to reinvest? If yes: negotiate rollover rate with bank based on current market rates and counterparty approval per step 3; (c) document rollover decision with yield comparison vs. alternative placements",
+     "duration": "30 min/maturity",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Yield optimization & benchmarking**: (a) quarterly: Treasury Manager benchmarks BuildRight's portfolio yield against: (i) BSP policy rate, (ii) 91-day T-bill average, (iii) peer company treasury yields (if available from industry surveys); (b) identify opportunities: (i) extend maturity ladder if yield curve is steep (lock in higher rates), (ii) shorten maturity if rate increases expected (maintain flexibility), (iii) diversify into higher-yielding instruments (commercial papers, corporate bonds) within approved risk limits; (c) Investment Committee reviews and approves any changes to investment strategy or counterparty limits",
+     "duration": "2 hours/quarter",
+     "n": "5",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Investment accounting & reporting**: (a) monthly: Treasury Analyst records interest income accruals in GL per W86; (b) quarterly: Controller verifies investment valuations (amortized cost for held-to-maturity, fair value for trading); (c) annual: External Auditor confirms investment balances and counterparty risk assessment as part of W86 financial audit",
+     "duration": "Per W86",
+     "n": "6",
+     "r": "Treasury Analyst / Controller"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W318",
+    "W319",
+    "W76",
+    "W86"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-295",
+    "CTL-60"
+   ],
+   "fields": {
+    "Frequency": "Rare; expected < 1 material event per year chain-wide (mid-size Philippine bank failures have occurred — Export Bank, LBC Bank precedents per W1474's counterparty canon)",
+    "Owner": "Treasury Manager",
+    "Participants": "CFO, Treasury Analyst, Finance Controller, AP Manager (payment rerouting per W556), Payroll Manager (payroll funding per W5540), Legal (PDIC claims, contract review), Trade Finance (LC lines per W1455), Internal Audit (loss assessment), BCP Manager (W848 linkage if service-wide), relationship banks (alternate-channel activation)",
+    "Trigger": "A bank holding BuildRight operating accounts, payroll funding accounts, or W318/W1474 placements is placed under BSP/PMC intervention (receivership, conservatorship), freezes withdrawals, or suffers an outage exceeding 24 hours that blocks collections or disbursements",
+    "Volume": "1 bank event × all exposed balances (operating accounts, payroll funding accounts, time placements) × the next-10-business-day disbursement calendar (payroll funding per W10/W5540, AP per W556, LC obligations per W1455)"
+   },
+   "id": "W5541",
+   "level": 2,
+   "name": "Bank-Failure & Frozen-Deposit Contingency",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Bank-health news/regulatory-action feeds auto-flag exposed accounts and pre-populate the exposure census (replaces manual Step 1 enumeration)",
+     "- The 10-day obligations-vs-accessible-cash gap model auto-computes from the treasury workbench and AP/payroll calendars (replaces manual Step 2 assembly)"
+    ],
+    "Background": [
+     "The counterparty-risk canon exists — W1474's diversification and PDIC-coverage review (PHP 500K per depositor per bank, per PA-18.3's background) and the concentration limits in the investment policy — but both govern the *steady state*. No workflow owned the event: the exposure census when a bank actually fails, rerouting collections and disbursements within days, filing PDIC deposit-insurance claims for balances above the insured cap, and the governance/disclosure follow-through. Frozen funds in a payroll-funding account trigger the W5540 payroll-failure chain; frozen collections accounts starve the W556 payment run. PDIC payout mechanics (claim filing within the 2-year claims window, insured-cap documentation) are a legal-operations task, not a treasury nicety. This workflow is that event canon, chained to W318/W1474 (placement limits), W5540 (payroll contingency), and W848/W849 (if the failure is part of a wider continuity event)."
+    ],
+    "Controls": [
+     "- CTL-295 (ensure controlled execution — FX & Investments (PA-18.3).); CTL-60 (ensure investment policy compliance.)",
+     "- operational: no standing instruction to an intervention-affected bank executes after the freeze flag; every rerouting step is dual-confirmed (Treasury + Finance Controller)",
+     "- operational: uninsured balances are written off only via the W81-class approval path with Audit sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Uninsured-loss risk**: placements above the PHP 500K PDIC cap at a failing bank are loss-exposed; mitigated by the W1474 concentration caps and, post-event, the Step-5 policy recalibration",
+     "- **Timing-scissors risk**: collections stranded at the failed bank while payroll/AP obligations fall due; mitigated by the 10-day gap model (Step 2) and pre-agreed alternate-bank channels (Step 3)",
+     "- **Payroll-cascade risk**: frozen payroll-funding account becomes a W5540 payday failure; mitigated by the explicit W5540 chain activation in Step 3",
+     "- **Claims-lapse risk**: PDIC claims missed inside the 2-year window or poorly documented; mitigated by the Legal-owned claim file with the insured/uninsured computation (Step 4)",
+     "- **Recurrence risk**: limits recalibrated on paper but new placements drift back to concentration; mitigated by the Step-5 limit re-papering and VS-21.2 KRI monitoring"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within the existing Treasury, AP, Payroll and Legal functions; the W1474 annual review already owns the steady-state half. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Bank-account master with bank-health flags & instruction freeze switch (per-account standing-instruction suspension)",
+     "- 10-day cash-flow calendar vs stranded-funds gap model (links to W317-class daily cash position / W318 placement registry)",
+     "- AP payment-run re-pointing & mandate/file-format management (links to W556)",
+     "- Payroll funding-account configuration & W5540 event-chain linkage",
+     "- PDIC claim file with deposit documentation & insured/uninsured computation (links to VS-88 document control)",
+     "- Intercompany loan posting & treasury journal entries (links to VS-72 shared-services mechanics)",
+     "- Board/Audit-Committee reporting pack & disclosure-controls log (links to W5017)"
+    ],
+    "Time Estimate": [
+     "Per event: Steps 1–3 (census, impact, rerouting) ≈ 60–120 staff-hours across Treasury, AP, Payroll and Legal in the first week; Steps 4–6 (claims, policy, governance) ≈ 80–160 staff-hours spread over weeks — event-driven, with the claims window (2 years) setting the outer bound. Steady-state contribution: the annual W1474 counterparty review already rehearses the exposure census; no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Manager",
+     "activity": "**Exposure census (first 24 h)**: enumerate every exposure at the affected bank — operating/collections accounts, payroll funding accounts, W318 time placements, W1474 money-market positions, standby LCs/collaterals posted; classify insured (≤ PHP 500K per depositor per bank per PDIC) vs uninsured; freeze any pending instructions to the affected bank",
+     "duration": "4–8 hrs",
+     "n": "1",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Cash-flow impact assessment**: map the next-10-business-day calendar against stranded funds — payroll funding dates (W10 cycle), AP runs (W556), tax remittances, LC settlements/amortization (W1455/W319); quantify the gap: obligations due vs accessible cash; classify severity (days-of-cover lost)",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Treasury Analyst / Finance Controller"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Rerouting activation**: execute the diversification policy's alternate-bank channel — switch collections sweeps and remittance-in instructions to alternate banks; redirect payroll funding accounts (notifying the W5540 chain); re-point AP disbursement files in W556; temporary intra-group funding per the VS-72 shared-services intercompany mechanics if the gap exceeds accessible cash; update bank-file formats/mandates with the alternate banks",
+     "duration": "2–5 days",
+     "n": "3",
+     "r": "Treasury / AP Manager / Payroll Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**PDIC claims & recovery**: Legal + Treasury prepare and file PDIC deposit-insurance claims for covered accounts within the claims window; document the insured/uninsured split; uninsured balances → loss assessment, write-off approval per the W81-class write-off policy with Audit sign-off; pursue set-off/recourse positions per deposit contracts",
+     "duration": "2–8 weeks elapsed",
+     "n": "4",
+     "r": "Legal / Treasury Analyst"
+    },
+    {
+     "a": "Treasury Manager / CFO",
+     "activity": "**Counterparty & policy review**: recalibrate W1474 counterparty limits and the investment policy's per-bank concentration caps (post-event lesson: e.g. per-bank cap ≤ 25% of liquid holdings, placements only at banks above an asset-quality floor); re-paper mandates and signatories at alternate banks; confirm no other bank breaches the recalibrated limits",
+     "duration": "1–2 weeks",
+     "n": "5",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Audit Committee",
+     "activity": "**Governance, disclosure & board reporting**: materiality assessment per the W5017 disclosure-controls canon (a listed-company material event if losses/gaps cross thresholds); Audit Committee report with loss quantification and policy changes; lender notification if covenant-relevant (liquidity representations per W319); post-event review feeding the VS-21.2 risk register and KRI thresholds",
+     "duration": "2–4 weeks",
+     "n": "6",
+     "r": "CFO / VP Legal / Head of Internal Audit & Risk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W1455",
+    "W1474",
+    "W317",
+    "W318",
+    "W319",
+    "W5017",
+    "W5540",
+    "W556",
+    "W81",
+    "W848",
+    "W849"
+   ]
+  }
+ ]
+}

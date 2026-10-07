@@ -1,0 +1,681 @@
+{
+ "process_area": {
+  "id": "PA-186.2",
+  "title": "Rental Transaction Lifecycle — Booking, Handover, Operation & Return"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/PA-186.2-equipment-rental-transaction-lifecycle.md",
+ "value_stream": {
+  "directory": "VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations",
+  "id": "VS-186",
+  "name": "Compact & Heavy Construction Equipment Rental Fleet Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-05",
+    "CTL-12"
+   ],
+   "fields": {
+    "Frequency": "~3,000–6,000 rentals/yr",
+    "Owner": "Rental Counter Supervisor",
+    "Participants": "Credit Analyst, Customer, Store Manager (override approvals)",
+    "Trigger": "Customer booking (online W5328 or in-store)",
+    "Volume": "1 reservation per rental"
+   },
+   "id": "W5329",
+   "level": 2,
+   "name": "Heavy Equipment Reservation, Quoting & Rental Agreement Generation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Online booking generates the agreement and pre-auth automatically; counter staff only confirm ID and hand over."
+    ],
+    "Controls": [
+     "- CTL-05: prevent unauthorized credit-limit overrides on the deposit hold; CTL-12 (credit approval separated from the counter)."
+    ],
+    "Cross-references": [
+     "- links to VS-12.2 (tool rental agreement W139.2), VS-68 (credit), VS-88 (documents)"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-promise risk**: a unit promised that is actually in maintenance or already reserved; mitigated by reservation drawn from a single real-time availability ledger that includes maintenance holds.",
+     "- **Deposit-shortfall risk**: a deposit hold below the first-loss/deductible leaves BuildRight exposed if the renter damages and walks; mitigated by a minimum deposit sized to the unit class deductible."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental reservation module (per-unit serial + window freeze); quote/rate engine (W5325); credit pre-auth (VS-68); agreement e-sign + vault (VS-88)."
+    ],
+    "Time Estimate": [
+     "- ~55 min per reservation; ~4,500/yr → ~4,100 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Confirm unit availability for the requested window at the chosen hub (single rental-asset ledger).",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Generate quote: base rate (day/week), delivery (W5331), CDW (W5327), deposit hold, and estimated fuel/wear.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Confirm pre-qualification standing (W5326); place deposit pre-auth on card/trade account.",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Generate the rental agreement: serial, hour-meter-out, rate, period, CDW election, and operator acknowledgment.",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Reserve the unit (status: Reserved) and freeze availability for the window.",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Rental Counter Staff"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W139",
+    "W5325",
+    "W5326",
+    "W5327",
+    "W5328",
+    "W5331"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-104"
+   ],
+   "fields": {
+    "Frequency": "Every rental out",
+    "Owner": "Rental Yard Lead",
+    "Participants": "Mechanic, HSE Officer, Customer/Operator",
+    "Trigger": "Customer collects at counter, or unit about to be delivered to jobsite (W5331)",
+    "Volume": "~3,000–6,000 handovers/yr"
+   },
+   "id": "W5330",
+   "level": 2,
+   "name": "Equipment Pre-Rental Inspection, Safety Briefing & Operator Handover",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Inspection app auto-generates the condition baseline and compares it on return; safety briefing delivered via required video on the customer's phone before handover."
+    ],
+    "Controls": [
+     "- CTL-104: rental-equipment condition & safety baselining; operational: no-handover-without-signed-acknowledgment gate."
+    ],
+    "Cross-references": [
+     "- links to VS-12.2 (W1319 safety briefing), VS-24 (HSE), VS-147 (customer/premises safety)"
+    ],
+    "Pain Points / Risks": [
+     "- **Dispute-on-return risk**: no documented pre-rental condition means the customer disputes damage charged on return (the VS-12.2 W1555 pattern, amplified by unit value); mitigated by mandatory photo + signed condition log at handover.",
+     "- **Unsafe-use risk**: an operator who skips the briefing injures themselves or a third party; mitigated by a signed operator acknowledgment and a refusal-to-handover gate if the briefing is not completed."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental inspection app (condition photos + hour-meter-out) feeding the damage-on-return comparison (W5334); telematics handover confirmation; document vault."
+    ],
+    "Time Estimate": [
+     "- ~50 min per handover; ~4,500/yr → ~3,750 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Conduct pre-rental inspection with the customer: condition photos, hour-meter-out, fluids, tires/tracks, safety devices, and damage log.",
+     "duration": "20 min",
+     "n": "1",
+     "r": "Rental Yard Lead"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Deliver class-specific safety briefing: controls, emergency stop, PPE required, load/capacity limits, refueling/charging, and emergency contact.",
+     "duration": "15 min",
+     "n": "2",
+     "r": "HSE Officer"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Verify operator competency acknowledgment (W5326) is signed; re-confirm for high-risk classes (aerial lifts, earthmoving).",
+     "duration": "5 min",
+     "n": "3",
+     "r": "HSE Officer"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Confirm telematics (W5324) is live and geofence set; hand over keys/controls.",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Mechanic"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Capture customer signature on condition + briefing acknowledgment; post to the agreement (VS-88).",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Rental Yard Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1319",
+    "W1555",
+    "W5324",
+    "W5326",
+    "W5331",
+    "W5334"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-25"
+   ],
+   "fields": {
+    "Frequency": "~40–60% of rentals include delivery (~1,500–3,000 deliveries/yr)",
+    "Owner": "Logistics Dispatcher",
+    "Participants": "3PL/Hauler, Store Receiving (at jobsite return), Insurance (W5327)",
+    "Trigger": "Rental with delivery option (vs. customer self-haul)",
+    "Volume": "1 delivery leg per delivered rental (out + return)"
+   },
+   "id": "W5331",
+   "level": 2,
+   "name": "Customer Equipment Transport, Delivery-to-Jobsite & Pickup Logistics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-select qualified hauler and trailer type from equipment weight/dimensions; telematics auto-confirms jobsite arrival."
+    ],
+    "Controls": [
+     "- CTL-25: safeguard inventory in transit; operational: permit-checklist gate before dispatch."
+    ],
+    "Cross-references": [
+     "- links to VS-06 (logistics fleet), VS-56 (3PL delivery), VS-74 (jobsite delivery), VS-110 (freight)"
+    ],
+    "Pain Points / Risks": [
+     "- **Transit-damage risk**: an unchained mini-excavator shifts on a tilt-bed and is damaged or causes a road incident; mitigated by class-specific chain-down SOP and load-down photo evidence.",
+     "- **Permit-default risk**: moving an oversize/overweight unit without the required LGU/LTFRB permit causes fines/impound; mitigated by a permit-checklist gate before dispatch."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Logistics/dispatch (VS-06); 3PL portal (VS-56); telematics geofence in/out; oversized-load permit records (LGU/LTFRB — VS-76/VS-166)."
+    ],
+    "Time Estimate": [
+     "- ~2 hours dispatcher effort per delivered rental; hauler transit varies (0.5–1 day)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Dispatcher",
+     "activity": "Plan transport: equipment weight/dimensions, tilt-bed/lowboy/trailer requirement, and route permits for oversized loads (links VS-74).",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Logistics Dispatcher"
+    },
+    {
+     "a": "Logistics Dispatcher",
+     "activity": "Book qualified hauler (3PL or BuildRight tow vehicle) with cargo/CTR insurance (VS-25/VS-26).",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Logistics Dispatcher"
+    },
+    {
+     "a": "Logistics Dispatcher",
+     "activity": "Load, secure, and chain per equipment class; document load-down photos.",
+     "duration": "45 min",
+     "n": "3",
+     "r": "3PL Driver"
+    },
+    {
+     "a": "Logistics Dispatcher",
+     "activity": "Deliver to jobsite; obtain site sign-off and handover to the customer's operator (W5330).",
+     "duration": "varies",
+     "n": "4",
+     "r": "3PL Driver"
+    },
+    {
+     "a": "Logistics Dispatcher",
+     "activity": "Schedule and execute return pickup; confirm telematics (W5324) re-enters the yard geofence.",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Logistics Dispatcher"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5324",
+    "W5327",
+    "W5330"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-23"
+   ],
+   "fields": {
+    "Frequency": "Continuous while rented",
+    "Owner": "Rental Fleet Manager",
+    "Participants": "IT/IoT Engineer, HSE Officer, Customer",
+    "Trigger": "Unit is out on rental (post W5330)",
+    "Volume": "~40–90 units out at any time (at 3–7-day average rentals on the ~3,000–6,000 rentals/year volume)"
+   },
+   "id": "W5332",
+   "level": 2,
+   "name": "In-Period Equipment Monitoring, Telematics Tracking & Misuse Detection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Rule-based alerting (geofence/hour/tamper) that auto-opens a case and, for high-value units, auto-triggers a kill-switch after an unresolved breach window."
+    ],
+    "Controls": [
+     "- CTL-23: detect theft/fraud via telematics exception; operational: same-day geofence-breach triage SLA."
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT/IoT ops), VS-23 (loss prevention/asset protection), VS-125 (fraud)"
+    ],
+    "Pain Points / Risks": [
+     "- **Theft/abscond risk**: a geofence breach ignored for days becomes an unrecoverable loss on a PHP 5M unit; mitigated by a same-day triage SLA on geofence-breach alerts and a kill-switch on high-value units.",
+     "- **Revenue-leakage risk**: a unit run 14 hours/day on a 1-day booking without an extension call loses billing; mitigated by hour-meter-vs-period auto-flag that prompts extension billing (W5333)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics/IoT platform; ERP rental-lifecycle event stream; alerting/case module."
+    ],
+    "Time Estimate": [
+     "- ~1–2 person-hours/day fleet-wide monitoring; triage per alert ~15 min."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "Monitor telematics feed: location vs. agreed jobsite geofence, hour-meter accumulation, and idle/duty patterns.",
+     "duration": "daily",
+     "n": "1",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "Alert on anomalies: geofence breach (unit leaving the agreed area), excessive hours vs. booked period, or kill-switch/ignition tamper.",
+     "duration": "real-time",
+     "n": "2",
+     "r": "IT/IoT Engineer"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "Triage alerts: contact renter for legitimate job-site moves vs. escalate to recovery (W5336) for a suspected theft/breach.",
+     "duration": "per alert",
+     "n": "3",
+     "r": "Rental Fleet Manager"
+    },
+    {
+     "a": "Rental Fleet Manager",
+     "activity": "Reconcile accumulated hours to the booked period; flag likely overage → extension billing (W5333).",
+     "duration": "daily",
+     "n": "4",
+     "r": "Rental Fleet Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5330",
+    "W5333",
+    "W5336"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-05"
+   ],
+   "fields": {
+    "Frequency": "~20–30% of rentals have a change",
+    "Owner": "Rental Counter Supervisor",
+    "Participants": "Credit Analyst, Customer, Next-in-queue renter",
+    "Trigger": "Renter requests extension; telematics shows overage (W5332); or early return",
+    "Volume": "~1,000–1,800 changes/yr"
+   },
+   "id": "W5333",
+   "level": 2,
+   "name": "Equipment Extension, Rollover, Early Return & Re-rental Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Self-service extension/return in the app that auto-checks conflicts, re-rates, and re-freezes availability."
+    ],
+    "Controls": [
+     "- CTL-05: deposit/credit re-check on extension; operational: reservation-conflict block."
+    ],
+    "Cross-references": [
+     "- links to VS-12.2 (W1318 reservation, W1375 overdue escalation), VS-60 (omnichannel availability)"
+    ],
+    "Pain Points / Risks": [
+     "- **Double-booking risk**: an extension that conflicts with the next confirmed reservation; mitigated by a reservation-conflict check that blocks the extension and offers a substitute unit (VS-12.2 W1374 pattern).",
+     "- **Revenue-leakage risk**: early returns not re-credited to availability leave the unit idle and unbookable; mitigated by automatic availability release on early-return confirmation."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental reservation amendment; rate-engine tier re-rating; availability re-freeze/waitlist (VS-12.2 W1318); billing link."
+    ],
+    "Time Estimate": [
+     "- ~50 min per change; ~1,400/yr → ~1,150 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Validate the change request against the unit's next reservation (no conflict) and renter's credit standing.",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "For extension: re-rate to the appropriate daily/weekly tier and re-confirm deposit/CDW coverage (W5327).",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "For early return: stop billing at actual return, release the remaining window to availability, and notify any waitlist (links VS-149/W139 booking).",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Amend the agreement and capture customer acknowledgment; re-freeze availability.",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Rental Counter Staff"
+    },
+    {
+     "a": "Rental Counter Supervisor",
+     "activity": "Re-invoice/reverse per the change; post to billing (W5335).",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Rental Counter Staff"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1318",
+    "W1374",
+    "W1375",
+    "W139",
+    "W5327",
+    "W5332",
+    "W5335"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-104"
+   ],
+   "fields": {
+    "Frequency": "Every rental return",
+    "Owner": "Rental Yard Lead",
+    "Participants": "Mechanic, Customer, Credit/Billing, Insurance (W5327)",
+    "Trigger": "Unit returns to yard (post W5331 pickup or self-return)",
+    "Volume": "~3,000–6,000 returns/yr"
+   },
+   "id": "W5334",
+   "level": 2,
+   "name": "Heavy Equipment Return Inspection, Damage Assessment & Repair Cost Recovery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- AI image-difference between baseline and return photos auto-flags new damage; repair-cost auto-quote from a parts/labour catalogue."
+    ],
+    "Controls": [
+     "- CTL-104: asset recovery/damage control — inflated or fabricated damage-claim detection."
+    ],
+    "Cross-references": [
+     "- links to VS-12.2 (W139.3 inspection, W1555 damage recovery), VS-26 (insurance claim), VS-89 (recall if damage reveals a defect)"
+    ],
+    "Pain Points / Risks": [
+     "- **Disputed-damage risk**: damage charged without baseline evidence is disputed and erodes customer trust; mitigated by photo-vs-photo baseline comparison at return (the VS-12.2 W139.3 pattern, extended to high-value units).",
+     "- **Lost-recovery risk**: chargeable damage not quoted/recovered at return is absorbed; mitigated by a no-unit-back-to-available gate until damage disposition is closed."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inspection app with baseline-comparison; damage-case module; deposit/CDW settlement link (W5335); maintenance work-order creation."
+    ],
+    "Time Estimate": [
+     "- ~90 min per return with damage; ~30 min clean return; ~4,500/yr → ~2,700 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Inspect against the pre-rental baseline (W5330): compare condition photos, hour-meter-in, fluids, tracks/tires, glass, and structure.",
+     "duration": "25 min",
+     "n": "1",
+     "r": "Rental Yard Lead"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Log any new damage with photos and a damage code; classify fair-wear vs. chargeable.",
+     "duration": "15 min",
+     "n": "2",
+     "r": "Mechanic"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Quote repair cost (parts + labour + downtime) for chargeable damage; confirm with customer.",
+     "duration": "20 min",
+     "n": "3",
+     "r": "Mechanic"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Recover from deposit/CDW/insurance per the agreement (W5327); raise a damage charge invoice if deposit/CDW is insufficient.",
+     "duration": "20 min",
+     "n": "4",
+     "r": "Credit/Billing"
+    },
+    {
+     "a": "Rental Yard Lead",
+     "activity": "Route unit to maintenance (W5337) or back to available; release deposit balance.",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Rental Yard Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W139",
+    "W1555",
+    "W5327",
+    "W5330",
+    "W5331",
+    "W5335",
+    "W5337"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-20",
+    "CTL-22"
+   ],
+   "fields": {
+    "Frequency": "Every rental close + weekly billing for open rentals",
+    "Owner": "Rental Billing Lead",
+    "Participants": "Credit/Billing, Customer, Finance",
+    "Trigger": "Rental closes (return W5334) or periodic billing for long rentals",
+    "Volume": "~3,000–6,000 invoices/yr"
+   },
+   "id": "W5335",
+   "level": 2,
+   "name": "Equipment Rental Billing, Deposit/Hold Management & Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-invoice from telematics hours + signed return inspection; auto-release of deposit balance on clean return."
+    ],
+    "Controls": [
+     "- CTL-20: cash/deposit accountability; CTL-22 (correct VAT on rental vs. CDW vs. delivery)."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (order-to-cash), VS-80 (payments), VS-17 (GL), VS-157 (revenue recognition)"
+    ],
+    "Pain Points / Risks": [
+     "- **Billing-accuracy risk**: manual hour entry vs. telematics causes under/over-billing and disputes; mitigated by telematics-sourced actuals as the single billing source.",
+     "- **Revenue-misclassification risk**: CDW (insurance-like) revenue booked as rental revenue distorts margin and tax (percentage tax/VAT) treatment; mitigated by a defined revenue-split GL mapping (links VS-157)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Billing engine reading telematics hours; AR/card settlement (VS-16/VS-80); revenue split to rental/CDW/delivery GL accounts (VS-17/VS-157)."
+    ],
+    "Time Estimate": [
+     "- ~45 min per close; ~4,500/yr → ~3,400 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Billing Lead",
+     "activity": "Compute final charges: actual hours/days from telematics (W5332), delivery, fuel/wear top-up, CDW, and damage (W5334).",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Rental Billing Lead"
+    },
+    {
+     "a": "Rental Billing Lead",
+     "activity": "Apply deposit hold and CDW; calculate net receivable or refund.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Credit/Billing"
+    },
+    {
+     "a": "Rental Billing Lead",
+     "activity": "Generate invoice; post to AR (trade account) or settle against the card pre-auth (links VS-16).",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Rental Billing Lead"
+    },
+    {
+     "a": "Rental Billing Lead",
+     "activity": "Release/refund the deposit balance per the agreement; record revenue split (rental vs. CDW vs. delivery).",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Credit/Billing"
+    },
+    {
+     "a": "CFO",
+     "activity": "Reconcile the rental-day revenue to the fleet utilization analytics (W5342).",
+     "duration": "weekly",
+     "n": "5",
+     "r": "Finance Business Partner"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5332",
+    "W5334",
+    "W5342"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-23",
+    "CTL-26"
+   ],
+   "fields": {
+    "Frequency": "Rare (~0.3–1% of rentals); high impact",
+    "Owner": "Loss Prevention Officer",
+    "Participants": "Corporate Security (VS-159), Legal (VS-100), Police, Insurance (VS-26), Recovery Agent",
+    "Trigger": "Geofence breach unresolved (W5332), overdue non-return (VS-12.2 W1375 escalation), or unit abandoned",
+    "Volume": "~15–60 incidents/yr"
+   },
+   "id": "W5336",
+   "level": 2,
+   "name": "Lost, Stolen or Abandoned Equipment Recovery, Recovery Agent & Police Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Kill-switch auto-triggers after an unresolved geofence breach window; auto-opens an LP case and insurance-notice clock."
+    ],
+    "Controls": [
+     "- CTL-23: theft/fraud detection; CTL-26 (asset loss/charge-off); operational: 48-hour insurance-notice SLA."
+    ],
+    "Cross-references": [
+     "- links to VS-23 (loss prevention), VS-159 (corporate security/investigations), VS-26 (insurance), VS-100 (legal), VS-12.2 (W1375 overdue)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unrecoverable-loss risk**: delayed escalation past the insurance notice window forfeits the claim on a PHP 5M unit; mitigated by a defined escalation timeline (24–48h) and the same-day triage SLA from W5332.",
+     "- **Safety/repo risk**: a recovery agent confronting a hostile renter creates personal-safety and legal exposure; mitigated by licensed-recovery-agent-only engagement and legal coordination (VS-100)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics recovery/kill-switch; LP case module (VS-23); insurance claim register (VS-26); police-blotter reference store."
+    ],
+    "Time Estimate": [
+     "- ~40–80 person-hours per major incident; ~30/yr → ~1,800 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Loss Prevention Officer",
+     "activity": "Confirm the loss: telematics last-known location, kill-switch activation, and contact attempts to the renter.",
+     "duration": "2 hours",
+     "n": "1",
+     "r": "Loss Prevention Officer"
+    },
+    {
+     "a": "Loss Prevention Officer",
+     "activity": "Escalate to Corporate Security and engage a licensed recovery agent; file a police report (theft/embezzlement under RPC).",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Corporate Security"
+    },
+    {
+     "a": "Loss Prevention Officer",
+     "activity": "Notify insurance/captive (W5327/VS-26) within the policy notice window; preserve evidence for the claim.",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Risk & Insurance Manager"
+    },
+    {
+     "a": "Loss Prevention Officer",
+     "activity": "Coordinate recovery/repo where located; if unrecoverable, process the claim and charge-off (VS-35).",
+     "duration": "varies",
+     "n": "4",
+     "r": "Corporate Security"
+    },
+    {
+     "a": "Loss Prevention Officer",
+     "activity": "Update the renter record (blacklist), file legal recovery of the unit value (VS-100), and capture lessons-learned.",
+     "duration": "1 week",
+     "n": "5",
+     "r": "Legal Counsel"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1375",
+    "W5327",
+    "W5332"
+   ]
+  }
+ ]
+}

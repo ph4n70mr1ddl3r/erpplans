@@ -1,0 +1,549 @@
+{
+ "process_area": {
+  "id": "PA-53.1",
+  "title": "Product Warranty Registration & Activation"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-53-warranty-guarantee-management/PA-53.1-warranty-registration-activation.md",
+ "value_stream": {
+  "directory": "VS-53-warranty-guarantee-management",
+  "id": "VS-53",
+  "name": "Warranty & Guarantee Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-194",
+    "CTL-388"
+   ],
+   "fields": {
+    "Frequency": "~420,000 warranty-eligible transactions/month",
+    "Owner": "Cashier / POS System",
+    "Participants": "Store Manager, IT Integration Lead",
+    "Trigger": "Customer purchases warranty-eligible product at POS or online",
+    "Volume": "~420K transactions/month across 200 stores + ecommerce"
+   },
+   "id": "W2118",
+   "level": 2,
+   "name": "POS Warranty Capture at Checkout",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Warranty-eligible auto-detected from the item master; serial auto-validated; vendor-push auto-retried on failure"
+    ],
+    "Controls": [
+     "- CTL-194 (ensure warranty registration & claim integrity.); CTL-388 (ensure controlled execution — Product Warranty Registration & Activation (PA-53.1).)"
+    ],
+    "Pain Points / Risks": [
+     "- **Serial-capture-skipped risk**: the cashier skips the serial-number capture (rushed checkout), making a future claim untraceable to the specific unit; mitigated by the mandatory-serial-field for serial-numbered SKUs (the POS won't proceed without it)",
+     "- **Vendor-API-failure risk**: the registration push to the vendor portal fails silently, so the vendor doesn't know about the warranty; mitigated by the W2123 data-quality audit catching the push failure"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / warranty capture (links to VS-08 / W5B, POS-013 real-time) — the warranty-eligible identification and capture",
+     "- CRM warranty module (links to VS-13 / W17, W156 CDP) — the warranty record",
+     "- Vendor portal (links to VS-28 / W593) — the vendor registration push"
+    ],
+    "Time Estimate": [
+     "~90 sec/transaction × ~420,000/month = **~10,500 hours/month Cashier** (absorbed into checkout, ~15 sec incremental over a normal scan)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Cashier",
+     "activity": "POS auto-identifies warranty-eligible SKU at scan; prompts cashier; captures transaction date, SKU, serial number, store, loyalty ID; generates warranty record in CRM",
+     "duration": "30–60 sec",
+     "n": "1",
+     "r": "POS System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cashier prints warranty card with terms, duration, claim instructions, and registration QR code; customer scans for digital warranty wallet",
+     "duration": "30 sec",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Cashier",
+     "activity": "For serial-numbered items: cashier scans or enters serial number; system validates format and links to item+transaction record",
+     "duration": "15–30 sec",
+     "n": "3",
+     "r": "Cashier"
+    },
+    {
+     "a": "IT Integration Lead",
+     "activity": "System pushes registration to vendor portal (real-time for top 20 vendors; batch daily for others); customer receives SMS/email confirmation",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W156",
+    "W17",
+    "W2123",
+    "W593",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-37",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "~8,580 warranty registrations/month from ecommerce",
+    "Owner": "Ecommerce System / CRM",
+    "Participants": "Ecommerce Ops, Customer",
+    "Trigger": "Ecommerce order with warranty-eligible items fulfilled",
+    "Volume": "~8,580/month"
+   },
+   "id": "W2119",
+   "level": 2,
+   "name": "Online Purchase Warranty Registration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Registration auto-generated on fulfillment; serial-reminders auto-sent; vendor-push auto-retried"
+    ],
+    "Controls": [
+     "- CTL-37: warranty validity; CTL-44 (registration integrity); operational: Ecommerce Ops monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Serial-registration-non-completion risk**: the customer doesn't register the serial within 14 days (they forget), making the warranty unclaimable; mitigated by the day-7 and day-13 reminders and the 14-day grace extension",
+     "- **Fulfillment-trigger-timing risk**: the warranty start-date is the fulfillment confirmation (not the order date), but the customer may expect it from the order date; mitigated by the warranty-start-date clearly stated on the certificate"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce / warranty (links to VS-10 / W11, W98 order) — the auto-registration on fulfillment",
+     "- CRM (links to VS-13 / W17) — the warranty record linked to the customer profile",
+     "- Vendor portal (links to VS-28 / W593) — the vendor push"
+    ],
+    "Time Estimate": [
+     "Automated; Ecommerce Ops ~2 hours/week monitoring = **~100 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Ops",
+     "activity": "Ecommerce platform identifies warranty-eligible SKUs; auto-generates registration upon fulfillment confirmation; sends digital warranty certificate via email",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Customer",
+     "activity": "For serial-numbered items: customer prompted to register serial via online form within 14 days; system sends reminders at day 7 and 13",
+     "duration": "<1 min",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "CRM",
+     "activity": "Warranty data pushed to vendor portal; record linked to customer profile in CRM and visible in mobile app",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W11",
+    "W17",
+    "W593",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-06",
+    "CTL-37"
+   ],
+   "fields": {
+    "Frequency": "~1,050 bulk registrations/month",
+    "Owner": "Trade Account Manager",
+    "Participants": "Head of Trade / Account Management, Customer",
+    "Trigger": "Trade/corporate account purchases warranty items in bulk",
+    "Volume": "~1,050/month; avg 5–15 items per invoice"
+   },
+   "id": "W2120",
+   "level": 2,
+   "name": "Bulk Warranty Registration for Trade Accounts",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Project warranty auto-created from the trade invoice; per-item registration auto-generated; expiry-alerts auto-scheduled"
+    ],
+    "Controls": [
+     "- CTL-37: warranty validity; CTL-06 (project/customer master); operational: Head of Trade / Account Management sign-off on project warranty files"
+    ],
+    "Pain Points / Risks": [
+     "- **Phase-start-date-misalignment risk**: the warranty starts on the invoice date but the item is delivered months later (phased), shortening the effective coverage; mitigated by the project-level start-date tied to delivery confirmation (not invoice date)",
+     "- **Bulk-item-individual-tracking risk**: a 100-item bulk warranty is registered as a block, losing individual-item traceability; mitigated by the per-item registration within the project file"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRM / project warranty (links to VS-13 / W17, VS-11 / W58 corporate account) — the project-level warranty file",
+     "- Phased-delivery integration (links to VS-11 / W164 staged delivery, VS-77 material staging) — the per-phase start-date",
+     "- Vendor portal (links to VS-28 / W593) — the vendor registration"
+    ],
+    "Time Estimate": [
+     "~25 min/bulk × ~1,050/month = **~440 hours/month Trade Account Manager** (distributed across the trade team)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Trade / Account Management",
+     "activity": "Account Manager creates project warranty file in CRM: links all items to project ID, customer account, delivery addresses",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Trade Account Mgr"
+    },
+    {
+     "a": "Trade Account Mgr",
+     "activity": "System auto-registers each item with project-level warranty start date (may differ from invoice date for phased deliveries)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Customer",
+     "activity": "Account Manager sends consolidated warranty schedule to customer; system schedules expiry alerts at 30 and 90 days before expiry",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Trade Account Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W164",
+    "W17",
+    "W58",
+    "W593"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-153",
+    "CTL-37"
+   ],
+   "fields": {
+    "Frequency": "~50–100 requests/month; peaks in summer renovation",
+    "Owner": "Customer Service Rep",
+    "Participants": "CSR, Customer Service Director",
+    "Trigger": "Homeowner requests warranty transfer to new property owner",
+    "Volume": "~50–100/month; avg 10–30 items per property"
+   },
+   "id": "W2121",
+   "level": 2,
+   "name": "Warranty Transfer for Resold Properties",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Transfer auto-processed on CSR verification; vendor-notification auto-sent"
+    ],
+    "Controls": [
+     "- CTL-37: warranty validity; CTL-153 (consented identity-verification data — links to VS-91 / W53); operational: CS Director sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Fraudulent-transfer risk**: a non-owner requests a transfer to access warranty coverage on items they didn't purchase; mitigated by the original-purchase verification (proof of purchase, identity)",
+     "- **Partial-transfer-ambiguity risk**: some items transfer and some don't (the new owner bought some, the old kept some), creating confusion; mitigated by the item-level transfer (not a blanket property transfer)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRM warranty (links to VS-13 / W17) — the original-purchase verification and the transfer record",
+     "- Vendor portal (links to VS-28 / W593) — the vendor-notification of the transfer",
+     "- Extended warranty (links to VS-53 / W2134) — the renewal offer on expired items"
+    ],
+    "Time Estimate": [
+     "~12 min/transfer × ~75/month = **~15 hours/month CSR**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Dir",
+     "activity": "CSR verifies original purchase in CRM; confirms warranty status, remaining coverage; creates transfer record with new owner details",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "CSR",
+     "activity": "System sends transfer confirmation to both parties; updates vendor portal; notes expired items and offers extended warranty renewal",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W17",
+    "W2134",
+    "W53",
+    "W593"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-51"
+   ],
+   "fields": {
+    "Frequency": "~5–10 changes/month; quarterly review",
+    "Owner": "Merchandise Planner",
+    "Participants": "Category Manager, VP Merchandising, IT, Legal",
+    "Trigger": "New product category or warranty terms change",
+    "Volume": "~60–120 changes/year across 35,000 SKUs"
+   },
+   "id": "W2122",
+   "level": 2,
+   "name": "Warranty Master Data Configuration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Warranty config auto-pushed from the item master to POS/ecom; RA 7394-compliance auto-checked"
+    ],
+    "Controls": [
+     "- CTL-51: warranty-master data quality; warranty terms conform to the Consumer Act (RA 7394) — links to VS-22; operational: VP Merchandising sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **RA 7394-non-compliance risk**: the warranty terms don't meet the Consumer Act's minimum (e.g., implied warranty on the sale), creating a consumer-protection exposure; mitigated by the Legal review in step 2",
+     "- **Config-vs-master-desync risk**: the warranty master says one duration but the POS prompt says another (config drift); mitigated by the single-source master and the config-refresh"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item/warranty master (links to VS-29 / W252, W296 service-item master) — the warranty parameters per SKU",
+     "- POS/ecom config (links to VS-08 / POS, VS-10) — the warranty-prompt and serial-capture rules",
+     "- Legal/compliance (links to VS-22 / W22.1 regulatory, VS-88) — the RA 7394 warranty-disclosure review"
+    ],
+    "Time Estimate": [
+     "~2 hours/change × ~7/month = **~14 hours/month** Category Manager + IT + Legal."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager defines warranty parameters: type, duration, coverage scope, claim process; Merch Planner configures in ERP item master",
+     "duration": "30–60 min",
+     "n": "1",
+     "r": "Category Mgr"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "IT configures POS/ecommerce prompts and serial capture rules; Legal reviews for Consumer Act (RA 7394) compliance",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "IT / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W22",
+    "W252",
+    "W296"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-388"
+   ],
+   "fields": {
+    "Frequency": "Monthly audit",
+    "Owner": "Data Quality Analyst",
+    "Participants": "VP Merchandising",
+    "Trigger": "Monthly quality audit schedule",
+    "Volume": "Spot-check ~500 records/month (1%)"
+   },
+   "id": "W2123",
+   "level": 2,
+   "name": "Warranty Data Quality Audit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Quality report auto-generated; root-cause auto-categorized"
+    ],
+    "Controls": [
+     "- CTL-388 (ensure controlled execution — Product Warranty Registration & Activation (PA-53.1).)",
+     "- operational: warranty-data quality; warranty validity — the audit ensures claims are valid; operational: VP Merchandising monthly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Silent-data-decay risk**: warranty records accumulate quality issues (missing serials, orphaned contacts) without detection, undermining claim validity; mitigated by the monthly audit",
+     "- **Root-cause-neglect risk**: quality issues are corrected one-by-one without fixing the systemic cause (a POS config error); mitigated by the root-cause analysis and the system-fix"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Data quality (links to VS-29 / W291 master-data-quality monitoring) — the warranty-record quality checks",
+     "- CRM (links to VS-13 / W17) — the warranty records audited",
+     "- Vendor portal (links to VS-28 / W593) — the vendor-push failure check"
+    ],
+    "Time Estimate": [
+     "~5 hours/month = **~60 hours/year** Data Quality Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Data Quality Analyst",
+     "activity": "System generates quality report: registrations without serials, without contacts, duplicates, date anomalies",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Analyst spot-checks 500 records; identifies root causes; escalates training gaps, config errors, or vendor API failures",
+     "duration": "4–6 hours",
+     "n": "2",
+     "r": "Data Quality Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W17",
+    "W291",
+    "W593"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-37",
+    "CTL-388"
+   ],
+   "fields": {
+    "Frequency": "~10,000–15,000 views/month",
+    "Owner": "Digital Product Manager",
+    "Participants": "Customer, Digital PM, CS Agent",
+    "Trigger": "Customer accesses warranty portal via app/web",
+    "Volume": "~150,000 expected activations in Year 1"
+   },
+   "id": "W2124",
+   "level": 2,
+   "name": "Warranty Digital Wallet & Customer Portal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Wallet auto-populated from the CRM; alerts auto-sent; claim-initiation auto-routed"
+    ],
+    "Controls": [
+     "- CTL-388: data-privacy handling — links to VS-91 / W53; CTL-37 (warranty validity in the portal); operational: Digital PM adoption review"
+    ],
+    "Pain Points / Risks": [
+     "- **Adoption-low risk**: customers don't activate the digital wallet, so the proactive alerts and self-service claim don't reach them; mitigated by the QR-code at checkout (W2118) and the activation incentive",
+     "- **Data-privacy risk**: the portal shows purchase history and product details; mitigated by the RA 10173 consent and authentication per VS-91 / W53"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- App/web portal (links to VS-75 / digital engagement, VS-10 / W98) — the warranty wallet surface",
+     "- CRM (links to VS-13 / W17, W156 CDP) — the warranty data source",
+     "- Push notifications (links to VS-75 app) — the proactive alerts"
+    ],
+    "Time Estimate": [
+     "~4 hours/week Digital PM = **~200 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Digital PM",
+     "activity": "Customer logs in; sees all warranties by status (active, expiring, expired); can view details, claim history, remaining coverage",
+     "duration": "<1 min/customer",
+     "n": "1",
+     "r": "Customer / System"
+    },
+    {
+     "a": "Customer",
+     "activity": "System proactively alerts: warranty expiring in 90 days, product recall notifications, seasonal maintenance reminders",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "CS Agent",
+     "activity": "Customer can initiate claim from portal; upload photos; track status in real-time with push notifications",
+     "duration": "5–10 min",
+     "n": "3",
+     "r": "Customer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W156",
+    "W17",
+    "W2118",
+    "W53",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-388"
+   ],
+   "fields": {
+    "Frequency": "Monthly dashboard; weekly metrics",
+    "Owner": "VP Merchandising",
+    "Participants": "Category Managers, CS Director",
+    "Trigger": "Monthly reporting cycle",
+    "Volume": "Full chain: 200 stores + ecommerce + trade"
+   },
+   "id": "W2125",
+   "level": 2,
+   "name": "Warranty Program KPI Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Dashboard auto-refreshed; high-claim-rate auto-flagged; weekly operational metrics auto-distributed"
+    ],
+    "Controls": [
+     "- CTL-388 (ensure controlled execution — Product Warranty Registration & Activation (PA-53.1).)",
+     "- CTL-388: warranty-program register accuracy; operational: VP Merchandising monthly sign-off; Category Manager review on >5% claim rate"
+    ],
+    "Pain Points / Risks": [
+     "- **Claim-rate-spike-blindness risk**: a category's claim rate spikes (a quality issue) but isn't caught until month-end; mitigated by the weekly operational metrics alongside the monthly dashboard",
+     "- **Cost-vs-customer-experience-imbalance risk**: pushing the warranty-cost % down (denying more claims) erodes customer satisfaction; mitigated by the satisfaction KPI alongside the cost KPI"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113) — the warranty-program dashboard",
+     "- CRM/warranty (links to VS-13 / W17, VS-53 / W2118–W2133) — the warranty dataset",
+     "- P&L (links to VS-17 / W9, VS-158 / W85) — the warranty-cost view"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/month = **~30 hours/year** VP Merchandising + Category Managers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "System generates dashboard: active warranties by category, registration rate, claim rate, avg resolution time, warranty cost %, extended warranty attach rate",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Managers review high claim rate categories (>5%); CS Director reviews claim satisfaction (target ≥80%); VP reviews warranty P&L",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "Various"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W17",
+    "W2118",
+    "W2133",
+    "W85",
+    "W9"
+   ]
+  }
+ ]
+}

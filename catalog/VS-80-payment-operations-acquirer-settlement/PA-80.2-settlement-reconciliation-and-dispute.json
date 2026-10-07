@@ -1,0 +1,518 @@
+{
+ "process_area": {
+  "id": "PA-80.2",
+  "title": "Settlement Reconciliation & Chargeback/Dispute Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-80-payment-operations-acquirer-settlement/PA-80.2-settlement-reconciliation-and-dispute.md",
+ "value_stream": {
+  "directory": "VS-80-payment-operations-acquirer-settlement",
+  "id": "VS-80",
+  "name": "Payment Operations, Acquirer & Settlement Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-215"
+   ],
+   "fields": {
+    "Frequency": "Daily per partner",
+    "Owner": "AR Settlement Accountant",
+    "Participants": "AR Settlement Accountant, IT, Finance",
+    "Trigger": "Daily settlement file from acquirer/e-wallet/gateway (T+1)",
+    "Volume": "~10 settlement files/day; ~PHP 2.9B/month non-cash tender"
+   },
+   "id": "W2785",
+   "level": 2,
+   "name": "Daily Card/E-Wallet Settlement File Ingestion & GL Posting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates file integrity and partner authentication\" (replaces manual Step 1).",
+     "- System auto-count of \"Accountant posts settlement to clearing GL\" (replaces manual Step 2).",
+     "- System auto-match of \"matches bank statement credit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-215 (ensure card/e-wallet settlement & chargeback control.)",
+     "- operational: schema validation and partner pre-notification"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation risk**: File format/schema changes break ingestion; mitigated by schema validation and partner pre-notification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Settlement file ingestion; clearing GL; bank statement import; multi-currency module"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours/day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Settlement Accountant",
+     "activity": "IT ingests daily settlement files (EDI/CSV/API) from each acquirer and e-wallet into ERP settlement staging; validates file integrity and partner authentication",
+     "duration": "Daily",
+     "n": "1",
+     "r": "IT"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "AR Settlement Accountant posts settlement to clearing GL: gross captured, fees deducted, net bank credit; maps each batch by MID/entity/store",
+     "duration": "Daily",
+     "n": "2",
+     "r": "AR Settlement Accountant"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance validates net settlement matches bank statement credit; investigates timing differences (T+1 vs. T+2) and currency (USD card settlements)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-215"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "AR Settlement Accountant",
+    "Participants": "AR Settlement Accountant, Store Ops, IT",
+    "Trigger": "Daily settlement posting",
+    "Volume": "~2.8M POS txns/month; ~1.4M non-cash lines/month"
+   },
+   "id": "W2786",
+   "level": 2,
+   "name": "Settlement-to-POS Capture Reconciliation & Exception Triage",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records to POS capture by reference\" (replaces manual Step 1).",
+     "- System auto-count of \"Accountant triages exceptions\" (replaces manual Step 2).",
+     "- System auto-send of \"resend batch, manual settlement, RFI to acquirer\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-215 (ensure card/e-wallet settlement & chargeback control.)",
+     "- operational: daily SLA-bound triage"
+    ],
+    "Pain Points / Risks": [
+     "- **Leakage risk**: Unreconciled exceptions over-state receivables; mitigated by daily SLA-bound triage"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Auto-match engine; exception queue; terminal monitoring"
+    ],
+    "Time Estimate": [
+     "- 3–5 hours/day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Settlement Accountant",
+     "activity": "ERP auto-matches settlement records to POS capture by reference (RRN/auth code/QR ref); flags unmatched captures and unmatched settlements",
+     "duration": "Daily",
+     "n": "1",
+     "r": "ERP automation"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "AR Settlement Accountant triages exceptions: terminal batch not closed, declined-but-captured, duplicate capture, missing settlement; assigns owner",
+     "duration": "Daily",
+     "n": "2",
+     "r": "AR Settlement Accountant"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Store Ops/IT resolves terminal-level issues (resend batch, manual settlement, RFI to acquirer); AR Settlement Accountant clears exception queue",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Store Ops / IT / AR Settlement Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-215"
+   ],
+   "fields": {
+    "Frequency": "2–3× per day per terminal",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, Store Manager, Payment Ops Manager",
+    "Trigger": "Shift change and end-of-day per terminal",
+    "Volume": "600 POS terminals × ~3 batches"
+   },
+   "id": "W2787",
+   "level": 2,
+   "name": "Mid-Batch / End-of-Day Terminal Close & Capture Totals Validation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prints batch totals per tender\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates capture totals vs.\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates terminals with unclosed batches beyond SLA to prevent settlement delay\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-215 (ensure card/e-wallet settlement & chargeback control.)",
+     "- operational: SLA monitoring and manager escalation"
+    ],
+    "Pain Points / Risks": [
+     "- **Operational risk**: Unclosed batches delay settlement and cash flow; mitigated by SLA monitoring and manager escalation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS terminal batch management; Z-report; chain-wide batch monitor"
+    ],
+    "Time Estimate": [
+     "- 10–15 min per terminal batch"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier initiates terminal batch close (settlement) at shift/day end; prints batch totals per tender; reconciles to POS Z-report",
+     "duration": "10–15 min/terminal",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager validates capture totals vs. physical evidence (signed charge slips, e-wallet confirmation); investigates variances; re-batches if needed",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager monitors chain-wide batch-close completion rate; escalates terminals with unclosed batches beyond SLA to prevent settlement delay",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-215"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~300–500 chargebacks/year (~0.003% of card txns, per the ~30–40/month Volume)",
+    "Owner": "Chargeback Analyst",
+    "Participants": "Chargeback Analyst, Store Ops, LP, AR Settlement",
+    "Trigger": "Chargeback notification from acquirer (issuer dispute)",
+    "Volume": "~30–40/month"
+   },
+   "id": "W2788",
+   "level": 2,
+   "name": "Chargeback Notification, Evidence Compilation & Representment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs in dispute tracker\" (replaces manual Step 1).",
+     "- System auto-compile of \"Store Ops/LP compiles compendium\" (replaces manual Step 2).",
+     "- System auto-submit of \"submits representment via acquirer portal within scheme deadline\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-215 (ensure card/e-wallet settlement & chargeback control.)",
+     "- operational: SLA-bounded tracker and reminder workflow"
+    ],
+    "Pain Points / Risks": [
+     "- **Financial risk**: Missed representment deadline forfeits right to recover; mitigated by SLA-bounded tracker and reminder workflow"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Acquirer dispute portal; dispute tracker; evidence repository; loss-recovery GL"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per chargeback"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Chargeback Analyst receives chargeback (fraud, friendly fraud, product not received, duplicate); logs in dispute tracker; pulls POS transaction evidence",
+     "duration": "Per dispute",
+     "n": "1",
+     "r": "Chargeback Analyst"
+    },
+    {
+     "a": "Chargeback Analyst",
+     "activity": "Store Ops/LP compiles compendium: signed charge slip, ID presented, CCTV timestamp, delivery proof/POD, BIR invoice, customer communication; assembles representment package",
+     "duration": "1–3 days",
+     "n": "2",
+     "r": "Store Ops / LP"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Chargeback Analyst submits representment via acquirer portal within scheme deadline (typically 7–45 days); tracks outcome; books chargeback loss or reversal",
+     "duration": "Per dispute",
+     "n": "3",
+     "r": "Chargeback Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-470"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~100–200 events/year",
+    "Owner": "Chargeback Analyst",
+    "Participants": "Chargeback Analyst, LP, Legal, Payment Ops Manager",
+    "Trigger": "Issuer retrieval request or fraud alert from scheme",
+    "Volume": "~10–15/month"
+   },
+   "id": "W2789",
+   "level": 2,
+   "name": "Retrieval Request, Fraud Alert & Pre-Arbitration Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records for potential chargeback\" (replaces manual Step 1).",
+     "- System auto-count of \"counterfeit card, account takeover, card testing\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates pre-arbitration cases to acquirer legal\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-470 (ensure controlled execution — Settlement Reconciliation & Chargeback/Dispute Management (PA-80.2).)",
+     "- operational: 24-hour SLA and LP-Payment Ops joint protocol"
+    ],
+    "Pain Points / Risks": [
+     "- **Fraud risk**: Late fraud alert response increases exposure; mitigated by 24-hour SLA and LP-Payment Ops joint protocol"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Scheme/acquirer fraud alert feed; LP case management; arbitration tracker"
+    ],
+    "Time Estimate": [
+     "- 2–6 hours per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Chargeback Analyst responds to retrieval request with transaction documentation within scheme SLA; preserves records for potential chargeback",
+     "duration": "Per request",
+     "n": "1",
+     "r": "Chargeback Analyst"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP investigates fraud alerts ( counterfeit card, account takeover, card testing); blocks terminals/merchants if compromise suspected",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "LP"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager escalates pre-arbitration cases to acquirer legal; coordinates scheme dispute resolution; books arbitration loss if unfavorable",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Payment Ops Manager / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-470"
+   ],
+   "fields": {
+    "Frequency": "~2% of transactions (returns); ~56K/month",
+    "Owner": "AR Settlement Accountant",
+    "Participants": "AR Settlement Accountant, Customer Service, Store Ops",
+    "Trigger": "Customer refund or transaction void",
+    "Volume": "~56,000 refund/void events/month"
+   },
+   "id": "W2790",
+   "level": 2,
+   "name": "Refund, Void & Partial-Reversal Settlement Matching",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates reversal reference\" (replaces manual Step 1).",
+     "- System auto-match of \"matches reversal to original capture\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant reconciles reversal settlement to bank debit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-470 (ensure controlled execution — Settlement Reconciliation & Chargeback/Dispute Management (PA-80.2).)",
+     "- operational: auto-match and daily reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation risk**: Refund processed but not settled (or vice versa) distorts receivables; mitigated by auto-match and daily reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS refund workflow; reversal match engine; refund liability GL"
+    ],
+    "Time Estimate": [
+     "- 10 min per refund; 2–3 hours/day aggregate"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Customer Service processes refund to original tender in POS/ecommerce; generates reversal reference; ensures within scheme refund window",
+     "duration": "Per refund",
+     "n": "1",
+     "r": "Customer Service"
+    },
+    {
+     "a": "AR Settlement Accountant",
+     "activity": "ERP auto-matches reversal to original capture; ensures settlement deduction equals refund; flags unmatched reversals for investigation",
+     "duration": "Daily",
+     "n": "2",
+     "r": "ERP automation"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "AR Settlement Accountant reconciles reversal settlement to bank debit; books refund liability and clears customer receivable; resolves timing differences",
+     "duration": "Daily",
+     "n": "3",
+     "r": "AR Settlement Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-470"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Analyst",
+    "Participants": "Finance Analyst, Payment Ops Manager, FP&A",
+    "Trigger": "Monthly close / cost allocation run",
+    "Volume": "~200 stores + ecommerce channel"
+   },
+   "id": "W2791",
+   "level": 2,
+   "name": "Payment Fee & Interchange Cost Allocation to Store/Channel",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-allocate of \"allocates payment fees\" (replaces manual Step 1).",
+     "- System auto-report of \"reports tender mix trend and cost-per-transaction to management\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-470 (ensure controlled execution — Settlement Reconciliation & Chargeback/Dispute Management (PA-80.2).)",
+     "- operational: tender-mix optimization incentives"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost risk**: Cash-heavy mix incurs CIT/cash-office cost; mitigated by tender-mix optimization incentives"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost allocation engine; store P&L module; tender analytics dashboard"
+    ],
+    "Time Estimate": [
+     "- 2–3 days per month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "FP&A Manager",
+     "activity": "Finance Analyst allocates payment fees (MDR, e-wallet fee, BNPL fee, chargeback loss) to originating store/channel based on transaction-level capture data",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "FP&A incorporates net payment cost into store P&L and category gross margin analysis; benchmarks cost-to-serve by tender/channel",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "FP&A"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager reports tender mix trend and cost-per-transaction to management; recommends migration incentives (e.g., e-wallet promo to reduce cash handling)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-470"
+   ],
+   "fields": {
+    "Frequency": "Weekly review + monthly close",
+    "Owner": "AR Settlement Accountant",
+    "Participants": "AR Settlement Accountant, Finance, Payment Ops Manager",
+    "Trigger": "Items aged > 30 days in settlement suspense",
+    "Volume": "~200–400 aged items/month"
+   },
+   "id": "W2792",
+   "level": 2,
+   "name": "Aged Unreconciled Settlement & Suspense GL Clearing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews aged settlement suspense weekly\" (replaces manual Step 1).",
+     "- System auto-flag for investigation of \"investigates root cause with acquirer/partner\" (replaces manual Step 2).",
+     "- System auto-report of \"reports aged suspense trend and root-cause themes to management for systemic…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-470 (ensure controlled execution — Settlement Reconciliation & Chargeback/Dispute Management (PA-80.2).)",
+     "- operational: 30/60/90 aging discipline and write-off governance"
+    ],
+    "Pain Points / Risks": [
+     "- **Financial risk**: Unmanaged suspense distorts financials and signals control weakness; mitigated by 30/60/90 aging discipline and write-off governance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Aged suspense report; write-off provisioning; root-cause tracker"
+    ],
+    "Time Estimate": [
+     "- 3–5 hours/week"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "AR Settlement Accountant reviews aged settlement suspense weekly; classifies (acquirer error, timing, write-off candidate); assigns resolution owner",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "AR Settlement Accountant"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance investigates root cause with acquirer/partner; recovers where possible; provisions write-off for unrecoverable items > 90 days",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager closes suspense items; reports aged suspense trend and root-cause themes to management for systemic remediation",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

@@ -1,0 +1,1357 @@
+{
+ "process_area": {
+  "id": "PA-05.2",
+  "title": "Stock Transfers & Rebalancing"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md",
+ "value_stream": {
+  "directory": "VS-05-inventory-lifecycle",
+  "id": "VS-05",
+  "name": "Inventory Lifecycle"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [],
+   "fields": {
+    "Frequency": "~30–40 inter-DC transfers/month; ~700–1,300 store-to-store transfers/month (W204 customer-transfers ~50–100/week + W214 inter-store ~20–30/day)",
+    "Owner": "Supply Planner (inter-DC); Store Manager (store-to-store)",
+    "Participants": "Supply Planner, Store Manager, Receiving Clerk, Stock Associate, DC Picker",
+    "Trigger": "Stock imbalance between locations; emergency need; inter-DC rebalancing",
+    "Volume": "Variable (typically 5–20 lines per transfer)"
+   },
+   "id": "W22",
+   "level": 2,
+   "name": "Stock Transfers (Store-to-Store & Inter-DC)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Steps": []
+   },
+   "steps": [
+    {
+     "a": "Supply Planning Mgr / Regional Mgr",
+     "activity": "Requestor identifies transfer need (stock-out risk, excess inventory, rebalancing)",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Supply Planner / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Requestor creates Transfer Order in system: source location, destination, items, quantities",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Requestor"
+    },
+    {
+     "a": "—",
+     "activity": "System checks availability at source location; confirms or flags shortage",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Approver",
+     "activity": "Approval: inter-DC → Supply Planning Manager; store-to-store → Regional Manager",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Approver"
+    },
+    {
+     "a": "DC Supervisor / Store Manager",
+     "activity": "Source location picks items (DC: WMS pick; Store: Stock Associate picks from shelf)",
+     "duration": "15–60 min",
+     "n": "5",
+     "r": "Picker / Stock Associate"
+    },
+    {
+     "a": "DC Supervisor / Store Manager",
+     "activity": "Items packed and shipped; system creates in-transit inventory",
+     "duration": "15–30 min",
+     "n": "6",
+     "r": "Shipper / Driver"
+    },
+    {
+     "a": "DC Supervisor / Store Manager",
+     "activity": "Destination location receives items; scans against Transfer Order",
+     "duration": "15–30 min",
+     "n": "7",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System updates: source inventory decreases, in-transit clears, destination inventory increases",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor / Store Manager",
+     "activity": "If discrepancy at destination: flag in system; source location notified for investigation",
+     "duration": "5 min if any",
+     "n": "9",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "Transfer discrepancy resolution: (a) if source picking error confirmed → source location absorbs loss (system posts inventory adjustment at source, Dr. Inventory Loss / Cr. Inventory at source location); (b) if carrier damage → DC Supervisor or Store Manager files carrier damage claim with photos and delivery receipt notation per W3.6a insurance claim process; (c) if unexplained shortage after investigation → destination writes off with approval per tier (Store Manager ≤ PHP 10,000, DC Manager ≤ PHP 50,000, Controller > PHP 50,000); system posts adjustment at destination (Dr. Inventory Loss / Cr. Inventory)",
+     "duration": "15–30 min",
+     "n": "9a",
+     "r": "Receiving Clerk / DC Supervisor / Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W204",
+    "W214",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-25"
+   ],
+   "fields": {},
+   "id": "W22A",
+   "level": 3,
+   "name": "Store-Level Outbound Transfer Fulfillment",
+   "parent": "W22",
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"Requestor identifies transfer need\" (replaces manual Step 1).",
+     "- System auto-create of \"creates Transfer Order in system\" (replaces manual Step 2).",
+     "- System auto-validate of \"checks availability at source location\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-25 (safeguard inventory in transit.)",
+     "- operational: threshold"
+    ],
+    "Pain Points / Risks": [
+     "- Store-level outbound fulfillment (W22A) lacks WMS-directed pick paths — Stock Associates navigate 35,000 SKUs manually, leading to longer pick times and higher mispick rates than DC operations.",
+     "- Transfer discrepancy resolution (W22.9a) is contentious when source and destination locations disagree on whether a shortage is a picking error or carrier damage; without photographic evidence at dispatch, disputes can take weeks to resolve.",
+     "- Intercompany model complexity: W4 DC-to-store movements are intra-entity (Depot Inc. throughout), but inter-DC transfers between Logistics Inc.-operated warehouses require IC service fee allocation per W14; planners occasionally confuse the two, leading to incorrect accounting treatment.",
+     "- Catch-weight item measurement variance (lumber, wire, rebar) between source and destination locations generates frequent tolerance disputes that require manual investigation beyond the ±1–2% system threshold.",
+     "- Customer-initiated inter-store transfers absorb transport cost as a customer service — with ~20–30/day (W214), the aggregate monthly courier cost of PHP 120,000–450,000 is not tracked (per W214: PHP 200–500/trip) against store profitability."
+    ],
+    "Pain Points / Risks (W22A)": [
+     "- Store-level picking lacks WMS-directed guidance — Stock Associates rely on handheld pick lists and manual scanning, increasing mispick rates compared to DC operations.",
+     "- Backhaul dependency on DC truck schedules means non-urgent transfers can wait 1–2 days for the next truck, delaying fulfillment to the destination store.",
+     "- Packing materials (cartons, labels, protective wrapping) are not consistently stocked at store level, causing ad-hoc sourcing delays during packing.",
+     "- Stock Associates juggle transfer fulfillment with customer-facing duties, leading to delayed shipment during peak store hours."
+    ],
+    "Staffing Implication": [
+     "- **Supply Planners**: ~30–40 inter-DC transfers/month at ~20 min each for creation/approval = ~10–13 hours/month; absorbed within existing Supply Planning team.",
+     "- **Store Managers (store-to-store)**: ~50–80 store-to-store transfers/month at ~20 min each = ~17–27 hours/month across 200 stores (~5–8 min per store per month); negligible per-store impact.",
+     "- **DC Pickers**: inter-DC transfers add ~15–60 min picking per transfer on top of standard replenishment picking; ~30–40/month = ~8–40 additional DC labor-hours/month across all DCs; absorbed within existing DC picking capacity.",
+     "- **Stock Associates (store outbound, W22A)**: ~50–80 store-to-store transfers/month at ~35–75 min each = ~30–100 store-hours/month across 200 stores; each store handles ~0.3–0.5 transfers/month, requiring ~15–35 min — absorbed within existing Stock Associate duties.",
+     "- **No incremental headcount required**; all transfer activities are absorbed within existing Supply Planning, DC, and store staffing models."
+    ],
+    "System Touchpoints": [
+     "- Transfer Order creation with source/destination (W22.2)",
+     "- Real-time availability check at source (W22.3)",
+     "- Approval workflow (W22.4)",
+     "- In-transit inventory tracking (W22.6)",
+     "- Receiving against Transfer Order (W22.7)",
+     "- Inventory update at both locations (W22.8)",
+     "- Discrepancy handling with financial resolution: source error, carrier damage, or unexplained loss disposition (W22.9a)",
+     "- Intercompany model — see W14 for full dual IC framework (service-based vs. goods-based); standard DC→Store replenishment (W4) is NOT an inter-entity transfer — Depot Inc. owns goods at both locations; Logistics Inc. provides warehousing services billed monthly per W14, not per-transfer",
+     "- Customer-initiated inter-store transfer: when a customer at Store A requests an item out of stock, Sales Associate checks real-time inventory at nearby stores via handheld or terminal; if available, Associate creates customer transfer request (item, quantity, source store, destination store, customer contact); Store Manager at destination approves; source Store Manager or system auto-confirms if within same region; system creates Transfer Order per W22; source store picks and ships; destination store receives and notifies customer via SMS/app; sale booked at destination store when customer purchases; transport cost absorbed by company as customer service (no charge to customer); real-time cross-store inventory lookup available to Sales Associates via handheld/terminal and to customers via website/app store selector",
+     "- Catch-weight / variable-measure items during transfers: for catch-weight items (lumber, wire, bulk nails), source location measures and records actual length/weight/piece count on Transfer Order; destination location re-measures upon receipt; if quantity differs from TO, variance handled per W22.9a with measurement tolerance applied (e.g., ±2% for lumber, ±1% for wire by length); within tolerance: system accepts destination measurement and posts variance as inventory adjustment at source; outside tolerance: source location investigates (measurement error, transit damage); system supports dual-entry measurement capture for catch-weight items on both outbound and inbound transfer processing"
+    ],
+    "Time Estimate": [
+     "Transfer creation and approval (steps 1–4): 20–30 min per transfer. Source picking and packing (steps 5–6): 15–60 min. Receiving at destination (steps 7–9): 15–35 min. Total end-to-end: inter-DC 3–7 days (including transit); store-to-store 1–5 days (same-city to inter-region). Discrepancy resolution (step 9a): 15–30 min per incident."
+    ],
+    "Time Estimate (W22A)": [
+     "~35–75 min per outbound transfer: 15–45 min picking + 10–20 min packing + 5–10 min staging. DC truck backhaul adds no incremental time (items ride on existing truck); 3PL or inter-store courier adds 4–8 hours transit."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Store Manager or Dept. Supervisor receives transfer pick list on handheld/terminal from approved Transfer Order",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Stock Associate picks items from sales floor or backroom per pick list; scan-confirms each item using handheld barcode scanner; system validates scanned SKU and quantity against Transfer Order",
+     "duration": "15–45 min",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "If item not found or short: Stock Associate enters actual quantity picked; system updates Transfer Order with partial quantity and notifies destination store",
+     "duration": "2 min",
+     "n": "3",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Stock Associate packs items in available shipping cartons or bags; labels each package with destination store name, Transfer Order number, and item count",
+     "duration": "10–20 min",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Dispatch options**: (a) **DC truck backhaul** (preferred): items ride on the next DC delivery truck returning from this store — Stock Associate stages packed items at receiving dock for driver pickup; (b) **Own fleet or 3PL**: if urgent or no DC truck scheduled within 2 days, Fleet Manager or DC Dispatch arranges separate pickup; (c) **Inter-store courier**: for same-city transfers, Store Manager may arrange direct courier delivery",
+     "duration": "5–10 min staging",
+     "n": "5",
+     "r": "Stock Associate / Driver"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Driver or carrier confirms pickup by scanning transfer shipment barcode on handheld; system updates Transfer Order status to \"Shipped\" and creates in-transit inventory",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Driver / Carrier"
+    },
+    {
+     "a": "—",
+     "activity": "System deducts picked items from source store inventory at shipment confirmation",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W214",
+    "W22",
+    "W4"
+   ]
+  },
+  {
+   "ctl_refs": [],
+   "fields": {
+    "Frequency": "~100–200 store-to-DC returns/month chain-wide; ~0.5–1 per store per month",
+    "Owner": "Store Manager (initiation); DC Supervisor (receiving)",
+    "Participants": "Store Manager, Stock Associate, Supply Planner, DC Receiving Clerk, DC Supervisor",
+    "Trigger": "Store identifies excess inventory beyond replenishment needs, damaged items requiring DC inspection/disposition, or items recalled/discontinued requiring central processing",
+    "Volume": "Typically 5–15 lines per return shipment"
+   },
+   "id": "W22B",
+   "level": 3,
+   "name": "Store-to-DC Return (Excess / Damaged Inventory)",
+   "parent": "W22",
+   "req_refs": [],
+   "sections": {
+    "Pain Points / Risks": [
+     "- Store-to-DC returns compete for reverse-logistics space on DC delivery trucks (backhaul capacity) with store-to-store transfers (W204) and proactive rebalancing shipments (W154); during peak periods, return shipments wait 1–2 weeks for available truck space.",
+     "- Excess return items that were slow-moving at the store often become slow-moving at the DC too, merely relocating the SLOB problem (W220) rather than resolving it.",
+     "- Damaged items returned to DC for inspection require DC Supervisor evaluation (step 7) that competes with outbound dispatch priorities — damaged goods awaiting disposition occupy valuable DC quarantine zone space.",
+     "- Return reason code accuracy is inconsistent — Store Managers sometimes code excess stock as \"damaged\" to expedite auto-approval, distorting the monthly return analytics (step 9) and obscuring true demand planning issues."
+    ],
+    "Staffing Implication": [
+     "- **Store Manager**: ~0.5–1 return initiations/month × 25 min = ~15 min/month. Absorbed.",
+     "- **Supply Planner**: 5 min review per return × ~200/month = ~17 hours/month across all stores. Absorbed by existing planner team.",
+     "- **DC Receiving**: adds ~15–30 min per return shipment to existing receiving workload. With ~100–200/month ÷ 4 DCs = ~25–50/DC/month. Manageable."
+    ],
+    "Staffing Implication (W22 overall)": [
+     "- Inter-DC transfers are part of Supply Planner's existing duties (within the 40-person Supply Chain & Logistics team (per profile §3.3)).",
+     "- Store-to-store transfers are managed by Store Managers with Regional Manager approval — absorbed into existing roles.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints (Store-to-DC Return)": [
+     "- Store-to-DC Return Order creation with reason codes (excess, damaged, discontinued, RTV consolidation) (W22B.2)",
+     "- Supply Planner approval workflow with DC capacity/demand check (W22B.3)",
+     "- In-transit inventory tracking for reverse movement (W22B.5)",
+     "- Disposition routing based on return reason code with integration to W6.8a (damage), W13.9a (clearance), W3.6b (RTV) (W22B.7)",
+     "- Store-to-DC return analytics: frequency, reason, category, store (W22B.9)",
+     "- Integration with W4 (reverse logistics on delivery truck), W6 (damage reporting), W13 (clearance), W22 (standard transfers), W29 (recall), W68 (discontinuation)"
+    ],
+    "Time Estimate": [
+     "Return initiation (steps 1–2): 25 min per return. Supply Planner review (step 3): 5 min per return. Store picking and staging (step 4): 30–60 min. DC receiving and disposition (steps 6–7): 30–60 min. Monthly analytics (step 9): 30 min. Total: ~2 hours per return initiation-to-disposition, spread across multiple days due to truck schedule dependency."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager or Dept. Supervisor identifies items for return to DC: (a) excess stock — on-hand significantly above max and unlikely to sell before expiry/obsolescence, (b) damaged items — store-damaged goods requiring central disposition (W6.8a), (c) discontinued/recalled items — per W29 or W68 (product discontinuation), (d) vendor-RTV consolidation — items staged for vendor return that are more efficiently processed through DC",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Store Manager / Dept. Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager creates Store-to-DC Return Order in system: select items, quantities, return reason code (excess / damaged / discontinued / RTV consolidation); system validates that items originated from DC (not DSD-only items that should be returned directly to vendor)",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Supply Planner reviews return request: for excess items, confirms DC has demand or storage capacity to absorb returned stock; for damaged items, auto-approved; system routes for approval",
+     "duration": "5 min/return",
+     "n": "3",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Stock Associate picks and packs items for return shipment; scan-confirms each item against Return Order; stages at store receiving area for DC truck pickup",
+     "duration": "30–60 min",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Items shipped on next available DC delivery truck (reverse logistics — truck returns to DC with return shipment); system creates in-transit inventory",
+     "duration": "Per W4 schedule",
+     "n": "5",
+     "r": "Driver / Stock Associate"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Receiving Clerk receives returned items; scans against Return Order; inspects condition",
+     "duration": "15–30 min",
+     "n": "6",
+     "r": "DC Receiving Clerk"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Disposition by return reason**: (a) excess — system returns items to DC saleable inventory at current WAC; (b) damaged — DC Supervisor inspects and decides disposition per W6.8a (markdown, scrap, RTV); (c) discontinued — system routes to clearance/liquidation holding area per W13.9a or W68; (d) RTV consolidation — Buyer coordinates with vendor per W3.6b",
+     "duration": "15–30 min",
+     "n": "7",
+     "r": "DC Receiving Clerk / DC Supervisor / Buyer"
+    },
+    {
+     "a": "—",
+     "activity": "System updates: store inventory decreases, in-transit clears, DC inventory increases (for resalable items) or posts to appropriate disposition account (for damaged/scrap/RTV)",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Monthly: Supply Planner reviews store-to-DC return report: frequency by store, reason, and category; flags stores with high return frequency for root cause analysis (ordering discipline, receiving quality, demand planning accuracy)",
+     "duration": "30 min/month",
+     "n": "9",
+     "r": "Supply Planner"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W13",
+    "W154",
+    "W204",
+    "W22",
+    "W220",
+    "W29",
+    "W3",
+    "W4",
+    "W6",
+    "W68"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "6 major bi-monthly promos/year + 12 monthly hot deal cycles",
+    "Owner": "Supply Planner",
+    "Participants": "Supply Planner, Category Manager, DC Supervisor, Store Manager",
+    "Trigger": "Promotional event confirmed (W13 step 3 — VP Merchandising approves promo pricing)",
+    "Volume": "200–500 SKUs per major promo; stock pre-positioned to 200 stores over 1–2 weeks before event"
+   },
+   "id": "W57",
+   "level": 2,
+   "name": "Promotional Stock Allocation & Pre-Positioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-forecast of \"After promo approval\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates promotional stock requirement per SKU per store\" (replaces manual Step 2).",
+     "- System auto-validate of \"checks DC inventory for promo items\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Supply Planner review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Promotional demand lift estimation is often inaccurate for new or seasonal SKUs with limited historical data, leading to over-allocation (tying up working capital) or under-allocation (lost sales and customer disappointment).",
+     "- Expedited POs to cover promo shortfalls carry premium freight costs (air freight for imports) that erode promotional margin, sometimes turning profitable promos into loss-makers.",
+     "- Store-level promo stock commingling with regular shelf stock — despite segregation procedures — causes inventory tracking confusion and inflates post-promo clearance volumes.",
+     "- Last-minute promo SKU additions or changes from Marketing (after allocation planning is complete) force emergency replanning, creating DC picking chaos and missed pre-positioning windows.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Supply Planner**: adds ~4–6 hours per major promo event for allocation planning + 30 min/day monitoring during the promo. With 6 major events/year, this is ~30–40 hours/year of incremental planning work, concentrated in the 2 weeks before each event. Absorbed within existing Supply Chain team.",
+     "- **DC Team**: promotional pre-positioning adds temporary surge to pick/pack/ship volume in the 1–2 weeks before each event. Managed with shift scheduling adjustments (W34)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Promotional demand lift calculation tool integrated with forecast engine (W31) and historical promo performance data (W57.2)",
+     "- Promotional replenishment order generation with priority flag and promo allocation tracking (W57.4)",
+     "- Promotional stock allocation dashboard: planned vs. shipped vs. received per store (W57.7)",
+     "- Promotional sell-through dashboard: real-time sales velocity during promo period with store-level drill-down (W57.8)",
+     "- Integration with W2 (expedited POs), W4 (replenishment waves), W13 (promo pricing and clearance), W22 (emergency inter-store transfers), W31 (demand forecast)"
+    ],
+    "Time Estimate": [
+     "Planning phase: 4–7 hours per major promo event (allocation calculation + DC stock check + expedited POs). Execution phase: 1–2 weeks of incremental pick/pack/ship waves per promo. Post-promo monitoring: 30 min/day during event + 2 hours for sell-through analysis."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "After promo approval (W13 step 3), Category Manager provides Supply Planner with promo SKU list, expected demand lift (historical lift % × baseline forecast), and maximum shelf capacity per store",
+     "duration": "2 hours/promo",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Supply Planner calculates promotional stock requirement per SKU per store: (base weekly demand × promo lift factor × promo duration weeks) + safety buffer (10–20%) − current store inventory − already-in-transit inventory",
+     "duration": "2–4 hours/promo",
+     "n": "2",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Supply Planner checks DC inventory for promo items; identifies shortfalls; requests Buyer to expedite POs for items with insufficient DC stock to cover promotional allocation (may use air freight for imports if lead time is critical)",
+     "duration": "1 hour/promo",
+     "n": "3",
+     "r": "Supply Planner / Buyer"
+    },
+    {
+     "a": "Supply Planner",
+     "activity": "System generates promotional replenishment orders per store with \"Promo\" priority flag; these orders are prioritized ahead of routine replenishment in the pick wave (W4 step 3)",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC picks and ships promotional stock to stores in waves over 1–2 weeks before promo start date; stores in each region scheduled to receive promo stock 3–5 days before event",
+     "duration": "Per W4",
+     "n": "5",
+     "r": "DC Team"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Receiving Clerk receives promo stock; Stock Associate stages in backroom or designated promo display area (not commingled with regular shelf stock to preserve promo allocation integrity)",
+     "duration": "Per W4",
+     "n": "6",
+     "r": "Receiving Clerk / Stock Associate"
+    },
+    {
+     "a": "Supply Planner",
+     "activity": "System tracks promotional stock allocation vs. actual receipt per store; flags stores that have not received their full allocation 2 days before promo start",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "During promo: system reports promo stock sell-through daily per store; Supply Planner monitors for stores selling faster than expected and arranges emergency replenishment from DC or transfers from slower-selling stores (W22)",
+     "duration": "30 min/day during promo",
+     "n": "8",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "After promo: remaining promo stock disposition per W13.9a (clearance) or return to regular shelf inventory if sell-through ≥ 90%",
+     "duration": "Per W13",
+     "n": "9",
+     "r": "Pricing Analyst / Stock Associate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W2",
+    "W22",
+    "W31",
+    "W34",
+    "W4"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "Quarterly governance review; continuous allocation monitoring",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planning Manager, VP Supply Chain, Category Manager, Ecommerce Manager, Sales Manager, DC Supervisor",
+    "Trigger": "Quarterly allocation governance review; or ad-hoc triggered by sustained stockout pattern, new channel launch, or allocation conflict escalation",
+    "Volume": "35,000 active SKUs allocated across: 200 stores (W4), ecommerce BOPIS from stores (W11), ecommerce home delivery from DCs (W19), B2B trade/corporate orders (W58), promotional pre-positioning (W57), backorder fulfillment (W56)"
+   },
+   "id": "W105",
+   "level": 2,
+   "name": "Multi-Channel Inventory Allocation & Priority Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Allocation Priority Hierarchy (Constrained Supply)": [
+     "| Priority | Demand Channel | Rationale | Override Authority |",
+     "|---|---|---|---|",
+     "| 1 | **Existing customer backorders** (W56) | Customer already committed and waiting; highest service obligation | Supply Planning Manager |",
+     "| 2 | **Promotional pre-positioning** (W57) | Committed marketing spend; stockout during promo damages brand | VP Supply Chain + VP Merchandising |",
+     "| 3 | **Ecommerce BOPIS** (W11) | Customer already paid; fulfillment SLA of 4 hours | Supply Planning Manager |",
+     "| 4 | **Ecommerce home delivery** (W19) | Customer already paid; fulfillment SLA of 2–5 days | Supply Planning Manager |",
+     "| 5 | **B2B trade/corporate project orders** (W58) | Contractual obligation; high-value accounts | VP Supply Chain + Sales Manager |",
+     "| 6 | **Store replenishment — A-items** (W4) | Top 20% of SKUs generating 80% of revenue; highest retail impact | Supply Planning Manager |",
+     "| 7 | **Store replenishment — B-items** (W4) | Mid-tier items; moderate revenue impact | Supply Planning Manager |",
+     "| 8 | **Store replenishment — C-items** (W4) | Bottom 50% of SKUs; lowest revenue impact; highest tolerance for stockout | System auto-allocated from residual |",
+     "**Safety stock buffers**: each channel's ATP calculation deducts a configurable safety stock buffer that is NOT available for allocation to any channel — this buffer protects against demand variability and prevents complete stockout at any location.",
+     "- **DC safety stock**: configurable per SKU per DC (set during W31.8 parameter governance); deducted from DC ATP before any allocation",
+     "- **Store safety stock**: configurable per SKU per store; deducted from store ATP for BOPIS availability",
+     "- **BOPIS buffer**: stores reserve a configurable buffer (default: 2 units per A-item SKU) so that walk-in customers are not completely displaced by BOPIS orders"
+    ],
+    "Automation Opportunity": [
+     "- System auto-log of \"log — all instances where default priority was overridden, with approver and…\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews allocation performance with cross-functional stakeholders\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approvers involved? Should any override patterns trigger a permanent rule…\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "Multiple workflows reference inventory allocation: W4 (store replenishment with constrained allocation), W11 (BOPIS ATP reservation), W19 (home delivery ATP), W57 (promotional pre-positioning), and W56 (backorder priority). However, there is no unified governance framework defining allocation priorities when multiple demand channels compete for the same limited inventory. During constrained supply periods (vendor delays, seasonal peaks, promotional surges), the absence of clear priority rules leads to ad-hoc decisions, channel conflict, and customer dissatisfaction. This workflow establishes the allocation governance framework."
+    ],
+    "Continuous Allocation Monitoring": [],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Supply Planning Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Priority hierarchy is perceived as biased by channel owners (e.g., Ecommerce feels deprioritized vs. B2B trade), creating internal political friction and frequent override requests that undermine the governance framework.",
+     "- Safety stock buffers are difficult to calibrate — too high ties up working capital across 35K SKUs, too low leads to stockouts that trigger costly emergency transfers and expedited POs.",
+     "- ATP calculation complexity across 6 demand channels, 200 stores, 4 DCs, and 35K SKUs creates computational latency; stale ATP data leads to over-promising and subsequent cancellation or re-allocation.",
+     "- No automated feedback loop between override patterns and rule optimization — override frequency data exists but is not systematically used to improve the default hierarchy.",
+     "---"
+    ],
+    "Quarterly Allocation Governance Review": [],
+    "Staffing Implication": [
+     "- **Supply Planning Manager**: adds ~4 hours/quarter for governance review + 30 min/day for conflict monitoring = ~28 hours/quarter. Absorbed within existing role.",
+     "- **Supply Planner**: 30 min/day for conflict resolution = ~10 hours/month. Absorbed within existing planning duties.",
+     "- **VP Supply Chain**: ~2 hours/quarter for governance review + ~30 min/quarter for override approvals. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Configurable allocation priority engine with channel-specific weights and safety stock buffers (W105 allocation hierarchy)",
+     "- ATP calculation per channel per SKU per location incorporating priority rules, safety stock, and existing commitments (W105 ATP logic)",
+     "- Quarterly allocation performance report with fill rate, conflicts, safety stock breaches, and override log (W105.1)",
+     "- Daily allocation conflict dashboard with real-time alerts and suggested actions (W105.6)",
+     "- Allocation override request workflow with VP Supply Chain approval and audit trail (W105.8)",
+     "- Integration with W4 (store replenishment), W11 (BOPIS), W19 (home delivery), W22 (inter-DC transfers), W31 (demand planning parameters), W56 (backorder priority), W57 (promo allocation), W58 (B2B orders)"
+    ],
+    "Time Estimate": [
+     "Quarterly governance review: 4–5 hours (report generation + cross-functional review + rule updates). Daily monitoring: 30 min/day for conflict dashboard review and resolution. Override approvals: ~15 min each, ad-hoc."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Allocation performance report**: System generates quarterly allocation performance report: (a) fill rate by demand channel (target: A-items ≥ 97%, B-items ≥ 93%, C-items ≥ 85%), (b) allocation conflicts — instances where demand exceeded supply and priority rules were applied, with channel impact, (c) safety stock breaches — instances where actual inventory fell below safety stock buffer (indicates systemic under-supply), (d) channel stockout frequency — how often did each channel experience out-of-stock due to allocation exhaustion?, (e) override log — all instances where default priority was overridden, with approver and justification",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning Manager reviews allocation performance with cross-functional stakeholders: (a) **Ecommerce Manager**: BOPIS and home delivery fill rate, customer impact of stockouts, allocation adequacy for peak events, (b) **Sales Manager**: B2B trade/corporate fill rate, impact on account relationships and revenue, (c) **Category Manager**: category-level fill rate, vendor supply reliability issues, (d) **DC Supervisor**: operational impact of allocation-driven picking priorities (promotional vs. routine orders), capacity conflicts",
+     "duration": "2 hours/quarter",
+     "n": "2",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Allocation rule review**: Supply Planning Manager and VP Supply Chain review and adjust allocation rules: (a) are priority rankings still appropriate given channel revenue contribution and growth trajectory?, (b) are safety stock buffers adequate or excessive? (benchmark: buffer usage rate — how often is buffer consumed?), (c) should any channels be added or removed from the hierarchy? (e.g., new ship-from-store channel per W19B), (d) are ABC classification thresholds (W31.8) correctly driving allocation priority — do A-items get sufficient allocation vs. B/C-items?",
+     "duration": "1 hour/quarter",
+     "n": "3",
+     "r": "Supply Planning Manager / VP Supply Chain"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Conflict resolution from past quarter**: Review all allocation overrides from the past quarter — were they justified? Were the right approvers involved? Should any override patterns trigger a permanent rule change? (e.g., if B2B orders were frequently prioritized over ecommerce, consider adjusting the default hierarchy)",
+     "duration": "1 hour/quarter",
+     "n": "4",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning Manager updates allocation configuration in system based on review: priority weights, safety stock parameters, ATP buffer rules; documents changes with effective date, rationale, and VP Supply Chain approval; system logs all configuration changes with audit trail",
+     "duration": "30 min/quarter",
+     "n": "5",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "—",
+     "activity": "System monitors allocation conflicts in real-time: when demand from a higher-priority channel exhausts available allocation for a lower-priority channel, system alerts Supply Planner with: SKU, location, channels affected, quantities short, and suggested action (expedite PO per W2, arrange inter-DC transfer per W22, or accept stockout)",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Supply Planner reviews daily allocation conflict dashboard; resolves conflicts by: (a) expediting POs with vendors for critical shortfalls, (b) rebalancing safety stock buffers (temporary reduction for low-demand locations), (c) arranging emergency inter-DC transfers per W22, (d) recommending substitution to affected channel (alternative SKU with available inventory)",
+     "duration": "30 min/day",
+     "n": "7",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Allocation override**: When a business decision requires deviating from the default priority (e.g., prioritizing a large corporate project order over routine store replenishment), requestor (Category Manager, Sales Manager, or Ecommerce Manager) submits allocation override request in system with: SKU, quantity, source location, requested priority channel, business justification, and revenue impact; VP Supply Chain approves overrides affecting > 5% of a location's inventory; system logs override with full audit trail",
+     "duration": "15 min/override",
+     "n": "8",
+     "r": "Requestor / VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W11",
+    "W19",
+    "W19B",
+    "W2",
+    "W22",
+    "W31",
+    "W4",
+    "W56",
+    "W57",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planner, Store Managers, Logistics",
+    "Trigger": "High inventory variance between stores; slow-mover identification (W1); or localized demand spike",
+    "Volume": "~500–1,000 SKUs rebalanced per cycle"
+   },
+   "id": "W154",
+   "level": 2,
+   "name": "Proactive Store Inventory Rebalancing (Stock Push)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-identify of \"Identify SKUs\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates\" (replaces manual Step 3).",
+     "- System auto-log of \"logistics\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Supply Planning Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Store Manager validation delays (30 min/store across 50–100 affected stores) create a bottleneck; without timely confirmation, transfers are generated against phantom stock.",
+     "- Push transfers consume DC truck backhaul capacity, competing with store-to-DC returns (W22B) for limited reverse-logistics space on returning delivery trucks.",
+     "- Measuring actual impact is difficult — sales lift at the receiving store may be conflated with seasonal demand, making it hard to isolate the rebalancing benefit.",
+     "- Over-aggressive push transfers can leave the sending store understocked if demand patterns shift unexpectedly before the next regular replenishment cycle.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Supply Planner**: ~8 hours/month for rebalancing analysis, push order generation, and impact review. Absorbed within existing 2–3 planner team.",
+     "- **Store Managers**: ~30 min/month for stock validation at affected stores (~50–100 stores). Absorbed.",
+     "- **Logistics**: consolidation into existing weekly DC backhaul schedule — no incremental staffing.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Overstock/understock analysis dashboard with store-level inventory health comparison (W154.1)",
+     "- Automated push transfer order generation linked to W22 transfer workflow (W154.3)",
+     "- DC truck backhaul consolidation planning for store-to-store transfers (W154.4)",
+     "- Post-rebalancing impact dashboard: sales lift at receiving store, holding cost reduction at sending store (W154.5)"
+    ],
+    "Time Estimate": [
+     "Monthly cycle: ~8 hours total (4 hours analysis + 1 hour order generation + 30 min/store validation + 2 hours impact review). Logistics consolidation varies by volume; typically absorbed into weekly DC backhaul schedules."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Planning Mgr",
+     "activity": "**Analysis**: Identify SKUs with \"Overstock\" at Store A and \"Understock/High Velocity\" at Store B",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Validation**: Store Managers confirm physical stock availability and condition for transfer",
+     "duration": "30 min/store",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Supply Planning Mgr",
+     "activity": "**Push Order**: System generates \"Push\" Stock Transfers (W22); overrides standard ROP to clear excess",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Logistics**: Consolidate transfers into weekly DC-to-Store backhaul or store-to-store courier",
+     "duration": "Varies",
+     "n": "4",
+     "r": "Logistics"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Impact Review**: Measure sales lift at receiving store and holding cost reduction at sending store",
+     "duration": "2 hours",
+     "n": "5",
+     "r": "Supply Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W22",
+    "W22B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "Weekly",
+    "Owner": "Regional Store Operations Manager",
+    "Participants": "Store Managers, Supply Planner, Local Courier (3PL)",
+    "Trigger": "Critical stock-out at Store A; excess stock of same SKU at Store B (within same region/cluster)",
+    "Volume": "~50–100 transfers per week"
+   },
+   "id": "W204",
+   "level": 2,
+   "name": "Regional Stock Rebalancing & Inter-Store Expedited Transfers",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks\" (replaces manual Step 1).",
+     "- System auto-request of \"request\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves based on regional inventory health and cost of transfer vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Regional Store Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- 3PL courier costs (PHP 500–2,000 per trip) are not systematically tracked against the margin of transferred items; low-margin SKUs transferred at high courier cost may result in net loss.",
+     "- Approval bottleneck when Regional Manager is unavailable — 1-hour SLA for approval is aspirational during peak periods, causing expedited transfers to stall.",
+     "- In-transit inventory for 3PL courier shipments lacks real-time tracking (unlike DC fleet GPS), creating blind spots if courier delays or misdelivers.",
+     "- High transfer frequency (~50–100/week) strains Store B picking capacity and competes with customer service during peak store hours.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Regional Store Operations Manager**: weekly oversight of ~50–100 transfers, ~2–3 hours/week for approval and coordination. Absorbed within existing regional management role.",
+     "- **Store Managers (source stores)**: ~15 min/week for picking and staging outbound transfers. Absorbed.",
+     "- **Store Managers (destination stores)**: ~10 min/week for receiving. Absorbed.",
+     "- **3PL courier cost**: PHP 500–2,000 per trip × ~50–100 trips/week = PHP 100,000–800,000/month. Budgeted within regional logistics cost center.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Regional real-time inventory visibility dashboard for Store Managers (W204.1)",
+     "- Expedited transfer request workflow with Regional Manager approval routing (W204.2–3)",
+     "- Integration with W22 (transfer order and in-transit tracking) and W22A (store-level outbound fulfillment)",
+     "- Local 3PL booking integration (Lalamove/Transportify) for same-day courier dispatch (W204.5)"
+    ],
+    "Time Estimate": [
+     "Total cycle: 5–9 hours from identification to goods receipt (5 min identification + 1 hour approval + 15 min pick/stage + 4–8 hours transit + 10 min receipt). Regional Manager approval is the typical bottleneck at ~1 hour."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Opportunity Identification**: Store A Manager identifies \"Sold Out\" status for high-demand SKU; checks \"Regional Inventory\" in real-time system (W5)",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Transfer Request**: Store A Manager initiates an \"Expedited Transfer Request\" from Store B (nearest location with > 2 weeks cover)",
+     "duration": "2 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Approval**: Regional Manager or Supply Planner approves based on regional inventory health and cost of transfer vs. margin",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Regional Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Pick & Stage**: Store B Staff picks and stages items in backroom; system records \"In-Transit\" status (W22)",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Expedited Dispatch**: Local 3PL (Lalamove/Transportify) picks up from Store B; delivers to Store A within 4-8 hours",
+     "duration": "4-8 hours",
+     "n": "5",
+     "r": "Logistics"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Receipt**: Store A Receiving Clerk processes Goods Receipt; inventory available for sale immediately",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W22",
+    "W22A",
+    "W5"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Store Manager (Store A)",
+    "Participants": "Sales Associate, Store Manager B, 3PL Courier, Customer",
+    "Trigger": "Customer requests an out-of-stock item at Store A that is in stock at Store B",
+    "Volume": "~20–30 customer-initiated transfers per day"
+   },
+   "id": "W214",
+   "level": 2,
+   "name": "Store-to-Store Expedited Transfers (Customer-Initiated)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks real-time inventory in ERP and finds stock available at nearby Store B.\" (replaces manual Step 1).",
+     "- System auto-generate of \"Order & Payment\" (replaces manual Step 2).",
+     "- System auto-route of \"routes a high-priority pick task to Store B's terminal/handheld.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Customer may not return to collect the item after transfer — system has no auto-cancellation timer, creating stranded inventory at Store A and tied-up payment that requires manual refund processing.",
+     "- 3PL courier reliability is inconsistent for inter-store delivery (especially between cities), leading to missed customer expectations on the 1–3 hour delivery promise.",
+     "- Optional transfer fee charged to customer is a friction point — some customers refuse, and absorbing the cost erodes margin on lower-value items.",
+     "- Source store Stock Associates may deprioritize customer-initiated pick tasks during busy periods, delaying the transfer and degrading the customer experience.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Sales Associates**: ~20–30 customer-initiated transfers/day ÷ 200 stores = ~0.1–0.15/store/day × 15 min each = ~2 min/store/day. Absorbed.",
+     "- **Source Store Stock Associates**: ~15 min per pick task; with ~20–30/day distributed across 200 stores, average < 1 per store per week. Absorbed.",
+     "- **3PL courier cost**: PHP 200–500 per trip × ~20–30/day = PHP 120,000–450,000/month. Absorbed within store operations cost center.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time cross-store inventory lookup for Sales Associates via handheld/terminal (W214.1)",
+     "- Customer-initiated transfer order with payment capture and status tracking (W214.2)",
+     "- Automated high-priority pick task routing to source store (W214.3)",
+     "- 3PL courier booking integration (Lalamove/Grab/Transportify) via ERP (W214.5)",
+     "- Automated customer SMS/email notification upon goods receipt at destination store (W214.6)"
+    ],
+    "Time Estimate": [
+     "Total cycle: 2–4.5 hours from customer inquiry to pickup notification (5 min inquiry + 10 min payment + automated pick routing + 15 min pick/pack + 10 min dispatch + 1–3 hours transit + automated notification). Customer collection: 5 min."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Inquiry**: Customer requests an out-of-stock item at Store A. Sales Associate checks real-time inventory in ERP and finds stock available at nearby Store B.",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Store Manager A",
+     "activity": "**Order & Payment**: Sales Associate offers to have the item transferred from Store B via expedited courier. Customer agrees and pays for the item (plus optional transfer fee) at Store A; system generates a \"Customer-Initiated Transfer Order\" with status \"Awaiting Pickup\".",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Notification**: System automatically routes a high-priority pick task to Store B's terminal/handheld.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager B",
+     "activity": "**Pick & Pack**: Store B Stock Associate picks the item, places it in secure packaging, and prints an transfer label with Store A's order number and Customer details.",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Stock Associate B"
+    },
+    {
+     "a": "—",
+     "activity": "**Dispatch**: Store B books a local 3PL courier (Lalamove/Grab/Transportify) via ERP integration to transport the item to Store A.",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Store Manager B"
+    },
+    {
+     "a": "Store Manager A",
+     "activity": "**Transit & Arrival**: 3PL Courier transports item to Store A. Store A Receiving Clerk receives it in the system; ERP automatically triggers an SMS/email to the Customer (\"Your order is ready for pickup!\").",
+     "duration": "1–3 hours",
+     "n": "6",
+     "r": "Courier / Store A Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Customer Collection**: Customer arrives at Store A Pro Desk; Sales Associate scan-confirms collection and closes the transfer order.",
+     "duration": "5 min",
+     "n": "7",
+     "r": "Sales Associate"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "Monthly; or as needed for peak seasons",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planner, DC Managers, Logistics (3PL Carrier)",
+    "Trigger": "Supply planning identifies \"Overstock\" in one DC and \"Stock-out Risk\" in another",
+    "Volume": "Bulk pallet transfers"
+   },
+   "id": "W218",
+   "level": 2,
+   "name": "Inter-DC Stock Rebalancing (Stock Push)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics books heavy-duty transport\" (replaces manual Step 3).",
+     "- System auto-track of \"tracks\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Supply Planning Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Inter-DC freight cost for bulk transfers (especially inter-island via W66) can exceed the margin preserved by avoiding stock-outs, making some rebalancing moves economically unjustifiable.",
+     "- In-transit inventory tied up for 1–3 days during inter-DC movement is unavailable to any channel, creating temporary allocation conflicts in the source DC's residual inventory.",
+     "- Bulk transfer proposals rely on static cover-day thresholds (6 months vs. 2 weeks) that do not account for upcoming promotions (W57) or seasonal demand shifts, leading to poorly timed transfers.",
+     "- 3PL carrier availability for heavy-duty transport (10-wheeler, tractor head) is limited during peak construction season, delaying rebalancing execution.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Supply Planning Manager**: ~3 hours/month for imbalance detection and transfer proposal review. Absorbed.",
+     "- **Supply Planner**: ~2 hours/month for transfer execution monitoring. Absorbed within existing planner duties.",
+     "- **DC Staff (source and destination)**: ~4 hours combined per transfer for loading and receiving. With ~30–40 transfers/month across 4 DCs (the inter-DC canon), this is ~30–40 hours/DC/month. Absorbed.",
+     "- **Logistics (3PL carrier)**: heavy-duty transport (10-wheeler, tractor head) for inter-DC bulk movement booked per event. Cost: PHP 15,000–50,000 per trip depending on distance and island. Budgeted within logistics cost center.",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- DC-level inventory health and cover analysis dashboard",
+     "- Bulk transfer order generation (Push mode)",
+     "- WMS bulk zone picking and receiving",
+     "- In-transit inventory value tracking between DCs"
+    ],
+    "Time Estimate": [
+     "Planning: 3 hours/month (2 hours imbalance detection + 1 hour transfer proposal). Execution: 1–3 days transit + 4 hours combined loading/receiving. Efficiency audit: 2 hours/quarter."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Imbalance Detection**: Supply Planner reviews \"DC-to-DC Inventory Health\" report; identifies SKUs where current DC stock > 6 months cover vs. < 2 weeks at another DC",
+     "duration": "2 hours",
+     "n": "1",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Supply Planning Mgr",
+     "activity": "**Transfer Proposal**: System suggests \"Rebalancing Transfer\" (Push) to move bulk stock to the understocked DC",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "System / Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Fulfillment Booking**: Logistics books heavy-duty transport (tractor head / 10-wheeler) for the bulk move",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Logistics"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Loading**: Source DC picks from bulk storage; system verifies quantities via WMS (W3)",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "DC Picker"
+    },
+    {
+     "a": "—",
+     "activity": "**Transit**: Bulk shipment moves between DCs; system tracks \"In-Transit\" at WAC",
+     "duration": "1–3 days",
+     "n": "5",
+     "r": "Driver"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Receipt**: Destination DC processes bulk GR; inventory available for sale immediately",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Efficiency Audit**: Review total freight cost vs. margin preserved by avoiding stock-outs",
+     "duration": "Quarterly",
+     "n": "7",
+     "r": "Supply Planning Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3",
+    "W57",
+    "W66"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "~30–40 inter-DC transfers/month; higher during seasonal transitions and post-typhoon recovery",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planning Manager, Shipping DC Supervisor, Receiving DC Supervisor, Logistics Coordinator, Inventory Analyst",
+    "Trigger": "Supply planning detects DC inventory imbalance; or emergency replenishment request from a DC facing stockout risk; or post-season regional rebalancing",
+    "Volume": "~30–40 transfer orders/month averaging 5–20 lines per transfer (per W22); total ~150–800 transfer lines/month"
+   },
+   "id": "W1423",
+   "level": 2,
+   "name": "DC-to-DC Inter-DC Inventory Rebalancing Transfer Execution & In-Transit Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews recommendations\" (replaces manual Step 1).",
+     "- System auto-post of \"posts goods issue — inventory reduces at shipping DC, in-transit inventory…\" (replaces manual Step 2).",
+     "- System auto-log of \"logistics provider per W66\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot operates 4 distribution centers (Davao, Cebu, Calamba, Clark) serving different regions. Despite demand forecasting (W31) and automated replenishment (W4), inventory imbalances between DCs occur regularly: (a) regional demand spikes (e.g., typhoon in Visayas increases waterproofing demand beyond Cebu DC's stock), (b) new store openings in one region deplete DC inventory faster than planned, (c) import container cargo is sometimes split unevenly (container destination was assigned before demand shifted), (d) vendor DSD deliveries may bypass DCs for stores near vendor locations, creating regional assortment gaps. Inter-DC transfers rebalance inventory to match regional demand: (a) ~30–40 transfers/month is significant volume requiring dedicated coordination, (b) transfers between islands (Davao–Cebu, Cebu–Calamba) involve inter-island shipping (roll-on/roll-off ferries or coastwise vessels), adding 3–7 days transit time, (c) in-transit inventory must be tracked and valued (owned by BuildRight Depot, Inc. throughout — no IC sale), (d) both DCs must accurately post the transfer (shipping DC reduces inventory, receiving DC increases inventory) to maintain perpetual accuracy. This workflow manages the inter-DC transfer execution from initiation through in-transit monitoring to receipt."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Supply Planning Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Inter-island shipping unreliability**: Philippine inter-island logistics (RORO, coastwise vessels) are subject to weather delays, port congestion, and vessel mechanical failures; a 3-day transit can stretch to 10+ days during typhoon season, leaving the destination DC understocked",
+     "- **In-transit damage**: tiles and fragile items are particularly susceptible to damage during inter-island transfers (rough seas, multiple handling points); damage rate may be 2–5% per transfer",
+     "- **Perpetual inventory accuracy**: if the shipping DC posts goods issue but the receiving DC delays goods receipt (backlog at receiving dock), in-transit inventory accumulates in the GL, distorting the inventory balance and potentially triggering unnecessary re-orders",
+     "- **Transfer cost vs. vendor direct**: for some items, it may be cheaper to order directly from the vendor to the deficit DC rather than transfer from another DC (especially for heavy/low-value items where inter-island freight exceeds vendor delivery cost)"
+    ],
+    "Staffing Implication": [
+     "- Supply Planning Manager: ~2–3 hours/day on transfer initiation. Absorbed within existing role.",
+     "- Inventory Analyst: ~1–2 hours/day on in-transit monitoring + 4–6 hours/month on reconciliation. Absorbed.",
+     "- DC labor (picking, receiving): absorbed in existing DC workforce per W584 (DC daily operations).",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inter-DC transfer recommendation engine: automated rebalancing suggestions based on DC inventory levels and demand (W22)",
+     "- Transfer order management: create, approve, ship, receive workflow with full audit trail (W3)",
+     "- In-transit inventory tracker: real-time visibility into items between DCs with vessel/truck tracking integration (W106)",
+     "- Transfer reconciliation module: monthly reconciliation of all transfer orders with exception reporting (W22)",
+     "- Integration with W22 (inter-DC transfers — existing), W3 (DC receiving), W106 (DC dispatch), W66 (inter-island logistics), W4 (store replenishment — source of demand data), W31 (demand forecasting — trigger for rebalancing)"
+    ],
+    "Time Estimate": [
+     "- Transfer initiation and review: 2–3 hours/day = ~60–90 hours/month",
+     "- Shipping DC execution: 4–8 hours/transfer × 35 transfers/month = 140–280 hours/month (absorbed in DC operations)",
+     "- In-transit monitoring: 1–2 hours/day = ~30–60 hours/month",
+     "- Receiving DC execution: 2–4 hours/transfer × 35 transfers/month = 70–140 hours/month (absorbed in DC operations)",
+     "- Monthly reconciliation: 4–6 hours/month",
+     "- Total annual: ~3,600–7,000 hours/year (primarily DC labor absorbed in existing operations)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Transfer initiation**: Supply Planning Manager identifies rebalancing need: (a) system generates inter-DC transfer recommendation: (i) identify SKUs where one DC has excess stock (above max level) and another DC has deficit (below safety stock), (ii) calculate optimal transfer quantity: minimum of source DC excess and destination DC deficit, (b) Supply Planning Manager reviews recommendations: (i) validate demand signal (is the deficit real or a data timing issue?), (ii) consider transit time — for inter-island transfers with 5–7 day transit, the destination DC may be replenished by vendors before the transfer arrives, (c) approve transfer orders: ~30–40/month",
+     "duration": "2–3 hours/day",
+     "n": "1",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Shipping DC execution**: (a) Shipping DC Supervisor receives transfer order in WMS: pick items from storage locations per W106 procedures, (b) pack and stage for inter-DC transport: (i) for land transfers (Calamba–Clark): load onto company or third-party truck, (ii) for inter-island transfers (Davao–Cebu, Cebu–Calamba): stage for coastwise vessel or RORO ferry, (c) ship confirmation: system posts goods issue — inventory reduces at shipping DC, in-transit inventory increases (Dr. Inventory In-Transit / Cr. Inventory at Shipping DC)",
+     "duration": "4–8 hours/transfer",
+     "n": "2",
+     "r": "Shipping DC Supervisor / Pick Staff"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**In-transit monitoring**: (a) system tracks in-transit inventory: items shipped from one DC but not yet received at another, (b) Inventory Analyst monitors daily: (i) expected arrival date vs. actual progress (vessel tracking for inter-island), (ii) flag delays: transfers in transit > expected transit time + 2 days, (c) for delayed transfers: coordinate with logistics provider per W66 (inter-island logistics) to determine cause and revised ETA",
+     "duration": "1–2 hours/day",
+     "n": "3",
+     "r": "Inventory Analyst / Logistics Coordinator"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Receiving DC execution**: (a) Receiving DC Supervisor processes inbound transfer: (i) receive against transfer order in WMS, (ii) verify quantities: compare received vs. shipped quantities, (iii) identify discrepancies: shortage (lost in transit), damage (especially for fragile items like tiles), overage (shipping DC loaded extra), (b) discrepancy resolution: (i) shortages/damage: log claim with logistics provider per W66, (ii) system posts: Dr. Inventory at Receiving DC / Cr. Inventory In-Transit, (c) putaway received items to storage locations per W3 procedures",
+     "duration": "2–4 hours/transfer",
+     "n": "4",
+     "r": "Receiving DC Supervisor / Receiving Staff"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "**Monthly transfer reconciliation**: (a) Inventory Analyst reconciles monthly: (i) all transfer orders created vs. shipped vs. received, (ii) identify stuck transfers: shipped but not received after 14 days — investigate (lost shipment, receiving delay, system error), (iii) in-transit inventory valuation: ensure WAC is correctly applied during transfer (transferred at source DC's WAC, not destination DC's WAC), (iv) total inter-DC transfer volume and cost analysis (freight, handling)",
+     "duration": "4–6 hours/month",
+     "n": "5",
+     "r": "Inventory Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W106",
+    "W22",
+    "W3",
+    "W31",
+    "W4",
+    "W584",
+    "W66"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "Daily valuation update; weekly cycle count reconciliation for catch-weight items; monthly shrinkage analysis",
+    "Owner": "Inventory Analyst",
+    "Participants": "Inventory Analyst, Store Department Supervisor, Store Manager, Finance Controller, POS System Administrator",
+    "Trigger": "Daily store closing (Z-report per W574); or catch-weight item sales transaction at POS per W463; or weekly cycle count including catch-weight items per W6",
+    "Volume": "~50–100 catch-weight SKUs per store (lumber, wire, nails in bulk, pipes sold per meter); 200 stores × 50–100 SKUs = 10,000–20,000 catch-weight inventory positions"
+   },
+   "id": "W1433",
+   "level": 2,
+   "name": "Store-Level Daily Catch-Weight Item Inventory Valuation, WAC Calculation & Shrinkage Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Daily catch-weight sales recording\" (replaces manual Step 1).",
+     "- System auto-calculate of \"recalculates WAC per catch-weight SKU per store\" (replaces manual Step 2).",
+     "- System auto-count of \"Weekly catch-weight cycle count\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot sells catch-weight items — products sold by variable weight or length rather than by fixed unit: (a) lumber (sold per board foot, with varying widths/lengths/grades), (b) wire and cable (sold per meter from spools), (c) nails and fasteners in bulk (sold per kilogram from bins), (d) pipes (PVC, galvanized iron — sold per meter or per cut length), (e) chain and rope (sold per meter). Catch-weight items present unique inventory management challenges: (a) the system must track both quantity (pieces/lengths) and weight/length (kg/m/board feet) — a single inventory record has dual units of measure, (b) WAC (Weighted Average Cost) calculation is more complex: each purchase may have a different cost per unit of measure, and sales deplete inventory at varying weights/lengths, (c) physical counting is harder: you can't count pieces of nails in a bin — you weigh the bin and subtract tare weight, (d) shrinkage is harder to detect: a few meters of wire or kilograms of nails removed from a bin may not be noticed, unlike a missing box of power tools, (e) cutting/waste: when lumber or pipe is cut to customer specification, the remnant (offcut) may or may not be resalable — this affects inventory valuation. This workflow manages the daily catch-weight inventory valuation, WAC calculation, and shrinkage reconciliation."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: Inventory Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Measurement imprecision**: weighing nails on a floor scale (± 0.5 kg accuracy) or measuring lumber by tape (± 0.5 inch accuracy) introduces systematic counting errors that accumulate over time, making it difficult to distinguish genuine shrinkage from measurement noise",
+     "- **Customer-facing waste perception**: when a customer orders 6 feet of pipe from a 10-foot piece, the 4-foot remnant is often discarded or sold at discount; customers may perceive this as wasteful, especially for expensive items like copper wire or GI pipe",
+     "- **High shrinkage risk**: catch-weight items (nails, screws, wire) are among the most frequently stolen items in hardware retail due to small size, high value, and difficulty of securing bulk bins; LP measures per W562 may not be effective for bin-based catch-weight items",
+     "- **WAC volatility**: because catch-weight items have variable quantities per receipt, the WAC can fluctuate significantly between deliveries (e.g., one lumber delivery at PHP 45/board foot, next delivery at PHP 55/board foot due to supplier price change); COGS per sale varies depending on when the item was sold relative to deliveries"
+    ],
+    "Staffing Implication": [
+     "- Inventory Analyst: ~4–6 hours/month on catch-weight shrinkage analysis. Absorbed within existing role.",
+     "- Store Department Supervisors: weekly cycle counting absorbed in existing W6 duties.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Catch-weight inventory module: dual unit of measure (pieces + weight/length) tracking with WAC per unit of measure (W1433.2)",
+     "- POS catch-weight integration: weight/length capture from scales and measuring devices per W463 (W1433.1)",
+     "- Cycle count variance analyzer: automated comparison of physical vs. system quantities with catch-weight-specific tolerance thresholds (W1433.3)",
+     "- Monthly shrinkage reporting: catch-weight shrinkage analysis by store, category, and trend (W1433.4)",
+     "- Remnant tracking module: cut-to-length waste management with minimum saleable length rules (W1433.5)",
+     "- Integration with W463 (catch-weight POS processing — sales data source), W6 (cycle counting — physical count process), W574 (store daily closing — WAC recalculation trigger), W562 (store-level LP daily routine — shrinkage investigation), W92 (inventory adjustment — shrinkage posting), W109 (store receiving — receipt weight verification)"
+    ],
+    "Time Estimate": [
+     "- Daily catch-weight sales recording: 3–5 min/transaction × ~30–60 catch-weight transactions/store/day × 200 stores ≈ ~18,000–60,000 min/day (absorbed in POS operations)",
+     "- WAC recalculation: automated",
+     "- Weekly cycle count: 30–60 min/store × 200 stores = ~100–200 hours/week chain-wide (absorbed in W6)",
+     "- Monthly shrinkage analysis: 4–6 hours/month (HQ)",
+     "- Total incremental effort (HQ): ~50–70 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Department Supervisor",
+     "activity": "**Daily catch-weight sales recording** (at POS per W463): (a) when a catch-weight item is sold at POS: (i) Sales Associate weighs/measures the item (e.g., places lumber on scale, measures wire length with counter), (ii) POS captures: item code + actual weight/length, (iii) POS calculates price: actual weight/length × price per kg/m/board foot, (iv) system records: inventory reduced by actual weight/length at current WAC per unit of measure, (v) journal entry: Dr. COGS (actual weight × WAC) / Cr. Inventory (actual weight × WAC)",
+     "duration": "3–5 min/transaction",
+     "n": "1",
+     "r": "Sales Associate / Cashier"
+    },
+    {
+     "a": "Inventory Analyst",
+     "activity": "**Daily WAC recalculation** (at store close per W574): (a) system recalculates WAC per catch-weight SKU per store: (i) new WAC = (prior inventory value + new receipts value) ÷ (prior inventory quantity + new receipt quantity), (b) for items with new deliveries during the day: receipt weight/length must be recorded accurately at receiving per W109 — if the vendor delivers 500 kg of nails but the receiving clerk records 480 kg (scale error), the WAC calculation is distorted, (c) system posts updated WAC and inventory value per catch-weight item per store",
+     "duration": "Automated (< 5 min/store)",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Weekly catch-weight cycle count** (per W6 cycle counting): (a) Store Department Supervisor conducts physical count of assigned catch-weight items: (i) lumber: count boards and measure dimensions (width × thickness × length = board feet), (ii) nails in bulk: weigh bin contents (gross weight − tare weight = net weight), (iii) wire spools: measure remaining diameter or use spool counter, (iv) pipes: count full lengths + measure cut remnants, (b) compare physical count to system quantity: (i) variance = physical quantity − system quantity, (ii) acceptable variance threshold for catch-weight items: ± 2–5% (higher than fixed-unit items due to measurement imprecision), (c) for variances exceeding threshold: investigate root cause (measurement error, customer theft, cutting waste unrecorded)",
+     "duration": "30–60 min/store/week (for catch-weight items only)",
+     "n": "3",
+     "r": "Store Department Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Monthly shrinkage analysis**: (a) Inventory Analyst compiles monthly catch-weight shrinkage report: (i) total variance by category (lumber, wire, nails, pipes), (ii) variance by store (identify high-shrinkage stores), (iii) variance trend (is shrinkage increasing or decreasing?), (b) Controller reviews: (i) total catch-weight inventory shrinkage value (estimated PHP 2–5M/month chain-wide given the measurement challenges), (ii) determine if shrinkage is within acceptable range (< 0.5% of catch-weight inventory value), (iii) if above threshold: escalate to Loss Prevention per W562 for investigation, (c) book inventory adjustment: Dr. Inventory Shrinkage Expense / Cr. Inventory (at WAC) for confirmed losses",
+     "duration": "4–6 hours/month",
+     "n": "4",
+     "r": "Inventory Analyst / Controller"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Cutting waste and remnant management**: (a) when a catch-weight item is cut for a customer (e.g., 10-foot pipe cut to 6 feet, leaving 4-foot remnant): (i) Sales Associate records: item code, original length, cut length, remnant length, (ii) system adjusts: original piece derecognized, sold piece recognized at WAC × sold length, remnant recognized at WAC × remnant length (if remnant is resalable — above minimum saleable length), (iii) if remnant is below minimum saleable length (scrap): recognized at zero value → Dr. Cutting Waste Expense / Cr. Inventory, (b) Store Department Supervisor monitors remnant accumulation: excessive remnants indicate cutting waste that could be reduced with better measurement",
+     "duration": "2–3 min/cut",
+     "n": "5",
+     "r": "Sales Associate / Store Department Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W109",
+    "W463",
+    "W562",
+    "W574",
+    "W6",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-254"
+   ],
+   "fields": {
+    "Frequency": "~8–12 emergency transfers/month across all DC pairs",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planning Manager, DC Managers (source & destination), Logistics Planner, Category Manager",
+    "Trigger": "Category A-item stockout at a DC serving ≥ 5 stores with no incoming PO within lead time; or store-level stockout of promotional item with active marketing spend",
+    "Volume": "Typically 5–20 SKUs per emergency transfer; high-value or high-velocity items"
+   },
+   "id": "W1535",
+   "level": 2,
+   "name": "Emergency Inter-DC Stock Transfer for Critical Out-of-Stock Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Stockout alert & assessment\" (replaces manual Step 1).",
+     "- System auto-route of \"Surplus DC identification\" (replaces manual Step 2).",
+     "- System auto-create of \"creates emergency transfer order\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "With 4 DCs serving distinct Philippine island regions (Mindanao, Visayas, South Luzon, North/Central Luzon), occasional demand surges or supply disruptions can create critical stockouts at one DC while another DC has surplus inventory. Standard inter-DC rebalancing (W218) operates on a monthly cycle and inter-island shipping takes 3–7 days. Emergency transfers bypass the normal cycle, using expedited inter-island shipping (RoRo, fast craft, or air freight for extreme urgency) to prevent revenue loss from stockouts."
+    ],
+    "Controls": [
+     "- CTL-254 (ensure controlled execution — Stock Transfers & Rebalancing (PA-05.2).)",
+     "- operational: must validate source DC surplus before authorization"
+    ],
+    "Pain Points / Risks": [
+     "- **Inter-island logistics delay**: Philippine inter-island shipping is subject to weather disruptions (typhoons cancel RoRo sailings for 1–3 days), port congestion, and vessel availability",
+     "- **Cost premium**: Emergency expedited shipping costs 3–5x standard inter-DC transfer freight; air freight can be 10–20x; must be justified by revenue at risk",
+     "- **Source DC depletion**: Emergency transfer may push source DC toward its own stockout; system must validate source DC surplus before authorization"
+    ],
+    "Staffing Implication": [
+     "- Supply Planning Manager: ~4 hours/month on emergency transfers (8–12 events × 30 min average); absorbed into existing role",
+     "- DC Supervisors and Logistics Planners: handle emergency picks/shipments as part of daily operations; no incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated critical stockout alert with multi-DC surplus query (W1535.1–2)",
+     "- Emergency transfer order creation with expedited routing (W1535.3–4)",
+     "- In-transit inventory tracking with heightened status (W1535.5)",
+     "- Priority putaway and allocation at destination DC (W1535.6)",
+     "- Post-event root cause analysis integration with S&OP (W1535.7)"
+    ],
+    "Time Estimate": [
+     "- Assessment & authorization: 30 min",
+     "- Expedited pick & ship: 2–4 hours",
+     "- Transit: 1–5 days (inter-island)",
+     "- Receipt & distribution: 2 hours",
+     "- Post-event review: 1 hour",
+     "- **Total logistics time: 2–6 days; active management time: ~4 hours per event**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Stockout alert & assessment**: System flags critical stockout — A-item at zero available quantity at DC with ≥ 5 stores showing negative ATP in next 7 days; Supply Planning Manager reviews: (a) Is there an incoming PO within lead time? (b) Can DSD vendors supply directly? (c) Is the stockout store-cluster specific or region-wide?",
+     "duration": "15 min",
+     "n": "1",
+     "r": "System / Supply Planning Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Surplus DC identification**: System queries all other DCs for available quantity of the affected SKU(s); ranks by: (a) surplus days-of-supply (> 21 days preferred), (b) shipping distance/transit time to affected DC, (c) inter-island route availability",
+     "duration": "5 min",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Emergency transfer authorization**: If transfer is warranted (revenue at risk > PHP 500K or promotional commitment affected), Supply Planning Manager creates emergency transfer order; VP Supply Chain approves if total transfer value > PHP 200K or requires air freight",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "DC Manager (source)",
+     "activity": "**Expedited pick & ship**: Source DC receives priority pick directive — emergency transfer order jumps queue ahead of standard replenishment orders; Logistics Planner books fastest available inter-island transport (RoRo ferry, fast craft, or for extreme urgency air freight via W1514)",
+     "duration": "2–4 hours",
+     "n": "4",
+     "r": "DC Supervisor / Logistics Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**In-transit tracking & store allocation**: System tracks emergency shipment with heightened monitoring; destination DC pre-allocates incoming stock to highest-priority store replenishment orders; Category Manager may adjust promotional allocation based on incoming emergency quantity",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Receipt & rush distribution**: Destination DC receives emergency shipment; priority putaway directly to forward-pick locations (bypass standard putaway); immediate release to outbound delivery wave for affected stores",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "DC Supervisor (destination)"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Post-event review**: Supply Planning Manager conducts root cause analysis — why did the stockout occur? (forecast miss, vendor delay, demand surge?); feeds into S&OP process (W1533) to prevent recurrence; documents emergency transfer cost (expedited shipping premium) for category P&L impact",
+     "duration": "1 hour/event",
+     "n": "7",
+     "r": "Supply Planning Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1514",
+    "W1533",
+    "W218"
+   ]
+  }
+ ]
+}

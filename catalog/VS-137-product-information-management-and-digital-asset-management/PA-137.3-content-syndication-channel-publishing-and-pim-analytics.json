@@ -1,0 +1,566 @@
+{
+ "process_area": {
+  "id": "PA-137.3",
+  "title": "Content Syndication, Channel Publishing & PIM Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-137-product-information-management-and-digital-asset-management/PA-137.3-content-syndication-channel-publishing-and-pim-analytics.md",
+ "value_stream": {
+  "directory": "VS-137-product-information-management-and-digital-asset-management",
+  "id": "VS-137",
+  "name": "Product Information Management (PIM) & Digital Asset Management (DAM)"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Continuous feed",
+    "Owner": "PIM Content Lead / Ecommerce Marketplace (VS-65)",
+    "Participants": "Marketplace ops (VS-65), Ecommerce (VS-10), IT (VS-27)",
+    "Trigger": "Marketplace presence (VS-65); channel onboarding; catalog change",
+    "Volume": "Lazada/Shopee and other marketplace catalogs (subset/full of 35,000 SKUs)"
+   },
+   "id": "W4161",
+   "level": 2,
+   "name": "Marketplace & Third-Party Channel Content Syndication",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto category-mapping suggestions; feed-error auto-classification; bulk listing templates"
+    ],
+    "Controls": [
+     "- CTL-643 (ensure controlled execution — Content Syndication, Channel Publishing & PIM Analytics (PA-137.3).)",
+     "- CTL-643: marketplace content sourced from canonical PIM (no manual channel-side edits); feed-error SLA"
+    ],
+    "Cross-references": [
+     "- links to VS-65 (marketplace), VS-48 (retail media), VS-10 (ecommerce), W4159 (publishing), VS-113.2 (integration)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mapping-error risk**: Wrong category mapping → listing rejected/hidden; mitigated by mapping governance + acceptance monitoring",
+     "- **Channel-conflict risk**: Inconsistent content across channels; mitigated by canonical-source syndication"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Marketplace feed/API (VS-65); PIM syndication (W4159); retail-media (VS-48); integration bus (VS-27/VS-113.2)"
+    ],
+    "Time Estimate": [
+     "- Automated feed; ~0.5–1 FTE marketplace ops + exception handling"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce map BuildRight's canonical content to each marketplace's required taxonomy/attributes (Lazada/Shopee categories differ), and configure the feed transform rules per channel",
+     "duration": "Per channel",
+     "n": "1",
+     "r": "PIM Content Lead / Marketplace Ops"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce run the syndication feed (product/price/availability/asset), monitor marketplace acceptance/rejections, and remediate category-mapping errors",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "PIM Content Lead / Ecommerce Ops"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce handle marketplace-specific content (promotional copy, bundle listings, sponsored-content assets links to VS-48 retail media), and measure channel performance (W4163)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "PIM Content Lead / Marketplace Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4159",
+    "W4163"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Real-time / near-real-time",
+    "Owner": "PIM Content Lead / Ecommerce Operations (VS-10) / Pricing (VS-57)",
+    "Participants": "Pricing (VS-57), Ecommerce (VS-10), Promotion (VS-58), Inventory (VS-05)",
+    "Trigger": "Price change (VS-57/VS-16); promotion (VS-58); availability change (VS-05)",
+    "Volume": "35,000 SKUs × 6 channels; ~2.8M monthly POS + ~42,900 ecommerce orders/mo"
+   },
+   "id": "W4162",
+   "level": 2,
+   "name": "Price, Promotion & Availability Content Sync",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Event-driven real-time price/promo/availability push; discrepancy auto-detection & alert"
+    ],
+    "Controls": [
+     "- CTL-643 (ensure controlled execution — Content Syndication, Channel Publishing & PIM Analytics (PA-137.3).)",
+     "- CTL-643: single authoritative pricing source; real-time sync with discrepancy monitoring (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-57 (pricing), VS-16 (price types), VS-58 (promotions), VS-05 (inventory), VS-85 (mandatory discount), VS-118 (revenue assurance), VS-10 (availability §8.4)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stale-price risk**: Channel shows wrong price → customer dispute/revenue leakage; mitigated by real-time sync + revenue-assurance monitoring (VS-118)",
+     "- **Availability-mismatch risk**: Online shows stock when out → failed fulfillment; mitigated by real-time per-store availability"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing source (VS-57/VS-16); promotion engine (VS-58); inventory availability (VS-05/VS-10 §8.4); PIM syndication (W4159); revenue assurance (VS-118)"
+    ],
+    "Time Estimate": [
+     "- Automated real-time pipeline; ~0.3 FTE monitoring + exception"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce/Pricing sync price content (SRP, trade price, promo price) from the authoritative pricing source (VS-57/VS-16) to all channels in real-time, with display-price computation (VAT-inclusive, mandatory-discount links to VS-85)",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "PIM Content Lead / Pricing / Ecommerce Ops"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce sync promotion content (badges, callouts, validity links to VS-58) and availability (per-store real-time stock links to VS-10 §8.4) consistently across channels",
+     "duration": "Real-time",
+     "n": "2",
+     "r": "PIM Content Lead / Ecommerce Ops"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce monitor sync latency/errors, reconcile price/availability discrepancies (links to VS-118 revenue-assurance price integrity), and escalate stale data",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "PIM Content Lead / Ecommerce Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4159"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Weekly/monthly",
+    "Owner": "PIM Content Lead / Ecommerce Analytics (VS-28/VS-10)",
+    "Participants": "SEO (VS-10), Marketing (VS-14), Ecommerce (VS-10), Insights (VS-44)",
+    "Trigger": "Periodic review; SEO/content-strategy cycle",
+    "Volume": "35,000 SKUs; web/app/marketplace/search analytics"
+   },
+   "id": "W4163",
+   "level": 2,
+   "name": "Product Content Performance & SEO Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto content-gap detection from search analytics; A/B-test automation; SEO-scoring per SKU"
+    ],
+    "Controls": [
+     "- CTL-643 (ensure controlled execution — Content Syndication, Channel Publishing & PIM Analytics (PA-137.3).)",
+     "- CTL-643: content KPIs tied to revenue/conversion (not vanity metrics); A/B-test governance"
+    ],
+    "Cross-references": [
+     "- links to VS-10 (SEO/ecommerce analytics), VS-28 (BI), VS-44 (insights), VS-14 (marketing), W4149/W4156 (enrichment)"
+    ],
+    "Pain Points / Risks": [
+     "- **Blind-spot risk**: Low-performing content not identified → lost revenue; mitigated by per-SKU performance analytics",
+     "- **Vanity-metric risk**: Optimizing views not conversion; mitigated by tying content KPIs to conversion/attach (W4164)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SEO/web analytics (VS-10); BI/analytics (VS-28); insights (VS-44); PIM completeness (W4147)"
+    ],
+    "Time Estimate": [
+     "- Weekly/monthly; ~1 FTE analytics"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Ecommerce/SEO measure content performance — PDP views, search ranking, click-through, bounce, time-on-page, search-term gaps (zero-result queries) — per SKU/category/channel",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "PIM Content Lead / SEO / Analytics"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/SEO identify content gaps (low-completeness SKUs, missing keywords, poor images) and prioritize enrichment (links to W4149/W4156) by revenue/traffic impact",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "PIM Content Lead / SEO"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Marketing report content-performance KPIs, A/B test content variants, and feed learnings into category/content strategy (VS-01/VS-14)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "PIM Content Lead / Marketing"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4147",
+    "W4149",
+    "W4156",
+    "W4164"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "PIM Content Lead / Ecommerce Analytics (VS-28)",
+    "Participants": "Ecommerce (VS-10), Merchandising (VS-01), Customer/CDP (VS-126), Selling-enablement (VS-124)",
+    "Trigger": "Performance review; cross-sell/attach objective",
+    "Volume": "~2.8M monthly POS + ~42,900 ecommerce orders/mo; ~600K loyalty members"
+   },
+   "id": "W4164",
+   "level": 2,
+   "name": "Content-Driven Conversion, Attach & Basket Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Conversion-lift auto-attribution; basket/attach analytics automation; content-ROI dashboards"
+    ],
+    "Controls": [
+     "- CTL-643 (ensure controlled execution — Content Syndication, Channel Publishing & PIM Analytics (PA-137.3).)",
+     "- CTL-643: content-ROI measured with A/B-test rigor; cross-sell relevance monitored"
+    ],
+    "Cross-references": [
+     "- links to VS-10 (ecommerce analytics), VS-28 (BI), VS-126 (CDP/basket), VS-124 (selling), VS-01 (merchandising), W4151 (relationships)"
+    ],
+    "Pain Points / Risks": [
+     "- **Attribution risk**: Hard to isolate content's revenue impact; mitigated by A/B testing and conversion-lift measurement",
+     "- **Over-attach risk**: Aggressive cross-sell annoys shoppers; mitigated by relevance/basket analytics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce analytics (VS-10); BI/analytics (VS-28); CDP/basket data (VS-126); selling-enablement (VS-124)"
+    ],
+    "Time Estimate": [
+     "- Monthly; ~1 FTE analytics"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Analytics measure content's revenue impact — conversion lift from complete vs incomplete content, attach from cross-sell/bundle (W4151), basket-size from how-to/rich content (W4156)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "PIM Content Lead / Analytics"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Merchandising measure cross-sell/bundle attach effectiveness (W4151) and clienteling/personalization lift (VS-126/VS-124) attributable to content, by category",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "PIM Content Lead / Merchandising / CDP"
+    },
+    {
+     "a": "Director Ecommerce / CMO",
+     "activity": "PIM/Ecommerce report content-ROI (content investment vs conversion/attach/basket lift), prioritize the content backlog, and feed into merchandising/selling strategy (VS-01/VS-124)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "PIM Content Lead / Ecommerce"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4151",
+    "W4156"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-149",
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "PIM Product Owner / Vendor Management (VS-03)",
+    "Participants": "Vendor Mgmt (VS-03), Content teams, Scorecard (VS-67), Procurement (VS-15)",
+    "Trigger": "Monthly review; vendor scorecard cycle",
+    "Volume": "~800–1,000 vendors; internal content teams"
+   },
+   "id": "W4165",
+   "level": 2,
+   "name": "Vendor & Internal Content SLA Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto SLA dashboards; scorecard auto-feed; bottleneck auto-detection"
+    ],
+    "Controls": [
+     "- CTL-149 (ensure product content accuracy & rights compliance.)",
+     "- CTL-643: vendor content-SLA in scorecard (VS-03/VS-67); internal SLA tracked and resourced"
+    ],
+    "Cross-references": [
+     "- links to VS-03 (vendor), VS-67 (scorecard), VS-15 (procurement), VS-03 (agreements)"
+    ],
+    "Pain Points / Risks": [
+     "- **No-consequence risk**: Poor vendor content SLA ignored → recurring delays; mitigated by scorecard consequence",
+     "- **Internal-bottleneck risk**: Content team under-resourced vs backlog; mitigated by SLA/burn-down visibility"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM SLA dashboards; vendor scorecard (VS-03/VS-67); procurement (VS-15)"
+    ],
+    "Time Estimate": [
+     "- Monthly; ~0.3 FTE reporting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "PIM Owner",
+     "activity": "PIM/Vendor Mgmt measure vendor content SLA performance — on-time content delivery, completeness, accuracy, SDS/cert timeliness (W4155) — per vendor",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "PIM Owner / Vendor Mgmt"
+    },
+    {
+     "a": "PIM Owner",
+     "activity": "PIM measure internal content-team SLA (onboarding cycle time W4148, enrichment backlog burn-down, defect-fix time) and identify bottlenecks",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "PIM Owner / Content Lead"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Vendor Mgmt feed vendor content-SLA into the vendor scorecard (VS-67 W2347/VS-03), manage consequences (improvement plan), and report to merchandising/procurement",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "PIM Owner / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2347",
+    "W4148",
+    "W4155"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic",
+    "Owner": "PIM Product Owner / Data Governance (VS-28.2)",
+    "Participants": "Data stewards, Merchandising (VS-01), MDM (VS-29), Audit (VS-21)",
+    "Trigger": "Data-quality audit; duplicate detection; governance review",
+    "Volume": "~55,000 SKU master; dedup across imports/brands"
+   },
+   "id": "W4166",
+   "level": 2,
+   "name": "Catalog Data Quality, Duplicate & GSR Remediation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Duplicate auto-detection (fuzzy match); inconsistency auto-scan; remediation auto-routing"
+    ],
+    "Controls": [
+     "- CTL-643 (ensure controlled execution — Content Syndication, Channel Publishing & PIM Analytics (PA-137.3).)",
+     "- CTL-643: duplicate/inconsistency KPIs in governance; intake controls prevent recurrence (VS-28.2)"
+    ],
+    "Cross-references": [
+     "- links to VS-28.2 (data quality), VS-29 (MDM), VS-21 (audit), VS-133 (OpEx), W4152 (intake)"
+    ],
+    "Pain Points / Risks": [
+     "- **Duplicate-SKU risk**: Same item twice → inventory/sales/pricing chaos; mitigated by dedup + intake control",
+     "- **Inconsistency risk**: Conflicting specs across channels; mitigated by canonical-source + quality checks"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM data-quality tooling; data-quality framework (VS-28.2 W2392); MDM (VS-29); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- Continuous; ~0.5–1 FTE data stewardship"
+    ]
+   },
+   "steps": [
+    {
+     "a": "PIM Owner",
+     "activity": "PIM/Data Gov run catalog data-quality checks — duplicates (same SKU ranged twice), inconsistencies (conflicting specs across channels), orphaned/incomplete records — and log issues",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "PIM Owner / Data Gov"
+    },
+    {
+     "a": "PIM Owner",
+     "activity": "PIM/Merchandising resolve duplicates (merge/retire), standardize attribute values (links to W4146 dictionary), and remediate Global Source/brand registry (GSR) mismatches across import vendors",
+     "duration": "Per issue",
+     "n": "2",
+     "r": "PIM Owner / Merchandising / Sourcing"
+    },
+    {
+     "a": "Director Ecommerce",
+     "activity": "PIM/Data Gov report data-quality KPIs to governance (VS-28.2 W2392/VS-133), prevent recurrence via intake controls (W4152), and support audit (VS-21)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "PIM Owner / Data Gov"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2392",
+    "W4146",
+    "W4152"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Per event (bi-monthly sales + seasonal)",
+    "Owner": "PIM Content Lead / Marketing (VS-14)",
+    "Participants": "Marketing (VS-14), Merchandising (VS-01), Ecommerce (VS-10), Print (VS-14 W1270)",
+    "Trigger": "Seasonal/promo calendar (VS-14/VS-01 §13.2); ber-months, sale events",
+    "Volume": "Seasonal SKUs (~500) + promo subset of 35,000"
+   },
+   "id": "W4167",
+   "level": 2,
+   "name": "Seasonal & Promotional Catalog Event Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Event-content templates; scheduled publish/withdraw auto-execution; performance auto-recap"
+    ],
+    "Controls": [
+     "- CTL-643 (ensure controlled execution — Content Syndication, Channel Publishing & PIM Analytics (PA-137.3).)",
+     "- CTL-643: event content reviewed/approved; publish/withdraw windows enforced"
+    ],
+    "Cross-references": [
+     "- links to VS-14 (marketing/calendar/print W1270), VS-58 (promotions), VS-01 §13.2 (seasonal), VS-10 (landing pages), W4158 (retire)"
+    ],
+    "Pain Points / Risks": [
+     "- **Timing risk**: Seasonal content published late/withdrawn late; mitigated by scheduled publish/withdraw windows",
+     "- **Asset-overload risk**: Event content overwhelms core catalog; mitigated by phased scheduling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM event/catalog mgmt; ecommerce landing pages (VS-10); print catalog (VS-14 W1270); promo engine (VS-58); DAM seasonal assets (W4153)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 weeks/event; prioritized backlog"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director Marketing",
+     "activity": "PIM/Marketing plan the seasonal/promotional catalog event — participating SKUs, themed content/assets, bundle/kit content (W4151), print-flyer extract (VS-14 W1270) — from the calendar",
+     "duration": "Per event",
+     "n": "1",
+     "r": "PIM Content Lead / Marketing"
+    },
+    {
+     "a": "Director Marketing",
+     "activity": "PIM/Marketing produce event-specific content (banners, landing pages, themed how-to, gift guides), schedule publish/withdraw windows across channels (W4159), and coordinate with promo pricing (VS-58)",
+     "duration": "Per event",
+     "n": "2",
+     "r": "PIM Content Lead / Marketing / Ecommerce"
+    },
+    {
+     "a": "Director Marketing",
+     "activity": "PIM/Marketing measure event content performance (W4163/W4164), retire seasonal content post-event (W4158), and capture learnings for the next cycle",
+     "duration": "Post-event",
+     "n": "3",
+     "r": "PIM Content Lead / Marketing"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1270",
+    "W4151",
+    "W4153",
+    "W4158",
+    "W4159",
+    "W4163",
+    "W4164"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-149",
+    "CTL-643"
+   ],
+   "fields": {
+    "Frequency": "Annual + on change",
+    "Owner": "PIM Product Owner / Enterprise Architecture (VS-113) / IT (VS-27)",
+    "Participants": "IT (VS-27), EA (VS-113), Ecommerce (VS-10), TBM/FinOps (VS-135), InfoSec (VS-27.3)",
+    "Trigger": "Platform review; upgrade; integration change; lifecycle governance",
+    "Volume": "Enterprise PIM/DAM platform serving 6 channels + B2B"
+   },
+   "id": "W4168",
+   "level": 2,
+   "name": "PIM/DAM Platform, Integration & Lifecycle Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Platform health/usage monitoring; integration auto-monitoring; FinOps cost analytics (VS-135)"
+    ],
+    "Controls": [
+     "- CTL-149 (ensure product content accuracy & rights compliance.)",
+     "- CTL-643: platform lifecycle governed (VS-113); DR/BCP tested (VS-26); security/privacy assessed (VS-27.3/VS-91)"
+    ],
+    "Cross-references": [
+     "- links to VS-113 (EA), VS-113.2 (integration), VS-27 (IT ops), VS-135 (TBM/FinOps), VS-27.3 (security), VS-91 (privacy), VS-26 (DR/BCP), VS-29 (item master)"
+    ],
+    "Pain Points / Risks": [
+     "- **Platform-risk**: PIM/DAM outage halts all channels; mitigated by HA/DR (VS-26) and monitoring",
+     "- **Integration-debt risk**: Point-to-point integrations accumulate; mitigated by integration-layer governance (VS-113.2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM/DAM platform; integration layer (VS-113.2); TBM/FinOps (VS-135); InfoSec (VS-27.3); DR/BCP (VS-26)"
+    ],
+    "Time Estimate": [
+     "- Annual governance; ~0.5 FTE platform mgmt"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "PIM/EA/IT govern the PIM/DAM platform lifecycle — roadmap, upgrades, vendor management, scalability (35K→growth, asset volume), and cost (links to VS-135 TBM)",
+     "duration": "Annual",
+     "n": "1",
+     "r": "PIM Owner / EA / IT"
+    },
+    {
+     "a": "CIO",
+     "activity": "PIM/EA govern integration architecture (ERP item master VS-29, ecommerce VS-10, marketplace VS-65, retail-media VS-48, print, CDP VS-126) via the integration layer (VS-113.2) with versioning/monitoring",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "PIM Owner / EA"
+    },
+    {
+     "a": "CIO",
+     "activity": "PIM/InfoSec govern platform security (access control, vendor portal VS-27.3, data privacy of customer-linked content VS-91), and conduct periodic DR/BCP testing (VS-26) for the content platform",
+     "duration": "Annual",
+     "n": "3",
+     "r": "PIM Owner / InfoSec"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

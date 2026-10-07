@@ -1,0 +1,565 @@
+{
+ "process_area": {
+  "id": "PA-158.2",
+  "title": "Cost Variance, Actual-vs-Standard & Margin Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.2-cost-variance-actual-vs-standard-and-margin-analytics.md",
+ "value_stream": {
+  "directory": "VS-158-product-costing-landed-cost-and-cost-accounting",
+  "id": "VS-158",
+  "name": "Product Costing, Landed-Cost & Cost Accounting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Per receipt (system) + monthly review",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Procurement (VS-03), Merchandising (VS-01), Vendor Mgmt (VS-67), Controller",
+    "Trigger": "PO receipt where actual price ≠ standard; monthly variance review",
+    "Volume": "~72,000 receipts/yr; ~ top-200 vendors = 85% COGS"
+   },
+   "id": "W4657",
+   "level": 2,
+   "name": "Purchase-Price Variance (PPV) Analysis & Vendor Accountability",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto PPV capture at receipt; threshold-based vendor alerts; PPV-to-roll feed"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: PPV captured at every receipt; unfavorable variances > threshold routed and reviewed; PPV feeds the standard roll"
+    ],
+    "Cross-references": [
+     "- links to VS-03/VS-67 (vendor/scorecard), W4656 (roll), W4661 (margin), VS-17.1 (GL)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unaddressed-PPV risk**: Persistent unfavorable PPV on a vendor not acted on erodes margin silently; mitigated by threshold-based routing to Procurement",
+     "- **Standard-lag risk**: Standard not updated to reflect persistent PPV accumulates large revaluations; mitigated by feeding PPV into the roll"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PO receipt (VS-04); PPV ledger; vendor scorecard (VS-67); analytics (VS-28); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~3–5 days/month PPV analysis + vendor routing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Capture PPV at every receipt (actual purchase price − standard cost); post to the PPV P&L account and accumulate by vendor/category/SKU",
+     "duration": "Per receipt",
+     "n": "1",
+     "r": "Cost Accounting / System"
+    },
+    {
+     "a": "Controller / VP Merchandising",
+     "activity": "Analyze PPV monthly: favorable vs. unfavorable by vendor/category; route unfavorable variances exceeding threshold to Procurement/Vendor Mgmt for vendor accountability and negotiation (VS-03.3/VS-67)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / Procurement"
+    },
+    {
+     "a": "Controller",
+     "activity": "Feed recurring PPV into the next standard-cost roll (W4656) so the standard reflects the new actual; track PPV trend as a procurement-KPI input (VS-67 scorecard)",
+     "duration": "Per roll",
+     "n": "3",
+     "r": "Cost Accounting / Procurement"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4656",
+    "W4661"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Per import shipment + monthly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Imports (VS-02.2), Freight (VS-110), Treasury/FX (VS-18.3), Commodity (VS-106), Controller",
+    "Trigger": "Import landed-cost finalization (W4651); monthly variance review",
+    "Volume": "~400–600 import TEUs/month"
+   },
+   "id": "W4658",
+   "level": 2,
+   "name": "Landed-Cost Variance vs. Standard & Import Rate Volatility Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Variance decomposition engine; volatility-vs-hedge dashboard; freight/FX-index feed"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: landed-cost variance decomposed by element; volatility vs. hedge quantified monthly; variance feeds the roll and commodity decisions"
+    ],
+    "Cross-references": [
+     "- links to W4651 (landed cost), VS-106 (commodity), VS-18.3 (FX), VS-110/VS-87 (freight/duty), W4656 (roll)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unhedged-exposure risk**: Import FX/freight volatility not quantified vs. the hedge → surprise margin hits; mitigated by the volatility-vs-hedge analysis",
+     "- **Demurrage leakage risk**: Recurring demurrage/detention (W249) inflating landed cost without corrective action; mitigated by variance decomposition and routing to VS-110"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Landed-cost module (W4651); freight audit (VS-110.3); FX/treasury (VS-18.3); commodity (VS-106); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~5–7 days/month landed-cost variance + volatility analysis"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Compare actual landed cost (W4651) to standard landed cost; decompose the variance into freight, duty, brokerage, insurance, demurrage, and FX components; post to the appropriate variance accounts",
+     "duration": "Per shipment + monthly",
+     "n": "1",
+     "r": "Cost Accounting / Imports"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Analyze import-rate volatility (ocean freight rates, FX, commodity-linked duty) vs. the commodity/FX hedge posture (VS-106/VS-18.3); quantify unhedged exposure and pass-through adequacy (VS-106.3)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / Treasury / Commodity"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Feed landed-cost variance into the standard roll (W4656) and into commodity-risk decisions (VS-106); recommend forward-buy/hedging/duty-optimization actions (VS-87/VS-110/VS-106)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / Treasury / Imports"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W249",
+    "W4651",
+    "W4656"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Per assembly batch + monthly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "DC Ops (VS-04/VS-92), Merchandising (VS-92), Controller",
+    "Trigger": "Kit assembly / build-to-order (VS-92); monthly variance review",
+    "Volume": "DC kitting volume (VS-92.2); build-to-order assembly"
+   },
+   "id": "W4659",
+   "level": 2,
+   "name": "Production / Conversion Variance for Kitting & Build-to-Order",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto variance capture at assembly; yield/efficiency dashboards by kit/DC"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: conversion variance captured and decomposed; yield/efficiency drivers routed; variance feeds the kit roll"
+    ],
+    "Cross-references": [
+     "- links to VS-92 (kitting), VS-04 (DC), W4653/W4654 (catch-weight/kit cost), VS-92.3 (economics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Yield-loss risk**: Component yield/scrap higher than standard erodes kit margin; mitigated by usage-variance analysis and yield re-verification (W4653)",
+     "- **Labor-efficiency risk**: Inefficient assembly inflates conversion cost; mitigated by efficiency-variance routing to DC ops"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- DC kitting module (VS-92.2); conversion-variance ledger; GL (VS-17.1); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~2–3 days/month conversion variance analysis"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Capture conversion variance: actual assembly labor/overhead + component consumption vs. the kit standard cost (W4654); post material-usage and labor-rate/efficiency variances",
+     "duration": "Per batch + monthly",
+     "n": "1",
+     "r": "Cost Accounting / DC Ops"
+    },
+    {
+     "a": "Controller",
+     "activity": "Analyze conversion variance by kit/DC: identify yield loss, component substitution, and labor-efficiency drivers; route to DC operations for corrective action",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / DC Ops"
+    },
+    {
+     "a": "Controller",
+     "activity": "Feed conversion variance into the kit-standard roll (W4654) and into kitting-economics decisions (VS-92.3)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4653",
+    "W4654"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Monthly + at close",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Inventory (VS-05), Loss Prevention (VS-23), Controller, FP&A (VS-17.4)",
+    "Trigger": "Inventory adjustment (VS-05); shrinkage (VS-23); NRV review at close (W9)",
+    "Volume": "~ shrinkage <1.5% target; slow-moving/obsolete (SLOB) inventory"
+   },
+   "id": "W4660",
+   "level": 2,
+   "name": "Inventory Adjustment, Write-Down & NRV Cost Impact",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Adjustment-to-cost-account auto-classification; SLOB/NRV candidate list with suggested provision; trend dashboards"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: adjustments classified per rules; NRV reviewed each close (W9); inventory cost reconciled to GL"
+    ],
+    "Cross-references": [
+     "- links to VS-05/VS-23 (inventory/shrink), W220 (SLOB), W9 (close/NRV), VS-05.3 (disposition), W4663 (COGS recon)"
+    ],
+    "Pain Points / Risks": [
+     "- **NRV-miss risk**: Failing to write down SLOB to NRV overstates inventory and assets — audit finding; mitigated by the per-close NRV review",
+     "- **Mis-classified-adjustment risk**: A shrinkage write-off booked as a variance distorts margin; mitigated by the cost-account classification rules"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory module (VS-05); shrinkage (VS-23); SLOB (W220); NRV review (W9); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~3–5 days/month adjustment + NRV accounting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Post the cost impact of inventory adjustments (shrinkage, damage, count variances — VS-05.1/VS-23) to the correct cost account (write-off vs. variance) using the current standard cost",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Cost Accounting / Inventory"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "At each close (W9), perform the lower-of-cost-or-NRV review (PFRS/IAS 2): identify slow-moving/obsolete stock (W220), estimate NRV vs. carrying cost, and book the write-down provision",
+     "duration": "Per close",
+     "n": "2",
+     "r": "Cost Accounting / FP&A"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile total inventory cost to the GL inventory account and the WAC verification (W9); analyze write-down trend and feed into assortment/SLOB decisions (VS-05.3)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / FP&A"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W220",
+    "W4663",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Monthly + ad-hoc",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Merchandising (VS-01/VS-101), Pricing (VS-01.2), FP&A (VS-17.4), Insights (VS-28)",
+    "Trigger": "Monthly margin review; pricing/markdown decisions",
+    "Volume": "~35K SKUs × 200 stores × 5 entities (aggregated to category/region)"
+   },
+   "id": "W4661",
+   "level": 2,
+   "name": "Gross-Margin, MMU/IMU & Maintained-Margin Analytics by SKU / Category / Store",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Margin/GMROI auto-computation; outlier-detection with cost-data validation; routing to pricing/merchandising"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: margin pack cost-data-validated; outliers routed; aggregate tied to PFRS financials"
+    ],
+    "Cross-references": [
+     "- elevates W85 (VS-17.4); links to VS-01.2/VS-101/VS-64 (pricing/markdown), VS-28 (analytics), VS-17.4 (FP&A)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-data-error mis-signal risk**: Acting on a margin signal caused by a cost-master error (not a real margin problem) → bad pricing decisions; mitigated by cost-data validation before action",
+     "- **GMROI-blind risk**: Margin % without turn (GMROI) mis-ranks SKU productivity; mitigated by GMROI inclusion"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Margin analytics (VS-28/VS-17.4); cost layer (W4649); promo/markdown (VS-01.2/VS-64); merchandise FP (VS-101)"
+    ],
+    "Time Estimate": [
+     "- ~5–7 days/month margin analytics pack (elevates W85's margin-review scope)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / VP Merchandising",
+     "activity": "Produce the margin analytics pack: gross margin % (net sales − COGS), initial markup (IMU), maintained markup (MMU) after markdowns, and GMROI by SKU/category/store/region/entity — using the cost layer (W4649/W4656) net of vendor funding (W4664)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Cost Accounting / FP&A / Insights"
+    },
+    {
+     "a": "Controller",
+     "activity": "Identify margin outliers (below category floor, eroding trend, store-specific) and route to Merchandising/Pricing for action (VS-01.2/VS-101/VS-64 markdown); validate cost-data accuracy before acting on a margin signal",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / Merchandising"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Tie aggregate margin to the PFRS financials and the merchandise-financial plan (VS-101); feed maintained-margin into OTB and pricing strategy (VS-101/VS-01.2)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / FP&A"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4649",
+    "W4656",
+    "W4664",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Logistics (VS-06/VS-110), Imports (VS-87), Vendor Mgmt (VS-03/VS-67), Controller",
+    "Trigger": "Monthly freight/duty cost review; vendor compliance chargeback decisions",
+    "Volume": "Freight/duty/handling spend (VS-110/VS-87); vendor compliance chargebacks (W245)"
+   },
+   "id": "W4662",
+   "level": 2,
+   "name": "Freight, Duty & Handling Cost Absorption vs. Billback Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Compliance-event-to-chargeback auto-flag; absorb-vs-billback dashboards; recovery-rate tracking"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: inbound cost classified absorb vs. billback; chargebacks evidence-based; unrecovered leakage quantified and routed"
+    ],
+    "Cross-references": [
+     "- links to W4651/W4652 (landed/domestic freight), W245 (chargeback), VS-110 (freight), VS-67 (scorecard)"
+    ],
+    "Pain Points / Risks": [
+     "- **Absorbed-leakage risk**: Vendor-compliance cost absorbed into COGS instead of recovered erodes margin; mitigated by the billback classification and recovery",
+     "- **Chargeback-dispute risk**: Chargebacks disputed by vendors without documentation → non-recovery; mitigated by evidence-based chargebacks (routing-guide compliance VS-110.2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Freight audit/pay (VS-110.3); vendor compliance chargeback (W245); landed cost (W4651); vendor scorecard (VS-67)"
+    ],
+    "Time Estimate": [
+     "- ~3–5 days/month absorb-vs-billback analysis"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Classify inbound freight/duty/handling cost as absorbed (into SKU cost per W4651/W4652) vs. billback-eligible (vendor non-compliance — wrong carrier, late shipment, packaging non-conformance per W245)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Cost Accounting / Logistics"
+    },
+    {
+     "a": "Controller / VP Merchandising",
+     "activity": "Bill back vendor-compliance-eligible cost (W245 chargebacks) and recover; analyze the absorb-vs-billback posture for net cost optimization (renegotiate Incoterms, routing-guide compliance — VS-110.2)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / Vendor Mgmt"
+    },
+    {
+     "a": "Controller",
+     "activity": "Quantify unrecovered billback-eligible cost as margin leakage; route to vendor scorecard (VS-67) and freight-procurement (VS-110) for structural recovery",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / Logistics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W245",
+    "W4651",
+    "W4652"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-115",
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "GL/Close (VS-17.1), Inventory (VS-05), POS (VS-08), Controller",
+    "Trigger": "Month-end close (W9A); COGS reconciliation",
+    "Volume": "~PHP 42–45B annual COGS; ~ every POS/sales transaction + every receipt/adjustment"
+   },
+   "id": "W4663",
+   "level": 2,
+   "name": "Cost-of-Goods-Sold Reconciliation, Cut-off & Period Matching",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- COGS-to-inventory-movement auto-reconciliation; cut-off-boundary flagging; entity/channel margin tie-out"
+    ],
+    "Controls": [
+     "- CTL-115 (ensure cost-master & COGS reconciliation control.)",
+     "- CTL-705: COGS reconciled to inventory movement monthly; cut-off tested; entity COGS tied to revenue and PFRS financials"
+    ],
+    "Cross-references": [
+     "- links to VS-05/VS-08 (inventory/POS), W9A (close), VS-72 (intercompany), W4661 (margin tie)"
+    ],
+    "Pain Points / Risks": [
+     "- **COGS-variance risk**: An unexplained COGS-to-inventory variance hides a costing/inventory error; mitigated by the monthly reconciliation and variance investigation",
+     "- **Cut-off risk**: Period-boundary sales/receipts mismatched to COGS → period margin distortion; mitigated by cut-off testing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory module (VS-05); POS sales (VS-08); GL (VS-17.1); month-end close (W9A); intercompany (VS-72)"
+    ],
+    "Time Estimate": [
+     "- ~4–6 days/month COGS reconciliation + cut-off"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Reconcile COGS to the inventory movement: opening inventory + receipts (at cost) + landed-cost adjustments − closing inventory = COGS; investigate any unexplained COGS variance",
+     "duration": "Per close",
+     "n": "1",
+     "r": "Cost Accounting / GL / Inventory"
+    },
+    {
+     "a": "Controller",
+     "activity": "Perform COGS cut-off: ensure sales/shipments near period-end are matched to the corresponding COGS in the same period (and receipts in the correct period); clear cut-off exceptions",
+     "duration": "Per close",
+     "n": "2",
+     "r": "Cost Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile COGS by entity/channel to revenue (margin tie-out) and to the PFRS financials; resolve any entity-allocation or intercompany COGS distortion (VS-72)",
+     "duration": "Per close",
+     "n": "3",
+     "r": "Cost Accounting / GL"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4661",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-705"
+   ],
+   "fields": {
+    "Frequency": "Per promo + monthly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Merchandising (VS-01.2/VS-64), Promo (VS-58), Rebate (VS-39), Pricing, Controller",
+    "Trigger": "Markdown/promo run (VS-01.2/VS-64); vendor rebate/funding (VS-39); monthly review",
+    "Volume": "6 major catalog promos/yr + monthly hot deals; vendor rebates (VS-39); co-op advertising"
+   },
+   "id": "W4664",
+   "level": 2,
+   "name": "Markdown, Promo & Vendor-Funding Net-Cost Impact Accounting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Funding-classification rules engine; accrual-to-receipt auto-reconcile; unclaimed-funding alert"
+    ],
+    "Controls": [
+     "- CTL-705 (ensure controlled execution — Cost Variance, Actual-vs-Standard & Margin Analytics (PA-158.2).)",
+     "- CTL-705: vendor-funding accounting policy documented (no double-count); markdown accounted per policy; accrual reconciled to receipts monthly"
+    ],
+    "Cross-references": [
+     "- links to VS-39 (rebate), VS-01.2/VS-64/VS-58 (markdown/promo), W4661 (margin), W4638 (variable consideration)"
+    ],
+    "Pain Points / Risks": [
+     "- **Double-count risk**: Vendor funding netted against cost AND recorded as income (or missed) → margin distortion; mitigated by the documented netting policy and reconciliation",
+     "- **Unclaimed-funding risk**: Earned vendor rebates/funding not claimed → margin leakage; mitigated by the accrual-to-receipt reconciliation (VS-39.3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Markdown/promo module (VS-01.2/VS-64/VS-58); rebate accrual (VS-39); GL (VS-17.1); margin analytics (W4661)"
+    ],
+    "Time Estimate": [
+     "- ~3–5 days/month markdown/vendor-funding accounting + reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Determine the correct accounting for vendor funding: reduction of cost of goods (net cost) vs. reduction of selling expense vs. other income — per PFRS and the documented policy; net rebates (VS-39) and co-op advertising against the funded SKU's cost",
+     "duration": "Per funding type",
+     "n": "1",
+     "r": "Cost Accounting / Rebate / Merchandising"
+    },
+    {
+     "a": "Controller",
+     "activity": "Account for markdown/promo cost: temporary vs. permanent markdown, markdown reserve, and the net margin impact after vendor funding; post the markdown to margin or a markdown P&L account per policy",
+     "duration": "Per promo",
+     "n": "2",
+     "r": "Cost Accounting / Pricing"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile vendor-funding accrual (VS-39) to actual receipts and to the net-cost reduction claimed; identify unfunded/unclaimed vendor funding as recovery opportunity (VS-39.3)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Cost Accounting / Rebate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4638",
+    "W4661"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,566 @@
+{
+ "process_area": {
+  "id": "PA-47.3",
+  "title": "Service Fulfillment, Scheduling & Quality Assurance"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-47-subscription-recurring-services/PA-47.3-service-fulfillment-quality.md",
+ "value_stream": {
+  "directory": "VS-47-subscription-recurring-services",
+  "id": "VS-47",
+  "name": "Subscription & Recurring Home Services"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "~1,000–3,500 service visits/month (projected; derived from ~5,000–10,000 subscribers × 2–4 visits/year)",
+    "Owner": "Service Coordinator",
+    "Participants": "Service Coordinator, Service Partner, Customer",
+    "Trigger": "Subscription enrollment; scheduled service visit due",
+    "Volume": "~5,000–10,000 subscribers × 2–4 visits/year"
+   },
+   "id": "W1990",
+   "level": 2,
+   "name": "Service Visit Scheduling & Dispatch Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates service visit schedule\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews and confirms schedule\" (replaces manual Step 2).",
+     "- System auto-send of \"sends\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: Service Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Scheduling conflicts**: Customer not available at scheduled time; allow easy rescheduling via app/SMS"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated service visit scheduling (W1990.1)",
+     "- Service partner dispatch portal (W1990.2)",
+     "- Integration with W544 (POS service work order) for service order creation"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours/day for coordinator; scheduling automated",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Coordinator",
+     "activity": "System generates service visit schedule: (a) based on subscription frequency: quarterly, semi-annual, annual, (b) customer's preferred visit window (from enrollment), (c) service partner availability calendar, (d) geographic optimization: batch visits by area to minimize partner travel time",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Service Coordinator reviews and confirms schedule: (a) verify partner availability, (b) check customer communication preferences (SMS/email/app), (c) send visit confirmation to customer: date, time window (e.g., 9 AM–12 PM), partner name, (d) send dispatch order to service partner: customer address, service type, tier, special instructions",
+     "duration": "1–2 hours/day",
+     "n": "2",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Day-of coordination: (a) partner confirms arrival estimate via app, (b) system sends \"technician on the way\" notification to customer with ETA, (c) if partner reports delay: reschedule notification to customer",
+     "duration": "Per visit",
+     "n": "3",
+     "r": "Service Coordinator / System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W544"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "~1,000–3,500 visits/month (per W1990's subscriber-based derivation)",
+    "Owner": "Service Partner Technician",
+    "Participants": "Service Partner Technician, Customer",
+    "Trigger": "Service partner arrives at customer location",
+    "Volume": "Per visit"
+   },
+   "id": "W1991",
+   "level": 2,
+   "name": "Service Visit Execution & Customer Interaction",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Service Partner Technician arrives at customer location\" (replaces manual Step 1).",
+     "- System auto-record of \"records\" (replaces manual Step 2).",
+     "- System auto-schedule of \"schedules next visit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Technician professionalism**: Partner technician represents BuildRight brand; unprofessional behavior damages subscription retention; monitor customer ratings closely"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Digital service report via partner app (W1991.2)",
+     "- Customer rating capture (W1991.3)",
+     "- Integration with W1992 (revenue recognition) for visit completion trigger"
+    ],
+    "Time Estimate": [
+     "- 1–3 hours per visit (varies by service type)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Service Partner Technician arrives at customer location: (a) BuildRight-branded uniform and ID, (b) greet customer, confirm identity and service requested, (c) perform service per tier checklist: (i) basic: inspection + report, (ii) standard: inspection + minor repair + report, (iii) premium: inspection + all repairs + parts + report",
+     "duration": "1–3 hours/visit",
+     "n": "1",
+     "r": "Service Partner Technician"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Service documentation: (a) technician completes digital service report on tablet/app: (i) work performed, (ii) materials used (for premium tier), (iii) findings and recommendations, (iv) before/after photos (required), (v) customer signature on completion, (b) system records: service visit completed, time spent, findings",
+     "duration": "10–15 min/report",
+     "n": "2",
+     "r": "Service Partner Technician"
+    },
+    {
+     "a": "—",
+     "activity": "Customer interaction: (a) technician explains findings to customer, (b) provides maintenance tips and recommendations, (c) schedules next visit (if customer wants early next visit), (d) customer rates service experience (1–5 stars) on technician's tablet before departure",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Service Partner Technician / Customer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1990",
+    "W1992"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "~1,000–3,500 completions/month (per W1990's visit volume)",
+    "Owner": "Accounting Manager",
+    "Participants": "System, Accounting Manager, Service Partner",
+    "Trigger": "Service visit completed and customer-signed report uploaded",
+    "Volume": "Per visit"
+   },
+   "id": "W1992",
+   "level": 2,
+   "name": "Service Completion Confirmation & Revenue Recognition Trigger",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-issue of \"issues or customer complaints\" (replaces manual Step 2).",
+     "- System auto-send of \"sends service completion confirmation with summary report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Revenue recognition timing**: Must be at service completion (not scheduling or dispatch); ensure trigger is tied to customer-signed completion report"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated revenue recognition on visit completion (W1992.1)",
+     "- Service partner payment processing (W1992.2)",
+     "- Integration with W1978 (deferred revenue) for revenue model"
+    ],
+    "Time Estimate": [
+     "- Automated; monthly partner payment processing",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "System triggers revenue recognition on visit completion: (a) deferred revenue → service revenue: pro-rata portion per visit (total subscription fee ÷ number of visits), (b) output VAT recognized on service revenue, (c) service partner cost recognized: debit COGS (service cost), credit AP (service partner payable)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Service partner payment: (a) system accumulates partner costs per visit, (b) monthly: AP processes partner payment per agreed terms (typically Net 15), (c) payment per completed visit × per-visit rate, (d) deduction for quality issues or customer complaints (if applicable)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "System / AP Clerk"
+    },
+    {
+     "a": "Service Coordinator",
+     "activity": "Customer notification: (a) system sends service completion confirmation with summary report, (b) include: work performed, recommendations, next visit date, (c) attach digital service report (PDF), (d) CSAT survey link",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1978",
+    "W1990"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "Continuous scoring; ~10% random audits",
+    "Owner": "VP Store Operations",
+    "Participants": "VP Store Operations, Quality Inspector, Service Partner",
+    "Trigger": "Service visit completion; random quality audit",
+    "Volume": "~100–350 quality audits/month (10% of visits)"
+   },
+   "id": "W1993",
+   "level": 2,
+   "name": "Service Quality Inspection & Partner Scoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates per-visit quality score\" (Step 1, already system-executed).",
+     "- System auto-review of \"review service report and photos for quality standards compliance\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: VP Store Operations review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Audit resource**: Quality calls to 100–350 customers/month (10% of 1,000–3,500 visits per W1990) require dedicated Quality Inspector or outsourcing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated quality scoring (W1993.1)",
+     "- Partner scorecard dashboard (W1993.3)",
+     "- Integration with W44 (vendor scorecard) for consolidated partner tracking"
+    ],
+    "Time Estimate": [
+     "- 1 day/month for scorecard; 15–20 min per audit",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "System calculates per-visit quality score: (a) customer rating (1–5 stars from W1991.3): weight 40%, (b) service report completeness (all fields filled, photos attached): weight 20%, (c) on-time arrival (within scheduled window): weight 20%, (d) customer complaint (if any): weight 20% (complaint = 0, no complaint = full score)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Random quality audit (~10% of visits): (a) VP Store Operations selects random sample, (b) Quality Inspector calls customer for feedback: (i) was technician professional?, (ii) was work completed to satisfaction?, (iii) would you recommend BuildRight services?, (c) review service report and photos for quality standards compliance",
+     "duration": "15–20 min/audit",
+     "n": "2",
+     "r": "Quality Inspector / VP Store Operations"
+    },
+    {
+     "a": "COO",
+     "activity": "Monthly partner scorecard: (a) average quality score by partner, (b) customer rating trend, (c) complaint rate, (d) on-time rate, (e) share with partner for continuous improvement",
+     "duration": "1 day/month",
+     "n": "3",
+     "r": "VP Store Operations"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1990",
+    "W1991",
+    "W44"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "~100–200 service complaints/month (projected ~5% complaint rate)",
+    "Owner": "Customer Service Rep",
+    "Participants": "Customer Service Rep, Service Coordinator, Service Partner, VP Store Operations",
+    "Trigger": "Customer reports service quality issue",
+    "Volume": "Per complaint"
+   },
+   "id": "W1994",
+   "level": 2,
+   "name": "Service Complaint & Revisit Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"reports service complaint\" (replaces manual Step 1).",
+     "- System auto-review of \"review service report and photos\" (replaces manual Step 2).",
+     "- System auto-log of \"apology + service credit on next billing\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: Customer Service Rep review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Property damage liability**: If service partner damages customer property, BuildRight may be held liable as the contracting entity; ensure service partner carries adequate insurance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service complaint tracking with severity classification (W1994.1)",
+     "- Partner penalty tracking (W1994.4)",
+     "- Integration with W13.1 (customer complaints) for complaint management"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per complaint investigation",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "Customer reports service complaint: (a) channel: phone, email, app, in-store, (b) complaint categories: (i) technician no-show or late, (ii) incomplete service, (iii) property damage during service, (iv) rude/unprofessional technician, (v) billing issue, (c) severity: minor (inconvenience), major (property damage, safety issue)",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Service Coordinator investigates: (a) review service report and photos, (b) contact service partner for their version, (c) for property damage: arrange inspection and repair, (d) for incomplete service: schedule revisit within 48 hours",
+     "duration": "30–60 min",
+     "n": "2",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Resolution: (a) minor: apology + service credit on next billing, (b) major: free revisit + partner penalty + potential partner termination, (c) customer notified of resolution, (d) complaint logged in partner scorecard",
+     "duration": "Per complaint",
+     "n": "3",
+     "r": "Customer Service Rep / Service Coordinator"
+    },
+    {
+     "a": "COO",
+     "activity": "Partner accountability: (a) repeated complaints from same partner: escalation meeting, (b) 3+ complaints in 30 days: temporary suspension of new visits, (c) unresolved major complaint: partner termination per W1975 agreement",
+     "duration": "As needed",
+     "n": "4",
+     "r": "VP Store Operations"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W1975"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "Monthly dashboard; quarterly review",
+    "Owner": "VP Store Operations",
+    "Participants": "VP Store Operations, Service Partners, COO",
+    "Trigger": "Monthly dashboard update; quarterly review meeting",
+    "Volume": "~20–30 service partners reviewed"
+   },
+   "id": "W1995",
+   "level": 2,
+   "name": "Service Partner Performance Dashboard & Quarterly Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates partner performance dashboard\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews dashboard monthly\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: VP Store Operations review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Partner concentration**: Over-reliance on a few top-performing partners creates risk if they leave; maintain minimum 2 partners per territory"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Partner performance dashboard (W1995.1)",
+     "- Integration with W44 (vendor scorecard) for consolidated view"
+    ],
+    "Time Estimate": [
+     "- 2–3 hours/month review; 20–60 hours/quarter for partner meetings",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "Monthly: system generates partner performance dashboard: (a) visits completed vs. scheduled, (b) average customer rating (1–5 stars), (c) on-time arrival rate, (d) complaint rate (% of visits resulting in complaint), (e) quality audit score (from random audits), (f) revisit rate (% of visits requiring follow-up)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "COO",
+     "activity": "VP Store Operations reviews dashboard monthly: (a) identify underperforming partners (score < 3.5/5.0), (b) identify top performers for recognition and priority dispatch, (c) flag capacity issues (partner declining visits due to workload)",
+     "duration": "2–3 hours/month",
+     "n": "2",
+     "r": "VP Store Operations"
+    },
+    {
+     "a": "COO",
+     "activity": "Quarterly: VP Store Operations conducts review meeting with each partner: (a) present scorecard, (b) discuss improvement areas, (c) agree on action items with deadlines, (d) discuss upcoming volume changes (seasonal demand, new territories), (e) top-performing partners: discuss expansion opportunities (additional territories, new service types)",
+     "duration": "1–2 hours/partner/quarter",
+     "n": "3",
+     "r": "VP Store Operations"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W44"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "~100–200 no-shows/month (projected ~5–10% rate)",
+    "Owner": "Service Coordinator",
+    "Participants": "Service Coordinator, Customer, Service Partner",
+    "Trigger": "Customer or partner no-show for scheduled visit",
+    "Volume": "Per occurrence"
+   },
+   "id": "W1996",
+   "level": 2,
+   "name": "Service Visit No-Show & Rescheduling Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs no-show with timestamp\" (replaces manual Step 1).",
+     "- System auto-validate of \"check-in from partner app within 30 min of scheduled start\" (replaces manual Step 2).",
+     "- System auto-schedule of \"rescheduled visit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer frustration**: Partner no-shows are highly damaging to subscription satisfaction; maintain strict SLA and backup partner availability"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GPS-based no-show detection (W1996.2)",
+     "- Automated rescheduling workflow (W1996.3)",
+     "- Integration with W1990 (scheduling) for reschedule"
+    ],
+    "Time Estimate": [
+     "- 15–60 min per no-show incident",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Coordinator",
+     "activity": "Customer no-show: (a) technician arrives at scheduled time, customer not available, (b) technician waits 15 minutes, attempts customer contact, (c) if no response: mark as customer no-show, (d) system logs no-show with timestamp, (e) reschedule: system sends rescheduling link to customer",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Service Partner / System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Partner no-show: (a) partner fails to arrive within scheduled window, (b) system detects: no GPS check-in from partner app within 30 min of scheduled start, (c) Service Coordinator contacts partner immediately, (d) if partner cannot come: emergency dispatch from backup partner or reschedule customer, (e) partner no-show penalty: PHP 500–1,000 deduction from partner payment per no-show",
+     "duration": "30–60 min",
+     "n": "2",
+     "r": "Service Coordinator"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Rescheduling: (a) system offers 3 alternative time slots, (b) customer selects preferred slot, (c) partner notified of rescheduled visit, (d) if rescheduling within same billing period: no impact on revenue recognition, (e) if rescheduling pushes visit to next billing period: deferred revenue timing adjusted",
+     "duration": "5–10 min",
+     "n": "3",
+     "r": "Service Coordinator / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1990"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-384"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "VP Store Operations",
+    "Participants": "VP Store Operations, CMO, CFO, COO",
+    "Trigger": "Annual subscription program review",
+    "Volume": "Consolidated program review"
+   },
+   "id": "W1997",
+   "level": 2,
+   "name": "Subscription Service Annual Program Review & Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"VP Store Operations compiles annual program review\" (replaces manual Step 1).",
+     "- System auto-create of \"CFO reviews financial performance\" (replaces manual Step 2).",
+     "- System auto-allocate of \"allocate budget for Year 2 subscriber growth target\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-384 (ensure controlled execution — Service Fulfillment, Scheduling & Quality Assurance (PA-47.3).)",
+     "- operational: VP Store Operations review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Program sustainability**: If churn exceeds enrollment growth, subscription base shrinks; continuous improvement in service quality and value proposition essential"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Subscription program analytics (W1997.1)",
+     "- Integration with W35 (executive reporting) for board presentation"
+    ],
+    "Time Estimate": [
+     "- 4–5 days/year",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "VP Store Operations compiles annual program review: (a) subscriber count: target vs. actual, (b) revenue: subscription revenue + deferred revenue balance, (c) margin: actual vs. target (25–35%), (d) retention rate: % of subscribers renewed, (e) churn analysis: why are customers leaving?, (f) service quality: average customer rating, complaint rate, partner performance, (g) enrollment funnel: awareness → inquiry → enrollment conversion rate",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "VP Store Operations"
+    },
+    {
+     "a": "COO",
+     "activity": "CFO reviews financial performance: (a) deferred revenue as % of total revenue, (b) breakage rate: % of subscribers not using all visits, (c) partner cost trend: are partner costs increasing?, (d) cash flow impact: annual upfront payments improve cash flow; monthly payments create receivables, (e) ROI of subscription program: incremental profit vs. investment",
+     "duration": "1 day",
+     "n": "2",
+     "r": "CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "Strategic decisions: (a) expand: add new service types or territories, (b) optimize: adjust pricing, tiers, partner network, (c) sunset: discontinue underperforming subscription products, (d) invest: allocate budget for Year 2 subscriber growth target",
+     "duration": "1 day",
+     "n": "3",
+     "r": "COO"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W35"
+   ]
+  }
+ ]
+}

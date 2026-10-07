@@ -1,0 +1,687 @@
+{
+ "process_area": {
+  "id": "PA-190.3",
+  "title": "OT Compliance, Third-Party Access & Cyber Resilience Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/PA-190.3-ot-compliance-third-party-access-and-cyber-resilience-analytics.md",
+ "value_stream": {
+  "directory": "VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection",
+  "id": "VS-190",
+  "name": "Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "Setup per vendor; per remote session; quarterly recertification",
+    "Owner": "OT Security Lead",
+    "Participants": "Vendor service teams, IFM (VS-138), Procurement (VS-34), VS-161 TPRM, Legal (VS-100), HSE (VS-24)",
+    "Trigger": "Vendor service contract setup; remote-support request; periodic recertification",
+    "Volume": "~50–150 vendor/contractor organizations with potential OT remote access (BMS, fire, SCADA, EV, locker, POS service, IFM providers); ~100s–1,000s sessions/yr"
+   },
+   "id": "W5433",
+   "level": 2,
+   "name": "OT-Aware Third-Party / Vendor Remote-Access Governance & Session Recording",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Just-in-time access auto-provisioning from approved tickets; off-hours/out-of-scope auto-alert; session-recording anomaly detection."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: least privilege / JIT vendor access; session recording via bastion host; no vendor direct network path to any OT controller."
+    ],
+    "Cross-references": [
+     "- links to VS-161 (TPRM), VS-167 (vendor personnel vetting), VS-34 (procurement), VS-100 (contracts), VS-138 (IFM vendor access)"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor-backdoor risk**: a vendor-installed out-of-band modem or \"support\" cloud link is the single most common OT breach path (Target-style); mitigated by mandatory bastion routing and the W5421 onboarding gate detecting rogue links.",
+     "- **Off-hours-misuse risk**: a vendor session at 2 AM to a fire panel or POS estate is a red flag; mitigated by session-recording review and off-hours alerting."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PAM/bastion/jump-host (VS-27.3 extended to OT); session-recording store; ticket/approval workflow; TPRM vendor records (VS-161); contract management (VS-100/VS-34)."
+    ],
+    "Time Estimate": [
+     "- ~4–6 weeks bastion/contract setup; ~5–10 min/session approval; ~sampling review weekly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Require every vendor OT remote session to traverse a BuildRight-controlled jump-host/bastion with MFA, just-in-time approval, and full session recording — never a vendor VPN/modem direct to the controller.",
+     "duration": "setup",
+     "n": "1",
+     "r": "OT Security Engineer"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Contractually bind vendors (via Procurement/VS-34 and TPRM/VS-161) to cyber terms: no standing access, notification of compromise, SBOM/vuln disclosure, personnel vetting (VS-167).",
+     "duration": "per contract",
+     "n": "2",
+     "r": "Procurement / Legal"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Approve each session against a ticket with business justification + ops sign-off (especially for safety-system access); time-box the access.",
+     "duration": "per session",
+     "n": "3",
+     "r": "OT Security Analyst"
+    },
+    {
+     "a": "OT SOC Lead",
+     "activity": "Record and review sessions (sampling + 100% for safety-system access); alert on policy violation (off-hours, out-of-scope device, file transfer).",
+     "duration": "per session",
+     "n": "4",
+     "r": "OT SOC Analyst"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Revoke and offboard vendor access at contract end or on TPRM trigger (VS-161) — confirm zero residual paths (W5423).",
+     "duration": "per offboard",
+     "n": "5",
+     "r": "OT Security Engineer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5421",
+    "W5423"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "Per device model; continuous monitoring",
+    "Owner": "OT Security Lead",
+    "Participants": "VS-161 TPRM, Procurement (VS-34/VS-03), VS-99 ITAM, channel owners",
+    "Trigger": "New connected-device procurement (W5421); vendor acquisition/EOL announcement; supply-chain incident",
+    "Volume": "~25,000–40,000 OT endpoints across ~10–20 device classes and ~50–150 vendors"
+   },
+   "id": "W5434",
+   "level": 2,
+   "name": "OT Cyber Supply-Chain & SBOM Risk Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SBOM-to-CVE auto-mapping; vendor-lifecycle news monitoring; fourth-party concentration analytics."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: TPRM/vendor risk; SBOM/inventory; operational: SBOM required before any new OT device model is approved."
+    ],
+    "Cross-references": [
+     "- links to VS-161 (TPRM), VS-34/VS-03 (procurement/vendor), VS-99 (asset lifecycle), W5421 (onboarding gate)"
+    ],
+    "Pain Points / Risks": [
+     "- **Opaque-firmware risk**: vendors refuse or cannot produce an SBOM, hiding vulnerable components; mitigated by making SBOM a procurement gate (W5421) and deprioritizing non-compliant vendors.",
+     "- **Silent-EOL risk**: a vendor end-of-lives a controller firmware with no migration path, leaving BuildRight running unpatchable devices; mitigated by lifecycle monitoring and proactive replacement planning (VS-99)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- OT SBOM repository; TPRM platform (VS-161); OT asset register (W5417); procurement/contract records (VS-34)."
+    ],
+    "Time Estimate": [
+     "- ~1–2 days/model SBOM ingestion + risk assessment; ~1 week/quarter TPRM consolidation."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Require a software bill of materials (SBOM) and firmware/support-lifecycle commitment from every OT device vendor at procurement (W5421).",
+     "duration": "per model",
+     "n": "1",
+     "r": "OT Security Analyst"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Maintain the OT SBOM repository and map disclosed component vulnerabilities (e.g., a vulnerable openssl/log4j equivalent in a controller firmware) to BuildRight devices.",
+     "duration": "ongoing",
+     "n": "2",
+     "r": "OT Security Analyst"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Assess fourth-party risk — a sub-component or cloud dependency inside a BMS/SCADA/locker/EV controller that itself has a risky supplier; concentrate with VS-161.",
+     "duration": "per model",
+     "n": "3",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Monitor vendor lifecycle (acquisition, end-of-support, insolvency) and trigger replacement (VS-99/W5423) before a device class goes unpatched.",
+     "duration": "ongoing",
+     "n": "4",
+     "r": "OT Security Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "Coordinate OT supply-chain risk into enterprise TPRM reporting (VS-161) and the risk register (W5424).",
+     "duration": "quarterly",
+     "n": "5",
+     "r": "OT Security Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5417",
+    "W5421",
+    "W5423",
+    "W5424"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-151",
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "Annual self-assessment; per audit/due-diligence",
+    "Owner": "OT Security Lead",
+    "Participants": "Compliance (VS-22), Internal Audit (VS-21), Legal (VS-100), channel owners, external auditor",
+    "Trigger": "Annual compliance cycle; audit (VS-21.3); customer/partner due-diligence (B2B/VS-107); regulatory expectation",
+    "Volume": "1 OT compliance program (IEC 62443-2-1 / 3-3 control set; NIST SP 800-82r3)"
+   },
+   "id": "W5435",
+   "level": 2,
+   "name": "OT Cybersecurity Compliance (IEC 62443 / NIST SP 800-82) & Audit Evidence",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Control-to-evidence auto-mapping; GRC evidence auto-ingest from W5417–W5434; questionnaire-response library."
+    ],
+    "Controls": [
+     "- CTL-151: OT statutory/framework compliance — IEC 62443 / NIST SP 800-82 mapping maintained continuously; CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).) — governance & evidence completeness; operational: annual compliance-mapping attestation."
+    ],
+    "Cross-references": [
+     "- links to VS-22 (compliance), VS-21.3 (audit), VS-100 (legal/disclosure), VS-80/VS-142 (BSP payment infra), VS-26 (insurer DD), VS-107 (B2B DD)"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence-scatter risk**: controls are operating but evidence is dispersed across IT/IFM/DC, failing an audit on paper; mitigated by GRC consolidation and the W5417–W5434 evidence feeds.",
+     "- **Over-disclosure risk**: handing a customer/insurer the full OT architecture diagram creates its own risk; mitigated by Legal review and tiered/controlled disclosure."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GRC/compliance platform (VS-22/VS-21 extended to OT); evidence repository; BSP cyber-resilience expectations (VS-80); board reporting (VS-36)."
+    ],
+    "Time Estimate": [
+     "- ~3–4 weeks/annual self-assessment; ~1–2 weeks per audit/due-diligence response."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Map the OT security program (W5417–W5434) to a recognized control framework — IEC 62443 (SL selection per zone) and NIST SP 800-82r3 — and identify gaps.",
+     "duration": "annual",
+     "n": "1",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Maintain evidence (asset inventory, segmentation, baselines, vuln mgmt, IR drills, access records) audit-ready in the GRC platform.",
+     "duration": "ongoing",
+     "n": "2",
+     "r": "OT Security Analyst"
+    },
+    {
+     "a": "Head of Internal Audit",
+     "activity": "Support internal audit's OT-cyber review (VS-21.3) and any BSP cyber-resilience / payment-infrastructure expectation (VS-80/VS-142).",
+     "duration": "per audit",
+     "n": "3",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Respond to B2B/customer (VS-107) and insurer (VS-26) due-diligence questionnaires on OT posture without over-disclosing sensitive architecture.",
+     "duration": "per request",
+     "n": "4",
+     "r": "OT Security Lead / Legal"
+    },
+    {
+     "a": "CIO",
+     "activity": "Track gap remediation to the risk register (W5424) and report maturity to the board/audit committee (VS-36/VS-21).",
+     "duration": "annual",
+     "n": "5",
+     "r": "OT Security Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5417",
+    "W5424",
+    "W5434"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "~1–2 OT-focused tests/yr; periodic purple-team exercises (W5429)",
+    "Owner": "OT Security Lead",
+    "Participants": "External pen-test firm, OT SOC (W5425/W5432), IFM (VS-138), HSE (VS-24), DC Ops (VS-04), Legal (VS-100)",
+    "Trigger": "Annual test cycle; major architecture change (W5418); new connected channel; post-incident (W5430)",
+    "Volume": "1 OT test program per cycle"
+   },
+   "id": "W5436",
+   "level": 2,
+   "name": "OT Penetration Testing, Red-Team & Cyber-Physical Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Safe/non-intrusive validation automation; retest-evidence capture; finding-to-control mapping."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: test governance with safety sign-off; remediation evidence retained; HSE sign-off on any production-touching test activity."
+    ],
+    "Cross-references": [
+     "- links to VS-27.3 (IT pen-test), VS-21.3 (audit/assurance), VS-24 (HSE safety scoping), VS-23 (physical access/evasion), VS-138 (BMS/door controllers)"
+    ],
+    "Pain Points / Risks": [
+     "- **Test-induced-outage risk**: aggressive pen-testing crashes a fragile PLC or trips a safety system; mitigated by non-prod-first scoping and HSE sign-off on any production probe.",
+     "- **Scanner-false-confidence risk**: a vulnerability scanner green-lights a controller that is in fact exploitable via a vendor-specific vector; mitigated by expert manual validation and OT-aware testers."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Non-prod OT range (W5429); OT-IDS/detection (W5425); vuln register (W5427); physical access control (VS-23/VS-138)."
+    ],
+    "Time Estimate": [
+     "- ~4–8 weeks elapsed per test cycle (scope→execute→remediate→retest)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Scope the test with explicit safety constraints — non-prod OT range (W5429) for technical exploitation; production limited to non-intrusive validation, with HSE sign-off on anything touching a safety system.",
+     "duration": "per test",
+     "n": "1",
+     "r": "OT Security Lead / HSE"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Execute (external firm): IT→OT pivot attempts, OT-IDS evasion, controller/default-credential checks, payment-zone (POS/SCO) testing, cyber-physical (does a compromise open a locked door or suppress an alarm).",
+     "duration": "per test",
+     "n": "2",
+     "r": "External Pen-Tester"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Validate findings exploitability in BuildRight context and route to vuln mgmt (W5427); never auto-trust scanner output on OT.",
+     "duration": "per finding",
+     "n": "3",
+     "r": "OT Vulnerability Manager"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Retest after remediation and close with verified evidence.",
+     "duration": "per cycle",
+     "n": "4",
+     "r": "External Pen-Tester / OT Security"
+    },
+    {
+     "a": "CIO",
+     "activity": "Feed lessons into detection (W5432), architecture (W5418), and the risk register (W5424); brief leadership.",
+     "duration": "per cycle",
+     "n": "5",
+     "r": "OT Security Lead"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5418",
+    "W5424",
+    "W5425",
+    "W5427",
+    "W5429",
+    "W5430",
+    "W5432"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "BCP plan maintenance annual; test per W5429 cycle",
+    "Owner": "OT Security Lead",
+    "Participants": "BCP/DR (VS-26), HSE (VS-24), Store/DC Ops (VS-07/VS-04), IFM (VS-138), channel owners",
+    "Trigger": "BCP planning/testing (VS-26.1); OT incident (W5430); major dependency failure (cloud/vendor)",
+    "Volume": "1 OT-aware BCP/recovery capability per site-class"
+   },
+   "id": "W5437",
+   "level": 2,
+   "name": "OT-Aware Business Continuity, Recovery & Fail-Secure Operating Mode",
+   "parent": null,
+   "req_refs": [
+    "NFR-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Image-based rebuild automation; RTO/RPO compliance monitoring; fail-secure-mode self-test."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: BCP governance with recovery evidence retained; documented fail-secure mode per OT device class."
+    ],
+    "Cross-references": [
+     "- links to VS-26 (BCP/DR), VS-08 (POS offline), VS-69 (typhoon/disaster), VS-138 (BMS override), VS-61 (generator fuel), W5429 (drills)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cloud-dependency risk**: a BMS/locker/EV/SCADA controller that bricks when its vendor cloud is unreachable takes the function down with the cloud; mitigated by documented offline/fail-secure modes and cloud-link risk assessment (W5421).",
+     "- **Recovery-exceeds-RTO risk**: rebuilding a mass-compromised POS/SCO or BMS estate takes longer than the business can absorb, closing stores for days; mitigated by image-based rebuild and the W5429 drill."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BCP/DR platform (VS-26); known-good image repository (W5428); POS offline capability (VS-08); BMS local override (VS-138); generator/fuel (VS-61/VS-07)."
+    ],
+    "Time Estimate": [
+     "- ~4–6 weeks/annual plan refresh; ~1–2 weeks per recovery test cycle."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Define fail-secure operating modes per OT class: POS/SCO offline mode (continue selling, VS-08 NFR-013), BMS manual-override, fire-system fail-safe-to-alarm, SCADA local-control fallback, EV/locker offline grace.",
+     "duration": "per class",
+     "n": "1",
+     "r": "OT Security Lead / HSE"
+    },
+    {
+     "a": "BCP Lead",
+     "activity": "Quantify recovery objectives (RTO/RPO) per OT criticality tier — Safety-of-life near-zero RTO, POS/SCO hours, BMS hours-to-days.",
+     "duration": "per tier",
+     "n": "2",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "BCP Lead",
+     "activity": "Maintain offline/cached capability: POS offline ≥8h (VS-08), BMS local override, comms/voice fallback for store/DC teams.",
+     "duration": "per site",
+     "n": "3",
+     "r": "OT Security Engineer"
+    },
+    {
+     "a": "COO",
+     "activity": "Coordinate OT-cyber-driven closure/recovery with enterprise BCP (VS-26) and typhoon/disaster response (VS-69) so a cyber event during a typhoon is rehearsed.",
+     "duration": "annual",
+     "n": "4",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Test recovery rebuild from known-good images (W5428) within the RTO/RPO targets; report gaps to the risk register (W5424).",
+     "duration": "per test",
+     "n": "5",
+     "r": "OT Security Engineer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5421",
+    "W5424",
+    "W5428",
+    "W5429",
+    "W5430"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "Annual training + targeted; continuous hygiene monitoring",
+    "Owner": "OT Security Lead",
+    "Participants": "HR/L&D (VS-19.4), VS-167 vetting, IFM (VS-138), VS-98 contingent workforce, VS-125 fraud/insider",
+    "Trigger": "Onboarding; recurring awareness cycle; insider-threat signal (VS-125/VS-119)",
+    "Volume": "~300–500 OT engineering/maintenance users + vendor personnel (incl. contingent per VS-98)"
+   },
+   "id": "W5438",
+   "level": 2,
+   "name": "OT Cyber Awareness, Engineering-Workstation Hygiene & Insider-Threat Controls",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Just-in-time engineering-workstation provisioning; removable-media/auto-isolation; insider-threat detection rules."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: least privilege / workstation hygiene; awareness and insider-risk controls; no general internet/email on OT engineering workstations."
+    ],
+    "Cross-references": [
+     "- links to VS-19.4 (L&D), VS-167 (vetting), VS-98 (contingent workforce), VS-125 (fraud/insider), VS-119 (ethics), VS-84/VS-103 (HR conduct)"
+    ],
+    "Pain Points / Risks": [
+     "- **Engineering-workstation-bridge risk**: a maintenance laptop that moves between the corporate network and OT zones is the classic IT→OT bridge; mitigated by clean-before-connect and dedicated hardened workstations.",
+     "- **Trusted-insider risk**: an engineer or vendor with privileged OT access and intent can cause direct physical/financial harm (suppress alarms, divert payment, exfiltrate config); mitigated by insider-threat detection and least-privilege/JIT access (W5419/W5433)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Engineering-workstation hardening (host protection); removable-media control; insider-threat detection (VS-125); L&D platform (VS-19.4); vetting records (VS-167)."
+    ],
+    "Time Estimate": [
+     "- ~1–2 hours/person annual training; workstation hardening continuous; insider-threat monitoring continuous."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Run OT-specific cyber awareness for engineering/maintenance staff and vendors — why a USB in a controller engineering workstation or a default password is catastrophic, not just an IT issue.",
+     "duration": "annual + onboarding",
+     "n": "1",
+     "r": "OT Security Analyst / L&D"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Lock down OT engineering workstations — no general internet/email, host-based protection, removable-media control, and clean-before-connect for any field laptop.",
+     "duration": "continuous",
+     "n": "2",
+     "r": "OT Security Engineer"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Apply insider-threat controls to OT-privileged users (detect mass config export, off-hours controller access, credential abuse) coordinated with VS-125/VS-119.",
+     "duration": "continuous",
+     "n": "3",
+     "r": "OT SOC Analyst"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Ensure contingent/vendor personnel (VS-98/VS-167) get OT-aware vetting and access commensurate with the OT-criticality tier they touch.",
+     "duration": "per onboarding",
+     "n": "4",
+     "r": "OT Security Lead / VS-167"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Reinforce with documented sanctions/escalation paths (HR VS-84/VS-103, Legal VS-100) for OT security policy violations.",
+     "duration": "per event",
+     "n": "5",
+     "r": "OT Security Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5419",
+    "W5433"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "Monthly coordination forum; per incident",
+    "Owner": "OT Security Lead",
+    "Participants": "VS-08/VS-149 (POS/SCO), VS-164 (lockers), VS-163 (EV), VS-138 (BMS), VS-108 (SCADA), VS-04 (WMS/RF), VS-23 (CCTV/EAS) channel owners",
+    "Trigger": "Channel-specific cyber event; recurring coordination; new channel onboarding (W5421)",
+    "Volume": "~8–10 connected-device channels (POS/SCO/RF/locker/EV/BMS/SCADA/fire/access/weighbridge)"
+   },
+   "id": "W5439",
+   "level": 2,
+   "name": "Connected-Channel (POS/SCO/EV/Locker/BMS) Cyber Coordination & Incident Liaison",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cross-channel posture rollup; common-vendor/common-CVE correlation across channels."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: cross-channel segregation consistency; ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3; .) — coordination governance; channel posture evidence; ."
+    ],
+    "Cross-references": [
+     "- links to VS-08/VS-149 (POS/SCO), VS-164 (lockers), VS-163 (EV), VS-138 (BMS), VS-108 (SCADA), VS-04 (WMS/RF), VS-23 (CCTV/EAS)"
+    ],
+    "Pain Points / Risks": [
+     "- **Siloed-response risk**: a single incident spanning BMS + lockers + POS gets handled as three uncoordinated channel events, losing the common root cause; mitigated by the cross-channel forum and single-incident-commander model.",
+     "- **Channel-config-drift risk**: each channel VS hardens its own device differently from the OT baseline; mitigated by W5420 baseline alignment and the monthly forum."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- OT posture dashboard (W5424); channel-specific controllers (VS-08/VS-149/VS-164/VS-163/VS-138/VS-108); IR case management (W5430)."
+    ],
+    "Time Estimate": [
+     "- ~0.5 day/monthly forum; per-incident coordination ad-hoc."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Run a monthly OT-cyber coordination forum across every connected-device channel — share posture, incidents, advisories, and onboarding pipeline.",
+     "duration": "monthly",
+     "n": "1",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "CIO",
+     "activity": "Maintain a per-channel cyber liaison (named owner in each channel VS) empowered to act on OT security direction during an incident (W5430).",
+     "duration": "per channel",
+     "n": "2",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Coordinate cross-channel incidents (e.g., a vendor common to BMS+SCADA+lockers breached simultaneously) with one incident commander and consistent comms.",
+     "duration": "per incident",
+     "n": "3",
+     "r": "OT IR Lead"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Align channel-specific security config (POS PIN pad, SCO weight-security, locker access-auth, EV OCPP/OCPI, BMS BACnet) to the OT baseline (W5420).",
+     "duration": "per channel",
+     "n": "4",
+     "r": "OT Security Engineer"
+    },
+    {
+     "a": "OT Security Lead",
+     "activity": "Feed channel cyber metrics into the posture dashboard (W5424) and channel governance (each channel VS).",
+     "duration": "monthly",
+     "n": "5",
+     "r": "OT Security Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5420",
+    "W5421",
+    "W5424",
+    "W5430"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-802"
+   ],
+   "fields": {
+    "Frequency": "Quarterly performance; annual maturity + investment",
+    "Owner": "OT Security Lead",
+    "Participants": "CIO, CFO, IT Security Manager/IT Security (VS-27.3), TBM/FinOps (VS-135), Internal Audit (VS-21), Insurance (VS-26)",
+    "Trigger": "Quarterly/annual governance cycle; budget/investment (VS-135); board reporting (VS-36)",
+    "Volume": "1 OT performance/maturity/investment view"
+   },
+   "id": "W5440",
+   "level": 2,
+   "name": "OT Cybersecurity Performance, Maturity & Investment Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- KPI auto-aggregation from W5417–W5438; maturity-model self-scoring with evidence links; loss-exposure modeling."
+    ],
+    "Controls": [
+     "- CTL-802 (ensure controlled execution — OT Compliance, Third-Party Access & Cyber Resilience Analytics (PA-190.3).)",
+     "- operational: performance/investment governance on evidence-backed KPIs; OT cyber posture reported to the board/audit committee at least annually."
+    ],
+    "Cross-references": [
+     "- links to VS-21.2 (ERM), VS-21.3 (audit), VS-135 (TBM/FinOps), VS-26 (insurance), VS-36 (board), VS-173 (investor disclosure)"
+    ],
+    "Pain Points / Risks": [
+     "- **Underinvestment risk**: OT security competes for budget against visible IT/digital initiatives and is chronically under-funded until an incident; mitigated by quantified financial-loss exposure and maturity tracking.",
+     "- **Metric-gaming risk**: KPIs (coverage %, MTTR) drift into optimism if measured leniently; mitigated by audit-validated evidence (VS-21.3) and honest baselines."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- OT posture dashboard (W5424); GRC/ERM (VS-21.2); TBM/FinOps (VS-135); board reporting (VS-36); investor disclosure (VS-173)."
+    ],
+    "Time Estimate": [
+     "- ~1 week/quarterly performance; ~3–4 weeks/annual maturity + investment cycle."
+    ]
+   },
+   "steps": [
+    {
+     "a": "OT Security Lead",
+     "activity": "Report OT performance KPIs: asset coverage %, segmentation hygiene, default-cred/baseline compliance, MTTC/MTTR for OT vulns, incident counts, drill/exercise currency.",
+     "duration": "quarterly",
+     "n": "1",
+     "r": "OT Security Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "Assess OT security maturity against a model (IEC 62443 SL / NIST 800-82 / CMMI-style) and track year-over-year progression.",
+     "duration": "annual",
+     "n": "2",
+     "r": "OT Security Lead"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quantify OT cyber risk in financial terms (loss exposure from a store-closing POS/BMS outage, a safety-system compromise) for VS-21.2 ERM and VS-26 insurance.",
+     "duration": "annual",
+     "n": "3",
+     "r": "OT Security Lead / ERM"
+    },
+    {
+     "a": "CIO/CFO",
+     "activity": "Build the OT security investment case (tools, staffing, remediation, device replacement) into the technology-business-management plan (VS-135).",
+     "duration": "annual",
+     "n": "4",
+     "r": "OT Security Lead / TBM"
+    },
+    {
+     "a": "CEO",
+     "activity": "Brief the board/audit committee (VS-36/VS-21) on OT cyber posture, material risks, and investment; align disclosure with VS-173 investor relations where material.",
+     "duration": "annual",
+     "n": "5",
+     "r": "CIO / OT Security Lead"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5417",
+    "W5424",
+    "W5438"
+   ]
+  }
+ ]
+}

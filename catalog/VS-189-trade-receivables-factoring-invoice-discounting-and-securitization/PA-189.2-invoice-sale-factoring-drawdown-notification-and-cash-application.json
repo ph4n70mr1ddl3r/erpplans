@@ -1,0 +1,684 @@
+{
+ "process_area": {
+  "id": "PA-189.2",
+  "title": "Invoice Sale, Factoring Drawdown, Notification & Cash Application"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/PA-189.2-invoice-sale-factoring-drawdown-notification-and-cash-application.md",
+ "value_stream": {
+  "directory": "VS-189-trade-receivables-factoring-invoice-discounting-and-securitization",
+  "id": "VS-189",
+  "name": "Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Daily/weekly submission batches",
+    "Owner": "AR/Factoring Operations Lead",
+    "Participants": "Credit Analyst, Factor/Funder",
+    "Trigger": "Invoice issuance (VS-16); scheduled submission cycle",
+    "Volume": "~3,500 AR invoices/month eligible; ~42,000/yr"
+   },
+   "id": "W5401",
+   "level": 2,
+   "name": "Eligible Invoice Batch Selection, Pooling & Submission to Factor",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-batch eligible invoices and submit straight-through to the factor."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: double-financing fraud detection with duplicate-submission guard (invoice-level uniqueness check)."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (AR/invoicing), VS-68 (credit/eligibility), VS-125 (fraud)"
+    ],
+    "Pain Points / Risks": [
+     "- **Ineligible-submission risk**: submitting ineligible invoices causes funder rejection, fees, and covenant impact; mitigated by automated eligibility-gating.",
+     "- **Double-financing risk**: an invoice submitted twice (to two factors) is fraud; mitigated by a single assigned-status flag in AR preventing re-submission."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Factoring eligibility/submission engine; AR (VS-16); concentration/limit check (W5395)."
+    ],
+    "Time Estimate": [
+     "- ~2–4 hours per batch; ~50 batches/yr → ~150 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Select eligible invoices per criteria (W5395): approved customer, within age, undisputed, within concentration.",
+     "duration": "per batch",
+     "n": "1",
+     "r": "AR/Factoring Ops Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Pool into a submission batch with required data (customer, invoice, amount, terms, due date).",
+     "duration": "per batch",
+     "n": "2",
+     "r": "AR/Factoring Ops Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Gate eligibility automatically (W5395); exclude ineligible (over-age, disputed, over-limit).",
+     "duration": "per batch",
+     "n": "3",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Submit the batch to the factor via the factoring platform (W5398); obtain acceptance.",
+     "duration": "per batch",
+     "n": "4",
+     "r": "AR/Factoring Ops Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Record submission and update invoice status to \"submitted/assigned\" in AR (VS-16).",
+     "duration": "per batch",
+     "n": "5",
+     "r": "AR/Factoring Ops Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5395",
+    "W5398"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-19",
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Per submission batch",
+    "Owner": "Treasury Manager",
+    "Participants": "Finance, Factor/Funder, Bank",
+    "Trigger": "Factor accepts and funds a submission (W5401)",
+    "Volume": "~50 drawdowns/yr (batched)"
+   },
+   "id": "W5402",
+   "level": 2,
+   "name": "Factor Funding/Drawdown, Advance Posting & Bank Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-post the advance from the bank feed and reconcile to the accepted submission."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: daily bank/posting reconciliation with month-end close tie-out."
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury/cash), VS-17 (GL), VS-157 (revenue/sale accounting)"
+    ],
+    "Pain Points / Risks": [
+     "- **Funding-discrepancy risk**: an advance short of the expected amount (fees, reserve, rejection) mis-states cash and receivables; mitigated by per-drawdown reconciliation.",
+     "- **Mis-posting risk**: posting the advance to the wrong GL account distorts the financials and derecognition; mitigated by defined GL mapping (W5397)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/funding (VS-18); GL posting (VS-17); factoring accounting (W5397); bank reconciliation (CTL-19)."
+    ],
+    "Time Estimate": [
+     "- ~2–4 hours per drawdown; ~50/yr → ~150 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Manager",
+     "activity": "Receive the factor advance (advance rate × eligible batch) net of fees/reserve to BuildRight's account.",
+     "duration": "per drawdown",
+     "n": "1",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Post the advance to cash and the receivables-sale/factoring GL accounts (VS-17/VS-157/W5397).",
+     "duration": "per drawdown",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Reconcile the advance to the accepted submission and facility terms (rate, advance, reserve).",
+     "duration": "per drawdown",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Update facility utilization and available headroom (W5394).",
+     "duration": "per drawdown",
+     "n": "4",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Investigate and resolve any funding discrepancy with the factor.",
+     "duration": "per exception",
+     "n": "5",
+     "r": "Treasury Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5394",
+    "W5397",
+    "W5401"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Per notified customer/segment; per remit change",
+    "Owner": "AR Lead",
+    "Participants": "Customer, Trade Account Manager (VS-107), Factor",
+    "Trigger": "Notification factoring (W5396); customer remit-to change",
+    "Volume": "~5,200 customer remit records; ~changes"
+   },
+   "id": "W5403",
+   "level": 2,
+   "name": "Customer Invoice Reissuance/Re-assignment & Remit-To Instruction Update",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Remit-to auto-updated on assignment with customer-notification template."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: payment-routing verification."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (AR), VS-29 (master data), VS-107 (accounts), VS-14 (comms)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-directed-payment risk**: a customer paying the old remit-to (BuildRight) instead of the factor causes mis-application and reconciliation breaks; mitigated by clear customer communication and remit-to controls.",
+     "- **Stale-remit risk**: an un-updated remit-to on a customer record causes ongoing mis-direction; mitigated by assignment-status flags and verification."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer master remit-to (VS-29); AR reassignment (VS-16); lockbox (W5398); communication (VS-14/VS-107)."
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per customer setup; ~changes ongoing."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "For notification factoring: update the customer master remit-to to the factor/lockbox (W5396).",
+     "duration": "per customer",
+     "n": "1",
+     "r": "AR Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Reissue/re-assign invoices (where required) with the new remit-to and assignment notice.",
+     "duration": "per invoice",
+     "n": "2",
+     "r": "AR Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Communicate the change to the customer (Trade Account Mgmt) to avoid mis-directed payment (W5404).",
+     "duration": "per customer",
+     "n": "3",
+     "r": "Trade Account Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Update AR (VS-16) and customer master (VS-29) with the assignment/remit status.",
+     "duration": "per customer",
+     "n": "4",
+     "r": "AR Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Verify the customer's next payment routes correctly to the factor/lockbox.",
+     "duration": "per cycle",
+     "n": "5",
+     "r": "AR Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5396",
+    "W5398",
+    "W5404"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-19",
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Cash Application Lead",
+    "Participants": "Factor/Funder, AR (VS-16), Treasury",
+    "Trigger": "Customer payment to the factor/lockbox (notification) or BuildRight (silent)",
+    "Volume": "~3,500 AR payments/month"
+   },
+   "id": "W5404",
+   "level": 2,
+   "name": "Lockbox/Cash Receipt Processing, Customer Payment Matching & Clearing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-matching of lockbox remittance to assigned invoices; auto-routing."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: bank/lockbox reconciliation with remittance-to-invoice matching."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (AR/cash application), VS-18 (treasury), VS-80 (payments)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unapplied-cash risk**: unmatched payments distort AR and the factoring reconciliation; mitigated by remittance-detail matching and daily reconciliation.",
+     "- **Float/routing risk**: collected funds not routed per the facility create exposure; mitigated by defined routing and reconciliation."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lockbox/factor remittance feed; AR cash application (VS-16); treasury routing (VS-18); bank reconciliation."
+    ],
+    "Time Estimate": [
+     "- ~3–5 person-hours/day cash application; ~1,500 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Receive lockbox/factor remittance data with customer/invoice references.",
+     "duration": "daily",
+     "n": "1",
+     "r": "Cash Application Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Match payments to the assigned invoices in AR (VS-16); clear the receivable and the factoring advance.",
+     "duration": "daily",
+     "n": "2",
+     "r": "Cash Application Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Route the collected funds per the facility (to the factor / to BuildRight net of advance).",
+     "duration": "daily",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Investigate and resolve unapplied/short/over-payments and unidentified remittances.",
+     "duration": "per exception",
+     "n": "4",
+     "r": "Cash Application Lead"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Reconcile the lockbox/factor account daily (CTL-19).",
+     "duration": "daily",
+     "n": "5",
+     "r": "Cash Application Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Event-driven (~1–5% of submitted invoices become dispute/short-pay/credit events)",
+    "Owner": "Credit Manager",
+    "Participants": "Factor/Funder, Trade Credit Insurer (VS-68), AR, Customer",
+    "Trigger": "Customer dispute, short-pay, or credit risk event on a factored invoice",
+    "Volume": "~1–5% of factored invoices"
+   },
+   "id": "W5405",
+   "level": 2,
+   "name": "Non-Recourse Credit Risk Event, Customer Dispute & Short-Pay Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Event-driven claim workflows with insurance-window alerts."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: credit-insurance claim validity checks; dispute-fraud review; dilution-rate accuracy in reserve true-ups."
+    ],
+    "Cross-references": [
+     "- links to VS-68 (trade credit/insurance), VS-26 (insurance), VS-16 (AR/disputes), VS-125 (fraud)"
+    ],
+    "Pain Points / Risks": [
+     "- **Uninsured-loss risk**: a non-recourse claim filed late (past the insurance window) is denied, leaving BuildRight/ factor exposed; mitigated by prompt claim filing within policy windows.",
+     "- **Recourse-buildup risk**: recourse events accumulating signal portfolio deterioration and future buybacks; mitigated by dilution analytics and reserve review (W5399)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Credit-risk module (VS-68); trade-credit insurance claims (VS-68/VS-26); AR dispute (VS-16); dilution analytics."
+    ],
+    "Time Estimate": [
+     "- ~2–6 person-hours per event; ~1,000/yr → ~4,000 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Identify the event: dispute, short-pay, or customer credit deterioration on a factored invoice.",
+     "duration": "per event",
+     "n": "1",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "For non-recourse: file a claim with the trade-credit insurer (VS-68) within the policy window.",
+     "duration": "per event",
+     "n": "2",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "For recourse: prepare for buyback at recourse-period expiry (W5407) or negotiate cure with the customer.",
+     "duration": "per event",
+     "n": "3",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Resolve the dispute/short-pay with the customer (links VS-16 dispute management).",
+     "duration": "per event",
+     "n": "4",
+     "r": "AR Lead"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Update dilution analytics and reserve/holdback (W5399/W5406).",
+     "duration": "per event",
+     "n": "5",
+     "r": "Credit Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5399",
+    "W5406",
+    "W5407"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-30",
+    "CTL-31",
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Per invoice close; periodic settlement",
+    "Owner": "Finance (Receivables Finance)",
+    "Participants": "Factor/Funder, Credit Manager, Treasury",
+    "Trigger": "Customer payment/close of factored invoice; periodic reserve settlement",
+    "Volume": "~42,000 invoice closes/yr"
+   },
+   "id": "W5406",
+   "level": 2,
+   "name": "Dilution Reconciliation, Reserve Release & Holdback Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Reserve auto-released on invoice close net of computed dilution."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: dilution/reserve accuracy; CTL-31 (adequate reserve); CTL-30 (close)."
+    ],
+    "Cross-references": [
+     "- links to VS-17 (GL), VS-68 (dilution/credit), VS-18 (treasury/settlement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Reserve-dispute risk**: disagreement with the factor on dilution/reserve release causes cash delay; mitigated by transparent dilution reconciliation and terms.",
+     "- **Mis-posting risk**: incorrect reserve-release posting distorts the financials; mitigated by defined GL mapping."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Factoring reserve/holdback module; GL (VS-17); dilution analytics (VS-68)."
+    ],
+    "Time Estimate": [
+     "- ~1–2 person-hours per settlement batch; ~12/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "On invoice payment/close, reconcile actual vs. expected (full vs. short-pay/dispute).",
+     "duration": "per invoice",
+     "n": "1",
+     "r": "Finance"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Compute dilution (short-pay/dispute as % of invoice) and impact on the reserve/holdback (W5399).",
+     "duration": "per batch",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Release the reserve/holdback to BuildRight net of dilution per the facility terms.",
+     "duration": "per settlement",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Post reserve release/holdback settlement to GL (VS-17).",
+     "duration": "per settlement",
+     "n": "4",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Report dilution vs. facility threshold to the funder and credit committee (W5410).",
+     "duration": "monthly",
+     "n": "5",
+     "r": "Credit Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5399",
+    "W5410"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-29",
+    "CTL-31",
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "~1–3% of recourse factored invoices",
+    "Owner": "Credit Manager",
+    "Participants": "Factor/Funder, AR (VS-16), Finance, Collections",
+    "Trigger": "Recourse period expiry on an unpaid factored invoice (recourse factoring)",
+    "Volume": "~400–1,250 buybacks/yr (~1–3% of the ~42,000/yr recourse-factored invoice book per W5401/W5406)"
+   },
+   "id": "W5407",
+   "level": 2,
+   "name": "Recourse Period Expiry, Unpaid-Invoice Buyback & Repurchase Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Recourse-expiry auto-triggers buyback and re-recognition workflows."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: buyback accuracy; CTL-31 (adequate recourse reserve/provision); CTL-29 (consolidated reporting)."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (AR/collections), VS-68 (credit), VS-157 (re-recognize), VS-17 (GL)"
+    ],
+    "Pain Points / Risks": [
+     "- **Recourse-buildup risk**: high recourse activity signals the sale is in substance a borrowing (re-characterization) and erodes the working-capital benefit; mitigated by substance monitoring (W5415).",
+     "- **Loss risk**: bought-back invoices that never collect become losses; mitigated by provisioning (W5412) and collection effort."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Factoring recourse engine; AR re-recognize (VS-16/VS-157); GL/provisioning (VS-17); collections (VS-16/VS-68)."
+    ],
+    "Time Estimate": [
+     "- ~1–2 person-hours per buyback; ~1,000/yr → ~1,500 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Identify invoices unpaid past the recourse period (recourse factoring).",
+     "duration": "per cycle",
+     "n": "1",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Repurchase/buyback the unpaid invoice from the factor per the recourse agreement (W5394).",
+     "duration": "per buyback",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Re-establish the receivable on BuildRight's books (re-recognize under PFRS 9 — W5397) and pursue collection (VS-16/VS-68).",
+     "duration": "per buyback",
+     "n": "3",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Apply the recourse reserve/holdback (W5399) and provision for likely loss (W5412).",
+     "duration": "per buyback",
+     "n": "4",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monitor recourse activity for substance/re-characterization signals (W5397/W5415).",
+     "duration": "monthly",
+     "n": "5",
+     "r": "Finance Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5394",
+    "W5397",
+    "W5399",
+    "W5401",
+    "W5406",
+    "W5412",
+    "W5415"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-19",
+    "CTL-29",
+    "CTL-798"
+   ],
+   "fields": {
+    "Frequency": "Monthly investor/trustee reporting",
+    "Owner": "Treasury Manager",
+    "Participants": "Trustee/SPV, Investors, Finance, Legal (VS-100)",
+    "Trigger": "Securitization instrument selected (W5393); periodic investor reporting",
+    "Volume": "~1 securitization pool; ~12 reports/yr"
+   },
+   "id": "W5408",
+   "level": 2,
+   "name": "Securitization Pool Reporting, Investor/Trustee Reporting & Servicing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Pool-performance auto-aggregated and investor reports auto-generated per the PSA."
+    ],
+    "Controls": [
+     "- CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification & Cash Application (PA-189.2).)",
+     "- operational: pool-reporting accuracy; CTL-19 (cash/waterfall reconciliation); CTL-29 (consolidated/off-BS reporting)."
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury/waterfall), VS-17 (GL), VS-100 (legal/SPV), VS-173 (investor/capital-markets disclosure)"
+    ],
+    "Pain Points / Risks": [
+     "- **Covenant/trigger-breach risk**: breaching a pool trigger (delinquency, excess spread) accelerates amortization/penalties; mitigated by trigger monitoring and early action.",
+     "- **Reporting-error risk**: inaccurate investor/trustee reports breach the PSA and expose to investor claims; mitigated by reconciled reporting and review."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Securitization pool/servicing module; investor/trustee reporting; treasury/waterfall (VS-18); GL (VS-17)."
+    ],
+    "Time Estimate": [
+     "- ~1–2 weeks elapsed per monthly cycle."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Manager",
+     "activity": "Aggregate pool performance: collections, dilution, delinquencies, and credit events (W5405).",
+     "duration": "per cycle",
+     "n": "1",
+     "r": "Finance"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Prepare investor/trustee reports per the pooling-and-servicing agreement (covenants, triggers, waterfalls).",
+     "duration": "per cycle",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Reconcile pool cash flows and remit per the waterfall (senior fees, interest, principal, residual).",
+     "duration": "per cycle",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Manage pool covenants/triggers (e.g. excess spread, delinquency triggers) and report breaches.",
+     "duration": "per cycle",
+     "n": "4",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Coordinate with the trustee/SPV and legal on pool administration (VS-100).",
+     "duration": "ongoing",
+     "n": "5",
+     "r": "Legal Counsel"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5393",
+    "W5405"
+   ]
+  }
+ ]
+}

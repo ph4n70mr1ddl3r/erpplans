@@ -1,0 +1,605 @@
+{
+ "process_area": {
+  "id": "PA-38.1",
+  "title": "Consumer Financing Program Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-38-consumer-credit-financing/PA-38.1-consumer-financing-program.md",
+ "value_stream": {
+  "directory": "VS-38-consumer-credit-financing",
+  "id": "VS-38",
+  "name": "Consumer Credit & Financing"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "Annual review; new agreements every 2–3 years",
+    "Owner": "CFO",
+    "Participants": "CFO, Treasury, VP Merchandising, CMO, Legal Counsel",
+    "Trigger": "Annual financing partner review or new partner needed",
+    "Volume": "~5–8 active financing partnerships"
+   },
+   "id": "W1763",
+   "level": 2,
+   "name": "Financing Partner Selection & Agreement Negotiation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"CFO identifies financing partner categories needed\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews and executes financing agreement\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: CFO review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Rate-creep risk**: MDR quietly rises at renewal against stale benchmarks; mitigated by the annual renegotiation powered by W1769 performance data (step 2)",
+     "- **Integration-failure risk**: approval timeouts at checkout kill financed sales and frustrate customers; mitigated by end-to-end testing before each partner go-live (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Partner category framework — bank installment partners (BDO, BPI, Metrobank, Chinabank, EastWest), non-bank (Home Credit), BNPL providers (step 1)",
+     "- Term negotiation workspace — merchant discount rate (MDR) 1.5–3.5% target, settlement timing, promotional terms (step 2)",
+     "- Legal execution — BSP compliance, Data Privacy Act data-sharing terms (step 3)",
+     "- POS integration — installment payment method with real-time approval interface (step 4)"
+    ],
+    "Time Estimate": [
+     "6–11 weeks elapsed per occurrence (1 week + 2–4 weeks + 1–2 weeks + 2–4 weeks) — at Annual review; new agreements every 2–3 years ≈ 0.3–0.5 occurrences/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "CFO identifies financing partner categories needed: (a) bank installment partners: BDO, BPI, Metrobank, Chinabank, EastWest (credit card installment conversion), (b) financing companies: Home Credit, RFC, Savers (for non-card installment), (c) BNPL providers: GCash GGives, Maya (digital-first installment), (d) government housing loan programs: Pag-IBIG Fund (home improvement loans), (e) in-house deferred payment for trade accounts (covered by VS-16)",
+     "duration": "1 week",
+     "n": "1",
+     "r": "CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "Negotiate terms with each partner: (a) merchant discount rate (MDR): % of transaction paid to partner (target: 1.5–3.5% depending on promo), (b) 0% interest promotional periods: partner subsidizes interest for 3/6/12-month terms (higher MDR for longer 0% periods), (c) settlement period: days until BuildRight receives payment (target: T+1 to T+3), (d) minimum transaction amount for installment (typically PHP 3,000–5,000), (e) maximum installment term (6/12/18/24/36 months), (f) chargeback and dispute resolution process, (g) marketing co-op fund contribution from partner",
+     "duration": "2–4 weeks",
+     "n": "2",
+     "r": "CFO / Treasury"
+    },
+    {
+     "a": "CFO",
+     "activity": "Legal Counsel reviews and executes financing agreement: (a) BSP compliance (if partner is regulated financial institution), (b) Data Privacy Act compliance for customer data sharing, (c) liability and indemnification terms, (d) termination provisions",
+     "duration": "1–2 weeks",
+     "n": "3",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CIO",
+     "activity": "IT integrates partner into POS system: (a) installment payment method added to POS terminal, (b) real-time approval interface with financing partner, (c) settlement reconciliation automated, (d) promotional rate tables configured in POS",
+     "duration": "2–4 weeks",
+     "n": "4",
+     "r": "IT / POS Vendor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1769"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "Per partner setup + annual refresher training",
+    "Owner": "CMO",
+    "Participants": "CMO, Marketing Team, Store Managers, Sales Associates",
+    "Trigger": "Financing partner agreement executed (W1763)",
+    "Volume": "200 stores × training per new partner"
+   },
+   "id": "W1764",
+   "level": 2,
+   "name": "In-Store Financing Desk Setup & Staff Training",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checkout and appliance section\" (replaces manual Step 1).",
+     "- System auto-document of \"documents for financing application\" (replaces manual Step 2).",
+     "- System auto-send of \"sends approval request to financing partner\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: CMO review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-selling risk**: staff promise 0% terms after a promotion has expired; mitigated by training plus current rate cards refreshed per campaign (steps 1–2)",
+     "- **Config-drift risk**: POS installment terms out of sync with the executed agreement; mitigated by POS configuration updates tied to agreement changes (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Financing information kits — partner brochures and rate cards at checkout and appliance sections (step 1)",
+     "- Sales Associate training — presenting financing options and qualifying customers (step 2)",
+     "- POS configuration — financing tender with installment-term selection and approval request (step 3)"
+    ],
+    "Time Estimate": [
+     "Per partner setup: financing information-kit creation 1 week ≈ 40 hours + Sales Associate training 2 hours/store × 200 stores = 400 hours + POS payment-method configuration ≈ 450 hours per new financing partner, with annual refresher training at reduced scope.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CMO",
+     "activity": "Marketing creates financing information kit per store: (a) financing partner brochure display at checkout and appliance section, (b) promotional signage (e.g., \"0% Interest for 12 Months on Appliances\"), (c) quick reference card for Sales Associates: available terms, minimum purchase, eligible categories, how to process, (d) financing desk setup at high-value product areas (appliances, power tools, bathroom/kitchen packages)",
+     "duration": "1 week",
+     "n": "1",
+     "r": "Marketing Team"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Sales Associate training on financing offerings: (a) how to present financing options to customers (\"Did you know you can pay in 12 months with 0% interest?\"), (b) which products are eligible for financing, (c) how to process installment payment at POS, (d) required customer documents for financing application (valid ID, proof of income for non-card installment), (e) common customer questions and responses",
+     "duration": "2 hours/store",
+     "n": "2",
+     "r": "Marketing Team / HR"
+    },
+    {
+     "a": "—",
+     "activity": "POS system updated: financing payment method appears as option; cashier selects installment term; system sends approval request to financing partner; approval received in real-time; transaction completed",
+     "duration": "Per partner setup",
+     "n": "3",
+     "r": "IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1763"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "6 major campaigns/year + monthly hot deals",
+    "Owner": "VP Merchandising",
+    "Participants": "VP Merchandising, Category Managers, CMO, CFO, Financing Partners",
+    "Trigger": "Seasonal promotional calendar (6 major events/year per merchandising strategy)",
+    "Volume": "~10–20 financing promotions/year"
+   },
+   "id": "W1765",
+   "level": 2,
+   "name": "Promotional Financing Campaign Planning (0% Installment)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"request exclusive installment rights for the promotion\" (replaces manual Step 2).",
+     "- System auto-review of \"review\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: VP Merchandising review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Subsidy-blowout risk**: elevated promotional MDR plus subsidies exceed the margin on incremental sales; mitigated by CFO-negotiated terms and the post-promotion ROI review (steps 2, 4)",
+     "- **Stale-promotion risk**: 0% signage stays up after the period ends — a misrepresentation exposure; mitigated by campaign end-date controls on materials (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seasonal promotional plan — financing-supported campaigns (summer aircon 0%, ber-months home improvement) (step 1)",
+     "- Promotional MDR negotiation — partner absorbs interest cost at elevated MDR (step 2)",
+     "- Campaign launch materials — signage, digital advertising (step 3)",
+     "- Post-promotion review — incremental sales, financing penetration (step 4)"
+    ],
+    "Time Estimate": [
+     "Per financing promotion ~3–5 days of effort (proposal per seasonal calendar over a 1-week window + CFO MDR negotiation over a 1-week window + post-promotion review over a 1-week window, at partial daily occupancy) × ~10–20 promotions/year ≈ 30–100 days/year; campaign execution runs its scheduled duration.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Managers propose financing-supported promotions per seasonal calendar: (a) summer (Mar–Apr): aircon and cooling — 0% for 12 months on aircon purchases > PHP 15K, (b) back-to-school (May–Jun): paint and electrical for school builds — 6-month installment, (c) ber-months (Sep–Dec): appliances and home décor — extended 24-month terms, (d) year-round: power tool bundles — 6-month installment, (e) each promotion includes: eligible products, financing terms, partner bank, promotional period, MDR subsidy split between BuildRight and partner",
+     "duration": "1 week/campaign",
+     "n": "1",
+     "r": "Category Managers"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "CFO negotiates promotional MDR with financing partner: (a) standard MDR may increase for 0% promotions (partner absorbs interest cost), (b) split: BuildRight absorbs X% of additional MDR, partner absorbs (100-X)%, (c) volume commitment: minimum transaction volume expected during promo period, (d) exclusivity: partner may request exclusive installment rights for the promotion",
+     "duration": "1 week",
+     "n": "2",
+     "r": "CFO"
+    },
+    {
+     "a": "CMO",
+     "activity": "Marketing launches promotional campaign: (a) in-store signage and displays, (b) social media and digital advertising highlighting financing terms, (c) SMS/email to loyalty members, (d) financing partner co-markets to their cardholders, (e) promotional rates configured in POS system for automatic application during promo period",
+     "duration": "Campaign duration",
+     "n": "3",
+     "r": "Marketing Team"
+    },
+    {
+     "a": "CFO",
+     "activity": "Post-promotion review: (a) incremental sales attributable to financing promotion, (b) financing penetration rate (% of eligible sales using installment), (c) cost of financing subsidy vs. incremental gross margin, (d) partner settlement accuracy, (e) ROI assessment for future campaigns",
+     "duration": "1 week post-promo",
+     "n": "4",
+     "r": "FP&A / VP Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "~15–25 installment transactions per store per day (~3–5% of POS transactions; ≈90,000–150,000/month chain-wide per W747)",
+    "Owner": "Cashier",
+    "Participants": "Cashier, Customer, Financing Partner (real-time)",
+    "Trigger": "Customer requests installment payment at POS",
+    "Volume": "~3–5% of POS transactions use installment financing (~90,000–150,000/month, per W747's ~4,000/day anchor)"
+   },
+   "id": "W1766",
+   "level": 2,
+   "name": "Consumer Credit Application Processing at POS",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Customer selects items and requests installment payment at checkout\" (replaces manual Step 1).",
+     "- System auto-generate of \"printed showing installment details\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"For non-card financing\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: Cashier review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Application rejection**: Customer selects merchandise, applies for financing, and is rejected — creates frustration; Sales Associate should offer alternatives (shorter term, lower amount, different partner)",
+     "- **Processing time**: Non-card financing applications take 10–15 minutes; queue management needed at busy periods",
+     "- **MDR impact**: Installment MDR (2.5–4%) is higher than regular card-present MDR (1.5–2%); gross margin impact must be factored into pricing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS eligibility check — minimum transaction amount and promotional terms (step 1)",
+     "- Card-installment flow — term selection (3/6/12/24/36 months) with real-time issuer approval (step 2)",
+     "- Non-card financing flow — ID capture and application via partner device (e.g., Home Credit) (step 3)",
+     "- Settlement interface — full amount from partner net of MDR (step 4)"
+    ],
+    "Time Estimate": [
+     "Checkout handling ~5–10 min per installment transaction (payment-method confirmation 2 min + card-installment processing 3–5 min; non-card financing applications 15–30 min) × ~8,000–12,000/month ≈ 8,000–24,000 cashier hours/year across 200 stores (settlement remittance automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer selects items and requests installment payment at checkout; Cashier confirms eligibility: (a) total transaction amount meets minimum (typically ≥ PHP 3,000–5,000), (b) items are eligible for installment (not clearance, not services), (c) customer presents valid credit card (for bank installment) or applies for non-card financing",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "For credit card installment: (a) Cashier selects installment payment method in POS, (b) selects term (3/6/12/24/36 months per promo), (c) swipes/taps customer credit card, (d) POS sends installment conversion request to acquiring bank, (e) approval received in real-time (3–10 seconds), (f) receipt printed showing installment details (monthly amount, term, total cost)",
+     "duration": "3–5 min",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "For non-card financing (e.g., Home Credit): (a) customer presents valid ID and provides personal information, (b) Sales Associate assists customer with financing partner application (tablet or kiosk), (c) financing partner performs credit assessment (real-time, 5–15 minutes), (d) approval/rejection communicated to customer, (e) if approved: transaction processed at POS with partner payment method, (f) customer signs financing agreement with partner (not BuildRight)",
+     "duration": "15–30 min",
+     "n": "3",
+     "r": "Sales Associate / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Transaction completed: (a) BuildRight receives full transaction amount from financing partner at settlement (minus MDR), (b) customer's payment obligation is with financing partner (not BuildRight), (c) no AR risk for BuildRight on consumer installment transactions",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W747"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "~500–1,000 referrals/year",
+    "Owner": "Department Supervisor",
+    "Participants": "Department Supervisor, Customer, Bank/Financing Partner",
+    "Trigger": "Customer inquires about financing for large home improvement project (kitchen, bathroom renovation, whole-house build)",
+    "Volume": "~2–5 referrals per store per year (~500–1,000/year per the Frequency)"
+   },
+   "id": "W1767",
+   "level": 2,
+   "name": "Home Improvement Loan Referral Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow notification of \"Supervisor refers customer to partner bank or Pag-IBIG for\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks referral volume and conversion rate\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: Department Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Disclosure risk**: undisclosed referral arrangements create consumer-protection exposure; mitigated by transparent, documented referral terms with partners (step 2)",
+     "- **Lead-loss risk**: referred customers never return and no one follows up; mitigated by monthly referral conversion tracking (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Referral identification at Department Supervisor for large projects (PHP 100–300K renovations) (step 1)",
+     "- Partner referral routing — banks and Pag-IBIG home improvement loans (step 2)",
+     "- Conversion tracking — referral volume and conversion rate monitoring (step 4)"
+    ],
+    "Time Estimate": [
+     "~10 min per financing referral (partner-bank/Pag-IBIG handoff with documentation; loan approval runs partner-side) × ~500–1,000 referrals/year ≈ 83–167 hours/year; monthly referral-volume and conversion tracking ≈ 12 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer discusses large project with Department Supervisor (e.g., full kitchen renovation ~PHP 100–300K); Supervisor identifies financing need and presents loan referral option",
+     "duration": "During sales interaction",
+     "n": "1",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Supervisor refers customer to partner bank or Pag-IBIG for home improvement loan: (a) Pag-IBIG Fund home improvement loan (for members, up to PHP 3M, 2–30 year terms), (b) bank personal/home improvement loans (BDO, BPI), (c) provides customer with referral information and partner contact, (d) BuildRight earns referral fee (if applicable per partner agreement)",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Customer obtains loan approval independently from financing partner; returns to BuildRight to make purchase; transaction processed as standard sale (cash or bank transfer from loan proceeds)",
+     "duration": "Variable",
+     "n": "3",
+     "r": "Customer / Cashier"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: VP Merchandising tracks referral volume and conversion rate; assesses referral program effectiveness",
+     "duration": "Monthly",
+     "n": "4",
+     "r": "VP Merchandising"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "~2,000–4,000 BNPL transactions/month (growing rapidly)",
+    "Owner": "CMO (digital channels) / VP Store Operations (in-store)",
+    "Participants": "Cashier, Customer, BNPL Provider (GCash GGives, Maya, etc.)",
+    "Trigger": "Customer selects BNPL payment at POS or ecommerce checkout",
+    "Volume": "~0.1–0.15% of total transactions (~2,000–4,000 BNPL transactions/month per the Frequency; increasing trend)"
+   },
+   "id": "W1768",
+   "level": 2,
+   "name": "Buy-Now-Pay-Later (BNPL) Integration & Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Customer selects BNPL at checkout\" (replaces manual Step 1).",
+     "- System auto-send of \"sends refund instruction to BNPL provider\" (replaces manual Step 3).",
+     "- System auto-record of \"records per W1779\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: CMO (digital channels) / VP Store Operations (in-store) review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Fee-erosion risk**: the 2–4% BNPL fee consumes margin on thin categories; mitigated by category-level acceptance rules and fee tracking in W1782 (steps 1–2)",
+     "- **Refund-trap risk**: refunds stall at the provider while the customer blames the store; mitigated by refund-instruction SLA monitoring (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BNPL checkout integration — QR/app flow in-store and at ecommerce checkout (step 1)",
+     "- Settlement interface — T+1 payment net of the 2–4% BNPL fee (step 2)",
+     "- Refund instruction flow to the BNPL provider (step 3)",
+     "- Monthly settlement reconciliation per W1779 (step 4)"
+    ],
+    "Time Estimate": [
+     "Checkout handling 3–5 min per BNPL transaction × ~2,000–4,000/month ≈ 1,200–4,000 cashier hours/year; BNPL returns 10 min each at realized volume; monthly Treasury settlement reconciliation ≈ 12 hours/year (T+1 settlement and posting automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer selects BNPL at checkout: (a) in-store: Cashier selects BNPL payment method in POS, generates QR code or asks customer to open BNPL app, (b) ecommerce: customer selects BNPL at payment page, redirected to BNPL provider for approval, (c) customer authenticates with BNPL provider (biometric/PIN), (d) BNPL provider approves transaction (instant for existing users; new user onboarding 3–5 minutes)",
+     "duration": "3–5 min",
+     "n": "1",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "Transaction completed: (a) BuildRight receives payment from BNPL provider at T+1 settlement, minus BNPL fee (typically 2–4%), (b) customer's repayment obligation is with BNPL provider, (c) no AR risk for BuildRight",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Returns on BNPL transactions: (a) customer returns item at store, (b) BuildRight processes return in POS, (c) system sends refund instruction to BNPL provider, (d) BNPL provider adjusts customer's payment schedule or issues refund, (e) BuildRight receives credit note from BNPL provider",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly reconciliation: Treasury reconciles BNPL settlement statements with POS transaction records per W1779",
+     "duration": "Monthly",
+     "n": "4",
+     "r": "Treasury"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1779",
+    "W1782"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "Monthly dashboard; quarterly partner review; annual renegotiation",
+    "Owner": "FP&A",
+    "Participants": "FP&A, CFO, VP Merchandising, CMO",
+    "Trigger": "Monthly performance review cycle",
+    "Volume": "~5–8 partner reviews"
+   },
+   "id": "W1769",
+   "level": 2,
+   "name": "Financing Program Performance Monitoring & Partner Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Quarterly partner review\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: FP&A review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Concentration risk**: one partner dominates the program and its terms; mitigated by partner-mix monitoring in the dashboard (step 1)",
+     "- **Silent-tightening risk**: a partner lowers approval rates, quietly suppressing financed sales; mitigated by quarterly approval-rate review (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Monthly financing dashboard — financed sales (PHP and % of total), by partner, penetration rate (step 1)",
+     "- Quarterly partner review — settlement accuracy, chargebacks, approval rates (step 2)",
+     "- Annual renegotiation with performance-based leverage (step 3)"
+    ],
+    "Time Estimate": [
+     "Monthly financing dashboard 1 day ≈ 12 days/year; quarterly partner reviews 1 day × ~5–8 partners ≈ 20–32 days/year; annual renegotiation cycle 2–4 weeks CFO-led ≈ 10–20 days — ≈ 42–64 days/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Monthly financing dashboard: (a) total financed sales (PHP amount and % of total sales), (b) financed sales by partner, (c) financed sales by category (appliances, power tools, home packages), (d) average financed transaction value vs. non-financed ATV, (e) financing penetration rate by store, (f) MDR cost by partner, (g) promotional financing effectiveness (incremental sales vs. MDR subsidy cost), (h) customer adoption rate by payment method (card installment vs. BNPL vs. non-card)",
+     "duration": "1 day/month",
+     "n": "1",
+     "r": "FP&A"
+    },
+    {
+     "a": "CEO",
+     "activity": "Quarterly partner review: (a) settlement accuracy (discrepancies, chargebacks), (b) approval rates (% of applications approved by partner), (c) customer satisfaction with financing process, (d) competitive benchmarking (what financing terms do competitors offer?), (e) partner compliance with agreement terms",
+     "duration": "1 day/quarter",
+     "n": "2",
+     "r": "CFO / Treasury"
+    },
+    {
+     "a": "CEO",
+     "activity": "Annual renegotiation: CFO uses performance data to negotiate better MDR rates, longer promotional terms, or improved settlement periods; underperforming partners may be replaced",
+     "duration": "2–4 weeks/year",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-355"
+   ],
+   "fields": {
+    "Frequency": "Continuous monitoring; ad-hoc for regulatory changes",
+    "Owner": "Legal Counsel",
+    "Participants": "Legal Counsel, Compliance Officer, CFO, DPO",
+    "Trigger": "Regulatory change from BSP, DTI, or financing partner requirements",
+    "Volume": "~3–5 regulatory updates/year"
+   },
+   "id": "W1770",
+   "level": 2,
+   "name": "Financing Compliance & BSP Regulatory Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"verify partners are properly licensed\" (replaces manual Step 1).",
+     "- System auto-communication of \"communicated at POS and in marketing materials\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitors financing data flows per W1735\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-355 (ensure controlled execution — Consumer Financing Program Management (PA-38.1).)",
+     "- operational: Legal Counsel review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Disclosure-violation risk**: promotional materials missing RA 3765-required disclosures (principal, interest, term); mitigated by the mandatory disclosure checklist on all promo materials (step 2)",
+     "- **Data-sharing-without-consent risk**: customer data passed to financing partners pre-consent; mitigated by consent captured before application submission (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Regulatory monitoring — BSP installment and credit rules, DTI consumer protection (step 1)",
+     "- Truth in Lending (RA 3765) disclosure compliance — principal, interest, term on all promo displays (step 2)",
+     "- Data-privacy consent management for financing applications (step 3)",
+     "- Annual partnership compliance review including licensing status (step 4)"
+    ],
+    "Time Estimate": [
+     "Continuous regulatory monitoring within Legal's standing watch (~3–5 regulatory updates/year at ~2–4 hours each ≈ 6–20 hours); Truth-in-Lending (RA 3765) disclosure checks per promotion; annual financing-partnership compliance review 1 day ≈ 8 hours.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "Legal Counsel monitors regulatory environment for consumer financing: (a) BSP regulations on installment sales and credit, (b) DTI consumer protection requirements (Truth in Lending Act), (c) Data Privacy Act requirements for customer financial data sharing, (d) Anti-Money Laundering (AMLA) requirements for large cash transactions, (e) financing company licensing requirements (BuildRight is merchant, not lender — but must verify partners are properly licensed)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CMO",
+     "activity": "Compliance with Truth in Lending Act (RA 3765): (a) ensure all promotional financing displays clearly state: principal amount, interest rate (or \"0% interest\"), installment term, monthly amortization, total amount payable, (b) no hidden fees passed to customer, (c) promotional terms clearly communicated at POS and in marketing materials",
+     "duration": "Per promotion",
+     "n": "2",
+     "r": "Legal Counsel / Marketing"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Data privacy compliance for financing applications: (a) customer consent obtained before sharing personal data with financing partner, (b) financing partner data processing agreement in place, (c) customer data retained only per retention policy, (d) DPO monitors financing data flows per W1735",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "DPO / Legal Counsel"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual review: Legal Counsel assesses all financing partnerships for regulatory compliance; flags any partner concerns (license status, complaint patterns, regulatory actions) to CFO",
+     "duration": "1 day/year",
+     "n": "4",
+     "r": "Legal Counsel"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1735"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,458 @@
+{
+ "process_area": {
+  "id": "PA-61.1",
+  "title": "Fuel Procurement & Consumption Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-61-fuel-fleet-cost-management/PA-61.1-fuel-procurement-consumption.md",
+ "value_stream": {
+  "directory": "VS-61-fuel-fleet-cost-management",
+  "id": "VS-61",
+  "name": "Fuel & Fleet Cost Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-412"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~20 trucks",
+    "Owner": "Logistics Manager",
+    "Participants": "Finance, VP Supply Chain",
+    "Trigger": "Fuel procurement for owned fleet",
+    "Volume": "~20 cards; ~PHP 2–3M/month"
+   },
+   "id": "W2310",
+   "level": 2,
+   "name": "Fleet Fuel Card Program Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Mileage-vs-fuel auto-reconciled; anomaly auto-flagged; block auto-on-reported-lost"
+    ],
+    "Controls": [
+     "- CTL-412 (ensure controlled execution — Fuel Procurement & Consumption Management (PA-61.1).)",
+     "- operational: fuel-card-change guard — pattern from VS-42; duplicate-transaction guard; operational: Finance monthly reconciliation sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Fuel-card-fraud risk**: a driver uses the card for a personal vehicle or siphons fuel; mitigated by the per-transaction limit, the mileage-vs-fuel anomaly detection, and the card-block on unauthorized",
+     "- **Lost-card risk**: a card is lost/stolen and used before block; mitigated by the 24-hour block-SLA and the per-transaction limit capping the exposure"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fuel-card platform (links to VS-18 / W320 banking security, VS-42 / W118 rent-payment pattern applied fleet-side) — the card program",
+     "- Telematics/mileage (links to VS-06 / W199 fleet telematics) — the mileage-vs-fuel cross-check",
+     "- Finance/AP (links to VS-15 / W7C recurring invoice) — the statement reconciliation"
+    ],
+    "Time Estimate": [
+     "~5 hours/month Logistics Manager + ~5 hours/month Finance = **~120 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Manages fuel card program: issues per vehicle, limits per transaction, monitors patterns, blocks unauthorized; Finance reviews statements, matches mileage, investigates anomalies",
+     "duration": "2–3 hours/month + 4–6 hours/month",
+     "n": "1",
+     "r": "Logistics Manager / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W118",
+    "W199",
+    "W320",
+    "W7C"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-181",
+    "CTL-412"
+   ],
+   "fields": {
+    "Frequency": "Weekly; Philippine diesel/gas prices",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "Procurement, Finance Manager",
+    "Trigger": "Weekly review cycle — Fuel Price Monitoring",
+    "Volume": "~PHP 2–3M monthly"
+   },
+   "id": "W2311",
+   "level": 2,
+   "name": "Fuel Price Monitoring & Procurement Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- DOE price auto-ingested; per-route optimal-station auto-suggested; discount-application auto-verified"
+    ],
+    "Controls": [
+     "- CTL-181 (ensure fleet fuel-cost accuracy & fraud prevention.)",
+     "- CTL-412 (discount-realization accuracy); operational: Finance Manager quarterly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Station-detour-cost risk**: a driver detours to a cheaper station, burning more fuel than the saving; mitigated by the per-route optimal-station (not a blanket \"cheapest\") that accounts for detour distance",
+     "- **Discount-non-realization risk**: a negotiated volume discount isn't applied at the pump (station-level system gap); mitigated by the statement-reconciliation catching the undiscounted transactions"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- DOE price feed (links to VS-27 / W113 external data) — the weekly fuel-price benchmark",
+     "- Route/station optimization (links to VS-06 / W196 route planning) — the per-route optimal station",
+     "- Procurement (links to VS-03 / W62 vendor contract) — the fleet-discount negotiation"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/week + ~1.5 days/quarter = **~180 hours/year** Logistics Finance Analyst + Procurement."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Monitors DOE weekly prices; identifies optimal stations per route; calculates delivery cost impact; Procurement negotiates fleet discounts with Petron, Shell, Caltex for volume",
+     "duration": "2–3 hours/week + 1–2 days/quarter",
+     "n": "1",
+     "r": "Logistics Finance Analyst / Procurement"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W196",
+    "W62"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-181"
+   ],
+   "fields": {
+    "Frequency": "Monthly; ~40 owned vehicles (the 40-truck owned fleet)",
+    "Owner": "Fleet Supervisor",
+    "Participants": "Logistics Manager",
+    "Trigger": "Monthly vehicle review",
+    "Volume": "~40 reports/month (one per owned vehicle)"
+   },
+   "id": "W2312",
+   "level": 2,
+   "name": "Vehicle Fuel Efficiency Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Liters/km auto-computed from telematics; deviation auto-flagged with diagnostic-suggestion"
+    ],
+    "Controls": [
+     "- CTL-181 (ensure fleet fuel-cost accuracy & fraud prevention.)",
+     "- Operational: Fleet Supervisor monthly sign-off; Logistics Manager escalation on chronic deviation"
+    ],
+    "Pain Points / Risks": [
+     "- **Efficiency-vs-driver-blame risk**: an efficiency drop is attributed to the driver when the root cause is mechanical (a failing injector); mitigated by the diagnostic-first investigation before coaching",
+     "- **Spec-benchmark-staleness risk**: the vehicle-spec benchmark is for new-condition and an aging fleet looks chronically inefficient; mitigated by the age-adjusted benchmark"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics (links to VS-06 / W199 fleet telematics) — the liters/km data per vehicle",
+     "- Maintenance (links to VS-06 / W188 fleet spare parts & PM) — the maintenance scheduled on deviation",
+     "- Driver scorecard (links to VS-06 / W197 driver performance) — the driver-behavior dimension"
+    ],
+    "Time Estimate": [
+     "~5 hours/month + ~2.5 hours investigation = **~90 hours/year** Fleet Supervisor."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Calculates: liters ÷ km; benchmarks vs. spec; flags >15% deviation; investigates: engine, tires, congestion, driver behavior; schedules maintenance or coaching",
+     "duration": "4–6 hours/month + 2–3 hours",
+     "n": "1",
+     "r": "Fleet Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W188",
+    "W197",
+    "W199"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-181",
+    "CTL-412"
+   ],
+   "fields": {
+    "Frequency": "Monthly; 4 DCs × ~10 vehicles",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "VP Supply Chain, CFO",
+    "Trigger": "Monthly reporting cycle — Fuel Consumption",
+    "Volume": "~40 vehicles/month (the 40-owned-truck canon)"
+   },
+   "id": "W2313",
+   "level": 2,
+   "name": "Fuel Consumption Reporting & Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Fuel-report auto-assembled; price-vs-volume variance auto-split"
+    ],
+    "Controls": [
+     "- CTL-181 (ensure fleet fuel-cost accuracy & fraud prevention.)",
+     "- CTL-412 (cost-accuracy — links to VS-158); operational: CFO monthly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Spend-attribution risk**: fuel spend isn't attributed per-delivery, hiding the per-delivery cost trend; mitigated by the telematics-derived per-delivery attribution",
+     "- **Budget-bias risk**: the budget was set at a fuel-price baseline that's since moved, making the variance misleading; mitigated by the price-normalized variance (volume-driven vs. price-driven split)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost analytics (links to VS-27 / W113, VS-158 / W85, VS-61 / W2325 TCO dashboard) — the fuel-cost dataset",
+     "- Budget (links to VS-17 / W26) — the budget-variance",
+     "- Telematics (links to VS-06 / W199) — the per-vehicle/per-delivery attribution"
+    ],
+    "Time Estimate": [
+     "~5 hours/month + ~1.5 hours VP review = **~80 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Monthly report: total spend, per-vehicle, per-delivery, fuel as % of logistics cost, trend vs. budget; VP reviews with COO; identifies reduction opportunities",
+     "duration": "4–6 hours/month + 1–2 hours",
+     "n": "1",
+     "r": "Logistics Finance Analyst / VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W199",
+    "W2325",
+    "W26",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-412"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; ~60 drivers",
+    "Owner": "Fleet Supervisor",
+    "Participants": "Logistics Manager, HR",
+    "Trigger": "Quarterly + new hires",
+    "Volume": "~60 drivers"
+   },
+   "id": "W2314",
+   "level": 2,
+   "name": "Driver Fuel Efficiency Training",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Individual coaching-plan auto-derived from telematics; training auto-assigned per behavior gap"
+    ],
+    "Controls": [
+     "- CTL-412 (ensure controlled execution — Fuel Procurement & Consumption Management (PA-61.1).)",
+     "- Operational: HR completion-rate sign-off; Logistics Manager scorecard-link verification"
+    ],
+    "Pain Points / Risks": [
+     "- **Training-without-behavior-change risk**: drivers attend but don't change behavior (no incentive); mitigated by the scorecard-link and the recognition/incentive",
+     "- **One-size-training risk**: the same training for all drivers ignores individual behavior gaps; mitigated by the telematics-derived individual coaching plan"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LMS (links to VS-19.4 / W51 training) — the training delivery and tracking",
+     "- Driver scorecard (links to VS-06 / W197 driver performance) — the efficiency-metric feedback loop",
+     "- Telematics (links to VS-06 / W199) — the behavior data (idling, harsh-acceleration)"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/session × 4 + ~1 hour/month recognition = **~60 hours/year** Fleet Supervisor."
+    ]
+   },
+   "steps": [
+    {
+     "a": "HR",
+     "activity": "Training: gear shifting, steady speed, idling reduction, route planning, tire pressure; monthly recognition for most efficient; linked to driver scorecard and incentive",
+     "duration": "2–3 hours/session + 1 hour/month",
+     "n": "1",
+     "r": "Fleet Supervisor / Logistics Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W197",
+    "W199",
+    "W51"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-412"
+   ],
+   "fields": {
+    "Frequency": "Annual; evaluate 2–3 replacements",
+    "Owner": "VP Supply Chain",
+    "Participants": "Finance, COO",
+    "Trigger": "Annual fleet review",
+    "Volume": "20 vehicles"
+   },
+   "id": "W2315",
+   "level": 2,
+   "name": "Alternative Fuel Vehicle Evaluation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- TCO model auto-assembled with scenario-analysis; ESG-benefit auto-quantified"
+    ],
+    "Controls": [
+     "- CTL-412 (ensure controlled execution — Fuel Procurement & Consumption Management (PA-61.1).)",
+     "- operational: capex-approval for the pilot; operational: COO sign-off on the pilot recommendation"
+    ],
+    "Pain Points / Risks": [
+     "- **Charging-infra-gap risk**: an EV pilot fails because the charging infrastructure isn't ready (links to VS-163); mitigated by the charging-infra-readiness gate before the EV pilot",
+     "- **TCO-shifting risk**: the TCO assumes a fuel-price trajectory that doesn't hold (fuel prices drop, eroding the EV savings); mitigated by the scenario-analysis (low/mid/high fuel-price)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet/asset (links to VS-04 / W52 fleet lifecycle, VS-35 / W399 fixed-asset, VS-163 EV charging) — the vehicle and charging-infra evaluation",
+     "- TCO model (links to VS-61 / W2326 annual TCO, VS-158 / W85) — the TCO comparison",
+     "- ESG (links to VS-25 / W192 GHG emissions, VS-61 / W2329 carbon footprint) — the sustainability benefit"
+    ],
+    "Time Estimate": [
+     "~5 days/year = **~40–50 hours/year** VP Supply Chain + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "Evaluates: EV for short-range, hybrid for medium, LPG/CNG for high-volume; Finance calculates TCO: acquisition, fuel savings, maintenance, charging, incentives; recommends pilot if positive ROI",
+     "duration": "3–5 days + 2–3 days",
+     "n": "1",
+     "r": "VP Supply Chain / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W192",
+    "W2326",
+    "W2329",
+    "W399",
+    "W52",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-412",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~2–4/year",
+    "Owner": "Logistics Manager",
+    "Participants": "Finance, CFO",
+    "Trigger": "Significant fuel change (>5%)",
+    "Volume": "~10–15 partners"
+   },
+   "id": "W2316",
+   "level": 2,
+   "name": "Fuel Cost Pass-Through to 3PL",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- DOE-price-change auto-monitored; clause-trigger auto-detected; rate-adjustment auto-implemented on Finance validation"
+    ],
+    "Controls": [
+     "- CTL-412 (contract-accuracy — links to VS-03); CTL-44 (rate-adjustment integrity); operational: CFO sign-off on the adjustment"
+    ],
+    "Pain Points / Risks": [
+     "- **Clause-ambiguity-dispute risk**: the adjustment clause is ambiguous (which price baseline, what lag), triggering a 3PL dispute; mitigated by the clear clause terms (DOE weekly price, 1-month lag, ±5% band)",
+     "- **Rate-implementation-lag risk**: the rate adjustment is agreed but not implemented in the ERP, under/over-paying the 3PL; mitigated by the Finance validation and the ERP-implementation step"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 3PL contract (links to VS-56 / W62B 3PL onboarding, VS-03 / W62 contract) — the fuel-adjustment clause",
+     "- AP/rate (links to VS-15 / W7, VS-56 / W242 3PL performance) — the rate adjustment",
+     "- DOE price (links to VS-61 / W2311) — the >5%-change trigger"
+    ],
+    "Time Estimate": [
+     "~2 days/event × ~3/year = **~50 hours/year** Logistics Manager + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Activates adjustment clause in contracts; adjusts per-delivery rates; Finance validates; communicates to partners; implements in ERP",
+     "duration": "1–2 days + 1 day",
+     "n": "1",
+     "r": "Logistics Manager / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2311",
+    "W242",
+    "W62",
+    "W62B",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-412"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~1–2/year",
+    "Owner": "Logistics Manager",
+    "Participants": "VP Supply Chain",
+    "Trigger": "Fuel disruption (typhoon)",
+    "Volume": "1–2 events/year"
+   },
+   "id": "W2317",
+   "level": 2,
+   "name": "Emergency Fuel Supply Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Typhoon-warning auto-triggers the top-off; backup-supplier auto-activated"
+    ],
+    "Controls": [
+     "- CTL-412 (ensure controlled execution — Fuel Procurement & Consumption Management (PA-61.1).)",
+     "- CTL-412 (BCP/emergency-fuel — links to VS-26); operational: VP Supply Chain post-event review"
+    ],
+    "Pain Points / Risks": [
+     "- **Fuel-stockout risk**: a typhoon disrupts fuel supply and the fleet can't run, halting deliveries; mitigated by the top-off-at-warning and the backup-supplier network",
+     "- **Post-event-backlog risk**: the disruption creates a delivery backlog that overwhelms recovery capacity; mitigated by the post-event schedule-adjustment and the essential-delivery prioritization"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BCP (links to VS-26 / W49 disaster response, VS-69 / typhoon) — the emergency-fuel protocol",
+     "- Supplier master (links to VS-03 / W36, VS-61 / W2311) — the backup suppliers",
+     "- Delivery scheduling (links to VS-06 / W196 route planning) — the essential-delivery prioritization"
+    ],
+    "Time Estimate": [
+     "~6 hours/event + ~1.5 days recovery × ~1.5/year = **~40 hours/year** Logistics Manager (concentrated during events)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Tops off tanks at warning; activates backup suppliers; prioritizes essential deliveries; post-event: adjusts schedule to clear backlog; reviews emergency plan",
+     "duration": "4–8 hours + 1–2 days",
+     "n": "1",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W196",
+    "W2311",
+    "W36",
+    "W49"
+   ]
+  }
+ ]
+}

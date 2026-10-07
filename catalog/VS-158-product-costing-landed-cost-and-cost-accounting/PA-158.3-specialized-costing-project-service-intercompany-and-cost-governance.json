@@ -1,0 +1,579 @@
+{
+ "process_area": {
+  "id": "PA-158.3",
+  "title": "Specialized Costing (Project, Service, Intercompany) & Cost Governance"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.3-specialized-costing-project-service-intercompany-and-cost-governance.md",
+ "value_stream": {
+  "directory": "VS-158-product-costing-landed-cost-and-cost-accounting",
+  "id": "VS-158",
+  "name": "Product Costing, Landed-Cost & Cost Accounting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-115",
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Per project (lifecycle)",
+    "Owner": "Cost Accounting Manager / Project Controller",
+    "Participants": "Trade/Government sales (VS-11/VS-46), Project Finance (VS-11.2), Procurement (VS-03), Controller",
+    "Trigger": "Project/contract award (VS-11/VS-46); project cost transaction; project close-out",
+    "Volume": "~ Active B2B/G2G projects (VS-11.2/VS-46.2); ~30% trade + 10% corporate revenue"
+   },
+   "id": "W4665",
+   "level": 2,
+   "name": "Project / Job Costing for B2B & Government Contracts",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- WBS-driven auto cost collection from AP/procurement/timesheet; real-time margin dashboard; close-out auto-reconciliation"
+    ],
+    "Controls": [
+     "- CTL-115 (ensure cost-master & COGS reconciliation control.)",
+     "- CTL-706: project cost collected to WBS; actual-vs-budget monitored weekly; final margin reconciled to revenue at close-out"
+    ],
+    "Cross-references": [
+     "- links to VS-11.2/VS-46.2 (project/government), W918/W162/W793 (margin/bid/close), W4632 (revenue match)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-miss risk**: Project cost (subcontractor, freight to site) not captured to the WBS understates project cost and overstates project margin; mitigated by WBS-driven cost collection",
+     "- **Margin-erosion-blind risk**: Late margin detection prevents corrective action; mitigated by real-time actual-vs-budget monitoring (VS-11.2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Project/job module (VS-11.2); AP (VS-15); procurement (VS-03); GL (VS-17.1); revenue recognition (VS-157 W4632)"
+    ],
+    "Time Estimate": [
+     "- ~per project lifecycle; ~weekly flash + close-out reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / Trade Sales Mgr",
+     "activity": "Set up the project/job cost structure (WBS): material by delivery stage, direct labor, subcontractor, equipment rental, freight to site, project overhead; define the cost-collection method (actual) and the revenue-matching method (W4632)",
+     "duration": "Per project",
+     "n": "1",
+     "r": "Project Controller / Cost Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Collect actual project cost (material issues, AP invoices, timesheets, subcontractor bills, freight) to the project WBS; monitor actual-vs-budget margin (VS-11.2 W918) and flag margin erosion",
+     "duration": "Per project lifecycle",
+     "n": "2",
+     "r": "Project Controller / Cost Accounting / AP"
+    },
+    {
+     "a": "Controller",
+     "activity": "At project close-out (VS-11.2 W793), compute final project cost and margin, reconcile to revenue recognized (W4632), and feed lessons-learned into future bid costing (VS-11.2 W162)",
+     "duration": "Per close-out",
+     "n": "3",
+     "r": "Project Controller / Cost Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W162",
+    "W4632",
+    "W793",
+    "W918"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Per service type + periodic",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Services (VS-12), HR/Labor (VS-19), Subcontractor mgmt, Controller",
+    "Trigger": "Service/installation sale (VS-12); service cost transaction; periodic refresh",
+    "Volume": "Installation & repair services (VS-12.1); tool rental; workshops"
+   },
+   "id": "W4666",
+   "level": 2,
+   "name": "Service & Installation Costing (Labor, Subcontractor, Burden)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Loaded-labor-rate engine; timesheet-to-work-order auto-collection; service-margin dashboards"
+    ],
+    "Controls": [
+     "- CTL-706 (ensure controlled execution — Specialized Costing (Project, Service, Intercompany) & Cost Governance (PA-158.3).)",
+     "- CTL-706: service cost built with loaded labor burden; actual collected to work order; variance analyzed monthly"
+    ],
+    "Cross-references": [
+     "- links to VS-12 (services), W544 (work order), VS-102 (comp/burden), W4627/W4634 (bundle allocation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-burdened-labor risk**: Labor cost without benefits/burden understates service cost and overstates service margin; mitigated by the loaded-rate build (VS-102)",
+     "- **Subcontractor-cost-miss risk**: Subcontractor invoices not captured to the work order; mitigated by WBS/work-order-driven collection"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service work order (W544); payroll/labor (VS-19.2/VS-102); subcontractor AP (VS-15); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~per service type 2–4 hours; ~2–3 days/month service-cost variance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Build the service-cost standard: direct labor (loaded wage rate incl. benefits/burden per VS-102), subcontractor rate, vehicle/tool cost, and service overhead; allocate to the service work order (W544)",
+     "duration": "Per service type",
+     "n": "1",
+     "r": "Cost Accounting / Services / HR"
+    },
+    {
+     "a": "Controller",
+     "activity": "Collect actual service cost (technician timesheet, subcontractor invoice, vehicle/tool cost) to the work order; post service-cost variance (actual vs. standard)",
+     "duration": "Per work order + monthly",
+     "n": "2",
+     "r": "Cost Accounting / Services"
+    },
+    {
+     "a": "Controller",
+     "activity": "Analyze service margin by service type/technician/region; feed into service pricing (VS-12) and the performance-obligation allocation for product+install bundles (W4627/W4634)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / Services"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4627",
+    "W4634",
+    "W544"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Per IC flow + quarterly TP review",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Intercompany/Shared Services (VS-72), Treasury (VS-18), Tax (VS-79), Controller",
+    "Trigger": "Intercompany service/goods flow (VS-72); transfer-pricing review (VS-17.2)",
+    "Volume": "5-entity group; warehousing/distribution fees, ecommerce fulfillment fees, rent (VS-97)"
+   },
+   "id": "W4667",
+   "level": 2,
+   "name": "Intercompany Cost Transfer & Transfer-Pricing Cost Build",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- IC cost-transfer engine from serving-entity actual cost; auto-elimination on consolidation; TP-alignment dashboard"
+    ],
+    "Controls": [
+     "- CTL-706 (ensure controlled execution — Specialized Costing (Project, Service, Intercompany) & Cost Governance (PA-158.3).)",
+     "- CTL-706: IC markups arm's-length (TP-documented); cost base reconciled; eliminated on consolidation"
+    ],
+    "Cross-references": [
+     "- links to VS-72 (IC/shared services), VS-17.2 (consolidation/TP), W305/W612/W1299 (TP rules), VS-97 (rent)"
+    ],
+    "Pain Points / Risks": [
+     "- **Non-arm's-length risk**: IC markups not at arm's-length → BIR transfer-pricing exposure (VS-79/VS-17.2); mitigated by TP documentation and annual review",
+     "- **Cost-base distortion risk**: An inaccurate serving-entity cost base produces wrong IC fees; mitigated by the cost-base build and reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Intercompany module (VS-72); transfer-pricing rules (W305/W612/W1299); GL (VS-17.1); consolidation (VS-17.2)"
+    ],
+    "Time Estimate": [
+     "- ~per IC flow 2–4 hours; ~3–5 days/quarter IC/TP accounting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / VP Tax",
+     "activity": "Build the intercompany cost-transfer model: the cost-plus markup for BuildRight Logistics warehousing/distribution fees to Depot Inc., Digital Commerce per-order fulfillment fees, and Property Mgmt rent (at arm's-length transfer pricing per VS-17.2 W612/W1299)",
+     "duration": "Per IC flow",
+     "n": "1",
+     "r": "Cost Accounting / Shared Services"
+    },
+    {
+     "a": "Controller",
+     "activity": "Compute the cost base for each IC service (actual operating cost of the serving entity + agreed markup); post IC cost to the receiving entity and IC revenue to the serving entity; eliminate on consolidation (VS-17.2)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Cost Accounting / IC"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Validate transfer-pricing alignment (arm's-length) with TP documentation (VS-17.2 W1299/VS-72 W2594); adjust markups on the annual TP review and post IC reclass",
+     "duration": "Quarterly + annual",
+     "n": "3",
+     "r": "Cost Accounting / Tax / Treasury"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1299",
+    "W2594",
+    "W305",
+    "W612"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Per sell-through + monthly",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Merchandising (VS-45), Vendor Mgmt (VS-03), Controller, Revenue Accounting (VS-157)",
+    "Trigger": "Consignment/VMI sell-through (VS-45); monthly settlement",
+    "Volume": "~300 VMI/consignment SKUs from 12 vendors"
+   },
+   "id": "W4668",
+   "level": 2,
+   "name": "Consignment & VMI Cost-Basis & Margin-on-Sell-Through",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sell-through-triggered COGS + vendor-payable auto-post; cost-basis-to-settlement auto-reconcile"
+    ],
+    "Controls": [
+     "- CTL-706 (ensure controlled execution — Specialized Costing (Project, Service, Intercompany) & Cost Governance (PA-158.3).)",
+     "- CTL-706: consignment cost at sell-through (not receipt); principal/agent posture documented; reconciled to settlement monthly"
+    ],
+    "Cross-references": [
+     "- links to VS-45 (consignment/VMI), W543 (sell-through), W4628/W4629 (principal/recognition), VS-45.3 (settlement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-at-receipt error risk**: Booking consignment cost at receipt (as if purchased) mis-values inventory and cost; mitigated by the cost-at-sell-through rule",
+     "- **Settlement-reconcile risk**: Cost basis vs. vendor settlement mismatch distorts margin; mitigated by the monthly reconcile (W4629)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment/VMI module (VS-45); sell-through feed (W543); vendor settlement (VS-45.3); GL (VS-17.1); revenue (W4629)"
+    ],
+    "Time Estimate": [
+     "- ~2–3 days/month consignment/VMI cost accounting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Establish the consignment/VMI cost basis (vendor settlement price at sell-through, not at receipt — goods are vendor-owned per VS-45.1); confirm BuildRight as principal (gross) for the consumer sale (W4628)",
+     "duration": "Per setup",
+     "n": "1",
+     "r": "Cost Accounting / Merchandising"
+    },
+    {
+     "a": "Controller",
+     "activity": "At each sell-through (W543), post COGS at the consignment cost basis and the AP/vendor-payable at settlement; recognize revenue per W4629",
+     "duration": "Per sell-through",
+     "n": "2",
+     "r": "Cost Accounting / AP"
+    },
+    {
+     "a": "Controller",
+     "activity": "Compute consignment/VMI margin (sell-through price − cost basis) by SKU/vendor; reconcile to the vendor settlement (VS-45.3); monitor commission/fee-type consignment where BuildRight is agent (net)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Cost Accounting"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4628",
+    "W4629",
+    "W543"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Monthly (+ weekly flash for volatile categories)",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Controller, GL/Close (VS-17.1), DC Ops (VS-04), HR (VS-19)",
+    "Trigger": "Cost-accounting calendar; period close",
+    "Volume": "5 entities × 12 months; multiple allocation cycles"
+   },
+   "id": "W4669",
+   "level": 2,
+   "name": "Cost-Accounting Calendar, Period Close & Cost Allocation Cycles",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Dependency-aware cost-close orchestration; pre-sign-off exception gate"
+    ],
+    "Controls": [
+     "- CTL-706 (ensure controlled execution — Specialized Costing (Project, Service, Intercompany) & Cost Governance (PA-158.3).)",
+     "- CTL-706: cost calendar sequenced with dependencies; allocation cycles posted and reconciled; close validated before sign-off"
+    ],
+    "Cross-references": [
+     "- links to W9A/W9B (close), W4652/W4666/W4667 (allocations), W4663/W4661 (reconcile/margin)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cycle-sequence risk**: Allocation cycles run out of order (e.g., freight allocated before landed-cost finalized) → incorrect costs; mitigated by the sequenced calendar with dependencies",
+     "- **Late-exception risk**: Exceptions discovered after financial close require re-open; mitigated by pre-sign-off validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Close calendar (VS-17.1 W9A/W9B); allocation engine; variance ledgers; GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~5–7 days/period cost close (absorbed in the close cycle)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Maintain the cost-accounting calendar aligned to the fiscal close (W9A/W9B): standard-cost roll, landed-cost run, freight/duty allocation, overhead absorption, variance analysis, NRV review — sequenced with dependencies",
+     "duration": "Per calendar",
+     "n": "1",
+     "r": "Cost Accounting / GL"
+    },
+    {
+     "a": "Controller",
+     "activity": "Execute the cost-allocation cycles each period: freight/handling to SKU (W4652), overhead to product/service, labor to service/project (W4666), IC cost transfer (W4667); post and reconcile each cycle",
+     "duration": "Per close",
+     "n": "2",
+     "r": "Cost Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Validate the cost close before financial-close sign-off: all variances posted, COGS reconciled (W4663), margin pack produced (W4661); resolve exceptions",
+     "duration": "Per close",
+     "n": "3",
+     "r": "Cost Accounting / GL"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4652",
+    "W4661",
+    "W4663",
+    "W4666",
+    "W4667",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-115",
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Per change + quarterly governance review",
+    "Owner": "Cost Accounting Manager",
+    "Participants": "Master Data (VS-29), Merchandising (VS-01), Controller, Internal Audit (VS-21)",
+    "Trigger": "Cost-master change request; audit finding; governance review",
+    "Volume": "~35K SKU cost records; vendor/contract cost data"
+   },
+   "id": "W4670",
+   "level": 2,
+   "name": "Cost-Master Data Governance, Change-Control & Approval Matrix",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-change workflow with tiered approval + SoD; data-quality scorecard feed; change-audit-trail"
+    ],
+    "Controls": [
+     "- CTL-115 (ensure cost-master & COGS reconciliation control.)",
+     "- CTL-706: cost-master changes via governance with tiered approval and SoD; data-quality reviewed quarterly"
+    ],
+    "Cross-references": [
+     "- links to VS-29 (master data), W291 (data quality), W4649 (cost-master), VS-21 (audit), VS-88 (records)"
+    ],
+    "Pain Points / Risks": [
+     "- **Ungoverned-change risk**: A cost-master change bypassing governance (e.g., a buyer editing a cost) corrupts the cost layer; mitigated by the governance + SoD",
+     "- **Data-quality-decay risk**: Stale/incomplete cost data degrades margin analytics; mitigated by quarterly data-quality review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Master data governance (VS-29); cost-master (W4649); data-quality monitoring (W291); audit trail (VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~per change absorbed; ~3–5 days/quarter governance review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Govern cost-master data (cost elements, conversion factors, allocation bases, overhead rates, kit/BOM) through the master-data governance process (VS-29): request, validate, approve, post, audit-trail",
+     "duration": "Per change",
+     "n": "1",
+     "r": "Cost Accounting / Master Data"
+    },
+    {
+     "a": "CFO",
+     "activity": "Apply the cost-change approval matrix: standard-cost change tiered approval (Category Mgr → Controller → CFO by materiality); segregate those who request a cost change from those who approve and post",
+     "duration": "Per change",
+     "n": "2",
+     "r": "Cost Accounting / Controller"
+    },
+    {
+     "a": "Controller",
+     "activity": "Review cost-master data quality quarterly (completeness, accuracy, timeliness); remediate data-quality issues and feed into the data-quality scorecard (VS-29 W291)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Cost Accounting / Master Data"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W291",
+    "W4649"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Per change + periodic review",
+    "Owner": "Cost Accounting Manager / IT Finance Lead",
+    "Participants": "IT (VS-27), EA (VS-113), Controller, Master Data (VS-29)",
+    "Trigger": "ERP costing config change; new cost policy; audit remediation",
+    "Volume": "1 costing-system config landscape"
+   },
+   "id": "W4671",
+   "level": 2,
+   "name": "Costing System Configuration: Cost-Sheet, Overhead Rates & GL Integration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Config-to-policy traceability dashboard; drift detection; automated config-test pack"
+    ],
+    "Controls": [
+     "- CTL-706 (ensure controlled execution — Specialized Costing (Project, Service, Intercompany) & Cost Governance (PA-158.3).)",
+     "- CTL-706: all costing config via change-control with Controller sign-off; config reconciled to policy semi-annually"
+    ],
+    "Cross-references": [
+     "- links to VS-27/VS-113 (IT/EA), VS-27.1 (change mgmt), W4649 (cost-master), W4646 (analog revenue config)"
+    ],
+    "Pain Points / Risks": [
+     "- **Config-drift risk**: Costing config diverges from documented policy over time → systematic cost errors; mitigated by periodic config review",
+     "- **Ungoverned-change risk**: Config change bypassing change-control breaks cost postings; mitigated by mandatory change-control and Controller sign-off"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Costing module config; GL integration (VS-17.1); change management (VS-27.1); EA standards (VS-113)"
+    ],
+    "Time Estimate": [
+     "- ~per change 2–4 days; ~3–5 days/semi-annual config review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO / Controller",
+     "activity": "Configure and maintain the costing system: cost-sheet template per item class, overhead-absorption rates, allocation bases/engines, variance accounts, and GL integration (cost-to-GL mapping per entity)",
+     "duration": "Per setup/change",
+     "n": "1",
+     "r": "IT Finance Lead / Cost Accounting"
+    },
+    {
+     "a": "CIO / Controller",
+     "activity": "Govern config changes through change-control (VS-27.1): test in non-prod, document, Controller sign-off, deploy; maintain a config-to-policy traceability matrix",
+     "duration": "Per change",
+     "n": "2",
+     "r": "IT / Cost Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Periodically review config for drift from documented cost policy (stale overhead rates, wrong allocation bases); reconcile config to the cost-master (W4649) and remediate",
+     "duration": "Semi-annual",
+     "n": "3",
+     "r": "Cost Accounting / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4646",
+    "W4649"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-115",
+    "CTL-706"
+   ],
+   "fields": {
+    "Frequency": "Continuous + annual review",
+    "Owner": "Cost Accounting Manager / Controller",
+    "Participants": "Internal Audit (VS-21), Revenue Assurance (VS-118), IT Security (VS-27.3), Controller",
+    "Trigger": "Risk assessment; audit; control remediation; annual review",
+    "Volume": "1 cost-accounting control set across 5 entities"
+   },
+   "id": "W4672",
+   "level": 2,
+   "name": "Cost-Accounting Internal Controls, Variance-Threshold & SoD Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SoD-conflict detection; manual-cost-adjustment log analytics; control-coverage report tied to cost-master"
+    ],
+    "Controls": [
+     "- CTL-115 (ensure cost-master & COGS reconciliation control.)",
+     "- CTL-706: documented control set mapped to internal-controls matrix; SoD enforced; audit trail retained 10 years; controls reviewed annually"
+    ],
+    "Cross-references": [
+     "- links to VS-21 (internal audit), VS-118 (revenue assurance), VS-27.3/VS-88 (security/records), W4657/W4660/W4663 (operating controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-manipulation risk**: Manual cost-adjustment authority mis-used to manage margin; mitigated by SoD, restricted authority, and audit trail",
+     "- **Control-coverage gap risk**: A control missing for a new cost flow/category; mitigated by the annual control review tied to the cost-master"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Internal-controls matrix (VS-21); audit trail (VS-88); SoD roles (VS-27.3); ERP journal history"
+    ],
+    "Time Estimate": [
+     "- ~5–8 days/year control-set maintenance; continuous SoD/audit-trail"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Maintain the cost-accounting control set: preventive (cost-change approval matrix W4670, config sign-off W4671, cost-at-sell-through rule W4668) and detective (variance-threshold investigation W4657/W4658/W4659, COGS reconcile W4663, NRV review W4660); map to the internal-controls matrix",
+     "duration": "Annual + continuous",
+     "n": "1",
+     "r": "Cost Accounting / Internal Audit"
+    },
+    {
+     "a": "CFO",
+     "activity": "Enforce segregation of duties: those who set standard cost, those who post cost journals, and those who reconcile/variance-investigate are separate; restrict manual cost-adjustment authority",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Controller / IT Security"
+    },
+    {
+     "a": "Controller",
+     "activity": "Preserve the cost-change and variance audit trail for 10 years (BIR/audit); coordinate with Revenue Assurance (VS-118) on margin-leakage investigation spanning cost and revenue",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Cost Accounting / Internal Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4657",
+    "W4658",
+    "W4659",
+    "W4660",
+    "W4663",
+    "W4668",
+    "W4670",
+    "W4671"
+   ]
+  }
+ ]
+}

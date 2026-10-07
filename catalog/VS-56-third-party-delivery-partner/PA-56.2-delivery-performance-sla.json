@@ -1,0 +1,482 @@
+{
+ "process_area": {
+  "id": "PA-56.2",
+  "title": "Delivery Performance & SLA Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-56-third-party-delivery-partner/PA-56.2-delivery-performance-sla.md",
+ "value_stream": {
+  "directory": "VS-56-third-party-delivery-partner",
+  "id": "VS-56",
+  "name": "Third-Party Delivery Partner Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-180",
+    "CTL-398"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~10,000 deliveries/month",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Manager, Store Manager",
+    "Trigger": "Active deliveries in progress",
+    "Volume": "~330–350 deliveries/day (~10,000/month)"
+   },
+   "id": "W2198",
+   "level": 2,
+   "name": "Real-Time Delivery Tracking & Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Tracking auto-monitored; exceptions auto-flagged at threshold; ETA auto-pushed to store"
+    ],
+    "Controls": [
+     "- CTL-180 (ensure 3PL delivery-partner compliance & performance.)",
+     "- CTL-398 (delivery-tracking integrity — links to VS-06); operational: Logistics Manager escalation on exceptions"
+    ],
+    "Pain Points / Risks": [
+     "- **Tracking-blind-spot risk**: a delivery enters a GPS dead-zone (tunnel, remote province) and tracking goes dark; mitigated by the last-known-position + ETA-estimate fallback",
+     "- **Exception-overload risk**: too many minor exceptions (5-min delays) desensitize the Coordinator; mitigated by the >30-min threshold for exception-flagging"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics/tracking (links to VS-06 / W199 fleet telematics, VS-56 / W2191 integration) — the real-time GPS tracking",
+     "- Alerting (links to VS-27 / W380) — the exception auto-alert",
+     "- Store comms (links to VS-07 / W571) — the ETA notification to stores"
+    ],
+    "Time Estimate": [
+     "Real-time monitoring absorbed into Logistics Coordinator role (~4 hours/day)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "System tracks all 3PL deliveries: driver location, ETA, status; Coordinator monitors exceptions (delays >30 min, no-show, breakdown, route deviation); auto-alerts store of ETA",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "System / Logistics Coord"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Store confirms receipt; exceptions escalated to Logistics Manager for corrective action",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Store Manager / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W199",
+    "W2191",
+    "W380",
+    "W571"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-180",
+    "CTL-398"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Manager",
+    "Trigger": "Daily SLA report",
+    "Volume": "~10,000 deliveries/month; 1–3 day SLA"
+   },
+   "id": "W2199",
+   "level": 2,
+   "name": "SLA Compliance Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SLA auto-computed daily; breaches auto-flagged with root-cause-suggestion"
+    ],
+    "Controls": [
+     "- CTL-180 (ensure 3PL delivery-partner compliance & performance.)",
+     "- CTL-398 (SLA-accuracy — links to VS-56); operational: Logistics Manager daily sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-target-unrealistic risk**: the SLA is set tighter than the logistics reality (Philippine traffic, archipelago), causing chronic breaches that demoralize; mitigated by the SLA calibrated to the actual logistics capability",
+     "- **Breach-without-correction risk**: breaches are reported but the root cause isn't fixed; mitigated by the root-cause analysis and the partner-CAP (W2196)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SLA engine (links to VS-56 / W2196 scorecard, VS-60 / W2292 fulfillment SLA) — the daily SLA computation",
+     "- Analytics (links to VS-27 / W113) — the SLA-breach dataset",
+     "- Partner scorecard (links to VS-56 / W2196) — the SLA feeds the scorecard"
+    ],
+    "Time Estimate": [
+     "~1.5 hours/day = **~400 hours/year** Logistics Coordinator."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "System calculates daily SLA compliance by partner, DC, route, store; Coordinator investigates breaches (traffic, weather, capacity, dispatch delay); implements corrections",
+     "duration": "1–2 hours/day",
+     "n": "1",
+     "r": "System / Logistics Coord"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2196",
+    "W2292"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-398",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "Daily; 2–5 business day SLA",
+    "Owner": "Ecommerce Logistics Coordinator",
+    "Participants": "Ecom Logistics Coordinator, Customer Service",
+    "Trigger": "Ecommerce home delivery orders",
+    "Volume": "~17,200 home deliveries/month"
+   },
+   "id": "W2200",
+   "level": 2,
+   "name": "Customer Home Delivery SLA Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Partner auto-assigned; SLA auto-tracked; delay-customer auto-notified; failed-delivery auto-rescheduled"
+    ],
+    "Controls": [
+     "- CTL-398 (home-delivery SLA — links to VS-60); CTL-44 (delivery-record integrity); operational: CS supervisor sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Failed-delivery risk**: the customer isn't home for the delivery (no prior appointment); mitigated by the delivery-appointment confirmation (SMS/app) before dispatch",
+     "- **Provincial-SLA-miss risk**: the 3–5 day provincial SLA is missed due to inter-island logistics; mitigated by the SLA calibrated and the proactive customer communication"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order routing (links to VS-60 / W2286, W548 on-demand) — the partner assignment",
+     "- SLA tracking (links to VS-60 / W2292, VS-56 / W2199) — the home-delivery SLA",
+     "- Customer comms (links to VS-13 / W56 backorder notification) — the proactive delay communication"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/day = **~650 hours/year** Ecom Logistics Coordinator."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service",
+     "activity": "System assigns to optimal partner by location/size/cost; tracks 2-day Metro / 3–5 day provincial SLA; proactively contacts customers for delays; failed deliveries rescheduled within 24 hours",
+     "duration": "2–3 hours/day",
+     "n": "1",
+     "r": "System / Ecom Logistics Coord"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2199",
+    "W2286",
+    "W2292",
+    "W548",
+    "W56"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-24",
+    "CTL-75"
+   ],
+   "fields": {
+    "Frequency": "~10,000 deliveries/month",
+    "Owner": "Store Receiving Clerk",
+    "Participants": "Receiving Clerk, Store Manager, Logistics Manager",
+    "Trigger": "Store receives delivery from 3PL",
+    "Volume": "~400–500/day"
+   },
+   "id": "W2201",
+   "level": 2,
+   "name": "Delivery Quality Inspection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Damage-rate-by-partner auto-aggregated; chronic-damage partner auto-flagged"
+    ],
+    "Controls": [
+     "- CTL-24: receiving-fraud detection; CTL-75 (damage-claim detection & recovery — links to VS-90); operational: Store Manager weekly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Damage-not-detected risk**: the Clerk accepts a delivery without noticing hidden damage, losing the claim window; mitigated by the inspection-standard and the damage-photo evidence",
+     "- **Chronic-damage-partner risk**: a partner consistently damages deliveries, but the pattern isn't seen because each delivery's damage is handled as a one-off; mitigated by the weekly quality-issue report aggregating per-partner damage rates"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GR/inspection (links to VS-04 / W3 receiving, W109 store-level receiving) — the delivery inspection and GR",
+     "- Damage claims (links to VS-90 / W90 damage claims, VS-56 / W2196 scorecard) — the damage-record routing",
+     "- POD (links to VS-56 / W2202) — the damage notation on POD"
+    ],
+    "Time Estimate": [
+     "~12 min/delivery × ~450/day = **~90 hours/day** Receiving Clerks (distributed across stores, absorbed into receiving)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Clerk inspects: damage, count vs. manifest, item condition; records GR; damaged items photographed, noted on POD, damage record created and routed to damage-claim handling process",
+     "duration": "10–15 min/delivery",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Weekly: Store Manager reports quality issues; patterns by partner or route investigated",
+     "duration": "15 min/week",
+     "n": "2",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W109",
+    "W2196",
+    "W2202",
+    "W3",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-398"
+   ],
+   "fields": {
+    "Frequency": "Every delivery (~10,000/month)",
+    "Owner": "3PL Driver / Receiving Clerk",
+    "Participants": "Logistics Coordinator",
+    "Trigger": "Every delivery completion",
+    "Volume": "~10,000 PODs/month"
+   },
+   "id": "W2202",
+   "level": 2,
+   "name": "Proof of Delivery & Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- POD fully digital (signature + GPS + timestamp); auto-matched to settlement"
+    ],
+    "Controls": [
+     "- CTL-398 (ensure controlled execution — Delivery Performance & SLA Management (PA-56.2).)",
+     "- operational: POD integrity; delivery-fraud detection; operational: Logistics Coordinator settlement-match review"
+    ],
+    "Pain Points / Risks": [
+     "- **POD-fraud risk**: a driver forges a POD (delivers to the wrong location, signs for an undelivered item); mitigated by the GPS + timestamp + digital-signature triangulation",
+     "- **POD-lost risk**: a POD isn't captured (system failure, driver forgot), leaving the delivery unverifiable for settlement; mitigated by the no-POD-no-settlement rule (the partner can't bill without a POD)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POD system (links to VS-56 / W2191 integration, VS-06 / W199 telematics) — the digital POD capture",
+     "- Settlement (links to VS-56 / W2206 invoice) — the POD auto-matched for settlement",
+     "- GR (links to VS-04 / W3) — the POD reconciled to the GR"
+    ],
+    "Time Estimate": [
+     "~2 min/delivery × ~10,000/month = **~330 hours/month** 3PL Drivers + system (auto-captured)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver obtains POD: digital signature + GPS + timestamp; system stores with delivery record; auto-matches for settlement",
+     "duration": "2 min/delivery",
+     "n": "1",
+     "r": "3PL Driver / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W199",
+    "W2191",
+    "W2206",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-24",
+    "CTL-398"
+   ],
+   "fields": {
+    "Frequency": "~500–800 exceptions/month (~5–8%)",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Manager",
+    "Trigger": "Delivery issue reported",
+    "Volume": "~500–800/month"
+   },
+   "id": "W2203",
+   "level": 2,
+   "name": "Delivery Exception Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Exception auto-categorized; resolution auto-suggested; customer auto-notified"
+    ],
+    "Controls": [
+     "- CTL-398 (exception-management accuracy); CTL-24 (exception-pattern fraud detection); operational: Logistics Manager exception-rate review"
+    ],
+    "Pain Points / Risks": [
+     "- **Exception-cascade risk**: an exception triggers a re-delivery that also fails (the root cause persists); mitigated by the exception-depth-limit and the root-cause fix",
+     "- **Customer-experience-degradation risk**: each exception adds delay and erodes trust; mitigated by the exception-rate target (<5–8%) and the root-cause fix"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Exception management (links to VS-60 / W2291 order-routing exception, VS-56 / W2198 tracking) — the exception detection and resolution",
+     "- DC coordination (links to VS-04 / W3, W106 dispatch) — the re-delivery coordination",
+     "- Customer comms (links to VS-13 / W56) — the exception-customer notification"
+    ],
+    "Time Estimate": [
+     "~15 min/exception × ~650/month = **~160 hours/month** Logistics Coordinator."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Coordinator categorizes: delay, damage, wrong items, failed delivery, breakdown; resolves: re-delivery, replacement, escalation to 3PL, coordination with DC",
+     "duration": "5–30 min",
+     "n": "1",
+     "r": "Logistics Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W106",
+    "W2198",
+    "W2291",
+    "W3",
+    "W56"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-398"
+   ],
+   "fields": {
+    "Frequency": "Daily; 4 DCs",
+    "Owner": "DC Dispatch Supervisor",
+    "Participants": "Logistics Manager",
+    "Trigger": "Daily delivery planning",
+    "Volume": "~4 DCs × 5–8 routes × 2–3 stops"
+   },
+   "id": "W2204",
+   "level": 2,
+   "name": "Multi-Stop Route Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Routes auto-generated; real-time-traffic-adjusted; Supervisor exceptions only"
+    ],
+    "Controls": [
+     "- CTL-398 (ensure controlled execution — Delivery Performance & SLA Management (PA-56.2).)",
+     "- CTL-398 (route-optimization accuracy); operational: Logistics Manager daily sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Optimization-vs-reality-divergence risk**: the optimized route doesn't account for real-time road conditions (traffic, construction); mitigated by the Supervisor's manual adjustment and the real-time traffic feed",
+     "- **Over-optimization risk**: too many stops per route saves cost but delays the last-stop customer; mitigated by the stops-per-route cap"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Route optimization (links to VS-06 / W196 route planning, W199 telematics) — the route engine",
+     "- DC dispatch (links to VS-04 / W106 dispatch, W585 dock scheduling) — the dispatch coordination",
+     "- Order management (links to VS-60 / W536) — the delivery-order source"
+    ],
+    "Time Estimate": [
+     "~1.5 hours/day × 4 DCs = **~1,500 hours/year** DC Dispatch Supervisors."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "System generates optimized routes: groups by geography, minimizes distance, balances capacity; Supervisor reviews and adjusts for priorities, last-minute orders, road closures",
+     "duration": "1–2 hours/day",
+     "n": "1",
+     "r": "System / DC Dispatch Supervisor"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W106",
+    "W196",
+    "W199",
+    "W536",
+    "W585"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-398"
+   ],
+   "fields": {
+    "Frequency": "2–3 major peaks/year",
+    "Owner": "Logistics Manager",
+    "Participants": "VP Supply Chain",
+    "Trigger": "Peak season (Christmas, summer)",
+    "Volume": "~30–50% volume increase"
+   },
+   "id": "W2205",
+   "level": 2,
+   "name": "Seasonal Delivery Surge Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Peak-volume auto-forecasted; capacity-need auto-computed; peak-rate-agreement auto-referenced"
+    ],
+    "Controls": [
+     "- CTL-398 (ensure controlled execution — Delivery Performance & SLA Management (PA-56.2).)",
+     "- CTL-398 (capacity-plan accuracy); operational: VP Supply Chain sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Capacity-shortfall risk**: the peak exceeds the pre-booked capacity; mitigated by the 4–6 week pre-booking and the temporary-driver/DC-overtime surge plan",
+     "- **Peak-rate-cost risk**: surge rates (peak premium) inflate the delivery cost; mitigated by the annual peak-rate agreement (locked-in rate vs. spot premium)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Capacity forecasting (links to VS-56 / W2195 capacity planning, VS-60 / W2307) — the peak-volume forecast",
+     "- 3PL capacity (links to VS-56 / W2190 partner onboarding, W2193 rate card) — the surge capacity pre-booking",
+     "- DC scheduling (links to VS-04 / W585) — the extended windows"
+    ],
+    "Time Estimate": [
+     "~2 weeks/peak × 2.5 + ~2.5 days post-peak = **~200 hours/year** Logistics Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Manager forecasts peak volume; pre-books 3PL capacity 4–6 weeks ahead; implements surge plan: extended windows, additional routes, temporary drivers, DC overtime",
+     "duration": "1–3 weeks",
+     "n": "1",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Post-peak: analyzes vs. plan; adjusts for next peak; updates contracts with peak rate agreements",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2190",
+    "W2193",
+    "W2195",
+    "W2307",
+    "W585"
+   ]
+  }
+ ]
+}

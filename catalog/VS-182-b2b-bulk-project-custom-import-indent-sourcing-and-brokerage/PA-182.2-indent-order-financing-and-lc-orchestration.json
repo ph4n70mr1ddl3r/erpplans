@@ -1,0 +1,590 @@
+{
+ "process_area": {
+  "id": "PA-182.2",
+  "title": "Indent Order Financing & LC Orchestration"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/PA-182.2-indent-order-financing-and-lc-orchestration.md",
+ "value_stream": {
+  "directory": "VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage",
+  "id": "VS-182",
+  "name": "B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations)"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-01"
+   ],
+   "fields": {
+    "Frequency": "Per contract execution",
+    "Owner": "Treasury Manager",
+    "Participants": "Import Buyer, Finance Controller (VS-17.4), Partner Bank Officer",
+    "Trigger": "Signed contract (W5228) and downpayment clearance (W5229)",
+    "Volume": "~40-50 LCs opened annually"
+   },
+   "id": "W5233",
+   "level": 2,
+   "name": "Letter of Credit Opening and Trade Finance Allocation for Indent Orders",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SWIFT message parsing and automated status matching in ERP."
+    ],
+    "Controls": [
+     "- CTL-01: Prevent unauthorized purchases; Treasury Director check-off on credit facilities."
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury), VS-100 (legal operations)"
+    ],
+    "Pain Points / Risks": [
+     "- **Facility overcommitment risk**: Indent LC allocations exhaust trade limits needed for regular inventory sourcing; mitigated by maintaining dedicated B2B project credit lines."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Trade Finance module, Bank interface (VS-18)."
+    ],
+    "Time Estimate": [
+     "- ~3-5 working days for bank issuance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Manager",
+     "activity": "Submit LC application packet to partner bank matching contract terms.",
+     "duration": "2-3 hours",
+     "n": "1",
+     "r": "Import Buyer"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Allocate trade credit facility limit and reserve funding availability.",
+     "duration": "1-2 hours",
+     "n": "2",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Review LC draft with Legal Operations (VS-100) to verify payment conditions.",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Confirm bank issuance of LC and transmit SWIFT message to supplier.",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "Partner Bank Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5228",
+    "W5229"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-01"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc per amendment request",
+    "Owner": "Import Buyer",
+    "Participants": "Treasury Manager, B2B Sourcing Manager, Partner Bank Officer",
+    "Trigger": "Supplier request for LC amendment or contract adjustment",
+    "Volume": "~10-15 amendments processed annually"
+   },
+   "id": "W5234",
+   "level": 2,
+   "name": "Pro-Forma Invoice Verification and LC Amendment Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Automated LC amendment workflow tracking with audit history."
+    ],
+    "Controls": [
+     "- CTL-01: Prevent unauthorized purchases; CFO approval required for amendments affecting price or margin."
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury), VS-101 (merchandise plan)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unauthorised cost escalation risk**: Uncontrolled LC amendments add fee overheads and delay shipment; mitigated by charging amendment fees back to supplier if they initiated change."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Trade Finance module, Partner Bank interface."
+    ],
+    "Time Estimate": [
+     "- ~2-4 working days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Import Buyer",
+     "activity": "Verify validity of supplier amendment request (price change, delivery window extension).",
+     "duration": "1-2 hours",
+     "n": "1",
+     "r": "Import Buyer"
+    },
+    {
+     "a": "Import Buyer",
+     "activity": "Calculate margin and project delivery schedule impact.",
+     "duration": "1-2 hours",
+     "n": "2",
+     "r": "B2B Sourcing Manager"
+    },
+    {
+     "a": "Import Buyer",
+     "activity": "Submit approved amendment request to bank and pay amendment fees.",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Import Buyer",
+     "activity": "Transmit bank SWIFT amendment notice to supplier bank.",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "Partner Bank Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-14"
+   ],
+   "fields": {
+    "Frequency": "Per shipment dispatch",
+    "Owner": "Import Coordinator",
+    "Participants": "Customs Broker Coordinator, Treasury Specialist, Partner Bank Auditor",
+    "Trigger": "Vessel departure notification and doc submission to bank",
+    "Volume": "~40-50 document reviews annually"
+   },
+   "id": "W5235",
+   "level": 2,
+   "name": "Shipping Document Receipt Discrepancy Auditing and Bank Release",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Optical Character Recognition (OCR) multi-document data reconciliation engine."
+    ],
+    "Controls": [
+     "- CTL-14: 3-way match validation controls; Import Director verification signature."
+    ],
+    "Cross-references": [
+     "- links to W256 (document archiving), VS-15 (P2P)"
+    ],
+    "Pain Points / Risks": [
+     "- **Discrepancy holding risk**: Inconsistent document descriptions delay customs release, causing port storage charges; mitigated by pre-clearance doc checks with shipping lines."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import Document Registry (W256), Partner Bank interface."
+    ],
+    "Time Estimate": [
+     "- ~1-2 days per document audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Import Coordinator",
+     "activity": "Receive shipping documents (Bill of Lading, Invoice, Packing List, Certificate of Origin, PSI).",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "Audit documents for consistency: exact matching of quantities, descriptions, weights, and LC terms.",
+     "duration": "2-3 hours",
+     "n": "2",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "Authorize bank to release shipping documents to Customs Broker upon zero discrepancies.",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Treasury Specialist"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "Reconcile bank document fees and record in import ledger.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Import Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W256"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-19"
+   ],
+   "fields": {
+    "Frequency": "Per qualified indent order import",
+    "Owner": "Treasury Specialist",
+    "Participants": "Treasury Manager, Partner Bank Officer, Cost Accountant",
+    "Trigger": "Document release from bank under TR terms",
+    "Volume": "~20-30 TRs executed annually"
+   },
+   "id": "W5236",
+   "level": 2,
+   "name": "Bank Trust Receipt Financing Execution for Indent Orders",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Automated bank loan schedule import and interest accrual calculation."
+    ],
+    "Controls": [
+     "- CTL-19: Ensure bank reconciliation completeness; CFO sign-off on TR facilities."
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury), VS-170 (inventory pledge)"
+    ],
+    "Pain Points / Risks": [
+     "- **Interest expense leakage risk**: Lapsed TR payment dates trigger high penalty interest rates; mitigated by system automated maturity alerts 15 days before due date."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury Module, General Ledger (VS-17)."
+    ],
+    "Time Estimate": [
+     "- ~1 day per TR execution"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Specialist",
+     "activity": "Execute Trust Receipt (TR) agreement with partner bank for document release.",
+     "duration": "1-2 hours",
+     "n": "1",
+     "r": "Treasury Specialist"
+    },
+    {
+     "a": "Treasury Specialist",
+     "activity": "Configure TR loan account in ERP: maturity date (typically 90-180 days), interest rate, principal amount.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Treasury Specialist"
+    },
+    {
+     "a": "Treasury Specialist",
+     "activity": "Book trust receipt financing liability in General Ledger.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Cost Accountant"
+    },
+    {
+     "a": "Treasury Specialist",
+     "activity": "Track TR maturity calendar and schedule principal/interest payments.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Treasury Specialist"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-15"
+   ],
+   "fields": {
+    "Frequency": "Per cargo booking",
+    "Owner": "Import Coordinator",
+    "Participants": "Insurance Administrator (VS-26), Insurance Underwriter Broker",
+    "Trigger": "Booking approval of shipment (W5232)",
+    "Volume": "~40-50 declarations annually"
+   },
+   "id": "W5237",
+   "level": 2,
+   "name": "Marine Insurance Coverage Mobilization and Port Risk Underwriting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Automated XML feed of cargo details from ERP shipment module to underwriter."
+    ],
+    "Controls": [
+     "- CTL-15: landed cost audit controls; VP Supply Chain approval of cargo coverages."
+    ],
+    "Cross-references": [
+     "- links to VS-26 (insurance), VS-158 (product costing)"
+    ],
+    "Pain Points / Risks": [
+     "- **Underinsured cargo risk**: Cargo damaged during rough sea transit is not fully covered due to valuation mismatch; mitigated by insuring cargo at CIF + 10% standard value."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Landed Cost Engine (VS-158), Insurance Portal (VS-26)."
+    ],
+    "Time Estimate": [
+     "- ~1 day per insurance booking"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Import Coordinator",
+     "activity": "Submit cargo declaration to marine insurance provider under open policy terms.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "Verify insurance certificate: check coverage limit, port routing, and deductible levels.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Insurance Administrator"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "Confirm endorsement of policy matching Incoterms (typically FOB/EXW — BuildRight as buyer declares cargo under its own open policy into landed cost).",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Insurance Underwriter Broker"
+    },
+    {
+     "a": "Import Coordinator",
+     "activity": "Record insurance premium cost in landed cost calculator ledger.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Import Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5232"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-22"
+   ],
+   "fields": {
+    "Frequency": "Per customs entry assessment",
+    "Owner": "Tax Accountant",
+    "Participants": "Import Coordinator, Partner Bank (AAB), Customs Broker",
+    "Trigger": "Customs duty assessment on the formal entry filed per W5239 (BOC e2m)",
+    "Volume": "~40-50 payments processed annually"
+   },
+   "id": "W5238",
+   "level": 2,
+   "name": "Import Duties Excise Tax and 12 Percent VAT Payment Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Direct API connection to BOC payment rail for instant confirmation receipt generation."
+    ],
+    "Controls": [
+     "- CTL-22: VAT compliance controls; Chief Accountant approval of tax payments."
+    ],
+    "Cross-references": [
+     "- links to VS-79 (tax), VS-18 (treasury), VS-87 (tariffs), VS-117 (DTI-BPS)"
+    ],
+    "Pain Points / Risks": [
+     "- **Incorrect HS classification risk**: Wrong tariff code leads to tax underpayment penalties; mitigated by securing official DTI-BPS and tariff commission classifications (VS-117/VS-87)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax Management module (VS-79), AAB Bank Portal (VS-18)."
+    ],
+    "Time Estimate": [
+     "- ~3.5-4.5 hours for verification and payment release (per the step durations)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Accountant",
+     "activity": "Receive customs duties and VAT assessment sheet from Broker (via BOC portal).",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Tax Accountant",
+     "activity": "Verify duties and excise-tax calculation against HS code rates and the VAT base (12% of the BOC dutiable value plus duty, excise and other charges per NIRC §107).",
+     "duration": "1-2 hours",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Accountant",
+     "activity": "Initiate online payment through bank portal to BOC collection account.",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Accountant",
+     "activity": "Secure bank confirmation receipt and transmit to Customs Broker.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Import Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5239"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-15"
+   ],
+   "fields": {
+    "Frequency": "Per customs clearing cycle",
+    "Owner": "Customs Broker Coordinator",
+    "Participants": "In-house Customs Broker (VS-02.2), BOC Inspector",
+    "Trigger": "Goods arrival at port / LC availability (W5236); formal entry due before release",
+    "Volume": "~40-50 clearances annually"
+   },
+   "id": "W5239",
+   "level": 2,
+   "name": "Bureau of Customs Formal Entry Filing and Single Administrative Document Release",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- BOC system status tracking dashboard with automated email notifications."
+    ],
+    "Controls": [
+     "- CTL-15: landed-cost accuracy on imports; Compliance Director audit of brokerage logs."
+    ],
+    "Cross-references": [
+     "- links to VS-02.2 (import), W256 (document archiving)"
+    ],
+    "Pain Points / Risks": [
+     "- **Customs inspection delay risk**: Port container yard congestion delays inspections; mitigated by booking inspections early morning at designated off-port clearance sites."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOC e2m System, Document Registry (W256)."
+    ],
+    "Time Estimate": [
+     "- ~3-5 working days standard customs duration"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customs Broker Coordinator",
+     "activity": "File formal import entry (Single Administrative Document - SAD) in BOC e2m system; the BOC assessment it returns triggers duty/VAT payment per W5238.",
+     "duration": "2-3 hours",
+     "n": "1",
+     "r": "Customs Broker Coordinator"
+    },
+    {
+     "a": "Customs Broker Coordinator",
+     "activity": "Coordinate physical container inspection (BOC Red Lane if triggered).",
+     "duration": "2-4 hours",
+     "n": "2",
+     "r": "In-house Customs Broker"
+    },
+    {
+     "a": "Customs Broker Coordinator",
+     "activity": "Verify duties/VAT paid per W5238 and assessment cleared, then secure Gate-Pass approval from port operator.",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Customs Broker Coordinator"
+    },
+    {
+     "a": "Customs Broker Coordinator",
+     "activity": "Download and file approved SAD in import document repository.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Customs Broker Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W256",
+    "W5236",
+    "W5238"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-25"
+   ],
+   "fields": {
+    "Frequency": "Per cleared container batch",
+    "Owner": "Freight Coordinator",
+    "Participants": "Customs Broker, Drayage Carrier Dispatcher, DC Operations Supervisor (VS-04)",
+    "Trigger": "Approved SAD gate-pass (W5239)",
+    "Volume": "~40-50 haulage coordination events annually"
+   },
+   "id": "W5240",
+   "level": 2,
+   "name": "Port Drayage Scheduling and Direct Container Delivery Mobilization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Real-time GPS tracking system integration with automatic port gate-in/gate-out logs."
+    ],
+    "Controls": [
+     "- CTL-25: Transit inventory safeguarding controls; Logistics Manager carrier assignment approval."
+    ],
+    "Cross-references": [
+     "- links to VS-06 (logistics), VS-02.2 (import), VS-04 (DC ops)"
+    ],
+    "Pain Points / Risks": [
+     "- **Demurrage charge risk**: Late empty container return triggers carrier detention charges; mitigated by enforcing 3-day return SLAs in carrier contracts."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Logistics Tracking Module (VS-06), Import Control Tower (VS-02.2)."
+    ],
+    "Time Estimate": [
+     "- ~1-2 hours coordination; ~1 day transit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Freight Coordinator",
+     "activity": "Schedule drayage trucks for container pickup at port terminal.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Freight Coordinator"
+    },
+    {
+     "a": "Freight Coordinator",
+     "activity": "Verify container number, seal status, and destination address matching delivery order.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Customs Broker"
+    },
+    {
+     "a": "Freight Coordinator",
+     "activity": "Transmit GPS tracking link and driver details to client jobsite coordinator.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Freight Coordinator"
+    },
+    {
+     "a": "Freight Coordinator",
+     "activity": "Update container status in import control tower system.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Freight Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5239"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,582 @@
+{
+ "process_area": {
+  "id": "PA-142.2",
+  "title": "COD Cash Collection, Custody & Driver/3PL Reconciliation"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/PA-142.2-cod-cash-collection-custody-and-driver-3pl-reconciliation.md",
+ "value_stream": {
+  "directory": "VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation",
+  "id": "VS-142",
+  "name": "Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Per COD order (~4,000–8,000/month, a ~23–47% COD share of the ~17,200 delivery orders)",
+    "Owner": "Ecommerce/Order Mgmt (VS-10) / Last-Mile Dispatch (VS-06.3)",
+    "Participants": "Payment Ops, Pricing (VS-01.2), Delivery Driver/3PL (VS-56)",
+    "Trigger": "COD order released for fulfillment (VS-10.2)",
+    "Volume": "Each COD order with an amount-due for collection"
+   },
+   "id": "W4273",
+   "level": 2,
+   "name": "COD Order Handoff, Delivery Note & Amount-Due Computation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto amount-due computation & lock; COD-flag handoff to delivery app; handoff-completeness dashboard"
+    ],
+    "Controls": [
+     "- CTL-657 (ensure controlled execution — COD Cash Collection, Custody & Driver/3PL Reconciliation (PA-142.2).)",
+     "- CTL-657: amount-due system-computed & locked; risk-tier auth applied (W4266); handoff completeness monitored"
+    ],
+    "Cross-references": [
+     "- links to VS-10 (order), VS-01.2/W4267 (fee), VS-06.3 (delivery app), VS-13 (loyalty), W4266 (auth), W4274 (collection)"
+    ],
+    "Pain Points / Risks": [
+     "- **Wrong-amount risk**: Driver collects wrong amount → dispute/loss; mitigated by system-computed locked amount-due on the note",
+     "- **Handoff-gap risk**: COD order released without amount/driver assignment; mitigated by handoff-completeness monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order/ecommerce (VS-10); pricing/fee (VS-01.2/W4267); delivery app (VS-06.3); risk auth (W4266); loyalty (VS-13)"
+    ],
+    "Time Estimate": [
+     "- Automated per order; monitoring part of daily ops"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Payment Ops",
+     "activity": "Order Mgmt/Payment Ops compute the exact COD amount-due (item total + COD fee W4267 − pre-paid deposit − loyalty redemption + delivery fee), apply risk-tier auth (W4266), and freeze the amount on the delivery note",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Order Mgmt / Payment Ops"
+    },
+    {
+     "a": "Head of Payment Ops",
+     "activity": "Order Mgmt/Last-Mile generate the COD delivery note (amount-due, item list, customer ID, payment-instruction) and hand off to the driver/3PL via the delivery app (VS-06.3), flagging COD vs pre-paid",
+     "duration": "Per order",
+     "n": "2",
+     "r": "Order Mgmt / Dispatch"
+    },
+    {
+     "a": "Head of Payment Ops",
+     "activity": "Payment Ops monitor COD handoff completeness (every COD order has a locked amount-due + assigned driver), and flag undelivered/COD-released exceptions",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Payment Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4266",
+    "W4267",
+    "W4274"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Per COD delivery (~4,000–8,000/month)",
+    "Owner": "Delivery Driver / 3PL (VS-56) / Last-Mile Ops (VS-06.3)",
+    "Participants": "Customer, Driver/3PL, Payment Ops, Fraud (VS-125)",
+    "Trigger": "Delivery to COD customer",
+    "Volume": "Each COD cash collection at the doorstep"
+   },
+   "id": "W4274",
+   "level": 2,
+   "name": "Doorstep Cash Collection, Receipting & POD Capture",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Mobile POD with amount capture & customer signature; digital receipt (BIR-compliant); counterfeit-detection guidance; cash-status auto-update"
+    ],
+    "Controls": [
+     "- CTL-657 (ensure controlled execution — COD Cash Collection, Custody & Driver/3PL Reconciliation (PA-142.2).)",
+     "- CTL-657: amount verified vs locked amount-due (W4273); POD/receipt captured (W4270/W4271); exceptions handled (W4276)"
+    ],
+    "Cross-references": [
+     "- links to VS-06.3 (delivery/POD), VS-56 (3PL), VS-79/W4271 (receipt), VS-125 (fraud), W4270 (controls), W4273 (amount-due), W4276 (short-pay), W4277 (reconciliation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Counterfeit/short-pay risk**: Fake bill or underpayment; mitigated by denomination check + short-pay handling (W4276)",
+     "- **No-evidence risk**: Cash collected without POD → unrecoverable; mitigated by mandatory digital POD/receipt"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Delivery app/POD (VS-06.3); order cash-status (W4272); receipting (VS-79/W4271); fraud/exception (VS-125)"
+    ],
+    "Time Estimate": [
+     "- ~3–8 min/collection at the doorstep"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Last-Mile Ops",
+     "activity": "Driver deliver the order, state the exact amount-due (per W4273), collect cash, verify denomination/authenticity (counterfeit check), and confirm exact amount or process short-pay (W4276)",
+     "duration": "Per delivery",
+     "n": "1",
+     "r": "Driver / 3PL"
+    },
+    {
+     "a": "Last-Mile Ops",
+     "activity": "Driver capture proof of delivery + cash collected (digital POD with amount, customer signature/photo receipt per W4270 standard), issue customer receipt (BIR-compliant per W4271), and update order cash-status in the app",
+     "duration": "Per delivery",
+     "n": "2",
+     "r": "Driver / 3PL"
+    },
+    {
+     "a": "Head of Payment Ops",
+     "activity": "Payment Ops/Fraud monitor collection exceptions (no-cash, short-pay, counterfeit flag), trigger refusal/return handling (W4276), and feed data to reconciliation (W4277)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Payment Ops / Fraud"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4270",
+    "W4271",
+    "W4272",
+    "W4273",
+    "W4276",
+    "W4277"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Daily per driver/depot",
+    "Owner": "Last-Mile Ops (VS-06.3) / 3PL (VS-56) / Payment Ops",
+    "Participants": "Drivers, 3PL depot/branch, Treasury (VS-18), Bank, Finance (VS-17.4)",
+    "Trigger": "End of driver/3PL shift, daily",
+    "Volume": "Daily cash custody & remittance across the driver/3PL network"
+   },
+   "id": "W4275",
+   "level": 2,
+   "name": "Driver/3PL Daily Cash Custody, Remittance & Deposit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- POD→remittance auto-match; bank-deposit feed reconciliation; unremitted-cash aging dashboard & alerts"
+    ],
+    "Controls": [
+     "- CTL-657 (ensure controlled execution — COD Cash Collection, Custody & Driver/3PL Reconciliation (PA-142.2).)",
+     "- CTL-657: tamper-evident custody; no-cash-overnight; remittance SLA; deposit verified (VS-18); aging tracked"
+    ],
+    "Cross-references": [
+     "- links to VS-06.3 (delivery), VS-18 (treasury/bank), VS-81 (CIT), W4270 (controls), W4269 (float), W4278 (3PL file), W4279 (GL posting)"
+    ],
+    "Pain Points / Risks": [
+     "- **Holding/robbery risk**: Cash held overnight/en route; mitigated by no-cash-overnight, tamper-evident custody, CIT (VS-81)",
+     "- **Float risk**: Slow remittance ties up working capital; mitigated by remittance SLA & aging tracking (W4269)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Delivery app/POD (VS-06.3); treasury/bank (VS-18); CIT (VS-81); 3PL cash file (W4278); GL (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min/driver end-of-shift; deposit within SLA"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Last-Mile Ops / Payment Ops",
+     "activity": "Driver/3PL secure the day's collected cash (tamper-evident bag per W4270, no-cash-overnight rule), reconcile to POD records, and remit to the 3PL depot/branch or BuildRight cash office within the SLA",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Driver / 3PL / Cash Office"
+    },
+    {
+     "a": "Head of Payment Ops",
+     "activity": "3PL depot/cash office verify & accept the remittance (count, match to POD list, sign handoff), deposit to bank (VS-18) or arrange CIT pickup (VS-81), and transmit the cash file to BuildRight (W4278)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "3PL / Cash Office / Treasury"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury/Payment Ops confirm bank deposit (deposit slip/bank feed VS-18), track unremitted-cash aging (W4269 float), and escalate overdue remittance per SLA",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Treasury / Payment Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4269",
+    "W4270",
+    "W4278",
+    "W4279"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Daily (~COD refusal rate 5–15% in PH ecommerce)",
+    "Owner": "Last-Mile Ops (VS-06.3) / Payment Ops / Returns (VS-32)",
+    "Participants": "Driver/3PL, Customer Support (VS-13), Returns (VS-32), Fraud (VS-125), Inventory (VS-05)",
+    "Trigger": "Customer refuses delivery, short-pays, or is unreachable",
+    "Volume": "Refused/short-pay/failed COD orders"
+   },
+   "id": "W4276",
+   "level": 2,
+   "name": "COD Refusal, Short-Pay & Failed-Delivery Cash Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Refusal-reason capture & pattern analytics; auto-eligibility tuning; RTV/inventory auto-update"
+    ],
+    "Controls": [
+     "- CTL-657 (ensure controlled execution — COD Cash Collection, Custody & Driver/3PL Reconciliation (PA-142.2).)",
+     "- CTL-657: refusal/short-pay evidenced; partial cash posted; stock returned (VS-32); repeat-refusal flagged (VS-125)"
+    ],
+    "Cross-references": [
+     "- links to VS-06.3 (delivery), VS-32 (returns/RTV), VS-05 (inventory), VS-125 (fraud), VS-13 (support), W4266 (eligibility), W4274 (collection), W4287 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Abuse risk**: Serial refusers tie up capacity/inventory; mitigated by refusal tracking & eligibility tuning (W4266)",
+     "- **Recovery risk**: Partial cash/stock not reconciled; mitigated by partial-payment posting & RTV (VS-32)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Delivery app (VS-06.3); returns/RTV (VS-32); inventory (VS-05); fraud (VS-125); customer support (VS-13); order (VS-10)"
+    ],
+    "Time Estimate": [
+     "- ~5–15 min/event; analysis periodic"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Last-Mile Ops",
+     "activity": "Driver/3PL record refusal/short-pay/failed-delivery with reason & evidence (photo/attempt log), collect any partial cash due (with POD per W4274), and return the goods per the RTV process (VS-32)",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Driver / 3PL / Returns"
+    },
+    {
+     "a": "Head of Payment Ops",
+     "activity": "Payment Ops/Returns process the order outcome (cancel/return to stock VS-32/VS-05, partial-payment posting, restocking fee per policy), and flag repeat-refusal customers to fraud (VS-125)",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Payment Ops / Returns / Fraud"
+    },
+    {
+     "a": "Head of Payment Ops",
+     "activity": "Customer Support (VS-13) follow up on failed deliveries (reschedule, address correction), and Fraud/Payment Ops analyze refusal patterns (W4287) to tune eligibility (W4266)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Customer Support / Fraud / Payment Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4266",
+    "W4274",
+    "W4287"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-110",
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Finance / Payment Ops / Cash Applications (VS-16)",
+    "Participants": "Finance (VS-17.4), GL (VS-17.1), AR/Cash App (VS-16), Last-Mile (VS-06.3), Fraud (VS-125)",
+    "Trigger": "Daily close (VS-17.1); receipt of remittance/3PL file",
+    "Volume": "All COD orders dispatched/collected that day (~thousands/day)"
+   },
+   "id": "W4277",
+   "level": 2,
+   "name": "Daily COD Cash-vs-Order Reconciliation & Exception Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto cash-to-order matching (POD+remittance+deposit vs amount-due); exception auto-flag; auto-aging"
+    ],
+    "Controls": [
+     "- CTL-110 (ensure COD cash-chain integrity.)",
+     "- CTL-657: daily order-level reconciliation; exceptions resolved within SLA; unreconciled provisioned (W4269); SoD (W4270)"
+    ],
+    "Cross-references": [
+     "- links to VS-17.1 (GL), VS-16 (AR/cash app), VS-06.3 (POD), VS-18 (bank), VS-125 (fraud), W4269 (provision), W4273 (amount-due), W4279 (posting), W4287 (reporting)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unreconciled-cash risk**: Cash without an order match → leakage/write-off; mitigated by daily order-level reconciliation & aging",
+     "- **Manual-effort risk**: High-volume manual matching; mitigated by automation (W4272 architecture)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GL/reconciliation (VS-17.1); AR/cash app (VS-16); delivery/POD (VS-06.3); bank (VS-18); fraud (VS-125); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~0.5–1 FTE daily at scale; continuous exception handling"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Finance/Cash App reconcile cash collected (POD W4274 + 3PL remittance W4275 + bank deposit W4279) against each COD order's amount-due (W4273), at order level, daily",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Finance / Cash App"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance/Payment Ops investigate exceptions (over/short, unmatched cash, missing POD, duplicate), route to driver/3PL/Fraud, and resolve within SLA",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Finance / Payment Ops / Fraud"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance post the reconciled cash to the GL/revenue (W4279), provision unremitted/unreconciled balances (W4269), and report reconciliation health (W4287)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Finance / GL"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4269",
+    "W4270",
+    "W4272",
+    "W4273",
+    "W4274",
+    "W4275",
+    "W4279",
+    "W4287"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Daily per 3PL",
+    "Owner": "Payment Ops / IT (VS-27) / Finance (VS-17.4)",
+    "Participants": "3PL (VS-56), IT (VS-27), Finance, Last-Mile (VS-06.3)",
+    "Trigger": "3PL daily cash-file transmission",
+    "Volume": "Cash files per 3PL partner (VS-56)"
+   },
+   "id": "W4278",
+   "level": 2,
+   "name": "3PL COD Cash File Ingest, Match & Discrepancy Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto file ingest & validation; auto-match with discrepancy flag; holdback auto-deduction"
+    ],
+    "Controls": [
+     "- CTL-657 (ensure controlled execution — COD Cash Collection, Custody & Driver/3PL Reconciliation (PA-142.2).)",
+     "- CTL-657: 3PL file validated & matched; discrepancies raised/SLA-tracked; holdback applied (W4268)"
+    ],
+    "Cross-references": [
+     "- links to VS-56/VS-06.3 (3PL/delivery), VS-17.1 (GL), VS-67 (scorecard), VS-27 (IT), W4268 (contract/holdback), W4272 (architecture), W4277 (reconciliation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Data-quality risk**: Incomplete/late 3PL file → reconciliation gap; mitigated by file-validation & SLA",
+     "- **Discrepancy risk**: 3PL-reported cash ≠ order cash; mitigated by matching + contract holdback (W4268)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 3PL integration (VS-56/W4272); delivery/POD (VS-06.3); finance/GL (VS-17.1); vendor scorecard (VS-67); IT (VS-27)"
+    ],
+    "Time Estimate": [
+     "- Automated ingest; ~1–2 hours/day discrepancy handling"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Payment Ops",
+     "activity": "IT/Payment Ops ingest the 3PL daily cash file (per-order collected amount, remittance, deposit reference) via the agreed format/exchange (W4272), validate structure & completeness",
+     "duration": "Daily",
+     "n": "1",
+     "r": "IT / Payment Ops"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops/Finance match the 3PL file to BuildRight POD/orders (W4273/W4274), flag discrepancies (missing orders, amount mismatch, missing deposit), and raise to the 3PL per contract (W4268)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Payment Ops / Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Payment Ops track discrepancy resolution/SLA, apply contract holdback/penalty (W4268), and feed 3PL performance to scorecard (VS-67) and reconciliation (W4277)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Payment Ops / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4268",
+    "W4272",
+    "W4273",
+    "W4274",
+    "W4277"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-110",
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Treasury (VS-18) / GL (VS-17.1) / Finance",
+    "Participants": "Treasury (VS-18), GL (VS-17.1), Cash App (VS-16), Bank, Payment Ops",
+    "Trigger": "Bank deposit (VS-18); daily close (VS-17.1)",
+    "Volume": "Bank deposits of COD cash across accounts"
+   },
+   "id": "W4279",
+   "level": 2,
+   "name": "COD Bank Deposit Verification & GL Cash Posting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Bank-feed auto-reconciliation; GL auto-posting with revenue/VAT coding; bank-rec automation"
+    ],
+    "Controls": [
+     "- CTL-110 (ensure COD cash-chain integrity.)",
+     "- CTL-657: deposit verified vs remittance; revenue recognized at delivery (W4271); VAT-coded (VS-79); bank rec closed"
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury/bank), VS-17.1 (GL/revenue), VS-16 (AR), VS-79 (tax), W4271 (recognition), W4275/W4278 (remittance/file), W4277 (reconciliation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Deposit-gap risk**: Cash remitted but not deposited → theft/loss; mitigated by deposit-vs-remittance verification",
+     "- **Recognition-error risk**: Revenue mis-timed/mis-coded; mitigated by recognize-at-delivery rule & VAT coding (VS-79)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/bank (VS-18); GL/revenue (VS-17.1); AR/cash app (VS-16); tax/BIR (VS-79); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- Automated posting; ~1–2 hours/day verification"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Treasury/GL verify the bank deposit (deposit slip vs bank statement/feed VS-18) against the remittance/cash file (W4275/W4278), confirming cash reached the bank",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Treasury / GL"
+    },
+    {
+     "a": "CFO",
+     "activity": "GL post the reconciled COD cash to revenue/AR (recognize at delivery per W4271), clear the COD receivable/float, and post COD fee/handling revenue (W4267)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "GL / Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance reconcile GL cash to bank (VS-17.1 bank rec), investigate variances, and ensure VAT/tax coding per VS-79",
+     "duration": "Daily/Monthly",
+     "n": "3",
+     "r": "Finance / GL / Tax"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4267",
+    "W4271",
+    "W4275",
+    "W4277",
+    "W4278"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-657"
+   ],
+   "fields": {
+    "Frequency": "Incident-driven",
+    "Owner": "Security (VS-23) / Payment Ops / Insurance (VS-26) / Loss Prevention",
+    "Participants": "Security (VS-23), Insurance (VS-26), Legal (VS-100), Fraud (VS-125), Treasury (VS-18), Police",
+    "Trigger": "Robbery/loss/security incident involving COD cash",
+    "Volume": "Security incidents across the COD cash chain"
+   },
+   "id": "W4280",
+   "level": 2,
+   "name": "COD Physical Cash Security, Robbery/Loss Response & Recovery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- In-app SOS/panic; incident→security/insurance workflow; loss-provision auto-suggestion"
+    ],
+    "Controls": [
+     "- CTL-657 (ensure controlled execution — COD Cash Collection, Custody & Driver/3PL Reconciliation (PA-142.2).)",
+     "- CTL-657: cash-security SOP followed; custody controls (W4270); claim/recovery pursued (VS-26); loss provisioned (W4269)"
+    ],
+    "Cross-references": [
+     "- links to VS-23 (security), VS-26 (insurance), VS-125 (fraud), VS-100 (legal), VS-81 (CIT), VS-18/VS-17.1 (GL), W4268 (3PL recovery), W4269 (loss), W4270 (controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **Loss risk**: Robbery/theft of COD cash; mitigated by custody controls (W4270), CIT (VS-81), insurance (VS-26)",
+     "- **Recovery risk**: Unrecovered loss distorts earnings; mitigated by claims/recovery & provisioning (W4269)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Security/incident (VS-23); insurance/claims (VS-26); fraud (VS-125); legal (VS-100); treasury/GL (VS-18/VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- Immediate response; investigation ~1–5 days/incident"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Payment Ops / Security",
+     "activity": "Driver/3PL/Security execute the incident response (safety first, secure scene, notify Security/Payment Ops/police), per the cash-security SOP (W4270)",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Driver / Security"
+    },
+    {
+     "a": "Head of Internal Audit & Risk / COO",
+     "activity": "Security/Fraud investigate (root cause, custody breakdown, internal vs external), document, and log to the loss/security system (VS-23/VS-125)",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "Security / Fraud"
+    },
+    {
+     "a": "CFO / Head of Internal Audit & Risk",
+     "activity": "Insurance/Legal file the claim (VS-26), pursue recovery (3PL contract W4268, fidelity bond, police/legal VS-100), provision/write off unrecovered loss (W4269), and apply corrective action",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Insurance / Legal / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4268",
+    "W4269",
+    "W4270"
+   ]
+  }
+ ]
+}

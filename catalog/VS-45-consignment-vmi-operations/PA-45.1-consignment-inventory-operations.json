@@ -1,0 +1,590 @@
+{
+ "process_area": {
+  "id": "PA-45.1",
+  "title": "Consignment Inventory Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-45-consignment-vmi-operations/PA-45.1-consignment-inventory-operations.md",
+ "value_stream": {
+  "directory": "VS-45-consignment-vmi-operations",
+  "id": "VS-45",
+  "name": "Consignment & Vendor-Managed Inventory Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-174"
+   ],
+   "fields": {
+    "Frequency": "~200–300 consignment receipts/month",
+    "Owner": "Receiving Clerk",
+    "Participants": "Receiving Clerk, Department Supervisor, AP Clerk, Vendor",
+    "Trigger": "Vendor delivers consignment goods to DC or store",
+    "Volume": "~1,500–2,000 consignment SKUs (major appliances, select tiles)"
+   },
+   "id": "W1926",
+   "level": 2,
+   "name": "Consignment Goods Receipt & Non-Valuated Inventory Posting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"Receiving Clerk receives consignment delivery\" (replaces manual Step 1).",
+     "- System auto-record of \"records\" (replaces manual Step 2).",
+     "- System auto-validate of \"check quantities against CSA\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-174 (ensure consignment & VMI settlement integrity.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Damage liability ambiguity**: If consignment goods are damaged in-store, who bears the loss? Must be clearly defined in consignment agreement (typically vendor bears transit damage, BuildRight bears in-store damage after receipt acceptance)",
+     "- **Non-valuated tracking**: Staff may not treat consignment goods with same care as owned inventory; requires clear signage and training"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Non-valuated goods receipt with consignment indicator (W1926.2)",
+     "- Consignment stock segregation in inventory module (W1926.2)",
+     "- Integration with W3 (DC receiving) and W18 (DSD receiving) for physical process"
+    ],
+    "Time Estimate": [
+     "- 15–30 min per receipt × ~300 receipts/month = ~75–150 hours/month",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Receiving Clerk receives consignment delivery: (a) verify delivery against consignment shipment advice (CSA) from vendor, (b) check item condition — consignment goods often high-value (appliances: PHP 5K–80K per unit; tiles: PHP 200–2,000 per box), (c) scan barcode or manually enter SKU, (d) system posts to non-valuated consignment stock (no WAC impact, no GR/IR, no AP liability until sale)",
+     "duration": "15–30 min/delivery",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System records: (a) consignment stock quantity by vendor by SKU by location, (b) vendor ownership indicator on inventory record, (c) consignment agreement reference (pricing, settlement terms), (d) no financial posting (no inventory value, no AP) — vendor retains ownership",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Receiving Clerk stages consignment goods in designated area: (a) major appliances: appliance section display or backroom staging, (b) tiles: tile gallery display area, (c) attach consignment tag (vendor-owned indicator visible to staff but not customers)",
+     "duration": "15–30 min/delivery",
+     "n": "3",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Department Supervisor verifies receipt accuracy: (a) spot-check quantities against CSA, (b) verify item condition (no damage during transit), (c) confirm non-valuated posting in system",
+     "duration": "5–10 min",
+     "n": "4",
+     "r": "Department Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W18",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-376"
+   ],
+   "fields": {
+    "Frequency": "Weekly per store",
+    "Owner": "Department Supervisor",
+    "Participants": "Department Supervisor, Sales Associate, Visual Merchandiser",
+    "Trigger": "Ongoing store operations; weekly display review",
+    "Volume": "~8–15 consignment SKUs on display per store (major appliances + select tiles)"
+   },
+   "id": "W1927",
+   "level": 2,
+   "name": "Consignment Stock Display & Shelf Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow notification of \"contact, not vendor\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews display condition\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).)",
+     "- operational: Department Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Display unit damage**: Customers may damage display appliances; BuildRight may bear cost per consignment agreement; need clear damage responsibility clause"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment stock visibility in store inventory system with vendor ownership flag (W1927.1)",
+     "- Demo/display unit tracking per W97 (W1927.3)",
+     "- Integration with W86 (planogram compliance)"
+    ],
+    "Time Estimate": [
+     "- 30 min/week × 200 stores = ~100 hours/week chain-wide",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Department Supervisor ensures consignment items are displayed per vendor planogram: (a) appliance section: display units powered on where applicable (fans, aircons), price tags with SRP, (b) tile gallery: sample boards with pricing, specification cards, (c) consignment items displayed alongside owned inventory without differentiation visible to customer",
+     "duration": "30 min/week",
+     "n": "1",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Sales Associate trained on consignment product knowledge: (a) know which items are consignment (internal knowledge only), (b) selling approach identical to owned inventory (no disclosure of consignment arrangement to customer), (c) warranty and return policies per BuildRight standard (BuildRight is point of contact, not vendor)",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Weekly: Department Supervisor reviews display condition: (a) display units clean and functional, (b) price tags accurate and current, (c) demo/display units tracked separately per W97 (sample/demo inventory), (d) missing or damaged display items reported for vendor replacement",
+     "duration": "15 min/week",
+     "n": "3",
+     "r": "Department Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W86",
+    "W97"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-376"
+   ],
+   "fields": {
+    "Frequency": "~8,000–12,000 consignment sales/month chain-wide",
+    "Owner": "Cashier",
+    "Participants": "Cashier, Store Manager, System",
+    "Trigger": "Customer purchases consignment item at POS",
+    "Volume": "~5–6% of active SKUs are consignment; represents ~3–4% of revenue"
+   },
+   "id": "W1928",
+   "level": 2,
+   "name": "Consignment Sell-Through at POS & Ownership Transfer",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans consignment item at POS\" (replaces manual Step 1).",
+     "- System auto-record of \"System executes ownership transfer at transaction completion\" (replaces manual Step 2).",
+     "- System auto-create of \"create delivery order per W5D\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).)",
+     "- operational: should use same barcode scan path as standard items"
+    ],
+    "Pain Points / Risks": [
+     "- **POS performance**: Consignment flag check at every scan must not slow checkout; system should use same barcode scan path as standard items",
+     "- **Ownership transfer timing**: Must be atomic with transaction completion; if transaction voided, ownership must revert"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS consignment item identification via item master flag (W1928.1)",
+     "- Automated ownership transfer with dual inventory posting (W1928.2)",
+     "- COGS at consignment cost with margin tracking (W1928.2)",
+     "- Integration with W5B (POS selling), W5D (customer delivery), W33 (warranty)"
+    ],
+    "Time Estimate": [
+     "- No incremental time beyond standard POS transaction",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier scans consignment item at POS: (a) system identifies item as consignment via item master flag, (b) standard selling price applied (customer sees no difference), (c) standard POS receipt generated (no consignment indicator on customer receipt), (d) standard tender processing (cash, card, e-wallet, trade account)",
+     "duration": "< 3 sec/scan",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System executes ownership transfer at transaction completion: (a) consignment stock reduced by 1 unit (vendor-owned → sold), (b) COGS posted at consignment cost (vendor settlement price, not BuildRight cost), (c) revenue posted at selling price, (d) gross margin = selling price − consignment cost (typically 15–25% for appliances, 20–30% for tiles), (e) sell-through record created: transaction ID, vendor, SKU, qty, consignment cost, selling price, timestamp",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "For major appliances: (a) if customer needs delivery, create delivery order per W5D, (b) if display unit sold, trigger replacement order from vendor consignment stock or vendor direct shipment, (c) appliance serial number captured at POS for warranty registration per W33",
+     "duration": "3–5 min",
+     "n": "3",
+     "r": "Cashier / System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W33",
+    "W5B",
+    "W5D"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-376"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Department Supervisor, Vendor",
+    "Trigger": "Monthly consignment aging review",
+    "Volume": "~1,500–2,000 consignment SKUs monitored"
+   },
+   "id": "W1929",
+   "level": 2,
+   "name": "Consignment Stock Rotation & Aging Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly consignment aging report\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews aging consignment stock\" (replaces manual Step 2).",
+     "- System auto-count of \"discounted price if vendor offers deep discount\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Dead consignment stock**: Takes up valuable display/shelf space with no revenue; vendor may be reluctant to take returns; need contractual minimum sell-through commitment or stock rotation clause"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment aging dashboard with sell-through analytics (W1929.1)",
+     "- Integration with W1 (assortment review) for consignment SKU rationalization"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours/month for Category Manager",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "System generates monthly consignment aging report: (a) days-on-hand by SKU by location, (b) sell-through rate: units sold / units available per month, (c) aging categories: < 30 days (fast), 30–60 days (moderate), 60–90 days (slow), > 90 days (dead stock), (d) compare consignment sell-through vs. owned inventory sell-through for same categories",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews aging consignment stock: (a) identify slow-moving consignment SKUs (> 60 days, < 1 unit/month sell-through), (b) contact vendor to discuss: (i) price reduction to stimulate sales, (ii) markdown support from vendor, (iii) stock rotation: return slow movers to vendor, replace with faster-selling models, (c) evaluate whether consignment arrangement is worthwhile for low-sell-through items",
+     "duration": "2–4 hours/month",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "For consignment stock > 90 days with no sales: (a) initiate return-to-vendor per W1931, or (b) negotiate markdown with vendor cost-sharing, or (c) convert to owned stock at discounted price if vendor offers deep discount",
+     "duration": "As needed",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W1931"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-174"
+   ],
+   "fields": {
+    "Frequency": "Monthly reconciliation; annual wall-to-wall count",
+    "Owner": "AP Manager",
+    "Participants": "AP Manager, Store Manager, Vendor, External Auditor",
+    "Trigger": "Monthly consignment reconciliation; annual physical inventory",
+    "Volume": "~1,500–2,000 consignment SKUs × 200 stores"
+   },
+   "id": "W1930",
+   "level": 2,
+   "name": "Consignment Physical Inventory & Vendor Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"recorded balance\" (replaces manual Step 1).",
+     "- System auto-document of \"AP Manager investigates discrepancies\" (replaces manual Step 2).",
+     "- System auto-count of \"counted alongside owned inventory during wall-to-wall count per W42\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-174 (ensure consignment & VMI settlement integrity.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor disputes**: Vendor may dispute shrinkage losses on consignment stock; clear contractual terms needed for loss allocation",
+     "- **Counting complexity**: Consignment stock intermingled with owned stock on display; staff must identify correctly during physical count"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment stock reconciliation report (W1930.1)",
+     "- Integration with W42 (annual physical inventory) for consignment count",
+     "- Vendor portal for reconciliation data sharing (W1930.3)"
+    ],
+    "Time Estimate": [
+     "- Monthly reconciliation: 1–2 days/month",
+     "- Annual physical count: absorbed in W42",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Manager",
+     "activity": "Monthly: system generates consignment stock reconciliation report per vendor: (a) opening balance (units), (b) additions (receipts), (c) reductions (sales), (d) returns to vendor, (e) adjustments (damages, shrinkage), (f) closing balance (units), (g) compare system closing balance to vendor's recorded balance",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "AP Manager investigates discrepancies: (a) system shows more than vendor: possible unrecorded receipt or vendor counting error, (b) system shows less than vendor: possible unrecorded sale, theft, damage not reported, (c) resolve discrepancies within 5 business days, (d) adjust consignment stock in system with documented reason",
+     "duration": "1–2 days/month",
+     "n": "2",
+     "r": "AP Manager"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Annual physical inventory: (a) consignment stock counted alongside owned inventory during wall-to-wall count per W42, (b) consignment stock tagged separately in count sheets, (c) vendor invited to observe count of their consignment stock, (d) count results shared with vendor within 10 business days, (e) discrepancies resolved per consignment agreement terms",
+     "duration": "Per annual count",
+     "n": "3",
+     "r": "Store Manager / AP Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W42"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-376"
+   ],
+   "fields": {
+    "Frequency": "~50–100 consignment returns/year",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Receiving Clerk, AP Clerk, Vendor",
+    "Trigger": "Slow-moving consignment stock; vendor request; consignment agreement termination",
+    "Volume": "~200–500 units/year"
+   },
+   "id": "W1931",
+   "level": 2,
+   "name": "Consignment Return-to-Vendor Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"create return request with SKU, qty, condition, reason\" (replaces manual Step 1).",
+     "- System auto-scan of \"scan items for system return posting\" (replaces manual Step 2).",
+     "- System auto-record of \"records pickup with vendor signature\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Condition disputes**: Vendor may refuse to accept returns of goods with shelf wear or display damage; need contractual return condition standards",
+     "- **Return logistics**: Large appliance returns require specialized transport coordination with vendor"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment return posting (non-valuated) (W1931.2)",
+     "- Vendor return acknowledgment tracking (W1931.3)",
+     "- Integration with W88 (RTV) for physical process similarity"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per return batch",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager initiates consignment return: (a) reason: slow-moving (> 90 days, no sales), model discontinued, vendor request, agreement termination, (b) create return request with SKU, qty, condition, reason, (c) notify vendor for pickup scheduling",
+     "duration": "15–30 min/return",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Receiving Clerk processes consignment return: (a) verify item condition (undamaged, complete with accessories, original packaging preferred), (b) scan items for system return posting, (c) system reduces consignment stock (no financial impact — vendor-owned), (d) stage items for vendor pickup",
+     "duration": "10–20 min/return",
+     "n": "2",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Vendor picks up returned consignment goods: (a) vendor representative signs return acknowledgment, (b) Receiving Clerk records pickup with vendor signature, (c) system records return completion with timestamp",
+     "duration": "15–30 min/pickup",
+     "n": "3",
+     "r": "Receiving Clerk / Vendor"
+    },
+    {
+     "a": "AP Clerk",
+     "activity": "System reconciles consignment return: (a) vendor consignment balance reduced, (b) no AP/AR impact (goods were vendor-owned), (c) return logged in vendor scorecard for performance tracking",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-376"
+   ],
+   "fields": {
+    "Frequency": "~20–30 consignment price changes/month",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Pricing Analyst, VP Merchandising, Vendor",
+    "Trigger": "Vendor price change; BuildRight promotional event",
+    "Volume": "~1,500–2,000 consignment SKUs"
+   },
+   "id": "W1932",
+   "level": 2,
+   "name": "Consignment Price Change & Promotional Price Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-update of \"update consignment cost in system\" (replaces manual Step 1).",
+     "- System auto-count of \"BuildRight promotional event on consignment items\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews promo performance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Margin squeeze during promos**: If vendor doesn't fund their share of promotional discount, BuildRight's margin on consignment goods erodes significantly"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment cost update with effective dating (W1932.1)",
+     "- Promotional consignment pricing with vendor contribution tracking (W1932.2)",
+     "- Integration with W40 (price changes) and W13 (promotions)"
+    ],
+    "Time Estimate": [
+     "- 30 min per price change; 1 day per promotional event",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Vendor-initiated price change: (a) vendor notifies Category Manager of consignment cost change (up or down), (b) Category Manager evaluates impact: (i) if cost increase: can BuildRight maintain current SRP and margin?, (ii) if cost decrease: should SRP be reduced or maintain to capture additional margin?, (c) update consignment cost in system (impacts COGS at next sale), (d) if SRP changes: initiate price change per W40",
+     "duration": "30 min/change",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "BuildRight promotional event on consignment items: (a) Category Manager negotiates promotional consignment cost with vendor (vendor funds a portion of the discount), (b) system applies promotional SRP at POS (standard promo mechanics per W13), (c) system calculates: (i) promotional revenue, (ii) promotional consignment cost, (iii) margin during promo period, (iv) vendor contribution to discount",
+     "duration": "Per promo event",
+     "n": "2",
+     "r": "Category Manager / Pricing Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Post-promotion: (a) system reverts to standard consignment cost and SRP, (b) Category Manager reviews promo performance: sell-through lift, vendor contribution, net margin",
+     "duration": "1 day/post-promo",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W40"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-376"
+   ],
+   "fields": {
+    "Frequency": "~20–30 consignment transfers/month",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Store Manager (sending), Store Manager (receiving), Vendor",
+    "Trigger": "Store requests consignment stock from another store or DC; vendor approves transfer",
+    "Volume": "~50–100 units/month"
+   },
+   "id": "W1933",
+   "level": 2,
+   "name": "Consignment Stock Transfer Between Locations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"created in system with consignment indicator\" (replaces manual Step 1).",
+     "- System auto-send of \"Sending store ships consignment goods\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify quantity and condition\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor approval delays**: Some consignment agreements require vendor sign-off on location transfers, slowing the process; negotiate self-service transfer rights within defined geographic area"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment transfer order with vendor notification (W1933.1)",
+     "- Non-valuated transfer posting (W1933.2–3)",
+     "- Integration with W22 (stock transfers) for physical logistics"
+    ],
+    "Time Estimate": [
+     "- 15–30 min approval + standard transfer logistics time",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager approves consignment transfer: (a) receiving store has customer waiting or strong demand, (b) sending store has excess consignment stock (slow-moving), (c) vendor notified of transfer (consignment agreement may require vendor approval for location changes), (d) transfer order created in system with consignment indicator",
+     "duration": "15–30 min/transfer",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Store Manager (sending)",
+     "activity": "Sending store ships consignment goods: (a) Receiving Clerk packs and ships per standard transfer process, (b) system posts consignment stock-out at sending location (no financial posting — vendor-owned), (c) goods in-transit tracked as consignment in-transit",
+     "duration": "Per standard transfer",
+     "n": "2",
+     "r": "Receiving Clerk (sending)"
+    },
+    {
+     "a": "Store Manager (receiving)",
+     "activity": "Receiving store receives consignment transfer: (a) verify quantity and condition, (b) system posts consignment stock-in at receiving location, (c) vendor consignment balance updated: vendor total unchanged, location allocation changed",
+     "duration": "Per standard receipt",
+     "n": "3",
+     "r": "Receiving Clerk (receiving)"
+    },
+    {
+     "a": "—",
+     "activity": "Vendor notification: system sends automatic transfer notification to vendor with new location details for their records",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W22"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,949 @@
+{
+ "process_area": {
+  "id": "PA-28.1",
+  "title": "BI Platform & Reporting"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-28-data-analytics-bi/PA-28.1-bi-platform-and-reporting.md",
+ "value_stream": {
+  "directory": "VS-28-data-analytics-bi",
+  "id": "VS-28",
+  "name": "Data, Analytics & BI"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-222"
+   ],
+   "fields": {
+    "Frequency": "Daily (365 days/year — automated with exception monitoring)",
+    "Owner": "BI Operations Analyst / IT Operations",
+    "Participants": "BI Manager, Store Managers (report recipients), Regional Managers, Finance Controller, COO",
+    "Trigger": "Scheduled — daily at 06:00 AM (before store opening) for morning reports; continuous refresh for real-time dashboards",
+    "Volume": "15–20 automated report distributions per day; 5 real-time dashboards refreshed continuously"
+   },
+   "id": "W879",
+   "level": 2,
+   "name": "Daily Report Distribution & Automated Dashboard Refresh",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check for errors or data latency\" (replaces manual Step 1).",
+     "- System auto-generate of \"Automated report generation and distribution — system generates\" (replaces manual Step 2).",
+     "- System auto-match of \"match source system\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-222 (ensure BI data governance & reporting integrity.)",
+     "- operational: quarterly"
+    ],
+    "Pain Points / Risks": [
+     "- Overnight ETL failures result in stale morning reports — executives make decisions on outdated data",
+     "- Report distribution list maintenance is ongoing — employee role changes create incorrect recipients",
+     "- Dashboard performance degrades as data volume grows — query optimization required quarterly",
+     "- Time zone differences across Philippine regions are minimal but store closing times vary — data completeness timing",
+     "- Email report attachments may be blocked by spam filters — PDF attachment size limits"
+    ],
+    "Staffing Implication": [
+     "- 1 BI Operations Analyst (early shift: 5:30 AM start for morning report verification)",
+     "- BI Manager: escalation point for data discrepancies",
+     "- IT Operations: ETL infrastructure support"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **BI Platform** — report generation, dashboard hosting, scheduling engine",
+     "- **Data Warehouse** — dimensional model, fact tables, data refresh",
+     "- **ETL Tool** — data pipeline monitoring, error alerting",
+     "- **Email System** — report distribution, delivery tracking",
+     "- **ERP Portal** — self-service report access",
+     "- **POS System** — daily sales data source"
+    ],
+    "Time Estimate": [
+     "- Daily monitoring: 2–3 hours per analyst",
+     "- **Annual estimate: ~900 person-hours/year (daily 2.5 hours × 365 days)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Manager",
+     "activity": "ETL batch completion verification — confirm overnight data warehouse refresh completed successfully (sales, inventory, finance, HR feeds); check for errors or data latency; if failed, initiate W881 exception handling",
+     "duration": "30 min",
+     "n": "1",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Automated report generation and distribution — system generates: (a) Daily Sales Flash (by store, region, chain), (b) Daily Inventory Alert (stock-outs, overstock, aging), (c) Daily Cash Reconciliation Summary, (d) Daily POS Performance Report, (e) Daily ecommerce Dashboard; distribute via email and portal per recipient distribution lists",
+     "duration": "15 min (automated)",
+     "n": "2",
+     "r": "BI System (automated)"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Dashboard refresh validation — verify real-time dashboards reflect current data: (a) Executive KPI Dashboard, (b) Store Operations Dashboard, (c) Supply Chain Dashboard, (d) Finance Dashboard, (e) Customer Experience Dashboard; check timestamp and data freshness",
+     "duration": "15 min",
+     "n": "3",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Investigate and resolve data discrepancies — if daily report numbers don't match source system (e.g., POS sales don't match finance posting), trace data lineage, identify root cause (ETL error, timing difference, data quality issue), and issue corrected report if material",
+     "duration": "30–60 min per discrepancy",
+     "n": "4",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Monitor report delivery success — check email delivery logs; re-send failed distributions; follow up with recipients who report access issues; maintain distribution list accuracy",
+     "duration": "15 min",
+     "n": "5",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Operations Analyst",
+     "activity": "End-of-day data snapshot — at store close (varies by region, 8–10 PM), capture final daily snapshot for next morning reports; verify POS close-of-day batch completion feeds",
+     "duration": "15 min (automated)",
+     "n": "6",
+     "r": "BI System (automated)"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W881"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-222"
+   ],
+   "fields": {
+    "Frequency": "~10–15 new dashboard requests per quarter; ~5–8 enhancement requests per month",
+    "Owner": "BI Developer / BI Manager",
+    "Participants": "Business Requestor, BI Developer, BI Manager, Data Architect, UX Designer",
+    "Trigger": "User request for new dashboard or enhancement; or scheduled quarterly platform improvement",
+    "Volume": "~60–80 dashboard projects per year; backlog of 15–20 active development items"
+   },
+   "id": "W880",
+   "level": 2,
+   "name": "BI Dashboard Development, Enhancement & User Request Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"log dashboard request — business user submits request via ticketing system\" (replaces manual Step 1).",
+     "- System auto-identify of \"identify data sources and availability\" (replaces manual Step 2).",
+     "- System auto-validate of \"validate data quality\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-222 (ensure BI data governance & reporting integrity.)",
+     "- operational: data may not exist in source systems or may be poor quality"
+    ],
+    "Pain Points / Risks": [
+     "- Business users may not clearly articulate requirements — multiple iteration cycles increase development time",
+     "- Data availability gaps — required data may not exist in source systems or may be poor quality",
+     "- Dashboard sprawl — uncontrolled creation leads to duplicative, inconsistent dashboards",
+     "- Performance issues with complex dashboards — large data sets across 200 stores can cause slow load times",
+     "- User adoption varies — some dashboards are never used after deployment; usage analytics essential"
+    ],
+    "Staffing Implication": [
+     "- 2 BI Developers (reporting and dashboard development)",
+     "- 1 Data Architect (model design, ETL oversight)",
+     "- BI Manager: prioritization and resource allocation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **BI Platform** — development environment, deployment, usage analytics",
+     "- **Data Warehouse** — dimensional model, data availability",
+     "- **ETL Tool** — new pipeline development, scheduling",
+     "- **ITSM** — request ticketing, project tracking, SLA management",
+     "- **ERP Portal** — dashboard publication, access management",
+     "- **Source Systems** — POS, WMS, Finance, HR, CRM data extraction"
+    ],
+    "Time Estimate": [
+     "- Per dashboard: 30–70 person-hours over 2–6 weeks",
+     "- **Annual estimate: 70 dashboards × 50 hours = 3,500 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Manager",
+     "activity": "Receive and log dashboard request — business user submits request via ticketing system: (a) business question to answer, (b) target audience, (c) required data elements, (d) desired refresh frequency, (e) priority; BI Manager triages and assigns",
+     "duration": "15 min (request)",
+     "n": "1",
+     "r": "Business Requestor"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Conduct requirements workshop — BI Developer meets with requestor to: (a) understand business process and decision context, (b) define KPIs and visualization requirements, (c) identify data sources and availability, (d) agree on interactivity (filters, drill-down), (e) prototype wireframe",
+     "duration": "2–4 hours",
+     "n": "2",
+     "r": "BI Developer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Design data model and ETL — if required data is not in warehouse: (a) design dimensional model additions, (b) build ETL pipeline to extract from source system, (c) validate data quality, (d) schedule refresh cadence",
+     "duration": "8–16 hours",
+     "n": "3",
+     "r": "BI Developer / Data Architect"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Develop dashboard — build visualization: (a) create measures and calculated fields, (b) design layout and charts, (c) implement interactivity (filters, drill-down, tooltips), (d) apply corporate visual standards, (e) optimize query performance",
+     "duration": "16–40 hours",
+     "n": "4",
+     "r": "BI Developer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "User acceptance testing — requestor validates: (a) numbers match source system, (b) visualizations answer business questions, (c) interactivity works as expected, (d) performance is acceptable (load time < 10 seconds); document and fix issues",
+     "duration": "4–8 hours",
+     "n": "5",
+     "r": "Business Requestor + BI Developer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Deploy to production — publish dashboard to BI portal; configure access permissions; set refresh schedule; add to report catalog; notify users; provide brief user guide",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "BI Developer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Post-deployment monitoring — monitor usage analytics for 30 days: (a) adoption rate, (b) user feedback, (c) performance metrics, (d) data accuracy issues; iterate based on feedback",
+     "duration": "2 hours (over 30 days)",
+     "n": "7",
+     "r": "BI Developer"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-222"
+   ],
+   "fields": {
+    "Frequency": "Monthly (12 packages per year)",
+    "Owner": "BI Manager / Finance Controller",
+    "Participants": "BI Analyst, Finance Analyst, Department Heads (data contributors), COO, CFO",
+    "Trigger": "Scheduled — monthly, typically completed by 5th business day of following month",
+    "Volume": "1 comprehensive package per month distributed to Executive Committee and Board of Directors"
+   },
+   "id": "W885",
+   "level": 2,
+   "name": "Monthly Executive Reporting Package Preparation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"Compile financial data — Finance Analyst extracts\" (replaces manual Step 1).",
+     "- System auto-extract of the operational-data pulls the BI Analyst runs (replaces manual Step 2).",
+     "- System auto-import of \"import container status\" feeds (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-222 (ensure BI data governance & reporting integrity.)",
+     "- operational: BI Manager / Finance Controller review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Data from multiple sources requires reconciliation — financial and operational numbers must tie",
+     "- Executive commentary turnaround is often delayed — package distribution slips past 5th business day target",
+     "- Monthly cadence is relentless — no downtime between packages",
+     "- Package content evolves based on executive priorities — scope changes require BI rework",
+     "- Appendix detail level must satisfy both CEO (summary) and Board (detail) — balance required",
+     "- Confidential financial data requires secure distribution — Board portal access control essential"
+    ],
+    "Staffing Implication": [
+     "- BI Manager: 8 hours per monthly package (lead)",
+     "- Finance Analyst: 4 hours per package",
+     "- BI Analyst: 4 hours per package",
+     "- Supply Chain Analyst: 2 hours per package",
+     "- CFO: 2 hours per package (review)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **BI Platform** — automated data extraction, visualization generation",
+     "- **Finance Module** — P&L, balance sheet, cash flow data",
+     "- **ERP Reporting** — operational metrics extraction",
+     "- **BI Dashboard** — executive KPI scorecards, store heatmap",
+     "- **Document Management** — package version control, distribution tracking",
+     "- **Board Portal** — secure distribution to Board of Directors"
+    ],
+    "Time Estimate": [
+     "- Per monthly package: ~18–20 person-hours (per the step and staffing itemizations)",
+     "- **Annual estimate: 12 packages × 28 hours = 336 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Compile financial data — Finance Analyst extracts: (a) P&L by entity and consolidated, (b) balance sheet, (c) cash flow statement, (d) working capital analysis, (e) capex tracking, (f) budget vs. actual with variance commentary",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Compile operational data — BI Analyst extracts: (a) same-store sales growth, (b) foot traffic and conversion rate, (c) average transaction value, (d) gross margin by category, (e) inventory turns and days-of-supply, (f) ecommerce metrics (GMV, conversion, AOV), (g) customer acquisition and retention",
+     "duration": "4 hours",
+     "n": "2",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Compile supply chain data — (a) vendor OTIF performance, (b) DC throughput and productivity, (c) delivery performance to stores, (d) import container status, (e) procurement cost savings",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Supply Chain Analyst"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Compile HR and organizational data — (a) headcount by entity, (b) turnover rate, (c) open positions and time-to-fill, (d) training completion, (e) employee satisfaction score",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "HR Analyst"
+    },
+    {
+     "a": "COO",
+     "activity": "Assemble executive package — BI Manager consolidates all data into standardized executive presentation: (a) CEO summary (1 page), (b) financial highlights (2 pages), (c) operational scorecard (2 pages), (d) category performance (1 page), (e) store heatmap and regional analysis (1 page), (f) key initiatives and risks (1 page), (g) detailed appendix; ensure visual consistency and narrative clarity",
+     "duration": "4 hours",
+     "n": "5",
+     "r": "BI Manager"
+    },
+    {
+     "a": "CEO",
+     "activity": "Executive review and commentary — CFO and COO review draft; add management commentary on material variances, strategic initiatives, and forward-looking outlook; iterate until approved",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "CFO / COO"
+    },
+    {
+     "a": "CFO",
+     "activity": "Distribute executive package — publish to Board portal, email to Executive Committee, upload to document management system, and schedule management review meeting (typically 10th business day)",
+     "duration": "1 hour",
+     "n": "7",
+     "r": "BI Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-325"
+   ],
+   "fields": {
+    "Frequency": "Weekly",
+    "Owner": "Regional Manager",
+    "Participants": "Regional Manager, Store Managers (in region), BI Analyst (dashboard maintenance), VP Store Operations (monthly consolidation)",
+    "Trigger": "Scheduled — weekly (every Monday); system auto-generates scorecard from prior week's data",
+    "Volume": "200 stores × 52 weeks = 10,400 scorecards/year; ~6 Regional Manager reviews/week (one per RM, per profile §12.1)"
+   },
+   "id": "W1214",
+   "level": 2,
+   "name": "Store Performance Scorecard Weekly Review & Regional Benchmarking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan rate, BOPIS fulfillment SLA compliance\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates regional rankings\" (replaces manual Step 2).",
+     "- System auto-alert of \"System identifies exception alerts\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "With 200 stores across the Philippine archipelago, BuildRight Depot's VP Store Operations and ~6 Regional Managers need a standardized, data-driven view of store performance to identify top performers, underperformers, and emerging trends. Weekly scorecards — automatically generated from POS, inventory, workforce, and customer data — provide a consistent performance snapshot that enables: (a) early intervention for declining stores before monthly P&L reveals the problem, (b) recognition and best-practice sharing from top-performing stores, (c) regional benchmarking to account for local market differences, (d) resource allocation (capital investment, staffing adjustments, merchandising support) based on performance data. This workflow complements W522 (daily cashier performance) and W67 (monthly store performance review) by adding a structured weekly cadence with standardized KPIs and regional comparison."
+    ],
+    "Controls": [
+     "- CTL-325 (ensure controlled execution — BI Platform & Reporting (PA-28.1).)",
+     "- operational: Regional Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Ranking gaming** — Store Managers may focus on ranked KPIs at the expense of unmeasured aspects; balanced scorecard with counter-metrics mitigates (e.g., pair revenue with margin)",
+     "- **Regional comparison unfairness** — stores in different markets (Metro Manila vs. provincial) have inherently different performance ceilings; within-region ranking and year-over-year comparison mitigates",
+     "- **Dashboard fatigue** — weekly review adds to Regional Manager workload; exception-based alerting and concise dashboard design keep review time manageable",
+     "- **Data lag** — CSAT survey responses and shrinkage estimates may lag real-time; scorecard should clearly label data freshness"
+    ],
+    "Staffing Implication": [
+     "- Regional Manager: ~1.5–2.5 hours/week on scorecard review and coaching calls; absorbed by existing role",
+     "- BI Analyst: ~2 hours/quarter on KPI review and dashboard maintenance",
+     "- VP Store Operations: ~2–3 hours/month on consolidation",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Weekly Store Performance Scorecard: auto-generated from POS transactions, inventory movements, workforce scheduling, CSAT surveys, and BOPIS fulfillment data",
+     "- Regional ranking engine: percentile calculation within region groups",
+     "- Exception alert engine: configurable thresholds for each KPI",
+     "- Store operations module: call notes, action items, follow-up tracking",
+     "- BI dashboard: interactive drill-down from region → store → KPI → contributing factors",
+     "- Integration with W522 (daily cashier performance), W67 (monthly store review), W879 (daily report distribution), W86 (planogram compliance)"
+    ],
+    "Time Estimate": [
+     "- Regional Manager: 30–60 min review + 30–90 min coaching calls + 30 min huddle = ~1.5–3 hours/week",
+     "- VP Store Operations: 2–3 hours/month for consolidation",
+     "- BI Analyst: 2 hours/quarter",
+     "- **Annual estimate: ~1,300 hours (Regional Managers) + ~30 hours (VP) + 8 hours (BI)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System auto-generates **Weekly Store Performance Scorecard** overnight Sunday/Monday for each store with prior week metrics: (a) **Revenue**: weekly revenue vs. target, year-over-year growth, revenue per sqm, average transaction value; (b) **Productivity**: revenue per employee, transactions per labor hour; (c) **Inventory**: inventory turns, out-of-stock rate (from W42 cycle count data), shrinkage estimate; (d) **Customer**: CSAT score (from W65 surveys), loyalty scan rate, BOPIS fulfillment SLA compliance; (e) **Operations**: on-time store opening rate, receiving accuracy, planogram compliance per W86",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System calculates **regional rankings**: stores ranked within their region on each KPI; color-coded: green (top quartile), yellow (middle 50%), red (bottom quartile); stores that moved > 10 percentile positions week-over-week flagged as \"movers\"",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System identifies **exception alerts**: (a) revenue decline > 10% week-over-week without seasonal explanation, (b) out-of-stock rate > 5% for any major category, (c) shrinkage estimate > 2% of revenue, (d) CSAT score < 75%, (e) loyalty scan rate < 40%, (f) any KPI in bottom quartile for 3+ consecutive weeks (chronic underperformer)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Regional Manager opens scorecard dashboard Monday morning; reviews: (a) region-level summary: total revenue vs. target, store count in green/yellow/red, key movers; (b) each store's scorecard with exception alerts; (c) identifies 3–5 stores requiring attention (new red stores, declining trends, chronic underperformers)",
+     "duration": "30–60 min",
+     "n": "4",
+     "r": "Regional Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Regional Manager contacts flagged Store Managers: (a) **coaching call** for declining stores — understand root cause (new competitor, staff turnover, supply issues, local event), agree on corrective actions; (b) **recognition call** for top movers — acknowledge improvement, ask what's working; (c) documents call notes and action items in store operations module",
+     "duration": "15–30 min per flagged store",
+     "n": "5",
+     "r": "Regional Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Weekly regional team huddle** (Monday afternoon): Regional Manager shares: (a) region performance vs. other regions (VP Store Operations shares inter-regional comparison), (b) top-performing stores and their best practices, (c) common challenges and cross-store solutions, (d) upcoming initiatives and priorities for the week",
+     "duration": "30 min",
+     "n": "6",
+     "r": "Regional Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "**Monthly consolidation**: VP Store Operations reviews aggregated scorecard data: (a) compare 10 regions on same KPIs, (b) identify best- and worst-performing regions, (c) analyze trends: are chain-wide KPIs improving or declining?, (d) present monthly summary to CEO/COO with recommendations for capital allocation, new store prioritization, or operational interventions",
+     "duration": "2–3 hours/month",
+     "n": "7",
+     "r": "VP Store Operations"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Quarterly KPI review**: BI Analyst and VP Store Operations review scorecard KPIs: (a) are targets still appropriate?, (b) should new KPIs be added (e.g., ecommerce conversion rate, marketplace seller rating)?, (c) adjust regional grouping if store count changes with new store openings",
+     "duration": "2 hours/quarter",
+     "n": "8",
+     "r": "BI Analyst / VP Store Operations"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W42",
+    "W522",
+    "W65",
+    "W67",
+    "W86",
+    "W879"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-325"
+   ],
+   "fields": {
+    "Frequency": "Weekly analytics refresh; monthly deep-dive per store; quarterly regional benchmarking",
+    "Owner": "BI Analyst (Retail Analytics)",
+    "Participants": "Store Manager, Regional Manager, VP Store Operations, Category Manager, Facilities Manager",
+    "Trigger": "Scheduled — weekly foot traffic analytics refresh; monthly productivity deep-dive; ad-hoc triggered by store conversion rate decline or regional benchmarking request",
+    "Volume": "200 stores × weekly analytics; monthly deep-dive for bottom-quartile stores (50 stores); quarterly benchmarking for all stores by region"
+   },
+   "id": "W1250",
+   "level": 2,
+   "name": "Store Foot Traffic Analytics, Conversion Rate Monitoring & Sales Floor Productivity Insights",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Weekly foot traffic data collection & processing\" (replaces manual Step 1).",
+     "- System auto-review of \"review out-of-stock rate for top-selling SKUs — stock-outs reduce conversion\" (replaces manual Step 2).",
+     "- System auto-validate of \"Monthly sales floor productivity deep-dive\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot operates 200 big-box stores with 8,000–15,000 sqm selling areas, generating PHP 25M in-store revenue per store per month. Despite significant investment in physical retail space, the company lacks systematic measurement of how effectively store traffic converts to revenue. Key questions include: (a) how many customers enter each store daily and how does this vary by day-of-week, season, and promotional event? (b) what is the conversion rate (transactions ÷ foot traffic) and how does it compare across stores? (c) which zones within the store (lumber yard, tool wall, tile gallery, appliance section) drive the highest engagement? (d) does foot traffic correlate with staffing levels — are stores understaffed during peak hours? This workflow establishes the analytics framework for foot traffic measurement, conversion rate monitoring, and sales floor productivity insights that drive operational decisions including staffing optimization, planogram refinement, and capital allocation for store layout improvements."
+    ],
+    "Controls": [
+     "- CTL-325 (ensure controlled execution — BI Platform & Reporting (PA-28.1).)",
+     "- operational: BI Analyst (Retail Analytics) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- People counter accuracy varies by technology — infrared counters overcount (children, shopping carts) while video-based counters are more accurate but more expensive",
+     "- Provincial stores may have unreliable power affecting counter uptime — estimated 85–90% data capture rate",
+     "- Conversion rate is influenced by many factors (weather, payday cycle, local events) making week-over-week comparison noisy",
+     "- Zone-level analytics require additional sensor investment — not all 200 stores have zone-level coverage",
+     "- Data privacy considerations — people counters capture customer movement patterns that may require NPC compliance review"
+    ],
+    "Staffing Implication": [
+     "- ~20% of 1 BI Analyst (~364 hours/year) on foot traffic and store productivity analytics — a standing part-time allocation, not a dedicated FTE",
+     "- Store Managers: 15 min/week reviewing store-level conversion dashboard",
+     "- Regional Managers: 1 hour/month reviewing regional conversion trends"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **People Counter System** — infrared/video door counters capturing entry counts per store",
+     "- **POS System** — transaction count, ATV, items per basket per store per day",
+     "- **BI Platform** — foot traffic dashboard, conversion rate analytics, store ranking",
+     "- **Location Master** — store selling area (sqm) for productivity calculations",
+     "- **HR / Scheduling Module** — staffing levels by hour for staffing-to-traffic ratio",
+     "- **Promotional Calendar** — campaign schedule for traffic/conversion correlation"
+    ],
+    "Time Estimate": [
+     "- Weekly analytics: 3 hours/week = 156 hours/year",
+     "- Monthly deep-dive: 4 hours/month = 48 hours/year",
+     "- Quarterly benchmarking: 8 hours/quarter = 32 hours/year",
+     "- Action plan tracking: 2 hours/month = 24 hours/year",
+     "- Conversion-rate variance analysis (step 2): 2 hours/week = 104 hours/year",
+     "- **Annual estimate: ~364 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Manager",
+     "activity": "**Weekly foot traffic data collection & processing**: BI Analyst extracts and processes foot traffic data from store-level people counters (door-mounted infrared or video-based counters): (a) aggregate daily entry counts by store; (b) calculate conversion rate: POS transactions ÷ foot traffic entries; (c) calculate ATV (average transaction value) and items per basket; (d) compute sales per sqm using store selling area from location master; (e) flag stores where conversion rate dropped > 10% week-over-week",
+     "duration": "3 hours/week",
+     "n": "1",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "**Conversion rate variance analysis**: For flagged stores, investigate conversion rate decline: (a) cross-reference with promotional calendar — was the store running an event that drove traffic without conversion? (b) check staffing levels during peak traffic hours — understaffing reduces conversion; (c) review out-of-stock rate for top-selling SKUs — stock-outs reduce conversion; (d) check weather data — heavy rain in provincial locations depresses walk-in traffic; (e) compile findings for Regional Manager review",
+     "duration": "2 hours/week",
+     "n": "2",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Monthly sales floor productivity deep-dive**: For bottom-quartile stores (50 stores by conversion rate), conduct detailed analysis: (a) zone-level traffic heat map (if zone-level sensors available) showing dwell time in lumber yard, tool wall, tile gallery, appliance section, checkout; (b) category-level conversion — which departments have high traffic but low sales; (c) staffing-to-traffic ratio — sales associates per 100 visitors by hour; (d) queue wait time correlation — does checkout queue length correlate with abandoned purchases; (e) generate store-specific productivity improvement recommendations",
+     "duration": "4 hours/month",
+     "n": "3",
+     "r": "BI Analyst / Regional Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Quarterly regional benchmarking report**: BI Analyst produces quarterly benchmarking report comparing all 200 stores across: (a) foot traffic growth rate (YoY, QoQ); (b) conversion rate ranking by region (Mindanao, Visayas, Luzon, NCR); (c) ATV trends by store maturity (new stores < 1 year vs. mature stores > 3 years); (d) sales per sqm vs. foot traffic per sqm — identifying over/under-performing space; (e) present to VP Store Operations and CMO for strategic decisions on marketing spend allocation, store hours optimization, and layout renovation priorities",
+     "duration": "8 hours/quarter",
+     "n": "4",
+     "r": "BI Analyst / BI Manager"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "**Action plan tracking**: Track implementation and impact of productivity improvement actions: (a) for each recommended action (staffing adjustment, layout change, category refresh), measure before/after conversion rate and ATV; (b) report ROI of layout changes and capital improvements; (c) feed results into annual store capital budget process",
+     "duration": "2 hours/month",
+     "n": "5",
+     "r": "BI Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-325"
+   ],
+   "fields": {
+    "Frequency": "Monthly reporting; quarterly deep-dive analysis; annual assortment rationalization review",
+    "Owner": "BI Analytics Manager",
+    "Participants": "BI Analytics Manager, Data Analyst, VP Merchandising, Category Managers, Pricing Analyst, Finance Controller, VP Store Operations",
+    "Trigger": "Monthly category performance reporting cycle; or quarterly assortment review; or ad-hoc request from VP Merchandising or Category Manager",
+    "Volume": "12 product categories; 35,000 active SKUs; 200 stores; ~PHP 62.3B annual revenue across all categories"
+   },
+   "id": "W1451",
+   "level": 2,
+   "name": "Merchandise Category Performance Analytics, Gross Margin Optimization & Assortment Rationalization Insights",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-identify of \"SKU-level margin analysis\" (replaces manual Step 2).",
+     "- System auto-report of \"Assortment rationalization recommendation\" (replaces manual Step 3).",
+     "- System auto-track of \"Category action plan tracking\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight Depot's 35,000 active SKUs are organized across 13 product categories (profile §6.2) (Lumber, Tiles, Plumbing, Electrical, Paint, Hand Tools, Power Tools, Hardware/Fasteners, Appliances, Home Décor, Garden, and Safety/PPE). Effective category management requires data-driven insights on: (a) which categories and sub-categories are growing vs. declining, (b) gross margin by category and SKU (target: 28–32% blended), (c) inventory productivity (GMROI — Gross Margin Return on Inventory Investment) by category, (d) space productivity (sales per sqm by department), and (e) assortment rationalization opportunities (identify SKUs that should be added, maintained, or discontinued). This workflow produces the analytical insights that drive merchandising decisions."
+    ],
+    "Controls": [
+     "- CTL-325 (ensure controlled execution — BI Platform & Reporting (PA-28.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Data granularity at SKU level**: margin analysis requires accurate landed cost per SKU (including freight allocation, customs duty, and handling costs per W85); inaccurate cost allocation distorts margin analysis",
+     "- **Action plan execution discipline**: analytics insights are only valuable if Category Managers act on them; VP Merchandising must enforce data-driven decision-making culture",
+     "- **Balancing revenue and margin**: some high-velocity, low-margin SKUs (e.g., cement, nails) are essential traffic drivers — discontinuing them to improve margin would reduce foot traffic and hurt cross-category sales"
+    ],
+    "Staffing Implication": [
+     "- BI Analytics Manager: ~6–8 hours/week on category analytics. Absorbed.",
+     "- Data Analyst: ~12–16 hours/week on category analytics. Dedicated analyst role.",
+     "- Category Managers: ~2 hours/week each on analytics review and action planning. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Category performance dashboard — automated monthly scorecard generation (W1451.1)",
+     "- SKU margin analysis tool — gross margin waterfall by SKU with drill-down (W1451.2)",
+     "- Assortment analytics module — SKU lifecycle scoring, market gap analysis (W1451.3)",
+     "- Integration with W1 (assortment planning), W13 (pricing), W85 (product costing), W102 (margin analysis), W1214 (store scorecard)"
+    ],
+    "Time Estimate": [
+     "- Monthly dashboard: 8 hours/month = 96 hours/year",
+     "- Quarterly SKU analysis: 16 hours/quarter = 64 hours/year",
+     "- Annual rationalization: 40 hours/year",
+     "- Action tracking: 4 hours/month = 48 hours/year",
+     "- **Annual estimate: ~248 hours/year**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Analytics Manager",
+     "activity": "**Monthly category performance dashboard**: Data Analyst produces monthly category scorecard: (a) revenue by category: (i) actual vs. plan vs. prior year, (ii) revenue share (% of total), (iii) same-store sales growth, (b) gross margin by category: (i) gross margin %, (ii) gross margin PHP, (iii) margin variance drivers (mix, pricing, cost changes), (c) inventory productivity: (i) GMROI (gross margin ÷ average inventory cost), (ii) inventory turns by category, (iii) weeks of supply, (d) space productivity: (i) sales per sqm by department, (ii) gross margin per sqm — identifies departments where space reallocation would improve store profitability",
+     "duration": "8 hours/month",
+     "n": "1",
+     "r": "Data Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**SKU-level margin analysis** (quarterly): Data Analyst conducts deep-dive margin analysis: (a) for each category, rank all SKUs by gross margin contribution (top 20% of SKUs typically drive 80% of margin), (b) identify \"margin leakers\": high-velocity SKUs with below-target margin — evaluate: (i) is the cost increasing? (vendor price increase, landed cost change per W85), (ii) is pricing competitive? (competitor pricing data), (iii) recommended action: negotiate vendor cost reduction, increase SRP, or discontinue, (c) identify \"margin gems\": low-velocity SKUs with high margin — evaluate: (i) can velocity be increased through better placement/promotion?, (ii) are these niche products worth keeping in assortment?, (d) identify \"dead weight\": low-velocity, low-margin SKUs — candidates for discontinuation per W1",
+     "duration": "16 hours/quarter",
+     "n": "2",
+     "r": "Data Analyst / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Assortment rationalization recommendation** (annual): BI Analytics Manager produces annual assortment rationalization report: (a) SKU lifecycle analysis: (i) new SKU performance vs. forecast (first 90 days), (ii) active SKU performance (sales velocity, margin, GMROI), (iii) declining SKU trend (12-month sales trend — is the SKU dying?), (iv) dead SKU identification (zero sales in 90 days), (b) market gap analysis: (i) competitor assortment comparison — categories where BuildRight has fewer SKUs than competitors, (ii) customer search queries on buildright.com.ph with zero results — products customers want but BuildRight doesn't carry, (c) recommendation: (i) SKUs to discontinue (target: 2,000–3,000/year), (ii) SKUs to add (target: 2,000–4,000/year for net 5–8% SKU growth), (iii) space reallocation recommendations by department, (d) present to VP Merchandising and Category Managers for action planning",
+     "duration": "40 hours/year",
+     "n": "3",
+     "r": "BI Analytics Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Category action plan tracking**: VP Merchandising and Category Managers develop action plans based on analytics insights: (a) cost reduction actions: vendor negotiation for high-cost SKUs (target: reduce COGS by 1–2% on top 500 SKUs), (b) pricing actions: SRP adjustments for margin leakers (per W13 pricing governance), (c) assortment actions: discontinuation list, new SKU introduction list, (d) BI Analytics Manager tracks action plan execution and measures impact on subsequent months' category scorecards",
+     "duration": "Ongoing",
+     "n": "4",
+     "r": "Category Managers / BI Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1",
+    "W102",
+    "W1214",
+    "W13",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-325"
+   ],
+   "fields": {
+    "Frequency": "Quarterly segmentation refresh; annual deep-dive with lifetime value modeling; monthly monitoring dashboards",
+    "Owner": "BI Analytics Manager",
+    "Participants": "BI Analytics Manager, Data Scientist, VP Marketing, CMO, Trade Account Manager, CRM Manager, VP Merchandising",
+    "Trigger": "Quarterly customer analytics cycle; or annual marketing strategy planning; or loyalty program review per W104",
+    "Volume": "~600,000 loyalty members (B2C); ~5,200 trade accounts (B2B); ~200 corporate accounts (B2B); ~42,900 ecommerce customers/month"
+   },
+   "id": "W1452",
+   "level": 2,
+   "name": "Customer Segmentation & Lifetime Value Analytics: Trade Professional vs. Retail vs. Corporate Account Profiling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records with segment tags for targeted marketing per W83 and W1443\" (replaces manual Step 1).",
+     "- System auto-count of \"Lifetime value modeling\" (replaces manual Step 2).",
+     "- System auto-monitor of \"Monthly segment monitoring dashboard\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight Depot serves three distinct customer segments: (a) walk-in retail (B2C) — ~60% of revenue from ~600,000 loyalty members, (b) trade professionals (B2B) — 30% of revenue from ~5,000 contractors/builders, and (c) corporate/institutional accounts (B2B) — 10% of revenue from ~200 large accounts. Each segment has fundamentally different purchasing behavior, margin profile, service requirements, and lifetime value. Understanding these differences is critical for: marketing investment allocation (where to spend marketing pesos), merchandising strategy (which products to prioritize for which segment), and service model design (in-store services, delivery, credit terms). This workflow produces the customer segmentation analytics and lifetime value models that inform BuildRight's customer strategy."
+    ],
+    "Controls": [
+     "- CTL-325 (ensure controlled execution — BI Platform & Reporting (PA-28.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Retail customer identification**: many walk-in customers do not present loyalty cards; ~40% of in-store transactions are not linked to a customer profile, limiting segmentation accuracy for the retail segment",
+     "- **Trade account data quality**: trade accounts may have multiple cardholders (company owner, foreman, purchasing officer) creating fragmented transaction history; account-level (not card-level) aggregation is essential",
+     "- **CLV model complexity**: predicting future customer value in retail is inherently uncertain; the model must be validated against actual outcomes and recalibrated annually"
+    ],
+    "Staffing Implication": [
+     "- Data Scientist: ~8 hours/week on customer analytics. Absorbed.",
+     "- BI Analytics Manager: ~4 hours/week on segment insights and stakeholder engagement. Absorbed.",
+     "- Data Analyst: ~4 hours/week on segment dashboard maintenance. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer Data Platform (CDP) — unified customer view across POS, ecommerce, loyalty, trade accounts (W1452.1)",
+     "- RFM segmentation engine — automated customer scoring and classification (W1452.1)",
+     "- CLV prediction model — machine learning model with feature store (W1452.2)",
+     "- Segment monitoring dashboard — real-time KPI tracking by segment (W1452.4)",
+     "- Integration with W17 (loyalty), W24 (trade accounts), W13 (CRM), W83 (marketing campaigns), W1443 (WhatsApp commerce)"
+    ],
+    "Time Estimate": [
+     "- Quarterly segmentation: 16 hours/quarter = 64 hours/year",
+     "- Annual CLV modeling: 40 hours/year",
+     "- Segment insights: 16 hours/quarter = 64 hours/year",
+     "- Monthly dashboard: 8 hours/month = 96 hours/year",
+     "- **Annual estimate: ~264 hours/year**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Analytics Manager",
+     "activity": "**Quarterly segmentation refresh**: Data Scientist refreshes customer segmentation model: (a) RFM analysis (Recency, Frequency, Monetary) for all 605,200+ customers: (i) Recency: days since last purchase, (ii) Frequency: number of transactions in trailing 12 months, (iii) Monetary: total spend in trailing 12 months, (b) segment classification: (i) Retail Champions: top 10% by spend (loyalty members who shop frequently and spend heavily), (ii) Retail Regulars: middle 50% (steady but moderate shoppers), (iii) Retail At-Risk: previously active but declining (trigger win-back per loyalty program), (iv) Trade Active: trade accounts with purchases in last 90 days, (v) Trade Dormant: trade accounts with no purchases in 90+ days (trigger re-engagement), (vi) Corporate Active: corporate accounts with active projects, (vii) Corporate Pipeline: corporate accounts with upcoming project bids, (c) update customer master records with segment tags for targeted marketing per W83 and W1443",
+     "duration": "16 hours/quarter",
+     "n": "1",
+     "r": "Data Scientist"
+    },
+    {
+     "a": "CMO",
+     "activity": "**Lifetime value modeling** (annual): Data Scientist builds/updates customer lifetime value (CLV) model: (a) historical CLV by segment: (i) average annual spend × average customer tenure × gross margin %, (ii) Trade professionals: avg PHP 300K/year × 5-year avg tenure × 25% margin = PHP 375K lifetime value, (iii) Retail Champions: avg PHP 50K/year × 3-year avg tenure × 32% margin = PHP 48K lifetime value, (iv) Corporate accounts: avg PHP 5M/year × 3-year avg tenure × 20% margin = PHP 3M lifetime value, (b) predictive CLV: machine learning model predicts future value based on purchasing patterns, demographics, and engagement signals, (c) customer acquisition cost (CAC) by segment: marketing spend ÷ new customers acquired, (d) CLV:CAC ratio by segment — guides marketing budget allocation (target: CLV:CAC > 3:1)",
+     "duration": "40 hours/year",
+     "n": "2",
+     "r": "Data Scientist"
+    },
+    {
+     "a": "CMO / VP Merchandising",
+     "activity": "**Segment-specific insight generation**: BI Analytics Manager produces segment-specific insights for stakeholders: (a) for VP Marketing: (i) which segment should receive increased marketing investment (highest CLV:CAC ratio), (ii) win-back campaign targets (At-Risk and Dormant segments), (iii) cross-sell/upsell opportunities (retail customers buying project materials who could be trade account candidates), (b) for VP Merchandising: (i) basket analysis by segment (what trade pros buy vs. retail customers — different category affinities), (ii) private label penetration by segment, (c) for VP Store Operations: (i) trade pro visit frequency and preferred store hours (inform staffing), (ii) BOPIS adoption by segment, (d) for CFO: (i) credit risk by segment (corporate account aging), (ii) margin by segment",
+     "duration": "16 hours/quarter",
+     "n": "3",
+     "r": "BI Analytics Manager"
+    },
+    {
+     "a": "BI Analytics Manager",
+     "activity": "**Monthly segment monitoring dashboard**: Data Analyst maintains real-time segment dashboard: (a) active customer count by segment, (b) monthly spend by segment vs. plan, (c) new customer acquisition by segment, (d) churn rate by segment (customers who haven't purchased in 90 days), (e) segment migration (customers moving between segments — e.g., Retail Regular → Trade Account upgrade), (f) alert on significant segment shifts: (i) trade account churn > 5% in a month, (ii) retail active customer decline > 2% month-over-month",
+     "duration": "8 hours/month",
+     "n": "4",
+     "r": "Data Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W104",
+    "W13",
+    "W1443",
+    "W17",
+    "W24",
+    "W83"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-325"
+   ],
+   "fields": {
+    "Frequency": "Daily dashboard refresh; weekly trend summary auto-emailed to Store Manager; monthly deep-dive analytics available on demand",
+    "Owner": "BI Analytics Manager",
+    "Participants": "BI Analytics Manager, Data Analyst, Store Manager, Regional Ops Manager, VP Store Operations",
+    "Trigger": "Daily — automated dashboard refresh at 6:00 AM (pre-store opening); real-time during store operating hours for select KPIs",
+    "Volume": "200 stores × 1 Store Manager dashboard = 200 daily dashboard views; ~180–200 Store Managers viewing daily during morning walkthrough (the >90% adoption target)"
+   },
+   "id": "W1567",
+   "level": 2,
+   "name": "Store Manager Self-Service Analytics Dashboard, Daily KPI Monitoring & Actionable Insight Delivery",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"count by department\" (replaces manual Step 1).",
+     "- System auto-validate of \"Check paint department staffing.\" (replaces manual Step 2).",
+     "- System auto-log of \"Store Manager training & adoption\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's 200 Store Managers are responsible for the daily performance of their stores (sales, customer service, inventory accuracy, staff productivity, safety). However, most Store Managers currently rely on end-of-day Z-reports from the POS and weekly reports emailed from HQ — information that is backward-looking and lacks context (no comparison to plan, no trend, no peer benchmarking). A self-service analytics dashboard accessible on the Store Manager's tablet or mobile phone provides real-time and near-real-time KPIs with actionable context: \"Your paint department sales are 15% below today's target — here's why (foot traffic is normal but conversion rate is down; check staffing in the paint section).\" This workflow manages the design, delivery, and continuous improvement of the Store Manager self-service analytics dashboard."
+    ],
+    "Controls": [
+     "- CTL-325 (ensure controlled execution — BI Platform & Reporting (PA-28.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Information overload**: presenting too many KPIs overwhelms Store Managers; the dashboard must be concise (max 15 KPIs on the landing page) with optional drill-down for detail-oriented users",
+     "- **Data latency**: POS sales data is near-real-time (per POS-013 event streaming), but inventory data from WMS may have 15–30 minute latency; dashboard must clearly indicate data freshness timestamps",
+     "- **Digital literacy variation**: Store Managers in provincial areas may be less comfortable with digital dashboards; the mobile-optimized design with large touch targets and simple visualizations mitigates"
+    ],
+    "Staffing Implication": [
+     "- BI Analytics Manager: ~8 hours/quarter on dashboard design and improvement. Absorbed.",
+     "- Data Analyst: ~4 hours/month on insight engine maintenance. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Self-service BI dashboard — mobile-optimized, role-based access, drill-down from summary to detail (W1567.1)",
+     "- Automated insight engine — AI-generated annotations and threshold-based alerts (W1567.2)",
+     "- Weekly summary email — auto-generated performance summary with action items (W1567.2)",
+     "- Adoption tracking dashboard — login rates, interaction metrics, and usage-performance correlation (W1567.3)",
+     "- Integration with POS (sales transactions), WMS (inventory), HR system (attendance), W41 (complaints), W1399 (forecast accuracy), W575 (store performance review)"
+    ],
+    "Time Estimate": [
+     "- Initial design: 40 hours (one-time)",
+     "- Quarterly refresh: 8 hours/quarter = 32 hours/year",
+     "- Insight engine maintenance: 4 hours/month = 48 hours/year",
+     "- Training: 4 hours/quarter = 16 hours/year",
+     "- Continuous improvement: 8 hours/quarter = 32 hours/year",
+     "- **Annual estimate: ~130 hours (ongoing)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "**Dashboard design**: BI Analytics Manager designs the Store Manager dashboard with the following KPI modules: (a) Sales Today: (i) hourly sales vs. plan (bar chart), (ii) year-over-year comparison, (iii) top 10 selling items today, (iv) average transaction value vs. target; (b) Customer: (i) foot traffic estimate (POS transactions as proxy), (ii) loyalty penetration rate (% of transactions with loyalty card), (iii) BOPIS orders pending pickup, (iv) customer complaints today (from W41); (c) Inventory: (i) stockout count by department (SKUs with zero on-hand), (ii) overdue cycle counts, (iii) receiving schedule (expected deliveries today), (iv) inventory accuracy rate; (d) People: (i) staff attendance (actual vs. scheduled), (ii) overtime hours this week, (iii) training completion status; (e) Safety: (i) days since last incident, (ii) open corrective actions; (f) Peer Comparison: store's sales per sqm rank within its region (anonymized peer benchmarking — \"You are #8 of 60 Mindanao stores this month\")",
+     "duration": "Initial design: 40 hours; quarterly refresh: 8 hours/quarter",
+     "n": "1",
+     "r": "BI Analytics Manager / Data Analyst"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Actionable insight engine**: BI Analytics Manager implements automated insight annotations on the dashboard: (a) AI-generated commentary for notable KPI movements: (i) \"Paint sales down 15% vs. plan — foot traffic normal, conversion rate 8% below average. Check paint department staffing.\", (ii) \"Stockout alert: 12 SKUs in lumber department at zero on-hand. Replenishment order expected tomorrow.\", (iii) \"Loyalty penetration dropped below 40% for 3rd consecutive day. Remind cashiers to ask for loyalty card.\"; (b) threshold-based alerts: push notification to Store Manager's phone when KPI exceeds threshold (e.g., sales > 20% below plan at 2 PM); (c) weekly summary email (auto-generated every Sunday): store performance this week vs. plan, vs. last week, vs. same week last year, and key action items",
+     "duration": "Setup: 20 hours; maintenance: 4 hours/month",
+     "n": "2",
+     "r": "Data Analyst / BI Analytics Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Store Manager training & adoption**: BI Analytics Manager ensures Store Manager adoption: (a) during new Store Manager onboarding per W1484: 1-hour dashboard training session; (b) during quarterly regional meetings: 30-minute dashboard best-practices sharing — highlight how top-performing Store Managers use dashboard insights to drive action; (c) track adoption metrics: (i) daily login rate (target: > 90% of Store Managers log in before 9 AM), (ii) dashboard interaction rate (click-through from summary to detail), (iii) correlation between dashboard usage and store performance improvement",
+     "duration": "4 hours/quarter",
+     "n": "3",
+     "r": "BI Analytics Manager / Regional Ops Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Continuous improvement**: Quarterly: BI Analytics Manager gathers Store Manager feedback: (a) survey: which KPIs are most useful? least useful? what's missing?; (b) feature requests: Store Managers request additional views or drill-downs; (c) prioritize dashboard enhancements based on: (i) number of Store Managers requesting, (ii) potential operational impact, (iii) data availability; (d) release updated dashboard version quarterly with release notes",
+     "duration": "8 hours/quarter",
+     "n": "4",
+     "r": "BI Analytics Manager / Data Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1399",
+    "W1484",
+    "W41",
+    "W575"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-325"
+   ],
+   "fields": {
+    "Frequency": "Weekly dashboard refresh; monthly board reporting package; quarterly strategy review deck",
+    "Owner": "BI Analytics Manager",
+    "Participants": "BI Analytics Manager, Data Analyst, Senior Data Scientist, CEO, CFO, COO, CIO, CMO, CHRO, Board of Directors",
+    "Trigger": "Weekly executive review cycle; monthly board reporting cycle; or ad-hoc executive inquiry",
+    "Volume": "5 C-suite executives (CEO, CFO, COO, CIO, CMO) + CHRO + VP Legal = 7 primary users; board of directors receives monthly package"
+   },
+   "id": "W1568",
+   "level": 2,
+   "name": "Executive Strategy Dashboard, C-Suite Performance Reporting & Board-Level Analytics Package",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"Executive dashboard design\" (replaces manual Step 1).",
+     "- System auto-count of \"headcount by entity\" (replaces manual Step 2).",
+     "- System auto-review of \"Quarterly strategy review deck\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's executive team and board of directors require a consolidated, high-level view of company performance that spans all value streams: sales, margins, inventory health, supply chain efficiency, customer satisfaction, employee metrics, and financial performance. Individual department dashboards exist (W1567 for store operations, W1452 for customer analytics, W1399 for forecasting), but the C-suite needs an integrated view that connects the dots: \"How did Q3's typhoon-related supply chain disruption (W852) affect our same-store sales growth, inventory turns, and gross margin?\" This workflow manages the executive strategy dashboard: a weekly-updated interactive dashboard for the C-suite and a monthly board-level reporting package that synthesizes key metrics, strategic insights, and risk indicators across the entire organization."
+    ],
+    "Controls": [
+     "- CTL-325 (ensure controlled execution — BI Platform & Reporting (PA-28.1).)",
+     "- operational: BI Analytics Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Data reconciliation across sources**: financial data from ERP may not perfectly align with sales data from POS (timing differences, returns adjustments); BI team must maintain a reconciliation layer and clearly state any discrepancies",
+     "- **Board report timeliness**: monthly board package requires data from the prior month's close; if the financial close per W9 is delayed beyond Day 5, the board package is delayed; automate data extraction to minimize manual dependency on financial close",
+     "- **Executive dashboard scope creep**: each C-suite member requests additional KPIs and drill-downs; without governance, the dashboard becomes unwieldy; quarterly review with CEO to prioritize dashboard content"
+    ],
+    "Staffing Implication": [
+     "- BI Analytics Manager: ~20 hours/month on executive reporting. Absorbed.",
+     "- Data Analyst: ~15 hours/month on board package and dashboard maintenance. Absorbed.",
+     "- Senior Data Scientist: ~8 hours/quarter on strategy review analytics. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Executive BI dashboard — role-based views with real-time data refresh for sales and daily refresh for financial/operational metrics (W1568.1)",
+     "- Board reporting automation — data pipeline from ERP, POS, WMS, HR, and CRM into standardized board report template (W1568.2)",
+     "- Strategy review presentation tool — slide generation from analytics with data visualization (W1568.3)",
+     "- Ad-hoc query tool — self-service data exploration for BI team with SQL access to data warehouse (W1568.4)",
+     "- Integration with all VS dashboards (W1567, W1452, W1399, W1553, W1558, W1559)"
+    ],
+    "Time Estimate": [
+     "- Dashboard design: 60 hours (one-time)",
+     "- Dashboard refresh: 12 hours/quarter = 48 hours/year",
+     "- Board package: 8–10 hours/month = 96–120 hours/year",
+     "- Strategy review: 20–30 hours/quarter = 80–120 hours/year",
+     "- Ad-hoc support: 4 hours/week = 208 hours/year",
+     "- **Annual estimate: ~432–496 hours (ongoing: 48 + 96–120 + 80–120 + 208)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "**Executive dashboard design**: BI Analytics Manager designs the C-suite dashboard with the following views: (a) CEO View: (i) total revenue vs. plan vs. prior year (daily, MTD, YTD), (ii) same-store sales growth by region, (iii) EBITDA margin trend, (iv) customer satisfaction score trend, (v) strategic initiative tracker (new store openings, ecommerce growth, sustainability targets); (b) CFO View: (i) revenue and gross margin by entity, (ii) cash flow dashboard (operating, investing, financing), (iii) AP aging summary, (iv) AR aging and collection rate, (v) capex spend vs. budget; (c) COO View: (i) supply chain scorecard (fill rate, on-time delivery, DC throughput), (ii) store operations scorecard (sales/sqm, shrinkage rate, customer complaint rate), (iii) safety dashboard (total incidents, lost-time injuries, days since last major incident); (d) CIO View: (i) system uptime (POS and back-office), (ii) IT service desk metrics (ticket volume, resolution time), (iii) cybersecurity dashboard (threat detections, vulnerability patch status); (e) CMO View: (i) marketing ROI by channel (paid social, email, influencer per W1558, local ads per W1559), (ii) ecommerce metrics (orders, GMV, conversion rate), (iii) loyalty program metrics (member growth, active rate, redemption rate)",
+     "duration": "Initial design: 60 hours; quarterly refresh: 12 hours/quarter",
+     "n": "1",
+     "r": "BI Analytics Manager / Data Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Monthly board reporting package**: Data Analyst compiles monthly board package: (a) Financial Summary: (i) consolidated P&L vs. budget with variance commentary, (ii) balance sheet highlights (inventory value, cash position, debt), (iii) cash flow summary; (b) Operational Highlights: (i) same-store sales growth by region, (ii) new store openings and pipeline, (iii) ecommerce growth and penetration %, (iv) supply chain performance; (c) Strategic Initiatives: (i) progress on annual strategic priorities, (ii) key milestones achieved, (iii) risks and mitigating actions; (d) People: (i) headcount by entity, (ii) turnover rate, (iii) open positions; (e) Risk & Compliance: (i) significant incidents, (ii) regulatory update, (iii) insurance claims summary; (f) CEO commentary letter: 1-page narrative summarizing the month's performance, challenges, and outlook",
+     "duration": "8–10 hours/month",
+     "n": "2",
+     "r": "Data Analyst / BI Analytics Manager / CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Quarterly strategy review deck**: BI Analytics Manager prepares quarterly strategy review presentation: (a) 30–40 slide deck covering: (i) quarterly financial performance vs. plan and prior year, (ii) market analysis (competitive landscape, consumer trends), (iii) strategic initiative deep-dive (2–3 initiatives per quarter — e.g., ecommerce expansion, sustainability program, new store format test), (iv) customer analytics deep-dive per W1452, (v) supply chain and inventory analytics per W1399, (vi) financial outlook for next quarter; (b) Senior Data Scientist contributes advanced analytics: (i) predictive revenue forecast for next quarter, (ii) what-if scenario modeling (e.g., \"What if typhoon season is worse than expected?\"), (iii) competitive intelligence from market data",
+     "duration": "20–30 hours/quarter",
+     "n": "3",
+     "r": "BI Analytics Manager / Senior Data Scientist / CFO"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Ad-hoc executive inquiry support**: BI Analytics Manager supports ad-hoc data requests from C-suite: (a) CEO asks: \"How are our new stores (opened in the last 12 months) performing vs. plan?\"; (b) CFO asks: \"What is our exposure to vendor X who just declared bankruptcy?\"; (c) COO asks: \"Which stores have the highest shrinkage rate and what are the common characteristics?\"; (d) turnaround time: same-day for simple queries, 2–3 days for complex analysis; (e) frequent ad-hoc queries are candidates for addition to the standard dashboard",
+     "duration": "~4 hours/week",
+     "n": "4",
+     "r": "BI Analytics Manager / Data Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1399",
+    "W1452",
+    "W1553",
+    "W1558",
+    "W1559",
+    "W1567",
+    "W852",
+    "W9"
+   ]
+  }
+ ]
+}

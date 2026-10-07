@@ -1,0 +1,609 @@
+{
+ "process_area": {
+  "id": "PA-77.1",
+  "title": "Project Material Planning & Phasing"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-77-construction-material-staging/PA-77.1-project-material-planning-phasing.md",
+ "value_stream": {
+  "directory": "VS-77-construction-material-staging",
+  "id": "VS-77",
+  "name": "Construction Project Material Staging & Phased Delivery"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Per project; ~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)",
+    "Owner": "Trade Sales Manager",
+    "Participants": "Trade Sales Mgr, Category Managers, Supply Planning, Procurement",
+    "Trigger": "Contractor engages BuildRight for project supply",
+    "Volume": "~20–30 projects; PHP 2M–100M each"
+   },
+   "id": "W2694",
+   "level": 2,
+   "name": "Construction Project Material Requirements Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Material-takeoff auto-computed from the project dimensions; quotation auto-generated from the takeoff × pricing; project-status auto-tracked from milestone completion"
+    ],
+    "Controls": [
+     "- CTL-460 (ensure controlled execution — Project Material Planning & Phasing (PA-77.1).)",
+     "- operational: Trade Sales Manager sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-creep risk**: the project scope expands beyond the original quotation, eroding margin; mitigated by the change-order process and the scope-confirmation sign-off",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~2–5 days per occurrence",
+     "- Volume: ~20–30 projects; PHP 2M–100M each",
+     "- Frequency: Per project; ~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)",
+     "- Absorbed into the Trade Sales Manager role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Trade Sales Manager works with contractor: reviews blueprint and bill of quantities, identifies BuildRight-supplied categories, estimates quantities per phase",
+     "duration": "2–5 days",
+     "n": "1",
+     "r": "Trade Sales Manager / Contractor"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning validates availability: checks inventory vs. requirements, identifies long-lead items (imported tiles: 60–90 days), raises advance POs",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Supply Planning"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Trade Sales Manager produces phased delivery schedule: divides project into phases, allocates quantities, aligns delivery dates with timeline; obtains contractor sign-off",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Trade Sales Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W211",
+    "W291",
+    "W3",
+    "W52",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Per project; ongoing monitoring",
+    "Owner": "Supply Planner",
+    "Participants": "Supply Planner, Category Manager, DC Ops, Trade Sales Manager",
+    "Trigger": "Project material plan approved",
+    "Volume": "~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)"
+   },
+   "id": "W2695",
+   "level": 2,
+   "name": "Project Material Reservation & Inventory Allocation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Reservation auto-created against ATP with automatic release/expiry; project-vs-retail allocation auto-validated"
+    ],
+    "Controls": [
+     "- CTL-460 (ensure controlled execution — Project Material Planning & Phasing (PA-77.1).)",
+     "- operational: inventory-count integrity; Operational: Supply Planner sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-creep risk**: the project scope expands beyond the original quotation, eroding margin; mitigated by the change-order process and the scope-confirmation sign-off",
+     "- **Inventory-desync risk**: reservation/ATP desync between project stock and ROP-driven replenishment causing stock diversion; mitigated by real-time ATP validation and buffer-stock reservation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory/ATP (links to VS-05 / W105 multi-channel allocation, VS-29 / W252 item master)",
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)"
+    ],
+    "Time Estimate": [
+     "- ~1 day per occurrence",
+     "- Volume: ~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)",
+     "- Frequency: Per project; ongoing monitoring",
+     "- Absorbed into the Supply Planner role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planner creates inventory reservations: allocates stock against project PO, prevents ROP from consuming project stock; configures ATP for uncommitted availability",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager monitors reservations: ensures no stockouts for regular customers, adjusts allocation, authorizes substitutions when unavailable",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "DC Ops segregates project inventory: dedicated staging area per project, labels with project reference, coordinates delivery scheduling per phase",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "DC Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W105",
+    "W211",
+    "W252",
+    "W3",
+    "W52",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; 5–10 per project",
+    "Owner": "Trade Sales Representative",
+    "Participants": "Trade Sales Rep, Category Manager, Contractor, Supply Planning",
+    "Trigger": "Specified material unavailable or change request",
+    "Volume": "~5–10 per project"
+   },
+   "id": "W2696",
+   "level": 2,
+   "name": "Project Material Substitution & Alternative Approval",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Material-takeoff auto-computed from the project dimensions; quotation auto-generated from the takeoff × pricing; project-status auto-tracked from milestone completion"
+    ],
+    "Controls": [
+     "- CTL-460 (ensure controlled execution — Project Material Planning & Phasing (PA-77.1).)",
+     "- operational: Trade Sales Representative sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-creep risk**: the project scope expands beyond the original quotation, eroding margin; mitigated by the change-order process and the scope-confirmation sign-off",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Mobile app (links to VS-75 / digital engagement app, VS-10 / ecommerce)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per occurrence",
+     "- Volume: ~5–10 per project",
+     "- Frequency: Ad-hoc; 5–10 per project",
+     "- Absorbed into the Trade Sales Representative role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Trade Sales Rep identifies substitution need: out of stock, discontinued, import delay; proposes alternative from available inventory",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Trade Sales Rep"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager evaluates: technical equivalence, visual equivalence (tiles/fixtures), price difference, contractor approval; documents rationale",
+     "duration": "1–2 hours",
+     "n": "2",
+     "r": "Category Manager / Trade Sales Rep"
+    },
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Contractor approves/rejects: if approved — updates reservation and PO; if rejected — Procurement expedites original; all documented in project file",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Contractor / Trade Sales Rep / Supply Planning"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W211",
+    "W291",
+    "W3",
+    "W52",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-204",
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Per project; monthly monitoring",
+    "Owner": "Trade Sales Manager",
+    "Participants": "Trade Sales Mgr, Category Manager, Pricing Analyst, Finance",
+    "Trigger": "Project contract negotiation or price change",
+    "Volume": "~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)"
+   },
+   "id": "W2697",
+   "level": 2,
+   "name": "Project Material Price Lock & Escalation Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Pricing auto-computed from the cost + margin target; settlement auto-reconciled with discrepancy-flagging; invoice auto-generated from the POD/delivery record"
+    ],
+    "Controls": [
+     "- CTL-204 (ensure project staging & price-lock integrity.)",
+     "- CTL-460 (price-change authorization — links to VS-08 / W40); Operational: Trade Sales Manager sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Margin-erosion risk**: pricing miscalculation (commission, discount, surcharge) erodes net margin below target; mitigated by the margin-floor guard and pre-launch validation",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing/financials (links to VS-17 / W9 financial close, VS-29 / W289 pricing master)",
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)"
+    ],
+    "Time Estimate": [
+     "- ~varies per occurrence",
+     "- Volume: ~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)",
+     "- Frequency: Per project; monthly monitoring",
+     "- Absorbed into the Trade Sales Manager role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Trade Sales Manager negotiates price lock: fixed price for project duration (3–12 months) or escalation formula tied to published index, with maximum cap",
+     "duration": "Per project negotiation",
+     "n": "1",
+     "r": "Trade Sales Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Pricing Analyst monitors market movements vs. locked prices: identifies margin erosion risk; quantifies impact; escalates if margin falls below 15%",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Pricing Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance tracks project margin: revenue vs. actual cost including price lock impact, holding cost, delivery cost; reports monthly to VP Merchandising",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance / Trade Sales Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W211",
+    "W289",
+    "W291",
+    "W3",
+    "W40",
+    "W52",
+    "W58",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planning Mgr, Category Managers, Procurement, VP Supply Chain",
+    "Trigger": "Monthly planning cycle",
+    "Volume": "~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)"
+   },
+   "id": "W2698",
+   "level": 2,
+   "name": "Multi-Project Material Demand Consolidation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Material-takeoff auto-computed from the project dimensions; quotation auto-generated from the takeoff × pricing; project-status auto-tracked from milestone completion"
+    ],
+    "Controls": [
+     "- CTL-460 (ensure controlled execution — Project Material Planning & Phasing (PA-77.1).)",
+     "- operational: Supply Planning Manager sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-creep risk**: the project scope expands beyond the original quotation, eroding margin; mitigated by the change-order process and the scope-confirmation sign-off",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 days per occurrence",
+     "- Volume: ~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)",
+     "- Frequency: Monthly",
+     "- Absorbed into the Supply Planning Manager role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning Manager consolidates demand: sums quantities by SKU across projects, checks against retail forecast, identifies spikes",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Manager adjusts procurement: increases POs for high-demand items, negotiates volume discounts, staggers deliveries; ensures retail availability",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Supply Planning Manager / Procurement"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews: identifies items where project demand exceeds 30% of total (risk to retail), recommends allocation rules, adjusts forecast",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W211",
+    "W291",
+    "W3",
+    "W52",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; 10–20 per project",
+    "Owner": "Trade Sales Representative",
+    "Participants": "Trade Sales Rep, Supply Planning, Category Manager, Contractor",
+    "Trigger": "Contractor requests modification",
+    "Volume": "~10–20 per project"
+   },
+   "id": "W2699",
+   "level": 2,
+   "name": "Project Material Change Order Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Material-takeoff auto-computed from the project dimensions; quotation auto-generated from the takeoff × pricing; project-status auto-tracked from milestone completion"
+    ],
+    "Controls": [
+     "- CTL-460 (ensure controlled execution — Project Material Planning & Phasing (PA-77.1).)",
+     "- operational: Trade Sales Representative sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-creep risk**: the project scope expands beyond the original quotation, eroding margin; mitigated by the change-order process and the scope-confirmation sign-off",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per occurrence",
+     "- Volume: ~10–20 per project",
+     "- Frequency: Ad-hoc; 10–20 per project",
+     "- Absorbed into the Trade Sales Representative role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Contractor submits change order: additional quantities, deletions, specification changes; Trade Sales Rep documents in change order log",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Contractor / Trade Sales Rep"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning assesses impact: checks availability, restocking feasibility, schedule impact; provides cost impact to Trade Sales Rep",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Supply Planning / Trade Sales Rep"
+    },
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Trade Sales Rep confirms with contractor: revised quantities and pricing, adjusted schedule, cost implications; obtains written confirmation; updates PO and reservation",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Trade Sales Rep / Contractor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W211",
+    "W2286",
+    "W291",
+    "W3",
+    "W52",
+    "W536",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-460"
+   ],
+   "fields": {
+    "Frequency": "Per project",
+    "Owner": "Trade Sales Representative",
+    "Participants": "Trade Sales Rep, Category Manager, Quality, Contractor",
+    "Trigger": "Project plan development",
+    "Volume": "~20–30 projects"
+   },
+   "id": "W2700",
+   "level": 2,
+   "name": "Project Material Quality Specification Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Material-takeoff auto-computed from the project dimensions; quotation auto-generated from the takeoff × pricing; project-status auto-tracked from milestone completion"
+    ],
+    "Controls": [
+     "- CTL-460 (ensure controlled execution — Project Material Planning & Phasing (PA-77.1).)",
+     "- operational: Trade Sales Representative sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-creep risk**: the project scope expands beyond the original quotation, eroding margin; mitigated by the change-order process and the scope-confirmation sign-off",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)",
+     "- Logistics/DC (links to VS-04 / W3 receiving, VS-04 / W52 fleet, VS-77 / material staging)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 days per occurrence",
+     "- Volume: ~20–30 projects",
+     "- Frequency: Per project",
+     "- Absorbed into the Trade Sales Representative role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Sales Manager",
+     "activity": "Trade Sales Rep documents quality specs: material grades, tile PEI ratings, lumber species/grade/moisture, fixture brand/model/finish",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "Trade Sales Rep / Contractor"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager verifies product availability matching specs: confirms grades and brands, identifies special orders, provides certification documents (PS mark, ASTM, ISO)",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Category Manager / Quality"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Quality provides test certificates for project documentation: cement compressive strength, steel tensile strength, tile breaking strength; includes in project package",
+     "duration": "Per project",
+     "n": "3",
+     "r": "Quality / Trade Sales Rep"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W211",
+    "W291",
+    "W3",
+    "W52",
+    "W58"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-212"
+   ],
+   "fields": {
+    "Frequency": "Per project",
+    "Owner": "Trade Sales Manager",
+    "Participants": "Trade Sales Mgr, Credit Manager, Finance, Contractor",
+    "Trigger": "Project PO creation or contract negotiation",
+    "Volume": "~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)"
+   },
+   "id": "W2701",
+   "level": 2,
+   "name": "Project Account Credit & Payment Terms Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-212: trade-credit authorization & exposure guard — links to VS-16 / W24; Operational: Trade Sales Manager sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit-default risk**: a trade account defaults on extended credit, creating a bad-debt write-off; mitigated by the credit-scoring model and the credit-limit monitoring",
+     "- **Phase-mismatch risk**: material arrives ahead of the construction phase needing it (or late), inflating staging cost and delaying the project; mitigated by the phasing plan tied to the construction schedule"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing/financials (links to VS-17 / W9 financial close, VS-29 / W289 pricing master)",
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Project/design (links to VS-11 / W58 corporate account, VS-66 / W211 design)"
+    ],
+    "Time Estimate": [
+     "- ~varies per occurrence",
+     "- Volume: ~80–120 active B2B projects (of which ~20–30 are large staged/phased material projects)",
+     "- Frequency: Per project",
+     "- Absorbed into the Trade Sales Manager role; not incremental headcount unless volume scales significantly.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising / CFO",
+     "activity": "Trade Sales Manager negotiates payment terms: milestone-based, progress billing, retention (5–10%), credit terms (Net 30/60); Credit Manager approval per authorization matrix",
+     "duration": "Per project",
+     "n": "1",
+     "r": "Trade Sales Manager / Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance sets up project billing: creates project account, links phase delivery to billing milestones, configures retention tracking, establishes credit limit",
+     "duration": "Per project",
+     "n": "2",
+     "r": "Finance / Credit Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Trade Sales Manager monitors payment health: tracks billed vs. collected, escalates overdue payments, ensures retention release upon completion",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Trade Sales Manager / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W211",
+    "W24",
+    "W289",
+    "W58",
+    "W9"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,521 @@
+{
+ "process_area": {
+  "id": "PA-93.2",
+  "title": "Micro-Fulfillment Daily Pick / Pack / Dispatch Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-93-dark-store-micro-fulfillment/PA-93.2-micro-fulfillment-daily-pick-pack-dispatch.md",
+ "value_stream": {
+  "directory": "VS-93-dark-store-micro-fulfillment",
+  "id": "VS-93",
+  "name": "Dark Store & Micro-Fulfillment Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-509"
+   ],
+   "fields": {
+    "Frequency": "6–12 wave releases per day per dark store",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Dark Store Shift Supervisor, WMS, Pickers, Packers, Dispatch",
+    "Trigger": "Continuous order intake; cut-off windows; batch release schedule",
+    "Volume": "~50–400 orders per wave; ~1,000–5,000 lines/day per dark store"
+   },
+   "id": "W3097",
+   "level": 2,
+   "name": "Dark Store Order Wave Planning & Batch Release",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route/zone, and item overlap\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews proposed wave\" (replaces manual Step 2).",
+     "- System auto-generate of \"prints pick labels / pushes to RF guns / dispatches goods-to-person bins\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-509 (ensure controlled execution — Micro-Fulfillment Daily Pick / Pack / Dispatch Operations (PA-93.2).)",
+     "- operational: atomic reservation and real-time sync to ecommerce (links to VS-10)"
+    ],
+    "Pain Points / Risks": [
+     "- **Oversell risk**: Wave reserved against stale inventory; mitigated by atomic reservation and real-time sync to ecommerce (links to VS-10)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS wave engine; OMS/order reservation (links to VS-60/VS-10); inventory (links to VS-05)"
+    ],
+    "Time Estimate": [
+     "- 10–15 min/wave planning; 6–12 waves/day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "WMS continuously aggregates eligible orders (links to VS-60) into a wave plan: group by SLA tier (same-day, next-day, BOPIS), cut-off, dispatch route/zone, and item overlap; respects promised time and rider/3PL capacity",
+     "duration": "Per wave (5–10 min)",
+     "n": "1",
+     "r": "WMS / Dark Store Shift Supervisor"
+    },
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Dark Store Shift Supervisor reviews proposed wave: volume vs. staffing, automation availability, hot-orders, known stockouts/substitutes; adjusts wave size and releases batch to pick",
+     "duration": "5 min/wave",
+     "n": "2",
+     "r": "Dark Store Shift Supervisor"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "System reserves inventory against wave (atomic reservation to prevent oversell), prints pick labels / pushes to RF guns / dispatches goods-to-person bins; flags short-pick candidates for substitute approval",
+     "duration": "Automated",
+     "n": "3",
+     "r": "WMS"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-77"
+   ],
+   "fields": {
+    "Frequency": "Continuous during operating hours",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Pickers, Dark Store Shift Supervisor, Automation (if MFC)",
+    "Trigger": "Wave released to floor",
+    "Volume": "Target ≥ 80 lines/picker-hour (manual) / ≥ 150 lines/picker-hour (MFC automation)"
+   },
+   "id": "W3098",
+   "level": 2,
+   "name": "Multi-Order Batch Picking & RF/Automation-Guided Walk Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans bin and item at each pick face\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates scan-to-tote to prevent wrong-order placement\" (replaces manual Step 2).",
+     "- System auto-log of \"triggers substitute suggestion\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-77 (ensure dark-store order accuracy & dispatch control.)",
+     "- operational: scan-to-tote, weight-check at pack station, and picker accuracy KPI"
+    ],
+    "Pain Points / Risks": [
+     "- **Pick accuracy**: Mis-pick drives customer complaint and shrink; mitigated by scan-to-tote, weight-check at pack station, and picker accuracy KPI"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS pick engine; RF/voice/automation control; substitute logic (links to VS-01)"
+    ],
+    "Time Estimate": [
+     "- Per wave; ~20–40 min/wave depending on size"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Picker follows RF/automation-guided walk sequence (optimized for shortest path / goods-to-person bin delivery); scans bin and item at each pick face; confirms quantity against pick label/tote",
+     "duration": "Per wave",
+     "n": "1",
+     "r": "Picker"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Multi-order batch pick: picker places each picked line into the correct customer tote/order partition (sort-while-picking); system validates scan-to-tote to prevent wrong-order placement",
+     "duration": "Per wave",
+     "n": "2",
+     "r": "Picker"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "On short-pick (stockout, damaged): picker marks reason code in WMS; system triggers substitute suggestion (links to VS-01 substitute logic) or short-ship / cancel per customer-eligible rule; for high-value/fragile, escalate to Supervisor",
+     "duration": "Per exception",
+     "n": "3",
+     "r": "Picker / WMS"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-77"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Packers, Quality Checker, Dark Store Shift Supervisor",
+    "Trigger": "Pick complete; tote arrives at pack station",
+    "Volume": "Target ≥ 30 orders/pack-station-hour"
+   },
+   "id": "W3099",
+   "level": 2,
+   "name": "Pack Station Operations, Quality Check & Right-Box Selection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans order/tote at pack station\" (replaces manual Step 1).",
+     "- System auto-validate of \"check station validates packed weight vs.\" (replaces manual Step 2).",
+     "- System auto-log of \"logged and fed back to picker/packer accuracy KPI\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-77 (ensure dark-store order accuracy & dispatch control.)",
+     "- operational: scan-to-pack and weight tolerance"
+    ],
+    "Pain Points / Risks": [
+     "- **Pack-error risk**: Wrong item or quantity in carton drives returns (links to VS-32) and CS complaints; mitigated by scan-to-pack and weight tolerance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pack station with display; cartonization/dimensioning; weight-check; quality sampling"
+    ],
+    "Time Estimate": [
+     "- 2–4 min/order pack + audit samples"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Packer scans order/tote at pack station; system displays items expected with images and pack instructions (fragile orientation, hazmat rules — links to VS-24, cold/chemical — links to VS-73); packer scans each item to confirm correctness",
+     "duration": "1–3 min/order",
+     "n": "1",
+     "r": "Packer"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "System auto-suggests carton size based on cube (dimensioner or item dimensions); packer packs, void-fills, seals; weight-check station validates packed weight vs. expected tolerance; out-of-tolerance orders held for Quality",
+     "duration": "Per order",
+     "n": "2",
+     "r": "Packer / WMS"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Quality Checker performs AQL sample audit (e.g., 1 in 50): correct items, quantity, presentation, invoice/packing slip, gift/messages; defects logged and fed back to picker/packer accuracy KPI",
+     "duration": "Per sample",
+     "n": "3",
+     "r": "Quality Checker"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-509"
+   ],
+   "fields": {
+    "Frequency": "Daily + event-driven",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Packers, Inventory/Stores Clerk, Procurement (links to VS-34)",
+    "Trigger": "Shift start; low-stock alerts; daily consumables plan",
+    "Volume": "~300–4,800 cartons consumed/day per dark store (one per order, per W3097's wave volumes) drawn from ~10–20 carton sizes on hand, plus labels, void-fill, tape, ribbons"
+   },
+   "id": "W3100",
+   "level": 2,
+   "name": "Pack-Station Consumables, Labeling & Manifest Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prints shipping labels and packing slips\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitors consumables inventory\" (replaces manual Step 2).",
+     "- System auto-scan of \"scan\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-509 (ensure controlled execution — Micro-Fulfillment Daily Pick / Pack / Dispatch Operations (PA-93.2).)",
+     "- operational: min/max and dual-source (links to VS-34)"
+    ],
+    "Pain Points / Risks": [
+     "- **Consumable stockout risk**: Wrong carton size halts pack; mitigated by min/max and dual-source (links to VS-34)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Label/invoice print (links to VS-79); consumables min/max; carrier manifest API (links to VS-56)"
+    ],
+    "Time Estimate": [
+     "- Continuous; ~30–60 min/day per dark store on consumables mgmt"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "System prints shipping labels and packing slips (BIR-compliant invoice for the customer's tender — links to VS-79); integrates address validation; applies promotional inserts, return labels, and multi-language instructions per destination",
+     "duration": "Per order",
+     "n": "1",
+     "r": "WMS / Packer"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Stores Clerk monitors consumables inventory (cartons by size, void-fill, tape, labels, ribbons, hazmat labels) and replenishes pack stations; min/max triggers replenishment from reserve or procurement via VS-34",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Stores Clerk"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Manifest: system builds dispatch manifest per route/carrier/slot; packer loads staged cartons onto dispatch pallet/trolley with manifest scan; system marks orders ready-for-dispatch and notifies carrier/3PL",
+     "duration": "Per dispatch",
+     "n": "3",
+     "r": "WMS / Packer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3097"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-509"
+   ],
+   "fields": {
+    "Frequency": "8–24 dispatch windows per day per dark store",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Dispatch Clerk, 3PL/Rider Partners (links to VS-56), Own Fleet (links to VS-06)",
+    "Trigger": "Wave packed; dispatch window; carrier pickup",
+    "Volume": "~50–500 parcels/load; mix of 3PL rider (last-mile), own-fleet bulk (links to VS-06)"
+   },
+   "id": "W3101",
+   "level": 2,
+   "name": "Dispatch Scheduling, Carrier Handoff & Route Consolidation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans each parcel against manifest\" (replaces manual Step 1).",
+     "- System auto-route of \"Carrier/rider signs for parcels\" (replaces manual Step 2).",
+     "- System auto-record of \"Dispatch Clerk closes manifest, archives signed e-POD to records\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-509 (ensure controlled execution — Micro-Fulfillment Daily Pick / Pack / Dispatch Operations (PA-93.2).)",
+     "- operational: multi-carrier SLA (links to VS-56) and surge-rider pool"
+    ],
+    "Pain Points / Risks": [
+     "- **Carrier no-show / late risk**: Rider/3PL delays break same-day promise; mitigated by multi-carrier SLA (links to VS-56) and surge-rider pool"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Manifest/e-POD; carrier API (links to VS-56); TMS (links to VS-06); customer notification (links to VS-10)"
+    ],
+    "Time Estimate": [
+     "- 10–15 min/dispatch"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Dispatch Clerk confirms carrier/rider arrival; scans each parcel against manifest; system validates route/zone correctness; rejects misrouted parcels back to staging",
+     "duration": "Per dispatch",
+     "n": "1",
+     "r": "Dispatch Clerk"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Carrier/rider signs for parcels (handheld / e-POD); system pushes tracking event to OMS and customer (links to VS-10/VS-13); for own-fleet, TMS route plan (links to VS-06) is loaded to driver app",
+     "duration": "Per dispatch",
+     "n": "2",
+     "r": "Dispatch Clerk / Carrier"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Dispatch Clerk closes manifest, archives signed e-POD to records (links to VS-88), and reports dispatch KPIs (on-time dispatch, route fill, rider wait time) to Shift Supervisor",
+     "duration": "5 min/dispatch",
+     "n": "3",
+     "r": "Dispatch Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-509"
+   ],
+   "fields": {
+    "Frequency": "Per cut-off window (4–8 per day)",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Dark Store Shift Supervisor, Ecommerce Ops (links to VS-60), CS (links to VS-13)",
+    "Trigger": "Daily operating cycle; cut-off breach; SLA at-risk",
+    "Volume": "All eligible orders"
+   },
+   "id": "W3102",
+   "level": 2,
+   "name": "Same-Day / Next-Day Delivery Cut-Off & SLA Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"System enforces published cut-offs per zone/promise\" (replaces manual Step 1).",
+     "- System auto-escalate of \"escalates to supervisor/CS to preempt customer complaint\" (replaces manual Step 2).",
+     "- System auto-log of \"apology and remediation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-509 (ensure controlled execution — Micro-Fulfillment Daily Pick / Pack / Dispatch Operations (PA-93.2).)",
+     "- operational: conservative published promise + stretch internal SLA"
+    ],
+    "Pain Points / Risks": [
+     "- **Promise-creep risk**: Aggressive cut-offs erode customer trust if missed; mitigated by conservative published promise + stretch internal SLA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cut-off engine (links to VS-10/VS-60); SLA dashboard (links to PA-93.3); CS ticketing (links to VS-13)"
+    ],
+    "Time Estimate": [
+     "- Continuous; ~1–2 hr/day per dark store on SLA watch"
+    ]
+   },
+   "steps": [
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "System enforces published cut-offs per zone/promise (e.g., same-day order before 2 PM in Metro Manila Zone 1); auto-extends promise to next tier when cut-off passed; communicates updated promise to customer at checkout (links to VS-10)",
+     "duration": "Automated + daily review",
+     "n": "1",
+     "r": "WMS / OMS"
+    },
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Dark Store Shift Supervisor runs SLA watchlist: orders within 30 min of breach flagged red; reprioritizes pick/pack/dispatch, swaps rider/carrier, or escalates to supervisor/CS to preempt customer complaint",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Dark Store Shift Supervisor"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "CS (links to VS-13) proactively notifies customers of any SLA miss with apology and remediation (credit, loyalty points, free delivery); root-cause feeds into PA-93.3 analytics",
+     "duration": "Per breach",
+     "n": "3",
+     "r": "Customer Service"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-509"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~20–40% of dark-store volume",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Stage Clerk, Customer Service (links to VS-13), Customer",
+    "Trigger": "BOPIS order picked; customer ETA; pickup window",
+    "Volume": "Pick SLA: ready within 4 hr of order (links to VS-10 §8.2); hold 5 days then auto-cancel"
+   },
+   "id": "W3103",
+   "level": 2,
+   "name": "BOPIS / Click-and-Collect Stage & Customer Handover",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"collect zone with locker/shelf ID\" (replaces manual Step 1).",
+     "- System auto-scan of \"scans order out, releases goods\" (replaces manual Step 2).",
+     "- System workflow notification of \"For orders approaching 5-day hold\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-509 (ensure controlled execution — Micro-Fulfillment Daily Pick / Pack / Dispatch Operations (PA-93.2).)",
+     "- operational: ID + pickup code verification"
+    ],
+    "Pain Points / Risks": [
+     "- **Wrong-handover risk**: Releasing to wrong customer drives fraud complaint (links to VS-23); mitigated by ID + pickup code verification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOPIS staging (links to VS-10); customer notification (links to VS-13/VS-75); refund (links to VS-80); revenue (links to VS-16/VS-17)"
+    ],
+    "Time Estimate": [
+     "- 2–5 min per handover; aging mgmt daily"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Packer stages BOPIS order in dedicated click-and-collect zone with locker/shelf ID; system marks order READY and pushes customer notification (SMS/app — links to VS-13/VS-75) with pickup code/QR",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Packer / WMS"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Customer arrives at designated pickup point (dark store counter, partner locker, curbside); Stage Clerk verifies ID/pickup code, scans order out, releases goods; system posts fulfillment and revenue recognition (links to VS-16/VS-17)",
+     "duration": "2–5 min/handover",
+     "n": "2",
+     "r": "Stage Clerk"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "For orders approaching 5-day hold: CS proactively contacts customer (links to VS-13); on expiry, auto-cancel, refund, and return inventory to sellable stock (links to VS-32 returns)",
+     "duration": "Per aging",
+     "n": "3",
+     "r": "Customer Service / WMS"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-77"
+   ],
+   "fields": {
+    "Frequency": "~2–5% return rate (links to VS-32)",
+    "Owner": "Dark Store Shift Supervisor",
+    "Participants": "Returns Clerk, Quality, Inventory, CS (links to VS-13), AP/AR",
+    "Trigger": "Customer returns ecommerce/dark-store order; damaged-in-transit; mis-pick; undeliverable",
+    "Volume": "Per dark store"
+   },
+   "id": "W3104",
+   "level": 2,
+   "name": "Dark Store Returns, Reverse Putaway & Exception Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"Returns Clerk receives returned/undeliverable parcel\" (replaces manual Step 1).",
+     "- System auto-route of \"route to disposition\" (replaces manual Step 2).",
+     "- System auto-file of \"file claim with carrier\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-77 (ensure dark-store order accuracy & dispatch control.)",
+     "- operational: inspection, weight check, and serial tracking"
+    ],
+    "Pain Points / Risks": [
+     "- **Return-fraud risk**: False claims, empty-box returns; mitigated by inspection, weight check, and serial tracking"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Returns workflow (links to VS-32); damage/claims (links to VS-90); refunds (links to VS-80); inventory (links to VS-05)"
+    ],
+    "Time Estimate": [
+     "- 3–8 min per return"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Returns Clerk receives returned/undeliverable parcel; scans order; matches to original shipment; inspects condition (A/B/C/D, saleable/not); logs disposition reason and photos",
+     "duration": "Per return (3–5 min)",
+     "n": "1",
+     "r": "Returns Clerk"
+    },
+    {
+     "a": "Dark Store Shift Supervisor",
+     "activity": "Quality/Inventory route to disposition: sellable → reverse putaway to pick face (links to VS-05); damaged → damage/claim workflow (links to VS-90); vendor-return → VS-32; dispose → VS-73",
+     "duration": "Per return",
+     "n": "2",
+     "r": "Quality / Inventory"
+    },
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Finance/CS process refund (links to VS-80) and any restocking fee per policy; for courier-attributable damage, file claim with carrier (links to VS-56/VS-90); update customer via CS",
+     "duration": "Per return",
+     "n": "3",
+     "r": "Finance / CS"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

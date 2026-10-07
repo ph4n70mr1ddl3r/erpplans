@@ -1,0 +1,573 @@
+{
+ "process_area": {
+  "id": "PA-99.3",
+  "title": "Technology Asset Security, Cost & Governance Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-99-it-asset-technology-lifecycle-management/PA-99.3-technology-asset-security-cost-governance-analytics.md",
+ "value_stream": {
+  "directory": "VS-99-it-asset-technology-lifecycle-management",
+  "id": "VS-99",
+  "name": "IT Asset & Technology Lifecycle Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Continuous + policy cycle",
+    "Owner": "Security Manager",
+    "Participants": "Security Mgr (links to VS-27.3), IT Ops (links to VS-27), IT Asset Mgr, Development (links to VS-27.1)",
+    "Trigger": "New device deployment (W3235); policy update; security findings",
+    "Volume": "All endpoints, POS, servers, network"
+   },
+   "id": "W3249",
+   "level": 2,
+   "name": "IT Asset Security Hardening & Configuration Baseline",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System rule-based auto-approval of \"approved software allow-list\" (replaces manual Step 1).",
+     "- System auto-scan of \"Deploy and enforce baselines\" (replaces manual Step 2).",
+     "- System auto-report of \"report baseline compliance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: continuous scanning and auto-remediation; operational: class-specific baselines"
+    ],
+    "Pain Points / Risks": [
+     "- **Configuration-drift risk**: Devices fall out of baseline over time; mitigated by continuous scanning and auto-remediation",
+     "- **POS-constraint risk**: Hardening must coexist with POS offline/legacy requirements (per POS-013); mitigated by class-specific baselines"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Configuration/security tools (links to VS-27.3); MDM (W3236); imaging (W3235); risk register (links to VS-21.2)"
+    ],
+    "Time Estimate": [
+     "- Per policy cycle; continuous monitoring"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Security Manager",
+     "activity": "Security/IT Ops define and maintain hardening baselines per asset class (POS, endpoint, server, network, mobile): CIS/industry benchmarks, BuildRight-specific standards (encryption, AV/EDR, patch level, MDM, least-privilege, disabled services/ports), approved software allow-list; version and publish baselines",
+     "duration": "Per policy cycle",
+     "n": "1",
+     "r": "Security / IT Ops"
+    },
+    {
+     "a": "Security Manager",
+     "activity": "Deploy and enforce baselines: build into imaging (W3235), enforce via configuration management and MDM (W3236), monitor drift via scanning (links to VS-27.3), auto-remediate or ticket; gate new assets on baseline compliance before deployment",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT Ops / Security"
+    },
+    {
+     "a": "Security Manager",
+     "activity": "Audit and report baseline compliance: measure % compliant by class/location, remediate exceptions, report to IT governance (W3253) and security risk register (links to VS-21.2/VS-27.3); align to data-privacy safeguards (links to VS-91) on devices handling personal data",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Security / IT Asset Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3235",
+    "W3236",
+    "W3253"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Continuous + event-driven",
+    "Owner": "Security Manager",
+    "Participants": "Security Mgr (links to VS-27.3), IT Ops (links to VS-27), IT Asset Mgr, Finance, Business Owners",
+    "Trigger": "Vendor end-of-support; CVE/vulnerability advisory; audit finding",
+    "Volume": "Subset of estate approaching EOL or with unpatched vulnerabilities"
+   },
+   "id": "W3250",
+   "level": 2,
+   "name": "End-of-Life / Vulnerable Asset Remediation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan for known vulnerabilities\" (replaces manual Step 1).",
+     "- System auto-track of \"Track remediation SLA and report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: SLA and prioritization; operational: refresh acceleration and isolation"
+    ],
+    "Pain Points / Risks": [
+     "- **Unpatched-vulnerability risk**: Exploit of known CVE causes breach (links to VS-27.3/VS-91); mitigated by SLA and prioritization",
+     "- **EOL-support gap**: Vendor no longer patches; mitigated by refresh acceleration and isolation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vulnerability/security (links to VS-27.3); CMDB/EOL tracking (W3233); change mgmt (links to VS-27.1); risk register (links to VS-21.2)"
+    ],
+    "Time Estimate": [
+     "- Per finding; continuous tracking"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Security Manager",
+     "activity": "Security/IT Asset Mgr identify EOL/vulnerable assets: track vendor end-of-support dates per asset (W3233), scan for known vulnerabilities (CVEs per W3247), assess exploitability and exposure; prioritize by risk (critical/high first)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Security / IT Asset Mgr"
+    },
+    {
+     "a": "Security Manager",
+     "activity": "Remediate: patch/upgrade where supported, isolate/compensating-controls where patch unavailable, accelerate refresh (W3238) for EOL assets, decommission where uneconomic; manage business disruption and change control (links to VS-27.1 W132/W495)",
+     "duration": "Per finding",
+     "n": "2",
+     "r": "IT Ops / Security / IT Asset Mgr"
+    },
+    {
+     "a": "Security Manager",
+     "activity": "Track remediation SLA and report: open vulnerabilities/EOL inventory, mean-time-to-remediate, exceptions with risk acceptance and expiry; feed risk register (links to VS-21.2) and audit support (W3256)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Security / IT Asset Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W132",
+    "W3233",
+    "W3238",
+    "W3247",
+    "W3256",
+    "W495"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + per decision",
+    "Owner": "IT Asset Manager",
+    "Participants": "IT Asset Mgr, Finance (links to VS-17.4), IT Ops (links to VS-27), Procurement",
+    "Trigger": "Quarterly cost review; catalog/refresh decisions",
+    "Volume": "Full hardware/software estate"
+   },
+   "id": "W3251",
+   "level": 2,
+   "name": "IT Asset Total Cost of Ownership Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-analyze of \"Analyze TCO drivers and comparisons\" (replaces manual Step 2).",
+     "- System auto-log of \"Feed TCO into decisions\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: comprehensive TCO model; operational: granular modeling"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden-cost risk**: Undercounting support/operations understates true TCO; mitigated by comprehensive TCO model",
+     "- **Model-oversimplification risk**: Aggregate TCO hides class-level variation; mitigated by granular modeling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- TCO analytics/BI (links to VS-28); finance (links to VS-17.4); CMDB (W3233); procurement (links to VS-34)"
+    ],
+    "Time Estimate": [
+     "- Quarterly; ongoing refinement"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Asset Manager",
+     "activity": "IT Asset Mgr/Finance build TCO model per asset class/model: acquisition (capex), software/licenses (W3241), deployment/config (W3235), support/maintenance/break-fix (W3237), operations (power, network, management), refresh/disposal (W3238/W3239); annualize over lifecycle",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "IT Asset Mgr / Finance"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Analyze TCO drivers and comparisons: cost per device, per store, per user; compare models/vendors/strategies (own vs lease per VS-96 parallel, standard vs premium); identify cost outliers and optimization opportunities (W3242/W3244)",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "IT Asset Mgr / Finance"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Feed TCO into decisions: catalog selection (W3234), refresh policy (W3238), make/buy/lease, vendor selection (W3255); report TCO trends and optimization savings to IT governance and finance",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "IT Asset Mgr / Procurement"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3233",
+    "W3234",
+    "W3235",
+    "W3237",
+    "W3238",
+    "W3239",
+    "W3241",
+    "W3242",
+    "W3244",
+    "W3255"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "IT Asset Manager",
+    "Participants": "IT Asset Mgr, Finance (links to VS-72/VS-17), IT Ops (links to VS-27), Entity/Dept Owners",
+    "Trigger": "Quarterly utilization review; chargeback cycle",
+    "Volume": "Full estate"
+   },
+   "id": "W3252",
+   "level": 2,
+   "name": "Asset Utilization, Right-Sizing & Chargeback",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-identify of \"identify under-utilized assets and over-provisioning\" (replaces manual Step 1).",
+     "- System auto-assign of \"reassign to higher-value use\" (replaces manual Step 2).",
+     "- System auto-count of \"accountability, report unit economics to entity finance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: utilization analytics; operational: transparent usage data and methodology"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-provisioning waste**: Idle capacity inflates cost; mitigated by utilization analytics",
+     "- **Chargeback-dispute risk**: Entities contest allocations; mitigated by transparent usage data and methodology"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Utilization/monitoring (links to VS-27); shared services/chargeback (links to VS-72); finance (links to VS-17); BI (links to VS-28)"
+    ],
+    "Time Estimate": [
+     "- Quarterly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Asset Manager",
+     "activity": "IT Asset Mgr measure utilization: device uptime/usage, software-feature usage (W3242), cloud resource utilization (W3244), capacity vs demand; identify under-utilized assets and over-provisioning",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "IT Asset Mgr / IT Ops"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Right-size: consolidate under-utilized assets, down-size configurations, retire redundant capacity, reassign to higher-value use; balance utilization with resilience/redundancy requirements",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "IT Asset Mgr / IT Ops"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Chargeback/showback to consuming entities (5 entities per VS-72) and departments: allocate IT asset cost by usage (links to VS-72 shared-services chargeback), drive accountability, report unit economics to entity finance",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "IT Asset Mgr / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3242",
+    "W3244"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "IT Asset Manager",
+    "Participants": "IT Asset Mgr, IT Governance, Security (links to VS-27.3), Finance, Audit (links to VS-21), Data Governance (links to VS-28)",
+    "Trigger": "Annual governance cycle; policy refresh; audit finding",
+    "Volume": "Enterprise-wide ITAM program"
+   },
+   "id": "W3253",
+   "level": 2,
+   "name": "ITAM Governance, Policy & Stewardship Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enterprise data governance council\" (replaces manual Step 2).",
+     "- System auto-log of \"Measure and report ITAM maturity\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: annual refresh; operational: maturity model and improvement plan"
+    ],
+    "Pain Points / Risks": [
+     "- **Policy-staleness risk**: Outdated policy fails to address new tech (cloud, SaaS, AI); mitigated by annual refresh",
+     "- **Low-maturity risk**: Weak ITAM leads to cost/compliance/security issues; mitigated by maturity model and improvement plan"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Policy/CMS (links to VS-22/VS-88); data governance (links to VS-28/VS-29); audit (links to VS-21)"
+    ],
+    "Time Estimate": [
+     "- Annual cycle; ongoing stewardship"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Asset Manager",
+     "activity": "IT Asset Mgr/IT Governance maintain ITAM policy framework: hardware lifecycle, software licensing, SaaS/cloud, security baseline (W3249), disposal (W3239/W3254), acceptable use (links to VS-27.3), roles/responsibilities, authority matrix; align with VS-28 data governance and VS-29 master-data governance",
+     "duration": "Annual",
+     "n": "1",
+     "r": "IT Asset Mgr / IT Governance"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Operate ITAM stewardship: assign asset owners/stewards per class, define data-quality standards for the CMDB (W3233) and SAM (W3241), conduct training and awareness, manage exceptions/variances; integrate with enterprise data governance council (links to VS-28 W1177)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT Asset Mgr / Stewards"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Measure and report ITAM maturity: KPIs (CMDB accuracy, license compliance %, refresh-cycle adherence, disposal-compliance %), maturity model (people/process/technology), continuous improvement; report to IT steering and audit (links to VS-21)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "IT Asset Mgr / Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1177",
+    "W3233",
+    "W3239",
+    "W3241",
+    "W3249",
+    "W3254"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Continuous + audit-driven",
+    "Owner": "IT Asset Manager",
+    "Participants": "IT Asset Mgr, Privacy/DPO (links to VS-91), Sustainability (links to VS-73/VS-25), Finance (links to VS-35), Legal, Audit (links to VS-21)",
+    "Trigger": "Disposal (W3239); regulatory audit; policy review",
+    "Volume": "Hundreds–thousands of disposals/year"
+   },
+   "id": "W3254",
+   "level": 2,
+   "name": "Asset Disposal Compliance (Data Privacy / BIR / E-Waste)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"document chain-of-custody and disposal method, comply with hazardous-waste…\" (replaces manual Step 2).",
+     "- System auto-record of \"records per BIR 10-year requirement\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: certified sanitization and certificates; operational: accredited vendor and documentation"
+    ],
+    "Pain Points / Risks": [
+     "- **Privacy-breach risk**: Improper sanitization exposes personal data (links to VS-91 NPC); mitigated by certified sanitization and certificates",
+     "- **Environmental-fine risk**: Improper e-waste disposal violates DENR rules (links to VS-73.2); mitigated by accredited vendor and documentation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Privacy (links to VS-91); environment (links to VS-73/VS-25); fixed assets (links to VS-35); tax (links to VS-79); records (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- Per disposal; ongoing compliance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Asset Manager",
+     "activity": "Ensure data-privacy compliance on disposal: certified sanitization (NIST 800-88) for all data-bearing media (W3239), retain sanitization certificates, manage data-subject obligations (links to VS-91 — secure destruction of personal data per RA 10173); DPO oversight",
+     "duration": "Per disposal",
+     "n": "1",
+     "r": "IT Asset Mgr / DPO"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Ensure e-waste/environmental compliance: use DENR-accredited TSD vendors (links to VS-73.2 hazardous/e-waste), document chain-of-custody and disposal method, comply with hazardous-waste registration; manage CSR/donation with sanitization and end-use controls",
+     "duration": "Per disposal",
+     "n": "2",
+     "r": "IT Asset Mgr / Sustainability"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Ensure financial/BIR compliance: derecognize assets (links to VS-35.3), document disposal for tax (gain/loss, links to VS-79), retain records per BIR 10-year requirement (links to VS-88); support external audit (links to VS-22.2) and privacy/environmental audits",
+     "duration": "Per disposal",
+     "n": "3",
+     "r": "IT Asset Mgr / Finance / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3239"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Per contract + ongoing",
+    "Owner": "IT Asset Manager",
+    "Participants": "IT Asset Mgr, Procurement (links to VS-34/VS-67), IT Ops (links to VS-27), Finance, Legal",
+    "Trigger": "Warranty expiry; vendor performance issue; contract renewal",
+    "Volume": "~20–50 IT hardware/software/cloud vendors"
+   },
+   "id": "W3255",
+   "level": 2,
+   "name": "IT Vendor & Hardware Warranty Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"track vendor performance\" (replaces manual Step 1).",
+     "- System auto-log of \"Vendor scorecard and review\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: warranty tracking; operational: multi-vendor strategy where feasible"
+    ],
+    "Pain Points / Risks": [
+     "- **Warranty-leakage risk**: Paying for in-warranty repairs or extended warranties on low-failure assets; mitigated by warranty tracking",
+     "- **Vendor-lock risk**: Over-dependence on one vendor; mitigated by multi-vendor strategy where feasible"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor master (links to VS-29/VS-03); procurement (links to VS-34); CMDB/warranty (W3233); scorecard (links to VS-67)"
+    ],
+    "Time Estimate": [
+     "- Ongoing; quarterly reviews"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Asset Manager",
+     "activity": "IT Asset Mgr/Procurement manage IT vendor relationships: maintain vendor master (links to VS-29), framework agreements (W3234), warranty/SLA terms, RMA process (W3237), support tiers, escalation contacts; track vendor performance (delivery, quality, support responsiveness)",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "IT Asset Mgr / Procurement"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Manage warranties per asset: track warranty start/end and coverage per serial (W3233), decide on extended-warranty purchase (cost vs expected break/fix), ensure RMA eligibility before out-of-warranty (W3237); manage vendor support contracts (vendor-specific support plans)",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "IT Asset Mgr"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Vendor scorecard and review (links to VS-67 methodology): periodic business review, performance scorecard, issue resolution, renewal/renegotiation (W3245), rationalize to preferred vendors; feed catalog decisions (W3234)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "IT Asset Mgr / Procurement"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3233",
+    "W3234",
+    "W3237",
+    "W3245"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-528"
+   ],
+   "fields": {
+    "Frequency": "Quarterly risk review + audit-driven",
+    "Owner": "IT Asset Manager",
+    "Participants": "IT Asset Mgr, Security (links to VS-27.3), Risk (links to VS-21.2), Audit (links to VS-21), Privacy (links to VS-91)",
+    "Trigger": "Risk-cycle (links to VS-21.2); audit (internal/external); incident",
+    "Volume": "ITAM risk register; audit support"
+   },
+   "id": "W3256",
+   "level": 2,
+   "name": "Technology Asset Risk Register & Audit Support",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enterprise risk register\" (replaces manual Step 1).",
+     "- System auto-record of \"Support internal/external audit\" (replaces manual Step 2).",
+     "- System auto-post of \"posture to IT steering and audit committee\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-528 (ensure controlled execution — Technology Asset Security, Cost & Governance Analytics (PA-99.3).)",
+     "- operational: integration (links to VS-21); operational: proactive controls and timely remediation"
+    ],
+    "Pain Points / Risks": [
+     "- **Unmanaged risk**: ITAM risks not captured in enterprise risk register; mitigated by integration (links to VS-21.2)",
+     "- **Audit-finding risk**: Audit identifies control gaps; mitigated by proactive controls and timely remediation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Risk register (links to VS-21.2); audit (links to VS-21); security (links to VS-27.3); privacy (links to VS-91); records (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- Quarterly; per audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Asset Manager",
+     "activity": "IT Asset Mgr/Security maintain ITAM risk register: asset-related risks (EOL/vulnerable W3250, non-compliant licenses W3246, ghost assets W3233, disposal-privacy W3254, lost/stolen W3240), assess likelihood/impact, assign owner and mitigation, track to closure; integrate to enterprise risk register (links to VS-21.2)",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "IT Asset Mgr / Security / Risk"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Support internal/external audit (links to VS-21/VS-22.2): provide CMDB (W3233), SAM (W3241), disposal certificates (W3239/W3254), license/contract records (W3245), privacy controls (links to VS-91); respond to findings and remediate",
+     "duration": "Per audit",
+     "n": "2",
+     "r": "IT Asset Mgr / Audit"
+    },
+    {
+     "a": "IT Asset Manager",
+     "activity": "Continuous improvement: incorporate audit findings, incidents (W3240/W3246), and industry developments into policy (W3253) and controls; report ITAM risk posture to IT steering and audit committee (links to VS-21/VS-36)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "IT Asset Mgr / Risk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3233",
+    "W3239",
+    "W3240",
+    "W3241",
+    "W3245",
+    "W3246",
+    "W3250",
+    "W3253",
+    "W3254"
+   ]
+  }
+ ]
+}

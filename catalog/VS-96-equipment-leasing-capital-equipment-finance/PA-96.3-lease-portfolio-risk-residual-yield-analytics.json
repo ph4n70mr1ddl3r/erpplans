@@ -1,0 +1,532 @@
+{
+ "process_area": {
+  "id": "PA-96.3",
+  "title": "Lease Portfolio Risk, Residual & Yield Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-96-equipment-leasing-capital-equipment-finance/PA-96.3-lease-portfolio-risk-residual-yield-analytics.md",
+ "value_stream": {
+  "directory": "VS-96-equipment-leasing-capital-equipment-finance",
+  "id": "VS-96",
+  "name": "Equipment Leasing & Capital Equipment Finance"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-519"
+   ],
+   "fields": {
+    "Frequency": "Monthly/quarterly",
+    "Owner": "Lease Portfolio Manager",
+    "Participants": "Lease Portfolio Mgr, Finance, Risk, BI (links to VS-28), Treasury (links to VS-18)",
+    "Trigger": "Monthly portfolio review; ALM cycle",
+    "Volume": "Whole portfolio"
+   },
+   "id": "W3177",
+   "level": 2,
+   "name": "Lease Portfolio Composition & Concentration Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-analyze of \"analyze concentration vs.\" (replaces manual Step 2).",
+     "- System auto-file of \"profile\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-519 (ensure controlled execution — Lease Portfolio Risk, Residual & Yield Analytics (PA-96.3).)",
+     "- operational: limits and diversification"
+    ],
+    "Pain Points / Risks": [
+     "- **Concentration risk**: Adverse event in single segment/region impairs portfolio; mitigated by limits and diversification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Portfolio/BI dashboards (links to VS-28); treasury/ALM (links to VS-18); governance (links to VS-36)"
+    ],
+    "Time Estimate": [
+     "- 1 week per monthly cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Portfolio Manager",
+     "activity": "BI (links to VS-28) compute portfolio composition: outstanding balance, # of leases, average ticket, by segment (trade/corporate/government), asset category, geography, tenor, lessor partner (W3165), lease type",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Lease Portfolio Mgr/Risk analyze concentration vs. limits: top-customer concentration, single-segment, single-asset-category, single-region; flag breaches and recommend rebalancing (origination tilt, partner diversification)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Lease Portfolio Mgr / Risk"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/Treasury (links to VS-18) report portfolio metrics to ALCO/Finance Committee (links to VS-36); mature/amortize portfolio projections; align funding to asset profile (W3181)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Finance Analyst / Treasury"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3165",
+    "W3181"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-105"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Lease Credit Manager",
+    "Participants": "Lease Credit Mgr, Risk, Finance, Internal Audit (links to VS-21)",
+    "Trigger": "Monthly risk cycle; delinquency migration; ECL re-measurement",
+    "Volume": "Whole portfolio"
+   },
+   "id": "W3178",
+   "level": 2,
+   "name": "Lease Credit Risk, Scoring & Provisioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitor portfolio credit quality\" (replaces manual Step 1).",
+     "- System auto-post of \"Finance compute Expected Credit Loss\" (replaces manual Step 2).",
+     "- System auto-log of \"methodology, collection effectiveness\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-105 (prevent unauthorized lease credit extension.)",
+     "- operational: back-testing and periodic model validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Model-risk**: Mis-calibrated scoring under-prices risk; mitigated by back-testing and periodic model validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Credit-scoring model; ECL engine; GL/provision (links to VS-17); audit (links to VS-21)"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per monthly cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Lease Credit Mgr/Risk monitor portfolio credit quality: delinquency buckets (30/60/90+), default rate, cure rate, migration by internal rating; refresh scoring model performance vs. actuals",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Risk Analyst / Lease Credit Mgr"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance compute Expected Credit Loss (ECL) per PFRS 9 / PAS 39 (links to VS-17): PD × LGD × EAD by bucket; post provision; report movement to Finance Committee (links to VS-36)",
+     "duration": "Monthly/quarterly",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "Audit Committee",
+     "activity": "Internal Audit (links to VS-21) periodically audit credit process: underwriting quality, scoring accuracy, provisioning methodology, collection effectiveness; findings to audit committee",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-519"
+   ],
+   "fields": {
+    "Frequency": "Per return + quarterly review",
+    "Owner": "Lease Portfolio Manager",
+    "Participants": "Lease Portfolio Mgr, Inventory (links to VS-05), Category (links to VS-01), Quality, Sales (links to VS-11)",
+    "Trigger": "Asset return (W3175); periodic residual review",
+    "Volume": "Per returned asset + portfolio"
+   },
+   "id": "W3179",
+   "level": 2,
+   "name": "Residual Value Realization & Used-Equipment Remarketing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"track residual realization\" (replaces manual Step 1).",
+     "- System auto-report of \"report residual risk to Finance Committee\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-519 (ensure controlled execution — Lease Portfolio Risk, Residual & Yield Analytics (PA-96.3).)",
+     "- operational: conservative residual and diverse remarketing channels"
+    ],
+    "Pain Points / Risks": [
+     "- **Used-market-volatility risk**: Secondary-market price swings affect recovery; mitigated by conservative residual and diverse remarketing channels"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Residual master (links to W3162); inventory (links to VS-05); remarketing channel (links to VS-09/VS-11)"
+    ],
+    "Time Estimate": [
+     "- Per asset; quarterly review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Lease Portfolio Mgr/Category (links to VS-01) track residual realization: returned-asset sale price vs. book residual; analyze by asset category, age, condition; identify over/under-stated residuals",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Lease Portfolio Mgr / Category"
+    },
+    {
+     "a": "Lease Portfolio Manager",
+     "activity": "Inventory/Sales (links to VS-11) remarket returned assets: certified-pre-owned sale (links to VS-09 W916), auction, dealer wholesale, redeploy to new lease (W3175), refurbish (links to VS-09), or scrap (links to VS-73); maximize recovery",
+     "duration": "Per asset",
+     "n": "2",
+     "r": "Inventory / Sales / Quality"
+    },
+    {
+     "a": "CFO",
+     "activity": "Lease Portfolio Mgr/Risk recalibrate residual curves (W3162) based on actual realization; adjust pricing; report residual risk to Finance Committee (links to VS-36)",
+     "duration": "Quarterly/annual",
+     "n": "3",
+     "r": "Lease Portfolio Mgr / Risk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3162",
+    "W3175",
+    "W916"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-519"
+   ],
+   "fields": {
+    "Frequency": "Monthly/quarterly",
+    "Owner": "Lease Portfolio Manager",
+    "Participants": "Lease Portfolio Mgr, Finance, BI (links to VS-28), Treasury (links to VS-18)",
+    "Trigger": "Monthly/quarterly profitability cycle",
+    "Volume": "Whole portfolio + per deal"
+   },
+   "id": "W3180",
+   "level": 2,
+   "name": "Lease Yield, IRR & Profitability Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-analyze of \"analyze per-deal IRR vs.\" (replaces manual Step 2).",
+     "- System auto-report of \"report profitability to ALCO/Finance Committee\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-519 (ensure controlled execution — Lease Portfolio Risk, Residual & Yield Analytics (PA-96.3).)",
+     "- operational: risk-based pricing and operating-cost discipline"
+    ],
+    "Pain Points / Risks": [
+     "- **Yield-erosion risk**: Competitive pressure compresses margins; mitigated by risk-based pricing and operating-cost discipline"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Profitability analytics (links to VS-28/VS-17); treasury/ALM (links to VS-18); governance (links to VS-36)"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Portfolio Manager",
+     "activity": "Finance/BI (links to VS-28) compute portfolio yield: effective interest yield, net interest margin (yield − cost-of-funds), operating cost ratio, credit cost (provisions), residual gain/loss; segment by product/segment/partner",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Finance Analyst / BI"
+    },
+    {
+     "a": "CFO",
+     "activity": "Lease Portfolio Mgr analyze per-deal IRR vs. pricing-model target; identify under-yielding deals (mis-pricing, restructuring losses, credit costs); recommend pricing/underwriting adjustments",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Lease Portfolio Mgr / Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury/Finance (links to VS-18) report profitability to ALCO/Finance Committee; calibrate new-business pricing to hit target return-on-risk-adjusted-capital; feed into strategy (W3161)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Finance / Treasury"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3161"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-519"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Mgr, CFO, Lease Portfolio Mgr, Legal, Investment Bank (if securitization)",
+    "Trigger": "Portfolio scale threshold; funding-cost optimization; partner-bank facility renewal",
+    "Volume": "Whole portfolio"
+   },
+   "id": "W3181",
+   "level": 2,
+   "name": "Lease Portfolio Securitization & Funding Strategy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-match of \"match funding tenor/currency to lease assets\" (replaces manual Step 1).",
+     "- System auto-post of \"post-trade servicing and reporting\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-519 (ensure controlled execution — Lease Portfolio Risk, Residual & Yield Analytics (PA-96.3).)",
+     "- operational: ALM discipline and tenor-matching"
+    ],
+    "Pain Points / Risks": [
+     "- **Funding-mismatch risk**: Short-term funding long-term assets; mitigated by ALM discipline and tenor-matching"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/funding (links to VS-18); GL (links to VS-17); legal/securitization documentation"
+    ],
+    "Time Estimate": [
+     "- Per facility/transaction; weeks-to-months"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Treasury (links to VS-18) maintain funding sources: warehouse line, partner-bank facilities, lessor funding (W3165); match funding tenor/currency to lease assets; manage interest-rate gap (fixed vs. floating)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "At portfolio scale: evaluate securitization / lease-asset-backed securities (ABS) or whole-portfolio sale to free capital and reduce funding cost; engage investment bank for structuring",
+     "duration": "Event-driven",
+     "n": "2",
+     "r": "Treasury / Investment Bank"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/Legal structure transaction: asset-pool selection, credit enhancement, rating-agency process, disclosures; execute and book (links to VS-17); manage post-trade servicing and reporting",
+     "duration": "Per transaction",
+     "n": "3",
+     "r": "Finance / Legal / Treasury"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3165"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-105"
+   ],
+   "fields": {
+    "Frequency": "Continuous + per cycle",
+    "Owner": "Compliance Officer",
+    "Participants": "Compliance Officer, Legal, Finance, Lease Operations Mgr, External Counsel",
+    "Trigger": "Regulatory cycle; new regulation; examination",
+    "Volume": "Whole portfolio"
+   },
+   "id": "W3182",
+   "level": 2,
+   "name": "Lease Regulatory Compliance (BSP, Truth in Lending, BIR)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Compliance/Legal map applicable regulations\" (replaces manual Step 1).",
+     "- System auto-record of \"records per BIR\" (replaces manual Step 2).",
+     "- System auto-track of \"track regulatory-change management\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-105 (prevent unauthorized lease credit extension.)",
+     "- operational: compliance calendar and external counsel review"
+    ],
+    "Pain Points / Risks": [
+     "- **Non-compliance risk**: Lapsed license/disclosure triggers penalties; mitigated by compliance calendar and external counsel review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance register; Truth-in-Lending disclosure; AML (links to VS-86); privacy (links to VS-91); records (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- Continuous; annual review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Compliance/Legal map applicable regulations: BSP rules (if BuildRight entity is financing-company-registered or partners with BSP-supervised lessor), Truth in Lending Act (RA 3765) disclosure, Consumer Act (RA 7394) for any consumer-adjacent lease, BIR lease-accounting/tax (links to VS-79), SEC reporting for financing companies",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "Lease Operations Manager",
+     "activity": "Lease Operations implement compliance: Truth-in-Lending disclosure on every quote (W3164), fair-collection-practices (no harassment — links to VS-84 for collections), data privacy (links to VS-91), anti-money-laundering on lease payments (links to VS-86), books-and-records per BIR",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Lease Operations Mgr / Compliance"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Compliance respond to regulatory examinations; remediate findings; track regulatory-change management (links to VS-22); report to Audit/Compliance Committee (links to VS-36)",
+     "duration": "Per examination",
+     "n": "3",
+     "r": "Compliance Officer / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3164"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-519"
+   ],
+   "fields": {
+    "Frequency": "Per transaction + monthly/quarterly filing",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Mgr, Finance, Lease Operations Mgr, External Tax Counsel",
+    "Trigger": "Billing cycle (W3170); tax filing; BIR inquiry",
+    "Volume": "All lease transactions"
+   },
+   "id": "W3183",
+   "level": 2,
+   "name": "Lease Tax, VAT & Withholding Treatment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"document tax positions\" (replaces manual Step 1).",
+     "- System auto-generate of \"generate BIR-compliant invoice and Form 2307 for customer withholding\" (replaces manual Step 2).",
+     "- System auto-file of \"file income tax on lease profit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-519 (ensure controlled execution — Lease Portfolio Risk, Residual & Yield Analytics (PA-96.3).)",
+     "- operational: structured tax design and external counsel review"
+    ],
+    "Pain Points / Risks": [
+     "- **Tax-mis-classification risk**: Wrong treatment triggers BIR assessment and customer dispute; mitigated by structured tax design and external counsel review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax engine (links to VS-79); e-invoicing (links to VS-79); GL (links to VS-17); audit (links to VS-21)"
+    ],
+    "Time Estimate": [
+     "- Setup 1–2 weeks; ongoing monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Mgr structure lease taxation per lease type and BIR rules: operating lease rentals = VATable lease income; finance lease = separate treatment of principal/interest; creditable withholding tax (EWT/CWT) on rental payments by customer; document tax positions (links to VS-79)",
+     "duration": "Setup + ongoing",
+     "n": "1",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "System compute per-invoice: VAT (12%) on lease rental, EWT (5% on lease rentals per RR 2-98, withheld by the customer-lessee), any percentage tax; generate BIR-compliant invoice and Form 2307 for customer withholding (links to VS-79)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "System / Finance"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Mgr remit VAT/EWT to BIR (links to VS-79); reconcile creditable withholding credits; file income tax on lease profit; defend on BIR audit (links to VS-21); issue annual tax documents to customers",
+     "duration": "Monthly/quarterly/annual",
+     "n": "3",
+     "r": "Tax Manager / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3170"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-519"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Lease Portfolio Manager",
+    "Participants": "Lease Portfolio Mgr, Finance, BI (links to VS-28), B2B Sales (links to VS-11), Strategy (links to VS-33)",
+    "Trigger": "Annual strategy; CLV model refresh",
+    "Volume": "Whole portfolio"
+   },
+   "id": "W3184",
+   "level": 2,
+   "name": "Lease Customer Lifetime Value & Portfolio Strategy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-renew of \"renewal rate, NPV\" (replaces manual Step 1).",
+     "- System auto-identify of \"identify high-CLV segments and design portfolio-growth plays\" (replaces manual Step 2).",
+     "- System auto-report of \"report to executive committee\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-519 (ensure controlled execution — Lease Portfolio Risk, Residual & Yield Analytics (PA-96.3).)",
+     "- operational: conservative assumptions and back-testing"
+    ],
+    "Pain Points / Risks": [
+     "- **CLV-over-estimate risk**: Overstated CLV drives unwise acquisition spend; mitigated by conservative assumptions and back-testing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CLV model (links to VS-28); CRM/opportunity (links to VS-11/VS-13); strategy/portfolio (links to VS-33)"
+    ],
+    "Time Estimate": [
+     "- 2–4 weeks per annual cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Lease Portfolio Manager",
+     "activity": "BI/Finance (links to VS-28) compute customer lifetime value: expected revenue (lease income + cross-sell of merchandise, services, retail-media — links to VS-48), cost (funding, credit, ops), retention/renewal rate, NPV; segment by customer type",
+     "duration": "Annual",
+     "n": "1",
+     "r": "BI Analyst / Finance"
+    },
+    {
+     "a": "Head of Trade / Account Management",
+     "activity": "B2B Sales/Lease Portfolio Mgr identify high-CLV segments and design portfolio-growth plays: cross-sell lease to merchandise customers (links to VS-11), bundle maintenance/service (links to VS-12), offer trade-in/upgrade cycle (links to VS-09); align sales incentives",
+     "duration": "Annual",
+     "n": "2",
+     "r": "B2B Sales / Lease Portfolio Mgr"
+    },
+    {
+     "a": "CEO",
+     "activity": "Strategy/Lease Portfolio Mgr refine portfolio strategy (W3161) based on CLV: target segments, asset categories, partner mix, pricing; report to executive committee (links to VS-33/VS-36)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Lease Portfolio Mgr / Strategy"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3161"
+   ]
+  }
+ ]
+}

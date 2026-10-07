@@ -1,0 +1,466 @@
+{
+ "process_area": {
+  "id": "PA-56.3",
+  "title": "3PL Settlement & Cost Optimization"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-56-third-party-delivery-partner/PA-56.3-3pl-settlement-cost-optimization.md",
+ "value_stream": {
+  "directory": "VS-56-third-party-delivery-partner",
+  "id": "VS-56",
+  "name": "Third-Party Delivery Partner Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-178",
+    "CTL-399"
+   ],
+   "fields": {
+    "Frequency": "Monthly; ~10–15 invoices",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "Finance Manager",
+    "Trigger": "3PL partner submits monthly invoice",
+    "Volume": "~PHP 30–50M/month total logistics"
+   },
+   "id": "W2206",
+   "level": 2,
+   "name": "Monthly 3PL Invoice Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Invoice auto-matched to delivery records; discrepancies auto-flagged; SLA-penalties auto-deducted"
+    ],
+    "Controls": [
+     "- CTL-399 (ensure controlled execution — 3PL Settlement & Cost Optimization (PA-56.3).)",
+     "- operational: invoice/POD-match integrity; CTL-178 (3PL SLA reviews documented with penalties applied at billing); operational: Finance Manager sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Invoice-vs-system-mismatch risk**: the partner's invoice doesn't match the system delivery count (over-billing); mitigated by the POD-matched reconciliation (no POD, no payment)",
+     "- **SLA-penalty-omission risk**: the partner's invoice doesn't deduct the SLA-penalty credits; mitigated by the SLA-penalty auto-applied from the W2199 monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AP/invoice (links to VS-15 / W7, W7C, VS-56 / W2202 POD) — the invoice matching",
+     "- Delivery records (links to VS-56 / W2198 tracking, W2202 POD) — the system-record baseline",
+     "- Settlement (links to VS-15 / W7) — the Net-30 payment"
+    ],
+    "Time Estimate": [
+     "~5 hours/month × 12 partners = **~60 hours/month** Logistics Finance Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Analyst matches invoice vs. system delivery records: validates count, distances, surcharges, SLA penalties; investigates discrepancies with partner; approves adjusted invoice; payment Net 30",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "Logistics Finance Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2198",
+    "W2199",
+    "W2202",
+    "W7",
+    "W7C"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "Finance Manager",
+    "Trigger": "Monthly analysis cycle — Per-Delivery Cost",
+    "Volume": "~10,000 deliveries analyzed"
+   },
+   "id": "W2207",
+   "level": 2,
+   "name": "Per-Delivery Cost Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Per-delivery cost auto-computed; high-cost auto-flagged with context"
+    ],
+    "Controls": [
+     "- CTL-399 (ensure controlled execution — 3PL Settlement & Cost Optimization (PA-56.3).)",
+     "- CTL-399 (cost-accuracy — links to VS-158); operational: Finance Manager sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-without-context risk**: a high per-delivery cost on a route reflects its difficulty (remote, bulky items), not partner inefficiency; mitigated by the like-for-like comparison (same route, same delivery type)",
+     "- **Optimization-vs-service-trade-off risk**: cost-optimization routes to the cheapest partner, ignoring service quality; mitigated by the cost-and-performance joint view"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost analytics (links to VS-27 / W113, VS-61 / W2325 TCO, VS-158 / W85) — the per-delivery cost dataset",
+     "- Route data (links to VS-06 / W196, VS-56 / W2204) — the route attribution",
+     "- Partner scorecard (links to VS-56 / W2196) — the cost alongside performance"
+    ],
+    "Time Estimate": [
+     "~5 hours/month = **~60 hours/year** Logistics Finance Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Analyst calculates per-delivery cost by partner, route, category, delivery type; identifies high-cost routes and partners; recommends optimization actions",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "Logistics Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W196",
+    "W2196",
+    "W2204",
+    "W2325",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Logistics Manager",
+    "Participants": "VP Supply Chain",
+    "Trigger": "Quarterly benchmarking cycle — 3PL Cost Benchmarking",
+    "Volume": "~10–15 partners vs. market"
+   },
+   "id": "W2208",
+   "level": 2,
+   "name": "3PL Cost Benchmarking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Partner-vs-market auto-compared quarterly; above-market auto-flagged"
+    ],
+    "Controls": [
+     "- CTL-399 (ensure controlled execution — 3PL Settlement & Cost Optimization (PA-56.3).)",
+     "- CTL-399 (3PL-contract accuracy — links to VS-03); operational: VP Supply Chain sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Benchmark-staleness risk**: the market benchmark is outdated; mitigated by the quarterly refresh",
+     "- **Apples-to-oranges risk**: the benchmark rate is for a different service level (cheaper but worse SLA); mitigated by the like-for-like (same SLA, same lane) comparison"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Benchmark data (links to VS-61 / W2331 3PL benchmarking, VS-27 / W113) — the market-rate comparison",
+     "- Partner scorecard (links to VS-56 / W2196) — the rate alongside performance",
+     "- Rate card (links to VS-56 / W2193) — the negotiated rates"
+    ],
+    "Time Estimate": [
+     "~2.5 days/quarter = **~80 hours/year** Logistics Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Benchmarks partner rates vs. market (spot rates, industry surveys); identifies above-market partners for renegotiation or replacement; feeds the W2197 termination/transition decision",
+     "duration": "2–3 days/quarter",
+     "n": "1",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W2193",
+    "W2196",
+    "W2197",
+    "W2331"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Logistics Manager",
+    "Participants": "VP Supply Chain",
+    "Trigger": "Quarterly cycle — Route Cost",
+    "Volume": "~20–30 routes"
+   },
+   "id": "W2209",
+   "level": 2,
+   "name": "Route Cost Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-optimization auto-modeled per route; service-impact auto-computed"
+    ],
+    "Controls": [
+     "- CTL-399 (ensure controlled execution — 3PL Settlement & Cost Optimization (PA-56.3).)",
+     "- CTL-399 (cost-accuracy — links to VS-158); operational: VP Supply Chain sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Optimization-vs-service-degradation risk**: cost-cutting reduces delivery frequency, hurting store replenishment; mitigated by the service-level-impact check alongside the cost-saving",
+     "- **Model-vs-reality-divergence risk**: the modeled saving doesn't materialize (real-world variability); mitigated by the pilot-before-rollout (links to VS-30 / W398)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Route analytics (links to VS-61 / W2321 route benchmarking, VS-06 / W196) — the per-route cost",
+     "- Backhaul (links to VS-61 / W2322 backhaul utilization) — the optimization lever",
+     "- Owned-vs-3PL (links to VS-61 / W2326 TCO) — the mode comparison"
+    ],
+    "Time Estimate": [
+     "~2.5 days/quarter = **~80 hours/year** Logistics Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Identifies cost-optimization opportunities per route: consolidate multi-stop, increase backhaul utilization (VS-61 / W2322), switch owned-vs-3PL, adjust delivery frequency; models the cost impact; recommends changes",
+     "duration": "2–3 days/quarter",
+     "n": "1",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W196",
+    "W2321",
+    "W2322",
+    "W2326",
+    "W398"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~2–4/year",
+    "Owner": "Logistics Manager",
+    "Participants": "Finance, CFO",
+    "Trigger": "Significant fuel price change (>5%)",
+    "Volume": "~10–15 partners"
+   },
+   "id": "W2210",
+   "level": 2,
+   "name": "3PL Fuel Surcharge Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- DOE-price-change auto-monitored; clause-trigger auto-detected; rate auto-adjusted on validation"
+    ],
+    "Controls": [
+     "- CTL-399 (contract/fuel-clause accuracy — links to VS-61); CTL-44 (rate-adjustment integrity); operational: CFO sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Clause-ambiguity-dispute risk**: the fuel clause is ambiguous (which baseline, what lag); mitigated by the clear clause terms (DOE weekly, 1-month lag, ±5% band)",
+     "- **Rate-implementation-lag risk**: the adjustment is agreed but not implemented in the ERP; mitigated by the Finance validation and the ERP-implementation step"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contract/fuel clause (links to VS-61 / W2316 fuel pass-through, VS-56 / W2193 rate card) — the fuel-adjustment clause",
+     "- DOE price (links to VS-61 / W2311) — the >5%-change trigger",
+     "- Rate/ERP (links to VS-29 / W304, VS-15 / W7) — the rate adjustment implementation"
+    ],
+    "Time Estimate": [
+     "~1.5 days/event × ~3/year = **~40 hours/year** Logistics Manager + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Activates fuel-surcharge adjustment clause in 3PL contracts; adjusts per-delivery rates; Finance validates; communicates to partners; implements in ERP",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "Logistics Manager / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2193",
+    "W2311",
+    "W2316",
+    "W304",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Logistics Finance Analyst",
+    "Participants": "Finance Manager",
+    "Trigger": "Monthly cycle — Delivery Cost Allocation Category",
+    "Volume": "13 categories"
+   },
+   "id": "W2211",
+   "level": 2,
+   "name": "Delivery Cost Allocation by Category",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Delivery cost auto-allocated per category; landed-cost auto-computed"
+    ],
+    "Controls": [
+     "- CTL-399 (ensure controlled execution — 3PL Settlement & Cost Optimization (PA-56.3).)",
+     "- CTL-399 (cost-allocation accuracy — links to VS-158); operational: Finance Manager sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Allocation-arbitrariness risk**: the delivery-cost allocation method (weight vs. volume vs. route) is arbitrary and distorts the per-category cost; mitigated by the documented allocation method and the periodic method-review",
+     "- **High-cost-category-blindness risk**: a category with high delivery cost (bulky, low-margin) isn't identified, eroding its true margin; mitigated by the landed-cost-per-category view"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost accounting (links to VS-158 / W85, VS-17 / W26) — the delivery-cost allocation",
+     "- Item/category (links to VS-29 / W252, W290 category) — the category attribution",
+     "- Landed cost (links to VS-158 / W85, VS-02 / W66 freight allocation) — the per-category landed cost"
+    ],
+    "Time Estimate": [
+     "~5 hours/month = **~60 hours/year** Logistics Finance Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Analyst allocates delivery cost to merchandise categories: weight/volume-based, route-based; computes landed cost per category (links to VS-158 / W85 product costing); identifies high-delivery-cost categories",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "Logistics Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W252",
+    "W26",
+    "W290",
+    "W66",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399",
+    "CTL-42"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "Logistics Manager",
+    "Participants": "Finance, CFO",
+    "Trigger": "Annual contract review",
+    "Volume": "~10–15 partners"
+   },
+   "id": "W2212",
+   "level": 2,
+   "name": "3PL Payment Terms Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Payment-terms-impact auto-modeled; early-payment-discount auto-computed"
+    ],
+    "Controls": [
+     "- CTL-42: partner bank-detail guard (vendor-payment-fraud discipline applied to 3PL partners); CTL-399 (payment-terms accuracy at 3PL settlement); operational: CFO sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-extended-terms risk**: generous payment terms (Net 60) strain BuildRight's cash flow; mitigated by the cash-flow-impact analysis",
+     "- **Partner-cash-strain risk**: tight terms (Net 15) strain a small partner's cash flow, risking their solvency; mitigated by the partner-financial-health monitoring (VS-67 / W2475)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payment terms (links to VS-15 / W7, VS-29 / W295 payment-terms master) — the terms per partner",
+     "- Cash flow (links to VS-18 / W233 cash flow forecasting) — the cash-flow-impact analysis",
+     "- AP (links to VS-15 / W7) — the early-payment-discount processing"
+    ],
+    "Time Estimate": [
+     "~1.5 days/year = **~12 hours/year** Logistics Manager + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Reviews payment terms (Net 30/60) per partner; negotiates early-payment discounts; balances cash-flow benefit vs. partner relationship; Finance sets up in ERP",
+     "duration": "1–2 days/year",
+     "n": "1",
+     "r": "Logistics Manager / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W233",
+    "W2475",
+    "W295",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-399"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "VP Supply Chain",
+    "Participants": "COO",
+    "Trigger": "Monthly dashboard cycle — Delivery Cost",
+    "Volume": "Owned + 3PL"
+   },
+   "id": "W2213",
+   "level": 2,
+   "name": "Total Delivery Cost Dashboard",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Dashboard auto-refreshed monthly; %-of-COGS auto-computed; partner-vs-owned auto-compared"
+    ],
+    "Controls": [
+     "- CTL-399 (ensure controlled execution — 3PL Settlement & Cost Optimization (PA-56.3).)",
+     "- CTL-399 (cost-composite accuracy — links to VS-158); operational: COO monthly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-composite-fragmentation risk**: the dashboard draws from owned-fleet + 3PL + toll + fuel sources that don't tie cleanly; mitigated by the single TCO-engine as the composite source",
+     "- **Target-distortion risk**: the 8–10%-of-COGS target is distorted if COGS is misstated; mitigated by the COGS-integrity check (VS-158)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost dashboard (links to VS-27 / W113, VS-61 / W2325 TCO dashboard, VS-158 / W85) — the delivery-cost composite",
+     "- Partner data (links to VS-56 / W2196 scorecard, W2206 invoice) — the 3PL cost portion",
+     "- Owned-fleet data (links to VS-61 / W2313 fuel, W2324 maintenance) — the owned portion"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/month = **~30 hours/year** VP Supply Chain."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "Dashboard: total delivery cost (owned + 3PL), per delivery, per km, per category, per partner; fuel %, toll %; logistics cost as % of COGS (target 8–10%); VP reviews with COO",
+     "duration": "2–3 hours/month",
+     "n": "1",
+     "r": "System / VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W2196",
+    "W2206",
+    "W2313",
+    "W2324",
+    "W2325",
+    "W85"
+   ]
+  }
+ ]
+}

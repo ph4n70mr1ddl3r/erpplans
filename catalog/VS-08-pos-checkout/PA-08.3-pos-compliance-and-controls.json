@@ -1,0 +1,1526 @@
+{
+ "process_area": {
+  "id": "PA-08.3",
+  "title": "POS Compliance & Controls"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md",
+ "value_stream": {
+  "directory": "VS-08-pos-checkout",
+  "id": "VS-08",
+  "name": "POS & Checkout"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Rare — estimated 5–10 flagged transactions per year chain-wide for hardware retail; more likely at stores near construction hubs serving contractors",
+    "Owner": "Compliance Officer (filing); Store Manager (initial documentation)",
+    "Participants": "Cashier, Store Manager, Compliance Officer, AMLC (external)",
+    "Trigger": "Cash transaction ≥ PHP 500,000 (single or cumulative within 24 hours for same customer) OR system detects suspicious structuring pattern OR cashier/manager identifies suspicious customer behavior",
+    "Volume": "~5–10 suspicious transaction reports (STRs) filed annually with AMLC"
+   },
+   "id": "W519",
+   "level": 2,
+   "name": "POS Suspicious Transaction & AML Compliance Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitoring\" (replaces manual Step 1).",
+     "- System auto-record of \"record customer details\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews within 24 hours\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)"
+    ],
+    "Pain Points / Risks": [
+     "- **False positives** — in hardware retail, PHP 500,000+ cash purchases by contractors are legitimate business transactions; excessive flagging wastes Store Manager and Compliance Officer time; system should learn to reduce false positives over time (e.g., whitelisting known trade account customers with verified business registration)",
+     "- **Customer friction** — requiring government ID for large cash purchases may irritate legitimate contractor customers who are time-sensitive; Store Manager must handle diplomatically",
+     "- **Tipping-off risk**: if Store Manager informs customer that their transaction was \"flagged\" or \"reported,\" this constitutes a criminal offense under AMLA Section 9; training must emphasize prohibition; mitigated by CTL-265 (controlled execution — POS Compliance & Controls (PA-08.3))",
+     "- **Structuring detection limitations** — customers structuring across multiple terminals within same store or across multiple stores within 24 hours may evade detection if system does not aggregate across terminals and locations in real-time",
+     "- **Low volume but high stakes** — with only 5–10 reports/year, institutional knowledge is limited; process must be well-documented so any Store Manager can execute correctly"
+    ],
+    "Staffing Implication": [
+     "- **No incremental store-level headcount** — suspicious transaction handling is a Store Manager responsibility (estimated 1–2 hours/year per store at most).",
+     "- **Compliance Officer** — existing Compliance Officer within Finance/Legal team handles STR filing; estimated 25–50 hours/year for AML POS-related activity (STR filing, register maintenance, training delivery).",
+     "- Annual AML awareness training absorbed by W51 training program (2 hours within annual training calendar).",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automatic cash transaction threshold monitoring: single transaction ≥ PHP 500,000 and cumulative 24-hour monitoring per customer (W519.1)",
+     "- Structuring detection: multiple transactions below threshold by same customer within 24 hours (W519.1)",
+     "- Customer identification form in POS with auto-populate from loyalty member data (W519.2–3)",
+     "- Transaction hold status for flagged transactions (W519.2)",
+     "- Legitimacy assessment documentation with manager ID and justification (W519.5)",
+     "- STR filing log with AMLC reference number and restricted visibility per tipping-off prohibition (W519.8–9)",
+     "- STR register for AMLC compliance audits (W519.10)",
+     "- Integration with W5B (in-store selling — transaction source), W17 (loyalty — customer identification), W37 (loss prevention — suspicious behavior escalation), W51 (training — AML awareness), W292 (employee master — training completion tracking), W354 (B2B AML screening — parallel process for trade accounts)"
+    ],
+    "Time Estimate": [
+     "Legitimate transaction assessment: ~25 min (15 min review + 10 min documentation). Suspicious transaction escalation: ~1 hour for Store Manager (initial documentation + escalation call). STR preparation and filing: ~2.5 hours for Compliance Officer. Annual AML awareness training: 2 hours/session × ~200 Store Managers and Lead Cashiers (delivered via e-learning + in-person regional sessions)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Threshold monitoring**: system automatically monitors all cash transactions at POS; if single cash transaction ≥ PHP 500,000: system flags transaction and alerts Store Manager via terminal notification; if same customer (identified via loyalty card, name, or vehicle plate) accumulates cash transactions ≥ PHP 500,000 within 24 hours across multiple transactions: system alerts Store Manager with structuring detection alert",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Transaction hold**: for flagged transactions, system allows transaction completion but places cash in temporary hold status; system prompts cashier to collect customer identification (government-issued photo ID) and record customer details (full name, ID type, ID number, address, contact number, nature of transaction/purpose of purchase)",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cashier completes customer identification form in system (or system auto-populates from loyalty member data if customer is enrolled); if customer refuses to provide identification: Store Manager is notified; transaction is completed but flagged as \"Customer Refused ID\" — Compliance Officer reviews within 24 hours",
+     "duration": "3 min",
+     "n": "3",
+     "r": "Cashier / Customer"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager reviews flagged transaction details: customer identity, transaction amount, items purchased, payment method, any prior flagged transactions for same customer; Store Manager assesses whether transaction appears legitimate (e.g., contractor bulk-buying materials for a project) or suspicious (e.g., purchasing high-value easily-resalable items with large cash, customer appears nervous or evasive)",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "If Store Manager assesses transaction as **legitimate**: documents assessment with justification (e.g., \"Contractor purchasing cement, rebar, and tiles for government project — presented purchase order from agency\"); system records legitimacy determination with manager ID; no STR filed; transaction hold released; documentation retained for 5 years per AMLA record retention",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "If Store Manager assesses transaction as **suspicious** or is unsure: Store Manager escalates to Compliance Officer within 24 hours; Compliance Officer reviews transaction details, customer history, and Store Manager's assessment",
+     "duration": "30 min",
+     "n": "6",
+     "r": "Store Manager / Compliance Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Compliance Officer determines if Suspicious Transaction Report (STR) is warranted per AMLC guidelines; if yes: Compliance Officer prepares STR using AMLC online portal with required details (covered person information, customer information, transaction details, suspicious indicators, supporting documents)",
+     "duration": "2 hours",
+     "n": "7",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Compliance Officer files STR with AMLC via online portal; system logs STR filing with AMLC reference number, filing date, and linked POS transaction(s)",
+     "duration": "30 min",
+     "n": "8",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Tipping-off prohibition**: system restricts visibility of STR filing — cashier and Store Manager who reported are NOT informed of STR filing status; only Compliance Officer and CFO have access to STR records; per AMLA Section 9, no person shall disclose to any customer that a STR has been or will be filed",
+     "duration": "Ongoing",
+     "n": "9",
+     "r": "System / Compliance Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Compliance Officer maintains STR register: all filed STRs with AMLC reference numbers, filing dates, transaction references, and status; register subject to AMLC examination during periodic compliance audits",
+     "duration": "Quarterly review",
+     "n": "10",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual: Compliance Officer conducts AML awareness training for all Store Managers and Lead Cashiers (integrated with W51 training program); training covers AMLA requirements, red flags for suspicious transactions, customer identification procedures, tipping-off prohibition, and STR filing process",
+     "duration": "2 hours/year",
+     "n": "11",
+     "r": "Compliance Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W17",
+    "W292",
+    "W354",
+    "W37",
+    "W51",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Multiple daily per store — estimated 5–10 age-restricted transactions per store per day (solvents, thinners, spray paints, cutting tools, pesticides)",
+    "Owner": "Cashier (verification); Store Manager (compliance oversight)",
+    "Participants": "Cashier, Customer, Store Manager (escalation), Compliance Team (audit)",
+    "Trigger": "Barcode scan of age-restricted SKU at POS or SCO",
+    "Volume": "~1,000–2,000 age-restricted transactions/day chain-wide"
+   },
+   "id": "W520",
+   "level": 2,
+   "name": "Age-Restricted Product Verification & Compliance at POS",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"Customer brings age-restricted items to checkout\" (replaces manual Step 1).",
+     "- System auto-request of \"Request Government-Issued Photo ID\" (replaces manual Step 2).",
+     "- System auto-post of \"postal ID with photo\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: quarterly spot-audits and verification rate monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Cashier bypass risk**: cashiers may skip ID verification to avoid customer confrontation or speed up checkout, especially during peak hours; automated prompt mitigates but cashier can enter false DOB; quarterly spot-audits and verification rate monitoring deter bypass",
+     "- **Customer confrontation** — customers (especially older adults) may be offended when asked for ID; cashiers must be trained to explain calmly and consistently (\"Ma'am/Sir, we are required by law to verify age for these products\")",
+     "- **Scope of restricted items unclear** — not all Philippine retailers enforce age restrictions consistently; defining the exact SKU list that triggers verification requires legal review and regular updates as regulations change",
+     "- **SCO age verification** — self-checkout stations require SCO Attendant intervention for age verification (W516.6), adding to attendant workload; risk that attendant approves without proper ID check; mitigated by quarterly spot-audits and verification rate monitoring",
+     "- **ID fraud** — customers may present fake or borrowed IDs; cashiers are not trained forensic document examiners; system accepts DOB entry in good faith"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — age verification adds ~30 sec per affected transaction, absorbed within cashier and Store Manager duties.",
+     "- Compliance Team time for monthly reporting: ~1 hour/month (absorbed by existing Compliance FTE).",
+     "- Quarterly spot-audit: ~30 min/quarter per Store Manager (200 stores × 30 min = 100 hours/quarter, absorbed within existing FTEs).",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Age-restricted SKU flag in item master (W252) with configurable minimum age per SKU or category (W520.1)",
+     "- Full-screen age verification prompt interrupting transaction flow at scan (W520.2)",
+     "- Customer-facing display \"Age Verification Required\" message (W520.3)",
+     "- ID type dropdown with acceptable Philippine government-issued ID types (W520.5)",
+     "- Age calculation from date of birth with automated verified/denied determination (W520.6–7)",
+     "- Age verification compliance log with transaction, SKU, customer age/no ID, cashier, result (W520.9)",
+     "- Monthly compliance report: verification rate, denial rate, \"No ID\" rate by store (W520.10)",
+     "- Integration with W5B (in-store selling — verification within checkout flow), W252 (item master — age-restricted flag), W37 (loss prevention — compliance log review), W518 (cashier training — age-restricted procedure training), W71 (CCTV — spot-audit footage), W501 (first aid — solvent abuse incident response)"
+    ],
+    "Time Estimate": [
+     "~30–60 seconds per age-restricted transaction (30 sec ID request + 30 sec ID entry and system verification). Adds ~15–30 min/day to cashier workload per store at 5–10 age-restricted transactions/day. Monthly compliance report: 1 hour. Quarterly spot-audit: 30 min/store."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer brings age-restricted items to checkout; Cashier scans barcode; system identifies SKU as age-restricted from item master flag (per DENR/FPA-regulated chemicals, cutting tools, solvents list maintained in W252 item master)",
+     "duration": "Per scan",
+     "n": "1",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "System interrupts transaction flow: POS terminal displays full-screen age-verification prompt showing item name, minimum age requirement (18 for solvents, cutting tools, pesticides per FPA regulations; configurable per SKU), and \"Request Government-Issued Photo ID\" instruction to cashier",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Customer-facing display shows \"Age Verification Required\" message (does not display specific product or reason to protect customer privacy)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Cashier verbally requests customer's government-issued photo ID (acceptable forms: Philippine driver's license, passport, PhilHealth ID, SSS ID, GSIS ID, COMELEC voter's ID, national ID, postal ID with photo)",
+     "duration": "30 sec",
+     "n": "4",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Cashier selects ID type from dropdown on POS terminal; enters customer date of birth from ID or scans ID barcode (if machine-readable)",
+     "duration": "30 sec",
+     "n": "5",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System calculates customer age from date of birth; if age ≥ minimum age requirement: system displays \"VERIFIED — Age Confirmed\" on cashier screen; customer display returns to transaction total; transaction proceeds",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If age < minimum age requirement: system displays \"DENIED — Customer Below Required Age\" on cashier screen; customer-facing display shows \"Transaction Restricted\"; system removes age-restricted item(s) from transaction; remaining non-restricted items continue to checkout; Cashier informs customer that specific item(s) cannot be sold due to age restriction",
+     "duration": "30 sec",
+     "n": "7",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "If customer cannot produce valid ID: system denies sale of age-restricted item(s) per same step 7 procedure; customer can still purchase non-restricted items in transaction",
+     "duration": "30 sec",
+     "n": "8",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System logs age verification event: transaction ID, SKU(s) verified, customer age or \"No ID\" status, cashier ID, verification result (verified/denied/no ID), timestamp; log available for DENR/FPA compliance audit",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "Legal/Compliance Head",
+     "activity": "Monthly: Compliance Team runs age-restricted product compliance report — verification rate (% of age-restricted transactions where verification was completed), denial rate, \"No ID\" rate by store; stores with verification rate < 95% flagged for retraining (W518)",
+     "duration": "1 hour/month",
+     "n": "10",
+     "r": "Compliance Team"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "Quarterly: Store Manager conducts spot-audit: observes 5 random age-restricted transactions at checkout (or reviews CCTV W71 footage of age-restricted scans) to verify cashiers are following ID request and verification procedure; documents observations in compliance log",
+     "duration": "30 min/quarter",
+     "n": "11",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W252",
+    "W37",
+    "W501",
+    "W516",
+    "W518",
+    "W5B",
+    "W71"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Occasional — varies significantly by store location; ~10–20 per store per month for stores near government centers, PEZA zones, or diplomatic areas; ~2–5 for other stores",
+    "Owner": "Cashier (processing); Store Manager (verification and approval)",
+    "Participants": "Cashier, Store Manager, Customer, Finance Team (compliance review)",
+    "Trigger": "Customer presents tax exemption certificate at POS (government agency purchase order, PEZA-registered entity ID, diplomatic exemption letter, BIR tax exemption ruling)",
+    "Volume": "~640–1,450 tax-exempt transactions/month chain-wide (≈30 gov't-center stores × 10–20 + ~170 other stores × 2–5)"
+   },
+   "id": "W527",
+   "level": 2,
+   "name": "POS Tax Exemption Processing (Government / PEZA / Institutional)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documentation at checkout\" (replaces manual Step 1).",
+     "- System auto-record of \"Cashier identifies customer in system\" (replaces manual Step 2).",
+     "- System auto-validate of \"Store Manager verifies tax exemption documentation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: should maintain whitelist of verified tax-exempt entities from Finance Team"
+    ],
+    "Pain Points / Risks": [
+     "- **Document fraud** — forged tax exemption documents presented at POS; Store Manager is not a legal expert in document verification; system should maintain whitelist of verified tax-exempt entities from Finance Team",
+     "- **Partial exemption complexity** — PEZA and government exemptions may apply only to specific categories (e.g., capital equipment exempt, consumables taxable); Cashier must know which items qualify — requires product knowledge training",
+     "- **BIR audit exposure** — if tax-exempt transactions lack proper documentation or are incorrectly processed, BIR may disallow exemption during audit, resulting in VAT assessment + penalties + interest; Finance Team monthly review mitigates",
+     "- **Customer wait time** — tax exemption processing adds ~7 min to checkout (2 min customer lookup + 5 min manager verification); government agency buyers making large purchases accept this but institutional buyers making small purchases may be frustrated",
+     "- **Store Manager availability** — every tax-exempt transaction requires Store Manager verification; during peak hours, Store Manager may be unavailable, delaying checkout"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — tax exemption processing is a Cashier and Store Manager responsibility.",
+     "- Finance Team monthly review: ~2 hours/month absorbed by existing Finance FTE.",
+     "- Higher-volume stores (near government centers, PEZA zones) may see ~20 tax-exempt transactions/month adding ~140 min to Cashier/Manager workload.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax-exempt customer identification: existing B2B account lookup or temporary tax-exempt customer record (W527.2)",
+     "- Tax exemption verification with Store Manager approval in system (W527.3)",
+     "- Zero output VAT application at line or transaction level with GL posting to exempt revenue account (W527.4–5)",
+     "- Partial exemption: line-level VAT flagging for mixed merchandise (W527.6)",
+     "- Tax-exempt transaction register with full documentation for BIR audit support (W527.7)",
+     "- Integration with W5B (in-store selling — tax exemption within checkout), W8 (AR processing — B2B account billing), W24 (credit application — customer VAT treatment classification), W253 (customer master — VAT registration status), W9A.16 (VAT return — exempt/zero-rated sales schedule), W54A (BIR CAS — compliant receipt format), W78 (government procurement — PHILGEPS integration)"
+    ],
+    "Time Estimate": [
+     "~7 min per tax-exempt transaction (2 min customer lookup + 5 min verification and approval). Processing and posting: automated. Monthly Finance review: ~2 hours. At 10–20 transactions/store/month, total store-level labor is ~70–140 min/month per store."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer presents tax exemption documentation at checkout: government agency purchase order with VAT exemption certification, PEZA-registered entity ID card, diplomatic exemption letter, or BIR tax exemption ruling with TIN",
+     "duration": "—",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "—",
+     "activity": "Cashier identifies customer in system: looks up customer account (if existing B2B account per W24) or creates temporary tax-exempt customer record (for one-time government purchases)",
+     "duration": "2 min",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager verifies tax exemption documentation: confirms document validity (government letterhead, PEZA registration number, BIR ruling reference), checks expiry (if applicable), verifies customer identity matches document; approves tax exemption in system with manager ID",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "System applies zero output VAT to the transaction: all eligible items recalculated with 0% VAT (net of VAT from SRP); customer display shows \"TAX EXEMPT TRANSACTION\" with exemption type; receipt prints tax exemption details (exemption type, certificate/reference number, verifying manager ID)",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System posts transaction to tax-exempt revenue GL account (separate from standard VATable sales); records in tax-exempt transaction register for BIR reporting (W9A.16 VAT return — exempt/zero-rated sales schedule); zero output VAT entry posted alongside standard Dr. Cash / Cr. Revenue",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If only some items are tax-exempt (partial exemption — e.g., PEZA-registered entity purchasing mixed merchandise where only certain categories qualify): Cashier manually flags exempt items at line level; system applies VAT only to non-exempt items",
+     "duration": "2 min",
+     "n": "6",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "System logs tax exemption transaction: transaction ID, customer account, exemption type, certificate/reference number, verifying Store Manager ID, total exempt amount, items exempted; log available for Finance Team BIR audit support",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "Monthly: Finance Team reviews tax-exempt transaction register — total exempt sales by exemption type, by store, by customer; verifies documentation completeness for all exempt transactions; flags transactions missing documentation for Store Manager follow-up",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "Finance Team"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W24",
+    "W253",
+    "W54A",
+    "W5B",
+    "W78",
+    "W8",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Multiple daily per store — estimated 2–5 voids/refunds per store per day",
+    "Owner": "Cashier (initiation); Authorizing Manager (approval per tier)",
+    "Participants": "Cashier, Department Supervisor, Assistant Store Manager, Store Manager, Regional Manager (by tier)",
+    "Trigger": "Cashier initiates void (pre- or post-tender) or refund at POS",
+    "Volume": "~400–1,000 voids/refunds/day chain-wide"
+   },
+   "id": "W529",
+   "level": 2,
+   "name": "POS Void & Refund Tiered Authorization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scanned, duplicate scan, post-purchase return\" (replaces manual Step 1).",
+     "- System auto-count of \"account returns, high-value project material returns\" (replaces manual Step 2).",
+     "- System rule-based authorization of \"authorizer name and role on cashier screen\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: should flag multiple same-customer voids within a session"
+    ],
+    "Pain Points / Risks": [
+     "- **Authorizer bottleneck** — at stores where only Store Manager holds Tier 3 authority, voids/refunds > PHP 20,000 wait for Store Manager availability; customer wait time increases; remote authorization mitigates but requires mobile infrastructure",
+     "- **Tier circumvention** — Cashier and Supervisor colluding to split a large void into multiple smaller voids below PHP 5,000 to avoid higher-tier authorization; system should flag multiple same-customer voids within a session",
+     "- **Remote authorization security** — mobile push authorization could be compromised if authorizer's device is lost or stolen; GPS tracking and biometric device lock mitigate",
+     "- **Customer perception** — customer waiting at terminal while authorizer is called feels like being suspected of fraud; Cashier should communicate naturally (\"Let me get my supervisor to authorize this for you — standard procedure for this amount\")",
+     "- **Weekend/after-hours coverage** — stores open on weekends or late evening may not have all tier authorizers on shift; weekend scheduling (W34) must ensure at least one Tier 3 authorizer is always present"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — void/refund authorization is absorbed by existing management structure (Supervisors, Asst. Manager, Store Manager).",
+     "- Remote authorization availability requires Store Manager or Asst. Manager to have mobile device with push notification capability during all hours store is open.",
+     "- Weekend scheduling must ensure at least one Tier 3 authorizer (Store Manager or Asst. Manager) is always on shift.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Configurable tiered authorization matrix by void/refund amount with role-based access control (W529.2)",
+     "- Void/refund reason code selection with configurable reason code list (W529.3)",
+     "- Authorizer identification via employee ID badge/credentials with role verification (W529.5)",
+     "- Full authorization audit trail: authorizer ID, role, timestamp, amount, reason, original transaction (W529.7)",
+     "- Remote authorization capability via mobile push notification with GPS tracking (W529.9)",
+     "- Daily void/refund summary by tier, reason, cashier, authorizer (W529.10)",
+     "- Integration with W5B.10 (void transaction — reversal logic), W12A (in-store returns — refund processing), W101 (customer refund & credit — credit memo), W272 (cashier over/short — variance feed), W37 (loss prevention — void/refund pattern analysis), W522 (daily transaction review — void/refund summary), W152 (IT provisioning — role-based access), W292 (employee master — authorization role assignment)"
+    ],
+    "Time Estimate": [
+     "~3–5 min per void/refund (15 sec initiation + automated tier check + 15 sec reason code + 1 min authorizer call + 1–2 min review + automated processing). Remote authorization adds ~5 min. Daily summary review: part of W522 (~5 min of the daily review covers voids/refunds). Chain-wide at 400–1,000/day: ~20–80 hours/day for void/refund processing."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Cashier identifies need for void or refund: customer request, pricing error, wrong item scanned, duplicate scan, post-purchase return; Cashier selects \"Void\" or \"Refund\" on POS terminal",
+     "duration": "15 sec",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System determines authorization tier based on void/refund amount: **Tier 1 — Department Supervisor**: ≤ PHP 5,000 (covers most common voids — wrong item, duplicate scan, minor pricing error); **Tier 2 — Assistant Store Manager**: > PHP 5,000 and ≤ PHP 20,000; **Tier 3 — Store Manager**: > PHP 20,000 and ≤ PHP 100,000; **Tier 4 — Regional Manager**: > PHP 100,000 (rare — large trade account returns, high-value project material returns)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System prompts Cashier for void/refund reason code (Wrong Item Scanned / Duplicate Scan / Pricing Error / Customer Changed Mind / Customer Dissatisfied / Damaged Item / Other); Cashier selects reason code",
+     "duration": "15 sec",
+     "n": "3",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System displays required authorizer name and role on cashier screen (e.g., \"Authorization Required: Dept. Supervisor — Maria Santos\"); Cashier calls or signals the required authorizer to terminal",
+     "duration": "1 min",
+     "n": "4",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Authorizer arrives at terminal; swipes/scan employee ID badge or enters credentials; system verifies authorizer has required role (Department Supervisor / Asst. Manager / Store Manager / Regional Manager); system displays void/refund details (original transaction, amount, reason code, items) for authorizer review",
+     "duration": "1 min",
+     "n": "5",
+     "r": "Authorizer"
+    },
+    {
+     "a": "—",
+     "activity": "Authorizer reviews void/refund request: verifies amount is reasonable for stated reason, checks for patterns (same cashier repeatedly voiding, same customer returning frequently), confirms item(s) are present for refund (if applicable); Authorizer approves or rejects",
+     "duration": "1–2 min",
+     "n": "6",
+     "r": "Authorizer"
+    },
+    {
+     "a": "—",
+     "activity": "If approved: system processes void (reverses inventory, payment, loyalty points, promo usage per W5B.10) or refund (processes refund to original tender per W12A.6); system records authorization with: authorizer ID, authorizer role, approval timestamp, void/refund amount, reason code, original transaction reference",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "If rejected: system cancels void/refund request; Cashier informs customer of denial and alternative options (e.g., exchange instead of refund, escalate to Store Manager if Department Supervisor denied); system logs rejected request with reason",
+     "duration": "30 sec",
+     "n": "8",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "**No available authorizer**: if required-tier authorizer is not physically available in store (e.g., Store Manager is the only Tier 3 authorizer and is off-site): Cashier can request remote authorization — system sends authorization request to authorizer's mobile device (push notification with transaction details); authorizer reviews and approves/rejects on mobile; all remote authorizations are logged with GPS location and timestamp of authorization device",
+     "duration": "5 min",
+     "n": "9",
+     "r": "System / Authorizer"
+    },
+    {
+     "a": "—",
+     "activity": "Daily: system generates void/refund summary report for Store Manager — count and total value by authorization tier, by reason code, by cashier, by authorizer; Store Manager reviews as part of W522 daily transaction review; Regional Manager receives daily summary of all Tier 4 authorizations (> PHP 100,000)",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101",
+    "W12A",
+    "W152",
+    "W272",
+    "W292",
+    "W34",
+    "W37",
+    "W522",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Several per store per day — hardware retail has inherently high basket values (contractors, project buyers); ~1–3 high-value transactions per store per day (the PHP 50K trigger is self-limiting vs the ~PHP 840K/day per-store revenue canon)",
+    "Owner": "Cashier (processing); Store Manager (oversight)",
+    "Participants": "Cashier, Customer, Store Manager, Loss Prevention (analytics)",
+    "Trigger": "Transaction total exceeds configurable threshold (default: PHP 50,000)",
+    "Volume": "~200–600 high-value transactions/day chain-wide"
+   },
+   "id": "W530",
+   "level": 2,
+   "name": "POS High-Value Transaction Documentation & Customer ID",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-post of \"scans ID barcode if machine-readable\" (replaces manual Step 4).",
+     "- System auto-capture of \"enters ID number\" (replaces manual Step 4).",
+     "- System auto-generate of \"printed on merchant copy of receipt\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: must enforce separate receipt formats"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer friction** — requesting ID for PHP 50K+ purchases may irritate regular contractor customers; Cashier should frame as \"For your protection\" rather than \"Store policy requires\"",
+     "- **Data privacy** — collecting and storing government ID numbers is subject to RA 10173 Data Privacy Act; ID numbers must be encrypted, access restricted, and retention period defined (10 years per BIR retention, then purged); NPC registration (W434) must cover this data",
+     "- **ID entry errors** — Cashier mistyping ID number or customer name creates data quality issues; OCR/scanning for machine-readable IDs mitigates",
+     "- **Threshold calibration** — PHP 50K threshold may be too low for hardware retail (many contractor purchases exceed PHP 50K); too many triggers dilute the control's effectiveness; Store Manager should review threshold adequacy quarterly",
+     "- **Privacy on receipt** — customer ID details must NOT appear on customer receipt copy; only on merchant copy; system must enforce separate receipt formats"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — high-value documentation is a Cashier responsibility (~15–23 min/day per store).",
+     "- LP Analyst weekly review: ~1 hour/week absorbed by existing LP team.",
+     "- Data privacy compliance: existing DPO (W434) oversight covers ID data handling.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Configurable high-value transaction threshold (default PHP 50,000) with automatic prompt (W530.1)",
+     "- Customer-facing display notification for high-value ID requirement (W530.2)",
+     "- ID type dropdown with Philippine government-issued ID types (W530.4)",
+     "- Customer identification recording: ID type, encrypted ID number, customer name linked to transaction (W530.5)",
+     "- Loyalty member auto-populate for customer name (W530.7)",
+     "- High-value transaction register with encrypted ID data for LP review (W530.8–9)",
+     "- Integration with W5B (in-store selling — high-value within checkout), W519 (AML — PHP 500K+ cash trigger), W522 (daily review — high-value spot-check), W37 (loss prevention — anomaly analysis), W17 (loyalty — customer auto-populate), W253 (customer master — customer data source), W152 (IT provisioning — ID data encryption)"
+    ],
+    "Time Estimate": [
+     "~1.5 min additional per high-value transaction (30 sec ID request + 1 min ID entry). For loyalty members: ~30 sec additional. At 10–15 high-value transactions per store per day: ~15–23 min/day additional cashier time per store. LP weekly review: ~1 hour."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Transaction total exceeds PHP 50,000 (configurable per store or chain-wide); system displays \"High-Value Transaction — Customer Identification Required\" prompt on cashier screen",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Customer-facing display shows \"Transaction requires ID verification — please have your government ID ready\"",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Cashier verbally requests customer's government-issued photo ID; acceptable ID types: Philippine driver's license, passport, national ID (PhilSys), SSS ID, GSIS ID, COMELEC voter's ID, postal ID with photo, PRC ID, PhilHealth ID",
+     "duration": "30 sec",
+     "n": "3",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Cashier selects ID type from dropdown on POS terminal; enters ID number (or scans ID barcode if machine-readable); enters customer full name from ID",
+     "duration": "1 min",
+     "n": "4",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System records customer identification details against transaction: ID type, ID number (encrypted in audit log, last 4 digits visible), customer name, cashier ID, transaction ID, transaction amount; identification details printed on merchant copy of receipt (not on customer copy for privacy)",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Transaction proceeds to tender per standard W5B.7; if payment is cash and amount ≥ PHP 500,000: W519 AML reporting process is triggered in addition to high-value documentation",
+     "duration": "Per W5B",
+     "n": "6",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "For loyalty members: system auto-populates customer name from loyalty record; Cashier only needs to verify and scan/enter ID — reduces data entry to ~30 sec",
+     "duration": "30 sec",
+     "n": "7",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Daily: high-value transaction register included in W522 daily review; Store Manager spot-checks high-value transactions for reasonableness (customer name matches purchase type, e.g., contractor buying construction materials)",
+     "duration": "Part of W522",
+     "n": "8",
+     "r": "Store Manager"
+    },
+    {
+     "a": "LP Director",
+     "activity": "Weekly: Loss Prevention reviews high-value transaction register for anomalies: same customer name with different IDs, same ID at multiple stores, high-value transactions followed by high-value returns (W12), high-value cash transactions (W519 trigger correlation)",
+     "duration": "1 hour/week",
+     "n": "9",
+     "r": "LP Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12",
+    "W152",
+    "W17",
+    "W253",
+    "W37",
+    "W434",
+    "W519",
+    "W522",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Per transaction — nearly all transactions require bagging or carry-out in hardware retail",
+    "Owner": "Cashier (bag fee processing); Sales Associate / Utility Staff (carry-out)",
+    "Participants": "Cashier, Sales Associate, Customer, Store Manager (ordinance compliance)",
+    "Trigger": "Transaction completed; customer requires bags or carry-out assistance for purchased items",
+    "Volume": "~2.8M transactions/month chain-wide (majority requiring some form of bagging or carry-out)"
+   },
+   "id": "W531",
+   "level": 2,
+   "name": "POS Bagging, Carry-Out & Bag Fee Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"After tender completion\" (replaces manual Step 1).",
+     "- System auto-match of \"matches to LGU jurisdiction in location master\" (replaces manual Step 2).",
+     "- System auto-post of \"post-tender adjustment OR presented as pre-tender line item before final total\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: Cashier (bag fee processing); Sales Associate / Utility Staff (carry-out) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **LGU ordinance complexity** — Philippine LGUs have different bag fee amounts, bag type restrictions (some ban plastic entirely, some allow plastic with fee), and incentive structures; maintaining current rules per location requires ongoing legal monitoring; incorrect fee application risks LGU fine; mitigated by the Cashier (bag fee processing) and Sales Associate / Utility Staff (carry-out) review and approval gate",
+     "- **Customer resistance to bag fees** — customers in municipalities newly implementing bag fees may resist paying; Cashier must explain calmly that fee is mandated by LGU ordinance",
+     "- **Bag supply stockouts** — running out of bags during peak hours creates customer frustration and checkout delays; bag replenishment must be prioritized during peak",
+     "- **Carry-out liability** — Staff member assisting customer to vehicle may injure themselves (heavy items, parking lot traffic); OHS incident per W140 if injury occurs",
+     "- **Plastic bag ban compliance** — stores in municipalities with full plastic bag bans (Muntinlupa) must ensure NO plastic bags are available at checkout; accidental availability risks LGU penalty and public complaint; mitigated by CTL-265 (controlled execution — POS Compliance & Controls (PA-08.3))"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — bagging is a standard Cashier responsibility; carry-out assistance is absorbed by Sales Associates and Utility Staff.",
+     "- Carry-out requests during peak hours pull Sales Associates from floor duties; ~5–10 min per carry-out, ~10–20 carry-outs/store/day during peak construction season.",
+     "- Bag supply procurement absorbed by W136 indirect procurement process.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LGU-specific bag fee rules by store location from location master (W254) with automatic applicability determination (W531.2)",
+     "- Bag fee line item on transaction with LGU ordinance reference (W531.3)",
+     "- Reusable bag incentive (discount per bag used) per LGU incentive program (W531.4)",
+     "- Bag fee revenue posting to separate GL account per LGU (for LGU reporting if required) (W531.3)",
+     "- Bag supply inventory tracking as non-merchandise supply item (W531.7)",
+     "- Integration with W5B (in-store selling — bag fee within checkout), W254 (location master — LGU jurisdiction), W136 (indirect procurement — bag supply purchasing), W438 (yard dispatch — carry-out for bulky items), W489 (store budget — bag supply cost allocation)"
+    ],
+    "Time Estimate": [
+     "Bag fee transaction: ~15 sec additional per transaction (bag offer + automated fee calculation). Carry-out assistance: ~5–10 min per bulky item carry-out. Bag replenishment: ~5 min per replenishment event. Monthly compliance review: ~30 min."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "After tender completion (W5B.8) and receipt printing (W5B.8), Cashier asks customer: \"Would you like a bag?\" and offers bag options: small paper bag (if available), large plastic bag, reusable bag (for purchase), or no bag",
+     "duration": "15 sec",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System automatically determines bag fee applicability based on store location: system reads store location from terminal ID → matches to LGU jurisdiction in location master (W254) → applies LGU-specific bag fee ordinance (e.g., Makati City: PHP 2/bag; Quezon City: PHP 5/bag for plastic; Pasig: PHP 5/plastic bag; Muntinlupa: plastic bag ban — no plastic bags allowed at all; stores in municipalities without ordinance: no bag fee)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "If bag fee applies: system adds bag fee line item to transaction (already completed — bag fee added as post-tender adjustment OR presented as pre-tender line item before final total); system selects bag fee amount per LGU ordinance and bag type; receipt itemizes bag fee separately (\"LGU Plastic Bag Fee: PHP 5.00\")",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "If customer brings reusable bag: system applies bag fee waiver (no charge); some LGUs provide incentive (e.g., PHP 1 discount per reusable bag used) — system applies incentive if configured for store location",
+     "duration": "15 sec",
+     "n": "4",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Cashier bags items or customer self-bags; oversized items (lumber, cement bags, large tools, appliances) that cannot fit in bags are staged at bagging area for carry-out",
+     "duration": "1–2 min",
+     "n": "5",
+     "r": "Cashier / Customer"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "For bulky/heavy items requiring carry-out: Cashier calls Sales Associate or Utility Staff for carry-out assistance; Staff member assists customer to vehicle loading area (W438 yard dispatch for lumber/building materials) or store exit for smaller bulky items; customer signs or acknowledges receipt of items",
+     "duration": "5–10 min",
+     "n": "6",
+     "r": "Sales Associate / Utility Staff"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Bag supply replenishment**: Cashier monitors bag supply at terminal; when supply runs low: Cashier notifies Stock Associate to replenish from backroom bag inventory; bag inventory tracked as non-merchandise supply item per W136 (indirect procurement)",
+     "duration": "5 min (replenishment)",
+     "n": "7",
+     "r": "Cashier / Stock Associate"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "Monthly: Store Manager reviews bag fee revenue and compliance — bag fees collected vs. expected based on transaction volume per LGU ordinance; identifies stores with low bag fee collection (potential non-compliance with LGU ordinance); bag supply consumption report for W136 procurement planning",
+     "duration": "30 min/month",
+     "n": "8",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W136",
+    "W140",
+    "W254",
+    "W438",
+    "W489",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Continuous — ~500–800 exception alerts/day across 200 stores during operating hours",
+    "Owner": "Loss Prevention Manager (enterprise); Store Manager (store-level response)",
+    "Participants": "LP Analyst (monitoring), Store Manager (response), Cashier (involved in flagged transaction), Regional LP Manager (escalation)",
+    "Trigger": "POS system detects anomalous transaction pattern in real-time; LP analyst monitors exception dashboard",
+    "Volume": "Peak: bi-monthly sales events generate 2–3× normal exception volume"
+   },
+   "id": "W538",
+   "level": 2,
+   "name": "POS Real-Time Loss Prevention Exception Monitoring & Alert Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans followed by high-value manual entry\" (replaces manual Step 1).",
+     "- System auto-log of \"logged for trend analysis\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews critical alert on dashboard\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight processes 2.8M POS transactions/month across 600 terminals. While W37 (Loss Prevention & Exception Reporting) provides retrospective analysis and W522 (Daily Transaction Review) covers next-day cashier auditing, there is no workflow for real-time detection and immediate response to POS anomalies. Common retail fraud patterns — sweethearting (cashier deliberately under-rings items), pass-through fraud (scanning low-price items for high-price ones), rapid void sequences, excessive no-sale drawer opens, coupon abuse, and serial returners — require real-time detection and intervention to prevent ongoing losses. Industry benchmarks suggest that real-time LP monitoring can reduce shrinkage by 15–25% compared to retrospective-only approaches."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: severity classification and ML model tuning with confirmed-case feedback; operational: clear LP policy disclosure in cashier onboarding (W518) and union coordination (W493); operational: edge CCTV processing or direct POS-to-camera timestamp correlation"
+    ],
+    "Exception Detection Rules (Configurable)": [
+     "| Pattern | Detection Method | Default Threshold | Severity |",
+     "|---|---|---|---|",
+     "| Excessive voids | Void count / total transactions per cashier per hour | > 5% void rate | Medium → High if sustained |",
+     "| No-sale drawer opens | Count per cashier per hour | > 3/hour | Medium |",
+     "| Sweethearting | Item price vs. expected basket value ratio | < 0.6 ratio + weight mismatch | Critical |",
+     "| Pass-through fraud | Weight mismatch at SCO or barcode anomaly | > 20% weight deviation | Critical |",
+     "| Rapid void sequence | Consecutive voids within time window | > 2 voids in 5 min | High |",
+     "| Coupon abuse | Coupon value vs. basket ratio | > 50% coupon-to-sale ratio | Medium → High if repeated |",
+     "| Serial returner | Return frequency by customer identifier | > 3 returns in 7 days | Medium → High if across stores |",
+     "| Manual card entry | Non-EMV transaction frequency | > 2% of card transactions per cashier | Medium |"
+    ],
+    "Pain Points / Risks": [
+     "- **Alert fatigue** — too many false positives cause LP Analysts to ignore real fraud; mitigated by severity classification and ML model tuning with confirmed-case feedback",
+     "- **Privacy concerns** — real-time cashier monitoring may be perceived as surveillance; mitigated by clear LP policy disclosure in cashier onboarding (W518) and union coordination (W493)",
+     "- **CCTV integration latency** — snapshot retrieval must be near-real-time to be useful for Critical alerts; mitigated by edge CCTV processing or direct POS-to-camera timestamp correlation",
+     "- **Cross-store data latency** — real-time event stream (W533) must aggregate across stores for serial fraud detection; mitigated by centralized LP analytics engine consuming all store events"
+    ],
+    "Staffing Implication": [
+     "- **2–3 LP Analysts** (enterprise-level, at HQ or regional offices) for real-time dashboard monitoring and alert triage; may be absorbed into existing LP team if current headcount permits",
+     "- Store Managers: ~0.5–1.5 min/day average per store reviewing High alerts (20–30/day chain-wide ÷ 200 stores, 5–10 min each; absorbed into existing LP responsibilities per W37)",
+     "- No incremental IT headcount — LP analytics engine maintained by existing IT Operations",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time POS event stream consumption (W533) for anomaly detection engine (W538.1)",
+     "- LP exception dashboard with alert classification and routing (W538.2)",
+     "- CCTV snapshot integration for alert context (W538.3)",
+     "- Store Manager mobile alert notification (W538.4)",
+     "- Integration with W37 (LP investigation — confirmed cases), W522 (daily review — medium alerts), W281 (SCO exceptions — pass-through detection), W248 (inventory variance — shrinkage correlation), W272 (cashier over/short — drawer anomaly context)"
+    ],
+    "Time Estimate": [
+     "- System detection and alert: automated (real-time, < 30 sec from event)",
+     "- Critical alert triage: 3–5 min per alert (estimated 5–10 Critical alerts/day chain-wide)",
+     "- Store-level Critical response: 5–15 min per response",
+     "- High alert review: 5–10 min per alert (estimated 20–30 High alerts/day chain-wide, distributed across stores)",
+     "- Weekly analytics and tuning: ~2 hours/week for LP Analyst",
+     "- **Total LP Analyst time**: ~3–4 hours/day across enterprise (2–3 analysts)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Real-time exception detection**: LP analytics engine continuously monitors POS event stream (W533) for anomaly patterns: (a) high void rate per cashier (> 5% of transactions in 1-hour window), (b) excessive no-sale drawer opens (> 3 per hour per cashier), (c) rapid consecutive voids (> 2 voids within 5 minutes by same cashier), (d) price override frequency exceeding threshold, (e) sweethearting detection (repeated low-value scans followed by high-value manual entry), (f) pass-through detection (weight mismatch between scanned barcode and expected item weight at SCO), (g) refund/return frequency exceeding threshold per cashier, (h) manual card entry (non-EMV) above baseline, (i) loyalty points gaming patterns",
+     "duration": "Real-time (< 30 sec from event)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Alert classification and routing**: system classifies each detected anomaly by severity: (a) **Critical** (active fraud suspected — immediate response required): sweethearting, pass-through fraud, serial void-refund pattern; (b) **High** (suspicious pattern — same-shift response): excessive voids, frequent overrides, coupon stacking abuse; (c) **Medium** (anomalous but explainable — next-day review): slightly elevated void rate, higher-than-average discount usage; (d) **Low** (statistical noise — logged for trend analysis); Critical and High alerts pushed to LP Analyst dashboard and Store Manager mobile app in real-time; Medium alerts queued for W522 daily review",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "**Critical alert triage**: LP Analyst reviews critical alert on dashboard; assesses context (cashier history, transaction details, CCTV snapshot if available, recent performance metrics from W522); determines if active intervention is warranted",
+     "duration": "3–5 min per alert",
+     "n": "3",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "**Store-level response for Critical alerts**: LP Analyst contacts Store Manager (or on-duty supervisor) via secure channel with alert details; Store Manager observes cashier covertly; if fraud confirmed, Store Manager intervenes per W37 (LP investigation protocol); if false positive, LP Analyst dismisses alert and notes reason for ML model improvement",
+     "duration": "5–15 min per response",
+     "n": "4",
+     "r": "LP Analyst / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**High alert same-shift review**: at next natural break (shift handover W517 or mid-shift), Store Manager reviews High alerts for their cashiers; reviews transaction-level detail; coaches cashier if pattern is procedural error; escalates to LP if pattern appears deliberate",
+     "duration": "5–10 min per alert",
+     "n": "5",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Medium alert daily review**: Medium alerts consolidated into W522 daily transaction review; Store Manager addresses during next-day cashier performance audit",
+     "duration": "Per W522",
+     "n": "6",
+     "r": "Store Manager"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "**Pattern analytics & model tuning**: LP Analyst reviews weekly exception summary: alert volume by store, severity distribution, false-positive rate, confirmed fraud cases; adjusts detection thresholds; feeds confirmed cases back to ML model for continuous improvement; monthly report to LP Manager",
+     "duration": "~2 hours/week",
+     "n": "7",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "**Cross-store serial fraud detection**: system detects same customer (loyalty ID, payment card token, or phone number) triggering exceptions across multiple stores within defined period; LP Analyst investigates cross-store pattern; coordinates with affected Store Managers",
+     "duration": "Per case",
+     "n": "8",
+     "r": "LP Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W248",
+    "W272",
+    "W281",
+    "W37",
+    "W493",
+    "W517",
+    "W518",
+    "W522",
+    "W533"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "~14,000 reprints/month (~0.5% of transactions); ~56,000 credit notes/month (~2% return rate)",
+    "Owner": "Store Manager (reprint authorization); Finance (credit note compliance)",
+    "Participants": "Cashier, Customer, Store Manager, Finance (credit note review)",
+    "Trigger": "Customer requests receipt/invoice reprint; cashier discovers error requiring invoice adjustment; return/refund requires BIR credit note",
+    "Volume": "Peak: post-sale events when customers submit receipts for reimbursement"
+   },
+   "id": "W540",
+   "level": 2,
+   "name": "POS BIR Invoice Reprint, Adjustment & Credit Note Issuance",
+   "parent": null,
+   "req_refs": [
+    "DOC-002",
+    "FIN-027",
+    "NFR-006"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"Receipt reprint request\" (replaces manual Step 1).",
+     "- System auto-log of \"logs reprint with cashier ID, reason, and timestamp for audit trail\" (replaces manual Step 2).",
+     "- System auto-file of \"Credit note for return/refund\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "The Bureau of Internal Revenue (BIR) has strict requirements for registered invoices and receipts issued from CAS-registered systems (per W54A). Original receipts cannot be reprinted as exact duplicates; BIR requires specific procedures for reprints, credit notes (for returns/refunds), and debit notes (for price corrections). All must maintain sequential numbering, reference the original transaction, and be retained for 10 years. This workflow covers the POS-side procedures for BIR-compliant invoice reprints, adjustments, and credit note issuance."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: system-enforced sequential integrity with void-if-error fallback; operational: provides lookup alternative (payment card, loyalty ID); operational: \"REPRINT\" watermark and log of all reprints"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit note sequential gap** — if credit note generation fails (printer error), the CAS-registered sequence has a gap, which BIR auditors scrutinize; mitigated by system-enforced sequential integrity with void-if-error fallback",
+     "- **Customer without original receipt requesting credit note** — BIR allows credit notes without original receipt for certain transaction types; system provides lookup alternative (payment card, loyalty ID); manual override with manager approval",
+     "- **Reprint abuse for expense fraud** — customers may request reprints to submit duplicate expense claims; mitigated by \"REPRINT\" watermark and log of all reprints",
+     "- **Debit note approval bottleneck** — Finance Manager approval for amounts > PHP 5,000 may delay customer; mitigated by Store Manager provisional approval with next-day Finance confirmation"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — reprint and credit note operations absorbed by existing cashiers and Store Managers",
+     "- Finance: monthly audit trail review (~30 min/month) and debit note approval (~2 hours/month) absorbed into existing duties",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BIR CAS-registered sequential numbering engine for credit notes and debit notes (W540.3–4)",
+     "- Original transaction lookup by receipt number, date, loyalty ID, or payment card (W540.1)",
+     "- Reprint watermark and logging system (W540.2)",
+     "- Credit note auto-generation integrated with return/refund processing (W540.3, W12, W529, FIN-027)",
+     "- Void document generation integrated with void authorization (W540.5, W529)",
+     "- 10-year digital archive integration (W540.6, DOC-002, NFR-006)",
+     "- Integration with W5B (checkout — original transaction source), W12/W12A (returns — credit note trigger), W529 (void/refund authorization — void document trigger), W54A (CAS registration — numbering authority), W77 (BIR audit — document retrieval), W528 (digital receipt — e-receipt reprint), W473 (BIR EIS — credit note transmission)"
+    ],
+    "Time Estimate": [
+     "- Receipt reprint (lookup + print + log): 3–4 min per occurrence",
+     "- Credit note (automated as part of return): no incremental time beyond W12 processing",
+     "- Debit note (manual initiation + approval): 5–10 min per occurrence (~200/month chain-wide)",
+     "- Void document (automated): no incremental time beyond W529 processing",
+     "- Monthly audit trail review: 30 min/month by Finance",
+     "- **Total**: ~700–930 hours/month chain-wide for reprints (14,000 × 3–4 min) + ~33 hours/month for debit notes"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Receipt reprint request**: customer requests copy of receipt; cashier looks up original transaction by date, receipt number, or loyalty ID; system verifies original transaction exists and belongs to requesting customer (loyalty ID or payment card match); cashier requests reprint authorization from Store Manager",
+     "duration": "2–3 min",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**BIR-compliant reprint**: system prints reprint with \"REPRINT\" watermark, original receipt number, original date/time, and reprint date/time; reprint does NOT generate a new sequential invoice number; system logs reprint with cashier ID, reason, and timestamp for audit trail; customer signs reprint acknowledgment log (paper or digital)",
+     "duration": "1 min",
+     "n": "2",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Credit note for return/refund**: when processing return or refund (W12, W529), system automatically generates BIR-compliant credit note: (a) new sequential credit note number from CAS-registered range, (b) references original sales invoice number and date, (c) lists returned items with original prices, (d) shows VAT amount being reversed, (e) shows total credit amount, (f) customer name and TIN if available, (g) BIR CAS permit number; credit note printed in duplicate (customer copy + file copy)",
+     "duration": "Automated (part of return processing)",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Debit note for price correction**: when a post-sale price correction is required (pricing error discovered after transaction completion), Store Manager initiates debit note: (a) references original sales invoice, (b) shows price difference, (c) shows additional VAT, (d) customer signs debit note; debit note requires Finance Manager approval for amounts > PHP 5,000",
+     "duration": "5–10 min",
+     "n": "4",
+     "r": "Store Manager / Finance"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Voided transaction documentation**: when a transaction is voided per W529 (void authorization), system prints void document referencing original invoice number with \"VOIDED\" watermark, void reason, authorizer ID, and timestamp; voided invoice number preserved in sequence (not reused) per BIR requirements; void document filed for BIR audit",
+     "duration": "Automated (part of void processing)",
+     "n": "5",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "Finance",
+     "activity": "**BIR audit trail maintenance**: all reprints, credit notes, debit notes, and void documents automatically indexed and retained in POS transaction archive; 10-year retention per BIR requirements (NFR-006); monthly summary generated for Finance review; supporting documentation for BIR audit per W77 (BIR audit response)",
+     "duration": "Automated + 30 min/month review",
+     "n": "6",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12",
+    "W12A",
+    "W473",
+    "W528",
+    "W529",
+    "W54A",
+    "W5B",
+    "W77"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "~8,400 price discrepancy events/month (~0.3% of POS transactions)",
+    "Owner": "Store Manager (immediate resolution); Pricing Manager (root cause correction)",
+    "Participants": "Cashier (detection), Customer, Store Manager (authorization), Stock Associate (shelf label correction)",
+    "Trigger": "Customer or cashier detects discrepancy between displayed/advertised price and POS-scanned price at checkout",
+    "Volume": "Higher during promotional changeover periods (price file updates) and after planogram resets"
+   },
+   "id": "W553",
+   "level": 2,
+   "name": "POS Pricing Error Detection & Immediate Correction at Checkout",
+   "parent": null,
+   "req_refs": [
+    "POS-006",
+    "POS-011",
+    "POS-047"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan, system displays POS price\" (replaces manual Step 1).",
+     "- System auto-validate of \"checking\" (replaces manual Step 2).",
+     "- System auto-log of \"Immediate price adjustment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Price discrepancies between shelf labels, promotional signage, and POS-scanned prices occur regularly in high-SKU retail environments. With 35,000 active SKUs and frequent promotional changeovers, BuildRight experiences price discrepancies from: (a) shelf labels not updated after price changes (W40), (b) promotional pricing not yet propagated to POS (sync delay), (c) planogram reset moving items to wrong shelf with wrong label (W86), (d) DTI price freeze activation lag (W468). While W69 covers periodic price compliance audits and W5B.11 mentions price dispute handling, no workflow details the immediate correction process at checkout — verifying the correct price, adjusting for the customer, flagging the root cause, and correcting the shelf label. Prompt resolution is critical for customer satisfaction and DTI consumer protection compliance (RA 7394)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: allowing customer to continue shopping and return, or moving to customer service counter; operational: honoring lower price and immediate shelf correction; operational: mandatory manager authorization and root cause logging with analytics"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer wait during verification** — 2–3 min verification delays checkout; mitigated by allowing customer to continue shopping and return, or moving to customer service counter",
+     "- **DTI consumer liability** — under RA 7394, selling at higher price than advertised/shelf price is a violation; mitigated by honoring lower price and immediate shelf correction",
+     "- **Price override abuse** — cashiers may claim \"price discrepancy\" to apply unauthorized discounts; mitigated by mandatory manager authorization and root cause logging with analytics",
+     "- **Systemic pricing errors** — if price file has incorrect prices, all stores affected; mitigated by enterprise-wide trigger at > 3 same-SKU discrepancies (W553.6)"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — absorbed by existing Store Manager, cashier, and Stock Associate roles",
+     "- Pricing Manager: enterprise-wide trigger investigation (~15–30 min per trigger, estimated 2–3 triggers/week)",
+     "- W69 price compliance audit: root cause data from this workflow feeds into and improves existing price compliance process"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS price display at scan with customer-facing screen comparison (W553.1, POS-011)",
+     "- Price verification via price master lookup (W553.2, W289)",
+     "- Price override with reason code and logging (W553.3, POS-006)",
+     "- Automated shelf label correction task generation (W553.4)",
+     "- Root cause classification and W69 dashboard feed (W553.5)",
+     "- Enterprise-wide price verification trigger (W553.6, POS-047)",
+     "- Integration with W5B (checkout — price display), W40 (price changes — label update gap), W13 (promotions — promo pricing source), W69 (price compliance audit — root cause data), W86 (planogram — shelf placement), W181 (shelf label printing — correction label), W289 (pricing master — source of truth), W468 (DTI price freeze — freeze price source), POS-006 (price override — authorization), POS-047 (price push — enterprise correction), W533 (event stream — discrepancy event)"
+    ],
+    "Time Estimate": [
+     "- Price discrepancy detection and cashier pause: 30 sec",
+     "- Store Manager verification: 2–3 min",
+     "- Price adjustment and logging: 1 min",
+     "- Root cause logging: 30 sec",
+     "- Shelf label correction: 3–5 min per label (Stock Associate)",
+     "- **Total per occurrence**: 4–5 min at checkout + 3–5 min shelf correction = 7–10 min",
+     "- **Total per store per day**: ~10–15 min (based on ~42 discrepancies/month/store ≈ 1–2/day)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Price discrepancy detection**: at scan, system displays POS price; customer or cashier notices discrepancy with shelf label or advertised price; cashier pauses transaction and calls Store Manager",
+     "duration": "30 sec",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "**Price verification**: Store Manager verifies correct price by checking: (a) POS system price (from price master W289 — source of truth), (b) shelf label price, (c) promotional signage if applicable, (d) current promotional calendar (W13), (e) DTI price freeze status (W468) if in calamity-declared area; Store Manager determines which price is correct per policy: (a) if POS price is correct and shelf label is wrong → charge POS price, fix label, (b) if shelf label shows lower price (customer was mislead) → honor shelf price per DTI consumer protection (RA 7394), (c) if promotional price should be active but not yet applied → apply promo price immediately and flag price file sync issue",
+     "duration": "2–3 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Immediate price adjustment**: Store Manager authorizes price override per POS-006 (price override with authorization); cashier applies corrected price with reason code \"PRICE-DISCREPANCY\"; system logs: (a) original POS price, (b) corrected price, (c) difference, (d) reason code, (e) authorizer, (f) shelf label or promotional signage reference; transaction continues with corrected price",
+     "duration": "1 min",
+     "n": "3",
+     "r": "Cashier / Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Shelf label flagging**: system automatically generates shelf label correction task: (a) item SKU, (b) store location, (c) correct price, (d) discrepancy type (wrong label, missing label, promo not reflected); task assigned to Stock Associate for immediate correction; high-priority items (front-page promo, endcap display) flagged for immediate correction; all corrections completed before next peak shopping period",
+     "duration": "Stock Associate: 3–5 min per label",
+     "n": "4",
+     "r": "System / Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Root cause logging**: Store Manager classifies root cause: (a) label not updated after price change (process gap in W40), (b) promotional pricing sync delay (W533 latency), (c) item placed on wrong shelf (W86 planogram issue), (d) DTI price freeze not yet propagated (W468), (e) pricing master error (W289), (f) other; root cause data feeds into weekly price compliance dashboard for W69",
+     "duration": "30 sec",
+     "n": "5",
+     "r": "Store Manager / System"
+    },
+    {
+     "a": "Pricing Manager",
+     "activity": "**Batch price verification trigger**: if same SKU has > 3 discrepancy events across stores within 24 hours: system triggers enterprise-wide price verification for that SKU; Pricing Manager notified; price file integrity check initiated; if systemic, corrected price pushed to all terminals via POS-047 within 60 seconds",
+     "duration": "Automated alert + 15–30 min investigation",
+     "n": "6",
+     "r": "System / Pricing Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W13",
+    "W181",
+    "W289",
+    "W40",
+    "W468",
+    "W533",
+    "W5B",
+    "W69",
+    "W86"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~56,000 returns/month across 200 stores (~2% return rate)",
+    "Owner": "Loss Prevention Officer (LPO)",
+    "Participants": "LPO, Store Manager, POS Cashier, LP Analyst (HQ), Customer Service Counter staff",
+    "Trigger": "Return transaction processed at POS (W12) or system generates return pattern alert",
+    "Volume": "Fraudulent returns estimated at 3-5% of total returns = ~1,700–2,800/month"
+   },
+   "id": "W605",
+   "level": 2,
+   "name": "Return Fraud Detection & Serial Returner Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors return transactions for fraud indicators\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates alert to LPO dashboard and Store Manager mobile app with alert…\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews transaction history\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: trade account exemption from standard return frequency thresholds and human review before restrictions; operational: enterprise-wide return history query in real-time; operational: BIR-compliant sequential receipt numbering (W540) and barcode-based receipt validation at POS"
+    ],
+    "Pain Points / Risks": [
+     "- **False positives**: legitimate frequent returners (contractors with project overages) may be flagged; mitigated by trade account exemption from standard return frequency thresholds and human review before restrictions",
+     "- **Cross-store fraud**: customer returns items at multiple stores to avoid per-store thresholds; mitigated by enterprise-wide return history query in real-time",
+     "- **Receipt fraud**: counterfeit or duplicated receipts used for returns; mitigated by BIR-compliant sequential receipt numbering (W540) and barcode-based receipt validation at POS",
+     "- **Customer relations impact**: denying returns to flagged customers may cause confrontations; mitigated by discrete system-enforced restrictions and Store Manager authority to override with documentation"
+    ],
+    "Staffing Implication": [
+     "- **Loss Prevention Officer (per store)**: ~15 min/day reviewing alerts = ~1.5 hours/week. Absorbed within LP daily routine (W562).",
+     "- **LP Analyst (HQ)**: ~2 hours/week on return fraud analytics. Absorbed within existing LP analytics role.",
+     "- **LP Manager**: ~1 hour/month on policy review. Absorbed within existing role."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP POS module: return transaction logging, receipt validation, customer return history",
+     "- LP analytics module: fraud detection rules engine, alert management, case tracking",
+     "- CCTV system: footage retrieval for return transaction review",
+     "- Customer master: return flag, watch list status, restriction enforcement",
+     "- BI module: return fraud analytics dashboard, trend analysis"
+    ],
+    "Time Estimate": [
+     "LP triage runs 5 min per yellow alert, 20 min per orange, and 30 min per red (cross-store pattern confirmation); store-level enforcement adds 5 min per flagged return at the register; recurring analytics 2 hours/week ≈ 104 hours/year plus monthly policy review 1 hour ≈ 12 hours/year — alert-driven volume at the estimated ~1,700–2,800 suspicious returns/month annualizes at the realized alert mix (detection and alerting automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System continuously monitors return transactions for fraud indicators: (a) same customer > 3 returns in 30 days, (b) returns without receipt > 2 in 30 days, (c) high-value returns (> PHP 10,000), (d) return of commonly wardrobed items (power tools, appliances), (e) return at different store than purchase (cross-store returns), (f) receipt appears altered or duplicated",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "When fraud indicator triggered: system generates alert to LPO dashboard and Store Manager mobile app with alert classification: Yellow (monitoring), Orange (likely fraud), Red (confirmed pattern)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Yellow alerts**: LPO adds customer to watch list; reviews transaction history; no customer-facing action",
+     "duration": "5 min",
+     "n": "3",
+     "r": "LPO"
+    },
+    {
+     "a": "LP Analyst",
+     "activity": "**Orange alerts**: LPO investigates customer's full return history across all 200 stores; reviews CCTV footage of return transaction; checks loyalty account for anomalies; prepares case summary",
+     "duration": "20 min",
+     "n": "4",
+     "r": "LPO"
+    },
+    {
+     "a": "LP Analyst",
+     "activity": "**Red alerts (confirmed pattern)**: LPO coordinates with LP Analyst for cross-store pattern analysis; if fraud confirmed: (a) customer flagged in system with return restriction (receipt-only returns, manager override required), (b) if employee collusion suspected, escalates per W248, (c) if organized retail crime, escalates per W490",
+     "duration": "30 min",
+     "n": "5",
+     "r": "LPO"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store-level return policy enforcement: for flagged customers, Cashier receives system prompt requiring manager authorization for return; Customer Service Counter staff trained on receipt verification, product condition assessment, and time-since-purchase validation",
+     "duration": "5 min/return",
+     "n": "6",
+     "r": "Cashier / CS Staff"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "Weekly: LP Analyst generates return fraud analytics report — top serial returners, fraud rate by store, fraud rate by category, common fraud methods, recovery value from fraud prevention",
+     "duration": "2 hours",
+     "n": "7",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Monthly: LP Manager reviews return policy effectiveness; recommends threshold adjustments to system fraud detection rules; coordinates with Merchandising on high-return-rate SKUs for root cause analysis (quality issues vs. fraud)",
+     "duration": "1 hour",
+     "n": "8",
+     "r": "LP Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12",
+    "W248",
+    "W490",
+    "W540",
+    "W562"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-184"
+   ],
+   "fields": {
+    "Frequency": "Quarterly calibration per store (200 stores × ~4 scales each = ~800 calibrations/quarter); daily price verification for catch-weight items",
+    "Owner": "Store Manager",
+    "Participants": "Department Supervisor, Maintenance/Utility Staff, Scale Calibration Technician (contracted), POS System Administrator",
+    "Trigger": "Quarterly scale calibration schedule; or customer complaint about weight-based pricing; or BIR/DENR inspection advisory",
+    "Volume": "~800 scales chain-wide (200 stores × 4: lumber yard scale, hardware bulk scale, produce/garden scale, receiving dock scale); ~5,000 catch-weight SKUs (~14% of active SKUs)"
+   },
+   "id": "W1305",
+   "level": 2,
+   "name": "Catch-Weight & Variable-Quantity Item POS Pricing Verification & Scale Calibration Compliance",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan catch-weight barcode label from a pre-printed test label — verify POS…\" (replaces manual Step 1).",
+     "- System auto-inspect of \"Quarterly professional scale calibration\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify price accuracy for catch-weight items\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight sells catch-weight items — products sold by variable weight or length rather than by fixed unit. These include: (a) lumber (sold per board foot or per piece with variable dimensions), (b) nails and screws in bulk (sold per kilogram from bins), (c) wire and cable (sold per meter from spools), (d) chain and rope (sold per meter), (e) garden soil and sand (sold per kilogram). At POS, these items are weighed on a scale or measured, and the price is calculated by weight × price/kg or length × price/meter. Under Philippine law (BIR Revenue Regulations on weighing and measuring devices, DTI-BPS / DOST-ITDI NML standards per RA 9236), commercial scales must be: (i) verified and sealed by the local government weights and measures office, (ii) calibrated regularly (quarterly minimum for retail), (iii) accurate within prescribed tolerances. An inaccurate scale means customers are either overcharged (violating the Consumer Act, RA 7394) or undercharged (BuildRight loses revenue). This workflow manages scale calibration compliance and catch-weight pricing verification to ensure accurate customer billing and regulatory compliance."
+    ],
+    "Controls": [
+     "- CTL-184 (ensure POS settlement & tender reconciliation completeness.)",
+     "- operational: Store Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Scale drift between calibrations** — scales gradually drift out of calibration due to wear, temperature changes, and vibration; daily verification catches significant drift but minor drift accumulates between quarterly professional calibrations",
+     "- **Customer trust** — customers who suspect they are being overcharged for catch-weight items (especially contractors buying bulk nails or lumber) may dispute the weight; visible scale display and customer-facing weight readout reduce disputes",
+     "- **Humidity and corrosion** — Philippine humidity accelerates scale corrosion, especially in the outdoor lumber yard; load cells in outdoor scales have shorter lifespans and require more frequent replacement",
+     "- **BIR audit risk**: if BIR finds catch-weight pricing errors during a CAS audit (W1304), BuildRight may be assessed for underreported VAT (if weight was understated) or penalized for consumer fraud (if overstated); mitigated by the Store Manager review and approval gate and operational: periodic reconciliation against source documents"
+    ],
+    "Staffing Implication": [
+     "- **Department Supervisor**: ~10–15 min/day on price verification + 1–2 hours/week on reconciliation = ~3–4 hours/week",
+     "- **Maintenance/Utility Staff**: ~30 min/quarter during calibration visits",
+     "- **Contracted Scale Calibration Technician**: ~1–2 hours/store/quarter × 200 stores = ~800 hours/year (contracted service)",
+     "- **No incremental BuildRight headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS scale integration — scale weight transmitted to POS for price calculation",
+     "- ERP price management — catch-weight item pricing with per-unit-of-measure rates",
+     "- Calibration certificate management — digital filing and renewal tracking per W47",
+     "- Inventory module — catch-weight inventory tracking with unit of measure (kg, meter, board foot)",
+     "- BIR-compliant receipt generation — catch-weight item detail on receipt",
+     "- Price push notification — real-time price update to POS terminals",
+     "- LGU inspection log — inspection dates, results, corrective actions"
+    ],
+    "Time Estimate": [
+     "- Daily verification: 10–15 min/store/day",
+     "- Quarterly calibration: 1–2 hours/store",
+     "- Weekly reconciliation: 1–2 hours/store/week",
+     "- **Annual per store: ~60–90 hours (daily) + ~4–8 hours (calibration) + ~50–100 hours (weekly) ≈ ~115–200 hours**",
+     "- **Annual chain-wide: ~23,000–40,000 hours (mostly Department Supervisor time absorbed into daily duties)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Daily catch-weight price verification**: (a) during opening procedure (W5A), Department Supervisor verifies catch-weight prices at POS: (i) test-weigh a known-weight item (calibration weight) on each store scale — verify displayed weight matches within ± 10g tolerance, (ii) verify price-per-unit for top 20 catch-weight items matches current ERP price: lumber price per board foot, nails price per kg, wire price per meter, (iii) scan catch-weight barcode label from a pre-printed test label — verify POS displays correct item, weight, and price calculation; (b) log verification results in daily checklist; (c) if any discrepancy: (i) price error: report to Store Manager for immediate correction in POS — price update pushed from ERP, (ii) scale inaccuracy: take scale out of service and use backup scale pending calibration",
+     "duration": "10–15 min/day",
+     "n": "1",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Quarterly professional scale calibration**: (a) contracted Scale Calibration Technician visits each store quarterly per maintenance schedule (W47); (b) technician calibrates each scale using NIST-traceable calibration weights: (i) zero-point verification, (ii) linearity test (test at 25%, 50%, 75%, 100% of scale capacity), (iii) repeatability test (same weight weighed 5 times — must be within ± 0.1% of reading); (c) if scale fails calibration: (i) attempt adjustment per manufacturer procedure, (ii) if adjustment fails: scale replaced from spare inventory at regional office, failed scale sent for repair; (d) technician issues calibration certificate per scale with: scale serial number, calibration date, test results, next calibration due date, technician signature and accreditation number; (e) calibration certificate filed in ERP maintenance module and displayed near scale (LGU inspection requirement)",
+     "duration": "1–2 hours/store/quarter",
+     "n": "2",
+     "r": "Scale Calibration Technician"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "**LGU weights & measures inspection readiness**: (a) when LGU announces weights and measures inspection: Store Manager ensures: (i) all scales have current calibration certificates displayed, (ii) LGU verification seals (lead wire seal on scale adjustment mechanism) are intact — broken seal indicates potential tampering, (iii) catch-weight price labels are clearly displayed per DTI requirements (price per kg, price per meter, price per board foot), (iv) scale display is visible to customer during weighing (Consumer Act requirement), (v) receipt shows item, weight, unit of measure, price per unit, and total price for catch-weight items; (b) LGU inspector may: (i) test scales with their own calibration weights, (ii) verify price accuracy for catch-weight items, (iii) issue compliance certificate or notice of violation; (c) for violations: Store Manager has 5 days to correct; uncorrected violations result in fines and potential store closure per LGU ordinance",
+     "duration": "Per inspection: 2–3 hours",
+     "n": "3",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Catch-weight inventory accuracy reconciliation**: Weekly, Department Supervisor reconciles catch-weight inventory: (a) for bulk items (nails, screws by kg): compare POS sales volume (total kg sold per SKU per week) to physical bin inventory change; (b) for lumber: compare POS board foot sales to physical count change; (c) investigate variances > 3%: (i) scale inaccuracy (over- or under-weighing), (ii) measurement rounding at POS, (iii) spillage/waste not recorded, (iv) pilferage; (d) post inventory adjustment per threshold with Store Manager approval",
+     "duration": "1–2 hours/week",
+     "n": "4",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Catch-weight pricing change management**: When Category Manager changes catch-weight item prices: (a) system pushes price update to all POS terminals in real-time (continuous sync per POS-013); (b) Department Supervisor receives notification of price change with effective date/time; (c) Supervisor updates shelf/bin price labels for catch-weight items before first customer transaction at new price; (d) system prevents sale of catch-weight item at old price after effective time — auto-rejects if POS cache has stale price; (e) price change log maintained for BIR audit trail (price history per SKU with dates)",
+     "duration": "Per price change event: 15–30 min",
+     "n": "5",
+     "r": "System / Department Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1304",
+    "W47",
+    "W5A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-265"
+   ],
+   "fields": {
+    "Frequency": "Continuous real-time or near-real-time per transaction; daily batch reconciliation to BIR EIS portal",
+    "Owner": "Tax Compliance Manager",
+    "Participants": "Tax Compliance Manager, IT POS Team, Finance Controller, Store Department Supervisor",
+    "Trigger": "Each POS sales transaction completion; BIR EIS daily/weekly batch submission deadlines",
+    "Volume": "~2.8M POS transactions/month across 200 stores (~467/store/day)"
+   },
+   "id": "W1516",
+   "level": 2,
+   "name": "Philippine BIR Electronic Invoicing System (EIS) Sales Data Transmission & Compliance",
+   "parent": null,
+   "req_refs": [
+    "POS-042"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generate BIR-compliant sales data fields\" (replaces manual Step 1).",
+     "- System auto-record of \"record for each completed transaction with all BIR-mandated fields\" (replaces manual Step 2).",
+     "- System auto-log of \"logs transmission\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "The Philippine Bureau of Internal Revenue (BIR) is progressively mandating Electronic Invoicing/Receipting under the TRAIN Law (RA 10963) for taxpayers exceeding PHP 3M annual gross sales. BuildRight Depot, with ~PHP 62.3B annual revenue, falls well within the mandatory scope. The BIR Electronic Invoicing System (EIS) requires registered businesses to transmit sales data (transaction-level details including TIN, amount, VAT, item descriptions) electronically. Non-compliance carries penalties of PHP 1,000–50,000 per violation plus potential suspension of business permit. For a retailer processing 2.8M monthly transactions across 200 stores, the technical and compliance challenge is significant: every POS must generate BIR-compliant electronic sales data, transmit to a centralized system, and reconcile against BIR portal acknowledgment — all while maintaining offline capability during Philippine internet outages."
+    ],
+    "Controls": [
+     "- CTL-265 (ensure controlled execution — POS Compliance & Controls (PA-08.3).)",
+     "- operational: Tax Compliance Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Offline store transmission gaps**: with Philippine internet reliability challenges (POS offline ≥ 8 hours per A6.1), stores in prolonged outage risk exceeding the 24-hour EIS transmission tolerance; BIR may impose penalties even if the delay is ISP-caused",
+     "- **Sequential OR number integrity**: BIR strictly prohibits gaps in OR/SI numbering; if a POS terminal crashes mid-transaction and generates a partial record, the OR number may be consumed without a corresponding BIR submission — requires manual void explanation and documentation",
+     "- **Volume at scale**: 2.8M transactions/month × 10+ data fields = massive data payload to BIR EIS; API rate limits, transmission failures, and rejection handling at this volume require robust automated error recovery",
+     "- **Regulatory uncertainty**: BIR EIS implementation timeline has been repeatedly extended; requirements may change, requiring costly POS software updates across 600 terminals (200 stores × 3 terminals)"
+    ],
+    "Staffing Implication": [
+     "- Tax Compliance Manager: daily reconciliation + monthly certification + audit response = ~200–400 hours/year; primary duty",
+     "- IT POS Team: initial setup 2–3 months + ongoing exception handling ~10–20 hours/month; absorbed",
+     "- Finance Controller: monthly sign-off ~1 hour/month; absorbed",
+     "- No incremental headcount beyond existing Tax Compliance Manager role",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS transaction engine: BIR-compliant electronic sales record generation with all mandated fields (W1516.2)",
+     "- BIR EIS API/SFTP integration: real-time or batch transmission with acknowledgment tracking (W1516.3)",
+     "- Local queue management: offline transaction queuing with automatic flush upon connectivity restoration (W1516.3)",
+     "- Daily reconciliation module: POS transaction count vs. BIR EIS submission count, sequential OR gap analysis (W1516.4)",
+     "- Monthly compliance dashboard: submission rate, rejection rate, latency metrics (W1516.5)",
+     "- Integration with W540 (BIR Invoice Reprint), W530 (High-Value Transaction Documentation), POS-042 (event-driven architecture)"
+    ],
+    "Time Estimate": [
+     "- Initial setup: 2–3 months (IT POS Team + Tax Compliance Manager)",
+     "- Daily reconciliation: 30–60 min/day = ~180–360 hours/year",
+     "- Monthly certification: 2–3 hours/month = ~24–36 hours/year",
+     "- BIR audit response: ~40–80 hours per audit (infrequent)",
+     "- **Annual ongoing: ~200–400 hours (primarily Tax Compliance Manager)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "**BIR EIS registration and setup**: (a) Tax Compliance Manager registers each store location (200 stores + 4 DCs + HQ) with BIR EIS portal; (b) receives unique facility TIN-EIS credentials; (c) IT POS Team configures each POS terminal to generate BIR-compliant sales data fields: (i) seller TIN, (ii) registered name, (iii) store address, (iv) transaction date/time, (v) item description per line, (vi) quantity, (vii) unit price, (viii) VAT amount, (ix) total amount, (x) official receipt/invoice number per BIR sequential format",
+     "duration": "Initial setup: 2–3 months",
+     "n": "1",
+     "r": "Tax Compliance Manager / IT POS Team"
+    },
+    {
+     "a": "—",
+     "activity": "**Per-transaction data generation**: (a) POS system generates electronic sales record for each completed transaction with all BIR-mandated fields; (b) system assigns BIR-compliant sequential OR/SI number; (c) record stored in local queue (for offline resilience) and queued for transmission to BIR EIS; (d) customer receipt printed with BIR-required details including \"TIN: xxx-xxx-xxx\" header, \"VAT Registered\" marker, and QR code linking to electronic record",
+     "duration": "Automated per transaction",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Tax Compliance Manager",
+     "activity": "**Data transmission**: (a) system transmits queued sales records to BIR EIS via API/SFTP in real-time (preferred) or batch mode (minimum daily); (b) for stores experiencing internet outage: records queued locally and transmitted upon connectivity restoration within 24-hour tolerance window; (c) system logs transmission status: sent, acknowledged, rejected (with rejection reason)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System / IT POS Team"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Daily reconciliation**: (a) Tax Compliance Manager or designee runs daily EIS reconciliation report: (i) total transactions in POS system vs. total records transmitted to BIR EIS, (ii) records acknowledged by BIR vs. pending/rejected, (iii) sequential OR number gap analysis (no missing OR numbers per BIR requirement); (b) for rejected records: IT POS Team investigates rejection reason (format error, missing field, duplicate OR number), corrects, and retransmits; (c) for transmission gaps (offline stores): verify all records queued during outage were transmitted upon reconnection",
+     "duration": "30–60 min/day",
+     "n": "4",
+     "r": "Tax Compliance Manager / IT POS Team"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly compliance certification**: (a) Tax Compliance Manager generates monthly EIS compliance report: (i) total transactions submitted vs. total POS transactions (target: 100%), (ii) rejection rate (target: < 0.1%), (iii) average transmission latency (target: < 4 hours), (iv) sequential OR number integrity confirmation; (b) Finance Controller reviews and signs off; (c) report filed for BIR audit readiness (10-year retention per A6.5)",
+     "duration": "2–3 hours/month",
+     "n": "5",
+     "r": "Tax Compliance Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**BIR audit response**: when BIR selects BuildRight for EIS compliance audit: (a) Tax Compliance Manager extracts requested transaction samples from system; (b) provides transmission logs, acknowledgment receipts, and sequential OR number continuity evidence; (c) coordinates with external tax counsel if BIR raises deficiencies",
+     "duration": "Per audit event",
+     "n": "6",
+     "r": "Tax Compliance Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W530",
+    "W540"
+   ]
+  }
+ ]
+}

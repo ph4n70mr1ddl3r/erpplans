@@ -1,0 +1,547 @@
+{
+ "process_area": {
+  "id": "PA-54.3",
+  "title": "Gift Card Reconciliation & Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-54-gift-card-stored-value/PA-54.3-gift-card-reconciliation-analytics.md",
+ "value_stream": {
+  "directory": "VS-54-gift-card-stored-value",
+  "id": "VS-54",
+  "name": "Gift Card & Stored Value Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Daily across 200 stores + ecommerce",
+    "Owner": "Accountant (AP/AR)",
+    "Participants": "Accountant, Finance Manager",
+    "Trigger": "End-of-day POS close and ecommerce settlement",
+    "Volume": "~15,000–25,000 daily GC transactions"
+   },
+   "id": "W2158",
+   "level": 2,
+   "name": "Daily Gift Card Liability Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Reconciliation auto-run with discrepancy auto-flagged; GL auto-tied to the stored-value total"
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- operational: liability-reconciliation integrity; bank/liability reconciliation — links to VS-17; operational: Finance Manager daily sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Unreconciled-difference risk**: the stored-value total and the GL don't tie, indicating a posting error or a missing transaction; mitigated by the daily reconciliation catching the discrepancy within 24 hours (not month-end)",
+     "- **Timing-cut risk**: the reconciliation's cut-off misaligns with the stored-value-system batch, creating a false discrepancy; mitigated by the aligned cut-off (reconciliation runs after the stored-value batch completes)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Stored-value ledger (links to VS-08 / W28, VS-54 / W2143/2150) — the daily movement",
+     "- GL reconciliation (links to VS-17 / W9A, W89 bank reconciliation pattern) — the stored-value-vs-GL match",
+     "- POS/ecommerce settlement (links to VS-08 / W541 cash office, VS-10) — the transaction source"
+    ],
+    "Time Estimate": [
+     "~1.5 hours/day × 30 days = **~45 hours/month Accountant**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Accountant reconciles the daily gift-card liability movement: openings + loads/reloads − redemptions − breakage − cancellations = closing; validates the stored-value-system total against the GL liability account",
+     "duration": "1–2 hours/day",
+     "n": "1",
+     "r": "Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2143",
+    "W28",
+    "W541",
+    "W89",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Manager",
+    "Participants": "CFO",
+    "Trigger": "Monthly financial close per VS-17",
+    "Volume": "Full GC program for 5 entities"
+   },
+   "id": "W2159",
+   "level": 2,
+   "name": "Monthly Gift Card Financial Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Report auto-assembled from the daily reconciliation rollup; disclosure-note auto-drafted"
+    ],
+    "Controls": [
+     "- CTL-393 (financial-reporting accuracy — links to VS-17); CTL-44 (liability integrity); operational: CFO monthly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Disclosure-incompleteness risk**: the GC liability note for the financial statements is incomplete (missing the breakage methodology or the liability movement reconciliation); mitigated by the standardized report template tied to the disclosure requirement",
+     "- **Cross-entity-consolidation risk**: the 5 entities' GC programs consolidate with intercompany elimination if cards cross entities; mitigated by the per-entity tagging and the consolidation check"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Financial reporting (links to VS-17 / W9, W9A month-end) — the GC-program financial view",
+     "- Stored-value ledger (links to VS-08 / W28, VS-54 / W2158) — the source dataset",
+     "- PFRS 15 disclosure (links to VS-157 / W911) — the gift-card liability note"
+    ],
+    "Time Estimate": [
+     "~1 day/month = **~120 hours/year** Finance Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Manager compiles the monthly gift-card financial report: liability movement, loads, redemptions, breakage, cancellation, outstanding liability, channel split; reconciles to the W2158 daily rollup",
+     "duration": "1 day/month",
+     "n": "1",
+     "r": "Finance Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2158",
+    "W28",
+    "W9",
+    "W911",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "Real-time + weekly comprehensive",
+    "Owner": "Loss Prevention Analyst",
+    "Participants": "LP Analyst, Loss Prevention Mgr",
+    "Trigger": "Real-time alerts or weekly review",
+    "Volume": "~50–100 flagged transactions/week; <0.5% fraud"
+   },
+   "id": "W2160",
+   "level": 2,
+   "name": "Gift Card Fraud Monitoring & Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Fraud-rules auto-applied in real-time; false-positive-rate auto-monitored for rule-tuning"
+    ],
+    "Controls": [
+     "- CTL-393 (fraud-detection — links to VS-125); CTL-44 (freeze/reversal integrity); operational: Loss Prevention Manager weekly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **False-positive-customer-harm risk**: legitimate high-value purchases are held, frustrating good customers; mitigated by the false-positive review SLA and the rule-tuning in step 2",
+     "- **Novel-fraud-pattern risk**: a new fraud pattern (e.g., a card-number leak) isn't caught by the existing rules; mitigated by the VS-125 fraud-intelligence feed and the rule-refresh"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fraud monitoring (links to VS-125 / W266 ecommerce fraud, VS-23 / W248 inventory variance) — the fraud-rule engine and the flagged queue",
+     "- Stored-value (links to VS-08 / W28) — the freeze and reversal",
+     "- Payment gateway (links to VS-80 / W537) — the stolen-payment detection"
+    ],
+    "Time Estimate": [
+     "~5 hours/week LP Analyst = **~250 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Loss Prevention Mgr",
+     "activity": "System applies real-time fraud rules: velocity (rapid high-value purchases), enumeration (brute-force card-number attempts), geolocation anomalies, stolen-payment-method patterns; holds suspicious transactions for review",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "System / LP Analyst"
+    },
+    {
+     "a": "Loss Prevention Mgr",
+     "activity": "LP Analyst reviews the flagged queue weekly: confirms fraud (reverse the transaction, freeze the card), or releases the hold (false positive); tunes the rules to reduce false positives",
+     "duration": "4–6 hours/week",
+     "n": "2",
+     "r": "LP Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W248",
+    "W266",
+    "W28",
+    "W537"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; annual comprehensive",
+    "Owner": "FP&A Analyst",
+    "Participants": "CFO",
+    "Trigger": "Quarterly program review",
+    "Volume": "~PHP 500–600M annual liability; ~PHP 30–50M breakage"
+   },
+   "id": "W2161",
+   "level": 2,
+   "name": "Gift Card Program ROI Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ROI auto-assembled from the cost/benefit datasets; basket-lift auto-computed from loyalty-tagged redemptions"
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- CTL-393 (ROI/budget accuracy — links to VS-17); operational: CFO sign-off on the ROI methodology"
+    ],
+    "Pain Points / Risks": [
+     "- **Benefit-attribution risk**: the \"incremental basket lift\" (gift-card recipients spend more than the card value) is hard to attribute cleanly; mitigated by the loyalty-tagged gift-card-redemption basket analysis",
+     "- **Breakage-dependency risk**: the ROI over-relies on breakage revenue, which is ethically and regulatorily sensitive (consumer-protection scrutiny of unused balances); mitigated by the ROI presented with and without breakage, so the program stands on the basket-lift alone"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FP&A / cost accounting (links to VS-17 / W26, VS-158 / W85) — the cost and benefit inputs",
+     "- Breakage (links to VS-54 / W2156) — the breakage-revenue benefit",
+     "- Basket analytics (links to VS-13 / W17, VS-27 / W113) — the gift-card-recipient basket-lift"
+    ],
+    "Time Estimate": [
+     "~2.5 days/quarter = **~80–100 hours/year** FP&A Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "FP&A Analyst computes the program ROI: program cost (card production, platform, fraud loss, marketing) vs. program benefit (breakage revenue, incremental basket lift from gift-card recipients, cash-flow float benefit); recommends the program-investment split",
+     "duration": "2–3 days/quarter",
+     "n": "1",
+     "r": "FP&A Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W17",
+    "W2156",
+    "W26",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Monthly analysis; the quarterly comprehensive review runs via the VS-13 quarterly CX cycle",
+    "Owner": "Customer Experience Manager",
+    "Participants": "CX Manager, COO",
+    "Trigger": "Monthly CX review per VS-13",
+    "Volume": "~2,000–3,000 feedback items/month"
+   },
+   "id": "W2162",
+   "level": 2,
+   "name": "Gift Card Customer Satisfaction Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Feedback auto-segmented by channel; sentiment auto-tagged"
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- Operational: CX Manager monthly sign-off; COO review of any channel below threshold"
+    ],
+    "Pain Points / Risks": [
+     "- **Silent-dissatisfaction risk**: dissatisfied gift-card customers don't complain (they just don't repurchase), so the feedback understates the problem; mitigated by the repurchase-rate metric alongside the feedback",
+     "- **Channel-specific-friction blindness**: the aggregate feedback hides a channel-specific friction (e.g., app-redemption is buggy); mitigated by the channel-segmented feedback view"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CX / CSAT (links to VS-13 / W65 CSAT/NPS, W41 complaint) — the feedback dataset",
+     "- CRM (links to VS-13) — the gift-card-customer record",
+     "- Channel platforms (links to VS-08, VS-10, VS-75) — the experience surfaces measured"
+    ],
+    "Time Estimate": [
+     "~6 hours/month = **~70–80 hours/year** CX Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "CX Manager analyzes gift-card feedback: purchase experience, redemption friction, balance-inquiry satisfaction, lost-card resolution; identifies pain points and recommends fixes",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "CX Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W41",
+    "W65"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Monthly maintenance; real-time monitoring",
+    "Owner": "IT Integration Lead",
+    "Participants": "CIO",
+    "Trigger": "Monthly maintenance or API degradation",
+    "Volume": "4 integration points: POS, ecommerce, app, CRM"
+   },
+   "id": "W2163",
+   "level": 2,
+   "name": "Gift Card System Integration & API Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- API-health auto-monitored with auto-ticketing on degradation; integrations auto-tested on release"
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- CTL-393 (API/integration integrity — links to VS-27); operational: CIO monthly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **API-degradation risk**: a slow/degraded API causes checkout friction (redemption fails or times out); mitigated by the real-time health monitoring and the failover (if the stored-value API is down, the POS caches and reconciles later per the offline-resilience pattern)",
+     "- **Integration-asymmetry risk**: the app integration lags the POS integration (new features ship to POS first), creating inconsistent experience; mitigated by the synchronized release across all 4 integrations"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- API gateway (links to VS-27 / W257 enterprise API lifecycle) — the 4 integrations",
+     "- Stored-value platform (links to VS-08 / W28) — the integrated system",
+     "- IT monitoring (links to VS-27 / W380 alert & event management) — the API-health monitoring"
+    ],
+    "Time Estimate": [
+     "~6 hours/week IT Integration Lead = **~300 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "IT Integration Lead maintains the 4 gift-card integrations: POS (in-store sale/redemption), ecommerce (online sale/redemption), app (balance inquiry/reload), CRM (loyalty link); monitors API health, applies updates, troubleshoots degradation",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "IT Integration Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W257",
+    "W28",
+    "W380"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Semi-annual",
+    "Owner": "Marketing Analyst",
+    "Participants": "VP Marketing",
+    "Trigger": "Semi-annual competitive review",
+    "Volume": "4–6 competitors (Wilcon, CitiHardware, Handyman, SM, Robinsons)"
+   },
+   "id": "W2164",
+   "level": 2,
+   "name": "Gift Card Benchmarking & Competitive Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Benchmark dataset structured for year-over-year tracking"
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- Operational: VP Marketing sign-off on benchmark findings"
+    ],
+    "Pain Points / Risks": [
+     "- **Anecdotal-benchmark risk**: a single mystery-shop per competitor is anecdotal; mitigated by multiple data points and the structured scoring",
+     "- **Copy-without-fit risk**: a competitor practice (e.g., no-expiry cards) is copied without assessing the breakage-model impact; mitigated by the fit-and-impact assessment before adoption"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Competitive intelligence (links to VS-33 / competitive intelligence, VS-57 competitor price intelligence) — the benchmark dataset",
+     "- Program performance (links to VS-54 / W2161 ROI) — the internal comparison basis"
+    ],
+    "Time Estimate": [
+     "~3 days/semi-annual = **~40–50 hours/year** Marketing Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Marketing",
+     "activity": "Marketing Analyst benchmarks BuildRight's gift-card program against 4–6 competitors: denomination structure, channel mix, promo strategy, digital integration, breakage policy; identifies gaps and best practices",
+     "duration": "Semi-annual",
+     "n": "1",
+     "r": "Marketing Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W2161"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "FP&A Analyst",
+    "Participants": "CFO",
+    "Trigger": "Quarterly analysis cycle — Gift Card Channel Profitability",
+    "Volume": "4 channels"
+   },
+   "id": "W2165",
+   "level": 2,
+   "name": "Gift Card Channel Profitability Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Channel-profitability auto-computed quarterly with cost-allocation documented"
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- CTL-393 (cost-allocation accuracy); operational: CFO sign-off on the analysis"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-allocation arbitrariness risk**: the platform/IT cost allocation across channels is arbitrary, distorting the per-channel profitability; mitigated by the transaction-volume-based allocation (the channels driving the most transactions bear the IT cost)",
+     "- **Cross-channel-cannibalization blindness**: a channel grows by shifting volume from another (not net growth); mitigated by the total-program view alongside the channel view"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FP&A / cost accounting (links to VS-17 / W26, VS-158 / W85) — the channel cost and revenue",
+     "- Channel platforms (links to VS-08, VS-10, VS-75, VS-11) — the 4 channels",
+     "- Analytics (links to VS-27 / W113) — the channel-performance dataset"
+    ],
+    "Time Estimate": [
+     "~2 days/quarter = **~60–80 hours/year** FP&A Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "FP&A Analyst computes channel profitability: per-channel revenue (load + breakage), channel cost (platform, fraud, servicing), net contribution; identifies the most/least profitable channels",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "FP&A Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W26",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-393"
+   ],
+   "fields": {
+    "Frequency": "Quarterly dormancy sweep; annual escheat evaluation & derecognition cycle",
+    "Owner": "Finance Manager",
+    "Participants": "Finance Manager, Accountant (AP/AR), Legal Counsel, Customer Service Manager",
+    "Trigger": "Stored-value dormancy sweep flags balances with 24 months of inactivity (no load, redemption, balance inquiry, or transfer)",
+    "Volume": "~4,000–6,600 balances flagged dormant per annual cycle; aggregate dormant value ~PHP 8–12M"
+   },
+   "id": "W5511",
+   "level": 2,
+   "name": "Gift Card Dormancy Monitoring, Escheat Evaluation & Expired-Liability Derecognition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-flag of \"flags stored-value balances with 24 months of inactivity\" (replaces manual Step 1).",
+     "- Dormancy sweep auto-run with outreach SMS/email auto-queued and the 60-day window auto-tracked (replaces manual Step 2 dispatch).",
+     "- Breakage entry auto-drafted from the approved sweep population (replaces manual Step 4 posting)."
+    ],
+    "Controls": [
+     "- CTL-393 (ensure controlled execution — Gift Card Reconciliation & Analytics (PA-54.3).)",
+     "- operational: Finance Manager review and approval gate; Legal Counsel sign-off before derecognition"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: dormant balances derecognized without a documented escheat evaluation forfeit the statutory defense and invite penalty exposure; mitigated by the Legal Counsel sign-off gate (Step 3) before any derecognition",
+     "- **Breakage-misstatement risk**: premature derecognition overstates income if customers later redeem; mitigated by the remote-redemption test, the 60-day outreach window, and quarterly re-review of previously derecognized tranches",
+     "- **Reactivation risk**: a customer redeems a derecognized balance after the liability was taken to income; mitigated by the automatic re-liability posting rule (system re-books the liability and reverses the breakage entry on redemption of a flagged card)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within existing Finance and Legal headcount; no incremental staffing (the sweep and register are system-generated; the evaluation is a low-volume annual cycle)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Stored-value ledger dormancy flag (24-month no-activity rule) with dormancy register export (links to VS-54 / W2158 reconciliation — the derecognized population must tie to the liability roll-forward)",
+     "- Customer outreach queue via loyalty contact data (links to VS-13) — the 60-day reactivation window evidence",
+     "- Legal case log for escheat evaluation & filing (links to VS-100) — the per-tranche applicability position",
+     "- GL derecognition entry with PFRS 15 breakage posting (links to VS-17 / W9A month-end close; feeds W2159 monthly gift-card financial reporting)"
+    ],
+    "Time Estimate": [
+     "Quarterly sweep validation & outreach ~4 hours × 4 sweeps = **~16 hours/year**; annual escheat evaluation & derecognition cycle ~10–14 hours (Legal evaluation 4–6 + posting 4–6 + filing/archive 2); total **~26–30 hours/year** (Accountant ~20, Legal Counsel ~6, Finance Manager oversight absorbed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "System flags stored-value balances with 24 months of inactivity per the quarterly dormancy sweep; generates the dormancy register (card number, balance, last activity, load channel)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Accountant validates the dormancy register against redemptions, reissued cards, and pending disputes; queues customer outreach (SMS/email via loyalty contact data) giving 60 days to reactivate before the annual evaluation",
+     "duration": "4 hours/sweep",
+     "n": "2",
+     "r": "Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Legal Counsel evaluates escheat applicability for unclaimed balances under Philippine unclaimed-property rules and, where applicable, prepares the filing through counsel; documents the position per dormant tranche",
+     "duration": "4–6 hours/cycle",
+     "n": "3",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance derecognizes eligible expired liabilities to breakage income per the PFRS 15 breakage policy (only where redemption is remote and the tranche passed the Legal evaluation); posts the GL entry and archives the dormancy register",
+     "duration": "4–6 hours/cycle",
+     "n": "4",
+     "r": "Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Escheat filing executed where applicable; dormant-balance population, outreach evidence, derecognition entries, and filings archived for audit (feeds W2159 monthly reporting and the W2160 fraud-monitoring exclusions list)",
+     "duration": "2 hours/cycle",
+     "n": "5",
+     "r": "Legal Counsel / Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2158",
+    "W2159",
+    "W2160",
+    "W9A"
+   ]
+  }
+ ]
+}

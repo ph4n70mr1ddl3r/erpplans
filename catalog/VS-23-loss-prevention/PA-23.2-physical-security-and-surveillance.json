@@ -1,0 +1,1126 @@
+{
+ "process_area": {
+  "id": "PA-23.2",
+  "title": "Physical Security & Surveillance"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-23-loss-prevention/PA-23.2-physical-security-and-surveillance.md",
+ "value_stream": {
+  "directory": "VS-23-loss-prevention",
+  "id": "VS-23",
+  "name": "Loss Prevention & Asset Protection"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Daily (continuous monitoring during store hours; incident review within 24 hours)",
+    "Owner": "LP Officer (Store-Level) / Security Operations Center (SOC) Lead",
+    "Participants": "LP Analyst, Store Manager, IT Security, External Security Agency (contracted)",
+    "Trigger": "Scheduled — daily operations review; ad-hoc triggered by exception report (W837) or incident report",
+    "Volume": "200 stores × average 2–3 incident reviews per day = ~400–600 reviews; 24/7 continuous monitoring at 4 DCs"
+   },
+   "id": "W838",
+   "level": 2,
+   "name": "CCTV & Surveillance System Daily Operations & Incident Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"recording — automated health check at store open\" (replaces manual Step 1).",
+     "- System auto-monitor of \"Monitor real-time camera feeds at SOC for 4 DCs and 10 highest-shrinkage stores\" (replaces manual Step 2).",
+     "- System auto-document of \"document observation, tag for investigation if warranted\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: LP Officer (Store-Level) / Security Operations Center (SOC) Lead review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Camera uptime target is 98%; actual may be lower in provincial stores with poor connectivity",
+     "- Storage capacity for 30-day retention across 200 stores requires ~500 TB",
+     "- SOC staffing for 24/7 monitoring is expensive; currently only 4 DCs and 10 stores covered",
+     "- Privacy concerns under RA 10173 (Data Privacy Act) — CCTV signage and notice requirements"
+    ],
+    "Staffing Implication": [
+     "- SOC: 3 operators × 3 shifts = 9 operators + 1 SOC Lead (national)",
+     "- LP Analysts include CCTV review in daily exception workflow (W837)",
+     "- IT Security: 1 FTE dedicated to CCTV infrastructure maintenance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **CCTV/DVR/NVR System** — camera health monitoring, footage retrieval, archival",
+     "- **ERP LP Module** — incident tagging, case linking, evidence management",
+     "- **IT Operations Monitoring** — camera uptime alerts, storage capacity tracking",
+     "- **Access Control System** — integration with entrance/exit camera feeds",
+     "- **AI Video Analytics Platform** (future) — automated behavior detection, person tracking"
+    ],
+    "Time Estimate": [
+     "- Daily health check: 20 min automated",
+     "- Incident review: 60 min per analyst per day",
+     "- Spot checks: 45 min per analyst per day",
+     "- Archival and reporting: 30 min per analyst per day",
+     "- **Total daily effort: ~6 analyst-hours + 9 SOC operator shifts**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "SOC Lead",
+     "activity": "Verify all store CCTV cameras online and recording — automated health check at store open; flag any offline cameras to IT Security for immediate remediation",
+     "duration": "20 min",
+     "n": "1",
+     "r": "IT Security"
+    },
+    {
+     "a": "SOC Lead",
+     "activity": "Monitor real-time camera feeds at SOC for 4 DCs and 10 highest-shrinkage stores (rotating selection monthly)",
+     "duration": "Continuous (shift-based)",
+     "n": "2",
+     "r": "SOC Operator"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "Review flagged incidents from exception report (W837) — retrieve footage for timestamp window, document observation, tag for investigation if warranted",
+     "duration": "60 min",
+     "n": "3",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "Conduct spot-check surveillance review — random selection of 5 stores per day for cashier area, entrance/exit, and high-value merchandise zones",
+     "duration": "45 min",
+     "n": "4",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "SOC Lead",
+     "activity": "Archive incident footage per retention policy — 30 days routine, 1 year for active investigation, 7 years for prosecuted cases (aligned with criminal-prosecution prescriptive periods; CCTV footage is governed by legal/LP practice, separate from the 10-year BIR accounting-records retention)",
+     "duration": "15 min",
+     "n": "5",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "SOC Lead",
+     "activity": "Generate daily CCTV operational status report — camera uptime %, incident captures, response time to offline alerts",
+     "duration": "15 min",
+     "n": "6",
+     "r": "SOC Operator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W837"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Monthly per store (200 stores = ~200 audits/month); daily EAS alarm response",
+    "Owner": "LP Officer (Store-Level) / Security Guard (contracted)",
+    "Participants": "Store Manager, LP Analyst, Security Guard Agency Supervisor, IT Security",
+    "Trigger": "Scheduled — monthly per store; or triggered by EAS alarm frequency spike or shrinkage result",
+    "Volume": "~200 entrance/exit audits/month; ~500–800 EAS alarm responses per day chain-wide"
+   },
+   "id": "W844",
+   "level": 2,
+   "name": "Store Entrance/Exit Audit & Electronic Article Surveillance (EAS) Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs alarm in incident register\" (replaces manual Step 1).",
+     "- System auto-review of \"review — Store Manager reviews incident register\" (replaces manual Step 2).",
+     "- System auto-validate of \"checkout, source-tagging compliance for high-risk SKUs, security guard presence…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: maintenance (gate calibration, deactivator pad replacement) requires specialized vendor support"
+    ],
+    "Pain Points / Risks": [
+     "- EAS false alarm rate can be high (> 30%) due to tag deactivation failures, causing customer frustration",
+     "- Security guard agencies have high turnover (~50% annually); continuous training required",
+     "- Source-tagging vendor compliance is inconsistent; some vendors resist cost of tag application",
+     "- EAS system maintenance (gate calibration, deactivator pad replacement) requires specialized vendor support",
+     "- Cultural sensitivity: customers may feel accused when EAS alarm triggers; staff must handle with courtesy"
+    ],
+    "Staffing Implication": [
+     "- Security guards: 2 per store × 200 stores = 400 guards (contracted through agency)",
+     "- LP Analysts: monthly audit rotation (each analyst covers ~40 stores)",
+     "- 1 FTE EAS System Administrator (national, under IT Operations)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **EAS System** — gate alarm logging, tag/deactivation counter, system health monitoring",
+     "- **POS System** — tag deactivation confirmation at checkout",
+     "- **ERP LP Module** — alarm incident register, audit checklist, tag inventory tracking",
+     "- **Procurement Module** — source-tagging vendor compliance tracking",
+     "- **BI Dashboard** — EAS effectiveness analytics, store comparison"
+    ],
+    "Time Estimate": [
+     "- Daily EAS response: 5 min × ~3 alarms/store = 15 min/store/day",
+     "- Monthly audit: 60 min per store",
+     "- **Annual estimate: ~18,250 alarm response + ~2,400 audit + ~1,250 admin ≈ ~21,900 person-hours/year**",
+     "---",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "EAS alarm response — security guard approaches customer, requests to verify purchase, checks receipt against bag contents, tags/detags merchandise, logs alarm in incident register",
+     "duration": "5 min per alarm",
+     "n": "1",
+     "r": "Security Guard"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "Daily EAS alarm log review — Store Manager reviews incident register; flag repeat alarm locations (may indicate tag deactivation failure), repeat individuals, or alarm-to-apprehension ratio",
+     "duration": "15 min daily",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "Monthly entrance/exit audit — verify EAS gate functionality, tag application compliance at checkout, source-tagging compliance for high-risk SKUs, security guard presence and procedure adherence",
+     "duration": "60 min per store",
+     "n": "3",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "EAS tag inventory management — reconcile EAS tag stock (hard tags, soft labels), order replenishment, ensure tag availability at all POS terminals and receiving dock",
+     "duration": "30 min monthly",
+     "n": "4",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "Source-tagging compliance verification — confirm vendor-applied EAS labels on high-risk categories (power tools, electrical, plumbing fittings, adhesives) per vendor agreement",
+     "duration": "2 hours monthly",
+     "n": "5",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "Generate monthly EAS effectiveness report — alarm rate, apprehension rate, tag application compliance %, shrinkage correlation by store",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "LP Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "2–3 vendor deliveries per store per day + 3PL driver visits + occasional service contractors = ~5–8 external personnel access events per store per day",
+    "Owner": "Receiving Clerk / LP Officer",
+    "Participants": "Receiving Clerk, LP Officer, Vendor Driver, Store Manager, Security Guard",
+    "Trigger": "Vendor delivery truck arrives at store receiving dock; or 3PL driver arrives for customer delivery pickup; or service contractor arrives for maintenance",
+    "Volume": "~1,000–1,600 external access events per day chain-wide (200 stores × 5–8)"
+   },
+   "id": "W1211",
+   "level": 2,
+   "name": "Store-Level Vendor & Delivery Driver Access Control & Yard Security Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documents\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks delivery documents against expected deliveries in system\" (replaces manual Step 2).",
+     "- System auto-log of \"logs visitor in access control system\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot stores receive 2–3 vendor deliveries and multiple 3PL driver visits daily. Each external person entering the store premises — particularly the receiving dock, backroom, and lumber yard — represents a security and safety risk. External personnel may: (a) steal merchandise from unsecured backroom areas, (b) introduce safety hazards by operating equipment (forklifts, pallet jacks) in the yard, (c) access restricted areas (cash office, IT server room), (d) conduct unauthorized deliveries (phantom deliveries). The lumber yard and outdoor materials area is particularly vulnerable — large, open-access areas with high-value items (lumber, rebar, cement) where distinguishing vendor activity from theft is difficult. This workflow governs the check-in, escort, monitoring, and check-out of all external personnel at store premises, complementing W843 (vendor & delivery fraud detection) and W838 (CCTV operations)."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: Receiving Clerk / LP Officer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Tailgating** — vendor drivers holding gates open for unauthorized persons to enter yard/backroom; anti-tailgating turnstiles or mantrap gates mitigate at high-risk stores",
+     "- **Visitor badge sharing** — drivers exchanging badges to extend access; photo-on-badge and guard verification mitigates",
+     "- **Receiving Clerk distraction** — Clerk called away during unloading leaves driver unattended in backroom; merchandise vulnerability during unattended periods",
+     "- **After-hours deliveries** — emergency vendor deliveries outside store hours lack same security controls; Store Manager must authorize and be present",
+     "- **Driver familiarity** — regular drivers known to staff may bypass check-in procedures over time; LP Officer spot-checks mitigate"
+    ],
+    "Staffing Implication": [
+     "- Security Guards: already deployed at each store (1–2 per store); visitor management adds ~2–5 min per visitor = ~25–40 min/day",
+     "- Receiving Clerks: escort duty is part of receiving process; no incremental time",
+     "- LP Officer: weekly access log review adds ~30 min/week; absorbed by existing regional LP team",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Visitor access control system: visitor registration, badge issuance, time tracking, auto-expiry alerts",
+     "- Daily delivery schedule from W109 (goods receiving) for pre-authorized visitor validation",
+     "- Approved contractor database from W600 (service contractor accreditation)",
+     "- CCTV system integration (W838) for visitor movement tracking",
+     "- LP analytics dashboard for access pattern analysis and anomaly detection"
+    ],
+    "Time Estimate": [
+     "- Per visitor check-in: 5 min (2 min ID verification + 3 min system registration)",
+     "- Per visitor check-out: 5 min (vehicle inspection + badge return + system log)",
+     "- Weekly access review: 30 min per LP Officer per region",
+     "- **Chain-wide: ~1,000–1,600 visitors/day × 10 min = 167–267 person-hours/day**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Officer",
+     "activity": "External personnel (vendor driver, 3PL driver, service contractor) arrives at store entrance or receiving gate; Security Guard greets and requests: (a) government-issued ID, (b) delivery documents (DR, PO reference) or service work order, (c) vehicle plate number and details",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Security Guard"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Security Guard verifies identity and purpose: (a) checks delivery documents against expected deliveries in system (Receiving Clerk's daily delivery schedule from W109), (b) for service contractors: verifies against approved contractor list per W600, (c) for unexpected/unlisted deliveries: contacts Receiving Clerk for authorization",
+     "duration": "2 min",
+     "n": "2",
+     "r": "Security Guard"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "Security Guard logs visitor in access control system: (a) visitor name, company, ID number, vehicle plate, purpose, time-in, assigned escort; (b) issues color-coded visitor badge (green = vendor delivery, yellow = 3PL driver, orange = service contractor) with time-limited validity (max 2 hours for deliveries; max 8 hours for contractors); (c) retains visitor's government ID at guard station",
+     "duration": "3 min",
+     "n": "3",
+     "r": "Security Guard / System"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "Receiving Clerk receives notification and escorts vendor driver to receiving dock; Receiving Clerk remains present throughout unloading; driver is NOT permitted in: (a) sales floor, (b) cash office, (c) stockroom beyond receiving staging area, (d) IT/server area",
+     "duration": "Duration of unloading",
+     "n": "4",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "For lumber yard / outdoor materials deliveries: Security Guard or LP Officer monitors via CCTV; driver must remain within designated unloading zone; yard gate closed after entry",
+     "duration": "Duration of unloading",
+     "n": "5",
+     "r": "LP Officer / Security Guard"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "Upon completion: Receiving Clerk verifies delivered goods match DR (W109 goods receipt); signs delivery receipt; escorts driver back to exit; Security Guard checks: (a) vehicle cargo area visually inspected for unauthorized merchandise, (b) driver returns visitor badge, (c) Security Guard returns government ID, (d) logs time-out in access control system",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Receiving Clerk / Security Guard"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If visitor badge not returned within validity period: system alerts LP Officer; LP Officer locates visitor; if visitor cannot be located: Store Manager notified; LP Officer reviews CCTV footage for visitor's last known location",
+     "duration": "10 min",
+     "n": "7",
+     "r": "System / LP Officer"
+    },
+    {
+     "a": "LP Director",
+     "activity": "Weekly: LP Officer reviews access control log for anomalies: (a) visitors exceeding time limit, (b) frequent visits by same vendor driver outside scheduled deliveries, (c) vehicles without proper documentation, (d) after-hours access events; escalates patterns to LP Director",
+     "duration": "30 min/week",
+     "n": "8",
+     "r": "LP Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W109",
+    "W600",
+    "W838",
+    "W843"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Daily (every operating day at all 200 stores with lumber yards)",
+    "Owner": "LP Officer (Store-Level) / Store Manager",
+    "Participants": "LP Analyst, Lumber Yard Sales Associate, Department Supervisor (Lumber & Building Materials), LP Manager (Regional)",
+    "Trigger": "Scheduled — daily surveillance protocol; ad-hoc triggered by exception report (W837), inventory variance alert, or incident report",
+    "Volume": "200 stores × daily surveillance protocol; estimated 15–25 lumber yard theft incidents per month chain-wide"
+   },
+   "id": "W1247",
+   "level": 2,
+   "name": "Outdoor Lumber Yard & Building Material Yard Theft Prevention & Surveillance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Opening yard security check\" (replaces manual Step 1).",
+     "- System auto-count of \"count of top 20 highest-value lumber and building material SKUs against system…\" (replaces manual Step 2).",
+     "- System auto-log of \"log vehicle plate number for purchases > PHP 20,000\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's outdoor lumber yards and building material display areas are among the highest shrinkage risk zones in the store network. Lumber (4,900 SKUs, 14% of assortment), cement, rebar, hollow blocks, steel pipes, and other bulky construction materials are stored in partially enclosed or open-air areas that are difficult to secure with conventional EAS gates. Unlike the controlled main sales floor, the lumber yard has multiple access points: customer vehicle loading lanes, forklift operating zones, delivery truck gates, and pedestrian walkways. Construction materials represent high-value, easily resold goods — a single bundle of premium plywood (PHP 3,500–5,000) or a pallet of cement (PHP 8,000–12,000) can be loaded into a pickup truck within minutes. Philippine construction material theft is exacerbated by: (a) active informal construction markets where stolen materials are resold at 40–60% of SRP, (b) contractor crews who may have legitimate access to the yard but remove more than purchased, (c) after-hours access via perimeter fencing. This workflow governs the daily surveillance, theft prevention, and incident response procedures specifically for outdoor lumber yards and building material display areas."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: LP Officer (Store-Level) / Store Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Multiple yard access points make complete perimeter security impractical without significant capital investment",
+     "- Customer self-loading culture in Philippine hardware retail conflicts with controlled goods release procedures",
+     "- After-hours theft via perimeter breach is difficult to prevent without 24/7 security guard presence",
+     "- Weather exposure damages electronic security equipment (CCTV, sensors) in outdoor yards",
+     "- Balancing customer experience with security — excessive checks drive contractors to competitors"
+    ],
+    "Staffing Implication": [
+     "- Lumber Yard Sales Associate: yard security duties add ~1 hour/day per store to existing role",
+     "- Department Supervisor: crew access control adds ~30 min/day during peak hours",
+     "- LP Officer: 30 min/day CCTV review per store (can be centralized at regional level)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **CCTV System** — yard-specific camera feeds with vehicle license plate recognition (LPR) at exit gate",
+     "- **POS System** — receipt verification for goods release, vehicle plate logging for high-value purchases",
+     "- **Inventory Module** — daily spot-check count entry, variance alert generation",
+     "- **LP Module** — incident reporting, vehicle plate blacklist, contractor access badge logging",
+     "- **Trade Account Module** — authorized purchaser verification, crew access logging"
+    ],
+    "Time Estimate": [
+     "- Per store per day: ~85 min for yard security activities (opening 15 + spot-check 20 + CCTV 30 + closing 20)",
+     "- **Annual estimate: 200 stores × 365 days × 85 min = ~6,205,000 staff-minutes/year (~103,400 staff-hours/year)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Opening yard security check**: Before customer access, Lumber Yard Sales Associate conducts perimeter walk: (a) verify fencing integrity — no cuts, breaches, or lifted sections; (b) check all gates locked and chain intact; (c) verify CCTV camera coverage of yard entry/exit points (minimum 4 cameras per yard: main gate, vehicle exit, pedestrian entry, high-value display); (d) confirm yard lighting operational for evening hours; (e) report any security deficiencies to Store Manager before yard opens",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Lumber Yard Sales Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**High-value material inventory spot-check**: Verify physical count of top 20 highest-value lumber and building material SKUs against system on-hand: (a) premium plywood bundles, (b) structural lumber (2×4, 2×6 per board), (c) rebar bundles, (d) cement pallets, (e) steel pipe lengths; flag variance > 2 units per SKU for investigation",
+     "duration": "20 min",
+     "n": "2",
+     "r": "Lumber Yard Sales Associate"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Customer vehicle loading monitoring**: During operating hours, Sales Associate monitors customer vehicle loading zone: (a) verify customer presents sales receipt before loading bulky items into vehicle; (b) match receipt line items to physical goods being loaded; (c) for large purchases (> PHP 10,000 in lumber/CM), verify payment completed at POS before release; (d) log vehicle plate number for purchases > PHP 20,000",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Lumber Yard Sales Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Contractor crew access control**: For registered trade account customers purchasing in bulk: (a) verify trade account ID and authorized purchaser list; (b) issue yard access badge that logs entry/exit time; (c) limit yard access to 2 crew members per account visit; (d) verify total loaded quantity matches invoice before yard exit",
+     "duration": "5 min per crew",
+     "n": "4",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "**CCTV real-time monitoring review**: LP Officer reviews CCTV footage for lumber yard during high-risk windows (opening hour, lunch rush, closing hour): (a) flag vehicles entering loading zone without stopping at POS; (b) identify individuals loitering near high-value stacks; (c) detect concealment of smaller items (tools, fittings) within lumber bundles; (d) cross-reference vehicle plates with previous incident database",
+     "duration": "30 min/day",
+     "n": "5",
+     "r": "LP Officer / LP Analyst"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Incident response for yard theft**: If theft detected: (a) approach subject with minimum 2 staff present; (b) if customer has unpaid goods in vehicle, request return to POS for payment; (c) if subject refuses or flees, record vehicle description, plate number, and CCTV timestamp — do not physically pursue; (d) file incident report within 1 hour; (e) for repeat offenders or organized groups, escalate to LP Manager (Regional) for investigation per W840",
+     "duration": "30–60 min per incident",
+     "n": "6",
+     "r": "LP Officer / Department Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Closing yard security protocol**: After customer hours: (a) final yard walk to verify no customers or unauthorized persons remain; (b) conduct closing count of top 10 high-value SKUs; (c) secure all gates with padlock; (d) verify CCTV recording continues in night-vision mode; (e) report any closing variance to Store Manager via system alert",
+     "duration": "20 min",
+     "n": "7",
+     "r": "Lumber Yard Sales Associate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W837",
+    "W840"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-225"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring at all 200 stores; investigation as needed",
+    "Owner": "Customer Service Representative / LP Analyst",
+    "Participants": "Store Manager, Stock Associate, LP Analyst, Ecommerce Operations Manager",
+    "Trigger": "Scheduled — daily BOPIS staging area audit; ad-hoc triggered by customer complaint of order tampering, inventory variance at staging, or LP exception alert",
+    "Volume": "~25,700 BOPIS orders/month; estimated 50–80 staging-related incidents/month chain-wide"
+   },
+   "id": "W1248",
+   "level": 2,
+   "name": "BOPIS Staging Area Security & Omnichannel Fulfillment Fraud Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check that staged orders are in sealed bags/containers with order number label\" (replaces manual Step 1).",
+     "- System auto-scan of \"scan each item barcode to confirm correct SKU and quantity\" (replaces manual Step 2).",
+     "- System auto-record of \"records pickup timestamp and customer acknowledgment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot processes ~25,700 BOPIS (Buy Online, Pick Up In Store) orders per month across 200 stores, staged at the customer service counter for customer pickup within 4 hours. Each BOPIS order involves: (a) store receives pick list from ecommerce platform, (b) Stock Associate picks items from shelves and stages at designated BOPIS holding area, (c) customer presents ID and order confirmation for release. The BOPIS staging area creates a unique security vulnerability: items are picked from inventory but not yet sold, creating a \"limbo\" state where goods are reserved but unattended for up to 5 days. Risks include: (i) employee theft from staged orders (high-value power tools, electrical fixtures), (ii) customer impersonation — presenting fake order confirmation to collect another customer's goods, (iii) staged order tampering — swapping higher-value items with lower-value substitutes before customer pickup, (iv) order abandonment — customer never picks up and staged items are not returned to shelf promptly. This workflow governs security and fraud prevention for BOPIS and omnichannel fulfillment staging areas."
+    ],
+    "Controls": [
+     "- CTL-225 (ensure shrinkage detection & case governance.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- BOPIS staging areas compete with limited backroom space in big-box format; secure lockers may not be feasible for bulky items (lumber, appliances)",
+     "- Customer impersonation is difficult to detect without OTP for all orders, but OTP adds friction to pickup experience",
+     "- Employee collusion risk — Stock Associate stages order, accomplice picks up with fake ID",
+     "- Abandoned order processing creates additional labor; ~5% abandonment rate means ~1,285 returns-to-shelf/month"
+    ],
+    "Staffing Implication": [
+     "- Customer Service Representative: BOPIS security duties add ~45 min/day to existing role",
+     "- LP Analyst: staging tampering detection adds 30 min/day to existing monitoring duties",
+     "- Stock Associate: pick verification adds 5 min per order (~4,280 min/day chain-wide for ~25,700 orders/month)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Ecommerce Platform** — BOPIS order lifecycle, pickup confirmation, cancellation trigger",
+     "- **POS / Customer Service Module** — ID verification, QR code scanning, OTP validation",
+     "- **Inventory Module** — staged order inventory status, return-to-shelf reconciliation",
+     "- **LP Module** — tampering incident logging, impersonation flag tracking",
+     "- **CCTV System** — staging area coverage, pickup counter footage",
+     "- **SMS Gateway** — OTP delivery for high-value pickups"
+    ],
+    "Time Estimate": [
+     "- Daily monitoring: 45 min per store (opening audit + tampering detection)",
+     "- Per order: 8 min additional security overhead (pick verification + pickup verification)",
+     "- **Annual estimate: 200 stores × 365 × 45 min + 308,000 orders × 8 min = ~95,800 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Daily staging area opening audit**: Customer Service Representative verifies staging area readiness: (a) confirm BOPIS holding shelves/lockers are empty from previous day or contain only active orders within hold period; (b) verify CCTV coverage of staging area; (c) check that staged orders are in sealed bags/containers with order number label; (d) report any unsealed or unlabeled staged goods to Store Manager",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Customer Service Representative"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**BOPIS pick verification**: When Stock Associate completes BOPIS pick, system requires: (a) scan each item barcode to confirm correct SKU and quantity; (b) photograph staged order (mobile app) as pick verification evidence; (c) system generates tamper-evident bag seal number or locker code; (d) Stock Associate and Customer Service Representative both verify staged order count matches pick list",
+     "duration": "5 min per order",
+     "n": "2",
+     "r": "Stock Associate / Customer Service Representative"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Customer pickup identity verification**: At BOPIS pickup: (a) customer presents government-issued ID matching order name; (b) Customer Service Representative scans order QR code and verifies customer identity; (c) system displays order contents — representative opens sealed bag in customer presence; (d) customer confirms item count and condition; (e) system records pickup timestamp and customer acknowledgment",
+     "duration": "5 min per pickup",
+     "n": "3",
+     "r": "Customer Service Representative"
+    },
+    {
+     "a": "LP Manager (Regional)",
+     "activity": "**Anti-impersonation controls**: For high-value BOPIS orders (> PHP 10,000): (a) system sends SMS OTP to order phone number at pickup — customer must provide OTP; (b) if third-party pickup authorized, system requires pickup authorization code from order owner; (c) flag attempts to collect multiple orders under different names from same ID; (d) flag pickup attempts within 30 min of order placement (insufficient time for legitimate pick)",
+     "duration": "3 min per high-value pickup",
+     "n": "4",
+     "r": "Customer Service Representative"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Staged order tampering detection**: Daily reconciliation of staged orders: (a) system compares pick-scan log to current staged inventory; (b) flag any staged order with item count discrepancy; (c) for sealed bags: verify seal number matches system record; (d) for open-shelf staging: spot-check item SKUs against pick list; (e) investigate any tampered seals or mismatched items as potential theft per W839",
+     "duration": "30 min/day",
+     "n": "5",
+     "r": "LP Analyst / Customer Service Representative"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Abandoned order return-to-shelf**: For orders exceeding 5-day hold period: (a) system auto-generates cancellation and refund; (b) Stock Associate returns items to shelf and scans each item for inventory reconciliation; (c) system verifies return-to-shelf count matches original pick count; (d) any items missing from abandoned order are flagged as potential shrinkage",
+     "duration": "10 min per abandoned order",
+     "n": "6",
+     "r": "Stock Associate"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W839"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Daily automated health check; ~10–20 incident footage retrieval requests/week chain-wide",
+    "Owner": "Loss Prevention Analyst (LP Operations Center)",
+    "Participants": "LP Analyst, LPO (Loss Prevention Officer), Store Manager, HR (for employee investigations), Legal (for police reports)",
+    "Trigger": "Scheduled — daily (automated health check); ad-hoc (incident investigation request from W37 or W562)",
+    "Volume": "200 stores × ~32 cameras/store = ~6,400 cameras; ~15 TB of footage generated daily chain-wide"
+   },
+   "id": "W1388",
+   "level": 2,
+   "name": "Store CCTV System Daily Health Check, Footage Retention & Incident Retrieval Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Automated daily health check\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews health report at start of shift\" (replaces manual Step 2).",
+     "- System auto-flag of \"flagged with hold\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight operates approximately 6,400 CCTV cameras across 200 stores, covering entrances/exits, POS terminals, high-value merchandise areas (power tools, appliances), receiving docks, lumber yard, and parking lots. The LP Operations Center at HQ monitors camera health and retrieves footage for incident investigations (W37 exception monitoring, W562 daily LP routine). Philippine data privacy regulations (RA 10173) and company policy govern footage retention, access, and disposal. CCTV footage is critical evidence for internal theft investigations, customer injury claims, robbery/burglary police reports, and slip-and-fall liability disputes."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: Loss Prevention Analyst (LP Operations Center) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Camera coverage gaps**: with ~32 cameras per store covering 8,000–15,000 sqm, blind spots exist; shoplifters and dishonest employees learn camera locations and exploit gaps; annual camera layout review is needed",
+     "- **Storage cost growth**: as camera resolution increases (from 2MP to 4MP to 8MP), storage requirements grow exponentially; 200 stores × 90-day retention at high resolution = significant network storage infrastructure cost",
+     "- **Internet bandwidth limitations**: remote footage retrieval from provincial stores depends on internet connection quality; some stores have < 10 Mbps upload, making real-time remote viewing of high-resolution footage impractical",
+     "- **RA 10173 compliance risk**: CCTV footage containing identifiable individuals is personal data under the Data Privacy Act; failure to comply with retention limits, access controls, or breach notification requirements exposes BuildRight to NPC (National Privacy Commission) penalties; mitigated by the Loss Prevention Analyst (LP Operations Center) review and approval gate"
+    ],
+    "Staffing Implication": [
+     "1 LP Analyst at HQ Operations Center manages CCTV health and footage retrieval for all 200 stores. Absorbed within existing LP Operations Center staffing.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CCTV health monitoring platform: automated camera status, recording status, storage capacity, and image quality checks (W1388.1)",
+     "- Centralized NVR management: remote access to all store NVRs for footage retrieval without requiring on-site presence (W1388.4)",
+     "- Evidence vault: secured network storage with access logging, retention hold management, and chain-of-custody tracking (W1388.4)",
+     "- Retention policy engine: automated deletion per camera-type schedule with hold code override (W1388.3)",
+     "- Data privacy access log: immutable audit trail of all footage access events (W1388.5)",
+     "- Integration with W37 (exception monitoring — footage requests for fraud/theft investigation), W562 (store LP daily routine — LPO reviews camera feeds), W838 (CCTV daily operations), W1389 (burglary alarm — footage retrieval post-incident)"
+    ],
+    "Time Estimate": [
+     "Daily health check review: 30 min/day. Incident footage retrieval: 15–30 min/request × 10–20 requests/week = ~5 hours/week. Monthly reporting: 2 hours/month. Total: ~10–12 hours/week."
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Analyst",
+     "activity": "**Automated daily health check** (4:00 AM): system checks all cameras per store — (a) camera online/offline status, (b) recording active (NVR writing footage), (c) storage capacity (days of footage remaining at current resolution), (d) image quality (blur, darkness, obstruction detection via AI); generates health report with exception list of cameras requiring attention",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP Analyst reviews health report at start of shift: (a) offline cameras — identify root cause (power outage, network failure, hardware malfunction); dispatch Facilities Technician for on-site repair if needed; (b) storage capacity warnings — initiate archival or increase storage; (c) image quality issues — dispatch cleaning (lens) or repositioning; (d) for cameras covering high-risk areas (POS, high-value merchandise, receiving dock) — priority repair SLA: 4 hours (same day)",
+     "duration": "30 min/day",
+     "n": "2",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Analyst",
+     "activity": "**Footage retention management**: system enforces retention policy per camera type: (a) POS cameras and high-value area cameras: 90 days; (b) entrance/exit and parking lot cameras: 60 days; (c) receiving dock cameras: 90 days; (d) general store floor cameras: 30 days; (e) footage related to open investigations (flagged with hold code): retained until investigation closed + 1 year; (f) footage related to legal proceedings (litigation hold): retained until Legal releases hold; (g) system auto-deletes footage past retention period unless hold code applied",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "**Incident footage retrieval**: when LPO or Store Manager requests footage for an investigation: (a) requestor submits footage request via LP ticketing system: store, camera, date/time range, incident description, urgency (standard 24 hours or urgent 2 hours); (b) LP Analyst retrieves footage from NVR (remote access for most stores); (c) clips relevant segment; (d) saves to evidence vault (secured network storage with restricted access); (e) applies retention hold code; (f) notifies requestor of footage availability",
+     "duration": "15–30 min/request",
+     "n": "4",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "DPO",
+     "activity": "**Data privacy compliance**: all CCTV footage access is logged — who accessed, when, which camera, reason; LP Manager reviews access logs monthly; unauthorized access (e.g., viewing footage for non-business reasons) is a policy violation subject to disciplinary action; footage is not shared externally (police, third parties) without Legal approval and data privacy impact assessment per RA 10173",
+     "duration": "1 hour/month",
+     "n": "5",
+     "r": "LP Manager"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "**Monthly system performance report**: LP Analyst generates monthly CCTV health report — (a) camera uptime % by store and region, (b) offline incidents and resolution time, (c) storage utilization trend, (d) footage retrieval request volume and SLA compliance, (e) cameras reaching end-of-life for replacement planning",
+     "duration": "2 hours/month",
+     "n": "6",
+     "r": "LP Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1389",
+    "W37",
+    "W562",
+    "W838"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "~15–25 alarm activations/month chain-wide; ~5–10 confirmed burglaries or break-in attempts/year",
+    "Owner": "LP Operations Center Manager",
+    "Participants": "LP Operations Center, LPO, Store Manager, Security Guard Agency, Philippine National Police (PNP), Insurance Coordinator, Facilities Manager",
+    "Trigger": "Store burglar alarm activation during non-operating hours (10:00 PM – 7:00 AM); alarm monitoring center (AMC) notifies LP Operations Center",
+    "Volume": "~180–300 alarm activations/year; majority are false alarms (animals, wind, power fluctuation, employee error)"
+   },
+   "id": "W1389",
+   "level": 2,
+   "name": "Store After-Hours Burglary Alarm Response, Police Coordination & Incident Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"center\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews alarm details\" (replaces manual Step 2).",
+     "- System auto-log of \"log as false alarm\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight stores house high-value merchandise (power tools, appliances, electrical supplies) in relatively accessible retail formats, making them targets for after-hours burglary. With 200 stores, most located in commercial zones with varying levels of security infrastructure, burglary attempts are a persistent risk. Alarm activations must be triaged quickly — false alarms must be identified to avoid unnecessary police dispatch costs, while genuine break-ins require immediate police coordination and evidence preservation. Philippine police response times vary significantly (15–60 minutes in Metro Manila; 1–3 hours in provincial areas)."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: LP Operations Center Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **False alarm fatigue**: with 180–300 activations/year and ~95% being false alarms, LP Analysts may become desensitized and delay response to genuine intrusions; zone-based triage and CCTV verification mitigate this",
+     "- **Provincial PNP response limitations**: in rural/provincial areas, the nearest PNP station may be 30–60 minutes away; by the time police arrive, intruders have fled and evidence is contaminated",
+     "- **CCTV footage gap during power outage**: if the store experiences a power outage (unplanned, typhoon damage), CCTV and alarm systems rely on UPS/battery backup (typically 2–4 hours); intruders may cut power to disable cameras before the UPS runs out",
+     "- **Insurance claim documentation**: Philippine insurance companies require police blotter, incident report, proof of ownership (purchase invoices for stolen items), and CCTV footage to process claims; missing documentation delays or jeopardizes reimbursement",
+     "- **Internal collusion risk**: some burglaries involve current or former employees who know alarm codes, camera blind spots, and high-value merchandise locations; LP investigations must consider insider knowledge when reviewing CCTV footage and entry method; mitigated by the LP Operations Center Manager review and approval gate"
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing LP Operations Center, LPO, Store Managers, and Facilities Technicians. After-hours response adds unpredictable time burden on Store Managers (called to store at night). No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Alarm monitoring integration: AMC zone-based alarm signals with automated LP Operations Center notification (W1389.1)",
+     "- Remote CCTV access: live feed review during alarm triage (W1389.2)",
+     "- Pre-close inventory snapshot: system captures closing inventory position for post-burglary loss quantification (W1389.5)",
+     "- Incident report module: standardized burglary report template with photo attachment, CCTV screenshots, and police blotter linkage (W1389.5–6)",
+     "- Insurance claim integration: automated claim initiation from incident report per W610 (W1389.7)",
+     "- Security vulnerability register: per-store log of security incidents, entry methods, and upgrades installed (W1389.9)",
+     "- Integration with W1388 (CCTV health — footage quality affects investigation), W562 (store LP daily routine), W610 (insurance claims), W26.2 (crisis response for major incidents)"
+    ],
+    "Time Estimate": [
+     "Alarm triage: 5–10 min/activation. Confirmed burglary response: 6–12 hours total across all participants (LP Ops Center, LPO, Store Manager, PNP, Facilities, Insurance). Post-incident review: 1 hour. Per confirmed burglary event: ~12–20 person-hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**Alarm activation**: alarm system triggers at store during non-operating hours; alarm monitoring center (AMC) receives signal with zone identification (which sensor triggered: door, window, motion, glass break); AMC calls LP Operations Center and designated Store Manager simultaneously",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "AMC / LP Ops Center"
+    },
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**Initial triage** (within 5 minutes): LP Analyst reviews alarm details: (a) which zone(s) triggered — single zone (likely false alarm) vs. multiple zones in sequence (likely genuine intrusion); (b) review CCTV remote feed (if available and internet is up) — visual confirmation of intruder vs. empty store; (c) check if any scheduled activity (night cleaning, early morning delivery) explains the activation",
+     "duration": "5 min",
+     "n": "2",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**Decision**: (a) **Confirmed false alarm** — LP Analyst resets alarm remotely, notifies Store Manager and security guard on duty; no police dispatch; log as false alarm; (b) **Confirmed intrusion or cannot verify** — LP Analyst dispatches response: (i) call security guard agency mobile patrol (if contracted), (ii) call PNP local station, (iii) notify Store Manager to respond to store, (iv) continue monitoring CCTV if available",
+     "duration": "5 min",
+     "n": "3",
+     "r": "LP Analyst"
+    },
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**On-site response**: first responder arrives (security patrol, PNP, or Store Manager): (a) do NOT enter store alone — wait for backup; (b) perimeter check from outside — broken window, forced door, vehicle near dock; (c) if intruder still present — PNP handles apprehension; if intruder fled — preserve scene",
+     "duration": "30–60 min",
+     "n": "4",
+     "r": "First Responder / PNP"
+    },
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**Scene entry and assessment** (after PNP clears scene or confirms intruder gone): (a) Store Manager and LPO enter store; (b) document point of entry (photograph); (c) identify stolen merchandise — walk each department, compare shelf/display quantities against pre-close inventory snapshot; (d) LPO reviews CCTV footage with Store Manager to identify intruder(s), entry/exit times, and items taken; (e) record all findings in incident report",
+     "duration": "2–4 hours",
+     "n": "5",
+     "r": "Store Manager / LPO"
+    },
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**Police report**: LPO or Store Manager files official police report (Blotter) with local PNP station: (a) time of break-in, (b) point of entry, (c) list of stolen items with values, (d) CCTV footage screenshots of intruder(s), (e) obtain police blotter reference number (required for insurance claim)",
+     "duration": "1–2 hours",
+     "n": "6",
+     "r": "LPO / Store Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Insurance notification**: within 24 hours, Insurance Coordinator notifies property/crime insurance carrier of burglary claim per W610; provides police blotter, incident report, and CCTV footage",
+     "duration": "1 hour",
+     "n": "7",
+     "r": "Insurance Coordinator"
+    },
+    {
+     "a": "LP Ops Center Mgr",
+     "activity": "**Damage repair and securing**: Facilities Technician repairs point of entry (broken window, forced door, cut fence/grille) same day; upgrades security if weakness identified (e.g., add anti-pry bars, reinforce glass with security film); store cannot remain open with compromised physical security",
+     "duration": "2–8 hours",
+     "n": "8",
+     "r": "Facilities Tech / Store Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Post-incident review**: LP Manager reviews each confirmed burglary: (a) vulnerability assessment — how did intruder gain entry? (b) was alarm system adequate? (c) CCTV footage quality sufficient for identification? (d) response time from alarm to on-site presence; (e) recommendations for security upgrade; (f) if pattern identified (same MO across multiple stores), issue chain-wide security alert",
+     "duration": "1 hour/incident",
+     "n": "9",
+     "r": "LP Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1388",
+    "W26",
+    "W562",
+    "W610"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Per access change request (~50–100/month chain-wide); semi-annual key audit; lock rotation per schedule",
+    "Owner": "LP Operations Manager",
+    "Participants": "Store Manager, Facilities Coordinator, IT Security, HR (employee status changes), Locksmith Vendor",
+    "Trigger": "New store opening; employee role change requiring access modification; key/credential loss; employee termination; or periodic security review",
+    "Volume": "200 stores × ~15–20 keys/access points per store = ~3,000–4,000 managed keys; ~6,762 employee access credentials"
+   },
+   "id": "W1477",
+   "level": 2,
+   "name": "Key & Access Credential Management, Master Key System & Store Lock Rotation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Access provisioning for new employees\" (replaces manual Step 1).",
+     "- System auto-log of \"logs all access changes with timestamp and authorizer\" (replaces manual Step 2).",
+     "- System auto-document of \"Access revocation on separation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Each BuildRight Depot store has 15–20 physical access points requiring keys: front entrance (roller shutter + glass door), receiving dock, backroom/storage, cashier cage/cash office, electrical room, IT/server closet, fire exit, outdoor lumber yard gate, chemical storage, and manager's office. Additionally, employees carry access credentials (RFID badges per W19.3 time & attendance system) that control entry to restricted areas (cash office, receiving dock, IT closet). With 200 stores and high employee turnover (~15–20% annually per model company profile), managing who has access to what — and ensuring access is revoked promptly upon employee separation — is critical for physical security and loss prevention. A single unreturned master key from a terminated employee could compromise an entire store's physical security. This workflow manages the full lifecycle of physical keys, access credentials, and lock rotation across the BuildRight chain."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: automated HR→LP system trigger; operational: trigger; operational: strict custody (HQ safe, two-person access) and emergency rekeying protocol"
+    ],
+    "Pain Points / Risks": [
+     "- **Key copying** — employees may duplicate keys at local hardware shops (including at competitor stores); restricted keyway systems (e.g., Medeco, Mul-T-Lock) prevent unauthorized duplication but are more expensive",
+     "- **Delayed revocation** — if HR does not notify LP Operations of employee separation promptly, the separated employee retains access; mitigated by automated HR→LP system trigger",
+     "- **Master key compromise** — if a Grand Master Key is lost or stolen, all 200 stores are compromised until rekeyed; mitigated by strict custody (HQ safe, two-person access) and emergency rekeying protocol",
+     "- **Key accountability fatigue** — with 6,762 employees across 200 stores, tracking every key issuance and return is administratively burdensome; mitigated by system automation and semi-annual audits"
+    ],
+    "Staffing Implication": [
+     "- **LP Operations**: ~50–100 access changes/month × 15 min = ~15–25 hours/month; absorbed",
+     "- **Store Manager**: 1 hour/store semi-annual audit = 200 hours total; absorbed",
+     "- **Facilities Coordinator**: per-event lock rotation; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Access control system — RFID badge management with role-based access profiles (W1477.1–3)",
+     "- HR system integration — automated access revocation trigger on employee separation (W1477.3)",
+     "- Key issuance tracking module — digital log of all keys issued, returned, and outstanding (W1477.1–4)",
+     "- Lock rotation scheduler — automated reminders for scheduled rekeying (W1477.5)",
+     "- Master key hierarchy management — key system documentation and authorization tracking (W1477.6)",
+     "- Integration with W19.1 (onboarding), W19.5 (separation), W1389 (burglary response), W838 (CCTV — access-controlled areas)"
+    ],
+    "Time Estimate": [
+     "- Access provisioning: ~15 min/employee × ~1,400 new hires/year = ~350 hours/year",
+     "- Access revocation: ~15 min × ~1,400 separations/year = ~350 hours/year",
+     "- Semi-annual audits: 400 hours/year (200 stores × 2 × 1 hour)",
+     "- Lock rotation: ~50–100 events/year × 2 hours = ~100–200 hours",
+     "- **Annual estimate: ~1,000–1,100 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Access provisioning for new employees**: (a) during onboarding per W19.1: HR system triggers access provisioning request to LP Operations; (b) LP Operations configures access credential based on role: (i) Store Manager: all areas, (ii) Department Supervisor: sales floor, backroom, receiving dock, (iii) Cashier: sales floor, cash office (during shift only), (iv) Stock Associate: sales floor, backroom, receiving dock, lumber yard, (v) Maintenance/Utility: all areas except cash office, (vi) CSR: sales floor, customer service counter; (c) system creates access profile linked to employee ID; (d) employee receives RFID badge and store key(s) based on role; (e) employee signs key receipt acknowledging responsibility and return obligation",
+     "duration": "15 min/employee",
+     "n": "1",
+     "r": "HR / LP Operations"
+    },
+    {
+     "a": "LP Operations Manager",
+     "activity": "**Access modification**: (a) when employee role changes (e.g., Sales Associate promoted to Department Supervisor): Store Manager submits access change request; (b) LP Operations updates access profile: add new areas, remove areas no longer needed; (c) if additional physical keys required: issue and document; if keys to be returned: collect and document; (d) system logs all access changes with timestamp and authorizer",
+     "duration": "10 min/change",
+     "n": "2",
+     "r": "Store Manager / LP Operations"
+    },
+    {
+     "a": "LP Operations Manager",
+     "activity": "**Access revocation on separation**: (a) when employee separates (resignation, termination) per W19.5: HR system triggers access revocation; (b) LP Operations revokes access: (i) deactivate RFID badge in system immediately (within 1 hour of separation notification), (ii) collect all physical keys from employee at exit, (iii) for involuntary terminations (theft, policy violation): Store Manager ensures employee is escorted out and keys collected before employee leaves premises; (c) if keys not returned: (i) document as \"Key Not Returned\" in security incident log, (ii) assess risk level based on key type (master key = critical, individual door key = moderate), (iii) for critical keys: schedule lock change within 48 hours per step 5",
+     "duration": "15 min/employee",
+     "n": "3",
+     "r": "HR / LP Operations / Store Manager"
+    },
+    {
+     "a": "LP Operations Manager",
+     "activity": "**Semi-annual key audit**: (a) Store Manager conducts semi-annual key audit: (i) verify all issued keys are accounted for (physical count against key issuance log), (ii) verify all employee access credentials match current active employees (no separated employees with active badges), (iii) check key storage: are master keys secured in locked key cabinet with limited access? (iv) verify spare key inventory is complete and secured; (b) report discrepancies to LP Operations Manager: (i) keys not accounted for — investigate (lost? stolen? employee forgot to return?), (ii) access credentials for separated employees still active — immediate revocation; (c) audit results filed with LP case management system",
+     "duration": "1 hour/store (semi-annual)",
+     "n": "4",
+     "r": "Store Manager"
+    },
+    {
+     "a": "LP Operations Manager",
+     "activity": "**Lock rotation & rekeying**: (a) scheduled lock rotation: high-security locks (cash office, IT closet, chemical storage) rekeyed every 2 years; standard locks (backroom, receiving dock) rekeyed every 3 years; (b) emergency rekeying: triggered by (i) master key not returned by terminated employee (within 48 hours), (ii) confirmed key duplication (discovery of unauthorized copy), (iii) burglary or attempted break-in per W1389; (c) Facilities Coordinator engages locksmith vendor for rekeying: (i) new keys issued and documented per step 1, (ii) old keys collected and destroyed, (iii) system updated with new key code",
+     "duration": "Per event",
+     "n": "5",
+     "r": "Facilities Coordinator / LP Operations"
+    },
+    {
+     "a": "COO",
+     "activity": "**Master key system governance**: (a) LP Operations Manager maintains BuildRight master key system hierarchy: (i) Grand Master Key (GMK) — opens all locks in all stores (held by COO and LP Operations Manager only, stored in HQ safe), (ii) Store Master Key (SMK) — opens all locks in one store (held by Store Manager and ASM, stored in store safe), (iii) Sub-Master Key — opens specific zone (receiving area, cash office), (iv) Individual Key — opens single door; (b) policy: no employee holds keys above their authorization level; master key duplication requires LP Operations Manager written authorization; (c) annual: LP Operations Manager reviews master key system integrity with locksmith vendor",
+     "duration": "4 hours/year",
+     "n": "6",
+     "r": "LP Operations Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1389",
+    "W19",
+    "W838"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Daily — ~100–150 vehicle entries/exits per DC per day; ~20–30 visitor entries per DC per day; quarterly perimeter security audit",
+    "Owner": "DC Manager",
+    "Participants": "DC Security Guard, DC Receiving Supervisor, Warehouse Supervisor, DC Manager, LP Operations (audit), Visitor/Vendor/Contractor",
+    "Trigger": "Daily DC operations (gate access management); visitor arrival; contractor/service provider access; or security incident at DC perimeter",
+    "Volume": "4 DCs × ~150 vehicle movements/day = ~600 vehicle movements/day; ~80–120 visitors/day across all DCs"
+   },
+   "id": "W1478",
+   "level": 2,
+   "name": "DC Perimeter Security, Gate Access Control & Visitor Management System",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"assigned to this DC\" (replaces manual Step 1).",
+     "- System auto-record of \"Vehicle gate access — delivery & vendor trucks\" (replaces manual Step 2).",
+     "- System auto-log of \"Visitor & contractor access\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's 4 distribution centers (Davao, Cebu, Laguna, Clark) are high-value facilities: each DC holds PHP 200–500M in inventory at any time and processes ~100–150 vehicle movements per day (delivery trucks, vendor trucks, employee vehicles, visitor cars). Unlike stores which are open to the public during business hours, DCs are closed facilities with restricted access — only authorized employees, pre-approved vendors, and scheduled visitors may enter. DC perimeter security is critical because: (a) inventory theft at DC scale is far more damaging than store-level theft (a single truckload of power tools = PHP 1–3M), (b) vendor delivery fraud (short shipments, phantom deliveries) requires gate-level verification per W843, and (c) workplace safety in a warehouse environment requires controlled access to prevent unauthorized persons from entering active forklift zones per W142. This workflow manages DC perimeter security, gate access control, and visitor management."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: turnstile or mantrap at pedestrian entrance; operational: rather than relying on name recognition"
+    ],
+    "Pain Points / Risks": [
+     "- **Tailgating** — employees or visitors following an authorized person through the gate without badging in; mitigated by turnstile or mantrap at pedestrian entrance",
+     "- **Driver identity verification** — with high driver turnover at third-party carriers, the \"approved driver list\" may be outdated; security guard must verify against appointment system rather than relying on name recognition",
+     "- **Contractor access scope creep** — contractors authorized for one area (e.g., IT closet) may wander into warehouse floor; escort requirement is difficult to enforce during long work periods",
+     "- **Night shift security** — with reduced staff and darkness, perimeter breaches are harder to detect; adequate lighting and CCTV with night-vision capability are essential"
+    ],
+    "Staffing Implication": [
+     "- **Security Guards**: 24/7 coverage at each DC requires ~6 guards/DC (3 shifts × 2 guards) × 4 DCs = ~24 guards; outsourced to security agency",
+     "- **DC Manager**: ~30 min/day on security log review; absorbed",
+     "- **LP Operations Manager**: 1 day/DC/quarter on audits = ~16 days/year; absorbed",
+     "- **No incremental BuildRight headcount (security guards are contracted)**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Gate access control system — RFID badge reader with employee verification (W1478.1)",
+     "- Vehicle appointment verification — integration with WMS inbound/outbound scheduling (W1478.2)",
+     "- Visitor management system — pre-registration, badge issuance, visitor log, escort tracking (W1478.3)",
+     "- Perimeter patrol logging — guard tour system with checkpoint scanning (W1478.4)",
+     "- CCTV integration per W838 — gate cameras, dock cameras, perimeter cameras (W1478.4)",
+     "- Quarterly audit management — findings tracking and remediation workflow (W1478.5)",
+     "- Integration with W838 (CCTV), W843 (vendor fraud), W1389 (alarm response), W142 (hazmat/safety), W3/W4 (receiving/shipping)"
+    ],
+    "Time Estimate": [
+     "- Gate access: automated + 1 min/employee × ~150 entries/DC/day = ~2.5 hours/DC/day",
+     "- Vehicle processing: 5 min × 150 vehicles/DC/day = ~12.5 hours/DC/day (absorbed by security guard)",
+     "- Visitor processing: 5–10 min × 30 visitors/DC/day = ~3 hours/DC/day",
+     "- Perimeter patrol: 20 min × 12 patrols/day = 4 hours/DC/day",
+     "- **Daily per DC: ~22 hours (absorbed by contracted security staff)**",
+     "- **LP audit: ~16 days/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Manager",
+     "activity": "**Employee gate access**: (a) DC employees badge in at the gate using RFID badge per W19.3 time & attendance — system verifies: (i) employee is active (not separated), (ii) employee is assigned to this DC, (iii) access is within authorized hours; (b) security guard visually verifies badge photo matches person; (c) for employees arriving outside normal shift hours: security guard contacts DC Receiving Supervisor or Warehouse Supervisor for authorization before allowing entry",
+     "duration": "Per entry (automated + visual check)",
+     "n": "1",
+     "r": "Security Guard / System"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Vehicle gate access — delivery & vendor trucks**: (a) truck arrives at DC gate: driver presents delivery appointment reference (scheduled via W3 or W4); (b) system verifies appointment: (i) is there a scheduled inbound or outbound shipment for this vendor/carrier? (ii) is the expected vehicle plate number matching? (iii) is the driver name on the approved driver list for this carrier? (c) if verified: security guard issues visitor badge and records: driver name, company, vehicle plate, purpose (inbound delivery, outbound pickup, vendor visit), expected duration, time in; (d) if not verified: security guard contacts DC Receiving Supervisor to confirm or deny entry; (e) truck proceeds to designated dock door per receiving schedule; (f) upon departure: security guard verifies truck has been released by DC Receiving Supervisor (no unauthorized cargo), records time out, collects visitor badge",
+     "duration": "5 min/vehicle",
+     "n": "2",
+     "r": "Security Guard / DC Receiving Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Visitor & contractor access**: (a) visitor arrives: security guard verifies visit authorization: (i) pre-registered in visitor management system by DC host employee, or (ii) walk-in visitor with legitimate business purpose — host employee must confirm; (b) visitor logs in: name, company, purpose, host employee, time in; (c) security guard issues visitor badge (color-coded: yellow for office visitors, orange for warehouse floor access — requires host escort); (d) visitor must be escorted at all times in warehouse areas; (e) for contractors (maintenance, IT, construction): (i) contractor presents work order or service ticket, (ii) DC Manager or designee approves access, (iii) contractor completes safety induction (2 min — emergency exits, PPE requirements, restricted areas), (iv) contractor badge limited to authorized work area only",
+     "duration": "5–10 min/visitor",
+     "n": "3",
+     "r": "Security Guard / DC Manager"
+    },
+    {
+     "a": "LP Operations Manager",
+     "activity": "**Perimeter patrol & incident response**: (a) security guard conducts perimeter patrol every 2 hours (24/7): (i) check fence/wall integrity, (ii) check all gates locked, (iii) check exterior lighting operational, (iv) check CCTV cameras per W838 operational and not obstructed, (v) check fire exits clear and alarmed; (b) any perimeter breach (cut fence, forced gate, unauthorized person on property): security guard activates incident response per W1389 protocol — contact PNP, DC Manager, LP Operations; (c) DC Manager reviews daily security log: entries, exits, incidents, patrol findings",
+     "duration": "20 min/patrol (every 2 hours)",
+     "n": "4",
+     "r": "Security Guard / DC Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "**Quarterly perimeter security audit**: (a) LP Operations Manager audits each DC quarterly (rotating — one DC/month): (i) review visitor management records — are all visitors properly logged and badged? (ii) review vehicle access logs — are all trucks verified against appointments? (iii) physical inspection: fence condition, gate locks, CCTV coverage (no blind spots), lighting adequacy, fire exit integrity, forklift area barriers; (iv) test access controls: attempt entry without badge, attempt to tailgate, attempt to enter restricted area with wrong-color badge; (b) audit findings reported to DC Manager with remediation actions and deadlines; (c) COO reviews audit summary quarterly",
+     "duration": "1 day/DC/quarter",
+     "n": "5",
+     "r": "LP Operations Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1389",
+    "W142",
+    "W19",
+    "W3",
+    "W4",
+    "W838",
+    "W843"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-311"
+   ],
+   "fields": {
+    "Frequency": "Per-movement event (100% of asset exits); monthly register reconciliation; quarterly LP audit sampling",
+    "Owner": "LP Officer (Store-Level) / Security Operations Center (SOC) Lead",
+    "Participants": "Store Manager, DC Security Supervisor, Facilities Coordinator, IT Asset Administrator, Fixed-Asset Accountant (W276-class disposals), Guard Force, Vendor service engineers, Installing contractors",
+    "Trigger": "Any company asset or property crossing a premises exit — equipment dispatched for off-site repair (W5088/W3237 vendor service), inter-site equipment & fixture transfers (store openings W16, remodels W226/W109), IT-asset redeployments (W3235-class), sold bulky goods released for customer pickup or delivery staging (W773/W1193), asset disposal & e-waste removal (W3239), vendor/contractor tools signed in and out, or an LP audit spot-check",
+    "Volume": "~8,000–12,000 gate-pass movements/year across ~205 stores, 4 DCs and HQ — repair dispatches ~2,500–3,500; inter-site transfers ~1,500–2,500; disposal/e-waste removals ~400–600; customer bulky releases ~3,000–4,500; vendor/contractor tool sign-outs ~500–800"
+   },
+   "id": "W5534",
+   "level": 2,
+   "name": "Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Gate passes auto-generate from the source document — repair order, transfer document or disposal record — replacing manual Step 1 re-encoding.",
+     "- Overdue returns auto-escalate at T+2 days to the issuing manager and LP with the asset's last-known location (replaces manual Step 3 follow-up).",
+     "- The monthly reconciliation report auto-builds from the pass register vs asset-location changes, flagging unmatched exits for LP review (replaces manual Step 5 tally)."
+    ],
+    "Controls": [
+     "- CTL-311 (ensure controlled execution — Physical Security & Surveillance (PA-23.2).)",
+     "- operational: no company asset exits any premises without a numbered gate pass; guard override requires the SOC Lead's logged authorization",
+     "- operational: one-way (disposal/transfer) passes require document references attached before release; the monthly reconciliation is signed by the LP Officer"
+    ],
+    "Cross-references": [
+     "- W1477/W1478 (sibling physical-security controls — people/visitor gate vs property gate), W5088/W3237 (repair dispatch), W773/W1193 (customer bulky release & will-call), W3239/W276 (disposal & asset retirement), W1732 (authority matrix), W839/W845 (investigation & shrinkage), W1174 (LP audit program), W838/W1388 (CCTV), W16/W226/W109 (site lifecycle moves)",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Shrinkage blind spot**: cycle counts cover merchandise, not fixed assets and equipment — assets exiting without documentation are the classic \"disappearing ladder/compressor\" loss with no downstream detection; mitigated by 100% pass coverage at every exit (Step 2)",
+     "- **Repair-vendor leakage**: assets dispatched for repair and never returned age silently into unrecorded losses; mitigated by return-window escalation and the monthly vendor-return reconciliation (Step 3/5)",
+     "- **Customer-release disputes**: bulky goods released against unpaid or unclaimed invoices create both loss and customer-service incidents; mitigated by the invoice/claim tie-out at the gate (Step 2)",
+     "- **Guard-force discipline decay**: manual line-item checks degrade during peak traffic; mitigated by barcode-scan verification and the quarterly W1174 audit sampling (Step 6)"
+    ],
+    "Staffing Implication": [
+     "- Guard-force processing absorbed within the existing W1478/W1477 security posts; LP oversight absorbed within the regional LP-officer structure; no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP gate-pass module integrated with the fixed-asset register (W276) and IT-asset register (W3239)",
+     "- POS/invoice cross-reference for customer bulky releases (W773/W1193); guard logbook + CCTV retention (W838/W1388)",
+     "- LP case management (W839) and shrinkage analytics (W845); W1732 authority matrix for approvals"
+    ],
+    "Time Estimate": [
+     "Guard-force pass processing 5–15 min × 8,000–12,000 movements ≈ 800–1,600 h/year (absorbed within existing security posts); LP reconciliation & escalation ≈ 100–145 h/year; audits ride the W1174 cycle (~60–90 h/year equivalent). Incremental oversight **≈ 160–235 hours/year** of LP effort; no new posts."
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Officer (Store-Level)",
+     "activity": "**Pass request & authorization**: the requesting manager raises the gate pass in the ERP — asset IDs/serials, quantities, destination, expected return date or one-way disposal/transfer flag; approvals per the W1732 authority matrix (department head + asset owner; LP countersign for high-value items)",
+     "duration": "5–10 min per pass",
+     "n": "1",
+     "r": "Requesting Manager"
+    },
+    {
+     "a": "Store Manager / DC Security Supervisor",
+     "activity": "**Verification & pass issuance at exit**: the guard verifies physical items against the pass line items (asset tags/serials, barcode-scan where tagged), confirms the disposition (repair-vendor pickup, customer release, disposal hauler, transfer), and issues the numbered pass; customer bulky releases tie to the paid invoice or will-call claim (W773/W1193) before release",
+     "duration": "5–15 min per movement",
+     "n": "2",
+     "r": "Guard Force"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "**Return reconciliation**: for returnable passes, the guard verifies re-entry within the validity window; overdue passes escalate automatically to the issuing manager and LP; the asset register (W276/W3239) confirms the asset's location status on return",
+     "duration": "5 min per return; escalation at T+2 days",
+     "n": "3",
+     "r": "Guard Force / LP Officer"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "**Disposal & one-way control**: one-way passes require the underlying document references attached before release — e-waste disposal certificates (W3239), inter-site transfer documents, waste-hauler pickup manifests; the hauler releases only against the scheduled manifest",
+     "duration": "10–15 min per one-way pass",
+     "n": "4",
+     "r": "LP Officer / Fixed-Asset Accountant"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "**Register & monthly reconciliation**: LP reconciles the pass register against asset-movement records monthly — repair-vendor returns due, transfers in transit, disposal completions; discrepancies open W839-class investigation cases and feed shrinkage analytics (W845)",
+     "duration": "8–12 h/month chain-wide",
+     "n": "5",
+     "r": "LP Officer"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "**Audit & analytics**: the quarterly LP compliance audit (the W1174 program) samples gate-pass coverage and completeness at 10–15 stores/quarter; KPIs — pass coverage %, overdue-return %, discrepancy rate — report into the shrinkage-reduction program (W845) and the W1174 scoring",
+     "duration": "rides the W1174 audit cycle",
+     "n": "6",
+     "r": "LPO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W109",
+    "W1174",
+    "W1193",
+    "W1388",
+    "W1477",
+    "W1478",
+    "W16",
+    "W1732",
+    "W226",
+    "W276",
+    "W3235",
+    "W3237",
+    "W3239",
+    "W5088",
+    "W773",
+    "W838",
+    "W839",
+    "W845"
+   ]
+  }
+ ]
+}

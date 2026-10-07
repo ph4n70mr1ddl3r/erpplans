@@ -1,0 +1,577 @@
+{
+ "process_area": {
+  "id": "PA-72.2",
+  "title": "Inter-Entity Service Level & Billing"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-72-cross-entity-shared-services/PA-72.2-inter-entity-service-level-billing.md",
+ "value_stream": {
+  "directory": "VS-72-cross-entity-shared-services",
+  "id": "VS-72",
+  "name": "Cross-Entity Shared Services & Chargeback"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Annual; event-driven",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, Legal, Entity CFOs",
+    "Trigger": "Annual review or new service establishment",
+    "Volume": "5 entities; ~20 IC service agreements"
+   },
+   "id": "W2582",
+   "level": 2,
+   "name": "Intercompany Service Agreement Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Agreement registry with expiry-alert auto-triggering the renewal review; invoice-template auto-generated per agreement"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).)",
+     "- CTL-446 (transfer-pricing arm's-length — links to W235); operational: CFO sign-off on annual renewals"
+    ],
+    "Pain Points / Risks": [
+     "- **Agreement-vs-actual-drift risk**: the agreement says one pricing methodology but the actual billing uses another (silent drift since the last renewal); mitigated by the annual Legal review comparing agreement to actual billing",
+     "- **Lapsed-agreement risk**: an agreement auto-renews past its intended term without the renegotiation that should have happened; mitigated by the expiry-alert in step 3 (not silent auto-renewal)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contract repository (links to VS-100 / W230, VS-88 / W255) — the IC agreement registry with expiry alerts",
+     "- IC billing (links to VS-17 / W14 intercompany, VS-72 / W2583) — the invoice templates per agreement",
+     "- Transfer-pricing documentation (links to VS-72 / W2594, VS-17 / W235) — the arm's-length basis"
+    ],
+    "Time Estimate": [
+     "~Ongoing registry maintenance + ~1.5 weeks/year Legal review = **~80–120 hours/year** Finance Controller + Legal."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller maintains intercompany service agreement registry: warehousing services (Logistics Inc. → Depot Inc.), ecommerce platform services (Digital Commerce Inc. → Depot Inc.), property leasing (Property Inc. → Depot Inc.), management services (Holdings → all subsidiaries)",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Legal reviews each agreement annually: confirms scope and pricing reflect actual services, verifies compliance with transfer pricing regulations (BIR Revenue Regulations), updates for any service changes; CFO signs off on renewals",
+     "duration": "1–2 weeks/year",
+     "n": "2",
+     "r": "Legal / Finance Controller"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "System stores IC service agreements with auto-renewal alerts; tracks billing milestones and payment terms; generates IC invoice templates per agreement; flags agreements approaching expiration for review",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Finance / IT"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W230",
+    "W235",
+    "W255",
+    "W2583",
+    "W2594"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Analyst",
+    "Participants": "Finance Analyst, Entity Accountants, Finance Controller",
+    "Trigger": "Monthly IC billing cycle",
+    "Volume": "~60–80 IC invoices/month incl. per-DC/per-entity splits (per PA-17.2 W1293)"
+   },
+   "id": "W2583",
+   "level": 2,
+   "name": "Monthly IC Invoice Generation & Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Invoices auto-generated from the agreement + operational volumes; net-settlement auto-computed; disputes auto-routed to the entity accountant worklist"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).) — IC-settlement accuracy, links to VS-17 / W14; operational: Finance Controller net-position sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Volume-data-dispute risk**: the invoice is based on a volume (warehouse pallets, ecommerce orders) the receiving entity disputes; mitigated by the 5-business-day verification window and the operational-record cross-check in step 2",
+     "- **Unsettled-IC-balance risk**: IC balances accumulate without cash settlement, creating inter-entity debt that distorts entity financials; mitigated by the monthly net-settlement in step 3 and the W2586 aging monitor"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IC invoicing (links to VS-17 / W14, VS-72 / W2582) — the auto-generated invoices per agreement",
+     "- IC AP/AR netting (links to VS-17 / W14 IC settlement) — the offsetting entries",
+     "- Treasury (links to VS-18 / W30 cash management, VS-72 / W2586 cash settlement) — the net cash movement"
+    ],
+    "Time Estimate": [
+     "~5 days/month (generation + verification + settlement) = **~480 hours/year** (8-hour day) Finance Analyst + Entity Accountants + Treasury."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "System auto-generates monthly IC invoices based on service agreements: warehouse fees (per-pallet + per-order), ecommerce platform fees (per-order), rent (fixed monthly per lease), management fees (allocated per methodology); Finance Analyst reviews and validates each invoice",
+     "duration": "1 day",
+     "n": "1",
+     "r": "System / Finance Analyst"
+    },
+    {
+     "a": "Entity CFOs",
+     "activity": "Entity accountants verify IC invoices against internal records: Depot Inc. confirms warehouse usage, Digital Commerce confirms order count, Property Inc. confirms lease terms; disputes resolved within 5 business days",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "Entity Accountants"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "System posts IC settlement: offsetting AP/AR entries between entities; net settlement for intercompany dividends and management fees; Finance Controller reviews net IC position; Treasury executes any required cash settlement between entity bank accounts",
+     "duration": "1 day",
+     "n": "3",
+     "r": "System / Treasury"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1293",
+    "W14",
+    "W2582",
+    "W2586",
+    "W30"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-18",
+    "CTL-48"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; 3–5 per year",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, Entity CFOs, CFO, External Advisor",
+    "Trigger": "Entity disputes IC service pricing",
+    "Volume": "5 entities"
+   },
+   "id": "W2584",
+   "level": 2,
+   "name": "IC Pricing Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Dispute auto-routed with the 10-day deadline; resolution auto-documented to the TP file"
+    ],
+    "Controls": [
+     "- CTL-48: dispute resolution — links to VS-39; CTL-18 (TP arm's-length — links to W235); operational: CFO decision sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Dispute-escalation risk**: an unresolved IC dispute festers and distorts the entity P&L for months; mitigated by the 10-business-day submission window and the CFO-decision timeline",
+     "- **TP-documentation-gap risk**: a dispute resolution changes the methodology but the TP file isn't updated, creating a BIR-audit exposure; mitigated by the documentation step in step 3"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Dispute/case management (links to VS-72 / W2585 audit findings pattern, VS-100 / W125 litigation pattern) — the dispute register",
+     "- TP documentation (links to VS-72 / W2594) — the dispute resolution added to the TP file",
+     "- Credit-note (links to VS-16 / W70 credit/debit note, VS-17 / W14) — the credit-note issuance"
+    ],
+    "Time Estimate": [
+     "~2.5 weeks/dispute × ~4/year = **~160–200 hours/year** Finance Controller + Entity CFOs."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Receiving entity CFO disputes IC charge: documents basis for dispute (volume variance, service quality issue, pricing methodology concern); submits formal dispute to Finance Controller within 10 business days of invoice receipt",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "Entity CFO"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller investigates: reviews allocation methodology, verifies data accuracy, benchmarks against external market rates; engages external transfer pricing advisor if methodology dispute; proposes resolution",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Finance Controller / External Advisor"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO renders decision: adjusts pricing prospectively, issues credit note for disputed amount if warranted, updates service agreement if methodology change required; documents resolution for transfer pricing file",
+     "duration": "1 week",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W125",
+    "W14",
+    "W235",
+    "W2585",
+    "W2594",
+    "W70"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Internal Auditor",
+    "Participants": "Internal Auditor, Finance Controller",
+    "Trigger": "Quarterly audit cycle",
+    "Volume": "~20 IC billing streams"
+   },
+   "id": "W2585",
+   "level": 2,
+   "name": "IC Billing Accuracy Audit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Calculation auto-verified (rate × volume); volume-vs-operational-record auto-reconciled"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).)",
+     "- operational: segregation of duties — auditor independent; duplicate-invoice guard; operational: Head of Internal Audit findings sign-off; Finance Controller remediation sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Volume-data-unreconciled risk**: the billed volume (e.g., pallets) doesn't match the operational record (WMS pallet count), indicating a billing error; mitigated by the operational-record cross-check in step 1",
+     "- **Recurrence risk**: the same billing error recurs quarter after quarter because the root cause isn't fixed; mitigated by the system-control strengthening in step 3 (not just the one-time correction)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Audit module (links to VS-21 / W120 audit planning, W348 e-commerce & omni-channel audit pattern applied IC-side) — the findings register",
+     "- IC billing (links to VS-72 / W2583) — the invoices audited",
+     "- Operational records (links to VS-04 WMS, VS-10 ecommerce) — the volume-data cross-check source"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks/quarter audit + ~1 week remediation = **~180–240 hours/year** Internal Audit + Finance Controller."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Internal Audit",
+     "activity": "Internal Auditor samples IC invoices: verifies calculation accuracy (rate × volume = charge), confirms billing matches service agreement terms, tests volume data against operational records (warehouse pallets stored, ecommerce orders processed)",
+     "duration": "1 week",
+     "n": "1",
+     "r": "Internal Auditor"
+    },
+    {
+     "a": "Head of Internal Audit",
+     "activity": "Auditor identifies discrepancies: over/under billing, incorrect rates applied, missing invoices for services rendered, late billing; quantifies financial impact; reports findings to Finance Controller and Head of Internal Audit",
+     "duration": "3–5 days",
+     "n": "2",
+     "r": "Internal Auditor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller implements corrections: issues adjusting entries, corrects billing templates, strengthens automated validation rules; prevents recurrence through system controls",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Finance Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W120",
+    "W2583",
+    "W348"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Mgr, Finance Controller, Entity CFOs",
+    "Trigger": "Monthly IC settlement cycle",
+    "Volume": "5 entities; ~PHP 150–250M in monthly IC flows (≈PHP 2–3B/year, per PA-17.2 W1299/W1293)"
+   },
+   "id": "W2586",
+   "level": 2,
+   "name": "Intercompany Cash Settlement & Netting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Net-position auto-computed from the IC sub-ledger; cash movement auto-initiated on Controller sign-off; aging auto-tracked"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).)",
+     "- CTL-446 (IC-settlement accuracy — links to VS-17 / W14); operational: cash-movement authorization per W320 electronic-banking security; Finance Controller netting sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **IC-balance-aging risk**: IC balances age because cash settlement lags the billing, creating inter-entity debt and FX/interest distortion; mitigated by the 5-business-day settlement SLA and the aging escalation",
+     "- **Elimination-error risk**: the consolidated-GL elimination doesn't match the netting, leaving residual IC balances in consolidation; mitigated by the GL-vs-netting verification in step 2"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IC netting (links to VS-17 / W14 IC settlement, W234 consolidated profit elimination) — the net-position computation",
+     "- Treasury / cash (links to VS-18 / W30 cash management, W323 cash concentration & inter-entity pooling) — the cash movement and pooling",
+     "- GL reconciliation (links to VS-17 / W9A month-end close) — the netting-vs-GL verification"
+    ],
+    "Time Estimate": [
+     "~2 days/month Treasury + Controller = **~240 hours/year** Treasury + Finance Controller."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Treasury Manager compiles monthly IC net position per entity: aggregates all IC receivables and payables; calculates net settlement amount per entity pair; prepares netting statement",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller verifies netting statement against GL IC sub-ledgers; confirms elimination entries in consolidated GL; Treasury executes cash movements for net settlement positions",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Finance Controller / Treasury"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Treasury ensures IC cash settlements are executed within 5 business days of month-end; monitors aging of IC balances; escalates overdue IC settlements; maintains IC cash settlement audit trail",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Treasury Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1293",
+    "W1299",
+    "W14",
+    "W234",
+    "W30",
+    "W320",
+    "W323",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Analyst",
+    "Participants": "Finance Analyst, Service Providers, Entity CFOs",
+    "Trigger": "Monthly SLA review cycle",
+    "Volume": "~20 IC service agreements"
+   },
+   "id": "W2587",
+   "level": 2,
+   "name": "IC Service Level Performance Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SLA scorecard auto-generated from the operational systems; penalty-credit auto-computed on breach"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).)",
+     "- CTL-446 (SLA-penalty accuracy); operational: Finance Controller quarterly SLA-review sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-without-consequence risk**: SLA breaches are measured but the penalty credit is never applied, eroding the SLA's teeth; mitigated by the auto-adjustment in step 2 and the quarterly review",
+     "- **Gaming-the-metric risk**: a service provider games the SLA metric (e.g., warehouse marks \"complete\" before actual completion) to avoid the penalty; mitigated by the operational-record cross-check (the W2585 audit pattern)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SLA monitoring (links to VS-04 / W586 DC KPI dashboard, VS-10 ecommerce, VS-138 facilities) — the SLA-metric source per service",
+     "- IC billing (links to VS-72 / W2583) — the penalty-credit adjustment",
+     "- TP documentation (links to VS-72 / W2594) — the SLA-driven pricing decisions documented"
+    ],
+    "Time Estimate": [
+     "~3 days/month Analyst + ~half-day/quarter Controller review = **~280–340 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "System collects SLA metrics: Logistics Inc. — warehouse throughput, order accuracy, delivery timeliness; Digital Commerce Inc. — platform uptime, order processing time; Property Inc. — facility response time, maintenance completion; generates SLA performance scorecards",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "System / Finance Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance Analyst reviews SLA performance vs. contractual targets: identifies SLA breaches; calculates penalty credits per agreement terms (e.g., 2% credit for warehouse accuracy <99%); adjusts IC invoices for SLA penalties",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly: Finance Controller convenes IC service review meeting with entity heads; discusses SLA trends, service improvement opportunities, pricing adjustments; documents decisions for transfer pricing file",
+     "duration": "Half day/quarter",
+     "n": "3",
+     "r": "Finance Controller / Entity Heads"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2583",
+    "W2585",
+    "W2594",
+    "W586"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; rare",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, Legal, IT, Entity CFO",
+    "Trigger": "New entity establishment or entity restructuring",
+    "Volume": "5 entities"
+   },
+   "id": "W2588",
+   "level": 2,
+   "name": "New Entity IC Service Onboarding",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Entity-config template reused from existing entities; parallel-run auto-reconciled"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).)",
+     "- CTL-446 (transfer-pricing arm's-length — links to W235); operational: CFO + CIO sign-off on go-live after parallel-run validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Config-error risk**: the new entity's IC account pairs mis-map, causing cross-entity posting errors; mitigated by the sandbox test and parallel-run validation in step 2",
+     "- **TP-documentation-lag risk**: the new entity starts transacting before the TP documentation is updated, creating an undocumented-period exposure; mitigated by the documentation refresh concurrent with onboarding (not deferred)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP entity config (links to VS-29 / W288 financial master, VS-17 / W14) — the new entity GL and IC account pairs",
+     "- IC billing templates (links to VS-72 / W2582, W2583) — the new entity's billing setup",
+     "- TP documentation (links to VS-72 / W2594) — the new entity's IC flows added to the TP file"
+    ],
+    "Time Estimate": [
+     "~5 weeks per onboarding (rare) = **~200 hours per event**, absorbed into the Finance Controller capacity when triggered."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller establishes IC service framework for new/restructured entity: identifies required shared services, negotiates service scope and pricing with entity head, drafts intercompany service agreement with Legal",
+     "duration": "2–3 weeks",
+     "n": "1",
+     "r": "Finance Controller / Legal"
+    },
+    {
+     "a": "CIO / CFO",
+     "activity": "IT configures entity in ERP: creates entity GL, IC account pairs, cost center structure, billing templates; tests IC posting rules in sandbox; Finance Controller validates parallel run",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "IT / Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller activates IC billing for new entity; monitors first 3 months for accuracy; adjusts allocation methodology based on actual volumes; external advisor updates transfer pricing documentation",
+     "duration": "1–3 months",
+     "n": "3",
+     "r": "Finance Controller / External Advisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W235",
+    "W2582",
+    "W2583",
+    "W2594",
+    "W288"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-446"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, Entity CFOs, Legal, CFO",
+    "Trigger": "Annual renewal cycle or service change trigger",
+    "Volume": "~20 agreements"
+   },
+   "id": "W2589",
+   "level": 2,
+   "name": "IC Service Agreement Renewal & Renegotiation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Renewal-analysis auto-assembled from the volume/cost/SLA datasets; TP-file update auto-generated from the renewal"
+    ],
+    "Controls": [
+     "- CTL-446 (ensure controlled execution — Inter-Entity Service Level & Billing (PA-72.2).)",
+     "- CTL-446 (transfer-pricing arm's-length — links to W235); operational: CFO sign-off on renewal terms"
+    ],
+    "Pain Points / Risks": [
+     "- **Renewal-without-negotiation risk**: agreements auto-renew without the ±5% renegotiation that should reflect cost changes; mitigated by the renewal-analysis in step 1 forcing an active decision",
+     "- **BIL-audit-readiness risk**: the renewal isn't documented in the TP file, leaving a gap for a BIR audit; mitigated by the documentation step in step 3"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Agreement registry (links to VS-72 / W2582) — the renewal-cycle tracking",
+     "- Billing/allocation config (links to VS-72 / W2574, W2583) — the rate/methodology update on renewal",
+     "- TP documentation (links to VS-72 / W2594) — the renewal terms added to the TP file"
+    ],
+    "Time Estimate": [
+     "~4 weeks annual renewal cycle = **~160–200 hours/year** Finance Controller + Legal + Entity CFOs."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller prepares renewal analysis: actual vs. budgeted service volumes, cost trend per service, market rate benchmarking, SLA performance summary, transfer pricing compliance status; proposes renewal terms (maintain, adjust pricing, modify scope)",
+     "duration": "1–2 weeks",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Entity CFOs review renewal proposals: negotiate pricing adjustments (typically ±5% annually based on cost changes), request scope modifications, raise service quality concerns; CFO mediates if agreement cannot be reached",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Entity CFOs / Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Legal updates executed agreements; Finance Controller updates ERP billing templates and allocation rules; communicates changes to entity accounting teams; documents in transfer pricing file for BIR audit readiness",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Legal / Finance Controller / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W235",
+    "W2574",
+    "W2582",
+    "W2583",
+    "W2594"
+   ]
+  }
+ ]
+}

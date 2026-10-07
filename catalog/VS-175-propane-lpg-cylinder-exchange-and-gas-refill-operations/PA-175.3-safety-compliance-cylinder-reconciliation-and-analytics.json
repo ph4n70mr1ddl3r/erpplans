@@ -1,0 +1,582 @@
+{
+ "process_area": {
+  "id": "PA-175.3",
+  "title": "LPG Safety, Compliance, Cylinder Reconciliation & Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/PA-175.3-safety-compliance-cylinder-reconciliation-and-analytics.md",
+ "value_stream": {
+  "directory": "VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations",
+  "id": "VS-175",
+  "name": "Propane, LPG Cylinder Exchange & Gas Refill Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-100",
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Daily + continuous",
+    "Owner": "Cage Associate / HSE (VS-24)",
+    "Participants": "Cage Associate, HSE (VS-24), Store Manager, Facilities (VS-138), BFP/fire consultant",
+    "Trigger": "Daily cage cycle (W5067); incident",
+    "Volume": "~200 stores × daily inspection"
+   },
+   "id": "W5073",
+   "level": 2,
+   "name": "LPG Daily Safety Inspection, Leak Detection & BFP Fire-Code Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Gas-leak IoT → auto-alarm/shutdown; inspection mobile-app checklist; FSIC-renewal auto-trigger (VS-166)"
+    ],
+    "Controls": [
+     "- CTL-100 (ensure LPG cylinder safety & deposit accounting.)",
+     "- CTL-757: daily inspection logged (VS-24); FSIC current (VS-166); max-cylinder limit enforced; detection-alarm functional"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (HSE), VS-138 (IFM), VS-166 (permits), VS-21 (audit), VS-63 (task mgmt); W5061 (cage/infrastructure), W5067 (cage ops), W5069 (condemnation), W5075 (emergency)"
+    ],
+    "Pain Points / Risks": [
+     "- **Undetected-leak risk**: Slow leak → ignition/fire; mitigated by daily detection + IoT sensors (W5061)",
+     "- **Compliance-lapse risk**: Expired FSIC/fire-system deficiency → BFP violation/closure; mitigated by daily/periodic checks (VS-166)",
+     "- **Inspection-failure risk**: Inspections skipped/log-falsified; mitigated by HSE audit (VS-21) + task mgmt (VS-63)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE/inspection log (VS-24); gas-leak sensor IoT (W5061); facility/CMMS (VS-138); BFP FSIC register (VS-166); cage inventory (W5067)"
+    ],
+    "Time Estimate": [
+     "- ~20–40 min/store/day inspection"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / HSE Manager",
+     "activity": "Daily leak & condition inspection: sniff/soap-test/detector check on full cylinders & valves, cage condition (ventilation, signage, max-cylinder limit W5061), and detection-alarm function",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Cage Associate / HSE"
+    },
+    {
+     "a": "HSE Manager",
+     "activity": "Verify BFP fire-code compliance: extinguisher/suppression readiness, egress, ignition-control (no-smoking signage), FSIC currency (VS-166), and cage/yard integrity",
+     "duration": "Daily + periodic",
+     "n": "2",
+     "r": "HSE / Facilities"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Log & escalate: inspection log, flag any defect for condemnation (W5069) or maintenance (VS-138), and escalate leaks/incidents to emergency response (W5075)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Cage Associate / HSE"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5061",
+    "W5067",
+    "W5069",
+    "W5075"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-100",
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Daily/weekly/monthly",
+    "Owner": "Inventory/O2C (VS-05/VS-16) / Store Manager",
+    "Participants": "Inventory (VS-05), O2C (VS-16), Cage Associate, FP&A (VS-17.4), LP (VS-23)",
+    "Trigger": "Daily/weekly/monthly reconciliation cycle",
+    "Volume": "~all stores × cylinder/deposit reconciliation"
+   },
+   "id": "W5074",
+   "level": 2,
+   "name": "Cylinder Inventory Reconciliation, Shrink & Deposit/Float Accounting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Scan-count vs system auto-reconciliation; deposit-float GL automation; variance/LP auto-alert"
+    ],
+    "Controls": [
+     "- CTL-100 (ensure LPG cylinder safety & deposit accounting.)",
+     "- CTL-757: cylinder inventory reconciled (VS-151/VS-05); cash-chain controls (VS-142); deposit-float GL-reconciled (VS-17); shrink provisioned"
+    ],
+    "Cross-references": [
+     "- links to VS-05 (inventory), VS-08 (POS), VS-16 (O2C), VS-17/VS-17.4 (R2R/FP&A), VS-23 (LP), VS-142 (cash); W5060 (asset), W5065 (exchange), W5076 (asset reconciliation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cylinder-shrink risk**: Pool cylinders stolen/lost → asset loss; mitigated by scan-reconciliation + LP (VS-23)",
+     "- **Cash/deposit-leakage risk**: Mis-handled exchange cash/deposit differential; mitigated by POS automation + cash controls (VS-142)",
+     "- **GL-mismatch risk**: Deposit-float GL out of balance; mitigated by monthly reconciliation (VS-17)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cylinder-asset/inventory (VS-151/VS-05); POS/cash (VS-08); O2C/AR (VS-16); LP case (VS-23); GL/R2R (VS-17); FP&A (VS-17.4)"
+    ],
+    "Time Estimate": [
+     "- ~weekly cycle; ~monthly deep reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Inventory Mgr",
+     "activity": "Reconcile cylinder inventory: scan-count full/empty/quarantined cylinders vs system (VS-151), investigate variances, and flag shrink (theft/loss) to LP (VS-23)",
+     "duration": "Weekly/Monthly",
+     "n": "1",
+     "r": "Cage Associate / Inventory / LP"
+    },
+    {
+     "a": "O2C Manager",
+     "activity": "Reconcile cash & deposit float: exchange/refill cash vs POS (VS-08/VS-16), deposit-collected vs -refunded, and the cash-chain integrity (links VS-142)",
+     "duration": "Daily/Monthly",
+     "n": "2",
+     "r": "O2C / Cashier / LP"
+    },
+    {
+     "a": "O2C Manager / FP&A",
+     "activity": "Report & reserve: shrink/variance reporting, deposit-float GL reconciliation (VS-17), bad-debt/shrink provision, and FP&A analytics (VS-17.4)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "O2C / FP&A / Inventory"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5060",
+    "W5065",
+    "W5076"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Event-driven (rare but high-severity)",
+    "Owner": "HSE Manager (VS-24) / Store Manager",
+    "Participants": "HSE (VS-24), Security/LP (VS-23/VS-159), Store Manager, BC/DR (VS-26), Legal (VS-100), Facilities (VS-138), authorities (BFP/DOLE/DOE)",
+    "Trigger": "Leak/fire/explosion/injury incident",
+    "Volume": "~few incidents/year target (zero tolerance)"
+   },
+   "id": "W5075",
+   "level": 2,
+   "name": "LPG Incident, Leak, Fire & Emergency Response & Reporting (DOLE/BFP/DOE)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Gas-leak IoT → auto-isolation/alarm + BFP auto-notification; incident reporting templates; corrective-action tracking"
+    ],
+    "Controls": [
+     "- CTL-757 (ensure controlled execution — LPG Safety, Compliance, Cylinder Reconciliation & Analytics (PA-175.3).)",
+     "- CTL-757: emergency plan executed & tested (W5064); authority reporting within deadlines (VS-22); incident investigated & remedied (VS-133/VS-24); records retained (VS-88)"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (HSE), VS-26 (BC/DR/insurance), VS-23/VS-159 (security), VS-22/VS-166 (reporting/permits), VS-133 (CI); W5064 (emergency plan), W5073 (daily safety)"
+    ],
+    "Pain Points / Risks": [
+     "- **Catastrophic-incident risk**: Leak/fire/explosion causing injury/property loss; mitigated by prevention (W5064/W5073) + response plan",
+     "- **Reporting-breach risk**: Late/incomplete authority notification → penalty/officer liability; mitigated by statutory-deadline reporting (VS-22)",
+     "- **Repetition risk**: Root cause not remedied; mitigated by investigation + corrective action (VS-133)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE/incident management (VS-24); BC/DR (VS-26); LP/corporate security (VS-23/VS-159); compliance/reporting (VS-22/VS-166); insurance/claims (VS-26); records (VS-88); root-cause/CI (VS-133)"
+    ],
+    "Time Estimate": [
+     "- ~immediate response; investigation days–weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HSE Manager / Store Manager",
+     "activity": "Respond & contain: execute the emergency plan (W5064) — isolate/vent, evacuate, suppress (if safe), secure the scene, and call BFP/medical as needed",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Store Mgr / HSE / Security"
+    },
+    {
+     "a": "HSE Manager / Compliance Officer",
+     "activity": "Report to authorities: BFP (fire), DOLE/OSH (workplace injury), DOE (LPG incident), LGU, and insurer (VS-26), within statutory deadlines (links VS-22/VS-166)",
+     "duration": "Per regulation",
+     "n": "2",
+     "r": "HSE / Legal / Compliance"
+    },
+    {
+     "a": "HSE Manager",
+     "activity": "Investigate, remedy & learn: root-cause (links VS-24/VS-133), corrective action, insurance claim (VS-26), record retention (VS-88), and distribution of lessons (W5064)",
+     "duration": "Post-incident",
+     "n": "3",
+     "r": "HSE / Internal Audit / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5064",
+    "W5073"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Monthly + audit cycle",
+    "Owner": "Inventory/Fixed-Asset/O2C (VS-05/VS-35/VS-16) / Finance",
+    "Participants": "Inventory (VS-05), Fixed-Asset (VS-35), O2C (VS-16), FP&A (VS-17.4), Internal Audit (VS-21), Supplier (VS-03)",
+    "Trigger": "Monthly reconciliation; audit cycle (VS-21); financial close (VS-17)",
+    "Volume": "~10,000s pool cylinders + deposit-float GL"
+   },
+   "id": "W5076",
+   "level": 2,
+   "name": "Cylinder-Asset, Deposit & Float Reconciliation & Audit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cylinder-pool ↔ deposit-float auto-reconciliation; ownership-split tracking; audit-evidence automation"
+    ],
+    "Controls": [
+     "- CTL-757 (ensure controlled execution — LPG Safety, Compliance, Cylinder Reconciliation & Analytics (PA-175.3).)",
+     "- CTL-757: cylinder pool reconciled to asset register & deposit-float GL (VS-17); internal-audit sample (VS-21); unclaimed deposits escheated"
+    ],
+    "Cross-references": [
+     "- links to VS-05/VS-35/VS-111 (asset), VS-16 (O2C/deposit), VS-17 (R2R), VS-21 (audit), VS-17.4 (FP&A); W5059 (ownership), W5060 (lifecycle), W5074 (shrink)"
+    ],
+    "Pain Points / Risks": [
+     "- **Asset/float-mismatch risk**: Cylinder pool vs deposit-float GL out of balance → mis-statement; mitigated by monthly reconciliation + audit (VS-21)",
+     "- **Unclaimed-deposit risk**: Unclaimed deposits not handled per unclaimed-property rules; mitigated by escheat accounting",
+     "- **Supplier-owned-confusion risk**: Mixing BuildRight-owned & supplier-owned cylinders; mitigated by ownership split reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cylinder-asset/fixed-asset (VS-35/VS-111); inventory (VS-05); O2C/deposit (VS-16); GL/R2R (VS-17); internal audit (VS-21); FP&A (VS-17.4)"
+    ],
+    "Time Estimate": [
+     "- ~monthly reconciliation; audit cycle per VS-21"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Mgr / Logistics Manager",
+     "activity": "Reconcile the cylinder pool: total cylinders (full/empty/quarantined/condemned/in-transit) vs the asset register (VS-35/VS-111), supplier-owned vs BuildRight-owned split, and reconcile to deposit float",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Inventory / Fixed-Asset"
+    },
+    {
+     "a": "Finance Mgr",
+     "activity": "Reconcile deposit float: deposits collected vs refunded vs outstanding, GL liability balance (VS-17), and unclaimed-deposit handling",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "O2C / Finance"
+    },
+    {
+     "a": "Finance Mgr",
+     "activity": "Audit & report: internal-audit sample (VS-21), variance/shrink write-off (VS-17.4), cylinder-lifecycle/depreciation, and the audit-evidence pack",
+     "duration": "Audit cycle",
+     "n": "3",
+     "r": "Internal Audit / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5059",
+    "W5060",
+    "W5074"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Pricing/Category (VS-01.2) / Category Manager",
+    "Participants": "Pricing (VS-01.2), Marketing (VS-14/VS-58), Analytics (VS-28), FP&A (VS-17.4), Store Ops (VS-07)",
+    "Trigger": "Pricing cycle (W5062); promotion (VS-14/VS-58); competitor change",
+    "Volume": "~all stores × price/promo execution"
+   },
+   "id": "W5077",
+   "level": 2,
+   "name": "LPG Price/Promotion Execution, Competitor Monitoring & Margin Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Competitor-rate scraping → pricing recommendation; price-execution compliance monitoring; promo-ROI analytics"
+    ],
+    "Controls": [
+     "- CTL-757 (ensure controlled execution — LPG Safety, Compliance, Cylinder Reconciliation & Analytics (PA-175.3).)",
+     "- CTL-757: pricing RA 7394/price-integrity-compliant (VS-118); promo-ROI monitored; margin reconciled (VS-17.4)"
+    ],
+    "Cross-references": [
+     "- links to VS-01.2 (pricing), VS-57 (competitor), VS-58 (promotions), VS-118 (integrity), VS-106/VS-158 (cost); W5062 (pricing), W5078 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Execution-gap risk**: Price/promo not executed at POS → revenue leakage or RA 7394 exposure; mitigated by execution monitoring (VS-118)",
+     "- **Margin-erosion risk**: Cost rise not passed through; mitigated by pass-through pricing (VS-106)",
+     "- **Promo-inefficiency risk**: Low-ROI promos; mitigated by promo analytics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing engine (VS-01.2); POS/price-tag (VS-08/VS-151); competitor intel (VS-57); promotions (VS-58); cost/landed (VS-158); analytics (VS-28); FP&A (VS-17.4)"
+    ],
+    "Time Estimate": [
+     "- ~monthly cycle; ~event-driven"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Mgr",
+     "activity": "Execute price & promotion: push exchange/refill prices & promos to POS/shelf-edge (VS-08/VS-151), monitor execution compliance, and link to grill/heater/torch appliance promos (VS-14)",
+     "duration": "Monthly + event",
+     "n": "1",
+     "r": "Pricing / Marketing / Store Ops"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Monitor competitors: scrape competitor LPG-exchange prices (VS-57), assess position, and feed dynamic pricing (W5062)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Analytics / Pricing"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Analyse margin: gross margin by cylinder size/channel, cost pass-through accuracy (VS-106/VS-158), promo ROI, and feed FP&A (VS-17.4)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Analytics / FP&A / Pricing"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5062",
+    "W5078"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Analytics/BI (VS-28) / Category Manager",
+    "Participants": "Analytics (VS-28), Logistics (VS-06), Inventory (VS-05), FP&A (VS-17.4), HSE (VS-24)",
+    "Trigger": "Monthly analytics cycle; program review",
+    "Volume": "~30,000–60,000-cylinder pool reconciled monthly (per the PA-175.1 \"10,000s\" pool canon)"
+   },
+   "id": "W5078",
+   "level": 2,
+   "name": "Cylinder Turn, Refill Yield, Asset Utilization & Leak-Rate Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cylinder-pool utilization dashboard; refill-yield auto-analysis; condemnation-rate alert"
+    ],
+    "Controls": [
+     "- CTL-757 (ensure controlled execution — LPG Safety, Compliance, Cylinder Reconciliation & Analytics (PA-175.3).)",
+     "- CTL-757: KPIs reconciled to inventory/asset (VS-05/VS-35); yield/shrink consistent with W5074; safety KPIs reviewed"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-151/VS-05 (asset), VS-67 (scorecard), VS-115 (metrology), VS-24 (HSE); W5059 (fleet), W5074 (shrink), W5077 (margin)"
+    ],
+    "Pain Points / Risks": [
+     "- **Capital-tie-up risk**: Over-sized/under-utilized pool; mitigated by utilization analytics → right-sizing",
+     "- **Yield-loss risk**: Under-fill/theft of gas → margin leakage; mitigated by yield analytics + metrology (VS-115)",
+     "- **Safety-signal-blindness risk**: Rising leak/condemnation rate unaddressed; mitigated by safety KPI tracking (W5075)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (VS-28); cylinder-asset (VS-151/VS-05); logistics (VS-06); supplier scorecard (VS-67); HSE (VS-24); FP&A (VS-17.4)"
+    ],
+    "Time Estimate": [
+     "- ~monthly cycle; ~1–2 days analysis"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Mgr",
+     "activity": "Build the cylinder-pool KPIs: cylinder turn (cycles/unit/yr), refill yield (gas-filled vs purchased), utilization (active vs idle), condemnation rate, and shrink/loss rate",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Analytics / Logistics / Inventory"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Diagnose: under-utilized cylinders (capital-tie-up), refill-yield loss (under-fill/theft), high condemnation (vendor quality), and leak-rate (safety — links W5075)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Analytics / HSE / Logistics"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Drive action: fleet right-sizing (W5059/W5060), refill-yield recovery, vendor-quality corrective (VS-67), and safety improvement (W5064)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Analytics / Category Mgr / Logistics"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5059",
+    "W5060",
+    "W5064",
+    "W5074",
+    "W5075",
+    "W5077"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Monthly/quarterly forecast",
+    "Owner": "Analytics/Supply (VS-28/VS-02) / Category Manager",
+    "Participants": "Analytics (VS-28), Supply Planning (VS-02), Logistics (VS-06), Marketing (VS-14), S&OP (VS-127)",
+    "Trigger": "Planning cycle; seasonality (summer grilling, holidays, typhoon/post-disaster VS-69); replenishment",
+    "Volume": "~200 stores × forecast"
+   },
+   "id": "W5079",
+   "level": 2,
+   "name": "LPG Customer Demand Seasonality, Forecasting & Stock-Out Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Time-series demand model; appliance-sale→cylinder-demand linkage; disaster-surge scenario planning"
+    ],
+    "Controls": [
+     "- CTL-757 (ensure controlled execution — LPG Safety, Compliance, Cylinder Reconciliation & Analytics (PA-175.3).)",
+     "- CTL-757: forecast reconciled to actuals; replenishment min-max controlled; feeds S&OP (VS-127)"
+    ],
+    "Cross-references": [
+     "- links to VS-28/VS-02 (analytics/supply), VS-127 (S&OP), VS-69 (disaster), VS-06 (logistics); W5058 (supply), W5070 (replenishment), W5078 (utilization)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stock-out risk**: Seasonal demand surge unmet → lost sales & customer churn; mitigated by seasonality forecast",
+     "- **Over-supply risk**: Excess cylinders/cost in low season; mitigated by demand-driven sizing",
+     "- **Disaster-surge risk**: Post-disaster LPG demand surge (VS-69); mitigated by disaster-scenario planning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/forecasting (VS-28); supply planning (VS-02); logistics/fleet (VS-06); S&OP (VS-127); CRM/appliance-linkage (VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~continuous model; ~2–3 days/quarter planning"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Mgr",
+     "activity": "Forecast demand: model exchange/refill seasonality (summer grilling, holidays, camping, post-disaster VS-69), appliance-sale linkage (grill/heater), and external drivers",
+     "duration": "Monthly/Quarterly",
+     "n": "1",
+     "r": "Analytics / Supply Planning"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Plan supply & fleet: translate forecast to bulk supply (W5058), cylinder-pool positioning (W5070), and refill-vendor capacity",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Supply Planning / Logistics"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Prevent stock-out & reconcile: monitor actual vs forecast, feed replenishment min-max (W5067/W5070), and S&OP (VS-127) where LPG is a constraint",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Analytics / Supply Planning / FP&A"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5058",
+    "W5067",
+    "W5070",
+    "W5078"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-757"
+   ],
+   "fields": {
+    "Frequency": "Quarterly/annual",
+    "Owner": "Category Manager / FP&A (VS-17.4)",
+    "Participants": "FP&A (VS-17.4), Analytics (VS-28), HSE (VS-24), Compliance (VS-22), Internal Audit (VS-21), Strategy (VS-33)",
+    "Trigger": "Executive review; annual strategy (W5057); compliance audit",
+    "Volume": "1 program × all stores"
+   },
+   "id": "W5080",
+   "level": 2,
+   "name": "LPG Program Performance, Compliance Audit & ROI Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Program P&L dashboard; attach-linkage analytics; compliance/incident trending; balanced-scorecard automation"
+    ],
+    "Controls": [
+     "- CTL-757 (ensure controlled execution — LPG Safety, Compliance, Cylinder Reconciliation & Analytics (PA-175.3).)",
+     "- CTL-757: P&L reconciled to FP&A (VS-17.4); compliance findings remediated (VS-21/VS-133); safety-incident rate tracked; strategy refreshed annually (W5057)"
+    ],
+    "Cross-references": [
+     "- links to VS-17.4 (FP&A), VS-28 (analytics), VS-13 (CRM), VS-21/VS-22 (audit/compliance), VS-24 (HSE), VS-33 (strategy); W5057 (strategy), W5077/W5078 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Safety/compliance-erosion risk**: Incident/compliance findings trending negatively; mitigated by audit + corrective (VS-21/VS-133)",
+     "- **ROI-misread risk**: Program judged on margin alone ignoring attach/safety; mitigated by balanced scorecard",
+     "- **Strategic-drift risk**: Program not adapting to demand/regulation; mitigated by annual refresh (W5057)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FP&A (VS-17.4); analytics/BI (VS-28); CRM/attach (VS-13); compliance/audit (VS-21/VS-22); HSE (VS-24); capex (VS-35); strategy (VS-33)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 weeks/quarter ROI + analytics; ~annual steer"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Mgr / CFO",
+     "activity": "Measure program ROI & P&L: revenue, gross margin, deposit-float income, operating cost, safety-incident cost, and program P&L vs business case (W5057)",
+     "duration": "Quarterly/Annual",
+     "n": "1",
+     "r": "FP&A / Analytics / Category Mgr"
+    },
+    {
+     "a": "Category Mgr",
+     "activity": "Quantify attach & compliance: appliance-attach lift (grill/heater/torch), compliance-audit findings (BFP/DOE/DTI-BPS/OSH), and incident rate",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Analytics / Compliance / HSE"
+    },
+    {
+     "a": "Category Mgr / CFO",
+     "activity": "Steer & improve: site expansion/pause, pricing/yield (W5062), fleet right-sizing (W5059), corrective actions from audit/incidents (VS-21/VS-133), and strategy refresh (W5057)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Category Mgr / Strategy / FP&A"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5057",
+    "W5059",
+    "W5062",
+    "W5077",
+    "W5078"
+   ]
+  }
+ ]
+}

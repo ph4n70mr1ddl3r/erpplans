@@ -1,0 +1,766 @@
+{
+ "process_area": {
+  "id": "PA-79.2",
+  "title": "Withholding Tax (EWT/CWT) & Form 2307 Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-79-tax-management-bir-reporting/PA-79.2-withholding-tax-and-2307-management.md",
+ "value_stream": {
+  "directory": "VS-79-tax-management-bir-reporting",
+  "id": "VS-79",
+  "name": "Tax Management & BIR Statutory Reporting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-214"
+   ],
+   "fields": {
+    "Frequency": "Monthly per entity",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, AP, Tax Accountant",
+    "Trigger": "Monthly close; vendor payment run",
+    "Volume": "~8,500 AP invoices/month; ~PHP 42–45B annual COGS from which EWT-applicable payments (services, rent, contractors) are screened at payment"
+   },
+   "id": "W2761",
+   "level": 2,
+   "name": "Expanded Withholding Tax (EWT) Determination & Quarterly Form 1601EQ",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant reconciles monthly EWT withheld ledger to GL withholding liability\" (replaces manual Step 2).",
+     "- System auto-generate of \"prepares and files BIR Form 1601-EQ\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-214 (ensure BIR tax compliance & filing integrity.)",
+     "- operational: automated tax-code mapping and payment-run validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Under-withholding disallows vendor deduction and imposes 25% surcharge + interest; mitigated by automated tax-code mapping and payment-run validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP AP EWT engine; withholding liability GL account; BIR eFPS"
+    ],
+    "Time Estimate": [
+     "- 3–5 days per entity per month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "AP applies EWT rate per nature-of-payment (rent 5%, professional 10–15%, supplies 1%, contractors 2% etc.) at invoice entry via ERP tax code; withholds at payment",
+     "duration": "Per payment",
+     "n": "1",
+     "r": "AP"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant reconciles monthly EWT withheld ledger to GL withholding liability; investigates un-withheld payments; books accruals for late-detected under-withholding",
+     "duration": "1–2 days/entity",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager prepares and files BIR Form 1601-EQ (quarterly, due the last day of the month following quarter close) via eFPS; remits withheld amounts; archives schedules",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~3,000–4,000 payments/month",
+    "Owner": "AP Manager",
+    "Participants": "AP, Tax Accountant, Vendor",
+    "Trigger": "Each taxable vendor/contractor payment subject to CWT",
+    "Volume": "~800–1,000 active vendors"
+   },
+   "id": "W2762",
+   "level": 2,
+   "name": "Creditable Withholding Tax (CWT) at Source & Vendor 2307 Issuance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates BIR Form 2307\" (replaces manual Step 1).",
+     "- System auto-submit of \"submits 2307 to vendor via portal/email\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant rolls up 2307 totals into the quarterly 1601-EQ filings and the annual 1604E information return\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: automated generation and portal delivery"
+    ],
+    "Pain Points / Risks": [
+     "- **Operational risk**: Manual 2307 issuance errors trigger vendor complaints and delayed input VAT recovery; mitigated by automated generation and portal delivery"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP AP 2307 generation; vendor portal; withholding GL; 1604E rollup"
+    ],
+    "Time Estimate": [
+     "- 5–10 min per 2307; quarterly rollup 2–3 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Manager",
+     "activity": "AP withholds CWT at payment per vendor's ATC (Alphanumeric Tax Code); generates BIR Form 2307 (Certificate of Tax Withheld) from ERP per payee/quarter",
+     "duration": "Per payment",
+     "n": "1",
+     "r": "AP"
+    },
+    {
+     "a": "AP Manager",
+     "activity": "AP submits 2307 to vendor via portal/email; tracks acknowledgment; handles vendor disputes over amount/tax base",
+     "duration": "Per payment",
+     "n": "2",
+     "r": "AP"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant rolls up 2307 totals into the quarterly 1601-EQ filings and the annual 1604E information return; reconciles sum of issued 2307 to GL withholding; archives certificates",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~1,500–2,000 AR receipts/month",
+    "Owner": "AR Manager",
+    "Participants": "AR, Tax Accountant, Customer, Collector",
+    "Trigger": "Government/corporate customer withholds tax on payment",
+    "Volume": "~5,200 AR trade/corporate accounts"
+   },
+   "id": "W2763",
+   "level": 2,
+   "name": "Customer CWT Collection (2307) & AR Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-match of \"matches withholding to open invoice\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates customer 2307 authenticity and ATC\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant uses accumulated customer CWT certificates to reduce income tax…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: aggressive 2307 collection and TCC claim-back"
+    ],
+    "Pain Points / Risks": [
+     "- **Cash-flow risk**: Unrecovered CWT sits as receivable; mitigated by aggressive 2307 collection and TCC claim-back"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP AR withholding application; withholding tax receivable GL; BIR refund/TCC module"
+    ],
+    "Time Estimate": [
+     "- 10–15 min per customer receipt; quarterly claim 3–5 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Manager",
+     "activity": "Collector obtains customer-issued BIR Form 2307 at collection; AR matches withholding to open invoice(s); applies as credit to customer's withholding tax receivable",
+     "duration": "Per receipt",
+     "n": "1",
+     "r": "AR / Collector"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant validates customer 2307 authenticity and ATC; reconciles to customer's withholding against books; flags missing certificates for follow-up",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Accountant uses accumulated customer CWT certificates to reduce income tax payable on 1702Q/1702RT; files refund/TCC claim for excess creditable withholding",
+     "duration": "Quarterly/Annual",
+     "n": "3",
+     "r": "Tax Accountant / Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Semi-monthly withholding; monthly filing",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Mgr, Tax Accountant, HR",
+    "Trigger": "Semi-monthly payroll run; monthly close",
+    "Volume": "6,762 employees across 5 entities"
+   },
+   "id": "W2764",
+   "level": 2,
+   "name": "Compensation Withholding Tax (1601C) & TRAIN Tax Table Maintenance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates per-pay-period computation against manual sample\" (replaces manual Step 1).",
+     "- System auto-reconcile of \"reconciles withholding register to payroll register and GL liability\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant files 1601C via eFPS\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: version-controlled table updates and sample validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Stale tax table causes systematic over/under-withholding for 6,762 employees; mitigated by version-controlled table updates and sample validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll tax engine; withholding GL; BIR eFPS; 2316 generation"
+    ],
+    "Time Estimate": [
+     "- 1–2 days per entity per month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Payroll Manager maintains TRAIN-law graduated withholding tax table in payroll engine per latest BIR revenue regulations; validates per-pay-period computation against manual sample",
+     "duration": "Per payroll cycle",
+     "n": "1",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll withholds compensation tax semi-monthly; remits via 1601C monthly; reconciles withholding register to payroll register and GL liability",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Payroll / Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant files 1601C via eFPS; supports BIR 2316 issuance to each employee by January 31; archives employer copy",
+     "duration": "Monthly/Annual",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Annual per entity",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Tax Accountant, Payroll, AP",
+    "Trigger": "Annual close (1604-C by January 31; 1604-E by March 1)",
+    "Volume": "5 entities; ~800 vendors + 6,762 employees"
+   },
+   "id": "W2765",
+   "level": 2,
+   "name": "Annual Information Return (1604E/1604C) & Alphabetical Employee List",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates vendor TINs against BIR TIN Validation System\" (replaces manual Step 1).",
+     "- System auto-record of \"Payroll compiles Alphabetical List of Employees\" (replaces manual Step 2).",
+     "- System auto-fileof \"Tax Manager files 1604-C with employee alphalist before\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: TIN validation at onboarding and pre-filing scrub"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Invalid/missing vendor TINs invalidate deduction; mitigated by TIN validation at onboarding and pre-filing scrub"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP annual rollup; BIR alphalist.dat generator; eFPS attachment portal"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per entity per year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant compiles annual Alpha List of Payees (1604E — income/payments and 1604C — compensation); validates vendor TINs against BIR TIN Validation System",
+     "duration": "3–5 days/entity",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Payroll compiles Alphabetical List of Employees ( alphalist.dat); cross-checks 2316 totals to payroll register; resolves duplicate/invalid TIN records",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "Payroll"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager files 1604-C with employee alphalist before January 31 and 1604-E with payees alphalist before March 1, both via eFPS; archives annual withholding certificates",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~50–100 FWT events/year",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Treasury, AP, Legal",
+    "Trigger": "Interest, dividend, royalty, or rental payment to resident/non-resident",
+    "Volume": "Intercompany loans, bank interest, property rentals, dividends"
+   },
+   "id": "W2766",
+   "level": 2,
+   "name": "Final Withholding Tax (Interest, Dividends, Rentals) Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares Treaty Tax Relief Application\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant remits FWT via 1601-FQ quarterly\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: legal review and TTRA documentation"
+    ],
+    "Pain Points / Risks": [
+     "- **Tax risk**: Mis-applied treaty rates on cross-border (intercompany import interest, royalties); mitigated by legal review and TTRA documentation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP AP final-tax code; treasury intercompany module; BIR eFPS 1601F"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Treasury/AP identifies FWT-applicable payment (bank deposit interest 20%, dividends 10% individuals / 15% RFC with intercorporate dividends exempt per CREATE, rentals 5%, royalties); applies final tax at source",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Treasury / AP"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager determines treaty relief applicability for non-resident payees; prepares Treaty Tax Relief Application (TTRA) with BIR for cross-border payments",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Tax Manager / Legal"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant remits FWT via 1601-FQ quarterly (1601-FF for non-resident payments); grosses-up/net reporting per BIR rules; archives certificate",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Quarterly review; event-driven",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, IT, Master Data, AP",
+    "Trigger": "BIR revenue regulation update or new payment type",
+    "Volume": "~60 ATC codes; ~500 item/service categories mapped"
+   },
+   "id": "W2767",
+   "level": 2,
+   "name": "EWT Rate Master Governance & Tax Code Mapping",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"Tax Manager monitors BIR Revenue Regulations/Revenue Memoranda for rate\" (replaces manual Step 1).",
+     "- System auto-test of \"tests changes in sandbox\" (replaces manual Step 2).",
+     "- System auto-document of \"documents control evidence for audit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: quarterly regulatory scan and versioned tax master"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Outdated rates cause systematic mis-withholding; mitigated by quarterly regulatory scan and versioned tax master"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP tax-code/ATC master; vendor type master; change-control workflow"
+    ],
+    "Time Estimate": [
+     "- 1–2 days per regulatory change"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Tax Manager monitors BIR Revenue Regulations/Revenue Memoranda for rate changes (e.g., CREATE adjustments); maintains EWT/FWT rate master per ATC",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Master Data maps service/purchase categories and vendor types to ATC codes; configures ERP tax determination rules; versions and tests changes in sandbox",
+     "duration": "Per change",
+     "n": "2",
+     "r": "Master Data / IT"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager communicates changes to AP/Procurement; runs retro-impact analysis on recent payments; documents control evidence for audit",
+     "duration": "Per change",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, AP, Vendor, Tax Manager",
+    "Trigger": "Vendor dispute or monthly reconciliation variance",
+    "Volume": "~50–100 disputes/year"
+   },
+   "id": "W2768",
+   "level": 2,
+   "name": "Withholding Tax Reconciliation, 2307 Discrepancy & Vendor Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant reconciles total 2307 issued to total EWT booked in GL monthly\" (replaces manual Step 1).",
+     "- System auto-issue of \"reissues corrected 2307 where warranted\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks corrections for annual 1604E alignment\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: self-service portal and SLA-bound dispute handling"
+    ],
+    "Pain Points / Risks": [
+     "- **Reputational risk**: Vendor dissatisfaction from 2307 errors; mitigated by self-service portal and SLA-bound dispute handling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP 2307 reconciliation report; GL withholding; vendor dispute ticket"
+    ],
+    "Time Estimate": [
+     "- 1–3 hours per dispute"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant reconciles total 2307 issued to total EWT booked in GL monthly; investigates variances; identifies duplicate/missed withholdings",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "AP Manager",
+     "activity": "AP responds to vendor disputes over 2307 amount/tax-base/ATC; provides payment evidence and reissues corrected 2307 where warranted",
+     "duration": "Per dispute",
+     "n": "2",
+     "r": "AP / Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager approves any amended 2307 and corresponding SWD (Sworn Statement of Deduction); tracks corrections for annual 1604E alignment",
+     "duration": "Per dispute",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Continuous benefit-event accrual; quarterly filing per entity",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, C&B Manager, Payroll Manager, HRIS Analyst, Controller (computation review), CFO (filing approval), external tax advisor (interpretation)",
+    "Trigger": "Quarterly FBT computation and filing cycle (15 days after quarter close); benefit-plan or de-minimis-threshold changes at C&B; new fringe-benefit source activation (housing allocation, vehicle assignment, loan issuance)",
+    "Volume": "5 entities × 4 quarters = 20 BIR 1605 filings/year; ~40–120 FBT-liable benefit instances per quarter chain-wide (managerial/supervisory recipients only — housing allocations, executive vehicle personal-use, club memberships, below-market loans, officer-only medical)"
+   },
+   "id": "W5508",
+   "level": 2,
+   "name": "Fringe Benefits Tax (FBT) Determination, Valuation & Quarterly BIR Form 1605 Filing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-feed of benefit events from HRIS/telematics/loan modules into the FBT register with rank and valuation metadata (supports Step 1).",
+     "- Exclusion-rule engine applying the versioned de-minimis threshold table with rationale capture (replaces manual Step 2 screening).",
+     "- Auto gross-up computation and per-entity aggregation with register-to-GL-to-payroll three-way reconciliation report (supports Steps 4–5).",
+     "- eFPS 1605 prefill and PRN-linked payment posting (supports Step 6)."
+    ],
+    "Background": [
+     "Benefits in kind furnished to managerial and supervisory employees carry a **final tax on the employer** under NIRC §33 (as amended by RA 10963 — TRAIN — to a 35% rate on the grossed-up monetary value), filed quarterly on **BIR Form 1605**. The capability had no owner: 'fringe benefit'/'FBT'/'1605' appeared in zero PA files as dedicated headers (only PA-144.1 flags 'BIR (fringe benefit)' as a dormitory-housing compliance obligation with no downstream workflow), while the adjacent workflows each own a different tax species — W2764 (compensation withholding on cash, 1601C), W2766 (final withholding on passive income), W3314 (SSS/PhilHealth/Pag-IBIG statutory contributions), W3316 (allowance/flex-benefit policy administration, no tax filing) — and VS-144 dormitory housing is one of the largest recurring fringe-benefit *sources* for the store-workforce population. This workflow owns the rank test, the exclusion classification (de minimis and otherwise-exempt benefits), the NIRC valuation rules, the gross-up computation, monthly accrual, and the quarterly 1605 filing across all 5 legal entities."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: exclusion rationale memos per benefit type; telematics/appraisal valuation evidence attached before computation; three-way register/GL/payroll reconciliation before each quarterly filing; 10-year evidence retention feeding W2773 audit defense"
+    ],
+    "Cross-references": [
+     "- W2764 (cash compensation withholding — rank-and-file route and 2316 coordination), W2766 (final withholding on passive income — distinct species), W2765 (annual info returns/Alphalist), W2773 (BIR audit defense), W2775 (tax incentive/structure monitoring), W2776 (tax calendar and risk register), W2755 (eFPS/e-Payment), W9A (month-end tax accrual), W3313/W3316/W3318/W3320 (benefit sources and cost model), W76 (loan issuances), W5B.12 (employee purchase discount limits), VS-144 (dormitory housing allocations), VS-102 (compensation & benefits program owner), VS-06 (fleet telematics valuation feed)",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Misclassification risk**: applying FBT to rank-and-file benefits (or missing the managerial population) either over-taxes or under-reports — the rank test and exclusion screen are the control points; mitigated by HRIS rank flags plus documented exclusion rationale memos (steps 2, 7)",
+     "- **Valuation dispute risk**: vehicle personal-use and co-occupied housing valuations are BIR audit hotspots when unsupported; mitigated by telematics/logbook and appraisal evidence attached to the register (step 3)",
+     "- **Late-filing exposure**: 20 statutory deadlines/year across 5 entities; mitigated by W2776 tax-calendar governance with pre-deadline escalations (step 6)",
+     "- **Double-counting risk**: FBT-covered benefits re-appearing as taxable compensation on 2316s (or vice versa); mitigated by the HRIS exclusion flag and W2764/W2765 reconciliation (steps 4, 7)",
+     "- **Plan-design blindness**: C&B rolling out a new perk without FBT costing understates true cost by ~54% of monetary value at the 35% grossed-up rate; mitigated by the annual design review gate (step 8)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HRIS-to-tax-engine benefit-event feed with rank flag, benefit type, valuation method, and entity attribution",
+     "- Fleet telematics personal-use allocation export feeding vehicle valuation (VS-06 integration)",
+     "- Loan module imputed-interest computation on below-market issuances (W76)",
+     "- Tax engine FBT gross-up (MV ÷ (1 − 35%) × 35%) with per-employee/per-entity aggregation and exclusion-rule flags",
+     "- FBT Payable GL account and month-end accrual posting (W9A tax-provision step); reconciliation report register ↔ GL ↔ payroll exclusion trail",
+     "- BIR eFPS 1605 quarterly filing with e-Payment PRN linkage (W2755) and archive in the tax evidence repository (10-year retention, feeds W2773)",
+     "- De-minimis threshold parameter table versioned per BIR issuance"
+    ],
+    "Time Estimate": [
+     "- Steady state ~30–45 min/month accrual + 2–3 hours per entity per quarter for computation review and 1605 filing (≈ 45–65 hours/year chain-wide) + annual design review 2–4 hours; absorbed by the Tax team and C&B; no incremental headcount"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "**Benefit-source identification**: Tax Accountant and C&B Manager maintain the fringe-benefit source register fed from HRIS and the C&B benefit master (W3313/W3316): employer-provided housing incl. dormitory allocations to managerial residents (VS-144), vehicle personal-use share from fleet assignment logs and telematics (VS-06), officer-only HMO/medical beyond the universal plan (W3313), educational assistance, club memberships, below-market employee loans (imputed interest on W76 loan issuances), and employee-discount patterns beyond policy (W5B.12 limits); each source carries a valuation method, rank-eligibility flag, and entity attribution",
+     "duration": "Quarterly refresh, 2–3 hours",
+     "n": "1",
+     "r": "Tax Accountant / C&B Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Rank and exclusion test**: system classifies each benefit event: (a) recipient rank — FBT applies only to managerial/supervisory employees; benefits furnished to the general rank-and-file population are instead taxable compensation routed to W2764; (b) exclusion screening — de minimis benefits within the BIR threshold schedule (RR 3-98 as updated by RR 5-2018: monetized unused leave within limits, rice subsidy, uniforms, rank-and-file medical assistance within caps), mandatory contributions, and benefits required for the employer's convenience / furnished on the necessity of the business (e.g., worksite housing where residency is required) are excluded with documented rationale",
+     "duration": "Automated + 1–2 hours/quarter review",
+     "n": "2",
+     "r": "System / Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Valuation per NIRC §33 rules**: housing at fair rental value; vehicles at depreciation plus operating costs × personal-use share (telematics/logbook evidence); loans at imputed interest using the prescribed rate × forgone spread; other benefits at acquisition cost; Tax Accountant overrides system values where evidence dictates (e.g., co-occupied housing pro-ration)",
+     "duration": "1–2 hours/quarter",
+     "n": "3",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Gross-up computation and aggregation**: system computes the grossed-up monetary value (monetary value ÷ (1 − 35%)) and FBT thereon at 35%, aggregated per employee, per benefit type, per entity; FBT is a final tax — the benefit is excluded from the employee's taxable compensation so no W2764 double-count (BIR 2316 coordination at year-end via W2765)",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Monthly accrual and reconciliation**: month-end close posts the FBT accrual (Dr. Fringe Benefits Tax Expense / Cr. FBT Payable) per the W9A tax-provision step; Tax Accountant reconciles the benefit-event register to the GL accrual and to payroll/payslip exclusion trails; variances investigated before filing",
+     "duration": "30–45 min/month",
+     "n": "5",
+     "r": "Tax Accountant / Chief Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly BIR 1605 filing**: Tax Accountant generates BIR Form 1605 per entity from the FBT register, reviews against the accrual, and files via eFPS within 15 days following quarter close (due-date governance per the W2776 tax calendar); payment via e-Payment rails per W2755; BIR confirmation and PRN archived in the tax evidence repository",
+     "duration": "2–3 hours/entity/quarter",
+     "n": "6",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Evidence, audit defense and employee-facing consistency**: FBT register, valuation evidence (telematics extracts, rental appraisals, loan amortization schedules), exclusion rationale memos, and filed 1605s retained 10 years per BIR rules; register excerpt feeds BIR audit response (W2773) and the annual information-return ecosystem (W2765); employee-side: FBT-covered benefits flagged in the HRIS so they neither appear as taxable compensation on 2316s nor are double-reported",
+     "duration": "30 min/quarter",
+     "n": "7",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CHRO / CFO",
+     "activity": "**Annual benefit-design review**: C&B Manager and Tax Accountant review benefit-plan changes for FBT efficiency (structure vs cash-equivalent, de-minimis headroom under updated BIR issuances, rank-population design that keeps benefits universal where intended), feeding the W3320 benefits cost model, the W2776 tax-risk register, and next year's plan design (W3313 renewal)",
+     "duration": "Annual, 2–4 hours",
+     "n": "8",
+     "r": "C&B Manager / Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2755",
+    "W2764",
+    "W2765",
+    "W2766",
+    "W2773",
+    "W2775",
+    "W2776",
+    "W3313",
+    "W3314",
+    "W3316",
+    "W3318",
+    "W3320",
+    "W5B",
+    "W76",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-467"
+   ],
+   "fields": {
+    "Frequency": "Annual issuance cycle with per-separation interim issuances; event-driven replacements and corrections",
+    "Owner": "Tax Manager",
+    "Participants": "Payroll Specialist, HR Shared Services (W3334-class issuance/verification requests), HR Technology Manager (ESS distribution per W3330), Store/DC HR Administrators (printed-copy distribution), Controller, External Audit Team, BIR (deadline regime and examination requests), Employees (recipients)",
+    "Trigger": "Calendar year-end close (the W9A/W10 year-end payroll cycle); the January 31 BIR deadline for furnishing 2316 to employees; the February 28 deadline for the related 1604C/alphalist filing (W2765); an employee separation (W43/W643) requiring an interim certificate; an employee request for a replacement or corrected certificate; or a BIR/labor examination evidence request (W77)",
+    "Volume": "~6,762 active employees furnished annually across the multi-entity payroll (W816 consolidation scope, 5 entities) + ~1,400–1,600 separated employees/year receiving separation 2316s; acknowledgment tracking to a ≥ 98% completion gate per entity; ~50–100 replacement/correction requests/year"
+   },
+   "id": "W5533",
+   "level": 2,
+   "name": "BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Certificate generation auto-schedules at year-end close with QC exception flags (rate anomalies, TIN invalids) pushed to the Payroll Specialist (replaces manual Step 2 monitoring).",
+     "- ESS acknowledgment completion auto-tracks per entity with store-level escalation lists generated at T-7 days before January 31 (replaces manual Step 3 tracking)."
+    ],
+    "Controls": [
+     "- CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) & Form 2307 Management (PA-79.2).)",
+     "- operational: annual issuance cannot close per entity until the 2316-to-1604C reconciliation is signed off by the Tax Manager",
+     "- operational: separation 2316 issuance is a W643 final-pay release checklist gate; overrides require Payroll Manager approval and are logged"
+    ],
+    "Cross-references": [
+     "- W2764/W2765 (filing reconciliation), W90.8 (certificate-generation capability), W10/W816/W1416/W1384 (payroll & 13th-month data), W43/W643 (separation & final-pay gate), W3330/W3334 (ESS & HR shared-services requests), W292 (employee master/TIN), W256/W2977 (retention), W351/W95/W77 (audit & BIR defense), W2972 (bank-financing evidence demand)",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Statutory-deadline risk**: missing the January 31 furnishing deadline — or issuing certificates that don't tie to the W2765 February 28 return — exposes every entity to BIR non-compliance penalties and undermines the W77 examination defense; mitigated by the per-entity acknowledgment completion gate (Step 3)",
+     "- **Reconciliation risk**: 2316s that don't reconcile to 1604C/alphalist totals are a classic BIR-exam finding; mitigated by the Step-1 pre-issuance reconciliation to W2764/W2765",
+     "- **Distribution-segmentation risk**: ~93–95% of employees are store/DC staff without reliable ESS access — printed distribution with signed receipts is the operational bottleneck; mitigated by store-HR-administered receipt logs with daily January tracking",
+     "- **Separation leakage**: missed interim 2316s at separation create labor-claim exposure, BIR complaints and re-hire friction; mitigated by the W43/W643 final-pay gate (Step 4)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within the Tax sub-team (6 FTE) as a W2765-companion deliverable; store-level distribution absorbed by store HR administrators within existing W594-class routines; no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll/tax module certificate generation (the W90.8 engine) with BIR December-format templates per entity",
+     "- ESS portal distribution + e-acknowledgment (W3330); printed-receipt logs for store/DC populations",
+     "- W2764/W2765 filing reconciliation; W43/W643 separation checklist gate; W256/W2977 retention archive"
+    ],
+    "Time Estimate": [
+     "Data assembly & reconciliation 2–3 h × 5 entities = 10–15 h/year; generation & QC ≈ 6–8 h/year; distribution & acknowledgment tracking ≈ 40–60 h/year; separation & interim issuances ≈ 420–480 h/year; corrections ≈ 15–25 h/year; evidence & audit ≈ 12 h/year. Total **≈ 500–600 hours/year** (≈0.3 FTE), absorbed within the tax and payroll teams plus store-HR distribution effort."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "**Year-end data assembly & validation**: per entity, assemble annual gross compensation and withholding per employee from the W10/W816 payroll runs — 13th-month exempt excess (W1416/W1384), taxable benefits, prior-employer income declared by mid-year hires; reconcile per-employee totals to the W2764 monthly 1601C remittances and pre-validate against the W2765 1604C/alphalist before any certificate is issued",
+     "duration": "2–3 hours per entity per year",
+     "n": "1",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Certificate generation & QC**: generate BIR Form 2316 per employee from the payroll/tax module (the W90.8 certificate-generation capability, BIR December format); QC-sample per entity (marginal tax rates, exempt 13th-month treatment, net compensation figure, TIN validity against the W292 employee master) and correct at source before distribution",
+     "duration": "6–8 hours per year (generation) + QC",
+     "n": "2",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Distribution & acknowledgment tracking**: distribute via ESS download (the W3330 portal tax-document capability) with e-acknowledgment capture; run printed-copy distribution with signed receipt logs for non-ESS populations (store/DC staff) administered by store HR; track per-entity acknowledgment completion daily in January and escalate laggard sites at T-7 days before the January 31 deadline",
+     "duration": "~40–60 hours/year (store distribution effort dominates: ~15–20 min/store × ~200 stores)",
+     "n": "3",
+     "r": "HR Technology Manager / Store HR Administrators"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Separation & interim issuance**: issue the 2316 upon separation as a W43 clearance-checklist item gated in the W643 final-pay release; issue interim certificates on employee request for financing, visa or loan purposes (the W2972 financing-desk evidence demand) within 2 business days",
+     "duration": "~0.3 h per separation × ~1,400–1,600/year; per-request otherwise",
+     "n": "4",
+     "r": "Payroll Specialist / HR Shared Services"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Corrections & replacements**: process corrected certificates where under/over-withholding is identified — feed the correction back to W2764 adjustments (refund or deficiency handling) and reissue; log every replacement with a reason code for the annual quality review",
+     "duration": "per request; ~50–100 requests/year",
+     "n": "5",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Deadline evidence & audit support**: archive the issuance evidence pack (generation logs, acknowledgment register, ESS download logs, printed-copy receipt sign-offs, separation-issue records) per the W256/W2977 retention schedule; fold into the W351/W95 audit package and the BIR-examination evidence per W77 — the 2316 file is the standard first document request in a compensation-tax examination",
+     "duration": "~12 hours/year",
+     "n": "6",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W1384",
+    "W1416",
+    "W256",
+    "W2764",
+    "W2765",
+    "W292",
+    "W2972",
+    "W2977",
+    "W3330",
+    "W3334",
+    "W351",
+    "W43",
+    "W594",
+    "W643",
+    "W77",
+    "W816",
+    "W90",
+    "W95",
+    "W9A"
+   ]
+  }
+ ]
+}

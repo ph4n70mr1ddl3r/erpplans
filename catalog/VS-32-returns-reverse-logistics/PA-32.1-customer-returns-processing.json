@@ -1,0 +1,835 @@
+{
+ "process_area": {
+  "id": "PA-32.1",
+  "title": "Customer Returns Processing"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-32-returns-reverse-logistics/PA-32.1-customer-returns-processing.md",
+ "value_stream": {
+  "directory": "VS-32-returns-reverse-logistics",
+  "id": "VS-32",
+  "name": "Returns & Reverse Logistics"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "~56,000 returns/month across 200 stores (~2% return rate on 2.8M transactions)",
+    "Owner": "Customer Service Representative (CSR)",
+    "Participants": "CSR, Customer Service Manager, Store Manager (overrides)",
+    "Trigger": "Customer brings purchased item(s) to customer service counter for return",
+    "Volume": "~280 returns/store/month (~9/day); seasonal spikes post-promotion"
+   },
+   "id": "W1622",
+   "level": 2,
+   "name": "In-Store Customer Return Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans receipt barcode or looks up transaction by date/loyalty card/amount\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks return eligibility\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspects returned item\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-179 (ensure returns integrity & refund-fraud prevention.)",
+     "- operational: Customer Service Representative review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Return fraud**: Customers returning stolen merchandise, used items as new, or items purchased on promotion at full price after promo ends; W1628 addresses detection",
+     "- **Cross-store return complexity**: Items purchased at one store and returned at another create inter-store inventory imbalance; periodic inter-store reconciliation needed",
+     "- **Restock delay**: Returned items sitting in staging area rather than being returned to shelf quickly reduce available inventory for sale",
+     "- **Custom items**: Paint (custom mixed), cut lumber, cut wire are non-returnable but customers may dispute; clear signage and receipt notation required"
+    ],
+    "Staffing Implication": [
+     "At ~47 hours/month of return processing per store, 1 dedicated CSR can handle returns plus other customer service duties (BOPIS pickup, special orders, complaints). Current staffing model (1 CSR per store) is adequate.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Transaction lookup by receipt barcode, loyalty card, date/amount, or transaction number (W1622.1)",
+     "- Return eligibility engine with configurable rules per category (W1622.2)",
+     "- Return reason code taxonomy (W1622.4)",
+     "- Inventory status routing: Return to Stock / Damaged / Quarantine (W1622.6)",
+     "- Loyalty points reversal (W1622.6)",
+     "- GL posting for return transaction (contra-revenue, inventory adjustment) (W1622.6)",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-09): this value stream owns return *decisioning* (eligibility, approval tiers, credit issuance, disposition); POS-side execution rides VS-08 (multi-tender refund mechanics W1538; fraud screening W605), and the cross-store variant runs VS-07 W12 with its higher Store-Manager approval threshold (above PHP 5,000)"
+    ],
+    "Time Estimate": [
+     "~10 min per return (including inspection, system processing, and customer interaction); ~280 returns/store/month × 10 min = ~47 hours/store/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer presents item(s) and receipt (or loyalty card/transaction reference) at customer service counter; CSR scans receipt barcode or looks up transaction by date/loyalty card/amount",
+     "duration": "2 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "System retrieves original transaction: (a) verifies item was purchased at this store (or BuildRight network — cross-store returns accepted), (b) checks return eligibility: (i) within 30-day return window (standard items), (ii) 7-day return window for appliances and power tools, (iii) non-returnable items: paint (custom mixed), cut-to-length items (wire, lumber, pipe), clearance/final sale items, (c) checks item has not been previously returned for same transaction",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "CSR inspects returned item: (a) matches item to receipt line (SKU, description), (b) checks condition: unused, original packaging, all accessories included, (c) checks for damage (if damaged: route to W1626 for quality assessment), (d) for electrical items: verifies safety seals intact, (e) for power tools: checks for signs of use (bit wear, scratches on chuck)",
+     "duration": "3 min",
+     "n": "3",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "**Accept**: CSR processes return in system: (a) scans item barcode, (b) selects return reason code (14 codes: unwanted, wrong size, found cheaper, defective, damaged in transit, wrong item, missing parts, not as described, quality issue, duplicate purchase, gift return, installation incompatibility, buyer's remorse, other), (c) system creates return receipt with authorization number",
+     "duration": "2 min",
+     "n": "4",
+     "r": "CSR"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "Refund method selection (per BuildRight policy): (a) original tender refund — cash for cash purchase, card refund for card purchase, (b) store credit (gift card) for returns > 30 days or without receipt (per W1625), (c) exchange for different item (per W1624)",
+     "duration": "1 min",
+     "n": "5",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "System processes: (a) inventory added back to store available stock (if resaleable condition — \"Return to Stock\" status), or moved to \"Damaged/Defective\" status (per W91), or moved to \"Quarantine\" for quality review (per W1626), (b) refund/payment reversal processed, (c) return transaction posted to GL (contra-revenue, inventory adjustment), (d) loyalty points reversed if points were earned on original purchase",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "Customer signs return receipt (digital signature pad or paper); CSR returns item to designated returns staging area; resaleable items returned to shelf within 2 hours by Stock Associate",
+     "duration": "2 min + restock time",
+     "n": "7",
+     "r": "CSR / Stock Associate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12",
+    "W1538",
+    "W1624",
+    "W1625",
+    "W1626",
+    "W1628",
+    "W605",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-337"
+   ],
+   "fields": {
+    "Frequency": "~4,000–5,000 ecommerce return requests/month (~10–12% ecommerce return rate)",
+    "Owner": "Customer Service — Ecommerce Returns Specialist",
+    "Participants": "Customer, Ecommerce Returns Specialist, Store CSR, DC Returns Processing",
+    "Trigger": "Customer initiates return request via buildright.com.ph or mobile app",
+    "Volume": "Variable by category; highest for appliances and power tools"
+   },
+   "id": "W1623",
+   "level": 2,
+   "name": "Ecommerce Customer Return Initiation & Authorization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs into ecommerce account, selects order, initiates return\" (replaces manual Step 1).",
+     "- System auto-review of \"System auto-assesses return eligibility\" (replaces manual Step 2).",
+     "- System auto-count of \"System generates Return Merchandise Authorization\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).)",
+     "- operational: Customer Service — Ecommerce Returns Specialist review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Channel-fraud risk**: staged condition photos and 30-day-window gaming extract refunds from the ecommerce channel (~10–12% return rate); mitigated by auto-eligibility checks (returnable category, no prior return of the item) and real-time fraud monitoring per W1628 (step 2)",
+     "- **Open-RMA abandonment risk**: RMAs issued but items never ship back, stranding reserved credit and phantom returns; mitigated by RMA expiry tracking with automatic cancellation of unshipped authorizations (steps 3–4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce self-service return portal with photo upload (W1623.1)",
+     "- RMA auto-approval rules engine (W1623.2)",
+     "- RMA number generation with return method selection (W1623.3)",
+     "- In-store RMA QR code scanning integration (W1623.5)",
+     "- Automated refund processing per payment method (W1623.7)",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-09): this workflow owns all ecommerce return *requests* (≈ 4,000–5,000/month at the ~10–12% rate on ~42,900 ecommerce orders/month); the store drop-off subset (≈ 3,300–4,200/month, ~8–10%) executes at the counter via VS-07 W12B under this authorization; courier-pickup returns run the returns-DC inspection path (W509)"
+    ],
+    "Time Estimate": [
+     "~25 min of handling per ecommerce return (initiation support 5 min + in-store drop-off processing 10 min + refund processing 5 min plus tender handling; eligibility assessment, RMA generation, and shipping labels automated) × ~4,000–5,000 return requests/month ≈ 20,000–25,000 hours/year across stores and the returns DC (courier pickup runs carrier-side).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer logs into ecommerce account, selects order, initiates return: (a) selects items to return, (b) selects return reason from dropdown, (c) uploads photos of item condition (required for damaged/defective claims), (d) selects preferred resolution: refund, exchange, or store credit",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "Ecommerce Returns Specialist",
+     "activity": "System auto-assesses return eligibility: (a) order within 30-day return window, (b) item is returnable category, (c) item has not been previously returned, (d) auto-approve for standard returns (unwanted, wrong size); route to Ecommerce Returns Specialist review for: (i) high-value items > PHP 10K, (ii) damaged/defective claims, (iii) return requests > 30 days",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System generates Return Merchandise Authorization (RMA) number; provides customer with return options: (a) **Drop-off at any BuildRight store**: customer brings item + RMA to customer service counter, (b) **Courier pickup**: for items > PHP 5K or bulky items; system generates courier pickup scheduling link with partner (Lalamove, Transportify), (c) **DC drop-off**: not customer-facing; for B2B large orders only",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Customer selects return method; system provides return shipping label (for courier pickup) or QR code for in-store drop-off",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "For in-store drop-off: Customer brings item to any BuildRight store; Store CSR scans RMA QR code; verifies item matches RMA (SKU, quantity, condition); processes return per W1622 steps 3–7 with RMA reference",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Store CSR"
+    },
+    {
+     "a": "Ecommerce Returns Specialist",
+     "activity": "For courier pickup: Courier collects item from customer; delivers to designated DC returns processing area; DC Returns Processing verifies item against RMA; processes return",
+     "duration": "Variable",
+     "n": "6",
+     "r": "Courier / DC Returns Processing"
+    },
+    {
+     "a": "Finance",
+     "activity": "Refund processing: (a) system triggers refund upon return receipt confirmation, (b) card refund: 3–5 business days processing, (c) e-wallet refund: 1–2 business days, (d) store credit: immediate, (e) COD refund: bank transfer to customer account within 5 business days",
+     "duration": "5 min + processing time",
+     "n": "7",
+     "r": "System / Ecommerce Returns Specialist"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12B",
+    "W1622",
+    "W1628",
+    "W509"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-337"
+   ],
+   "fields": {
+    "Frequency": "~15,000 exchanges/month (~27% of returns result in exchange)",
+    "Owner": "CSR",
+    "Participants": "CSR, Customer Service Manager",
+    "Trigger": "Customer requests exchange (different size, color, or item) instead of refund",
+    "Volume": "~75 exchanges/store/month"
+   },
+   "id": "W1624",
+   "level": 2,
+   "name": "Customer Exchange Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"requests exchange during return process\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks\" (replaces manual Step 2).",
+     "- System auto-scan of \"scans returned item\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory-asymmetry risk**: cross-SKU exchanges (different item, same category) shift stock mix while looking value-neutral; mitigated by the linked return + sale exchange transaction recording the net one-SKU-up/one-SKU-down impact (step 3)",
+     "- **Dead-end risk**: the replacement is unavailable at the current store and the exchange converts to a lost sale; mitigated by the nearby-store (30 km) availability check and home-delivery option for the replacement (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Exchange availability check with nearby store lookup (W1624.2)",
+     "- Linked exchange transaction (return + sale) with price difference handling (W1624.3)"
+    ],
+    "Time Estimate": [
+     "~5 min per exchange (request handling 2 min + exchange processing 3 min; availability check and inventory postings automated) × ~15,000 exchanges/month ≈ 15,000 hours/year of CSR time (~75 exchanges/store/month).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer requests exchange during return process (W1622 step 4); selects replacement item — same SKU different variant (size, color) or different SKU within same category",
+     "duration": "2 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "System checks: (a) requested exchange item availability at current store, (b) if not available at current store: checks nearby stores (within 30 km) or offers home delivery from DC, (c) price difference calculation: (i) same price item — even exchange, (ii) higher price item — customer pays difference, (iii) lower price item — customer receives store credit for difference (no cash refund on exchange)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "CSR processes exchange: (a) scans returned item (return transaction), (b) scans new item (sale transaction), (c) system creates linked exchange transaction (return + sale), (d) price difference collected or store credit issued",
+     "duration": "3 min",
+     "n": "3",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "Inventory: returned item added back to stock; exchanged item deducted from stock; net inventory impact is zero if same SKU variant, or one SKU increase / one SKU decrease",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1622"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "~8,000–10,000 no-receipt returns/month (~15–18% of all returns)",
+    "Owner": "Customer Service Manager",
+    "Participants": "Customer Service Manager, Store Manager (authorization)",
+    "Trigger": "Customer presents item for return without receipt or proof of purchase",
+    "Volume": "~45–50 per store/month"
+   },
+   "id": "W1625",
+   "level": 2,
+   "name": "Customer Return Without Receipt Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan loyalty card if customer is a member\" (replaces manual Step 1).",
+     "- System auto-record of \"recorded in system for fraud tracking\" (replaces manual Step 3).",
+     "- System auto-count of \"System records no-receipt return against customer ID\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-179 (ensure returns integrity & refund-fraud prevention.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Refund-fraud risk**: no-receipt returns (~8,000–10,000/month) attract serial abuse; mitigated by government-ID recording, a per-customer no-receipt counter with hard limits, and store-credit-only refunds (steps 3–4)",
+     "- **Over-valuation risk**: no-receipt credit at current price over-refunds items bought on promotion; mitigated by lowest-recent-price credit policy with supervisor approval tiers (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Transaction search by multiple criteria (W1625.1)",
+     "- No-receipt return policy engine with lowest-price calculation (W1625.3)",
+     "- Customer ID tracking with return frequency counter (W1625.4)",
+     "- Store credit issuance integration (W1625.5)",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-09): no-receipt approval tiers consolidate here; the cross-store variant (higher fraud risk, Store Manager approval above PHP 5,000) runs VS-07 W12; POS tender mechanics per VS-08 W1538"
+    ],
+    "Time Estimate": [
+     "~10 min per no-receipt return (transaction lookup 3 min + verification and processing 5 min + store-credit issuance 2 min; recording against customer ID automated) × ~8,000–10,000/month ≈ 16,000–20,000 hours/year of CSR time (~45–50 per store/month).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "CSR attempts to locate transaction: (a) scan loyalty card if customer is a member, (b) search by customer name/phone in system, (c) search by credit/debit card last 4 digits, (d) search by transaction date and amount estimate",
+     "duration": "3 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "If transaction found: process as standard return per W1622",
+     "duration": "Per W1622",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "If transaction not found: CSR processes no-receipt return: (a) verify item is a BuildRight-carried SKU (system lookup), (b) check item condition (unused, original packaging), (c) system applies no-receipt return policy: (i) refund limited to current selling price or lowest price in last 90 days (whichever is lower) to prevent fraud, (ii) refund issued as store credit only (no cash/card refund), (iii) customer must present valid government ID (recorded in system for fraud tracking), (iv) limit: max 3 no-receipt returns per customer per 6-month period",
+     "duration": "5 min",
+     "n": "3",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "System records no-receipt return against customer ID (government ID number); updates no-receipt return counter; blocks further no-receipt returns if limit exceeded",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Store credit (gift card) issued for refund amount; customer can use immediately",
+     "duration": "2 min",
+     "n": "5",
+     "r": "CSR"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12",
+    "W1538",
+    "W1622"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-337"
+   ],
+   "fields": {
+    "Frequency": "~8,000–10,000 returns/month require quality assessment (~15–18% of returns)",
+    "Owner": "Department Supervisor",
+    "Participants": "Department Supervisor, CSR, Quality Manager (escalated)",
+    "Trigger": "Returned item fails visual inspection during return processing (W1622 step 3)",
+    "Volume": "~40–50 per store/month"
+   },
+   "id": "W1626",
+   "level": 2,
+   "name": "Customer Return Quality Assessment & Disposition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"routes to Department Supervisor for quality assessment instead of immediate…\" (replaces manual Step 1).",
+     "- System auto-count of \"Department Supervisor assesses returned item\" (replaces manual Step 2).",
+     "- System auto-update of \"updates inventory status based on disposition\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).)",
+     "- operational: Department Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-disposition risk**: items restocked with missing accessories or damage leak value at full price; mitigated by the Department Supervisor assessment matrix (resaleable / markdown / damaged-defective / quarantine) instead of default restock (step 2)",
+     "- **Quarantine-aging risk**: disposition limbo ties up stock and vendor claim windows; mitigated by weekly Store Manager review of items in quarantine >7 days with Buyer escalation (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Return condition flag with routing to Department Supervisor (W1626.1)",
+     "- Disposition decision with inventory status update (W1626.2–3)",
+     "- Quarantine aging report (W1626.4)"
+    ],
+    "Time Estimate": [
+     "~7 min per assessed return (condition flagging 2 min + supervisor assessment 5 min; inventory status updates automated) × ~8,000–10,000/month ≈ 11,200–14,000 hours/year; weekly quarantine review 30 min/store ≈ 5,200 hours/year across 200 stores.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "CSR flags returned item as \"Condition Issue\" during return processing; routes to Department Supervisor for quality assessment instead of immediate restock",
+     "duration": "2 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Department Supervisor assesses returned item: (a) **Resaleable**: item is unused, packaging intact, all accessories present — return to stock at full price, (b) **Resaleable at discount**: minor cosmetic damage (scratched box, dented can) — route to markdown per W93, (c) **Defective — vendor liability**: product malfunction due to manufacturing defect — route to RTV per W88/W1280, (d) **Defective — customer caused**: damage clearly caused by customer misuse — deny return or issue partial store credit at Store Manager discretion, (e) **Unsaleable**: item cannot be resold (used, damaged, incomplete) — route to disposition per W91 (donate, scrap, or vendor return)",
+     "duration": "5 min/item",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System updates inventory status based on disposition: \"Available\" (resaleable), \"Markdown\" (discount), \"Damaged/Defective\" (RTV or scrap), \"Quarantine\" (pending vendor decision)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Weekly: Store Manager reviews items in \"Quarantine\" status > 7 days; escalates unresolved items to Buyer for vendor disposition decision",
+     "duration": "30 min/week",
+     "n": "4",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1280",
+    "W1622",
+    "W88",
+    "W91",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "~41,000 refund transactions/month (56,000 returns less ~15,000 exchanges per W1624)",
+    "Owner": "CSR (processing); Finance (reconciliation)",
+    "Participants": "CSR, Customer Service Manager, AP/AR Clerk, Controller",
+    "Trigger": "Return transaction completed (W1622, W1623, or W1625)",
+    "Volume": "~205 per store/month (41,000 refund transactions/month ÷ 200 stores; the ~280/store figure is the all-returns W1622 canon)"
+   },
+   "id": "W1627",
+   "level": 2,
+   "name": "Customer Return Credit Issuance & Refund Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"count updated in system\" (replaces manual Step 2).",
+     "- System auto-generate of \"issues store credit (gift card or digital credit to loyalty account\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-179 (ensure returns integrity & refund-fraud prevention.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Tender-mismatch risk**: cash refunds issued against card purchases enable fraud and break reconciliation; mitigated by refund-method rules — original tender with receipt, store credit without (step 1)",
+     "- **Cash-exposure risk**: ~41,000 refund transactions/month (56,000 returns less ~15,000 exchanges) across 200 stores concentrates cash-handling error and shrink; mitigated by drawer-level cash counting tied to daily reconciliation (W5F) and card refunds forced to the original card only (steps 2–3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Multi-tender refund processing (cash, card, store credit, credit note) (W1627.1–5)",
+     "- Cash drawer integration for cash refunds (W1627.2)",
+     "- Payment gateway integration for card refunds (W1627.3)",
+     "- Store credit issuance with expiry tracking (W1627.4)",
+     "- AR credit note generation for B2B returns (W1627.5)",
+     "- Daily refund reconciliation report (W1627.6)"
+    ],
+    "Time Estimate": [
+     "~2 min per refund transaction blended across cash/card/store-credit/B2B paths (card and store-credit largely system-executed) × ~41,000 refund transactions/month ≈ 16,400 hours/year of CSR time; daily central refund reconciliation 30 min ≈ 182 hours/year (refund-method routing automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Refund method determined per return type: (a) with receipt — original tender method, (b) without receipt — store credit only, (c) exchange — no refund (credit applied to exchange), (d) ecommerce — per W1623.7 (card/e-wallet/bank transfer), (e) B2B credit note — per W1629",
+     "duration": "Automated",
+     "n": "1",
+     "r": "CSR / System"
+    },
+    {
+     "a": "—",
+     "activity": "Cash refund: CSR opens cash drawer; dispenses cash per return receipt amount; cash count updated in system; included in daily cash reconciliation per W5F",
+     "duration": "2 min",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "Card refund: system initiates refund to original card; transaction posts in 3–5 business days; CSR gives customer card refund receipt; no cash handling required",
+     "duration": "1 min",
+     "n": "3",
+     "r": "System / CSR"
+    },
+    {
+     "a": "—",
+     "activity": "Store credit: system issues store credit (gift card or digital credit to loyalty account); credit amount = return value; credit expires 12 months from issuance; BIR-compliant receipt generated",
+     "duration": "2 min",
+     "n": "4",
+     "r": "System / CSR"
+    },
+    {
+     "a": "Controller",
+     "activity": "B2B credit note: system generates credit note against trade/corporate account; credit applied to AR balance; no cash outflow; per W1629",
+     "duration": "5 min",
+     "n": "5",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "Daily: Finance reconciles return refunds — total refunds by type (cash, card, store credit, credit note) against return transactions posted; flags discrepancies for investigation",
+     "duration": "30 min/day",
+     "n": "6",
+     "r": "AP/AR Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1622",
+    "W1623",
+    "W1624",
+    "W1625",
+    "W1629",
+    "W5F"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "Monthly trend analysis; real-time fraud monitoring",
+    "Owner": "Loss Prevention Manager",
+    "Participants": "Loss Prevention Manager, Store Managers, Customer Service Manager, Finance",
+    "Trigger": "Monthly returns analysis cycle or real-time fraud alert",
+    "Volume": "~56,000 returns/month across 200 stores"
+   },
+   "id": "W1628",
+   "level": 2,
+   "name": "Customer Return Trend Analysis & Fraud Detection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors return patterns for fraud indicators\" (replaces manual Step 1).",
+     "- System auto-send of \"sends fraud alert to Loss Prevention Manager and Store Manager for flagged…\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates Returns Analytics Report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-179 (ensure returns integrity & refund-fraud prevention.)",
+     "- operational: Loss Prevention Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Threshold-gaming risk**: serial returners stay just under the >5-returns-in-30-days tripwires; mitigated by layered pattern rules with real-time alerts and Store Manager authority to deny on suspicion (steps 1–2)",
+     "- **Root-cause-blindness risk**: high return rates accepted as cost-of-doing-business; mitigated by monthly analytics routing the top-20 return items to vendor VCARs (W1610) or product-description corrections (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time return fraud detection rules engine (W1628.1)",
+     "- Alert notification to Loss Prevention and Store Manager (W1628.2)",
+     "- Returns analytics dashboard with multi-dimensional analysis (W1628.3)",
+     "- Integration with vendor quality (W1610) and product content (W50) workflows (W1628.4)"
+    ],
+    "Time Estimate": [
+     "Monthly analytics cycle 6 hours (LP Returns Analytics Report 4 hours + Category top-20 return-item review 2 hours) ≈ 72 hours/year across ~56,000 returns/month (fraud-pattern monitoring and alerts automated/real-time).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Loss Prevention Manager",
+     "activity": "System continuously monitors return patterns for fraud indicators: (a) same customer > 5 returns in 30 days, (b) no-receipt returns > 3 per customer in 6 months, (c) returns of high-value items without original packaging, (d) return rate by store > 3% (flag vs. chain average ~2%), (e) returns processed by same CSR with high frequency (> 20% of store returns), (f) price difference between original purchase and return credit (switch fraud — buy on sale, return at full price using old receipt)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Real-time alerts: system sends fraud alert to Loss Prevention Manager and Store Manager for flagged transactions; Store Manager has authority to deny return if fraud suspected",
+     "duration": "Immediate",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Monthly: Loss Prevention Manager generates Returns Analytics Report: (a) return rate by store, by category, by reason code, (b) return rate trend (monthly, quarterly, YoY), (c) top 20 items by return volume, (d) top 20 customers by return frequency, (e) return fraud cases detected and resolved, (f) financial impact of returns (revenue reversal, handling cost, markdown cost)",
+     "duration": "4 hours/month",
+     "n": "3",
+     "r": "Loss Prevention Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Monthly: Category Manager reviews top 20 items by return volume; identifies root causes: (a) quality issue → vendor VCAR (W1610), (b) product description mismatch → update product information (W50), (c) sizing confusion → update labeling and store signage, (d) packaging damage → improve packaging or handling procedure",
+     "duration": "2 hours/month",
+     "n": "4",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1610",
+    "W50"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-337"
+   ],
+   "fields": {
+    "Frequency": "~500–700 B2B returns/month (~5% of B2B order volume)",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, Customer Service Manager, Sales Manager, Controller",
+    "Trigger": "Trade or corporate account customer requests return of purchased goods",
+    "Volume": "~100–150 consolidated monthly credit notes (covering the ~500–700 B2B returns/month, one per account per month)"
+   },
+   "id": "W1629",
+   "level": 2,
+   "name": "B2B Trade Account Return & Credit Note Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow notification of \"contacts Sales Manager or Customer Service to request return\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews return request\" (replaces manual Step 2).",
+     "- System auto-create of \"creates Return Authorization in system\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).)",
+     "- operational: AR Clerk review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: B2B return credits issued without a credit note referencing the original invoice create BIR exposure; mitigated by invoice-validated Return Authorization and credit notes tied to the original sales invoice (steps 2–4)",
+     "- **Speculative-order abuse risk**: trade customers use returns to unwind over-ordered speculative buys; mitigated by Sales Manager reason assessment with restocking-fee application per policy (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Return Authorization creation linked to original invoice (W1629.2)",
+     "- GR for returned B2B goods (W1629.4)",
+     "- BIR-compliant credit note generation with VAT adjustment (W1629.5)",
+     "- AR credit note register and analytics (W1629.6)"
+    ],
+    "Time Estimate": [
+     "~55 min per B2B return (request intake 10 min + Sales Manager review 15 min + approval/RA creation 10 min + goods-receipt verification 15 min + credit-note processing 5 min) × ~500–700 B2B returns/month ≈ 5,500–7,700 hours/year; monthly credit-note register review 1 hour ≈ 12 hours/year (credit-note generation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "Trade customer contacts Sales Manager or Customer Service to request return: (a) provides invoice number, item details, quantity, return reason, (b) for defective claims: provides photos and defect description",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Sales Manager / CSR"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Sales Manager reviews return request: (a) validates against original invoice (within return window, item match), (b) assesses return reason — defective product, over-ordering, project cancellation, wrong specification, (c) for project accounts: checks if return is partial delivery from larger project order (may indicate project delay rather than product issue)",
+     "duration": "15 min",
+     "n": "2",
+     "r": "Sales Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Sales Manager approves or denies return: (a) **Approve**: creates Return Authorization in system; customer arranges delivery of returned goods to designated store or DC, (b) **Deny**: provides reason to customer; escalates to VP Store Operations if customer disputes",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Sales Manager"
+    },
+    {
+     "a": "DC Supervisor / Store Manager",
+     "activity": "Returned goods received at store or DC: Receiving Clerk verifies against Return Authorization (items, quantities, condition); processes GR for returned items",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "AR Clerk processes credit note: (a) system generates credit note against customer account for returned goods value, (b) credit note references original invoice and Return Authorization, (c) credit note reduces AR balance, (d) BIR-compliant credit note generated (per Philippine tax requirements — credit note must reference original invoice number and include VAT adjustment)",
+     "duration": "5 min",
+     "n": "5",
+     "r": "AR Clerk / System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: Controller reviews B2B credit note register — (a) total credit notes issued, (b) credit note rate as % of B2B revenue, (c) top 10 customers by credit note volume, (d) top 10 items by B2B return frequency",
+     "duration": "1 hour/month",
+     "n": "6",
+     "r": "Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "~2,000–3,000 warranty claims/month",
+    "Owner": "Customer Service Manager",
+    "Participants": "CSR, Customer Service Manager, Department Supervisor, Buyer, vendor service center",
+    "Trigger": "Customer reports product failure within warranty period; or warranty claim registered at POS per POS-019",
+    "Volume": "~10–15 per store/month; highest for power tools and appliances"
+   },
+   "id": "W1630",
+   "level": 2,
+   "name": "Customer Warranty Claim Processing & Vendor Claim Initiation",
+   "parent": null,
+   "req_refs": [
+    "POS-019"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspects product for misuse indicators\" (replaces manual Step 1).",
+     "- System auto-capture of \"creates warranty claim in system\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates shipping label to vendor service center\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-179 (ensure returns integrity & refund-fraud prevention.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Warranty-theft risk**: claims on out-of-warranty or never-purchased products; mitigated by purchase-transaction lookup and warranty-period validation before claim creation (step 1)",
+     "- **Vendor-recovery leakage risk**: store-level warranty repairs and replacements never claimed back to the vendor; mitigated by vendor claim initiation built into the repair/replacement paths (steps 3–4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Purchase transaction lookup with warranty eligibility check (W1630.1)",
+     "- Warranty claim creation with photo attachment and classification (W1630.2)",
+     "- Vendor service center shipping integration (W1630.3)",
+     "- Replacement inventory check and exchange processing (W1630.4)",
+     "- Vendor warranty claim tracking (W1630.5)",
+     "- Warranty claim analytics dashboard (W1630.6)"
+    ],
+    "Time Estimate": [
+     "~20–25 min per warranty claim (product lookup 10 min + claim creation 5 min + repair/replacement path handling 5 min; vendor-side service waits excluded) × ~2,000–3,000 claims/month ≈ 8,000–15,000 hours/year of CSR time; vendor recovery filings 30 min/week ≈ 26 hours/year; monthly claims report 2 hours ≈ 24 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "Customer presents product with warranty claim at customer service counter: (a) CSR looks up original purchase transaction (receipt, loyalty card, or transaction number), (b) verifies warranty eligibility: (i) within warranty period (power tools: 6–12 months; appliances: 12–24 months per manufacturer), (ii) warranty covers reported failure type (manufacturing defect; excludes misuse, accidental damage, normal wear), (c) inspects product for misuse indicators (water damage on power tool, impact damage on appliance)",
+     "duration": "10 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "CSR creates warranty claim in system: (a) records product details, failure description, purchase date, warranty period, (b) attaches photos of product and defect, (c) classifies claim type: (i) **Repair** — product can be repaired at vendor service center, (ii) **Replacement** — product is beyond repair; vendor provides replacement unit, (iii) **Refund** — product is discontinued and no replacement available; process refund per W1627",
+     "duration": "5 min",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "**Repair path**: (a) system generates shipping label to vendor service center, (b) customer leaves product at store, (c) store consolidates warranty repair shipments weekly (sent to vendor service center), (d) vendor repairs and returns to store, (e) CSR notifies customer to pick up repaired product, (f) SLA: repair turnaround 14–21 business days",
+     "duration": "5 min + waiting",
+     "n": "3",
+     "r": "CSR / Buyer"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "**Replacement path**: (a) system checks replacement inventory at store; if available, immediate exchange per W1624, (b) if not available: Buyer contacts vendor for replacement unit; customer offered store credit (per W1627) or wait for replacement, (c) replacement unit received from vendor: CSR notifies customer for pickup",
+     "duration": "5 min + waiting",
+     "n": "4",
+     "r": "CSR / Buyer"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor recovery**: (a) Buyer files warranty claim with vendor for all warranty repairs/replacements, (b) tracks vendor warranty claim status and recovery amount, (c) vendor provides: repair at no cost, replacement unit at no cost, or credit note, (d) unrecovered warranty costs tracked per vendor as quality cost per W1614",
+     "duration": "30 min/week",
+     "n": "5",
+     "r": "Buyer"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Monthly: Customer Service Manager generates warranty claim report: (a) claims by product category and vendor, (b) claim rate as % of sales by SKU, (c) average turnaround time by vendor, (d) customer satisfaction with warranty process, (e) feeds into vendor quality scorecard per W1608",
+     "duration": "2 hours/month",
+     "n": "6",
+     "r": "Customer Service Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1608",
+    "W1614",
+    "W1624",
+    "W1627"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,571 @@
+{
+ "process_area": {
+  "id": "PA-97.3",
+  "title": "Property Accounting, Compliance & Portfolio Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-97-corporate-real-estate-property-portfolio/PA-97.3-property-accounting-compliance-portfolio-analytics.md",
+ "value_stream": {
+  "directory": "VS-97-corporate-real-estate-property-portfolio",
+  "id": "VS-97",
+  "name": "Corporate Real Estate & Property Portfolio Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-134"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly",
+    "Owner": "Property Controller",
+    "Participants": "Property Controller, Finance (links to VS-17), Director, Facilities & Real Estate, Treasury (links to VS-18)",
+    "Trigger": "Monthly close; quarterly portfolio review",
+    "Volume": "~205+ properties"
+   },
+   "id": "W3201",
+   "level": 2,
+   "name": "Property-Level P&L, NOI & Yield Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"reporting and group consolidation\" (replaces manual Step 2).",
+     "- System auto-review of \"review portfolio performance vs budget\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-134 (ensure property income & LGU tax compliance (as owner).)",
+     "- operational: capitalization policy (W3203/links to VS-35) and review; operational: automated IC matching (links to VS-17)"
+    ],
+    "Pain Points / Risks": [
+     "- **NOI-distortion risk**: Mis-classified capex vs opex inflates NOI; mitigated by capitalization policy (W3203/links to VS-35) and review",
+     "- **Intercompany-leak risk**: Incomplete elimination double-counts rent; mitigated by automated IC matching (links to VS-17.2/VS-72)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Property accounting/GL (links to VS-17); consolidation (links to VS-17.2); FP&A (links to VS-17.4); valuation (links to W3189)"
+    ],
+    "Time Estimate": [
+     "- 3–5 days/month close; 2–3 days/quarter review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Controller",
+     "activity": "Property Controller close each property's P&L monthly: rental revenue (intercompany + third-party per W3195), CAM recovery net of recoverable expenses, other income (parking, signage), operating expenses (repairs/maintenance, utilities common area, security, property mgmt fee), property tax (W3202), insurance (W3204); compute NOI, cap rate on fair value (W3189), yield-on-cost",
+     "duration": "3–5 days/close",
+     "n": "1",
+     "r": "Property Controller / Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance (links to VS-17.4) consolidate property P&L into Property Mgmt Inc. entity reporting and group consolidation (links to VS-17.2); eliminate intercompany rent and intercompany profit on services; report NOI by property, by cluster, and portfolio",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Finance Analyst / Property Controller"
+    },
+    {
+     "a": "CEO",
+     "activity": "Director, Facilities & Real Estate/Finance review portfolio performance vs budget (links to VS-33) and prior year: occupancy, NOI growth, yield vs hurdle, variance drivers, watchlist properties; feed into strategy (W3185) and asset-plan decisions (hold/sell/redevelop — W3192)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Director, Facilities & Real Estate / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3185",
+    "W3189",
+    "W3192",
+    "W3195",
+    "W3202",
+    "W3203",
+    "W3204"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-134"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Property Tax Manager",
+    "Participants": "Property Tax Mgr, Finance (links to VS-79), Legal, LGU Assessor/Collector",
+    "Trigger": "Annual RPT cycle; LGU assessment notice; transfer of ownership (W3187)",
+    "Volume": "~205+ titled properties across ~150 LGUs"
+   },
+   "id": "W3202",
+   "level": 2,
+   "name": "Real Property Tax, Assessment & LGU Compliance (as Owner)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-reconcile of \"reconcile to title/property master\" (replaces manual Step 1).",
+     "- System auto-count of \"Pay annual RPT\" (replaces manual Step 2).",
+     "- System auto-document of \"Contest unfair assessments\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-134 (ensure property income & LGU tax compliance (as owner).)",
+     "- operational: master calendar and early-payment discipline; operational: systematic protest (LBAA) and appraisal evidence"
+    ],
+    "Pain Points / Risks": [
+     "- **Delinquency-auction risk**: Unpaid RPT can trigger LGU auction of the property; mitigated by master calendar and early-payment discipline",
+     "- **Over-assessment risk**: LGUs over-assess commercial property; mitigated by systematic protest (LBAA) and appraisal evidence"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Property tax module; tax compliance (links to VS-79); LGU compliance (links to VS-76); property master (links to VS-29)"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks/annual cycle per cluster; event-driven for protests"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Controller",
+     "activity": "Property Tax Mgr maintain property tax declaration master: Tax Declaration No., classification (residential/commercial/industrial/ agricultural), assessed value, LGU/municipality, barangay, annual RPT due; reconcile to title/property master (links to VS-29/W3191) and to BuildRight-as-tenant RPT pass-through analysis (links to VS-42.3)",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Property Tax Mgr"
+    },
+    {
+     "a": "Property Controller",
+     "activity": "Pay annual RPT (on or before Jan 31, or quarterly per LGU schedule) to claim early-payment discount (typically 10–20%); for new acquisitions, transfer tax declaration to Property Mgmt Inc. name and update Assessor's Office; ensure no delinquency that could trigger auction/lien",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Property Tax Mgr / Finance"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Contest unfair assessments: file protest with Local Board of Assessment Appeals (LBAA) within statutory period where assessed value exceeds fair market value; document evidence (W3189 appraisal, sales comps); coordinate with VS-79 tax and VS-76 LGU compliance",
+     "duration": "Event-driven",
+     "n": "3",
+     "r": "Property Tax Mgr / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3187",
+    "W3189",
+    "W3191"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-522"
+   ],
+   "fields": {
+    "Frequency": "Annual plan + event-driven",
+    "Owner": "Property Development Manager",
+    "Participants": "Property Dev Mgr, Facilities (links to VS-20.3), Finance/Project Accounting (links to VS-40), Director, Facilities & Real Estate",
+    "Trigger": "Property condition assessment; tenant request; reserve study; lifecycle event",
+    "Volume": "~205+ properties with recurring capex needs"
+   },
+   "id": "W3203",
+   "level": 2,
+   "name": "Capital Improvements, Repair Reserve & CAPEX Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Execute capital improvements per VS-40 project accounting\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-522 (ensure controlled execution — Property Accounting, Compliance & Portfolio Analytics (PA-97.3).)",
+     "- operational: reserve study and disciplined contribution; operational: capitalization policy (links to VS-35)"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-reserving risk**: Insufficient reserves force deferred maintenance and emergency spend; mitigated by reserve study and disciplined contribution",
+     "- **Capitalization-error risk**: Operating repairs booked as capex inflate NOI/assets; mitigated by capitalization policy (links to VS-35)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Reserve/funding (links to VS-18/VS-40); condition/CMMS (links to VS-20.3); project accounting (links to VS-40); fixed assets (links to VS-35)"
+    ],
+    "Time Estimate": [
+     "- 4–6 weeks/annual plan; ongoing per project"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Property Dev/Facilities maintain property condition assessments (links to VS-20.3 annual DC/store condition assessments): building systems (roof, HVAC, electrical, plumbing, fire, structural), parking/grounds, seismic/typhoon resilience (links to VS-69); estimate remaining useful life and replacement cost; build 5–10 year capital plan",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Property Dev Mgr / Facilities"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance (links to VS-40) fund a repair/replacement reserve per reserve study: set reserve contribution per property from NOI, segregate funds, project cash needs vs reserves; governance for reserve draw (board authority per VS-36)",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Finance Analyst / Treasury"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Execute capital improvements per VS-40 project accounting: scope/bid/build (links to VS-20.2), track cost and schedule, capitalize qualifying expenditures to investment property (W3188/W3189), activate; ensure LGU permits (links to VS-22/VS-76) and tenant coordination (W3196)",
+     "duration": "Per project",
+     "n": "3",
+     "r": "Property Dev Mgr / Construction"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3188",
+    "W3189",
+    "W3196"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-522"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Risk & Insurance Manager",
+    "Participants": "Risk & Insurance Mgr, Treasury/Finance (links to VS-18/VS-26), Legal, Director, Facilities & Real Estate, Insurer/Broker",
+    "Trigger": "Annual renewal; acquisition (W3187); significant change/loss event",
+    "Volume": "Portfolio-wide property insurance program"
+   },
+   "id": "W3204",
+   "level": 2,
+   "name": "Property Insurance, Risk Transfer & Coverage Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"file and compliant\" (replaces manual Step 2).",
+     "- System auto-allocate of \"allocate premium and claim recoveries to property-level P&L\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-522 (ensure controlled execution — Property Accounting, Compliance & Portfolio Analytics (PA-97.3).)",
+     "- operational: appraisal-based limits and BI/loss-of-rent coverage; operational: compliance monitoring (W3196) and landlord-purchased coverage"
+    ],
+    "Pain Points / Risks": [
+     "- **Underinsurance risk**: Typhoon/seismic losses exceed limits/sub-limits; mitigated by appraisal-based limits and BI/loss-of-rent coverage",
+     "- **Uninsured-gap risk**: Tenant-provided lapsed certificates expose landlord; mitigated by compliance monitoring (W3196) and landlord-purchased coverage"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance register/claims (links to VS-26); GL/allocation (links to VS-17); risk register (links to VS-21.2)"
+    ],
+    "Time Estimate": [
+     "- 8–12 weeks/renewal; ongoing claims"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Risk & Insurance Mgr design portfolio insurance program: property/all-risk (fire, typhoon, flood, earthquake — critical for PH per VS-69), business interruption / loss of rent (for lessor income protection), boiler & machinery, general liability, builder's risk during construction (W3188); coverage limits, deductibles, sub-limits, per-location scheduling",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Risk & Insurance Mgr / Broker"
+    },
+    {
+     "a": "CFO",
+     "activity": "Broker/Insurer place coverage: market the program to insurers, negotiate premium and terms, bind policies; confirm Property Mgmt Inc./Holdings as named insured, lender as loss-payee where financed (W3190), tenants per lease requirements; ensure tenant-provided insurance certificates on file and compliant (W3196)",
+     "duration": "4–8 weeks",
+     "n": "2",
+     "r": "Broker / Risk & Insurance Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance (links to VS-26.3) manage claims and premium allocation: allocate premium and claim recoveries to property-level P&L (W3201); manage claim filing, adjuster coordination, and recovery for typhoon/seismic events (links to VS-26/VS-69); maintain insurance register",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Risk & Insurance Mgr / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3187",
+    "W3188",
+    "W3190",
+    "W3196",
+    "W3201"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-522"
+   ],
+   "fields": {
+    "Frequency": "Continuous + scheduled",
+    "Owner": "Property Manager",
+    "Participants": "Property Mgr, Facilities (links to VS-20.3), Janitorial/Security (links to VS-98), Landscaping Vendor, Store Ops (links to VS-07)",
+    "Trigger": "Daily operations; scheduled maintenance; tenant service (W3196)",
+    "Volume": "~205+ properties with common areas, parking, grounds"
+   },
+   "id": "W3205",
+   "level": 2,
+   "name": "Common Area, Grounds & Facility Operations Oversight",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"schedule preventive maintenance via CMMS\" (replaces manual Step 1).",
+     "- System auto-inspect of \"manage service vendors\" (replaces manual Step 2).",
+     "- System auto-log of \"logbook and inspection records\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-522 (ensure controlled execution — Property Accounting, Compliance & Portfolio Analytics (PA-97.3).)",
+     "- operational: inspection and preventive maintenance; operational: lease definitions and transparent CAM ledger (W3195)"
+    ],
+    "Pain Points / Risks": [
+     "- **Safety-liability risk**: Slips/falls, inadequate lighting, drainage failures create liability; mitigated by inspection and preventive maintenance",
+     "- **Cost-allocation disputes**: CAM-recoverable vs landlord cost disputes; mitigated by lease definitions and transparent CAM ledger (W3195)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CMMS/CAFM (links to VS-20.3); vendor mgmt (links to VS-34/VS-98); CAM allocation (links to W3195)"
+    ],
+    "Time Estimate": [
+     "- Ongoing oversight"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Manager",
+     "activity": "Property Mgr/Facilities operate common areas: parking lot maintenance (line marking, lighting, drainage — critical in PH rainy season), landscaping, signage, exterior lighting, waste collection (links to VS-73); schedule preventive maintenance via CMMS (links to VS-20.3)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Property Mgr / Facilities"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Property Mgr manage service vendors: security (links to VS-98 contingent workforce), janitorial (links to VS-98), landscaping, pest control, fire-life-safety inspections; SLA and invoice validation (links to VS-15/VS-34); allocate vendor cost to CAM recoverable vs landlord-responsibility for billing (W3195)",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Property Mgr / Finance"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Property Mgr coordinate with Store Ops (links to VS-07) for shared facility operations (loading dock, customer entrance, utilities) and with tenants (W3196); maintain property logbook and inspection records; feed issues to capital plan (W3203)",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Property Mgr / Store Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3195",
+    "W3196",
+    "W3203"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-522"
+   ],
+   "fields": {
+    "Frequency": "Per event + periodic review",
+    "Owner": "Property Compliance Manager",
+    "Participants": "Property Compliance Mgr, Legal, Environmental (links to VS-24/VS-73/VS-25), Director, Facilities & Real Estate, LGU/DENR",
+    "Trigger": "Acquisition (W3191); development (W3188); regulatory change; inspection",
+    "Volume": "~205+ properties"
+   },
+   "id": "W3206",
+   "level": 2,
+   "name": "Environmental, Zoning & Land-Use Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"verify zoning and land-use compliance for each property\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitoring\" (replaces manual Step 2).",
+     "- System auto-document of \"document compliance, correct violations within cure period, appeal where…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-522 (ensure controlled execution — Property Accounting, Compliance & Portfolio Analytics (PA-97.3).)",
+     "- operational: compliance register and variances; operational: W3191 ESA and remediation reserves"
+    ],
+    "Pain Points / Risks": [
+     "- **Use-nonconformity risk**: Operating outside zoning invites LGU shutdown/penalty; mitigated by compliance register and variances",
+     "- **Environmental-liability risk**: Undisclosed contamination transfers to owner; mitigated by W3191 ESA and remediation reserves"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance register (links to VS-22/VS-76); environmental (links to VS-24/VS-25/VS-73); records (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- Per property/event; ongoing monitoring"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Property Compliance Mgr/Legal verify zoning and land-use compliance for each property: LGU comprehensive land-use plan (CLUP) conformity (commercial use), building height/density/setback compliance, environmental compliance certificate (ECC) where required (DENR), tree-cutting permits, water/discharge permits; maintain compliance register per property",
+     "duration": "Per property + periodic",
+     "n": "1",
+     "r": "Property Compliance Mgr / Legal"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Environmental (links to VS-25.1/VS-73.2) manage environmental obligations: hazardous-materials disclosure (asbestos/lead in older structures, paint/chemical storage per VS-24.3), soil/groundwater if contaminated site (links to W3191 Phase II), waste-water and air-quality permits; coordinate VS-73 hazardous-waste and VS-25 ESG monitoring",
+     "duration": "Event-driven",
+     "n": "2",
+     "r": "Environmental Eng / Property Compliance Mgr"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "Respond to LGU/DENR inspections and notices (links to VS-22.2/VS-76): document compliance, correct violations within cure period, appeal where warranted; manage zoning/variance applications for repositioning/redevelopment (links to W3188)",
+     "duration": "Event-driven",
+     "n": "3",
+     "r": "Legal / Property Compliance Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3188",
+    "W3191"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-522"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Transfer Pricing Manager",
+    "Participants": "Transfer Pricing Mgr, Tax (links to VS-79), Finance (links to VS-72), Director, Facilities & Real Estate, External TP Advisor",
+    "Trigger": "Annual TP cycle (links to VS-72); new intercompany lease (W3193); renewal (W3197)",
+    "Volume": "~50 intercompany leases (the owned-site portfolio per W119; the ~205 total lease portfolio is predominantly third-party per W1183)"
+   },
+   "id": "W3207",
+   "level": 2,
+   "name": "Intercompany Rent Benchmarking & Transfer Pricing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"methodology per BIR RR 02-2013 and OECD guidelines\" (replaces manual Step 1).",
+     "- System auto-document of \"document in TP documentation\" (replaces manual Step 2).",
+     "- System auto-update of \"Defend on BIR audit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-522 (ensure controlled execution — Property Accounting, Compliance & Portfolio Analytics (PA-97.3).)",
+     "- operational: CUP benchmarking and contemporaneous docs; operational: single source of truth per property"
+    ],
+    "Pain Points / Risks": [
+     "- **TP-adjustment risk**: BIR challenges intercompany rent as non-arm's-length; mitigated by CUP benchmarking and contemporaneous docs",
+     "- **Inconsistency risk**: Rent, RPT basis, and valuation inputs must reconcile; mitigated by single source of truth per property"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- TP documentation (links to VS-72); tax (links to VS-79); billing (W3195); valuation (W3189)"
+    ],
+    "Time Estimate": [
+     "- 6–12 weeks/annual cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Transfer Pricing Mgr/TP Advisor conduct annual arm's-length benchmarking for intercompany rent: comparable uncontrolled price (CUP) using third-party lease comps (W3194 market deals) and market data, build per-sqm market rent range by location class (NCR/Visayas/Mindanao, mall vs standalone, store format); document methodology per BIR RR 02-2013 and OECD guidelines",
+     "duration": "4–8 weeks",
+     "n": "1",
+     "r": "TP Mgr / External TP Advisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Compare intercompany rent charged (W3193/W3195) to arm's-length range; adjust where outside range; document in TP documentation (master file, local file, country-by-country where applicable); ensure consistency between rent charged, RPT basis (W3202), and valuation inputs (W3189)",
+     "duration": "2–4 weeks",
+     "n": "2",
+     "r": "TP Mgr / Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Defend on BIR audit (links to VS-79.3/VS-22.2): produce TP documentation, benchmarking, comparables, and contemporaneous evidence; manage any BIR adjustment, interest, and penalty; update framework (W3193)",
+     "duration": "Event-driven",
+     "n": "3",
+     "r": "TP Mgr / Legal / Tax"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1183",
+    "W119",
+    "W3189",
+    "W3193",
+    "W3194",
+    "W3195",
+    "W3197",
+    "W3202"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-522"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + annual",
+    "Owner": "Director, Facilities & Real Estate",
+    "Participants": "Director, Facilities & Real Estate, Finance (links to VS-17), Valuation (links to W3189), ESG/Sustainability (links to VS-25), Strategy (links to VS-33)",
+    "Trigger": "Quarterly portfolio review; annual reporting; board/investor reporting",
+    "Volume": "Portfolio-wide"
+   },
+   "id": "W3208",
+   "level": 2,
+   "name": "Portfolio Performance, Valuation & ESG Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"collection, cap rate movement vs W3189 fair value, debt metrics\" (replaces manual Step 1).",
+     "- System auto-report of \"report portfolio valuation roll-forward\" (replaces manual Step 2).",
+     "- System auto-register of \"Director, Facilities & Real Estate/Strategy present to Board\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-522 (ensure controlled execution — Property Accounting, Compliance & Portfolio Analytics (PA-97.3).)",
+     "- operational: BI automation (links to VS-28) and monthly close discipline (W3201); operational: auditable metrics"
+    ],
+    "Pain Points / Risks": [
+     "- **Reporting-lag risk**: Stale portfolio data delays decisions; mitigated by BI automation (links to VS-28) and monthly close discipline (W3201)",
+     "- **Greenwashing risk**: Overstating ESG performance attracts scrutiny (links to VS-25); mitigated by auditable metrics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Portfolio analytics/BI (links to VS-28); valuation (W3189); ESG (links to VS-25); board reporting (links to VS-36)"
+    ],
+    "Time Estimate": [
+     "- 2–3 days/quarter; 2–3 weeks/annual pack"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "Finance/Director, Facilities & Real Estate produce portfolio performance pack: NOI by property/cluster/region, occupancy, WAL (weighted-average lease term), collection, cap rate movement vs W3189 fair value, debt metrics (W3190), capex vs reserve (W3203), watchlist; benchmark to budget (links to VS-33) and market",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Finance Analyst / Director, Facilities & Real Estate"
+    },
+    {
+     "a": "CFO",
+     "activity": "Valuation/ESG (links to VS-25/W3189) report portfolio valuation roll-forward: opening fair value, additions (W3187/W3188), disposals (W3192), fair-value movement, transfers, closing fair value; ESG metrics — green-building certifications (links to VS-78), energy/carbon (links to VS-25.1/W1563), climate-risk exposure (typhoon/seismic per VS-69), social/community impact",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Valuation Mgr / ESG Lead"
+    },
+    {
+     "a": "CEO",
+     "activity": "Director, Facilities & Real Estate/Strategy present to Board (links to VS-36.1) and Holdings: portfolio strategy execution, key deals, risk register (links to VS-21.2), outlook; integrate findings into next-strategic-cycle (W3185) and group consolidation/disclosure (links to VS-17.2/VS-17.4)",
+     "duration": "Quarterly/Annual",
+     "n": "3",
+     "r": "Director, Facilities & Real Estate / Strategy"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1563",
+    "W3185",
+    "W3187",
+    "W3188",
+    "W3189",
+    "W3190",
+    "W3192",
+    "W3201",
+    "W3203"
+   ]
+  }
+ ]
+}

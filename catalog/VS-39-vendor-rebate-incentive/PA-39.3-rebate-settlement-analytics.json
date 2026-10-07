@@ -1,0 +1,586 @@
+{
+ "process_area": {
+  "id": "PA-39.3",
+  "title": "Rebate Settlement & Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-39-vendor-rebate-incentive/PA-39.3-rebate-settlement-analytics.md",
+ "value_stream": {
+  "directory": "VS-39-vendor-rebate-incentive",
+  "id": "VS-39",
+  "name": "Vendor Rebate & Incentive Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "~100–200 settlements/quarter",
+    "Owner": "AP Manager",
+    "Participants": "AP Manager, Treasury, Vendor",
+    "Trigger": "Vendor approves rebate claim (W1793) or co-op reimbursement (W1799)",
+    "Volume": "~PHP 800M–1.8B in annual rebate settlements"
+   },
+   "id": "W1803",
+   "level": 2,
+   "name": "Rebate Settlement Processing (Credit Note & Cash)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Vendor settlement received in one of two forms\" (replaces manual Step 1).",
+     "- System auto-capture of \"entered in AP system against vendor account\" (replaces manual Step 2).",
+     "- System auto-post of \"For cash settlement\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: AP Manager review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Wrong-form-settlement risk**: cash expected but credit note received distorts AP and receivable balances; mitigated by settlement-form verification at intake (steps 1–2)",
+     "- **Short-settlement absorption**: vendor pays less than approved and the difference is written off quietly; mitigated by partial-settlement investigation (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Settlement intake — credit note against AP or cash to bank (step 1)",
+     "- Credit note verification vs. approved claim with variance documentation (step 2)",
+     "- Cash settlement application to rebate receivable (step 3)",
+     "- Partial settlement investigation and escalation (step 4)"
+    ],
+    "Time Estimate": [
+     "Settlement application 10 min per credit note or cash settlement × ~100–200 settlements/quarter ≈ 67–133 hours/year; partial-settlement handling as needed; monthly settlement-to-claim reconciliation 1 day ≈ 12 days/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AP Manager",
+     "activity": "Vendor settlement received in one of two forms: (a) **credit note**: vendor issues credit note against outstanding AP; reduces amount owed to vendor on next payment cycle, (b) **cash payment**: vendor wires payment to BuildRight bank account",
+     "duration": "Per settlement",
+     "n": "1",
+     "r": "Vendor → System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "For credit note settlement: (a) AP Manager verifies credit note matches approved claim amount (or documents variance), (b) credit note entered in AP system against vendor account, (c) next payment to vendor reduced by credit note amount, (d) system posts: debit AP, credit rebate income",
+     "duration": "10 min/credit note",
+     "n": "2",
+     "r": "AP Manager / System"
+    },
+    {
+     "a": "AP Manager",
+     "activity": "For cash settlement: (a) Treasury confirms receipt in bank account, (b) Treasury applies payment to rebate receivable in system, (c) system posts: debit cash, credit rebate receivable, (d) rebate income already recognized at accrual — no additional P&L impact",
+     "duration": "10 min/payment",
+     "n": "3",
+     "r": "Treasury / System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Partial settlement handling: (a) if vendor settles less than claimed amount: AP Manager investigates reason (documentation gap, calculation dispute, vendor policy limit), (b) unresolved variance escalated to Category Manager for vendor negotiation, (c) any unrecoverable portion reversed from rebate income",
+     "duration": "As needed",
+     "n": "4",
+     "r": "AP Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: AP Manager reconciles all rebate settlements to claims and accruals; unresolved items > 90 days escalated to CFO",
+     "duration": "1 day/month",
+     "n": "5",
+     "r": "AP Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1793",
+    "W1799"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-209"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Accounting Manager",
+    "Participants": "Accounting Manager, AP Manager, CFO",
+    "Trigger": "Monthly close; rebate accrual or settlement processing",
+    "Volume": "~100–200 active agreements"
+   },
+   "id": "W1804",
+   "level": 2,
+   "name": "Rebate Income Recognition & GL Posting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-match of \"match purchase period\" (replaces manual Step 1).",
+     "- System auto-post of \"posted per vendor agreement for traceability\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-209 (ensure vendor rebate accuracy & recognition.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Classification error**: rebates booked as other income instead of contra-COGS, overstating gross margin; mitigated by the PAS 2 policy with system-enforced posting (step 1)",
+     "- **Double-count risk**: income recognized at both accrual and settlement; mitigated by paired journal logic (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rebate income policy — reduction of COGS per PAS 2 treatment (step 1)",
+     "- Monthly journals — accrual and settlement entries (step 2)",
+     "- Net P&L presentation with receivable disclosure (step 3)"
+    ],
+    "Time Estimate": [
+     "Rebate accrual and income journal entries system-generated after review; monthly recognition review within close ≈ 4–8 hours/month ≈ 48–96 hours/year across ~100–200 active agreements; P&L presentation (COGS reduction) at reporting dates.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Rebate income recognition method (BuildRight policy): (a) rebates treated as **reduction of COGS** (IAS 2 / PAS 2 treatment — most common for retail), (b) alternative: treat as other income (IAS 18 / PAS 18) — less preferred as it inflates gross margin, (c) consistently applied across all rebate types, (d) accrued on a systematic basis (monthly) to match purchase period, (e) recognized when: (i) amount can be measured reliably, (ii) receipt is probable (vendor financial health assessed)",
+     "duration": "Policy-level",
+     "n": "1",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Monthly journal entries: (a) **accrual**: debit rebate receivable, credit COGS reduction (contra-COGS), (b) **settlement**: debit AP (credit note) or cash (cash payment), credit rebate receivable, (c) **adjustment**: debit/credit COGS reduction for accrual variances, (d) entries posted per vendor agreement for traceability",
+     "duration": "Automated after review",
+     "n": "2",
+     "r": "AP Manager / System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Financial statement presentation: (a) rebate income shown as reduction of COGS in P&L (net presentation), (b) rebate receivable shown as current asset in balance sheet (if material), (c) note disclosure: rebate income policy, significant agreements, and contingent rebates",
+     "duration": "At reporting date",
+     "n": "3",
+     "r": "Accounting Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "VP Merchandising",
+    "Participants": "VP Merchandising, Category Managers, CFO, VP Supply Chain",
+    "Trigger": "Annual vendor scorecard review (Q4)",
+    "Volume": "Top 100 vendors by rebate value"
+   },
+   "id": "W1805",
+   "level": 2,
+   "name": "Rebate Vendor Scorecard & Partnership Tiering",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"VP Merchandising develops vendor partnership tiering based on rebate\" (replaces manual Step 1)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: VP Merchandising review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Rebate-only-view risk**: vendors tiered on rebates alone despite poor service/quality; mitigated by scoring alongside total vendor performance (step 1)",
+     "- **Stale-tiering risk**: tiers persist after performance shifts; mitigated by annual scorecard refresh (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor partnership tiering — Platinum/Gold/Standard by rebate and total performance (step 1)",
+     "- Rebate scorecard metrics — income earned, % of purchases, claim quality (step 2)",
+     "- Tier applications — negotiation leverage and shelf-space allocation (step 3)"
+    ],
+    "Time Estimate": [
+     "8–9 days elapsed per occurrence (1 week + 1–2 days); cadence-carried steps as authored (Annual) — at Annual ≈ 1 occurrence/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "VP Merchandising develops vendor partnership tiering based on rebate and overall vendor performance: (a) **Platinum** (top 10 vendors — ~45% of COGS): highest rebate rates, co-op budgets, strategic collaboration, annual business planning together, (b) **Gold** (next 20 vendors): good rebate terms, regular co-op marketing, quarterly business reviews, (c) **Silver** (next 30 vendors): standard rebate terms, semi-annual reviews, (d) **Standard** (remaining vendors): basic rebate or no rebate, transactional relationship",
+     "duration": "1 week",
+     "n": "1",
+     "r": "VP Merchandising"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Vendor rebate scorecard metrics: (a) total rebate income earned, (b) rebate as % of purchases (effective margin improvement), (c) claim settlement rate (% of claimed amount actually received), (d) settlement speed (days from claim to payment), (e) co-op marketing funds utilized, (f) dispute rate (% of claims disputed by vendor), (g) year-over-year trend",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Category Managers / FP&A"
+    },
+    {
+     "a": "—",
+     "activity": "Tiering used for: (a) next year's negotiation leverage (higher tiers get more favorable terms), (b) allocation of limited shelf space, (c) new store opening rebate solicitation, (d) co-op marketing budget allocation",
+     "duration": "Annual",
+     "n": "3",
+     "r": "VP Merchandising"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "Monthly dashboard; weekly during peak promotional periods",
+    "Owner": "FP&A",
+    "Participants": "FP&A, VP Merchandising, Category Managers, CFO",
+    "Trigger": "Monthly analytics cycle",
+    "Volume": "Continuous analytics"
+   },
+   "id": "W1806",
+   "level": 2,
+   "name": "Rebate Analytics & Margin Impact Dashboard",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"Monthly rebate analytics dashboard\" (replaces manual Step 1).",
+     "- System auto-report of \"CFO uses rebate analytics in Board reporting\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Margin-overstatement risk**: rebate income invisible in category margin views; mitigated by before/after rebate margin analysis (step 2)",
+     "- **Concentration blindness**: one vendor dominates rebate income and its renegotiation creates cliff risk; mitigated by vendor-concentration view in the dashboard (step 1)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Monthly rebate analytics dashboard — income by period, % of COGS, by vendor/category (step 1)",
+     "- Margin impact analysis — gross margin before vs. after rebates (step 2)",
+     "- Board reporting benchmark — 2–4% of COGS (step 3)"
+    ],
+    "Time Estimate": [
+     "Monthly rebate analytics dashboard + margin-impact analysis 2 days/month ≈ 24 days/year, weekly during peak promotional periods; quarterly Board reporting rides W1653.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Monthly rebate analytics dashboard: (a) total rebate income (accrued) by month, quarter, YTD, (b) rebate as % of COGS (effective gross margin improvement), (c) rebate by category and vendor, (d) rebate claim success rate (% claimed vs. % received), (e) co-op marketing income and utilization, (f) markdown allowances recovered from vendors, (g) new store opening rebates collected, (h) rebate income vs. budget, (i) top 20 vendors by rebate income, (j) vendors with declining rebate income (risk of loss)",
+     "duration": "1 day/month",
+     "n": "1",
+     "r": "FP&A"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Margin impact analysis: (a) gross margin before rebates vs. gross margin after rebates by category, (b) rebate income contribution to EBITDA, (c) effective vendor margin improvement by category, (d) promotional margin impact (rebate + co-op − markdown cost = net promotional margin)",
+     "duration": "1 day/month",
+     "n": "2",
+     "r": "FP&A"
+    },
+    {
+     "a": "Board",
+     "activity": "CFO uses rebate analytics in Board reporting: (a) rebate income as % of revenue (benchmark: 2–4% of COGS for large retailers), (b) trend analysis: is BuildRight capturing all available vendor incentives? (c) comparison to industry benchmarks",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1653"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "Annual + quarterly updates",
+    "Owner": "FP&A",
+    "Participants": "FP&A, VP Merchandising, Category Managers, CFO",
+    "Trigger": "Annual budget process (W1646); quarterly forecast update",
+    "Volume": "1 annual projection + 3 quarterly updates"
+   },
+   "id": "W1807",
+   "level": 2,
+   "name": "Rebate Forecasting & Annual Income Projection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Impact on gross margin budget\" (replaces manual Step 2).",
+     "- System auto-update of \"Quarterly forecast update\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Phantom-income risk**: projections include rebates that thresholds will never reach; mitigated by realistic volume modeling per agreement (step 1)",
+     "- **Budget-drift risk**: rebate income forecast never updated as purchasing shifts; mitigated by quarterly re-forecast (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Annual rebate income projection per agreement (step 1)",
+     "- Gross margin budget integration — category targets include rebate income (step 2)",
+     "- Quarterly forecast update from actual purchases and settlements (step 3)"
+    ],
+    "Time Estimate": [
+     "Annual rebate income projection 1 week + gross-margin budget integration 1 day ≈ 6 days/year; quarterly forecast updates 1 day each ≈ 3 days/year — ≈ 9 days/year across ~100–200 active agreements.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Annual rebate income projection: (a) per agreement: project annual purchase volume × applicable rebate rate = projected rebate income, (b) aggregate by vendor, category, and total, (c) include co-op marketing income projection, (d) include markdown allowance recovery projection, (e) apply historical realization rate (% of accrued rebates actually received): typically 85–95%, (f) net projected rebate income = gross projection × realization rate",
+     "duration": "1 week",
+     "n": "1",
+     "r": "FP&A"
+    },
+    {
+     "a": "CFO",
+     "activity": "Impact on gross margin budget: (a) category gross margin target includes rebate income, (b) FP&A ensures rebate projection is realistic and not double-counted (rebate reduces COGS, which improves gross margin — but must not be counted as revenue), (c) sensitivity analysis: what if top 5 vendors reduce rebate rates by 1%?",
+     "duration": "1 day",
+     "n": "2",
+     "r": "FP&A"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly forecast update: (a) update projection based on actual YTD purchases and settlements, (b) adjust for new agreements, terminated agreements, rate changes, (c) compare forecast to accrual — adjust accrual rates if forecast changes significantly",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "FP&A"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1646"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "Annual internal audit; external audit annually",
+    "Owner": "Internal Audit",
+    "Participants": "Internal Audit, AP Manager, VP Merchandising, External Auditor",
+    "Trigger": "Annual internal audit plan; external audit",
+    "Volume": "1 comprehensive audit/year"
+   },
+   "id": "W1808",
+   "level": 2,
+   "name": "Rebate Audit & Compliance Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"methodology is appropriate and consistently applied\" (replaces manual Step 1).",
+     "- System auto-document of \"Key audit findings typically addressed\" (replaces manual Step 2).",
+     "- System auto-review of \"External auditor review\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: Internal Audit review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Chronic-missed-claims risk**: audit repeatedly finds unclaimed rebate leakage; mitigated by findings-driven automation per W1810 (steps 2, 4)",
+     "- **Material-misstatement risk**: accrual estimation error on material income; mitigated by consistent methodology and audit sampling (steps 1, 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Internal audit scope — accrual methodology, sample agreement testing (step 1)",
+     "- Typical findings — missed claims, accrual errors, aging receivables (step 2)",
+     "- External audit attention on material rebate income (PHP 800M–1.8B annually) (step 3)",
+     "- Management response and process improvement (step 4)"
+    ],
+    "Time Estimate": [
+     "Annual internal rebate audit 1–2 weeks ≈ 5–10 days plus management response within 30 days ≈ 2–4 days; external-audit sample support at the annual audit (rebate income material at PHP 800M–1.8B annually).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Internal Audit",
+     "activity": "Internal audit scope for rebates: (a) verify rebate accrual methodology is appropriate and consistently applied, (b) sample 20–30 rebate agreements: verify terms, accrual calculation accuracy, claim documentation, settlement recording, (c) test for unclaimed rebates (vendors with agreements but no claims filed), (d) verify co-op marketing fund utilization and documentation, (e) check for fictitious rebate claims (fraud risk: claiming rebates for purchases not made)",
+     "duration": "1–2 weeks",
+     "n": "1",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "Head of Internal Audit",
+     "activity": "Key audit findings typically addressed: (a) missed claims: vendor agreements exist but claims not submitted (direct margin leakage), (b) accrual accuracy: over/under accrual due to incorrect threshold assumptions, (c) documentation gaps: claims denied by vendor due to insufficient proof, (d) process inefficiency: manual claim process causes delays and errors",
+     "duration": "Report within 2 weeks",
+     "n": "2",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "CFO",
+     "activity": "External auditor review: (a) rebate income is material (PHP 800M–1.8B annually); receives significant audit attention, (b) test accrual estimation methodology (management judgment area), (c) confirm settlements with vendors (sample of top vendors), (d) assess collectibility of rebate receivables at year-end",
+     "duration": "During annual audit",
+     "n": "3",
+     "r": "External Auditor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Management response: AP Manager and VP Merchandising address audit findings; implement process improvements per W1810",
+     "duration": "Within 30 days",
+     "n": "4",
+     "r": "AP Manager / VP Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1810"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "VP Merchandising",
+    "Participants": "VP Merchandising, Category Managers, Buyers, CFO",
+    "Trigger": "Annual vendor negotiation cycle (Q4)",
+    "Volume": "~100–200 agreements reviewed"
+   },
+   "id": "W1809",
+   "level": 2,
+   "name": "Vendor Rebate Agreement Renewal & Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review each vendor's rebate performance for the year\" (replaces manual Step 1).",
+     "- System auto-update of \"updated in system per W1787\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: VP Merchandising review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Auto-renewal-complacency risk**: agreements renew on old terms despite volume growth; mitigated by the earned-vs.-potential gap analysis (step 1)",
+     "- **Target-without-execution risk**: income targets set but agreements not updated; mitigated by system parameter updates as a closing step (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Annual per-vendor rebate performance review — earned vs. potential (step 1)",
+     "- Optimization identification — rate increases, tier restructuring (step 2)",
+     "- CFO rebate income target setting (step 3)",
+     "- Agreement and accrual parameter updates in system (step 4)"
+    ],
+    "Time Estimate": [
+     "4.1–7.1 weeks elapsed per occurrence (2–3 weeks + 1–2 weeks + 1 day + 1–2 weeks) — at Annual ≈ 1 occurrence/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Managers review each vendor's rebate performance for the year: (a) actual rebate income earned vs. agreement potential, (b) claim realization rate, (c) vendor cooperation in claim processing, (d) comparison to competitive vendor rebate offers (benchmarking)",
+     "duration": "2–3 weeks",
+     "n": "1",
+     "r": "Category Managers"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Optimization opportunities identified: (a) increase rebate rate: if BuildRight's volume grew significantly, negotiate higher rate for next year, (b) lower thresholds: if current thresholds are consistently exceeded, negotiate lower threshold for same or higher rate, (c) consolidate vendor agreements: if purchasing from multiple vendors in same category, consolidate to fewer vendors for higher volume and better rates, (d) add new rebate types: co-op marketing funds, new store opening incentives, digital marketing support",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Category Managers / Buyers"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO sets rebate income target for next year based on optimization opportunities and purchase volume projections; Category Managers incorporate into vendor negotiations",
+     "duration": "1 day",
+     "n": "3",
+     "r": "CFO"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Negotiated agreements updated in system per W1787; accrual parameters updated for new rates and thresholds",
+     "duration": "1–2 weeks",
+     "n": "4",
+     "r": "Buyers / AP Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1787"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-360"
+   ],
+   "fields": {
+    "Frequency": "Continuous improvement",
+    "Owner": "VP Merchandising",
+    "Participants": "VP Merchandising, IT, AP Manager, CIO",
+    "Trigger": "Annual process improvement cycle; internal audit recommendation",
+    "Volume": "Ongoing"
+   },
+   "id": "W1810",
+   "level": 2,
+   "name": "Rebate Process Automation & System Enhancement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates rebate accrual directly from purchase data without manual…\" (replaces manual Step 1).",
+     "- System auto-match of \"matching and anomaly detection\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-360 (ensure controlled execution — Rebate Settlement & Analytics (PA-39.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Automation-before-process risk**: automating a broken claim process just accelerates errors; mitigated by audit-finding-driven prioritization (steps 1–2)",
+     "- **Regression risk**: new calculation logic mismatches agreement terms; mitigated by phased implementation with parallel-run verification (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automation opportunity register — auto-accrual, auto-claim generation (step 1)",
+     "- Prioritization by effort saved and error reduction (step 2)",
+     "- Phased implementation — Phase 1 auto-accrual/claims; Phase 2 vendor-portal integration (step 3)"
+    ],
+    "Time Estimate": [
+     "77 weeks elapsed per occurrence (18 months); cadence-carried steps as authored (Continuous, Quarterly) — cadence: Continuous improvement; annual effort is event-driven (annualize at realized volume).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "Identify automation opportunities: (a) auto-accrual: system calculates rebate accrual directly from purchase data without manual intervention (currently semi-automated; target: fully automated for standard agreements), (b) auto-claim generation: system generates rebate claim worksheets automatically at period end, (c) vendor portal integration: claims submitted electronically via vendor portal with auto-populated data, (d) settlement matching: auto-match vendor credit notes to claims using AI/ML pattern matching, (e) alerts: automatic notification when vendor crosses volume threshold, when claim is overdue, when accrual rate changes",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "VP Merchandising / IT"
+    },
+    {
+     "a": "CFO",
+     "activity": "Prioritize automation based on: (a) volume of manual effort saved (high: auto-accrual for 200 agreements), (b) error reduction (high: manual calculation errors on tier thresholds), (c) margin leakage prevention (high: missed claims due to manual process gaps), (d) implementation complexity (medium: vendor portal integration requires vendor cooperation)",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "VP Merchandising / CIO"
+    },
+    {
+     "a": "CIO",
+     "activity": "Implement in phases: (a) Phase 1: auto-accrual and auto-claim generation (3–6 months), (b) Phase 2: vendor portal integration for claim submission (6–12 months), (c) Phase 3: AI-powered settlement matching and anomaly detection (12–18 months)",
+     "duration": "18 months",
+     "n": "3",
+     "r": "IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

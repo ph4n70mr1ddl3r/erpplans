@@ -1,0 +1,682 @@
+{
+ "process_area": {
+  "id": "PA-188.3",
+  "title": "Curtailment, Collections, Risk & Portfolio Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/PA-188.3-curtailment-collections-risk-and-portfolio-analytics.md",
+ "value_stream": {
+  "directory": "VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing",
+  "id": "VS-188",
+  "name": "Trade Reseller Floor-Plan & Dealer Inventory Financing"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Credit Manager (Dealer Finance)",
+    "Participants": "Credit Analyst, Collections, Field Examiner",
+    "Trigger": "Daily aging run; curtailment-period expiry; sold-but-not-curtailed flag (W5382)",
+    "Volume": "~1,000 active dealers monitored daily"
+   },
+   "id": "W5385",
+   "level": 2,
+   "name": "Dealer Aging, Curtailment Default & Out-of-Trust (OOT) Detection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-aging and OOT-flagging with rule-based collections worklists and escalation."
+    ],
+    "Controls": [
+     "- CTL-796: OOT/fraud detection; CTL-796 (aging accuracy); CTL-796 (cure-authority separation)."
+    ],
+    "Cross-references": [
+     "- links to VS-68 (credit risk/aging), VS-23 (LP/fraud), VS-16 (AR aging)"
+    ],
+    "Pain Points / Risks": [
+     "- **OOT-accumulation risk**: unflagged OOT grows into large unsecured exposure before detection; mitigated by daily sold-vs-curtailed matching and aging.",
+     "- **Slow-cure risk**: weak cure follow-up lets a curable default become a loss; mitigated by defined cure timelines and escalation to workout."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Floor-plan aging/OOT engine; collections/case module; risk-grade update (VS-68)."
+    ],
+    "Time Estimate": [
+     "- ~2–4 person-hours/day aging/triage; ~10 person-hours/week reporting."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Run daily aging on curtailment and interest balances by dealer and bucket (current/30/60/90+).",
+     "duration": "daily",
+     "n": "1",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Flag curtailment defaults (units sold but unpaid past period) and OOT exposure per dealer.",
+     "duration": "daily",
+     "n": "2",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Triage: contact dealer, confirm cause, and set a cure timeline (pay-down or collateral substitution).",
+     "duration": "per flag",
+     "n": "3",
+     "r": "Collections"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Escalate repeat/serious OOT to workout (W5386) and risk-grade downgrade (W5388).",
+     "duration": "per escalation",
+     "n": "4",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Report portfolio aging and OOT exposure to the credit committee (W5391).",
+     "duration": "weekly",
+     "n": "5",
+     "r": "Credit Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5382",
+    "W5386",
+    "W5388",
+    "W5391"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-109",
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "~2–6% of active dealers/yr",
+    "Owner": "Workout/Recovery Manager",
+    "Participants": "Credit Manager, Legal (VS-100), Collections, Field Examiner",
+    "Trigger": "Default escalated from W5385; missed cure",
+    "Volume": "~30–120 workout cases/yr"
+   },
+   "id": "W5386",
+   "level": 2,
+   "name": "Dealer Collection, Workout, Restructuring & Skip-Tracing for Missing Collateral",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Default-driven case auto-creation with restructuring-calc and skip-trace worklist."
+    ],
+    "Controls": [
+     "- CTL-109: collections fraud detection & case governance; CTL-796 (ensure controlled execution — Curtailment, Collections, Risk & Portfolio Analytics (PA-188.3).) — restructuring approval authority."
+    ],
+    "Cross-references": [
+     "- links to VS-68 (credit), VS-100 (legal/enforcement), VS-23 (LP), VS-159 (security/skip-trace)"
+    ],
+    "Pain Points / Risks": [
+     "- **Loss-escalation risk**: weak workout lets a recoverable default become a write-off; mitigated by defined workout timelines and restructuring options.",
+     "- **Skip-trace failure risk**: unlocatable collateral (dealer concealed/sold) becomes unsecured loss; mitigated by serial-level tracking (W5379) and field-exam triggers."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Workout/case module; collateral location/skip-trace; legal/enforcement records (VS-100); risk-grade update."
+    ],
+    "Time Estimate": [
+     "- ~20–80 person-hours per case; ~70/yr → ~3,000 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Assess the default: cause, dealer financial condition, and collateral status (field exam W5381 if stale).",
+     "duration": "per case",
+     "n": "1",
+     "r": "Workout Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Pursue collections: demand curtailment, negotiate a restructuring/extended cure where viable, or move to recovery.",
+     "duration": "per case",
+     "n": "2",
+     "r": "Workout Manager"
+    },
+    {
+     "a": "Workout Manager",
+     "activity": "For missing collateral, skip-trace the units (serial-level) to locate them for repossession (W5387).",
+     "duration": "per case",
+     "n": "3",
+     "r": "Field Examiner"
+    },
+    {
+     "a": "Workout Manager",
+     "activity": "Engage Legal for demand/default notice and enforcement of the security agreement (W5371).",
+     "duration": "per case",
+     "n": "4",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Document the workout outcome (cured/restructured/recovery) and update the dealer risk grade/limit.",
+     "duration": "per case",
+     "n": "5",
+     "r": "Workout Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5371",
+    "W5379",
+    "W5381",
+    "W5385",
+    "W5387"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-21",
+    "CTL-26",
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "Rare (~1–3% of default cases reach repo); high impact",
+    "Owner": "Workout/Recovery Manager",
+    "Participants": "Legal (VS-100), Corporate Security (VS-159), Repo Agent, Sales (disposition)",
+    "Trigger": "Failed workout/cure (W5386); security-agreement enforcement",
+    "Volume": "~10–40 repossession events/yr"
+   },
+   "id": "W5387",
+   "level": 2,
+   "name": "Collateral Repossession, Redemption & Disposition of Defaulted Floor-Plan Units",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Repo-case workflow with redemption-clock and disposition options."
+    ],
+    "Controls": [
+     "- CTL-796: ensure controlled execution — Curtailment, Collections, Risk & Portfolio Analytics (PA-188.3).) — legal authorization; CTL-26 (asset recovery; CTL-21 (recovery/deficiency accounting)."
+    ],
+    "Cross-references": [
+     "- links to VS-100 (legal), VS-159 (security), VS-32/VS-155 (disposition/resale), VS-17 (GL), VS-23 (LP)"
+    ],
+    "Pain Points / Risks": [
+     "- **Wrongful-repo risk**: repossessing without proper legal basis exposes BuildRight to damages; mitigated by legal sign-off and documented default/security-agreement basis.",
+     "- **Recovery-shortfall risk**: disposing collateral below the outstanding balance leaves a deficiency to chase; mitigated by re-sale into BuildRight's channels at market and deficiency accounting."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Collateral/case module; disposition order (VS-11/VS-32); GL recovery/deficiency posting (VS-17); records (VS-88)."
+    ],
+    "Time Estimate": [
+     "- ~40–120 person-hours per repossession event; ~25/yr → ~1,500 person-hours/yr."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Workout Manager",
+     "activity": "Confirm the right to repossess under the security agreement (W5371) and applicable law; obtain legal sign-off.",
+     "duration": "per event",
+     "n": "1",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "Workout Manager",
+     "activity": "Engage a licensed repo agent / Corporate Security to recover the units (serial-level) from the dealer.",
+     "duration": "per event",
+     "n": "2",
+     "r": "Corporate Security"
+    },
+    {
+     "a": "Workout Manager",
+     "activity": "Provide the dealer a redemption window to cure and reclaim before disposition.",
+     "duration": "per event",
+     "n": "3",
+     "r": "Workout Manager"
+    },
+    {
+     "a": "Workout Manager",
+     "activity": "Dispose of unredeemed collateral: re-sell into BuildRight's channels (VS-11/VS-32/VS-155) or wholesale to recover principal.",
+     "duration": "per event",
+     "n": "4",
+     "r": "Sales"
+    },
+    {
+     "a": "CFO",
+     "activity": "Account for recovery vs. outstanding balance; post any deficiency to the dealer and any surplus per law.",
+     "duration": "per event",
+     "n": "5",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5371",
+    "W5386"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; ad-hoc on triggers",
+    "Owner": "Credit Manager (Dealer Finance)",
+    "Participants": "Risk (VS-21/VS-68), Treasury, Finance",
+    "Trigger": "Quarterly portfolio review; risk-trigger (W5385)",
+    "Volume": "1 portfolio review/quarter; ~1,000 dealer grades (one per active dealer in the floor-plan portfolio per W5374/W5385)"
+   },
+   "id": "W5388",
+   "level": 2,
+   "name": "Floor-Plan Portfolio Risk Rating, Concentration & Dealer Credit Limit Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Risk-grade auto-scored from payment/aging/OOT/exam signals; concentration dashboard."
+    ],
+    "Controls": [
+     "- CTL-796 (ensure controlled execution — Curtailment, Collections, Risk & Portfolio Analytics (PA-188.3).)",
+     "- operational: grading accuracy; limit-approval authority; concentration-limit adherence; ."
+    ],
+    "Cross-references": [
+     "- links to VS-68 (credit risk), VS-21 (risk/ERM), VS-18 (treasury exposure)"
+    ],
+    "Pain Points / Risks": [
+     "- **Concentration risk**: excessive exposure to a single dealer/segment/region magnifies default impact; mitigated by concentration limits and quarterly review.",
+     "- **Stale-grade risk**: a dealer's grade not updated as it deteriorates delays intervention; mitigated by trigger-based grade updates from aging/OOT."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Credit-risk module (VS-68); portfolio concentration analytics; risk-grade/limit update."
+    ],
+    "Time Estimate": [
+     "- ~2 weeks elapsed per quarterly review."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Rate each dealer's risk grade from payment/aging/OOT/exam findings (W5381/W5385).",
+     "duration": "quarterly",
+     "n": "1",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Analyze portfolio concentration by dealer, segment, region, and category vs. limits (W5369).",
+     "duration": "quarterly",
+     "n": "2",
+     "r": "Risk Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Review and adjust dealer floor-plan limits based on grade and performance (W5370).",
+     "duration": "quarterly",
+     "n": "3",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Identify watch-list dealers for enhanced monitoring/workout (W5386).",
+     "duration": "quarterly",
+     "n": "4",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Report portfolio risk profile and concentration to the credit/risk committee.",
+     "duration": "quarterly",
+     "n": "5",
+     "r": "Credit Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5369",
+    "W5370",
+    "W5374",
+    "W5381",
+    "W5385",
+    "W5386"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-21",
+    "CTL-30",
+    "CTL-31",
+    "CTL-34"
+   ],
+   "fields": {
+    "Frequency": "Monthly provisioning; per charge-off event",
+    "Owner": "Finance (Dealer Finance)",
+    "Participants": "Credit Manager, CFO, Internal Audit (VS-21), Tax (VS-79)",
+    "Trigger": "Monthly close; default/loss event (W5386/W5387)",
+    "Volume": "~1 monthly provision; ~20–60 charge-offs/yr"
+   },
+   "id": "W5389",
+   "level": 2,
+   "name": "Loss Provisioning, Charge-off & Recovery Accounting for Floor-Plan Losses",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ECL auto-computed from aging/grade data with documented methodology; charge-off workflow."
+    ],
+    "Controls": [
+     "- CTL-31: adequate provisions; CTL-30 (month-end close); CTL-34 (tax-compliant charge-off); CTL-21 (accuracy)."
+    ],
+    "Cross-references": [
+     "- links to VS-17 (GL), VS-157 (revenue/loss), VS-79 (tax), VS-21 (audit), VS-68 (credit)"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-provisioning risk**: an inadequate ECL distorts the audited PFRS financials and over-states income; mitigated by a documented PFRS 9 methodology and periodic audit.",
+     "- **Deductibility risk**: charge-offs not properly documented/deductible for BIR lose tax benefit; mitigated by documentation and tax review (VS-79)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ECL/provisioning engine (PFRS 9 — VS-157/VS-17); GL; recovery-income posting; tax reconciliation (VS-79)."
+    ],
+    "Time Estimate": [
+     "- ~1 week per monthly provisioning cycle; ~2 days per charge-off batch."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Compute the expected credit loss (ECL) provision under PFRS 9 from aging/grade/default data (W5385/W5388).",
+     "duration": "per close",
+     "n": "1",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Post the provision to the GL and provision contra-asset (VS-17); document methodology.",
+     "duration": "per close",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "On a confirmed loss (unrecoverable): charge-off the principal net of provision and recovery (W5387).",
+     "duration": "per event",
+     "n": "3",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Track recoveries post charge-off and recognize recovery income.",
+     "duration": "ongoing",
+     "n": "4",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Reconcile provisions/charge-offs to the credit-risk and tax records (VS-79 BIR deductibility).",
+     "duration": "per close",
+     "n": "5",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5385",
+    "W5386",
+    "W5387",
+    "W5388"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Credit Analyst (Dealer Finance)",
+    "Participants": "Trade Account Manager (VS-107), Merchandising, BI (VS-28)",
+    "Trigger": "Monthly dealer-performance review",
+    "Volume": "~1,000 dealers reviewed monthly"
+   },
+   "id": "W5390",
+   "level": 2,
+   "name": "Dealer Performance, Sales Velocity, Stocking Health & Relationship Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-refreshing dealer-performance dashboard with segmentation and growth flags."
+    ],
+    "Controls": [
+     "- CTL-796 (ensure controlled execution — Curtailment, Collections, Risk & Portfolio Analytics (PA-188.3).)",
+     "- operational: performance-data accuracy; program-growth tracking; ."
+    ],
+    "Cross-references": [
+     "- links to VS-107 (key accounts), VS-103 (relationship/EX), VS-28 (BI), VS-11 (trade)"
+    ],
+    "Pain Points / Risks": [
+     "- **Growth-blindness risk**: missing high-velocity dealers limits growth opportunity; mitigated by performance segmentation and growth-flagging.",
+     "- **Stocking-health risk**: slow-moving funded stock indicates default risk and category issues; mitigated by stocking-health metrics feeding limit/review."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI/analytics on floor-plan + sales + curtailment data (VS-28); key-account analytics (VS-107)."
+    ],
+    "Time Estimate": [
+     "- ~1 week per monthly review."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Compute dealer performance: sales velocity, turn, curtailment timeliness, and stocking health.",
+     "duration": "monthly",
+     "n": "1",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Segment dealers by performance/risk (W5388) and identify growth/opportunity vs. watch-list.",
+     "duration": "monthly",
+     "n": "2",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Share insights with Trade Account Management for relationship/limit discussions (VS-107).",
+     "duration": "monthly",
+     "n": "3",
+     "r": "Trade Account Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Identify under-performing stock/categories to feed assortment/limit decisions.",
+     "duration": "quarterly",
+     "n": "4",
+     "r": "Merchandising"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Track relationship metrics (NPS, retention, share-of-wallet) for the program (VS-107/VS-103).",
+     "duration": "quarterly",
+     "n": "5",
+     "r": "BI Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5388"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Business Partner (Dealer Finance)",
+    "Participants": "Treasury, Credit Manager, CFO, BI (VS-28)",
+    "Trigger": "Monthly/quarterly program-performance review",
+    "Volume": "1 program dashboard/month"
+   },
+   "id": "W5391",
+   "level": 2,
+   "name": "Floor-Plan Portfolio Yield, Cost-of-Funds, NPL & Profitability Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-refreshing NIM/yield/NPL dashboard from treasury + GL + credit data."
+    ],
+    "Controls": [
+     "- CTL-796 (ensure controlled execution — Curtailment, Collections, Risk & Portfolio Analytics (PA-188.3).)",
+     "- operational: profitability-data accuracy; vs. business case; treasury reconciliation; ."
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury/funding), VS-17 (P&L), VS-28 (BI), VS-36/VS-173 (board)"
+    ],
+    "Pain Points / Risks": [
+     "- **Margin-erosion risk**: rising funding cost or rising NPL compresses NIM below target; mitigated by NIM monitoring and pricing/recovery action.",
+     "- **Business-case-drift risk**: actual profitability diverging from the business case undetected; mitigated by monthly actual-vs-case reporting."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/funding analytics (VS-18); profitability dashboard (VS-28/VS-17); board reporting (VS-36/VS-173)."
+    ],
+    "Time Estimate": [
+     "- ~1 week per monthly review."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Compute portfolio yield, NIM (yield minus cost-of-funds W5373), and NPL/loss rate.",
+     "duration": "monthly",
+     "n": "1",
+     "r": "Finance Business Partner"
+    },
+    {
+     "a": "CFO",
+     "activity": "Reconcile financing-margin income, subvention, and recoveries to the P&L (W5383/W5389).",
+     "duration": "monthly",
+     "n": "2",
+     "r": "Finance Business Partner"
+    },
+    {
+     "a": "CFO",
+     "activity": "Compare to the business case (W5369) and risk-appetite targets; flag erosion.",
+     "duration": "monthly",
+     "n": "3",
+     "r": "Finance Business Partner"
+    },
+    {
+     "a": "CFO",
+     "activity": "Analyze funding mix and cost optimization (own balance sheet vs. facility — W5373).",
+     "duration": "quarterly",
+     "n": "4",
+     "r": "Treasury"
+    },
+    {
+     "a": "CEO",
+     "activity": "Report program profitability to the credit/finance committee and board reporting (VS-36/VS-173).",
+     "duration": "quarterly",
+     "n": "5",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W5369",
+    "W5373",
+    "W5383",
+    "W5389"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-796"
+   ],
+   "fields": {
+    "Frequency": "Periodic regulatory; annual internal audit",
+    "Owner": "Compliance Specialist",
+    "Participants": "Finance, Legal (VS-100), Internal Audit (VS-21), BSP/SEC",
+    "Trigger": "Regulatory reporting cycle; BSP/SEC examination; internal audit plan",
+    "Volume": "~4–12 regulatory reports/yr; ~1 internal audit/yr"
+   },
+   "id": "W5392",
+   "level": 2,
+   "name": "Regulatory Reporting, BSP Compliance Examination & Internal Audit Support",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Regulatory reports auto-generated from the reconciled ledger; audit-evidence package."
+    ],
+    "Controls": [
+     "- CTL-796 (ensure controlled execution — Curtailment, Collections, Risk & Portfolio Analytics (PA-188.3).)",
+     "- operational: statutory reporting; regulatory compliance; internal-audit independence (VS-21); accuracy; ."
+    ],
+    "Cross-references": [
+     "- links to VS-22 (compliance), VS-21 (audit), VS-86 (AML), VS-88 (records), VS-36/VS-173 (board), VS-100 (legal)"
+    ],
+    "Pain Points / Risks": [
+     "- **Examination-finding risk**: an examination that finds weak origination/collateral/provisioning controls triggers regulatory action; mitigated by annual internal audit and control testing.",
+     "- **Reporting-error risk**: inaccurate regulatory reports are themselves violations; mitigated by ledger-reconciled reporting and review."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Floor-plan ledger; regulatory reporting; audit-findings register (VS-21); records retention (VS-88)."
+    ],
+    "Time Estimate": [
+     "- ~2–3 weeks per regulatory cycle; ~3–4 weeks per internal audit."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Prepare regulatory reports (SEC/BSP lending-company, AML on floor-plan funds — VS-86) from the floor-plan ledger.",
+     "duration": "per cycle",
+     "n": "1",
+     "r": "Compliance Specialist"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "On BSP/SEC examination: provide loan files, collateral, provisioning, and disclosure evidence.",
+     "duration": "per exam",
+     "n": "2",
+     "r": "Compliance Specialist"
+    },
+    {
+     "a": "Compliance Specialist",
+     "activity": "Support internal audit of origination, collateral, curtailment, and provisioning controls (VS-21).",
+     "duration": "annual",
+     "n": "3",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Document and remediate findings; track to closure.",
+     "duration": "per finding",
+     "n": "4",
+     "r": "Compliance Specialist"
+    },
+    {
+     "a": "CEO",
+     "activity": "Escalate material findings/regulatory action to the board reporting (VS-36/VS-173).",
+     "duration": "per material finding",
+     "n": "5",
+     "r": "VP Legal & Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

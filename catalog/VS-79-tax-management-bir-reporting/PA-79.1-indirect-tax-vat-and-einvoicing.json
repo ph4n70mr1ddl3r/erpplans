@@ -1,0 +1,521 @@
+{
+ "process_area": {
+  "id": "PA-79.1",
+  "title": "Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-79-tax-management-bir-reporting/PA-79.1-indirect-tax-vat-and-einvoicing.md",
+ "value_stream": {
+  "directory": "VS-79-tax-management-bir-reporting",
+  "id": "VS-79",
+  "name": "Tax Management & BIR Statutory Reporting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-214"
+   ],
+   "fields": {
+    "Frequency": "Monthly per entity (5 entities)",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, GL Accountant, AP/AR, Tax Accountant",
+    "Trigger": "Monthly VAT close-and-file cycle (2550M statutory deadline: 20th of following month, or the 25th for later eFPS groups)",
+    "Volume": "5 returns/month; ~PHP 5.19B monthly revenue at 12% output VAT"
+   },
+   "id": "W2753",
+   "level": 2,
+   "name": "VAT Output/Input Ledger Reconciliation & Monthly Form 2550M Preparation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates VAT treatment on every taxable line\" (replaces manual Step 1).",
+     "- System auto-count of \"Tax Manager computes net VAT payable/refundable\" (replaces manual Step 2).",
+     "- System auto-generate of \"prepares BIR Form 2550M with supporting schedules\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-214 (ensure BIR tax compliance & filing integrity.)",
+     "- operational: automated tax determination rules and monthly reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Mis-classified VAT-exempt sales (PWD/SC, housing, education) trigger assessment; mitigated by automated tax determination rules and monthly reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Financials tax register & VAT control accounts; BIR eFPS; e-Invoicing (EIS) log"
+    ],
+    "Time Estimate": [
+     "- 3–5 days per entity per month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "GL Accountant reconciles VAT output (sales) vs. input (purchases) ledgers from ERP tax registers per entity; validates VAT treatment on every taxable line; flags mixed-tender and exempt sales",
+     "duration": "2–3 days/entity",
+     "n": "1",
+     "r": "GL Accountant / Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager computes net VAT payable/refundable; reconciles to GL VAT control accounts; investigates variances > PHP 50K; books adjusting journal entries",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant prepares BIR Form 2550M with supporting schedules; routes for CFO sign-off; archives computation workpapers for 10-year BIR retention",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-466"
+   ],
+   "fields": {
+    "Frequency": "Quarterly per entity",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Tax Accountant, External Tax Advisor",
+    "Trigger": "Quarterly close (25 days after quarter-end)",
+    "Volume": "5 returns/quarter"
+   },
+   "id": "W2754",
+   "level": 2,
+   "name": "Quarterly VAT Return (2550Q) & Transitional Input Tax Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates against GL quarterly trial balance\" (replaces manual Step 1).",
+     "- System auto-createof \"Tax Manager processes transitional input VAT on capital\" (replaces manual Step 2).",
+     "- System auto-document of \"documents positions taken for future audit defensibility\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-466 (ensure controlled execution — Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing (PA-79.1).)",
+     "- operational: advisor review and rule-versioning"
+    ],
+    "Pain Points / Risks": [
+     "- **Reporting risk**: TRAIN capital-goods phase-out errors (post-2021 acquisitions claimed on spread instead of fully creditable, or grandfathered pre-2022 60-month balances claimed in full — per RMC 21-2022); mitigated by advisor review and rule-versioning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Financials quarterly tax close workspace; BIR eFPS"
+    ],
+    "Time Estimate": [
+     "- 4–6 days per entity per quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant consolidates three monthly 2550M filings into quarterly summary; reconciles cumulative output/input VAT; validates against GL quarterly trial balance",
+     "duration": "2 days/entity",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager processes transitional input VAT on capital asset acquisitions (fully creditable in the acquisition month since 1 Jan 2022 per the TRAIN phase-out; residual 60-month schedules only for grandfathered pre-2022 assets per RMC 21-2022); coordinates with external advisor on contentious items",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Tax Manager / External Tax Advisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager files 2550Q via eFPS; settles any quarterly true-up; documents positions taken for future audit defensibility",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-214"
+   ],
+   "fields": {
+    "Frequency": "Monthly/quarterly/annual — ~80+ filings/year across all taxes",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Tax Manager, Treasury",
+    "Trigger": "Statutory deadline (per BIR filing calendar)",
+    "Volume": "5 entities × ~16 filings/year ≈ 80 filings"
+   },
+   "id": "W2755",
+   "level": 2,
+   "name": "BIR eFPS Filing, e-Payment (PESONet/InstaPay) & Validation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs into BIR eFPS, selects return type and tax period, uploads/generated data\" (replaces manual Step 1).",
+     "- System rule-based authorization of \"Authorized Agent Bank\" (replaces manual Step 2).",
+     "- System auto-document of \"Tax Accountant attaches proof of filing and payment to\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-214 (ensure BIR tax compliance & filing integrity.)",
+     "- operational: filing 3+ days early and maintaining offline computation backups"
+    ],
+    "Pain Points / Risks": [
+     "- **Operational risk**: eFPS downtime near deadlines; mitigated by filing 3+ days early and maintaining offline computation backups"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BIR eFPS portal; treasury banking platform; ERP document archive; tax calendar workflow"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours per filing cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant logs into BIR eFPS, selects return type and tax period, uploads/generated data; validates auto-computed fields vs. ERP workpapers before submission",
+     "duration": "30–60 min/filing",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury initiates e-Payment via Authorized Agent Bank (AAB) PESONet/InstaPay or revenue collection officer; captures payment confirmation/reference number",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Treasury"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant attaches proof of filing and payment to ERP tax document repository; updates tax calendar tracker; flags any rejection for re-filing before deadline",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-214"
+   ],
+   "fields": {
+    "Frequency": "Daily per location",
+    "Owner": "Tax Technology Lead",
+    "Participants": "Tax Tech Lead, IT Integration, POS Team, Tax Manager",
+    "Trigger": "Continuous (real-time/near-real-time per BIR EIS mandate)",
+    "Volume": "2.8M POS transactions/month across 205 locations"
+   },
+   "id": "W2756",
+   "level": 2,
+   "name": "BIR EIS E-Invoicing Transmission & Daily Sales Report Sync",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors acknowledgment receipts per location\" (replaces manual Step 1).",
+     "- System auto-count of \"Tax Tech Lead reconciles transmitted line count vs. ERP\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews monthly EIS transmission completeness report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-214 (ensure BIR tax compliance & filing integrity.)",
+     "- operational: daily reconciliation and SLA monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Failed/unreconciled EIS transmission invites penalty (PHP 1K–50K/return) and LO/permit risk; mitigated by daily reconciliation and SLA monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BIR EIS API gateway; POS-to-ERP event stream; ERP sales register; transmission log"
+    ],
+    "Time Estimate": [
+     "- Continuous (automated) + 1–2 hours/day triage"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "IT Integration ensures daily Sales Data Transmission (Sales Report + e-Invoice JSON) from ERP/POS to BIR EIS via API; monitors acknowledgment receipts per location",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "IT Integration / Tax Tech Lead"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Tech Lead reconciles transmitted line count vs. ERP sales register daily; investigates missing/failed transmissions (offline POS recovery); triggers re-transmission",
+     "duration": "1–2 hours/day",
+     "n": "2",
+     "r": "Tax Tech Lead"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager reviews monthly EIS transmission completeness report; escalates systemic integration failures to IT; maintains compliance attestation for BIR inspection",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-214"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~200–400 exempt transactions/month",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, AR, Trade Sales, Tax Manager",
+    "Trigger": "Sale to VAT-exempt customer or entity with PEZA/BOI/housing incentive",
+    "Volume": "~200 corporate/institutional accounts (per profile §9.2)"
+   },
+   "id": "W2757",
+   "level": 2,
+   "name": "VAT-Exempt & Zero-Rated Sale Documentation (PEZA/BOI/Education/Housing)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Trade Sales obtains customer exemption certificate\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates exemption currency and scope\" (replaces manual Step 2).",
+     "- System auto-document of \"documentation support for monthly 2550M exemption schedule\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-214 (ensure BIR tax compliance & filing integrity.)",
+     "- operational: annual renewal tracking and pre-sale validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Audit risk**: Expired/incomplete exemption documents disallow VAT-zero-rating; mitigated by annual renewal tracking and pre-sale validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP customer/item tax determination; document archive; BIR Tax Credit Certificate (TCC) module"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per account setup; ongoing monitoring"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Trade Sales obtains customer exemption certificate (PEZA/BOI, DepEd/CHED, PAG-IBIG-accredited housing, NGO BIR rulings) at account setup; AR stores in customer master",
+     "duration": "30 min/account",
+     "n": "1",
+     "r": "Trade Sales / AR"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant validates exemption currency and scope; configures VAT-exempt/zero-rated treatment in ERP customer/item tax code; audits renewal calendar annually",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Accountant compiles exemption documentation support for monthly 2550M exemption schedule; defends zero-rated input VAT refund claims with BIR",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Tax Accountant / Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-466"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~20–40 capex assets/year qualifying",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Fixed Asset Accountant, Tax Manager",
+    "Trigger": "Acquisition of capital goods > PHP 1M per BIR rules (Sec. 110(A)(2) NIRC; input VAT fully creditable since 1 Jan 2022 (the 60-month spread repealed by CREATE/RA 11534 per RR 7-2021; TRAIN-era RR 13-2018 set the sunset) — spread amortization applies only to grandfathered pre-2022 assets)",
+    "Volume": "~PHP 700M–1B annual capex (store builds alone run PHP 400–900M per W1648); ~PHP 84–120M input VAT pool"
+   },
+   "id": "W2758",
+   "level": 2,
+   "name": "Capital Goods Input VAT — Full-Credit Regime & Grandfathered 60-Month Amortization Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant flags capital goods acquisitions > PHP 1M threshold at capitalization\" (replaces manual Step 1).",
+     "- System auto-scheduleof \"ERP tax register\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles amortization register to fixed asset subledger annually\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-466 (ensure controlled execution — Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing (PA-79.1).)",
+     "- operational: FA-to-tax register reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Reporting risk**: Mis-tracking disposal acceleration underclaims/overclaims VAT; mitigated by FA-to-tax register reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Fixed Asset & input VAT amortization register; tax ledger"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per qualifying asset setup; monthly run"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Fixed Asset Accountant flags capital goods acquisitions > PHP 1M threshold at capitalization; captures input VAT component and in-service date",
+     "duration": "Per acquisition",
+     "n": "1",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant claims the full input VAT in the acquisition month (post-2021 regime); maintains residual 60-month amortization schedules in the ERP tax register for grandfathered pre-2022 assets, claiming the spread portion monthly on 2550M and tracking remaining balance per asset",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager reconciles amortization register to fixed asset subledger annually; accelerates remaining balance on asset disposal/retirement",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1648"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-466"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Tax Accountant, Entity Controllers",
+    "Trigger": "Quarterly close for non-VAT entities",
+    "Volume": "0–5 entities (monitor threshold)"
+   },
+   "id": "W2759",
+   "level": 2,
+   "name": "Percentage Tax (2551Q) & Entities Below VAT Threshold Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitor aggregate quarterly gross sales per entity against PHP 3M VAT threshold\" (replaces manual Step 1).",
+     "- System auto-file of \"Tax Manager files 2551Q\" (replaces manual Step 2).",
+     "- System auto-document of \"documents VAT-vs-percentage-tax optimization decision annually\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-466 (ensure controlled execution — Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing (PA-79.1).)",
+     "- operational: quarterly threshold dashboard"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Late VAT registration when crossing threshold; mitigated by quarterly threshold dashboard"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP per-entity revenue register; BIR eFPS 2551Q; threshold monitoring dashboard"
+    ],
+    "Time Estimate": [
+     "- 1–2 days per entity per quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Entity Controllers monitor aggregate quarterly gross sales per entity against PHP 3M VAT threshold; flag entities approaching the threshold for VAT registration planning",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Entity Controllers"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager files 2551Q (3% percentage tax) for any non-VAT-registered entity; coordinates voluntary VAT registration election where input VAT recovery is favorable",
+     "duration": "1 day/entity",
+     "n": "2",
+     "r": "Tax Manager / Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager documents VAT-vs-percentage-tax optimization decision annually; reviews entity structure for tax efficiency under CREATE and CREATE More",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Tax Manager / External Tax Advisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-214"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + annual review",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, IT, Store Ops, Legal",
+    "Trigger": "New POS rollout, system upgrade, or annual BIR audit",
+    "Volume": "205 locations; 600 POS terminals"
+   },
+   "id": "W2760",
+   "level": 2,
+   "name": "POS BIR-Registered Accreditation, CAS Registration & Compliance Audit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Tax Manager maintains BIR Computerized Accounting System\" (replaces manual Step 1).",
+     "- System auto-log of \"logs any deviation through change-control re-accreditation\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspection of CAS\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-214 (ensure BIR tax compliance & filing integrity.)",
+     "- operational: permit-master gating of go-lives"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Unaccredited POS/upgrade voids invoice validity; mitigated by permit-master gating of go-lives"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS permit master; BIR CAS/LOI register; change-control workflow"
+    ],
+    "Time Estimate": [
+     "- 4–8 hours per permit event; 1–2 weeks per BIR audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Tax Manager maintains BIR Computerized Accounting System (CAS)/POS permit inventory per location; processes new/refresh permits (BIR Form 1907) for every terminal swap or software upgrade",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Tax Manager / IT"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "IT ensures POS firmware/software matches BIR-accredited configuration (PTU); logs any deviation through change-control re-accreditation",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "CFO",
+     "activity": "Legal/Tax Manager supports BIR annual LOI inspection of CAS; demonstrates invoice numbering, TIN, sequential integrity, and tamper-evident logs across sample locations",
+     "duration": "1–2 weeks/audit",
+     "n": "3",
+     "r": "Legal / Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

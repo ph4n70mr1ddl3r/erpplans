@@ -1,0 +1,581 @@
+{
+ "process_area": {
+  "id": "PA-155.2",
+  "title": "Take-Back, Inspection, Refurbishment & Certification"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/PA-155.2-takeback-inspection-refurbishment-and-certification.md",
+ "value_stream": {
+  "directory": "VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale",
+  "id": "VS-155",
+  "name": "Trade-In, Buy-Back & Certified Pre-Owned Product Resale"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-696"
+   ],
+   "fields": {
+    "Frequency": "Per item",
+    "Owner": "Stores (VS-07) / Service Center (VS-12.1)",
+    "Participants": "POS (VS-08), Inventory (VS-05), Compliance (VS-22), Customer",
+    "Trigger": "Customer trade-in acceptance (W4580); buy-back",
+    "Volume": "Take-back intakes across stores/service centers"
+   },
+   "id": "W4585",
+   "level": 2,
+   "name": "Customer Take-Back Intake & Custody Transfer",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Intake/ownership-verification app; serial-vs-stolen-list check; custody-chain capture"
+    ],
+    "Controls": [
+     "- CTL-696 (ensure controlled execution — Take-Back, Inspection, Refurbishment & Certification (PA-155.2).)",
+     "- CTL-696: ownership/identity verified (anti-theft VS-23); eligibility confirmed (W4578); title transferred & documented"
+    ],
+    "Cross-references": [
+     "- links to VS-07/VS-08 (store/POS), VS-05 (inventory), VS-23 (LP), VS-22 (compliance), W4578 (eligibility), W4580 (credit), W4586 (inspection)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stolen-goods risk**: Receiving stolen property → legal/loss (VS-23/VS-100); mitigated by ownership/ID verification & serial check",
+     "- **Title-transfer risk**: Ambiguous ownership → later dispute; mitigated by documented title transfer & terms"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Stores (VS-07); POS (VS-08); inventory (VS-05/W4584); LP/anti-theft (VS-23); compliance (VS-22)"
+    ],
+    "Time Estimate": [
+     "- ~10–15 min per item"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Stores/Service Center take physical custody of the trade-in item, verify ownership/identity (anti-theft — avoid receiving stolen goods VS-23), and confirm eligibility (W4578)",
+     "duration": "Per item",
+     "n": "1",
+     "r": "Stores / Service Center"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Stores/POS issue the trade-in credit (W4580), record the take-back (customer, item, valuation, channel), and transfer title/ownership to BuildRight",
+     "duration": "Per item",
+     "n": "2",
+     "r": "Stores / POS / Compliance"
+    },
+    {
+     "a": "Inventory Manager",
+     "activity": "Inventory/Stores move the item to pre-owned intake stock (VS-05/W4584) and route to inspection (W4586), with custody chain documented",
+     "duration": "Per item",
+     "n": "3",
+     "r": "Inventory / Stores"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4578",
+    "W4580",
+    "W4584",
+    "W4586"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696",
+    "CTL-82"
+   ],
+   "fields": {
+    "Frequency": "Per item",
+    "Owner": "Service Center (VS-12.1) / Quality (VS-31)",
+    "Participants": "Stores (VS-07), HSE (VS-24), Privacy (VS-91), DG (VS-114)",
+    "Trigger": "Take-back custody (W4585)",
+    "Volume": "Inspections across intake items"
+   },
+   "id": "W4586",
+   "level": 2,
+   "name": "Intake Inspection, Safety Screen & Data Wipe",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Inspection/safety-checklist app; data-wipe documentation; recall-list integration (VS-89)"
+    ],
+    "Controls": [
+     "- CTL-82 (ensure trade-in device integrity & data wipe.)",
+     "- CTL-696: safety-screened (no recalled/DG/unsafe VS-89/VS-114); data wiped (VS-91); hazmat handled (VS-24)"
+    ],
+    "Cross-references": [
+     "- links to VS-12.1 (service center), VS-31 (quality), VS-91 (privacy), VS-24/VS-114 (HSE/DG), VS-89 (recall), W4585 (intake), W4587 (triage)"
+    ],
+    "Pain Points / Risks": [
+     "- **Safety-intake risk**: Unsafe item enters refurbishment → injury/fire; mitigated by safety screen & DG handling (VS-114/VS-24)",
+     "- **Privacy-residual risk**: Customer data on smart items; mitigated by certified data wipe (VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service center (VS-12.1); quality (VS-31); privacy (VS-91); HSE (VS-24); DG (VS-114); recall (VS-89)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per item"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center/Quality inspect the item (function, cosmetic, completeness, age/condition per W4579 grading) and safety-screen (no recalled VS-89, no DG/battery hazard VS-114, electrical safety)",
+     "duration": "Per item",
+     "n": "1",
+     "r": "Service Center / Quality"
+    },
+    {
+     "a": "Service Center Manager / DPO",
+     "activity": "Service Center/Privacy perform data wipe/factory reset on smart appliances/tools with stored data (VS-91 RA 10173), documenting sanitization",
+     "duration": "Per item",
+     "n": "2",
+     "r": "Service Center / Privacy"
+    },
+    {
+     "a": "Service Center Manager / HSE Lead",
+     "activity": "Service Center/HSE handle any intake hazmat (battery/chemical VS-114/VS-24) safely, and route the item to triage (W4587)",
+     "duration": "Per item",
+     "n": "3",
+     "r": "Service Center / HSE"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4579",
+    "W4585",
+    "W4587"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696"
+   ],
+   "fields": {
+    "Frequency": "Per item",
+    "Owner": "Service Center (VS-12.1) / Merchandising",
+    "Participants": "Quality (VS-31), Finance (VS-17.4), Circular (VS-73)",
+    "Trigger": "Intake inspection complete (W4586)",
+    "Volume": "Triage/disposition across intake items"
+   },
+   "id": "W4587",
+   "level": 2,
+   "name": "Triage, Routing & Disposition Decision",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Economics-driven triage rules; disposition-routing app; capacity/analytics"
+    ],
+    "Controls": [
+     "- CTL-696 (ensure controlled execution — Take-Back, Inspection, Refurbishment & Certification (PA-155.2).)",
+     "- CTL-696: disposition economics-driven (W4582); routes correct (refurb/parts/recycle); recorded for analytics/inventory"
+    ],
+    "Cross-references": [
+     "- links to VS-12.1 (service center), VS-01 (merch), VS-17.4 (finance), VS-73 (circular), VS-05 (inventory), W4582 (economics), W4586 (inspection), W4588/W4590 (routes)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-disposition risk**: Refurbishing uneconomic items, or recycling refurbishable ones; mitigated by unit-economics-driven triage",
+     "- **Triage-bottleneck risk**: Items pile up pre-disposition; mitigated by triage SLA & capacity"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service center (VS-12.1); merchandising (VS-01); finance (VS-17.4); circular (VS-73); inventory (VS-05)"
+    ],
+    "Time Estimate": [
+     "- ~per item minutes"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center/Merchandising triage each item to a disposition (refurbish-to-certify W4588, parts-harvest W4590, recycle/dispose VS-73) based on inspection (W4586) & unit economics (W4582)",
+     "duration": "Per item",
+     "n": "1",
+     "r": "Service Center / Merchandising"
+    },
+    {
+     "a": "CFO / VP Merch",
+     "activity": "Finance/Service Center confirm the disposition is economic (refurb cost vs resale value W4582), re-routing uneconomic items to parts/recycle",
+     "duration": "Per item",
+     "n": "2",
+     "r": "Finance / Service Center"
+    },
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center route the item (to refurb bench W4588, parts W4590, or recycle VS-73), recording the disposition for analytics (W4599) & inventory (VS-05)",
+     "duration": "Per item",
+     "n": "3",
+     "r": "Service Center"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4582",
+    "W4586",
+    "W4588",
+    "W4590",
+    "W4599"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696"
+   ],
+   "fields": {
+    "Frequency": "Per item",
+    "Owner": "Service Center (VS-12.1)",
+    "Participants": "Quality (VS-31), Inventory/parts (VS-05), Vendor service (VS-03), Finance (VS-17)",
+    "Trigger": "Triage to refurbish (W4587)",
+    "Volume": "Refurbishment processing across triaged items"
+   },
+   "id": "W4588",
+   "level": 2,
+   "name": "Refurbishment Processing (Repair, Refinish, Parts Replacement)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Refurb-workflow/cost-capture app; parts-availability check; quality-verification checklist"
+    ],
+    "Controls": [
+     "- CTL-696 (ensure controlled execution — Take-Back, Inspection, Refurbishment & Certification (PA-155.2).)",
+     "- CTL-696: refurbishment to standard & quality-verified (VS-31); cost captured (W4582); HSE-compliant (W4592)"
+    ],
+    "Cross-references": [
+     "- links to VS-12.1 (service center), VS-31 (quality), VS-05 (parts), VS-03 (vendor), VS-17 (finance), VS-24/W4592 (HSE), W4582 (cost), W4589 (certification)"
+    ],
+    "Pain Points / Risks": [
+     "- **Quality-failure risk**: Refurbished item fails in use → warranty/safety (W4583/VS-53); mitigated by VS-31 quality verification & W4589 certification",
+     "- **Cost-overrun risk**: Refurb exceeds estimate → margin loss (W4582); mitigated by cost tracking & stop-loss"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service center (VS-12.1); quality (VS-31); inventory/parts (VS-05); vendor service (VS-03); finance (VS-17); HSE (VS-24/W4592)"
+    ],
+    "Time Estimate": [
+     "- Per item hours–days (complexity-dependent)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center diagnose & execute refurbishment (repair, replace worn parts from stock VS-05 or vendor VS-03, refinish/clean, re-battery for cordless), per grade target (W4579)",
+     "duration": "Per item",
+     "n": "1",
+     "r": "Service Center / Vendor"
+    },
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center/Quality verify refurbishment meets function/cosmetic standard (VS-31), capturing parts/labor cost for unit economics (W4582/W4591)",
+     "duration": "Per item",
+     "n": "2",
+     "r": "Service Center / Quality"
+    },
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center route the refurbished item to certification (W4589), with HSE compliance during processing (W4592)",
+     "duration": "Per item",
+     "n": "3",
+     "r": "Service Center"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4579",
+    "W4582",
+    "W4583",
+    "W4587",
+    "W4589",
+    "W4591",
+    "W4592"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696",
+    "CTL-82"
+   ],
+   "fields": {
+    "Frequency": "Per item",
+    "Owner": "Quality (VS-31) / Service Center (VS-12.1)",
+    "Participants": "Warranty (VS-53), Auto-ID (VS-151), Merchandising (VS-01), Inventory (VS-05)",
+    "Trigger": "Refurbishment complete (W4588)",
+    "Volume": "Certifications across refurbished items"
+   },
+   "id": "W4589",
+   "level": 2,
+   "name": "Certification Testing, Grading & Certification Issuance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Certification-test checklist; certificate/warranty generation; certified-label/serial issuance (VS-151)"
+    ],
+    "Controls": [
+     "- CTL-82 (ensure trade-in device integrity & data wipe.)",
+     "- CTL-696: certification testing rigorous w/ reject criteria; certificate & warranty issued (W4583); labeled/serial-tracked (VS-151)"
+    ],
+    "Cross-references": [
+     "- links to VS-31 (quality), VS-12.1 (service center), VS-53 (warranty), VS-151 (auto-ID), VS-05 (inventory), W4579 (grading), W4583 (warranty), W4581 (price), W4593 (listing)"
+    ],
+    "Pain Points / Risks": [
+     "- **False-certify risk**: Item certified that shouldn't be → warranty/safety failure (VS-53/VS-26); mitigated by rigorous testing & reject criteria",
+     "- **Labeling-error risk**: Certified item mislabeled; mitigated by Auto-ID/serial control (VS-151)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Quality (VS-31); service center (VS-12.1); warranty (VS-53); auto-ID/labeling (VS-151); inventory (VS-05); merchandising (VS-01)"
+    ],
+    "Time Estimate": [
+     "- ~30–60 min per item"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "Quality/Service Center run certification testing (function, safety/electrical, performance vs spec), assign the final grade (A/B/C per W4579), and decide certify vs reject",
+     "duration": "Per item",
+     "n": "1",
+     "r": "Quality / Service Center"
+    },
+    {
+     "a": "VP Merch",
+     "activity": "Warranty/Merchandising issue the certified-pre-owned certificate & warranty (W4583 terms), and Auto-ID applies the certified-pre-owned label/serial (VS-151/W4584)",
+     "duration": "Per item",
+     "n": "2",
+     "r": "Warranty / Merchandising / Auto-ID"
+    },
+    {
+     "a": "Inventory Manager / VP Merch",
+     "activity": "Inventory/Merchandising move the certified item to resale stock (VS-05/W4584) at the W4581 price, ready for listing (W4593)",
+     "duration": "Per item",
+     "n": "3",
+     "r": "Inventory / Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4579",
+    "W4581",
+    "W4583",
+    "W4584",
+    "W4588",
+    "W4593"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696",
+    "CTL-82"
+   ],
+   "fields": {
+    "Frequency": "Per item",
+    "Owner": "Service Center (VS-12.1) / Circular (VS-73)",
+    "Participants": "Inventory (VS-05), Quality (VS-31), HSE (VS-24), Finance (VS-17)",
+    "Trigger": "Triage to parts/recycle (W4587); reject from certification (W4589)",
+    "Volume": "Parts-harvest/recycle across non-certified items"
+   },
+   "id": "W4590",
+   "level": 2,
+   "name": "Parts Harvesting, Recycling & Non-Certified Disposition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Parts-catalog/harvest app; recycle/e-waste partner routing; circular-impact tracking"
+    ],
+    "Controls": [
+     "- CTL-82 (ensure trade-in device integrity & data wipe.)",
+     "- CTL-696: parts harvested where economic; hazmat responsibly disposed (VS-114/VS-73); circular impact captured (VS-25)"
+    ],
+    "Cross-references": [
+     "- links to VS-12.1 (service center), VS-73 (circular/waste), VS-05 (inventory), VS-24/VS-114 (HSE/DG), VS-17 (finance), VS-25 (ESG), W4587 (triage), W4589 (reject)"
+    ],
+    "Pain Points / Risks": [
+     "- **Hazmat-mishandling risk**: Battery/chemical parts disposed improperly → environmental/fine (VS-114/VS-73); mitigated by hazmat-handling & certified e-waste partners",
+     "- **Value-loss risk**: Usable parts discarded; mitigated by parts-harvest discipline"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service center (VS-12.1); circular/waste (VS-73); inventory (VS-05); HSE/DG (VS-24/VS-114); finance (VS-17); ESG (VS-25)"
+    ],
+    "Time Estimate": [
+     "- Per item variable"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center harvest usable parts from non-certifiable/reject items (for refurbishment spares), cataloging to parts inventory (VS-05)",
+     "duration": "Per item",
+     "n": "1",
+     "r": "Service Center / Inventory"
+    },
+    {
+     "a": "Circular Lead / HSE Lead",
+     "activity": "Service Center/Circular route remaining material to recycling/responsible disposal (VS-73), with DG/hazmat handling (VS-114/VS-24) for batteries/chemicals",
+     "duration": "Per item",
+     "n": "2",
+     "r": "Service Center / Circular / HSE"
+    },
+    {
+     "a": "CFO / ESG Lead",
+     "activity": "Finance/Circular account parts-harvest value & disposal cost, capture circular-economy impact (diverted-from-waste), and report (VS-25/VS-73)",
+     "duration": "Per item",
+     "n": "3",
+     "r": "Finance / Circular"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4587",
+    "W4589"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696",
+    "CTL-82"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic",
+    "Owner": "Service Center (VS-12.1) / Quality (VS-31) / Finance (VS-17.4)",
+    "Participants": "OpEx (VS-133), Inventory (VS-05), Data (VS-28)",
+    "Trigger": "Refurbishment operations (W4588/W4589); capacity/cost review",
+    "Volume": "Refurbishment service-center operations across items"
+   },
+   "id": "W4591",
+   "level": 2,
+   "name": "Refurbishment Quality, Cost Tracking & Service-Center Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Refurb-workflow/WIP tracking; cost-capture automation; ops-performance dashboards"
+    ],
+    "Controls": [
+     "- CTL-82 (ensure trade-in device integrity & data wipe.)",
+     "- CTL-696: refurb ops capacity-planned & quality-controlled (VS-12.1/VS-31); cost/yield tracked (W4582); continuously improved (VS-133)"
+    ],
+    "Cross-references": [
+     "- links to VS-12.1 (service center), VS-31 (quality), VS-17.4 (finance), VS-133 (OpEx), VS-05 (inventory), W4582 (cost), W4599 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Capacity-bottleneck risk**: Refurb backlog → inventory tie-up; mitigated by workload planning & capacity mgmt",
+     "- **Quality-drift risk**: Inconsistent refurb quality → returns/warranty (VS-53); mitigated by QC & standard work (VS-133)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service center (VS-12.1); quality (VS-31); finance (VS-17.4); OpEx (VS-133); inventory (VS-05); data (VS-28)"
+    ],
+    "Time Estimate": [
+     "- Ongoing ops + periodic review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Center Manager",
+     "activity": "Service Center/Quality run refurbishment operations (workload planning, technician scheduling, WIP tracking, quality control), leveraging VS-12.1 service-center capability",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Service Center / Quality"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/Data track refurbishment cost (labor, parts, overhead per item/category W4582), yield, and throughput, feeding unit economics & analytics (W4599)",
+     "duration": "Periodic",
+     "n": "2",
+     "r": "Finance / Data"
+    },
+    {
+     "a": "Service Center Manager / COO",
+     "activity": "OpEx/Service Center drive continuous improvement (process efficiency, cost reduction, yield improvement) per VS-133, and report ops performance",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "OpEx / Service Center"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4582",
+    "W4588",
+    "W4589",
+    "W4599"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-696"
+   ],
+   "fields": {
+    "Frequency": "Continuous + on incident",
+    "Owner": "HSE (VS-24) / Service Center (VS-12.1)",
+    "Participants": "Quality (VS-31), DG (VS-114), Occupational Health (VS-83), Compliance (VS-22)",
+    "Trigger": "Refurbishment ops (W4588); HSE cycle; incident",
+    "Volume": "Refurbisher HSE across service centers"
+   },
+   "id": "W4592",
+   "level": 2,
+   "name": "Refurbisher Safety, HSE & Hazmat Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- HSE training/exposure tracking; incident management; hazmat-disposal documentation"
+    ],
+    "Controls": [
+     "- CTL-696 (ensure controlled execution — Take-Back, Inspection, Refurbishment & Certification (PA-155.2).)",
+     "- CTL-696: refurbisher safety standards (VS-24/VS-114); technicians trained/PPE'd; hazmat compliantly handled (VS-114/VS-73)"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (HSE), VS-12.1 (service center), VS-114 (DG), VS-83 (occupational health), VS-22/VS-21 (compliance/audit), W4586 (intake safety), W4590 (hazmat disposal)"
+    ],
+    "Pain Points / Risks": [
+     "- **Technician-injury risk**: Electrical/chemical/battery injury; mitigated by PPE, training, safe-test procedures (VS-24)",
+     "- **Hazmat-compliance risk**: Improper battery/chemical handling → environmental/fine (VS-114); mitigated by hazmat procedures & certified disposal"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE (VS-24); service center (VS-12.1); DG (VS-114); occupational health (VS-83); compliance (VS-22); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- Ongoing + per-incident"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HSE Lead / Service Center Manager",
+     "activity": "HSE/Service Center set refurbisher safety standards (electrical test safety, battery/lithium handling VS-114, PPE, ergonomic), per VS-24/DG rules",
+     "duration": "Annual + ongoing",
+     "n": "1",
+     "r": "HSE / Service Center"
+    },
+    {
+     "a": "HSE Lead",
+     "activity": "HSE/Occupational Health train technicians, monitor exposures (electrical, chemical, battery), and manage incidents (VS-24/VS-83)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "HSE / Occupational Health / Service Center"
+    },
+    {
+     "a": "HSE Lead / VP Legal",
+     "activity": "HSE/DG manage refurbishment hazmat (battery/chemical storage, e-waste disposal VS-114/VS-73), and ensure compliance/audit (VS-22/VS-21)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "HSE / DG / Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4586",
+    "W4588",
+    "W4590"
+   ]
+  }
+ ]
+}

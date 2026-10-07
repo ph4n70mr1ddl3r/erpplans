@@ -1,0 +1,1073 @@
+{
+ "process_area": {
+  "id": "PA-19.5",
+  "title": "Separation & Benefits"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-19-hire-to-retire/PA-19.5-separation-and-benefits.md",
+ "value_stream": {
+  "directory": "VS-19-hire-to-retire",
+  "id": "VS-19",
+  "name": "Hire-to-Retire"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "~100–130 separations/month (1,200–1,600/year at 15–20% annual turnover)",
+    "Owner": "HR Assistant",
+    "Participants": "HR Assistant, HR Head, Department Head, Payroll Officer, IT, Employee",
+    "Trigger": "Employee submits resignation, or management initiates termination, or employee retires",
+    "Volume": "Peaks in January (post-13th month pay resignations) and during store opening months (transfer to new store vs. separation)"
+   },
+   "id": "W43",
+   "level": 2,
+   "name": "Employee Separation & Offboarding",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits resignation letter\" (replaces manual Step 1).",
+     "- System auto-record of \"record in system\" (replaces manual Step 2).",
+     "- System auto-document of \"Department Head conducts exit interview\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: HR Assistant review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Clearance bottlenecks**: IT deactivation or store inventory reconciliation delays can block final pay release beyond the 5-day target, creating employee grievances and potential DOLE complaints",
+     "- **Post-13th month spike**: January resignation surge (after 13th month pay) strains HR capacity and creates simultaneous vacancy backfills across 200 stores",
+     "- **Final pay disputes**: Employees frequently contest loan deductions or leave conversion amounts; Payroll Officer must reconcile manually when system-calculated final pay is challenged",
+     "- **Cross-entity transfer complexity**: Transfers between BuildRight's 5 legal entities require simultaneous separation and re-onboarding; errors in leave balance carry-forward or statutory reassignment cause payroll discrepancies"
+    ],
+    "Staffing Implication": [
+     "- **HR Assistants (2)**: 100–130 separations/month × ~45 min admin each (clearance coordination + documentation) = ~90 hours/month. With 2 assistants that's ~45 hours each. Manageable alongside other HR admin duties.",
+     "- **IT**: 100–130 deactivations/month × 15 min each = ~30 hours/month. Absorbed by IT helpdesk.",
+     "- **Department Heads / Store Managers**: ~20 min per separating employee for clearance. With ~100/month spread across 200 stores, most managers handle < 1 separation/month. Negligible impact.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Separation record creation with type classification (W43.2)",
+     "- Automated clearance form generation and routing (W43.4)",
+     "- Clearance status tracking per department (W43.5–9)",
+     "- System account deactivation trigger (W43.5)",
+     "- Final pay computation by separation type: system auto-calculates final pay based on separation type (resignation, termination, retirement, end of contract) including pro-rated salary, pro-rated 13th month pay per BIR rules (1/12 of basic salary × months worked), unused VL monetization, applicable separation/retirement pay per Labor Code, less outstanding loans and deductions; final tax withholding per BIR rules (different treatment for retirement pay vs. resignation); final statutory contribution period computed per SSS/PhilHealth/Pag-IBIG rules; Payroll Officer reviews system calculation before processing (W43.10)",
+     "- Employee status lifecycle: Active → On Notice → Separated (W43.12)",
+     "- Certificate of Employment generation (W43.13)",
+     "- Cross-entity employee transfer: simultaneous separation and onboarding across legal entities with continuity of service; automatic payroll entity switch with transferred leave balances, 13th month pro-ration, and statutory reassignment; SSS/PhilHealth/Pag-IBIG reassigned to new entity; BIR withholding tax switched to new entity's TIN; GL postings to both entity payrolls for the transfer period (W43.15)",
+     "- Turnover analytics (W43.14)",
+     "- Integration with W10 (payroll) and W15 (onboarding — reverse process)"
+    ],
+    "Time Estimate": [
+     "- Separation record creation: 10 min/employee",
+     "- Exit interview: 30 min/employee",
+     "- Clearance collection (all departments): ~45 min/employee over 1–2 weeks",
+     "- Final pay computation: 30 min/employee",
+     "- **Total per separation**: ~2 hours of HR/Payroll time spread across 30-day notice period",
+     "- **Cycle time**: 30 days (notice period) + 5 business days for final pay release"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dept. Head",
+     "activity": "Employee submits resignation letter (or management issues termination notice)",
+     "duration": "—",
+     "n": "1",
+     "r": "Employee / Dept. Head"
+    },
+    {
+     "a": "HR Head",
+     "activity": "HR Assistant creates separation record in system: resignation date, last working day (30-day notice per Labor Code or garden leave), separation type (resignation, termination, retirement, end of contract)",
+     "duration": "10 min",
+     "n": "2",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "HR Head",
+     "activity": "Department Head conducts exit interview; documents feedback (work conditions, compensation, management, reason for leaving)",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Dept. Head"
+    },
+    {
+     "a": "HR Assistant",
+     "activity": "HR Assistant initiates clearance process: system generates clearance form routed to all relevant departments",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "CIO",
+     "activity": "**IT clearance**: IT confirms return of laptop/tablet/phone (if issued); deactivates system accounts (ERP, POS, email, VPN); revokes access badges",
+     "duration": "15 min/employee",
+     "n": "5",
+     "r": "IT Team"
+    },
+    {
+     "a": "Dept. Head",
+     "activity": "**Department clearance**: Dept. Head confirms return of company property (uniforms, tools, keys); approves final leave usage",
+     "duration": "10 min/employee",
+     "n": "6",
+     "r": "Dept. Head"
+    },
+    {
+     "a": "AP/AR Supervisor",
+     "activity": "**Finance clearance**: AP Clerk confirms no outstanding cash advances or loans; AR confirms no corporate account exposure",
+     "duration": "10 min/employee",
+     "n": "7",
+     "r": "AP / AR Clerk"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Store Operations clearance** (if store employee): Store Manager confirms no pending inventory accountability issues, cash drawer reconciled",
+     "duration": "10 min/employee",
+     "n": "8",
+     "r": "Store Manager"
+    },
+    {
+     "a": "HR Head",
+     "activity": "HR Assistant collects all signed clearances; marks clearance as complete in system",
+     "duration": "10 min/employee",
+     "n": "9",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Officer computes final pay per W10 step 12: pro-rated salary for final pay period, pro-rated 13th month pay (1/12 of annual basic salary × months worked ÷ 12), converted unused leave credits (VL to cash per company policy), less outstanding loans/advances and clearance deductions; final pay computation varies by separation type — resignation: pro-rated salary + 13th month + VL conversion; termination for cause: pro-rated salary + 13th month (VL conversion per company discretion); retirement: pro-rated salary + 13th month + VL conversion + retirement pay per Labor Code or company plan (whichever is higher); end of contract: pro-rated salary + 13th month + VL conversion + separation pay if applicable per DOLE; system auto-calculates final pay based on separation type classification from W43.2 with Payroll Officer review and validation",
+     "duration": "Per W10",
+     "n": "10",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "—",
+     "activity": "System generates final pay as separate payroll run or adjustment; final payslip issued (W10 step 13)",
+     "duration": "Automated",
+     "n": "11",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "System updates employee status to \"Separated\"; deactivates payroll processing; retains record for regulatory retention (10 years)",
+     "duration": "Automated",
+     "n": "12",
+     "r": "System"
+    },
+    {
+     "a": "HR Head",
+     "activity": "System generates COE (Certificate of Employment) on request: dates of employment, position, compensation range (optional)",
+     "duration": "5 min/request",
+     "n": "13",
+     "r": "System / HR Assistant"
+    },
+    {
+     "a": "CHRO",
+     "activity": "HR Head includes separation data in monthly turnover report: rate by department, store, and separation type; exit interview themes",
+     "duration": "1 hour/month",
+     "n": "14",
+     "r": "HR Head"
+    },
+    {
+     "a": "HR Head",
+     "activity": "Cross-entity employee transfer (between legal entities, e.g., Depot Inc. → Logistics Inc.): HR Assistant initiates transfer with effective date, destination entity, and new position; system processes as simultaneous separation from source entity and onboarding in destination entity with continuity of service — accumulated leave credits, 13th month pay pro-ration, and seniority carry forward; system deactivates employee in source entity payroll, creates employee record in destination entity with transferred balances, reassigns SSS/PhilHealth/Pag-IBIG to new entity's remittance, and switches BIR withholding tax to new entity's TIN registration; final pay computed at source entity (pro-rated) and first pay at destination entity for the same period; no break in employment continuity",
+     "duration": "30 min/transfer",
+     "n": "15",
+     "r": "HR Assistant / Payroll Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W15"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "Per separation event; ~1,200–1,600 separations/year (matching the hiring churn canon per W43)",
+    "Owner": "HR Business Partner",
+    "Participants": "HR Business Partner, departing employee, Department Supervisor/Store Manager",
+    "Trigger": "Employee submits resignation; employee terminated; employee retirement",
+    "Volume": "~100–130 separations/month across all locations"
+   },
+   "id": "W628",
+   "level": 2,
+   "name": "Employee Exit Interview & Attrition Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"schedules exit interview within employee's notice period\" (replaces manual Step 1).",
+     "- System auto-send of \"sends confidential exit interview questionnaire to departing employee via…\" (replaces manual Step 2).",
+     "- System auto-capture of \"captures qualitative insights\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: scheduling interview early in notice period, offering anonymous written option, and framing as feedback opportunity; operational: confidentiality assurance, anonymized reporting, and third-party survey option; operational: quarterly action-oriented review and tracking of retention interventions implemented"
+    ],
+    "Pain Points / Risks": [
+     "- **Low exit interview participation**: departing employees may decline to participate or provide superficial answers; mitigated by scheduling interview early in notice period, offering anonymous written option, and framing as feedback opportunity",
+     "- **Honesty bias**: employees may not share true reasons for leaving (especially if related to management) to avoid burning bridges; mitigated by confidentiality assurance, anonymized reporting, and third-party survey option",
+     "- **Data without action**: attrition data collected but not acted upon erodes management credibility; mitigated by quarterly action-oriented review and tracking of retention interventions implemented",
+     "- **Store-level access**: store employees may be harder to reach for exit interviews due to shift schedules and remote locations; mitigated by offering phone/video interviews and flexible scheduling"
+    ],
+    "Staffing Implication": [
+     "- **HR Business Partner**: ~30 min per exit interview + ~4 hours/month analytics + ~2 hours/quarter presentation = ~12 hours/month. Absorbed within existing role.",
+     "- **HR Coordinator**: ~5 min scheduling per separation. Absorbed within existing role."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP HR module: separation processing (per W43), exit interview data capture, attrition analytics",
+     "- ERP BI module: attrition dashboard, trend analysis, cost modeling",
+     "- Online survey platform: exit interview questionnaire delivery and response collection",
+     "- Employee master (W292): tenure data, performance ratings, rehire eligibility flag"
+    ],
+    "Time Estimate": [
+     "~55 min per separation (notification/scheduling 5 min + questionnaire 5 min + exit interview 30 min + structured recording 15 min; high-performer retention conversations add 30 min) × ~1,200–1,600 separations/year ≈ 1,100–1,470 hours/year; monthly attrition dashboard 4 hours ≈ 48 hours/year; quarterly trend presentation 2 hours ≈ 8 hours/year; annual workforce-plan integration 4 hours.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HR Business Partner",
+     "activity": "Departing employee notification received (per W43 offboarding); HR Coordinator schedules exit interview within employee's notice period (30 days for regular employees per Labor Code)",
+     "duration": "5 min",
+     "n": "1",
+     "r": "HR Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "HR Business Partner sends confidential exit interview questionnaire to departing employee via online survey link: covers (a) primary reason for leaving (compensation, career growth, management, work environment, relocation, personal, retirement), (b) satisfaction with role and team, (c) relationship with supervisor, (d) perception of company culture, (e) suggestions for improvement, (f) whether they would recommend BuildRight as employer",
+     "duration": "5 min",
+     "n": "2",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "—",
+     "activity": "Exit interview conducted (in-person for HQ/DC employees, video call for store employees, phone for remote locations): HR Business Partner explores survey responses, probes for additional context, and captures qualitative insights; assures confidentiality of responses",
+     "duration": "30 min",
+     "n": "3",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "—",
+     "activity": "HR Business Partner records structured exit interview data in HR analytics module: reason category, sub-reasons, verbatim quotes (anonymized), rehire eligibility assessment, and department/location metadata",
+     "duration": "15 min",
+     "n": "4",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "—",
+     "activity": "For high-performer departures or unexpected resignations: HR Business Partner conducts stay-interview-style debrief with Department Supervisor/Store Manager to understand team dynamics and identify retention risks for remaining team members",
+     "duration": "30 min",
+     "n": "5",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Monthly: HR Business Partner generates attrition analytics dashboard — (a) attrition rate by location/store, department, tenure band, and employment type, (b) top reasons for leaving, (c) average tenure at departure, (d) new hire 90-day attrition rate, (e) regretted vs. non-regretted attrition, (f) attrition cost estimate (recruitment + training + productivity loss)",
+     "duration": "4 hours",
+     "n": "6",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Quarterly: HR Business Partner presents attrition trend analysis to CHRO and Department Heads — identifies departments/stores with above-average attrition, root cause themes, and recommended retention interventions; links to employee engagement survey results (per W629)",
+     "duration": "2 hours",
+     "n": "7",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "CEO",
+     "activity": "Annually: CHRO incorporates attrition analysis into strategic workforce plan; sets annual retention targets; allocates retention budget (compensation adjustments, benefits enhancements, career development programs per W51)",
+     "duration": "4 hours",
+     "n": "8",
+     "r": "CHRO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W292",
+    "W43",
+    "W51",
+    "W629"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "~80–120 retirements/separations per year; growing as workforce ages",
+    "Owner": "CHRO",
+    "Participants": "HR Manager, Employee, Finance, Legal, Payroll",
+    "Trigger": "Employee reaches retirement eligibility (per RA 7641 or company policy) or separates from employment with retirement benefit entitlement",
+    "Volume": "1 retirement benefit computation per employee"
+   },
+   "id": "W977",
+   "level": 2,
+   "name": "Employee Retirement Benefit Fund (RA 7641) Administration & Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans employee master\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews computation for accuracy\" (replaces manual Step 2).",
+     "- System auto-document of \"Documentation & Approval\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Republic Act 7641 (Retirement Pay Law) mandates that Philippine private sector employees who have served at least 5 years with an employer are entitled to retirement pay upon reaching age 60 (optional) or age 65 (mandatory), unless the company has a more favorable retirement plan. The minimum retirement pay is one-half month salary per year of service (where one-half month = 15 days + 5 days incentive leave + 1/12 of 13th month pay = 22.5 days per year of service). BuildRight, as a responsible Philippine employer, provides retirement benefits that meet or exceed RA 7641 requirements. BuildRight's retirement program includes: (a) RA 7641 statutory retirement pay; (b) company-funded retirement savings plan with annual contributions; (c) early retirement option (reduced benefits for employees retiring between 55–59 with 20+ years of service); and (d) post-retirement benefits (continued HMO coverage for 1 year, employee discount for life per W205). With 6,762 employees and a growing proportion approaching retirement age (especially among early-hire store managers and long-tenured HQ staff), systematic retirement benefit administration is essential for compliance, financial planning, and employee relations."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: conservative investment policy and annual board review"
+    ],
+    "Pain Points / Risks": [
+     "- **Actuarial liability growth**: As BuildRight's workforce ages and grows, the retirement benefit liability increases; Finance must project liability 10+ years forward and ensure adequate funding; annual actuarial valuation is mandatory; underfunding risk mitigated by conservative investment policy and annual board review",
+     "- **Early retirement abuse**: Employees may seek early retirement to access retirement pay, then seek re-employment; BuildRight policy: rehired early retirees restart service computation from zero; minimum 12-month separation before rehire eligibility; HR monitors rehire patterns",
+     "- **Tax computation complexity**: BIR rules on retirement pay tax exemption are complex — exemption applies only if specific conditions are met (≥10 years service, ≥50 years old, retirement plan approved by BIR); incorrect tax computation exposes BuildRight to BIR penalties; Finance tax accountant (W90) reviews all retirement pay tax computations",
+     "- **Emotional sensitivity**: Retirement is an emotionally significant event; HR Manager must handle retirement counseling with sensitivity, especially for involuntary retirement (mandatory at 65); respectful communication, clear benefit explanation, and post-retirement support (HMO, discount) maintain positive employer-employee relationship and employer brand"
+    ],
+    "Staffing Implication": [
+     "- **No incremental headcount** — absorbed by existing HR and Finance teams; retirement processing estimated at 4–6 hours/month for eligibility monitoring + 2–4 hours per retiring employee"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR employee master data with age, hire date, and service computation (W292)",
+     "- Retirement eligibility batch job (monthly)",
+     "- Payroll system (W10) with retirement pay computation module",
+     "- Tax computation module — BIR retirement pay tax exemption rules",
+     "- Final pay processing (W643)",
+     "- Employee offboarding workflow (W43)",
+     "- 13th month pay module (W644)",
+     "- Leave balance management (W777)",
+     "- Long service award integration (W973)",
+     "- Financial reporting — PFRS 19 employee benefit disclosure",
+     "- BI dashboard for workforce age profile and retirement liability projection"
+    ],
+    "Time Estimate": [
+     "- Eligibility identification: 4–6 hours/month (batch)",
+     "- Benefit computation: 2–4 hours/employee",
+     "- Documentation & approval: 1–2 hours/employee",
+     "- Final pay processing: 2–3 hours/employee",
+     "- Financial planning: ongoing (annual actuarial + quarterly reporting)",
+     "- **Total per retiring employee**: 6–11 hours of staff time",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "**Retirement Eligibility Identification**: System identifies upcoming retirement-eligible employees: (a) monthly batch job scans employee master for: (i) employees turning 60 or 65 in next 6 months; (ii) employees with 5, 10, 15, 20, 25, 30 years of service; (iii) employees who have submitted retirement intention; (b) HR reviews eligibility list and classifies: (i) **Mandatory retirement** — employee reaching age 65; (ii) **Optional retirement** — employee age 60 with ≥5 years service (electing to retire); (iii) **Early retirement** — employee age 55+ with ≥20 years service (applying for early retirement); (iv) **Separation with retirement benefits** — employee separating (resignation, retrenchment) with ≥5 years service entitled to retirement pay proportionally; (c) HR Manager contacts eligible employees for retirement counseling: explains benefits, options, timeline, and required documents",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "System / HR Manager"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Retirement Benefit Computation**: HR computes retirement benefit package: (a) **Statutory retirement pay (RA 7641)**: (i) one-half month salary per year of service = (daily rate × 22.5 days) × years of service; (ii) daily rate = monthly basic salary ÷ 26 days (or 30 days per company policy); (iii) years of service = from hire date to retirement date (inclusive of approved leaves); (b) **Company retirement savings**: accumulated company contributions + earnings (if any); (c) **13th month pay pro-rated**: for the fraction of the year worked; (d) **Unused leave monetization**: per company leave policy and W777 (leave balance management); (e) **Long service award top-up**: if retirement coincides with a service milestone per W973; (f) **Total retirement package** = statutory + company savings + 13th month + leave monetization + any applicable top-up; (g) Finance reviews computation for accuracy; tax computation: retirement pay is tax-exempt up to PHP 50,000 per year of service (per BIR rules — retirement pay from employer's private retirement plan is exempt from income tax if employee has served ≥10 years and is ≥50 years old; otherwise, excess is taxable)",
+     "duration": "2–4 hours/employee",
+     "n": "2",
+     "r": "HR / Finance"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Retirement Documentation & Approval**: HR prepares retirement documents: (a) retirement benefit computation sheet — detailed breakdown per component; (b) retirement agreement — mutual agreement between BuildRight and employee documenting: retirement date, benefit amount, payment schedule, release and waiver, post-retirement benefits; (c) BIR tax compliance documents — Certificate of Tax Exemption (if applicable), withholding tax computation for taxable portion; (d) employee reviews and signs retirement agreement; (e) HR Manager and CHRO co-approve; (f) for early retirement: COO approval required; (g) Legal reviews agreement per W230 for compliance with RA 7641 and DOLE regulations",
+     "duration": "1–2 hours/employee",
+     "n": "3",
+     "r": "HR / Legal / Employee"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Final Pay Processing & Benefit Disbursement**: Payroll processes retirement pay: (a) retirement pay computed and processed through special off-cycle payroll run per W641 (off-cycle payment processing); (b) tax-exempt portion excluded from taxable income; taxable portion (if any) withheld per BIR graduated tax table; (c) retirement pay disbursed via bank transfer to employee's account; (d) final pay (last salary, 13th month, leave monetization) processed separately per W643 (final pay computation); (e) company retirement savings fund balance transferred to employee's personal account or paid as lump sum per employee election; (f) HR deactivates employee access: system access revoked per W43 (offboarding), company IDs collected, uniforms returned per W172; (g) post-retirement benefits activated: HMO extension (1 year), employee discount for life per W205, optional continued loyalty program membership",
+     "duration": "2–3 hours/employee",
+     "n": "4",
+     "r": "Payroll / HR / Finance"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Retirement Fund Financial Planning & Reporting**: Finance manages retirement fund: (a) annual actuarial valuation — commissioned to assess BuildRight's retirement benefit liability across all 6,762 employees; (b) annual company contribution to retirement fund budgeted per W26 (annual budget) — typically 2–4% of total payroll; (c) fund investment management — retirement fund assets invested per board-approved investment policy (conservative: government securities, time deposits, high-grade corporate bonds); (d) monthly fund performance reporting to CFO; (e) annual retirement fund disclosure in financial statements per PFRS 19 (Employee Benefits) — defined benefit obligation, plan assets, and net liability; (f) quarterly report to SEC (if applicable) per W481",
+     "duration": "Ongoing (annual actuarial + quarterly reporting)",
+     "n": "5",
+     "r": "Finance / CFO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W172",
+    "W205",
+    "W230",
+    "W26",
+    "W292",
+    "W43",
+    "W481",
+    "W641",
+    "W643",
+    "W644",
+    "W777",
+    "W90",
+    "W973"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; estimated 1–2 retrenchment exercises per year (historical Philippine retail context)",
+    "Owner": "HR Head (CHRO)",
+    "Participants": "HR Head, VP Legal, Department Head, Payroll Officer, DOLE Regional Director, Finance, Affected Employees, Employee Representatives (if unionized or elected)",
+    "Trigger": "Management decision to reduce workforce due to economic downturn, store closure (W45/W703), redundancy from automation (W30.2), or organizational restructuring",
+    "Volume": "Variable: from individual position redundancy to mass retrenchment affecting 20+ employees per event"
+   },
+   "id": "W1324",
+   "level": 2,
+   "name": "Employee Retrenchment & Redundancy Processing (Labor Code Art. 298–299 Compliance)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documented financial necessity — declining revenue, sustained losses, or…\" (replaces manual Step 1).",
+     "- System auto-review of \"review & compliance assessment\" (replaces manual Step 2).",
+     "- System auto-validate of \"Employee selection & notification\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine labor law (Labor Code Articles 298–301, formerly 283–284, and DOLE Department Order No. 174, series of 2017) strictly regulates retrenchment (reduction of workforce to prevent losses) and redundancy (elimination of positions rendered excess by factors such as restructuring, automation, or merger). Employers must follow mandatory procedural requirements including 30-day advance notice to both employees and DOLE, payment of separation pay (1 month per year of service for retrenchment; 1 month per year of service for redundancy), and good faith consultation. Non-compliance exposes BuildRight to illegal dismissal claims at NLRC (National Labor Relations Commission), potential reinstatement orders, and back wages. W43 covers voluntary separation and standard termination; this workflow covers the legally distinct process of retrenchment and redundancy, which requires specific DOLE compliance steps not applicable to voluntary resignation or for-cause termination. With 6,762 employees across 5 legal entities and ongoing automation initiatives (W30.2), BuildRight must have a compliant retrenchment process ready for activation."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: strict compliance with this workflow and VP Legal review at every step; operational: matching redeployment options to employee skills and providing training per W51 for new role requirements; operational: transparent communication (within legal limits), reaffirming job security for remaining staff, and accelerating workload redistribution to demonstrate operational continuity"
+    ],
+    "Pain Points / Risks": [
+     "- **NLRC illegal dismissal litigation**: retrenched employees may file illegal dismissal claims at NLRC; employer bears burden of proving: (a) authorized cause (retrenchment/redundancy), (b) good faith, (c) fair and equitable criteria, (d) procedural due process (30-day notice + DOLE notification + consultation); failure on any ground results in reinstatement + back wages; mitigated by strict compliance with this workflow and VP Legal review at every step",
+     "- **Mass retrenchment media exposure**: retrenchment of 20+ employees attracts media attention and social media criticism; Marketing/Communications Manager (CMO org) prepares media statement per W801; proactive communication emphasizing fairness, compliance, and support offered to affected employees mitigates reputational damage",
+     "- **Union/employee representative dynamics**: if BuildRight has unionized employees or elected employee representatives, retrenchment consultation has additional legal requirements; VP Legal advises on union-specific obligations per Collective Bargaining Agreement (if applicable)",
+     "- **Redeployment quality**: redeploying retrenched employees to lower-paying or lower-skill positions at other stores may be legally compliant but damages morale; mitigated by matching redeployment options to employee skills and providing training per W51 for new role requirements",
+     "- **Remaining employee demoralization**: retrenchment creates fear and uncertainty among remaining employees; mitigated by transparent communication (within legal limits), reaffirming job security for remaining staff, and accelerating workload redistribution to demonstrate operational continuity"
+    ],
+    "Staffing Implication": [
+     "- **HR Head**: ~20–30 hours per retrenchment exercise (planning, notification, consultation, DOLE reporting). Absorbed.",
+     "- **VP Legal**: ~10–15 hours per exercise (compliance review, notice drafting, documentation). Absorbed.",
+     "- **Payroll Officer**: ~2–4 hours per affected employee for separation pay computation. Absorbed.",
+     "- **Department Head**: ~5–10 hours per exercise (business case, notification delivery, post-retrenchment review). Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Employee master data with retrenchment/redundancy status classification (W1324.3, 7)",
+     "- Separation pay computation module: system calculates 1 month per year of service × basic salary + allowances per DOLE formula with tax exemption per BIR rules (W1324.5)",
+     "- DOLE notification and reporting document generation (W1324.6)",
+     "- Offboarding workflow per W43 with retrenchment-specific modifications (W1324.7)",
+     "- Redeployment/transfer module per W43.15 for internal redeployment option (W1324.4)",
+     "- Organizational chart management with position elimination and reporting line update (W1324.8)",
+     "- Integration with W43 (offboarding), W977 (retirement pay — for comparison), W72 (performance data for selection criteria), W16 (new store redeployment), W45/W703 (store closure trigger), W30.2 (automation-driven redundancy)"
+    ],
+    "Time Estimate": [
+     "- Business case and justification: 3–5 days",
+     "- Legal review: 2–3 days",
+     "- Employee notification: 1–2 days",
+     "- Consultation period: 30 days (elapsed, ~2–4 hours/employee of HR time)",
+     "- Separation pay computation: 2–4 hours/employee",
+     "- DOLE reporting: 1–2 days",
+     "- Offboarding: 1–2 hours/employee",
+     "- Post-retrenchment review: 2–3 days",
+     "- **Total elapsed time**: 35–40 days from decision to completion",
+     "- **Total HR/Legal effort**: ~60–100 hours per exercise (regardless of affected employee count)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "**Business case & justification**: Department Head or COO prepares retrenchment/redundancy business case: (a) **Retrenchment**: documented financial necessity — declining revenue, sustained losses, or imminent closure of business unit; supported by financial statements per W35; (b) **Redundancy**: documented operational justification — position elimination due to automation (per W30.2 AI/ML implementation), merger of roles, store closure (per W45/W703), or organizational restructuring; (c) business case includes: affected positions, number of employees, estimated cost (separation pay + benefits + DOLE filing), expected savings, timeline, and alternative measures considered and rejected (e.g., reduced hours, hiring freeze, attrition, redeployment to new stores per W16); (d) CHRO reviews business case for legal sufficiency per DOLE DO 174 requirements",
+     "duration": "3–5 days",
+     "n": "1",
+     "r": "Department Head / COO"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Legal review & compliance assessment**: VP Legal reviews retrenchment plan for Labor Code compliance: (a) verify grounds: retrenchment requires proof of financial necessity (audited financial statements); redundancy requires proof that position is genuinely excess; (b) confirm procedural requirements: (i) 30-day advance written notice to affected employees and DOLE Regional Director, (ii) good faith consultation with employees (or employee representatives/union), (iii) payment of separation pay: 1 month per year of service (retrenchment) or 1 month per year of service (redundancy), (c) assess NLRC litigation risk: retrenchment is the most litigated labor issue in the Philippines; employers bear burden of proving good faith and necessity; (d) VP Legal prepares retrenchment notice template and DOLE notification letter",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "VP Legal"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Employee selection & notification**: HR identifies affected employees based on approved criteria: (a) selection criteria must be fair and non-discriminatory: (i) performance-based (lowest performers per W72 annual review), (ii) skills/role-based (specific redundant positions), (iii) seniority (last-in, first-out for similar roles — subject to legal review); (b) HR cross-checks: no pregnant employees (protected per RA 11210), no employees on authorized leave, no employees with pending labor cases; (c) HR prepares individual retrenchment/redundancy notices for each affected employee: (i) reason for retrenchment/redundancy, (ii) effective date (30 days from receipt of notice), (iii) separation pay computation, (iv) available options: (a) accept retrenchment with separation pay, (b) apply for redeployment to another position/store, (c) apply for early retirement per W977 if eligible; (d) Department Head or HR delivers notice in person to each affected employee (individual meeting, not group announcement); simultaneous notice sent to DOLE Regional Director",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "HR Head / Department Head"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**30-day consultation period**: During the mandatory 30-day notice period: (a) HR conducts individual consultations with each affected employee: (i) explain separation pay computation in detail, (ii) discuss redeployment options (other stores with vacancies per W16, other roles within the entity, transfer to another BuildRight entity per W43.15), (iii) provide outplacement support: resume preparation, job search assistance, referral to BuildRight vendor partners with hiring needs; (b) for mass retrenchment (10+ employees): HR facilitates employee representative consultation (elected employee representative or union representative, if applicable); (c) HR documents all consultation meetings with attendance and discussion notes (critical evidence in case of NLRC dispute); (d) affected employee may choose redeployment: HR processes internal transfer per W43.15 to available position; retrenchment notice withdrawn if redeployment accepted",
+     "duration": "30 days (elapsed)",
+     "n": "4",
+     "r": "HR Head / HR Business Partner"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Separation pay computation & processing**: Payroll computes separation package per affected employee: (a) **Separation pay**: 1 month salary per year of service (per Labor Code); service computation from hire date to retrenchment effective date; monthly salary = basic salary + regularly received allowances per DOLE guidelines; (b) **Pro-rated 13th month pay**: 1/12 of annual basic salary × months worked in current year; (c) **Unused leave monetization**: VL conversion per company policy per W777; (d) **Tax treatment**: separation pay due to retrenchment/redundancy is tax-exempt up to PHP 50,000 per year of service per BIR rules (similar to W977 retirement pay); excess taxable per graduated tax table; (e) **Statutory benefits**: SSS, PhilHealth, Pag-IBIG contributions updated through last working day; certificates of contribution issued; (f) **Final pay**: last salary for hours worked through effective date; (g) Payroll Officer reviews computation; Finance validates; CHRO approves per authorization matrix",
+     "duration": "2–4 hours/employee",
+     "n": "5",
+     "r": "Payroll Officer / Finance"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**DOLE reporting & documentation**: HR submits required documentation to DOLE: (a) written notice to DOLE Regional Director (30 days before effectivity per Step 3); (b) post-retrenchment report: list of affected employees, positions, separation pay paid, and notice compliance documentation; (c) if mass retrenchment: additional reporting per DOLE DO 174 requirements; (d) VP Legal retains complete documentation file for each affected employee: notice, consultation records, separation pay computation, signed receipt, and DOLE correspondence; (e) documentation retained for 5 years per NLRC procedural rules for potential labor case defense",
+     "duration": "1–2 days",
+     "n": "6",
+     "r": "HR Head / VP Legal"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**Offboarding execution**: Affected employees processed through modified offboarding per W43: (a) clearance process per W43.4–9; (b) IT deactivation per W43.5; (c) company property return per W43.6; (d) final pay and separation pay disbursed on effective date via bank transfer; (e) Certificate of Employment issued per W43.13 with separation type documented as \"Retrenchment\" or \"Redundancy\" (accurate documentation protects both employee and employer); (f) HR updates employee status to \"Separated — Retrenchment\" or \"Separated — Redundancy\" in system; (g) system deactivates payroll processing per W43.12",
+     "duration": "Per W43 (1–2 hours/employee)",
+     "n": "7",
+     "r": "HR Assistant / Payroll / IT"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Post-retrenchment organizational review**: CHRO conducts post-retrenchment review with Department Head: (a) workload redistribution: verify remaining employees can absorb responsibilities of eliminated positions; (b) morale assessment: retrenchment affects morale of remaining employees — HR Business Partner conducts stay conversations per W628 with key retainers; (c) organizational chart update: remove redundant positions, update reporting lines; (d) budget recast: Finance adjusts department budget for reduced headcount; (e) rebuilding plan: timeline and strategy for rebuilding team when business conditions improve (e.g., new store openings per W16 create redeployment/rehiring opportunities)",
+     "duration": "2–3 days",
+     "n": "8",
+     "r": "CHRO / Department Head / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W16",
+    "W30",
+    "W35",
+    "W43",
+    "W45",
+    "W51",
+    "W628",
+    "W703",
+    "W72",
+    "W777",
+    "W801",
+    "W977"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "Estimated 3–5 employee deaths per year across 6,762 employees (based on Philippine actuarial mortality rates for working-age population)",
+    "Owner": "HR Head (CHRO)",
+    "Participants": "HR Head, HR Assistant, Payroll Officer, Finance, VP Legal, Insurance Coordinator, Department Head/Store Manager, Deceased Employee's Beneficiary/Family, SSS, Pag-IBIG, HMO Provider",
+    "Trigger": "Notification of employee death (from family, supervisor, or workplace incident report per W140)",
+    "Volume": "1 beneficiary claim per event; processing time-sensitive due to family's financial need"
+   },
+   "id": "W1325",
+   "level": 2,
+   "name": "Employee Death-in-Service Benefits Processing & Beneficiary Claim Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"record with death date, cause\" (replaces manual Step 1).",
+     "- System auto-document of \"Beneficiary identification & documentation\" (replaces manual Step 2).",
+     "- System auto-generate of \"SSS death benefit processing\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "With 6,762 employees across 200 stores and 4 DCs, employee deaths — whether from workplace accidents (W140), natural causes, illness, or commuting incidents — are a tragic but inevitable reality. Philippine law and BuildRight's benefits program provide several layers of financial support to the deceased employee's beneficiaries: (a) final pay (pro-rated salary, 13th month, leave monetization), (b) SSS death benefit (monthly pension or lump sum), (c) Pag-IBIG death benefit, (d) retirement fund per W977 (if vested), (e) life insurance per BuildRight's group policy, (f) workers' compensation per ECC/SSS if work-related, (g) company-provided bereavement assistance. This workflow ensures compassionate, efficient, and legally compliant processing of all death-in-service benefits. Timeliness is critical: the bereaved family depends on these benefits for funeral expenses and living costs. Philippine cultural expectations around prompt financial assistance after a death are strong, and delayed processing damages BuildRight's employer brand and community reputation."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: BuildRight's compassionate advance: company may advance PHP 50,000–100,000 to the family (interest-free, recoverable from SSS/Pag-IBIG proceeds) per CFO authorization; operational: rotating assignments and offering counseling support per W51 employee wellness programs; operational: annual beneficiary confirmation as part of benefits enrollment per W251"
+    ],
+    "Pain Points / Risks": [
+     "- **Family disputes over beneficiaries**: multiple claimants (e.g., estranged spouse vs. live-in partner, legitimate vs. illegitimate children) may dispute beneficiary designation; SSS/Pag-IBIG follow their own hierarchy rules regardless of company preference; VP Legal advises on proper claimant verification to avoid BuildRight paying the wrong person",
+     "- **Processing delays at government agencies**: SSS and Pag-IBIG processing times of 2–6 months create financial hardship for bereaved families; mitigated by BuildRight's compassionate advance: company may advance PHP 50,000–100,000 to the family (interest-free, recoverable from SSS/Pag-IBIG proceeds) per CFO authorization",
+     "- **Workplace death investigation**: if death occurred at work, DOLE investigation per W140 and potential criminal liability under RA 11058 (OSH Law) adds legal complexity and media exposure; VP Legal manages legal defense and regulatory response per W22",
+     "- **Emotional toll on HR staff**: processing multiple death-in-service claims per year takes emotional toll on HR Assistants; mitigated by rotating assignments and offering counseling support per W51 employee wellness programs",
+     "- **Incomplete beneficiary records**: employees may not have updated their beneficiary designations after life events (marriage, birth of child, divorce); HR discovers outdated records only at time of claim; mitigated by annual beneficiary confirmation as part of benefits enrollment per W251"
+    ],
+    "Staffing Implication": [
+     "- **HR Head**: ~4–6 hours per death-in-service event (coordination and family interface). Absorbed.",
+     "- **HR Assistant (dedicated)**: ~10–15 hours for initial processing + ~2 hours/month for 6 months follow-up per event. Absorbed within existing HR team; 3–5 events/year = ~50–80 hours/year.",
+     "- **Payroll Officer**: ~1–2 hours per event for final pay computation. Absorbed.",
+     "- **Insurance Coordinator**: ~2–3 hours per event for life insurance claim. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Employee master data with death-in-service status classification and beneficiary records (W1325.1, 9)",
+     "- Payroll system for final pay computation with tax-exempt treatment for death benefits (W1325.3)",
+     "- SSS contribution history module for death benefit filing (W1325.4)",
+     "- Pag-IBIG contribution history module for death/savings withdrawal filing (W1325.5)",
+     "- Insurance claims module per W863 for group life insurance claim (W1325.6)",
+     "- Retirement fund module per W977 for vested benefit computation (W1325.7)",
+     "- PhilHealth module for medical expense reimbursement (W1325.8)",
+     "- Document management for death certificate, beneficiary IDs, and claim filings (W1325.2, 9)",
+     "- HR analytics for death-in-service statistics (W1325.9)",
+     "- Integration with W43 (offboarding), W140 (workplace safety incident), W251 (statutory benefits), W805 (workers' compensation), W861 (injury insurance), W863 (insurance claims), W977 (retirement fund), W489 (bereavement assistance budget)"
+    ],
+    "Time Estimate": [
+     "- Immediate response: 2–4 hours",
+     "- Beneficiary documentation: 1–2 weeks",
+     "- Final pay processing: 1–2 hours (released within 5 business days)",
+     "- SSS filing: 3–5 hours preparation + 2–6 months government processing",
+     "- Pag-IBIG filing: 2–3 hours preparation + 1–3 months processing",
+     "- Insurance claim: 2–3 hours preparation + 2–8 weeks processing",
+     "- Retirement fund: 2–3 hours",
+     "- System closure: 1 hour",
+     "- Post-processing follow-up: 2 hours/month for 6 months",
+     "- **Total HR effort per event**: 30–50 hours over 6 months",
+     "- **Total elapsed time**: 6 months from death to final SSS/Pag-IBIG settlement"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "**Death notification & immediate response**: HR receives notification of employee death: (a) if workplace death: Store Manager/DC Supervisor activates emergency response per W140 and W238; COO and VP Legal notified immediately; DOLE notified within 48 hours per W140 reporting requirements; (b) if non-workplace death: Department Head or family notifies HR; (c) HR Head activates death-in-service protocol: (i) HR Assistant creates deceased employee record with death date, cause (if known), and beneficiary information from employee master; (ii) system immediately freezes employee's payroll, system access (per W43.5), and company credit cards/accounts; (iii) HR Head contacts Department Head/Store Manager to arrange: (a) company condolence visit to family, (b) funeral assistance (typically PHP 20,000–50,000 from company fund per W489), (c) leave coverage for team members attending wake/funeral; (iv) HR Head assigns dedicated HR Assistant as single point of contact for the family throughout the process",
+     "duration": "2–4 hours",
+     "n": "1",
+     "r": "HR Head / HR Assistant"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**Beneficiary identification & documentation**: HR Assistant contacts family to identify and verify beneficiaries: (a) primary beneficiary: spouse and/or children (per SSS rules — legitimate, illegitimate, or legally adopted); (b) secondary beneficiary: parents (if no primary beneficiary); (c) designated beneficiaries: check employee master for any designated beneficiaries on file (life insurance, retirement fund, Pag-IBIG); (d) required documents from family: (i) death certificate (PSA-certified), (ii) marriage certificate (if spouse claiming), (iii) birth certificates of children (if children claiming), (iv) valid IDs of all claimants, (v) funeral receipts for reimbursement; (e) HR Assistant assists family in obtaining documents if needed; (f) HR records all beneficiary information and document receipt in system",
+     "duration": "1–2 weeks (document collection)",
+     "n": "2",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Final pay computation**: Payroll Officer computes final pay per W43.10: (a) pro-rated salary through date of death; (b) pro-rated 13th month pay (1/12 × months worked); (c) unused VL monetization per company policy; (d) less: any outstanding loans or cash advances (company policy may waive deductions upon death as compassionate gesture); (e) final pay released to designated beneficiary within 5 business days per BuildRight policy (faster than standard W43 timeline given family's financial need); (f) tax treatment: final pay (salary + 13th month + VL conversion) taxed per normal payroll rules; separation pay due to death is tax-exempt per NIRC Section 32(B)(6)(b)",
+     "duration": "1–2 hours",
+     "n": "3",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**SSS death benefit processing**: HR Assistant assists family in filing SSS death benefit claim: (a) **SSS death benefit**: monthly pension for primary beneficiaries (spouse + children < 21 years old) or lump sum for secondary beneficiaries (parents); amount based on employee's SSS contribution history and CYS (credited years of service); (b) **SSS funeral benefit**: PHP 20,000–40,000 (one-time) to whoever paid for funeral expenses; (c) HR provides: (i) SSS contribution history printout, (ii) employer certification of employment and compensation, (iii) certified true copy of death certificate, (iv) other SSS-required forms (DDR, DDRF, DDRS); (d) HR Assistant assists family in filing at nearest SSS branch; processing time: 2–6 months from filing to first pension payment; (e) if work-related death: **SSS/ECC Employees' Compensation (EC) death benefit**: additional monthly pension + PHP 30,000 funeral benefit; filed separately per W805 workers' compensation process",
+     "duration": "3–5 hours (preparation) + 2–6 months SSS processing",
+     "n": "4",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**Pag-IBIG death benefit processing**: HR Assistant assists family in filing Pag-IBIG death and disability claim (DTD): (a) Pag-IBIG death benefit: PHP 20,000–80,000 (one-time) depending on membership duration and total accumulated savings (TAV); (b) Pag-IBIG savings withdrawal: deceased member's total accumulated savings (employee + employer contributions + dividends) withdrawn by beneficiaries; (c) HR provides employer certification and contribution history; (d) filed at nearest Pag-IBIG branch; processing time: 1–3 months",
+     "duration": "2–3 hours (preparation) + 1–3 months processing",
+     "n": "5",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Company life insurance claim**: Insurance Coordinator processes group life insurance claim per W863: (a) verify employee's coverage under BuildRight's group life insurance policy (coverage amount: typically 1–2× annual basic salary); (b) submit claim to insurance provider: death certificate, completed claim form, employer certification; (c) insurance company processes claim: 2–4 weeks for natural death; 4–8 weeks for accidental death (requires investigation); (d) benefit paid to designated beneficiary (not necessarily SSS/Pag-IBIG beneficiary — employee may have designated different person); (e) if work-related death: additional coverage under workers' compensation insurance per W805/W861",
+     "duration": "2–3 hours (preparation) + 2–8 weeks processing",
+     "n": "6",
+     "r": "Insurance Coordinator"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Retirement fund benefit (if vested)**: If deceased employee was vested in BuildRight's retirement fund per W977: (a) HR computes vested retirement benefit: employee's accumulated company contributions + earnings; (b) retirement fund benefit paid to designated beneficiary; (c) tax-exempt per BIR rules (retirement/death benefit); (d) Finance processes from retirement fund account",
+     "duration": "2–3 hours",
+     "n": "7",
+     "r": "HR / Finance"
+    },
+    {
+     "a": "—",
+     "activity": "**PhilHealth medical expense reimbursement**: If deceased employee had outstanding medical bills prior to death: (a) HR assists family in filing PhilHealth reimbursement for hospitalization expenses within 60 days of discharge; (b) PhilHealth deductions from final hospital bill reduce family's out-of-pocket medical costs",
+     "duration": "1–2 hours",
+     "n": "8",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**System closure & record retention**: HR completes administrative closure: (a) system updates employee status to \"Separated — Deceased\"; (b) deactivates all system access per W43.5; (c) removes from active payroll per W43.12; (d) files all death benefit documentation in employee's permanent record; (e) retains record for 10 years per BIR and SSS requirements; (f) updates HR analytics: death-in-service statistics feed into workforce planning and insurance renewal data per W863",
+     "duration": "1 hour",
+     "n": "9",
+     "r": "HR Assistant / System"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**Post-processing follow-up**: HR Assistant follows up with family on outstanding claims: (a) SSS pension approval status (2–6 month processing); (b) Pag-IBIG claim status (1–3 months); (c) any insurance claim delays; (d) HR Assistant available for 6 months post-death to assist with government agency follow-ups; (e) for workplace deaths: VP Legal monitors DOLE investigation per W140 and any potential criminal liability per RA 11058 (OSH Law)",
+     "duration": "~2 hours/month for 6 months",
+     "n": "10",
+     "r": "HR Assistant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W140",
+    "W22",
+    "W238",
+    "W251",
+    "W43",
+    "W489",
+    "W51",
+    "W805",
+    "W861",
+    "W863",
+    "W977"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "~60–80 resignations/month across all entities (based on ~15% annual turnover rate × ~5,800 employees ÷ 12)",
+    "Owner": "HR Specialist (HR Operations)",
+    "Participants": "HR Specialist, HR Manager, resigned employee, Department Manager, IT, Finance, Store Manager (if store-based)",
+    "Trigger": "Employee submits written resignation letter (30-day notice per Philippine Labor Code, Article 300) or initiates resignation via HR self-service portal",
+    "Volume": "~720–960 resignations/year"
+   },
+   "id": "W1383",
+   "level": 2,
+   "name": "Employee Resignation Processing, Clearance & Final Pay Computation (Philippine Labor Code)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs resignation in HRIS\" (replaces manual Step 1).",
+     "- System auto-count of \"Department Manager conducts retention discussion\" (replaces manual Step 2).",
+     "- System auto-validate of \"checklist customized by employee type —\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Under the Philippine Labor Code, employees must provide 30 days' written notice before resignation. Failure to render the full 30-day notice does not prevent the employee from leaving, but BuildRight may withhold amounts from final pay to cover damages (unrendered service period) per company policy. Final pay must be computed and released within 30 days from the employee's last day of work per DOLE Labor Advisory No. 06, Series of 2020. This workflow covers the complete resignation lifecycle from notice receipt through clearance to final pay release."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: HR Specialist (HR Operations) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **30-day notice non-compliance by employees**: many employees resign with less than 30 days' notice (some walk out with no notice); BuildRight cannot legally prevent the employee from leaving but may withhold final pay for unrendered notice — this creates disputes and DOLE complaints",
+     "- **Store-level accountability disputes**: Store Managers may claim the resigning employee has unresolved cash shortages or inventory discrepancies; if the employee disputes the charge, final pay release is delayed pending investigation; DOLE may side with the employee if BuildRight cannot prove the accountability",
+     "- **Clearance bottlenecks at IT and Finance**: IT deprovisioning and Finance cash advance liquidation are the most common clearance delays; if IT does not deprovision system access promptly, the resigned employee retains access to POS, ERP, and customer data — a security risk",
+     "- **Final pay computation errors**: pro-ration of 13th month pay, tax withholding on final pay (which may span tax brackets differently than regular payroll), and leave conversion calculations are error-prone; errors lead to DOLE complaints and potential penalties"
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing HR Specialists and Payroll team — adds ~60–80 hours/month across the team. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HRIS resignation module: notice logging, effective date calculation, clearance checklist generation, clearance tracking (W1383.1, W1383.3–4)",
+     "- Final pay computation engine: automated pro-ration of salary, 13th month pay, leave conversion, tax withholding, and deduction netting (W1383.5)",
+     "- Clearance workflow: digital sign-off by IT, Finance, HR, Department Manager, Store Manager with audit trail (W1383.4)",
+     "- Certificate of Employment auto-generation from HRIS data (W1383.8)",
+     "- DOLE 30-day final pay compliance dashboard (W1383.9)",
+     "- Integration with W628 (exit interview), W1384 (13th month pay proration), W43 (separation & offboarding), W19.2 (payroll processing)"
+    ],
+    "Time Estimate": [
+     "~30 min/employee for final pay computation + ~15 min clearance initiation + ~5 min/day clearance follow-up = ~1 hour/resignation over 2-week clearance period. At 60–80 resignations/month, ~60–80 hours/month across HR Specialists."
+    ]
+   },
+   "steps": [
+    {
+     "a": "HR Manager",
+     "activity": "Employee submits resignation letter to immediate supervisor and HR; HR Specialist logs resignation in HRIS with: employee name, ID, department, position, entity, resignation reason, effective date (last working day), date of notice; system calculates required 30-day notice period and validates effective date",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Employee / HR Specialist"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "Department Manager conducts retention discussion: (a) for high-performing employees, Manager may offer counter-offer (salary increase, promotion, transfer); (b) for store-based employees, Store Manager coordinates with HR; (c) if counter-offer accepted, HR cancels resignation in HRIS; if declined, proceed to clearance",
+     "duration": "30–60 min",
+     "n": "2",
+     "r": "Department Manager"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "HR Specialist initiates clearance process 2 weeks before last day: system generates clearance checklist customized by employee type — (a) **IT**: return laptop, mobile phone, VPN tokens; deprovision email, ERP access, POS access; (b) **Finance**: liquidate all cash advances, petty cash fund, travel expense reports; clear outstanding loans or salary advance balances; (c) **HR**: return company ID, uniforms, locker key; complete exit interview (W628); confirm 13th month pay status; (d) **Department Manager**: hand over work assignments, files, and ongoing projects; confirm no pending disciplinary cases; (e) **Store Manager** (if store-based): return keys, access cards, alarm codes; confirm no outstanding store-level accountability (cash variance, inventory shortage)",
+     "duration": "15 min",
+     "n": "3",
+     "r": "HR Specialist"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "Each clearance sign-off is recorded in HRIS with approver name, date, and status; system tracks outstanding clearance items; HR Specialist follows up daily on pending items",
+     "duration": "5 min/day",
+     "n": "4",
+     "r": "HR Specialist / Clearing Officers"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Final pay computation** (within 5 business days of last day): HR/Payroll computes: (a) **Unpaid salary**: pro-rated salary from last payroll cutoff to last working day; (b) **Unused vacation leave (SL/VL)**: Philippine law does not require conversion of unused sick leave; unused service incentive leave (SIL — 5 days/year after 1 year of service) is convertible to cash; company policy may provide additional vacation leave conversion; (c) **13th month pay**: pro-rated from January to last month of employment (see W1384); (d) **Tax withholdings**: final withholding tax computed using graduated tax table; prior year-to-date compensation considered; (e) **SSS, PhilHealth, Pag-IBIG deductions**: final month contributions computed; (f) **Less deductions**: unliquidated cash advances, outstanding loans, unpaid cash bond (if applicable), shortage/damage accountability (if any, per store clearance), withheld amount for unrendered 30-day notice (if applicable per company policy); (g) **Net final pay** = (a + b + c) − (d + e + f)",
+     "duration": "30 min/employee",
+     "n": "5",
+     "r": "HR Specialist / Payroll"
+    },
+    {
+     "a": "CHRO",
+     "activity": "HR Manager reviews and approves final pay computation; Finance Manager approves final pay release for amounts > PHP 100,000",
+     "duration": "10 min/employee",
+     "n": "6",
+     "r": "HR Manager / Finance Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Payroll processes final pay: (a) if clearance complete and no pending items — release final pay via bank transfer on next payroll run or within 30 days of last day (per DOLE Advisory); (b) if clearance incomplete — final pay is held until all clearance items resolved; (c) system posts final pay: Dr. Salary Expense / Cr. Cash; Dr. Final Pay Liability / Cr. Cash",
+     "duration": "5 min/employee",
+     "n": "7",
+     "r": "Payroll"
+    },
+    {
+     "a": "—",
+     "activity": "HR Specialist issues Certificate of Employment (COE) per DOLE requirement — COE must state dates of employment and position(s) held; COE issued within 3 days of request per Labor Code; system generates COE template with employee data",
+     "duration": "5 min/employee",
+     "n": "8",
+     "r": "HR Specialist"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**30-day compliance tracking**: HR Specialist monitors that all final pays are released within 30 days of last working day per DOLE Advisory; if delayed due to pending clearance, HR documents reason and follows up daily; unresolved final pay delays escalated to CHRO",
+     "duration": "15 min/week",
+     "n": "9",
+     "r": "HR Specialist"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1384",
+    "W19",
+    "W43",
+    "W628"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "Annual (November computation, December payment); prorated at separation for each departing employee",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Officer, HR Specialist, Controller, BIR",
+    "Trigger": "Scheduled — annual computation (November–December); ad-hoc for mid-year separations",
+    "Volume": "~6,762 employees across 5 entities (rank-and-file and management); ~720–960 prorated computations for separations"
+   },
+   "id": "W1384",
+   "level": 2,
+   "name": "Employee 13th Month Pay Computation, Proration & BIR Taxable Benefit Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Payroll Manager reviews computation\" (replaces manual Step 2).",
+     "- System auto-submit of \"submits 13th month pay register to Finance Manager and Controller for approval\" (replaces manual Step 3).",
+     "- System auto-post of \"posted as non-taxable benefit\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "Under Presidential Decree No. 851, all rank-and-file employees in the Philippines who have worked for at least one month during the calendar year are entitled to 13th month pay, equivalent to 1/12 of their total basic salary earned during the year. 13th month pay is tax-exempt up to PHP 90,000 per employee per year (per TRAIN Law, Republic Act 10963); the excess is taxable as supplementary compensation. Payment must be made on or before December 24 each year. For separated employees (resignation, termination, retirement), the prorated 13th month pay is included in the final pay (W1383)."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Definition disputes over \"basic salary\"**: PD 851 defines basic salary but excludes overtime, night differential, hazard pay, and cost-of-living allowances; employees (and some DOLE inspectors) may dispute the exclusion of certain pay components; if BuildRight's interpretation is challenged, liability can be significant (6,762 employees × underpayment amount)",
+     "- **Tax exemption threshold creating anomalies**: employees earning PHP 1.08M+/year in basic salary exceed the PHP 90,000 exemption; the taxable excess is withheld at their marginal rate, creating a lower net 13th month pay than colleagues earning slightly less — causing dissatisfaction among higher earners",
+     "- **December cash flow impact**: total 13th month pay liability across ~6,762 employees = ~PHP 150–200M payable in December (per W1416); this is a material cash outflow that must be planned in the cash flow forecast (W233)",
+     "- **Mid-year salary increase proration complexity**: employees who received salary increases during the year must have their 13th month pay computed using actual basic salary earned at each rate (i.e., January–June at old rate + July–December at new rate); manual computation is error-prone"
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing Payroll team. Annual computation adds 1 day of concentrated effort. Separation proration adds ~5 min/employee, distributed across the year. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 13th month pay computation engine: automated calculation from basic salary history, with tax exemption threshold checking (W1384.1)",
+     "- Proration engine: separation-triggered proration from January 1 to last working day (W1384.6)",
+     "- GL accrual: monthly accrual of 1/12 of estimated 13th month pay per employee (W9A month-end)",
+     "- BIR Form 2316 generation: 13th month pay included in annual compensation reporting (W1384.7)",
+     "- Integration with W1383 (separation — final pay includes prorated 13th month), W19.2 (payroll processing), W9A (month-end accrual and year-end reporting)"
+    ],
+    "Time Estimate": [
+     "Annual computation: 4–6 hours (Payroll Officer) + 2 hours (Payroll Manager review) + 1 hour (Controller). Separation proration: 5 min/employee × ~800 separations = ~67 hours/year. Total: ~75–80 hours/year."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "November: Payroll Officer runs 13th month pay computation in payroll system for all active employees: (a) total basic salary earned January 1 to November 30 (excluding overtime, night differential, hazard pay, and allowances per PD 851); (b) ÷ 12 = 13th month pay amount; (c) compare against PHP 90,000 tax exemption threshold; (d) compute taxable excess: 13th month pay − PHP 90,000 (if positive); (e) compute withholding tax on excess using graduated tax table",
+     "duration": "2–4 hours",
+     "n": "1",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "Controller",
+     "activity": "Payroll Manager reviews computation: (a) spot-check 20–30 employee calculations for accuracy (especially employees with salary changes, leaves without pay, or mid-year hires); (b) verify exclusion of non-basic pay components (OT, allowances); (c) verify entity-level totals reconcile to GL salary expense",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Payroll Manager submits 13th month pay register to Finance Manager and Controller for approval; Controller verifies total 13th month pay liability is accrued correctly in GL (accrued monthly per W9A month-end close)",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Controller"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "December payroll run: Payroll Officer includes 13th month pay in the December 15 or December 20 payroll run (before December 24 deadline); tax-exempt portion (≤ PHP 90,000) posted as non-taxable benefit; taxable excess withheld at graduated rates",
+     "duration": "Part of payroll run",
+     "n": "4",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "—",
+     "activity": "System posts 13th month pay: Dr. 13th Month Pay Expense (or Accrued 13th Month Pay if previously accrued) / Cr. Cash; tax withholding: Dr. 13th Month Pay Expense / Cr. Withholding Tax Payable",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Separation proration** (ongoing): for each separated employee per W1383, Payroll Officer computes prorated 13th month pay: (a) total basic salary earned January 1 to last working day ÷ 12 = prorated amount; (b) if employee previously received partial 13th month pay (mid-year advance, if company policy allows), deduct prior payment; (c) include in final pay computation per W1383 step 5c",
+     "duration": "5 min/employee",
+     "n": "6",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Year-end BIR reporting**: 13th month pay (including tax-exempt portion) is reported as part of employee's annual gross compensation on BIR Form 2316 (Certificate of Compensation Payment/Tax Withheld); taxable excess included in taxable income; Payroll Officer generates 2316 forms for all employees per W9A year-end process",
+     "duration": "Part of W9A",
+     "n": "7",
+     "r": "Payroll Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1383",
+    "W1416",
+    "W19",
+    "W233",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-300"
+   ],
+   "fields": {
+    "Frequency": "~20–40 separation pay events/year (mostly retrenchment/redundancy); ~30–50 retirement benefit settlements/year",
+    "Owner": "HR Manager",
+    "Participants": "HR Manager, HR Specialist, Payroll Officer, Legal, Finance Manager, Controller, DOLE (for retrenchment), Employee",
+    "Trigger": "Employee separation due to authorized causes (retrenchment, redundancy, closure, installation of labor-saving devices) requiring separation pay under Article 298–299 of the Labor Code; or employee retirement under company retirement plan or RA 7641; or settlement of retirement benefit upon resignation/termination",
+    "Volume": "~50–90 events/year"
+   },
+   "id": "W1385",
+   "level": 2,
+   "name": "Employee Separation Pay Computation, DOLE Clearance & Retirement Benefit Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System rule-based authorization of \"Authorized closure\" (replaces manual Step 1).",
+     "- System auto-validate of \"check tax exemption\" (replaces manual Step 2).",
+     "- System auto-document of \"documentation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine labor law mandates separation pay for employees terminated due to authorized causes (retrenchment, redundancy, closure, disease, installation of labor-saving devices). Separation pay is computed at one-half month pay per year of service (for retrenchment/redundancy) or one month pay per year of service (for closure not due to losses). Separation pay is in addition to final pay (W1383) and 13th month pay proration (W1384). For retirement, RA 7641 mandates retirement pay of at least one-half month pay per year of service for employees retiring at age 60–65 with at least 5 years of service (if no company retirement plan exists). BuildRight's company retirement plan (W977) provides benefits that are equal to or better than the RA 7641 minimum. Separation pay is tax-exempt up to certain limits per the National Internal Revenue Code (NIRC)."
+    ],
+    "Controls": [
+     "- CTL-300 (ensure controlled execution — Separation & Benefits (PA-19.5).)",
+     "- operational: HR Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Years of service computation disputes**: employees may dispute the start date used for service computation (e.g., claiming service from initial engagement as agency worker before regularization); Labor Arbiters generally rule in favor of the employee in ambiguous cases",
+     "- **\"½ month pay\" definition interpretation**: DOLE's formula (½ × basic salary + 1/12 × 13th month + 1/12 × SIL) produces a slightly different result than a simple \"15 days\" computation; BuildRight must consistently apply the DOLE formula to avoid underpayment claims",
+     "- **Tax exemption documentation**: BIR may challenge the tax exemption of separation pay during an audit; BuildRight must maintain DOLE-approved retrenchment notices, board resolutions, and separation agreements to support the exemption",
+     "- **Retirement plan funding sufficiency**: if the company retirement plan fund (W977) has insufficient assets to cover retiree benefits, BuildRight must fund the shortfall from operating cash — a potentially material unplanned cash outflow",
+     "- **Retrenchment DOLE conference risk**: DOLE may find the retrenchment unjustified during the conference, requiring BuildRight to reinstate employees with full back wages — a catastrophic financial outcome if 50+ employees are involved; mitigated by the HR Manager review and approval gate"
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing HR Manager, HR Specialist, Payroll, and Legal. Adds concentrated effort during retrenchment events. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HRIS separation pay calculator: automated computation based on separation type, years of service, and pay rate (W1385.2)",
+     "- Tax exemption engine: automatic NIRC Section 32(B)(6)(b) exemption checking based on separation type (W1385.2)",
+     "- DOLE retrenchment notice template: pre-formatted notice per Labor Code Art. 298 requirements (W1385.4)",
+     "- Off-cycle payment processing: separation pay and retirement benefit outside regular payroll run (W1385.6)",
+     "- Retirement fund integration: trustee coordination for company retirement plan (W977) fund release (W1385.7)",
+     "- Integration with W1383 (resignation/final pay), W1384 (13th month proration), W1324 (retrenchment processing), W977 (retirement fund administration), W9A (month-end — separation pay accrual)"
+    ],
+    "Time Estimate": [
+     "~30 min/employee for computation + 30 min/employee for approval and payment processing = ~1 hour/employee. Legal review adds ~1 hour/retrenchment event. DOLE filing adds 4–8 hours/large retrenchment event. Total: ~50–90 hours/year."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "**Trigger identification**: HR Manager identifies separation type — (a) **Retrenchment/Redundancy**: HR initiates per W1324 (Labor Code Art. 298–299 compliance); separation pay = ½ month pay × years of service (a fraction of at least 6 months = 1 whole year); (b) **Authorized closure**: separation pay = 1 month pay × years of service; (c) **Retirement**: employee reaches retirement age (company plan age or RA 7641 age 65); separation pay computed per company retirement plan formula (W977); (d) **Just cause termination**: no separation pay required (but employee entitled to final pay and 13th month proration per W1383/W1384)",
+     "duration": "30 min/employee",
+     "n": "1",
+     "r": "HR Manager"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Separation pay computation**: HR Specialist computes using payroll/HRIS data: (a) **Monthly pay rate**: basic monthly salary at time of separation; (b) **Years of service**: from hire date to last working day (inclusive of probationary period); (c) **Separation pay formula**: ½ month pay per year of service (retrenchment) or 1 month pay per year of service (closure/retirement); (d) **\"Month pay\" definition**: per DOLE, \"½ month pay\" = ½ × (basic monthly salary + 1/12 of 13th month pay + 1/12 of cash equivalent of SIL); commonly simplified to 15 days + 2.5 days (1/12 of 13th month) + 1.25 days (1/12 of SIL) = ½ month pay = ~18.75 days per year of service; (e) compute total separation pay; (f) check tax exemption: separation pay due to death, sickness, or authorized cause is exempt from tax per NIRC Section 32(B)(6)(b); (g) for retirement pay: exempt if retirement plan is approved by BIR and employee is at least 50 years old with 10+ years of service",
+     "duration": "30 min/employee",
+     "n": "2",
+     "r": "HR Specialist"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Legal review** (for retrenchment/redundancy): Legal reviews separation pay computation and ensures compliance with DOLE DO 174 requirements — (a) 30-day advance notice to employee and DOLE; (b) separation pay computation correctness; (c) retrenchment justification documentation; (d) DOLE Regional Office notification filed",
+     "duration": "1 hour/event",
+     "n": "3",
+     "r": "Legal"
+    },
+    {
+     "a": "Legal",
+     "activity": "**DOLE clearance** (for retrenchment/redundancy affecting 50+ employees): HR Manager files retrenchment notice with DOLE Regional Office at least 30 days before effectivity; includes list of affected employees, positions, length of service, separation pay computation, and justification; DOLE may schedule a conference to verify compliance",
+     "duration": "4–8 hours/event",
+     "n": "4",
+     "r": "HR Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Approval**: CHRO approves separation pay computation; Finance Manager verifies computation; Controller approves GL posting; for amounts > PHP 500,000 per employee or total > PHP 5M: CFO approval required",
+     "duration": "15 min/employee",
+     "n": "5",
+     "r": "CHRO / Controller"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Payment processing**: Payroll Officer processes separation pay as off-cycle payment — (a) if tax-exempt: gross amount released in full (no withholding); (b) if partially taxable (e.g., separation pay exceeding tax-exempt limit): withhold tax on excess per NIRC graduated rates; (c) system posts: Dr. Separation Pay Expense / Cr. Cash; Dr. Separation Pay Expense / Cr. Withholding Tax Payable (if taxable)",
+     "duration": "10 min/employee",
+     "n": "6",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Retirement benefit settlement** (for retiring employees): (a) HR Specialist computes retirement benefit per company plan (W977) — compare company plan benefit vs. RA 7641 minimum; apply higher amount; (b) coordinate with retirement fund trustee for fund withdrawal; (c) Payroll processes retirement benefit payment; (d) for BIR-approved retirement plan: benefit is tax-exempt per NIRC; (e) issue Certificate of Employment with retirement notation",
+     "duration": "1–2 hours/employee",
+     "n": "7",
+     "r": "HR Specialist / Payroll"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Quarterly**: HR Manager reports separation pay and retirement benefit costs to Finance for accrual tracking and budget variance analysis",
+     "duration": "30 min/quarter",
+     "n": "8",
+     "r": "HR Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1324",
+    "W1383",
+    "W1384",
+    "W977",
+    "W9A"
+   ]
+  }
+ ]
+}

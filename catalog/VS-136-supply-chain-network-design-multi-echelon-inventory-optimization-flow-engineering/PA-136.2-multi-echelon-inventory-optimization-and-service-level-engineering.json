@@ -1,0 +1,575 @@
+{
+ "process_area": {
+  "id": "PA-136.2",
+  "title": "Multi-Echelon Inventory Optimization & Service-Level Engineering"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/PA-136.2-multi-echelon-inventory-optimization-and-service-level-engineering.md",
+ "value_stream": {
+  "directory": "VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering",
+  "id": "VS-136",
+  "name": "Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-639"
+   ],
+   "fields": {
+    "Frequency": "Annual + per category",
+    "Owner": "Network Strategy Lead / Merchandising (VS-01)",
+    "Participants": "Merchandising (VS-01), Supply Planning (VS-02), Finance (VS-17.4/VS-105)",
+    "Trigger": "Strategy refresh; category review; network change",
+    "Volume": "35,000 active SKUs across 4 DCs + 200 stores"
+   },
+   "id": "W4129",
+   "level": 2,
+   "name": "Inventory Strategy, Postponement & Pooling Policy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Strategy-to-policy cascading; positioning analytics"
+    ],
+    "Controls": [
+     "- CTL-639 (ensure controlled execution — Multi-Echelon Inventory Optimization & Service-Level Engineering (PA-136.2).)",
+     "- CTL-639: inventory strategy approved by Merchandising/Supply Chain/Finance"
+    ],
+    "Cross-references": [
+     "- links to VS-01 (merchandising), VS-02 (supply), VS-04 (DC/cross-dock), VS-09 (postponement/fabrication)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-positioning risk**: Inventory in the wrong echelon (slow at store, stockout at DC); mitigated by echelon-aware strategy",
+     "- **Postponement-overlook risk**: Missing postponement opportunities (e.g., central stock + configure-to-order); mitigated by category review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Network/inventory model (W4122/W4130); merchandising (VS-01); supply planning (VS-02); MDM (VS-29)"
+    ],
+    "Time Estimate": [
+     "- Annual + per category"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Network Strategy/Merchandising define the inventory strategy per category: where to stock (DC vs store vs both), postponement (e.g., paint tinting at store links to VS-09), pooling, and make-to-stock vs make-to-order",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Network Strategy Lead / Merchandising / Supply Planning"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Network Strategy set the inventory positioning policy (centralized vs decentralized, forward-stocking, cross-dock for fast-movers links to VS-04) aligned to network design (W4121)",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Network Strategy Lead"
+    },
+    {
+     "a": "VP Supply Chain / COO",
+     "activity": "Network Strategy document the strategy, align with merchandising/finance on the turn/service trade-off, and feed into MEIO (W4130) and parameter governance (W4135)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Network Strategy Lead / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4121",
+    "W4122",
+    "W4130",
+    "W4135"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic refresh",
+    "Owner": "Network Strategy Lead / Supply Chain Analytics (VS-28)",
+    "Participants": "Analytics (VS-28), Supply Planning (VS-02), Merchandising (VS-01)",
+    "Trigger": "Network/inventory decision; parameter refresh",
+    "Volume": "~7.2M parameter sets (per SKU per location); 35K SKUs × 205 locations"
+   },
+   "id": "W4130",
+   "level": 2,
+   "name": "Multi-Echelon Inventory Optimization (MEIO) Modeling",
+   "parent": null,
+   "req_refs": [
+    "MDM-021"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- MEIO auto-refresh from demand/lead-time data; parameter auto-publication to MDM"
+    ],
+    "Controls": [
+     "- CTL-639 (ensure controlled execution — Multi-Echelon Inventory Optimization & Service-Level Engineering (PA-136.2).)",
+     "- CTL-639: MEIO assumptions documented; parameters governed before publishing"
+    ],
+    "Cross-references": [
+     "- links to VS-02 (supply/replenishment), VS-127 (S&OP/demand), VS-29 MDM-021 (parameters), VS-28 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Silo-optimization risk**: Optimizing each location independently misses echelon synergy; mitigated by true MEIO",
+     "- **Adoption risk**: Optimized parameters not adopted in execution; mitigated by MDM governance (W4135) and monitoring (W4138)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- MEIO optimization tool; BI/analytics (VS-28); demand planning (VS-127/VS-02); MDM (VS-29 MDM-021); ERP replenishment (VS-02)"
+    ],
+    "Time Estimate": [
+     "- Maintained; per refresh weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Network Strategy/Analytics build and maintain the MEIO model: demand variability and lead-time variability per SKU per echelon, dependency between echelons (DC buffers protect stores), and the service-level target per segment (W4132)",
+     "duration": "Maintained",
+     "n": "1",
+     "r": "Network Strategy Lead / Analytics"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Network Strategy/Analytics run MEIO optimization to find the least-inventory-cost deployment that meets service targets across all echelons (vs siloed per-location safety stock), and quantify working-capital/service impact",
+     "duration": "Per refresh",
+     "n": "2",
+     "r": "Network Strategy Lead / Finance"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Network Strategy output optimized parameters (safety stock, ROP, EOQ, min/max) to MDM (W4135) for execution by supply planning (VS-02), and validate post-implementation (W4138)",
+     "duration": "Per refresh",
+     "n": "3",
+     "r": "Network Strategy Lead / Supply Planning"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4132",
+    "W4135",
+    "W4138"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639"
+   ],
+   "fields": {
+    "Frequency": "Continuous + per refresh",
+    "Owner": "Supply Planning / Network Strategy Lead",
+    "Participants": "Supply Planning (VS-02), Analytics (VS-28), Merchandising (VS-01)",
+    "Trigger": "Parameter refresh; service-level review",
+    "Volume": "~7.2M parameter sets"
+   },
+   "id": "W4131",
+   "level": 2,
+   "name": "Safety Stock, Reorder Point & Service-Level Optimization",
+   "parent": null,
+   "req_refs": [
+    "MDM-021"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Variability-aware auto-parameter computation; service-level simulation"
+    ],
+    "Controls": [
+     "- CTL-639 (ensure controlled execution — Multi-Echelon Inventory Optimization & Service-Level Engineering (PA-136.2).)",
+     "- CTL-639: parameters governed (W4135); service-level monitored (W4138)"
+    ],
+    "Cross-references": [
+     "- links to VS-02 (replenishment), VS-29 MDM-021 (parameters), W4130 (MEIO), W4132 (segmentation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Static-parameter risk**: Parameters not updated as variability changes; mitigated by refresh cycle (W4142)",
+     "- **Service-blind risk**: Inventory without service targeting; mitigated by service-level optimization per segment"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP replenishment (VS-02); MEIO (W4130); MDM (VS-29 MDM-021); analytics (VS-28); ABC/XYZ (W4132)"
+    ],
+    "Time Estimate": [
+     "- Continuous; per refresh"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning/Analytics compute safety stock and ROP per SKU per location using demand variability, lead-time variability (import 45–90d, local 7–21d links to profile), and the target service level per segment (W4132)",
+     "duration": "Per refresh",
+     "n": "1",
+     "r": "Supply Planning / Analytics"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning optimize the service-level trade-off per segment (cost of inventory vs cost of stockout/lost-sale), and set EOQ balancing order cost vs holding cost",
+     "duration": "Per refresh",
+     "n": "2",
+     "r": "Supply Planning / Finance"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning publish optimized safety stock/ROP/EOQ to MDM (W4135), monitor service-level adherence and stockouts (W4138), and adjust on signal",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Supply Planning"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4130",
+    "W4132",
+    "W4135",
+    "W4138",
+    "W4142"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + on change",
+    "Owner": "Merchandising / Supply Planning (VS-02)",
+    "Participants": "Merchandising (VS-01), Supply Planning (VS-02), Analytics (VS-28)",
+    "Trigger": "Segmentation refresh; policy review",
+    "Volume": "35,000 active SKUs (A: top 20% = 80% revenue; B: 30% = 15%; C: 50% = 5%)"
+   },
+   "id": "W4132",
+   "level": 2,
+   "name": "ABC/XYZ Segmentation & Differentiated Inventory Policy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-segmentation from sales/variability data; policy-recommendation engine"
+    ],
+    "Controls": [
+     "- CTL-639 (ensure controlled execution — Multi-Echelon Inventory Optimization & Service-Level Engineering (PA-136.2).)",
+     "- CTL-639: segmentation reviewed by Merchandising; policy per segment documented"
+    ],
+    "Cross-references": [
+     "- links to VS-01 (merchandising), VS-02 (replenishment), VS-28 (analytics), W4131 (service levels)"
+    ],
+    "Pain Points / Risks": [
+     "- **One-size-fits-all risk**: Same policy for fast/slow movers (over-invest in C, under-serve A); mitigated by differentiated policy",
+     "- **Stale-segmentation risk**: Segments not refreshed as SKUs move; mitigated by quarterly refresh"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI/analytics (VS-28); merchandising (VS-01); MDM (VS-29); ERP replenishment (VS-02)"
+    ],
+    "Time Estimate": [
+     "- Quarterly + ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Merchandising/Analytics segment SKUs by value (ABC by revenue/contribution) and variability (XYZ by demand variability), producing a 3×3 matrix, refreshed quarterly",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Merchandising / Analytics"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Merchandising/Supply Planning define differentiated inventory policy per segment (AX: tight control, high service, frequent review; CZ: minimal/no stock, make-to-order); set service-level targets per segment (W4131)",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Merchandising / Supply Planning"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Merchandising/Supply Planning publish segmentation to MDM (W4135), drive policy into replenishment (VS-02), and review segment migration over time",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Merchandising / Supply Planning"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4131",
+    "W4135"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639"
+   ],
+   "fields": {
+    "Frequency": "Per season/promotion",
+    "Owner": "Supply Planning / Merchandising (VS-01)",
+    "Participants": "Merchandising (VS-01/VS-101), Supply Planning (VS-02), Finance (VS-17.4), Commodity (VS-106)",
+    "Trigger": "Seasonal calendar; promotion plan; forward-buy decision",
+    "Volume": "Seasonal SKUs (~500) + promo items; Philippine seasonality (rainy, ber-months, summer)"
+   },
+   "id": "W4133",
+   "level": 2,
+   "name": "Seasonal & Promotional Inventory Buffer Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Seasonal-demand modeling; forward-buy decision support"
+    ],
+    "Controls": [
+     "- CTL-639 (ensure controlled execution — Multi-Echelon Inventory Optimization & Service-Level Engineering (PA-136.2).)",
+     "- CTL-639: forward-buy decisions with Finance sign-off; seasonal variance reviewed post-season"
+    ],
+    "Cross-references": [
+     "- links to VS-01/VS-101 (merch financial/seasonal), VS-106 (commodity), VS-39/VS-58 (promo), VS-64 (clearance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-stock risk**: Seasonal over-buy → markdown/clearance; mitigated by forecast discipline and phase-out (VS-64)",
+     "- **Stockout-risk**: Under-buy during peak → lost sales; mitigated by buffer planning and pre-positioning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Demand/seasonal planning (VS-127/VS-02/VS-101); commodity (VS-106); promo (VS-39/VS-58); clearance (VS-64)"
+    ],
+    "Time Estimate": [
+     "- Per season/promotion"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning/Merchandising plan seasonal/promotional buffers using the seasonal calendar (links to VS-01/VS-101), forecast lift, and lead time; pre-position ahead of season (links to VS-02.3 W1432/W1492)",
+     "duration": "Per season",
+     "n": "1",
+     "r": "Supply Planning / Merchandising"
+    },
+    {
+     "a": "VP Supply Chain / CFO",
+     "activity": "Supply Planning/Finance evaluate forward-buy decisions (commodity price links to VS-106, promo/MDF links to VS-39), balance inventory carry vs price advantage, and set promo stock vs regular",
+     "duration": "Per promo",
+     "n": "2",
+     "r": "Supply Planning / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Supply Planning monitor seasonal sell-through and post-season clearance (links to VS-64), and capture lessons for next cycle (W4144)",
+     "duration": "Per season",
+     "n": "3",
+     "r": "Supply Planning / Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1432",
+    "W1492",
+    "W4144"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639",
+    "CTL-80"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + on decision",
+    "Owner": "Merchandising / Supply Planning (VS-02)",
+    "Participants": "Merchandising (VS-01), Supply Planning (VS-02), Inventory Lifecycle (VS-05), Finance (VS-17.4)",
+    "Trigger": "Aging review; assortment decision",
+    "Volume": "~50% of SKUs are C-items (long tail); obsolescence exposure"
+   },
+   "id": "W4134",
+   "level": 2,
+   "name": "Slow-Mover, Long-Tail & Obsolescence Risk Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Aging/velocity auto-scoring; slow-mover policy recommendations"
+    ],
+    "Controls": [
+     "- CTL-80 (ensure inventory parameter & network optimization governance.)",
+     "- CTL-639: write-downs per accounting policy (VS-17); slow-mover decisions documented"
+    ],
+    "Cross-references": [
+     "- links to VS-05 (inventory aging/lifecycle), VS-01 (lifecycle/assortment), VS-09 (special order), VS-17 (write-downs)"
+    ],
+    "Pain Points / Risks": [
+     "- **Dead-stock risk**: Capital trapped in non-moving inventory; mitigated by centralization and clearance",
+     "- **Service-risk**: Over-aggressive cut harming availability of needed items; mitigated by segment-aware policy (W4132)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory aging (VS-05); merchandising/lifecycle (VS-01); finance/write-down (VS-17); special order (VS-09)"
+    ],
+    "Time Estimate": [
+     "- Quarterly + ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Merchandising/Supply Planning identify slow-movers/long-tail (CZ segment) and obsolescence risk via aging analysis (links to VS-05 inventory aging), and quantify carrying cost and write-down exposure",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Merchandising / Supply Planning / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Merchandising optimize slow-movers: centralize stocking (stock at DC only, store-on-request), convert to non-stock/special-order (links to VS-09), bundle/clearance (links to VS-64/VS-32), or discontinue (links to VS-01 lifecycle)",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Merchandising / Supply Planning"
+    },
+    {
+     "a": "CFO",
+     "activity": "Merchandising/Finance manage obsolescence reserves/write-downs (links to VS-17), and feed slow-mover learnings into assortment (VS-01)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Merchandising / Finance"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4132"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639",
+    "CTL-80"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic governance",
+    "Owner": "Supply Planning / Master Data (VS-29)",
+    "Participants": "Supply Planning (VS-02), MDM (VS-29 MDM-021), Merchandising (VS-01), Audit (VS-21)",
+    "Trigger": "Parameter change; MDM governance",
+    "Volume": "~7.2M parameter sets (ROP, safety stock, EOQ, min/max, lead time, MOQ)"
+   },
+   "id": "W4135",
+   "level": 2,
+   "name": "Inventory Parameter Governance & Master Data",
+   "parent": null,
+   "req_refs": [
+    "MDM-021",
+    "PUR-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Parameter-change workflow with validation; drift detection"
+    ],
+    "Controls": [
+     "- CTL-80 (ensure inventory parameter & network optimization governance.)",
+     "- CTL-639: parameter changes approved and audited (MDM-021); exception overrides documented"
+    ],
+    "Cross-references": [
+     "- links to VS-29 MDM-021 (replenishment parameters), VS-45 (consignment/VMI), VS-02 (replenishment)"
+    ],
+    "Pain Points / Risks": [
+     "- **Rogue-parameter risk**: Manual overrides not governed; mitigated by approval and audit trail",
+     "- **Parameter-drift risk**: Parameters not refreshed; mitigated by governance and refresh cycle (W4142)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- MDM (VS-29 MDM-021); ERP replenishment (VS-02); MEIO (W4130); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- Continuous governance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning/MDM govern inventory parameters (ROP, safety stock, EOQ, min/max, lead time, MOQ) per the MDM-021 standard (links to VS-29), with calculation validation, effective-dating, and approval",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Supply Planning / MDM"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning manage exception parameters (consignment links to VS-45, VMI links to VS-45, DSD links to PUR-013, non-stock) and overrides with effective dating",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Supply Planning / MDM"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply Planning/MDM maintain parameter audit trail, reconcile parameters vs MEIO outputs (W4130/W4131), and support audit (VS-21)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Supply Planning / MDM / Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4130",
+    "W4131",
+    "W4142"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-639"
+   ],
+   "fields": {
+    "Frequency": "Continuous + quarterly",
+    "Owner": "VP Supply Chain / Finance (VS-105)",
+    "Participants": "Finance (VS-17.4/VS-105), Merchandising (VS-01/VS-101), Supply Planning (VS-02)",
+    "Trigger": "Working-capital target; turn target; finance review",
+    "Volume": "Enterprise inventory investment (turns target 6–8x)"
+   },
+   "id": "W4136",
+   "level": 2,
+   "name": "Inventory Investment, Turns & Working Capital Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Turns/working-capital analytics; scenario modeling"
+    ],
+    "Controls": [
+     "- CTL-639 (ensure controlled execution — Multi-Echelon Inventory Optimization & Service-Level Engineering (PA-136.2).)",
+     "- CTL-639: turn/service targets balanced and approved; working-capital reconciled by Finance"
+    ],
+    "Cross-references": [
+     "- links to VS-101 (merch financial), VS-105 (SCF/working capital), VS-17.4 (FP&A), VS-33 (performance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Turn-vs-service risk**: Aggressive turn harms availability; mitigated by balanced targets and MEIO",
+     "- **Stranded-inventory risk**: Capital trapped; mitigated by working-capital optimization and slow-mover action"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Merch financial planning (VS-101); SCF/working capital (VS-105); FP&A (VS-17.4); MEIO (W4130)"
+    ],
+    "Time Estimate": [
+     "- Continuous + quarterly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO / CFO",
+     "activity": "VP Supply Chain/Finance establish the inventory-investment plan and turns/GMROI/WOS targets (6–8x turn) aligned to merchandise financial planning (VS-101) and working-capital management (VS-105)",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "VP Supply Chain / Finance / Merchandising"
+    },
+    {
+     "a": "COO",
+     "activity": "VP Supply Chain drive working-capital release: MEIO (W4130), slow-mover reduction (W4134), lead-time reduction, and SCF/dynamic discounting (links to VS-105), balancing turn vs service",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "VP Supply Chain / Finance"
+    },
+    {
+     "a": "COO / CFO",
+     "activity": "VP Supply Chain/Finance report inventory investment, turns, and working-capital to the executive/Board (VS-33/VS-36), and flag gaps",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "VP Supply Chain / Finance"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4130",
+    "W4134"
+   ]
+  }
+ ]
+}

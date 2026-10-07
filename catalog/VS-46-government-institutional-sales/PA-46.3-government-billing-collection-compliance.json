@@ -1,0 +1,558 @@
+{
+ "process_area": {
+  "id": "PA-46.3",
+  "title": "Government Billing, Collection & Compliance"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-46-government-institutional-sales/PA-46.3-government-billing-collection-compliance.md",
+ "value_stream": {
+  "directory": "VS-46-government-institutional-sales",
+  "id": "VS-46",
+  "name": "Government & Institutional B2G Sales"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-191"
+   ],
+   "fields": {
+    "Frequency": "Per delivery milestone; ~200–300 government invoices/year",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, Trade Account Manager, Accounting Manager",
+    "Trigger": "Delivery completed and accepted by government entity",
+    "Volume": "~200–300 government invoices/year"
+   },
+   "id": "W1966",
+   "level": 2,
+   "name": "Government Invoice Submission & BIR-Compliant Billing",
+   "parent": null,
+   "req_refs": [
+    "DOC-002"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates government invoice\" (replaces manual Step 1).",
+     "- System auto-document of \"Supporting documents compiled\" (replaces manual Step 2).",
+     "- System auto-count of \"accounting/finance department\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-191 (ensure B2G procurement compliance & collection.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Document completeness**: Government entities reject incomplete invoice packages; missing acceptance certificate or delivery receipt delays payment by weeks"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Government AR invoice generation with BIR compliance (W1966.1)",
+     "- Integration with W540 (BIR invoice) for invoice format",
+     "- Integration with W8 (AR processing) for billing cycle"
+    ],
+    "Time Estimate": [
+     "- 45–90 min per invoice including document compilation and submission",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "AR Clerk generates government invoice: (a) BIR-registered sales invoice or official receipt per DOC-002, (b) include: government entity TIN, BuildRight TIN, CAS permit number, contract/PO reference, delivery receipt reference, acceptance certificate reference, (c) line items: product description, quantity, unit price, total per line, (d) VAT: 12% output VAT on gross amount (unless entity is VAT-exempt per specific law), (e) EWT: indicate 1% EWT to be withheld by government entity",
+     "duration": "15–30 min/invoice",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Supporting documents compiled: (a) signed delivery receipt, (b) acceptance certificate, (c) contract/PO copy, (d) inspection report (if applicable), (e) disbursement voucher (government payment request form — some agencies require BuildRight to prepare)",
+     "duration": "30–60 min/invoice",
+     "n": "2",
+     "r": "Trade Account Manager / AR Clerk"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Invoice submission: (a) submit to government entity's accounting/finance department, (b) follow submission format required by specific agency (some have online portals, others require physical submission), (c) obtain acknowledgment of receipt with date stamp",
+     "duration": "Per submission",
+     "n": "3",
+     "r": "AR Clerk / Trade Account Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W540",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-191"
+   ],
+   "fields": {
+    "Frequency": "Monthly collection cycle; weekly follow-up for overdue",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, Trade Account Manager, Accounting Manager",
+    "Trigger": "Government invoice past due; monthly collection cycle",
+    "Volume": "~150–200 active government accounts; ~200–300 invoices"
+   },
+   "id": "W1967",
+   "level": 2,
+   "name": "Government Account Collection & Payment Follow-Up",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts typically have longer collection cycle\" (replaces manual Step 1).",
+     "- System auto-escalate of \"escalate to VP Store Operations for management-level follow-up\" (replaces manual Step 2).",
+     "- System auto-document of \"Collection tactics for government\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-191 (ensure B2G procurement compliance & collection.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Bureaucratic payment process**: Government payments pass through multiple approvals (receiving, inspection, accounting, finance, COA audit); each step adds days to collection cycle"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Government AR aging report (W1967.1)",
+     "- Integration with W108 (customer credit collection & escalation) for collection workflow"
+    ],
+    "Time Estimate": [
+     "- 2–3 hours/week for follow-up",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "Monthly: AR Clerk generates government AR aging report: (a) by entity type (national govt, LGU, GOCC), (b) aging buckets: current, 30, 60, 90, 120+ days, (c) government accounts typically have longer collection cycle: average DSO 45–75 days vs. 30 days for trade accounts",
+     "duration": "Automated",
+     "n": "1",
+     "r": "AR Clerk / System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Weekly: AR Clerk follows up on overdue government invoices: (a) 30+ days: call government accounting department, (b) 60+ days: Trade Account Manager contacts procurement officer for intervention, (c) 90+ days: escalate to VP Store Operations for management-level follow-up, (d) 120+ days: VP Legal issues formal demand letter",
+     "duration": "2–3 hours/week",
+     "n": "2",
+     "r": "AR Clerk / Trade Account Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Collection tactics for government: (a) leverage relationship: Trade Account Manager follows up during next sales interaction, (b) pre-payment verification: ensure all required documents submitted (government won't pay without complete documentation), (c) COA (Commission on Audit) clearance: some payments require COA audit before release; ensure compliance",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Trade Account Manager / AR Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W108"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-381"
+   ],
+   "fields": {
+    "Frequency": "Per payment (EWT withheld); quarterly reconciliation",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, AR Clerk, Trade Account Manager",
+    "Trigger": "Government entity withholds EWT on payment; quarterly BIR filing",
+    "Volume": "~200–300 government payments/year with EWT"
+   },
+   "id": "W1968",
+   "level": 2,
+   "name": "Government EWT Certificate (BIR 2307) Collection & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Government entity withholds 1% EWT on payment\" (replaces manual Step 1).",
+     "- System auto-count of \"Account Manager follows up for 2307 issuance if not provided with payment\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles government EWT\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-381 (ensure controlled execution — Government Billing, Collection & Compliance (PA-46.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **2307 collection difficulty**: Some government entities are slow to issue BIR 2307; without it, BuildRight cannot credit the withheld tax, resulting in double taxation (pay full income tax + EWT already withheld)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- EWT receivable posting on government payments (W1968.1)",
+     "- BIR 2307 tracking and reconciliation (W1968.3)",
+     "- Integration with W90 (monthly tax filing) for EWT credit application"
+    ],
+    "Time Estimate": [
+     "- Per payment processing; 1–2 days/quarter reconciliation",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "Government entity withholds 1% EWT on payment: (a) government pays net of 1% EWT (e.g., PHP 100K invoice → government pays PHP 99K + issues BIR Form 2307 for PHP 1K EWT), (b) AR Clerk records: (i) cash received: PHP 99K, (ii) EWT receivable: PHP 1K, (iii) AR cleared: PHP 100K",
+     "duration": "Per payment",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "BIR Form 2307 collection: (a) government entity issues BIR Form 2307 (Certificate of Creditable Tax Withheld at Source), (b) Trade Account Manager follows up for 2307 issuance if not provided with payment, (c) collect 2307 within 30 days of payment — required for quarterly income tax filing",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Trade Account Manager / Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly: Tax Accountant reconciles government EWT: (a) total EWT withheld by all government entities in quarter, (b) total BIR 2307 certificates collected, (c) uncollected 2307: follow-up list for Trade Account Manager, (d) credit EWT against quarterly income tax payment per BIR 1702Q",
+     "duration": "1–2 days/quarter",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-381"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "Accounting Manager",
+    "Participants": "Accounting Manager, Tax Accountant, Trade Account Manager, CFO",
+    "Trigger": "Year-end government reporting cycle",
+    "Volume": "Consolidated government sales reporting"
+   },
+   "id": "W1969",
+   "level": 2,
+   "name": "Government Year-End Liquidation & Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accounting Manager compiles annual government sales report\" (replaces manual Step 1).",
+     "- System auto-document of \"document and carry forward to next year\" (replaces manual Step 2).",
+     "- System auto-generate of \"prepares government relationship report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-381 (ensure controlled execution — Government Billing, Collection & Compliance (PA-46.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Uncollected 2307 at year-end**: If government entity hasn't issued BIR 2307 by December 31, BuildRight cannot claim EWT credit for that tax year; aggressive follow-up needed in November-December"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Annual government sales report (W1969.1)",
+     "- EWT reconciliation for annual tax filing (W1969.2)",
+     "- Integration with W9B (year-end close) for financial reporting"
+    ],
+    "Time Estimate": [
+     "- 4–6 days/year total",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Accounting Manager compiles annual government sales report: (a) total government revenue by entity type, (b) total government sales invoices issued, (c) total EWT withheld by government entities, (d) total BIR 2307 collected, (e) total government accounts receivable balance at year-end, (f) bad debt provision for government AR",
+     "duration": "2–3 days/year",
+     "n": "1",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Accountant reconciles government EWT for annual income tax return: (a) total EWT per BIR 2307 certificates, (b) credit against annual income tax liability per BIR 1702RT, (c) any uncollected 2307: document and carry forward to next year",
+     "duration": "1–2 days/year",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Trade Account Manager prepares government relationship report: (a) active government accounts and their status, (b) contracts expiring in next year requiring renewal, (c) collection performance: average DSO by entity type, (d) pipeline for next year",
+     "duration": "1 day/year",
+     "n": "3",
+     "r": "Trade Account Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-381"
+   ],
+   "fields": {
+    "Frequency": "Monthly billing; ~50–100 active institutional accounts",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, Trade Account Manager, Credit Analyst",
+    "Trigger": "Institutional account purchase; monthly billing cycle",
+    "Volume": "~100–200 institutional invoices/year"
+   },
+   "id": "W1970",
+   "level": 2,
+   "name": "Institutional Account Billing & Collection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"AR Clerk processes institutional account billing\" (replaces manual Step 1).",
+     "- System auto-collect of \"collection\" (replaces manual Step 2).",
+     "- System workflow notification of \"contacts account directly,\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-381 (ensure controlled execution — Government Billing, Collection & Compliance (PA-46.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **NGO funding dependency**: Some NGOs depend on foreign donor funding; if donor payment delayed, NGO defaults on BuildRight payment; shorter terms or COD recommended for high-risk NGOs"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Institutional account billing through standard AR module (W1970.1)",
+     "- Integration with W8 (AR processing) and W108 (collection escalation)"
+    ],
+    "Time Estimate": [
+     "- Per billing cycle; ~2–3 hours/month",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "AR Clerk processes institutional account billing: (a) standard trade billing per W8, (b) institutional accounts: schools, hospitals, churches, NGOs — processed like trade accounts with standard BIR invoice, (c) VAT: standard 12% (no special government VAT treatment), (d) EWT: may apply depending on institutional type (private entities may or may not withhold)",
+     "duration": "Per billing cycle",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Collection: (a) standard collection process per W108, (b) institutional accounts: typically better payers than government but may have budget cycle constraints (schools: aligned to school year; churches: aligned to liturgical calendar; NGOs: aligned to donor funding cycles), (c) terms: Net 30 standard; Net 60 for established accounts",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "AR Clerk / Trade Account Manager"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Overdue management: (a) standard escalation per W108, (b) for institutional accounts: Trade Account Manager contacts account directly, (c) payment plan offered for legitimate financial difficulty (common with smaller NGOs and schools)",
+     "duration": "Per overdue",
+     "n": "3",
+     "r": "Trade Account Manager / AR Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W108",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-381"
+   ],
+   "fields": {
+    "Frequency": "Per government contract; monthly review",
+    "Owner": "Accounting Manager",
+    "Participants": "Accounting Manager, Trade Account Manager, CFO, External Auditor",
+    "Trigger": "Government contract with specific revenue recognition milestones",
+    "Volume": "~10–15 active government contracts"
+   },
+   "id": "W1971",
+   "level": 2,
+   "name": "Government Account Revenue Recognition (PFRS 15)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accounting Manager assesses government contract revenue recognition per PFRS 15\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews government revenue recognition\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-381 (ensure controlled execution — Government Billing, Collection & Compliance (PA-46.3).)",
+     "- operational: Accounting Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Recognition timing**: Revenue should be recognized at acceptance (not delivery or invoicing); government acceptance may lag delivery by weeks"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Revenue recognition module with milestone tracking (W1971.2)",
+     "- Integration with W487 (revenue recognition review) for PFRS 15 compliance"
+    ],
+    "Time Estimate": [
+     "- Per contract setup; quarterly review",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Accounting Manager assesses government contract revenue recognition per PFRS 15: (a) identify performance obligations: delivery of goods, installation services (if included), warranty, (b) transaction price: contract value less EWT, (c) allocation: allocate transaction price to each performance obligation, (d) timing: recognize revenue when (or as) performance obligation satisfied — for goods: at delivery and acceptance",
+     "duration": "Per contract",
+     "n": "1",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Multi-delivery contracts: (a) revenue recognized per delivery milestone as each delivery is accepted by government entity, (b) partial delivery: recognize revenue for accepted portion only, (c) installation included: separate performance obligation; recognize installation revenue when installation complete",
+     "duration": "Per milestone",
+     "n": "2",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual: External Auditor reviews government revenue recognition: (a) sample government contracts for PFRS 15 compliance, (b) verify timing of revenue recognition (delivery acceptance vs. invoice date), (c) verify EWT treatment (net of EWT as transaction price)",
+     "duration": "Per annual audit",
+     "n": "3",
+     "r": "External Auditor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W487"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-381"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, AR Clerk, Accounting Manager",
+    "Trigger": "Monthly VAT return preparation",
+    "Volume": "All government sales transactions"
+   },
+   "id": "W1972",
+   "level": 2,
+   "name": "Government Sales Tax Compliance & Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"verify per entity\" (replaces manual Step 1).",
+     "- System auto-report of \"reporting\" (replaces manual Step 2).",
+     "- System auto-flag for investigation of \"investigate per location\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-381 (ensure controlled execution — Government Billing, Collection & Compliance (PA-46.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **VAT-exempt misclassification**: Incorrectly treating a government sale as VAT-exempt (or vice versa) creates BIR compliance risk; verify each government entity's VAT status"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Government VAT classification in AR module (W1972.1)",
+     "- Integration with W90 (monthly tax filing) for consolidated reporting"
+    ],
+    "Time Estimate": [
+     "- Absorbed in monthly tax filing cycle",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "Monthly: Tax Accountant includes government sales in VAT return: (a) government sales are generally VAT-inclusive (12% output VAT charged), (b) some government entities may be VAT-exempt per specific law (e.g., certain international organizations, diplomatic missions) — verify per entity, (c) VAT-exempt government sales reported in separate schedule of VAT return",
+     "duration": "Per monthly filing",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "EWT reporting: (a) total government EWT withheld reported in quarterly income tax return (BIR 1702Q), (b) annual reconciliation in annual income tax return (BIR 1702RT), (c) uncredited EWT from prior years carried forward",
+     "duration": "Per quarterly/annual filing",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Local Business Tax (LBT): (a) government sales included in gross receipts for LBT computation per LGU, (b) some LGUs offer LBT incentives for businesses with significant government contracts — investigate per location",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-381"
+   ],
+   "fields": {
+    "Frequency": "Monthly aging review; quarterly provision assessment",
+    "Owner": "Accounting Manager",
+    "Participants": "Accounting Manager, Credit Analyst, CFO",
+    "Trigger": "Month-end close; quarterly bad debt review",
+    "Volume": "~150–200 active government accounts"
+   },
+   "id": "W1973",
+   "level": 2,
+   "name": "Government Account Aging & Bad Debt Provision",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews government AR aging\" (replaces manual Step 1).",
+     "- System auto-log of \"methodology\" (replaces manual Step 2).",
+     "- System auto-collect of \"collection rate assumption still valid?\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-381 (ensure controlled execution — Government Billing, Collection & Compliance (PA-46.3).)",
+     "- operational: Accounting Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Extended aging**: Government accounts may age 120–180+ days but still be collectible (bureaucratic delay, not credit risk); do not prematurely write off"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Government AR aging report (W1973.1)",
+     "- Bad debt provision calculation (W1973.2)",
+     "- Integration with W81 (bad debt write-off) for actual write-off processing"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours/month; 1 day/quarter for provision review",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Monthly: Accounting Manager reviews government AR aging: (a) total government AR balance, (b) aging distribution: current, 30, 60, 90, 120, 180+ days, (c) compare to prior month: is government AR improving or deteriorating?, (d) flag accounts > 90 days for Trade Account Manager follow-up",
+     "duration": "1–2 hours/month",
+     "n": "1",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly: Credit Analyst assesses bad debt provision for government accounts: (a) historical collection rate: government accounts collect ~95–98% eventually (very low actual write-off), (b) provision methodology: lower provision rate than trade accounts due to lower default risk, (c) specific provision for accounts > 180 days: assess collectibility per account, (d) accounts > 1 year: specific assessment — is there a legitimate reason for non-payment (dispute, documentation issue, budget reallocation)?",
+     "duration": "1 day/quarter",
+     "n": "2",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "Annual: CFO reviews government bad debt provisioning policy: (a) is 95–98% collection rate assumption still valid?, (b) any systemic collection issues (e.g., specific government entity consistently paying late), (c) adjust provisioning policy if needed",
+     "duration": "1 day/year",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W81"
+   ]
+  }
+ ]
+}

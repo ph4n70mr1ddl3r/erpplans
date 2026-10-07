@@ -1,0 +1,538 @@
+{
+ "process_area": {
+  "id": "PA-95.2",
+  "title": "Marketplace Catalog, Order Routing & Seller Fulfillment"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-95-marketplace-operator-third-party-seller/PA-95.2-marketplace-catalog-order-routing-fulfillment.md",
+ "value_stream": {
+  "directory": "VS-95-marketplace-operator-third-party-seller",
+  "id": "VS-95",
+  "name": "Marketplace Operator & Third-Party Seller Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Continuous + monthly review",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Catalog Ops (links to VS-01/VS-10), Ecommerce (links to VS-10), BI (links to VS-28)",
+    "Trigger": "Continuous catalog ops; search-relevance review",
+    "Volume": "~10K–50K 3P SKUs + 35K 1P SKUs unified"
+   },
+   "id": "W3145",
+   "level": 2,
+   "name": "Unified Marketplace Catalog & Search Merchandising",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Catalog Ops merge 1P and 3P offers into unified catalog per product taxonomy\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitors catalog health\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: dedup rules and quality gating"
+    ],
+    "Pain Points / Risks": [
+     "- **Search-clutter risk**: Duplicate/spammy listings degrade discovery; mitigated by dedup rules and quality gating"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Unified catalog/search (links to VS-10/VS-29); retail-media boosting (links to VS-48); listing-quality score (W3140)"
+    ],
+    "Time Estimate": [
+     "- Continuous; ~monthly tuning"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Catalog Ops merge 1P and 3P offers into unified catalog per product taxonomy (links to VS-01); each SKU page may show 1P offer + multiple 3P offers with buy-box logic (W3146)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Catalog Ops"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Ecommerce tune search relevance: combine title/spec/keyword/category; boost by listing quality (W3140), seller performance (W3154), conversion, and sponsorship (links to VS-48 retail media); apply merchandising rules (featured, new arrivals, top-rated)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Ecommerce / BI"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Marketplace Mgr monitors catalog health: duplicate listings, miscategorization, prohibited items (links to W3156 policy), price anomalies, out-of-date content; remediate with sellers",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Marketplace Mgr / Seller Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3140",
+    "W3146",
+    "W3154",
+    "W3156"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Continuous (real-time)",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Ecommerce (links to VS-10), Category (links to VS-01), Finance",
+    "Trigger": "Offer change; buy-box recompute",
+    "Volume": "All multi-offer SKUs"
+   },
+   "id": "W3146",
+   "level": 2,
+   "name": "First-Party vs Third-Party Offer Comparison & Buy-Box",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitor buy-box distribution\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: transparent, performance-based algorithm and documented rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Self-preferencing risk**: Always favoring 1P attracts competition-law scrutiny; mitigated by transparent, performance-based algorithm and documented rules"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Buy-box engine; pricing master (links to VS-01); seller performance (links to W3154)"
+    ],
+    "Time Estimate": [
+     "- Continuous; weekly review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "System computes buy-box winner per multi-offer SKU using weighted algorithm: total price (item + shipping + tax), seller performance (W3154), fulfillment speed, in-stock, returns policy; surfaces \"Other Sellers\" panel for runners-up",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category (links to VS-01) sets 1P/3P rules: categories where 1P wins by policy (private label — links to VS-41, controlled brands), categories open to 3P, and categories where 3P complements 1P (vendor direct-ship for out-of-stock)",
+     "duration": "Per category",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Marketplace Mgr monitor buy-box distribution: 1P share vs. 3P share, seller diversity, price competitiveness; flag anomalies (price war, seller dominance) and adjust rules",
+     "duration": "Weekly",
+     "n": "3",
+     "r": "Marketplace Mgr / BI"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3154"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-86"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Ecommerce (links to VS-10), Fraud/LP (links to VS-23), Seller Operations",
+    "Trigger": "Customer places marketplace order",
+    "Volume": "Per marketplace order"
+   },
+   "id": "W3147",
+   "level": 2,
+   "name": "Marketplace Order Capture, Fraud Screening & Routing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"captures order\" (replaces manual Step 1).",
+     "- System auto-generate of \"fingerprint, address risk\" (replaces manual Step 2).",
+     "- System auto-route of \"routes sub-order to seller\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-86 (ensure marketplace seller & tax compliance.)",
+     "- operational: multi-signal fraud screening and seller vetting (W3138)"
+    ],
+    "Pain Points / Risks": [
+     "- **Marketplace fraud risk**: Higher than 1P; mitigated by multi-signal fraud screening and seller vetting (W3138)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order capture (links to VS-10/VS-60); fraud screening (links to VS-23); seller routing; reservation (W3150)"
+    ],
+    "Time Estimate": [
+     "- Per order (automated)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Ecommerce (links to VS-10) captures order; for multi-seller basket (W3149) splits into per-seller sub-orders; reserves seller inventory (W3150); computes total price incl. shipping, tax, fees",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Ecommerce / System"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Fraud/LP (links to VS-23) screen order: payment fraud, fake/compromised account, first-party fraud, promo abuse (links to W3152); velocity rules, device fingerprint, address risk; hold/cancel/review suspicious orders",
+     "duration": "Per order (real-time)",
+     "n": "2",
+     "r": "Fraud Analyst / System"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Marketplace routes sub-order to seller (or to BuildRight fulfillment — Fulfilled-by-BuildRight — links to VS-93) with fulfillment SLA, shipping label, customer address; seller acknowledges and begins fulfillment (W3148)",
+     "duration": "Per order",
+     "n": "3",
+     "r": "System / Seller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3138",
+    "W3148",
+    "W3149",
+    "W3150",
+    "W3152"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Per order",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Seller, Carrier/3PL (links to VS-56), CS (links to VS-13)",
+    "Trigger": "Seller accepts sub-order",
+    "Volume": "Per marketplace order"
+   },
+   "id": "W3148",
+   "level": 2,
+   "name": "Seller Fulfillment SLA, Shipment Tracking & POD",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generate carrier label, manifest, hand-off to carrier\" (replaces manual Step 1).",
+     "- System auto-track of \"System captures tracking events\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitor SLA adherence\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: SLA monitoring, penalty, and Fulfill-by-BuildRight option"
+    ],
+    "Pain Points / Risks": [
+     "- **Late-ship risk**: Seller SLA breach hurts customer experience; mitigated by SLA monitoring, penalty, and Fulfill-by-BuildRight option"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Carrier API (links to VS-56); tracking/customer comms (links to VS-10/VS-13); seller scorecard (links to W3154)"
+    ],
+    "Time Estimate": [
+     "- Per order; ~daily review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Seller fulfills per SLA (e.g., ship within 24–48 hr); for BuildRight-fulfilled (links to VS-93), follow dark-store/DC dispatch SLA; generate carrier label, manifest, hand-off to carrier",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Seller / Carrier"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "System captures tracking events (carrier API — links to VS-56); push to customer (links to VS-10/VS-13); on delivery, capture POD/e-signature; auto-close order on confirmed delivery",
+     "duration": "Per order",
+     "n": "2",
+     "r": "System / Carrier"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Marketplace Mgr monitor SLA adherence (ship-on-time %, delivery-on-time %, cancellation rate, late-ship rate); under-performers flagged in seller scorecard (W3154) and remediation/penalty path",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Marketplace Mgr / Seller Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3154"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Per order",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Ecommerce (links to VS-10), CS (links to VS-13), OMS (links to VS-60)",
+    "Trigger": "Customer basket contains 1P + multiple 3P items",
+    "Volume": "~10–25% of baskets multi-seller"
+   },
+   "id": "W3149",
+   "level": 2,
+   "name": "Multi-Seller Basket Split, Consolidation & Customer Experience",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route via Fulfill-by-BuildRight\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconcile returns/refunds per seller\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: unified tracking, consolidated options, and clear comms"
+    ],
+    "Pain Points / Risks": [
+     "- **Experience-fragmentation risk**: Multiple deliveries/returns confuse customer; mitigated by unified tracking, consolidated options, and clear comms"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Basket/OMS (links to VS-10/VS-60); CS ticketing (links to VS-13); Fulfill-by-BuildRight (links to VS-93)"
+    ],
+    "Time Estimate": [
+     "- Per order (automated)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Ecommerce (links to VS-10) shows customer clear basket view: per-seller grouping, separate shipping thresholds/fees, estimated delivery windows, consolidated vs. split-shipment options where possible",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Ecommerce / System"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "OMS (links to VS-60) orchestrates split: per-seller sub-orders with their respective fulfillment paths; where consolidation beneficial, route via Fulfill-by-BuildRight (links to VS-93) consolidation point",
+     "duration": "Per order",
+     "n": "2",
+     "r": "OMS / System"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "CS (links to VS-13) manage multi-seller order inquiries with unified order view; communicate any per-seller delivery variance; reconcile returns/refunds per seller (W3151)",
+     "duration": "Per inquiry",
+     "n": "3",
+     "r": "CS / System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3151"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Continuous (real-time)",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, IT, Seller, Ecommerce (links to VS-10)",
+    "Trigger": "Seller inventory change; order reservation; sync failure",
+    "Volume": "All 3P listings"
+   },
+   "id": "W3150",
+   "level": 2,
+   "name": "Seller Inventory Sync, Reservation & Oversell Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-sync of \"syncs to listing availability\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitor sync health\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: real-time sync, atomic reservation, and stale-feed delisting"
+    ],
+    "Pain Points / Risks": [
+     "- **Oversell risk**: Stale inventory causes cancellation and customer dissatisfaction; mitigated by real-time sync, atomic reservation, and stale-feed delisting"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seller inventory API; reservation engine; ecommerce availability (links to VS-10); refunds (links to VS-80)"
+    ],
+    "Time Estimate": [
+     "- Continuous monitoring"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Seller maintains inventory via API (real-time), bulk upload, or portal; system syncs to listing availability; quality rules for stale feeds (auto-delist if feed > 24 hr stale)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Seller / IT"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "On order placement: system atomically reserves seller inventory; on oversell (concurrent orders exceed available): cancel, offer back-order, or substitute per seller policy; refund customer if cancelled (links to VS-80)",
+     "duration": "Per order",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "IT monitor sync health: API uptime, feed freshness, reservation accuracy; alert on anomalies; reconcile against seller reported inventory weekly",
+     "duration": "Daily/weekly",
+     "n": "3",
+     "r": "IT / Seller Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Per return (~5–10% return rate)",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Seller, CS (links to VS-13), Quality, AP (links to VS-15)",
+    "Trigger": "Customer initiates marketplace return",
+    "Volume": "Per marketplace order"
+   },
+   "id": "W3151",
+   "level": 2,
+   "name": "Marketplace Returns, Seller Responsibility & Disposition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"log return request with reason\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspects, files dispute if item not as returned\" (replaces manual Step 2).",
+     "- System auto-track of \"track return rate per seller to scorecard\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: inspection, evidence capture, and serial tracking (links to VS-23)"
+    ],
+    "Pain Points / Risks": [
+     "- **Return-abuse risk**: Fake returns, item-swap; mitigated by inspection, evidence capture, and serial tracking (links to VS-23)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Returns workflow (links to VS-32); refund (links to VS-80); settlement debit (links to W3153/VS-15)"
+    ],
+    "Time Estimate": [
+     "- 5–10 days per return cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "CS (links to VS-13) log return request with reason; route to seller; per marketplace policy decide approval (auto-approve for low-value, seller-review for high-value); communicate decision to customer",
+     "duration": "Per return",
+     "n": "1",
+     "r": "CS / Seller"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Customer ships item back (to seller or BuildRight consolidation per policy); on receipt, seller inspects, files dispute if item not as returned; CS mediates disputes",
+     "duration": "Per return",
+     "n": "2",
+     "r": "Customer / Seller / CS"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "On approval: refund customer (links to VS-80) and debit seller settlement (W3153); item disposition (restock by seller, refurbish — links to VS-09, dispose per VS-73); track return rate per seller to scorecard (W3154)",
+     "duration": "Per return",
+     "n": "3",
+     "r": "Finance / Seller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3153",
+    "W3154"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-515"
+   ],
+   "fields": {
+    "Frequency": "Per promotion + campaign cycle",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Marketing (links to VS-14), Retail Media (links to VS-48), Finance, Seller",
+    "Trigger": "Seller promotion request; marketplace campaign cycle",
+    "Volume": "~50–500 active seller promotions"
+   },
+   "id": "W3152",
+   "level": 2,
+   "name": "Seller-Initiated Promotions, Coupons & Co-Funded Campaigns",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews for compliance\" (replaces manual Step 1).",
+     "- System auto-report of \"For co-funded campaigns\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"Finance execute seller fee for promotional placement\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-515 (ensure controlled execution — Marketplace Catalog, Order Routing & Seller Fulfillment (PA-95.2).)",
+     "- operational: 1P/3P price rules (W3146) and review"
+    ],
+    "Pain Points / Risks": [
+     "- **Promo-cannibalization risk**: Seller promo undercuts 1P; mitigated by 1P/3P price rules (W3146) and review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Promotion engine (links to VS-14/VS-58); retail-media (links to VS-48); commission (links to W3141)"
+    ],
+    "Time Estimate": [
+     "- Per promotion/campaign"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Seller proposes promotion (discount %, coupon, bundle, free shipping, flash sale); Marketplace Mgr reviews for compliance (MAP/price-floor — links to VS-01, competition law, anti-dumping) and approve/decline",
+     "duration": "Per promotion",
+     "n": "1",
+     "r": "Marketplace Mgr / Seller"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "For co-funded campaigns (BuildRight + seller): Marketing (links to VS-14) structures campaign (featured placement, email, push, retail-media — links to VS-48); agree cost-share, KPIs, and reporting",
+     "duration": "Per campaign",
+     "n": "2",
+     "r": "Marketing / Seller"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance execute seller fee for promotional placement (commission engine — W3141) and reconcile; report promotional lift per seller and to scorecard (W3154)",
+     "duration": "Per campaign",
+     "n": "3",
+     "r": "Finance Analyst / Marketplace Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3141",
+    "W3146",
+    "W3154"
+   ]
+  }
+ ]
+}

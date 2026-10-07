@@ -1,0 +1,691 @@
+{
+ "process_area": {
+  "id": "PA-141.2",
+  "title": "Shuttle Service, Route & Daily Commute Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.2-shuttle-service-route-and-daily-commute-operations.md",
+ "value_stream": {
+  "directory": "VS-141-employee-transport-shuttle-and-daily-commute-management",
+  "id": "VS-141",
+  "name": "Employee Transport, Shuttle & Daily Commute Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Periodic + on shift/footprint change",
+    "Owner": "Transport Lead / Fleet Planning (VS-06)",
+    "Participants": "Site Managers (VS-07/VS-04), Analytics (VS-28), Workforce Planning (VS-103.3)",
+    "Trigger": "Need assessment (W4241); route review; new-store opening (VS-37)",
+    "Volume": "Routes per site × shift; pickup points across the employee catchment"
+   },
+   "id": "W4249",
+   "level": 2,
+   "name": "Shuttle Route Design, Shift Schedule & Pickup-Point Network",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Route-optimization/clustering tools; ridership-vs-capacity auto-alerts; schedule publication to ESS/app"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: routes evidence-designed (geocoded); schedule shift-aligned; reviewed periodically"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-19.3/VS-103.3 (shifts), VS-06 (fleet/route), VS-37 (new-store), W4241 (need), W4263 (re-optimization)"
+    ],
+    "Pain Points / Risks": [
+     "- **Route-inefficiency risk**: Long detours inflate cost/time; mitigated by cluster-based design + re-optimization (W4263)",
+     "- **Shift-misalign risk**: Shuttle arrives late → attendance/OT impact; mitigated by schedule aligned to roster with buffer"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Route/ridership analytics (VS-28); shift roster (VS-19.3/VS-103.3); fleet/route tool (VS-06); site data (VS-07)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 weeks per route-design cycle; ongoing re-optimization"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "Transport/Analytics design routes balancing employee home-cluster coverage, pickup-point safety/accessibility, travel time, shift start/end alignment, and vehicle capacity — using the geocoded need (W4241) and traffic/route data",
+     "duration": "Per review",
+     "n": "1",
+     "r": "Transport Lead / Analytics"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Transport define the published schedule (route, stops, times) per shift, communicate to riders and site managers, and align arrival/departure to shift roster (VS-19.3)",
+     "duration": "Per review",
+     "n": "2",
+     "r": "Transport Lead / Site Mgrs"
+    },
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "Transport periodically re-optimize routes on ridership/traffic change (W4263), manage route changes/disruptions, and keep the pickup-point network documented",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Transport Lead / Analytics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4241",
+    "W4263"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Multiple trips/day per route (2–3 shifts)",
+    "Owner": "Transport Dispatcher / Site Transport Coordinator",
+    "Participants": "Drivers, Site Managers (VS-07/VS-04), Security (VS-23), HR (VS-103)",
+    "Trigger": "Each scheduled shift, daily",
+    "Volume": "~6,762 employees; majority of store/DC shift staff boarding daily"
+   },
+   "id": "W4250",
+   "level": 2,
+   "name": "Daily Shuttle Dispatch, Manifest & Passenger Check-In",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Mobile manifest with QR check-in; GPS arrival/departure auto-log; ridership→analytics/payroll feed"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: manifest enforced (no unentitled boarding); seat-belt/no-overload; trip closed & reconciled"
+    ],
+    "Cross-references": [
+     "- links to VS-103.1 (ESS/app), VS-06 (dispatch), VS-23 (security gate), W4251 (entitlement), W4252 (pre-trip), W4253 (allowance), W4264 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Overload/unsafe risk**: More riders than seats; mitigated by manifest check-in + no-overload rule (W4260)",
+     "- **Unaccounted-rider risk**: Non-employees boarding; mitigated by ID/QR check-in vs entitlement (W4251)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Manifest/ridership module; ESS/app QR check-in (VS-103.1); fleet dispatch (VS-06); security gate (VS-23)"
+    ],
+    "Time Estimate": [
+     "- ~5–10 min boarding per trip; dispatch ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Transport Lead",
+     "activity": "Dispatcher generates the daily trip manifest (route, driver, vehicle, expected riders from W4251), confirms vehicle/driver readiness (pre-trip W4252), and dispatches on schedule",
+     "duration": "Per trip",
+     "n": "1",
+     "r": "Dispatcher / Driver"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Driver/Coordinator board employees against the manifest (check-in — employee ID/ESS QR), enforce seat-belt/no-overload, and log actual riders/departure/arrival times",
+     "duration": "Per trip",
+     "n": "2",
+     "r": "Driver / Coordinator"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Coordinator closes the trip (actual manifest, no-shows, exceptions), flag issues (overcapacity, refused boarding), and feed ridership data to analytics (W4264) and payroll/allowance (W4253)",
+     "duration": "Per trip",
+     "n": "3",
+     "r": "Coordinator / Dispatcher"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4251",
+    "W4252",
+    "W4253",
+    "W4260",
+    "W4264"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "On eligibility change + periodic rebalance",
+    "Owner": "HR Shared Services (VS-103.1) / Transport Lead",
+    "Participants": "HR (VS-19/VS-103), Site Managers, Employees",
+    "Trigger": "Policy (W4242); hire/transfer (VS-19.1/VS-103); capacity change",
+    "Volume": "Entitlement records for eligible employees × route/shift"
+   },
+   "id": "W4251",
+   "level": 2,
+   "name": "Employee Entitlement, Ridership Eligibility & Seat Allocation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Policy→entitlement auto-derivation; HRIS event-driven entitlement updates; waitlist/seat auto-allocation"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: entitlement policy-driven (W4242); synced to HRIS lifecycle (VS-19/VS-103); audited vs ridership"
+    ],
+    "Cross-references": [
+     "- links to VS-19/VS-103.1 (HRIS/ESS/lifecycle), VS-103 (shared services), W4242 (policy), W4245/W4249 (capacity/routes), W4264 (audit)"
+    ],
+    "Pain Points / Risks": [
+     "- **Ghost-rider risk**: Entitlement retained after exit/transfer → boarded by others/fraud; mitigated by HRIS sync on hire/transfer/exit + ridership audit",
+     "- **Allocation-fairness risk**: Waitlist management perceived unfair; mitigated by transparent allocation rule"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HRIS/ESS entitlement (VS-19/VS-103.1); ridership register; capacity (W4245); policy (W4242)"
+    ],
+    "Time Estimate": [
+     "- Per-change ~10 min; periodic rebalance ~1 day/site"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "HR/Transport determine each employee's transport entitlement from policy (W4242 — shift, role, site, distance), assign to route/seat, and maintain the ridership register in HRIS/ESS",
+     "duration": "Per change",
+     "n": "1",
+     "r": "HR Shared Services / Transport"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Transport allocate seats against capacity (W4245/W4249), manage waitlists and alternates, and update on hire/transfer/exit (VS-19.1/VS-103)",
+     "duration": "Per change",
+     "n": "2",
+     "r": "Transport Lead / HR"
+    },
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "HR/Transport handle entitlement exceptions (temporary eligibility, route-swap request), approve per policy, and audit entitlement vs actual ridership (W4264)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "HR / Transport Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4242",
+    "W4245",
+    "W4249",
+    "W4264"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Daily pre-trip + ongoing roster",
+    "Owner": "Transport Dispatcher / Fleet Driver Mgmt (VS-06.2)",
+    "Participants": "Drivers, Fleet (VS-06.2), HSE (VS-24), HR (VS-19), Security (VS-23)",
+    "Trigger": "Daily operations; driver hire (VS-19.1); compliance cycle",
+    "Volume": "Driver pool covering all routes × shifts"
+   },
+   "id": "W4252",
+   "level": 2,
+   "name": "Driver Roster, Qualification & Daily Pre-Trip Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Digital pre-trip checklist; license/clearance expiry auto-alerts; fatigue/hours tracking; fitness-to-drive attestation"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: drivers licensed/cleared/medically fit (DOLE); pre-trip completed; hours/fatigue managed (VS-24)"
+    ],
+    "Cross-references": [
+     "- links to VS-06.2 (fleet/driver), VS-24 (HSE), VS-19 (HR/driver record), VS-23 (clearance), W4260 (compliance/pre-trip), W4255 (incident)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unfit-driver risk**: Fatigued/unlicensed/unfit driver → accident; mitigated by fitness-to-drive check + fatigue/hours management",
+     "- **Credential-lapse risk**: Expired license/clearance; mitigated by re-credentialing registry (W4260)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet driver mgmt (VS-06.2); HSE (VS-24); HR/driver record (VS-19); security clearance (VS-23)"
+    ],
+    "Time Estimate": [
+     "- ~15 min pre-trip; roster/qualification ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Transport Lead",
+     "activity": "Fleet/Transport maintain the driver roster and qualifications (professional driver's license, PNP/LTO clearance, medical/DOLE fitness, defensive-driving training), with re-credentialing tracking",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "Fleet / HR / HSE"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Driver performs the daily pre-trip (vehicle condition check per W4260, fuel, first-aid/fire extinguisher, manifest/IDs), and Dispatcher confirms fitness-to-drive (not fatigued/intoxicated)",
+     "duration": "~15 min/trip",
+     "n": "2",
+     "r": "Driver / Dispatcher"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Dispatcher/HSE manage driver hours/fatigue, incident records (W4255), and performance coaching; escalate unfit drivers",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Dispatcher / HSE / Fleet"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4255",
+    "W4260"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Per payroll cycle + monthly reconciliation",
+    "Owner": "Payroll (VS-19.2) / Transport Lead / Procurement (VS-34)",
+    "Participants": "Payroll (VS-19.2), Comp (VS-102), Finance (VS-17.4), Procurement (VS-34)",
+    "Trigger": "Eligibility (W4251); payroll cycle (VS-19.2); monthly vendor/rideshare billing",
+    "Volume": "Allowance recipients + service-vehicle assignees + rideshare/vanpool participants"
+   },
+   "id": "W4253",
+   "level": 2,
+   "name": "Transport Allowance, Service-Vehicle & Ride-Share/Van-Pool Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Allowance auto-compute from rate table; payroll-vs-ridership exclusion check; fuel-card spend analytics"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: allowance BIR-coded (W4243); entitlement exclusivity enforced; fuel/personal-use controlled (VS-61)"
+    ],
+    "Cross-references": [
+     "- links to VS-19.2 (payroll), VS-102 (comp), VS-61/VS-06.2 (fuel/fleet), VS-34 (procurement), VS-17.4 (finance), W4243 (rates), W4251 (entitlement), W4264 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Double-dip risk**: Employee claims allowance + boards shuttle; mitigated by entitlement exclusivity (W4251) + payroll-vs-ridership reconciliation",
+     "- **Fuel-abuse risk**: Service-vehicle fuel misused; mitigated by fuel card controls (VS-61) + personal-use logging"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll (VS-19.2); comp (VS-102); fuel/fleet (VS-61/VS-06.2); procurement/contract (VS-34); finance (VS-17.4)"
+    ],
+    "Time Estimate": [
+     "- Part of payroll cycle; ~1–2 days monthly reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO / CFO",
+     "activity": "Payroll compute and pay the transport allowance to eligible non-shuttle employees per rate table (W4243), with BIR tax coding, in the semi-monthly run (VS-19.2)",
+     "duration": "Per cycle",
+     "n": "1",
+     "r": "Payroll"
+    },
+    {
+     "a": "COO",
+     "activity": "Fleet/Transport administer the service-vehicle program (assigned vehicles, fuel card per VS-61, personal-use policy/logging) and the rideshare/vanpool program (subsidy, platform, eligibility)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Fleet / Transport / Procurement"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/Transport reconcile allowance, fuel, and rideshare/vanpool spend, validate against policy/actuals, and feed cost analytics (W4264)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance / Transport Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4243",
+    "W4251",
+    "W4264"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Daily (close/open shifts) + event-driven",
+    "Owner": "Transport Lead / HSE (VS-24) / Site Managers",
+    "Participants": "HSE (VS-24), Security (VS-23), Labor Relations (VS-84), Site Managers",
+    "Trigger": "Night-differential shifts (10 PM–6 AM); close/open shifts; special events/seasonal peaks",
+    "Volume": "Employees on after-dark shifts, with emphasis on women-safe service"
+   },
+   "id": "W4254",
+   "level": 2,
+   "name": "Late-Night, Women-Safe & Special-Shift Transport Service",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- GPS live-tracking with SOS/panic; geofenced safe-drop confirmation; after-dark incident analytics"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: after-dark/women-safe standard enforced (VS-24); SOS available; close/open coverage guaranteed"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (HSE), VS-23 (security), VS-06 (GPS), VS-19.2 (OT), VS-84 (labor), W4255 (incident), W4263 (improvement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Safety risk**: After-dark assault/harassment at stops/in vehicle; mitigated by women-safe standard + escort/SOS + monitored stops",
+     "- **Coverage risk**: Late shifts uncovered → staff stranded; mitigated by guaranteed close/open coverage"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE (VS-24); security/CCTV (VS-23); fleet GPS (VS-06); SOS/panic integration; payroll OT (VS-19.2)"
+    ],
+    "Time Estimate": [
+     "- Standard definition ~2 weeks; daily ops ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO / CHRO",
+     "activity": "Transport/HSE define the after-dark service standard (door-to-door/drop-point safety, escort/wait-until-safe protocol, CCTV-monitored pickup points, GPS-tracked vehicles) prioritizing women-safe transport",
+     "duration": "Annual + ops",
+     "n": "1",
+     "r": "Transport Lead / HSE / Security"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Transport ensure late-night coverage (vehicle/driver availability for close & pre-open shifts, overtime per VS-19.2), and the SOS/emergency-contact procedure (links W4255)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Transport Lead / Dispatcher"
+    },
+    {
+     "a": "COO",
+     "activity": "HSE/Security monitor after-dark incidents, audit compliance with the women-safe standard, and improve routes/stops on feedback (W4263)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "HSE / Security / Transport"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4255",
+    "W4263"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Incident-driven (~few/month at scale)",
+    "Owner": "Transport Lead / HSE (VS-24) / Fleet (VS-06)",
+    "Participants": "Driver, HSE (VS-24), Security (VS-23), Insurance (VS-26), HR (VS-83), Legal (VS-100)",
+    "Trigger": "Vehicle breakdown; road accident; medical/security incident en route",
+    "Volume": "Incidents across the shuttle network"
+   },
+   "id": "W4255",
+   "level": 2,
+   "name": "Transport Incident, Breakdown & Passenger-Safety Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- In-vehicle SOS/automatic crash notification; incident→HSE/insurance workflow; CAPA tracking (VS-133)"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: incident SOP followed; passenger-liability insured (VS-26); root-cause CAPA logged (VS-24/VS-133)"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (HSE/CAPA), VS-06 (fleet), VS-26 (insurance), VS-23 (security), VS-83 (clinic), VS-100 (legal), W4260 (corrective), VS-133 (CI)"
+    ],
+    "Pain Points / Risks": [
+     "- **Passenger-harm risk**: Inadequate response worsens injury/liability; mitigated by SOP + first-aid + emergency linkage",
+     "- **Liability risk**: Uninsured/undocumented incident; mitigated by passenger-liability insurance (VS-26) + incident logging/CAPA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE/incident system (VS-24); fleet (VS-06); insurance/claims (VS-26); security (VS-23); HR/clinic (VS-83)"
+    ],
+    "Time Estimate": [
+     "- Immediate response; investigation ~1–3 days/incident"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Transport Lead",
+     "activity": "Driver/Coordinator execute the incident response (secure scene, passenger safety first-aid, notify Dispatcher/HSE/Security, call emergency services if needed) per the transport incident SOP",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Driver / Dispatcher"
+    },
+    {
+     "a": "COO",
+     "activity": "HSE/Fleet investigate (root cause, driver/vehicle factors, road/weather), arrange alternate transport for stranded passengers, and log to the HSE/incident system (VS-24)",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "HSE / Fleet / Transport Lead"
+    },
+    {
+     "a": "CFO / COO",
+     "activity": "Insurance/Legal handle claims/passenger-injury (VS-26), corrective action (driver retraining/vehicle repair W4260), and reporting/CAPA (links VS-24/VS-133)",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Insurance / Legal / Fleet"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4260"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "HR Shared Services / Transport Helpdesk (VS-103.1)",
+    "Participants": "Transport Lead, Site Managers, Payroll (VS-19.2), HR (VS-103)",
+    "Trigger": "Employee inquiry/complaint; missed shuttle; route-swap; lost item",
+    "Volume": "Inquiries across the workforce (ride issues, schedule, allowance)"
+   },
+   "id": "W4256",
+   "level": 2,
+   "name": "Transport Helpdesk, Employee Inquiry & Exception Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ESS self-service case logging; chatbot for FAQ (schedule/routes); auto-dispatch of backup; SLA dashboard"
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- CTL-654: cases logged/tracked to closure; SLA monitored; safety escalations to HSE (VS-24)"
+    ],
+    "Cross-references": [
+     "- links to VS-103.1 (case/ESS), VS-06 (dispatch), VS-19.2 (payroll), VS-28 (analytics), VS-24 (HSE), W4248 (EX), W4263/VS-133 (CI)",
+     "- links to VS-103.1 (case/ESS), VS-06 (dispatch), VS-19.2 (payroll), VS-28 (analytics), VS-24 (HSE), W4248 (EX), W4263/VS-133 (CI)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stranded-staff risk**: Missed-shuttle inquiry unresolved → absence/safety; mitigated by backup-dispatch SLA",
+     "- **Recurring-issue risk**: Themes unaddressed; mitigated by CI feed (VS-133) and EX analytics (W4248)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR case/ESS (VS-103.1); dispatch (VS-06); payroll (VS-19.2); analytics (VS-28); HSE (VS-24)"
+    ],
+    "Time Estimate": [
+     "- ~5–15 min/case; backup dispatch as needed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "Helpdesk receive employee transport inquiries (missed shuttle, route/stop request, lost item, allowance dispute, safety concern) via ESS/call/hotline, log a case, and triage",
+     "duration": "Per case",
+     "n": "1",
+     "r": "Transport Helpdesk / HR Shared Services"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "Helpdesk resolve or route the case (dispatch a backup, arrange alternate transport, escalate safety to HSE W4254/W4255, route payroll to VS-19.2), and track to closure",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Helpdesk / Transport / Payroll"
+    },
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "Helpdesk analyze recurring issues (missed shuttles, complaint themes), feed CI (W4263/VS-133) and EX (W4248), and report SLA performance",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Helpdesk / Analytics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4248",
+    "W4254",
+    "W4255",
+    "W4263"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-654"
+   ],
+   "fields": {
+    "Frequency": "~2–5 disruption events per year across the operating regions (transport-group strikes recur with modernization policy cycles; flood-season road closures are annual); most resolve within one day, the rare multi-day event is the tail case",
+    "Owner": "Transport Lead / Fleet Planning (VS-06) (continuity protocol); Site Managers (attendance execution)",
+    "Participants": "Store/DC Managers (site staffing decisions), HR Shared Services (VS-103.1 attendance & leave placement), Regional Managers (multi-site calls), Fleet Dispatch (shuttle surge per W4250), Payroll (VS-19.2, attendance coding), VS-19.3 (scheduling), Communications/VS-63 (employee & customer messaging), Regional Manager closure authority (the E-02 custody where trading cannot be sustained)",
+    "Trigger": "A citywide or regional commute interruption threatening mass absenteeism on a trading day — a PUV/jeepney strike or transport-group protest, major-flood or landslide road closures on primary commute corridors, or a fuel-supply disruption idling commuter transport across a metro where BuildRight concentrates stores and a DC",
+    "Volume": "1 event × the affected metro's sites (30–80 stores + 1 DC) × the affected sites' crews (typically 30–60% of store headcount commutes by public transport) × the trading day's staffing requirement"
+   },
+   "id": "W5569",
+   "level": 2,
+   "name": "Mass-Commute Disruption & Transport-Strike Continuity Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Attendance-impact forecast model keyed to commute-mode profiles and corridor status feeds (replaces manual Step 1 estimation)",
+     "- One-tap transport-disruption attendance code in the WFM app with payroll-rule auto-apply (replaces manual Step 6 coding)",
+     "- Shuttle-surge manifest template with consolidated pickup points pre-computed per corridor scenario (replaces ad-hoc dispatch)",
+     "- Store-locator/app status flags driven from the event record (replaces phone-tree status calls)"
+    ],
+    "Background": [
+     "The corpus owns the site and the vehicle: typhoon/flood protocols (W576/W848/W1387) protect *stores*, W850/W2510 decide whether a *site* opens, W4255 responds to a *shuttle* incident, and W484/W854 handled pandemic attendance — but nobody owned the commute-interruption event, where every site is open and reachable-yet-unstaffed: the crews cannot get in. A PUV-modernization-class strike strands 30–60% of a metro store's crew with zero damage to the building; the flood-closure variant strands crews on the far side of impassable corridors. The event needs an owner for the attendance-forecast call, the skeleton-crew and critical-role matrix (cashiers, keyholders, receiving), the shuttle-surge and pickup-consolidation plan, the ride-share/allowance activation under W4253, the attendance coding that keeps payroll honest, and the customer-impact decision riding the existing closure custody."
+    ],
+    "Controls": [
+     "- CTL-654 (ensure controlled execution — Shuttle Service, Route & Daily Commute Operations (PA-141.2).)",
+     "- operational: attendance coding under a declared commute disruption uses the no-penalty category verified against the event record; surge transport runs on W4250 manifests with W4253-gated allowances; any trading-day closure rides the E-02 custody and is documented either way"
+    ],
+    "Cross-references": [
+     "- links to W4250 (shuttle surge manifests), W4251/W4253 (commute profiles & allowance activation), W4255 (vehicle-level incident boundary), W561/W10 (attendance & payroll coding), VS-63/VS-75 (status messaging), VS-103.1 (leave placement), W2510/W850 (E-02 closure custody), W576/W848/W1387 (site-protection boundary — the event targets the commute, not the site)"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-staffed-trading risk**: opening on a skeleton crew without setting service expectations produces queue failures and safety issues at lumber-yard loading; mitigated by Step 4's explicit service-level matrix",
+     "- **Penalty-absence risk**: stranded crews charged with unexcused absences, driving grievance and attrition; mitigated by Step 2's no-penalty coding directive and Step 6's payroll integrity",
+     "- **Keyholder single-point risk**: the one keyholder stranded closes the store regardless of crew; mitigated by Step 2's critical-role matrix with cross-trained backups",
+     "- **Ad-hoc-transport risk**: managers improvising unreimbursed pickups; mitigated by Step 3's W4253-gated allowance activation with manifest discipline",
+     "- **Silent-closure risk**: a store silently unopened while signage says open; mitigated by Step 5's status push and the E-02 custody documentation"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by site management, HR Shared Services, Payroll and the transport program; no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Workforce-management attendance codes with the transport-disruption category and no-penalty flag (links to W561/W10)",
+     "- Shuttle dispatch console with surge manifests and consolidated pickup points (links to W4250)",
+     "- Ride-share/allowance activation record under the W4253 entitlement rules",
+     "- Store-communication cascade and app/store-locator status flags (links to VS-63, VS-75)",
+     "- Closure-decision record where trading cannot be sustained (links to the E-02 custody, W2510/W850)",
+     "- Corridor-vulnerability register keyed to the site roster for pre-planning"
+    ],
+    "Time Estimate": [
+     "Per event day ≈ 30–60 minutes per affected site for the staffing call and messaging (≈ 15–30 staff-hours per 30-site metro) plus 4–8 hours of transport-coordination and payroll coding centrally; at the 2–5-events-per-year cadence this stays absorbed within site management, HR Shared Services and the transport program — no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "HR Shared Services",
+     "activity": "**Disruptor & scope call**: classify the event (strike vs flood-closure vs fuel) from news/authoritative feeds; map affected corridors against the site roster; forecast attendance impact per site from commute-mode data (W4251/W4253 profiles)",
+     "duration": "1–2 hours (day before or 5–6 AM)",
+     "n": "1",
+     "r": "Transport Lead"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "**Attendance directive**: site-level staffing directive — report-if-you-can with no-penalty absence coding for stranded crews; critical-role matrix activates (keyholders, cashiers, receiving; department minimums)",
+     "duration": "Same morning",
+     "n": "2",
+     "r": "HR Shared Services / Site Managers"
+    },
+    {
+     "a": "Transport Lead",
+     "activity": "**Continuity transport**: shuttle surge on consolidated pickup points (W4250 manifest discipline), ride-share/van-pool allowance activation per W4253 for critical roles, carpool coordination via the site channels",
+     "duration": "Event-long",
+     "n": "3",
+     "r": "Fleet Dispatch / Transport Lead"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Trading decision**: open-with-skeleton-crew is the default with service-level expectations set (lane count, services suspended); where staffing or safety cannot sustain trading, closure rides the E-02 custody — W2510's decision matrix, W850's mechanics; documented either way",
+     "duration": "On threshold",
+     "n": "4",
+     "r": "Regional Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Customer & employee messaging**: opening status and service levels pushed to store channels, app/store locator and local social; employees get the transport options and the no-penalty confirmation in one communication",
+     "duration": "Same morning",
+     "n": "5",
+     "r": "VS-63 / Communications"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Payroll & leave integrity**: attendance coding per the directive (transport-disruption code — no absence-hit, no unverified absent); partial-day attendance tracked; the coding rides W10-class payroll rails",
+     "duration": "Per cycle",
+     "n": "6",
+     "r": "Payroll (VS-19.2)"
+    },
+    {
+     "a": "Head of HR Shared Services",
+     "activity": "**After-action**: attendance-vs-forecast reconciliation, shuttle-surge utilization, corridor vulnerability register update (chronic corridors pre-plan consolidated pickups), and the multi-day playbook refresh",
+     "duration": "Post-event",
+     "n": "7",
+     "r": "Transport Lead / HR"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W1387",
+    "W2510",
+    "W4250",
+    "W4251",
+    "W4253",
+    "W4255",
+    "W484",
+    "W561",
+    "W576",
+    "W848",
+    "W850",
+    "W854"
+   ]
+  }
+ ]
+}

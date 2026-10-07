@@ -1,0 +1,1027 @@
+{
+ "process_area": {
+  "id": "PA-16.2",
+  "title": "AR & Collections"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-16-order-to-cash/PA-16.2-ar-and-collections.md",
+ "value_stream": {
+  "directory": "VS-16-order-to-cash",
+  "id": "VS-16",
+  "name": "Order-to-Cash"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Weekly (comprehensive); daily (exception monitoring)",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Clerk, Sales Rep, Finance Manager",
+    "Trigger": "Weekly collection cycle; daily for high-risk accounts",
+    "Volume": "~5,200 trade accounts + ~200 corporate accounts; ~3,500 AR invoices/month"
+   },
+   "id": "W889",
+   "level": 2,
+   "name": "Customer AR Aging Analysis & Collection Prioritization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates AR aging report by bucket\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews aging and flags accounts requiring action\" (replaces manual Step 2).",
+     "- System auto-collect of \"AR Clerk prioritizes collection queue by\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Manual prioritization bias**: relying on AR Clerk judgment may miss systemic collection issues in smaller accounts",
+     "- **Sales-Collections tension**: Sales Reps may resist aggressive collection on their accounts for relationship reasons",
+     "- **Data freshness**: AR aging is only as current as the last posting; mid-day payments may not reflect"
+    ],
+    "Staffing Implication": [
+     "At ~5,400 active AR accounts with weekly collection cycles, 2–3 dedicated AR Clerks for collections + 1 AR Supervisor is adequate. Collection call volume: ~150–200 calls/week based on aging distribution.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AR aging report generation with configurable bucket definitions",
+     "- Automated exception alerts: accounts crossing aging thresholds, payments > 10 days overdue",
+     "- Collection queue management with assignment and tracking",
+     "- DSO and CEI calculation integrated with management reporting (W35)",
+     "- Customer account notes and collection history log"
+    ],
+    "Time Estimate": [
+     "~3 hours/week for comprehensive aging review and prioritization across ~5,400 accounts"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System generates AR aging report by bucket (current, 1–30, 31–60, 61–90, 91–120, > 120 days) segmented by entity, customer tier, and collection officer",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk reviews aging and flags accounts requiring action: (a) accounts crossing 30-day threshold for first reminder, (b) accounts in 61–90 day bucket for escalation, (c) accounts > 90 days for write-off assessment per W81",
+     "duration": "1 hour/week",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk prioritizes collection queue by: (a) amount at risk (largest balances first), (b) aging severity, (c) customer tier (corporate > trade), (d) payment history score, (e) sales rep input on customer situation",
+     "duration": "30 min/week",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "AR Supervisor assigns collection accounts to AR Clerks balanced by load and territory",
+     "duration": "15 min/week",
+     "n": "4",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Weekly collection review meeting: AR Supervisor, AR Clerks, and Sales Reps review top 20 overdue accounts, agree on action plan per account (call, visit, demand letter, legal referral)",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System generates DSO (Days Sales Outstanding) and collection effectiveness index (CEI) metrics for management reporting per W35",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W35",
+    "W81"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Daily (ongoing collection activity)",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, Sales Rep, AR Supervisor",
+    "Trigger": "Accounts identified in weekly aging review (W889)",
+    "Volume": "~150–200 collection calls/week; ~30–40 promise-to-pay tracking entries/week"
+   },
+   "id": "W890",
+   "level": 2,
+   "name": "Customer Collection Call Execution & Promise Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews assigned collection queue with customer aging detail, outstanding…\" (replaces manual Step 1).",
+     "- System rule-based authorization of \"AR Clerk executes collection call\" (replaces manual Step 2).",
+     "- System auto-log of \"logs call outcome in system\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Clerk review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer avoidance**: trade customers may avoid calls, requiring multi-channel outreach (email, SMS, WhatsApp)",
+     "- **Promise reliability**: ~30–40% of payment promises may be broken; over-reliance on promises delays escalation",
+     "- **Documentation burden**: logging every call is time-consuming but essential for legal escalation evidence"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Collection call log with timestamp, outcome, and notes per customer account",
+     "- Promise-to-pay tracking with automatic broken-promise flagging",
+     "- Follow-up task generation based on aging bucket and last contact date",
+     "- Collection effectiveness dashboard per AR Clerk"
+    ],
+    "Time Estimate": [
+     "~15–20 hours/week across 2–3 AR Clerks for active collection calling",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk reviews assigned collection queue with customer aging detail, outstanding invoices, and prior collection history",
+     "duration": "5 min/account",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "AR Clerk executes collection call: (a) confirms identity and authorized contact, (b) states outstanding amount and invoice references, (c) inquires on payment status and reason for delay, (d) negotiates payment commitment date",
+     "duration": "10–15 min/call",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "AR Clerk logs call outcome in system: (a) **Promise to Pay** — customer commits to specific date and amount, (b) **Dispute** — customer disputes invoice (route to W2746), (c) **Partial Payment** — customer offers partial settlement, (d) **No Response** — customer unreachable after 3 attempts, (e) **Broken Promise** — previously committed date missed",
+     "duration": "5 min/call",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "For promises: system creates promise-to-pay record with committed date, amount, and AR Clerk notes; system auto-flags broken promises on the committed date + 1 business day",
+     "duration": "2 min/promise",
+     "n": "4",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "Follow-up cadence: (a) 1–30 days overdue — call or email every 7 days, (b) 31–60 days — call every 3–5 business days, (c) 61–90 days — call every 2–3 business days + Sales Rep involvement, (d) > 90 days — demand letter + legal escalation per W812",
+     "duration": "Ongoing",
+     "n": "5",
+     "r": "AR Clerk / Sales Rep"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Weekly: AR Supervisor reviews broken promise report and escalates chronic non-payers to Finance Manager for demand letter or legal referral",
+     "duration": "30 min/week",
+     "n": "6",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2746",
+    "W812",
+    "W889"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Monthly (all active accounts); ad-hoc as needed",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, AR Supervisor",
+    "Trigger": "Monthly statement cycle (1st business day of month); ad-hoc on customer request",
+    "Volume": "~5,200 trade + ~200 corporate statements/month"
+   },
+   "id": "W892",
+   "level": 2,
+   "name": "Customer Statement Generation & Distribution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts with open balances\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews statements for accuracy\" (replaces manual Step 2).",
+     "- System auto-generate of \"printed and mailed for accounts without email\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Clerk review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Statement-accuracy risk**: statements generated against a subledger not yet reconciled to GL misstate opening/closing balances and aging, triggering customer disputes and dunning errors; mitigated by the AR Clerk pre-release review that entity, contact details, and aging buckets match the GL subledger (step 2)",
+     "- **Delivery-failure risk**: emailed statements bounce or the ~20% printed/mail statements go to stale addresses, silently breaking the dunning evidence trail; mitigated by distribution-channel monitoring and reissue within 1 business day of any ad-hoc request or bounce-back (steps 3–4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated statement generation with BIR-compliant formatting (entity TIN, registered address)",
+     "- Email delivery integration with read-receipt tracking",
+     "- Customer portal statement access with download history",
+     "- GL subledger reconciliation against statement totals"
+    ],
+    "Time Estimate": [
+     "Monthly cycle 1.5 hours (statement accuracy review 1 hour + distribution monitoring 30 min) ≈ 18 hours/year for ~5,400 statements/month; ad-hoc statement requests 10 min each within 1 business day at realized volume (statement generation and multi-channel distribution automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System generates monthly customer statements for all active AR accounts with open balances: opening balance, invoice details (date, number, amount), payments applied, adjustments (credit notes, debit notes), closing balance, and aging summary",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk reviews statements for accuracy: correct entity, proper contact details, aging buckets match GL subledger",
+     "duration": "1 hour/month",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System distributes statements via configured channel: (a) email (default for ~80% of accounts), (b) customer portal self-service download, (c) printed and mailed for accounts without email (~20%)",
+     "duration": "30 min/month",
+     "n": "3",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "Ad-hoc statement requests from customers or Sales Reps processed within 1 business day",
+     "duration": "10 min/request",
+     "n": "4",
+     "r": "AR Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "~5–10 escalation events/month",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Supervisor, Finance Manager, Legal Counsel, Collection Agency, Sales Rep",
+    "Trigger": "Account > 90 days overdue and all standard collection efforts exhausted per W890",
+    "Volume": "~50–100 accounts/year reaching legal escalation stage"
+   },
+   "id": "W812",
+   "level": 2,
+   "name": "Customer Credit Field Collection Operations & Legal Escalation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts > 90 days overdue where\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares demand letter on company letterhead\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves and signs demand letter\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence-chain risk**: a demand letter without proof of delivery weakens the subsequent small-claims (≤ PHP 400K) or RTC collection case; mitigated by registered mail with return card and email (step 3) and the system-logged agency-referral timeline (step 4)",
+     "- **Recovery-cost mismatch risk**: legal action on small balances costs more than is recoverable; mitigated by the explicit cost-benefit assessment before filing — small claims vs. regular civil case vs. write-off (step 5)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Collection escalation status tracking per customer account",
+     "- Demand letter template generation with merge fields",
+     "- External collection agency referral log with SLA tracking",
+     "- Legal case reference and court filing documentation",
+     "- Integration with bad debt write-off workflow (W81)"
+    ],
+    "Time Estimate": [
+     "Per escalated account: demand-letter preparation 30 min + approval and registered mailing 15 min + collection-agency engagement 30 min + legal-action evaluation 1 hour ≈ 2.25 hours × ~50–100 accounts/year reaching legal escalation ≈ 112–225 hours/year; the monthly 90+-day identification sweep runs 30 min ≈ 6 hours/year (escalation and legal-proceedings documentation ongoing).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "AR Supervisor identifies accounts > 90 days overdue where: (a) 3+ collection calls attempted with no payment, OR (b) 2+ broken payment promises, OR (c) customer disputing without engaging in resolution",
+     "duration": "30 min/month",
+     "n": "1",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "AR Supervisor prepares demand letter on company letterhead: outstanding amount, invoice references, payment deadline (10 business days), and statement of legal action if unresolved",
+     "duration": "30 min/account",
+     "n": "2",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Finance Manager approves and signs demand letter; sent via registered mail with return card and email",
+     "duration": "15 min/account",
+     "n": "3",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "If no response within deadline: AR Supervisor engages external collection agency for field visit; system logs agency referral with expected recovery timeline",
+     "duration": "30 min/account",
+     "n": "4",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "If collection agency unsuccessful: Finance Manager and Legal Counsel evaluate legal action — (a) file small claims case (≤ PHP 400K) in Municipal Trial Court, (b) file regular civil case for collection in Regional Trial Court, (c) assess cost-benefit of litigation vs. write-off per W81",
+     "duration": "1 hour/account",
+     "n": "5",
+     "r": "Finance Manager / Legal"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "All escalation actions and legal proceedings documented in customer account for audit trail and potential BIR write-off substantiation per W81",
+     "duration": "Ongoing",
+     "n": "6",
+     "r": "AR Supervisor / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W81",
+    "W890"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, AR Supervisor, Treasury Analyst",
+    "Trigger": "Customer payment received (bank transfer, check, cash deposit, e-wallet)",
+    "Volume": "~3,500 AR invoices/month; ~1,500–2,000 customer payments/month"
+   },
+   "id": "W2745",
+   "level": 2,
+   "name": "Customer AR Payment Application & Unapplied Cash Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check deposit slip, or manual notification from store/DC\" (replaces manual Step 1).",
+     "- System auto-count of \"applies payment to customer account\" (replaces manual Step 2).",
+     "- System auto-create of \"creates on-account credit\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Clerk review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Unapplied-cash-aging risk**: unmatched payments parked in the suspense account distort DSO and hide real collection status; mitigated by the 5-business-day investigation SLA using bank reference, customer communication, and Sales-Rep confirmation (step 5)",
+     "- **Misapplication risk**: no-reference payments matched by amount/date to the wrong invoice corrupt customer aging and dunning triggers; mitigated by proportional-allocation defaults, AR Supervisor approval on overpayment dispositions, and on-account credit handling (steps 3–4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Bank statement auto-import with payment matching algorithm",
+     "- Payment application with open-item matching by invoice reference",
+     "- Unapplied cash suspense account management",
+     "- On-account credit creation for overpayments",
+     "- GL reconciliation for unapplied cash balance"
+    ],
+    "Time Estimate": [
+     "Payment application 5 min/payment × ~1,500–2,000 customer payments/month ≈ 125–167 hours/month ≈ 1,500–2,000 hours/year; partial payments 5 min, overpayments 10 min, and unapplied-cash research 15 min per item at realized volume; weekly unapplied-cash aging review 30 min ≈ 26 hours/year; monthly suspense-account reconciliation 30 min ≈ 6 hours/year (bank auto-import and payment notifications ongoing).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "AR Clerk receives payment notification: bank statement auto-import, check deposit slip, or manual notification from store/DC",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "AR Clerk applies payment to customer account: (a) match payment to specific invoice(s) by reference number, (b) if no reference: match by amount, date, and customer name, (c) system posts: Dr. Cash/Bank / Cr. Accounts Receivable",
+     "duration": "5 min/payment",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Partial payment**: system applies proportionally across open invoices unless customer specifies allocation; remaining balance stays in AR aging",
+     "duration": "5 min/payment",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Overpayment**: system creates on-account credit; AR Clerk contacts customer for disposition (apply to future invoice, refund, or offset against other open items)",
+     "duration": "10 min/event",
+     "n": "4",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Unapplied cash**: payments received that cannot be matched to a customer or invoice are posted to unapplied cash suspense account; AR Clerk investigates within 5 business days using bank reference, customer communication, and Sales Rep confirmation",
+     "duration": "15 min/item",
+     "n": "5",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Weekly: AR Supervisor reviews unapplied cash aging; items > 10 days escalated; items > 30 days reported to Finance Manager",
+     "duration": "30 min/week",
+     "n": "6",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "Monthly: unapplied cash balance must reconcile to GL suspense account; variance investigated",
+     "duration": "30 min/month",
+     "n": "7",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "~50–80 disputes/month",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, AR Supervisor, Sales Rep, Category Manager, Warehouse Supervisor",
+    "Trigger": "Customer disputes invoice amount, quality, quantity, or pricing",
+    "Volume": "~1.5% of AR invoices result in disputes"
+   },
+   "id": "W2746",
+   "level": 2,
+   "name": "Customer AR Dispute Resolution & Credit Note Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs dispute in system\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify in system\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates BIR-compliant credit note referencing original sales invoice, with…\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Clerk review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-drift risk**: disputes stalled past the 5-business-day investigator response window freeze the invoice in aging and block cash application; mitigated by reason-code routing (pricing → Category Manager, quantity/delivery → Warehouse/DC, quality → W110) with response tracking (step 2)",
+     "- **Credit-note-compliance risk**: a credit note issued without BIR-compliant reference to the original sales invoice — or for an invalid dispute — creates VAT and audit exposure; mitigated by AR Supervisor approval before issuance and VAT-adjustment posting tied to the original invoice (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Dispute case management with status tracking (Open, Investigating, Resolved, Rejected)",
+     "- BIR-compliant credit note generation with sequential numbering",
+     "- GL automatic posting for credit notes (revenue reversal + VAT adjustment)",
+     "- Dispute analytics dashboard with reason code distribution"
+    ],
+    "Time Estimate": [
+     "~25 min of AR handling per dispute (logging 10 min + classification and routing 5 min + credit-note approval or rejection communication 10 min) plus the investigating party's response effort, which varies by dispute; × ~50–80 disputes/month ≈ 600–960 disputes/year ≈ 250–400 AR hours/year, plus monthly dispute analytics 30 min ≈ 6 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer raises dispute via Sales Rep, email, or phone; AR Clerk logs dispute in system with: invoice reference, disputed amount, reason code (pricing, quantity, quality, delivery, duplicate, other), and customer documentation",
+     "duration": "10 min/dispute",
+     "n": "1",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk classifies dispute type and routes for investigation: (a) **pricing** — route to Category Manager, (b) **quantity/delivery** — route to Warehouse Supervisor or DC, (c) **quality** — route to Quality per W110, (d) **duplicate invoice** — verify in system",
+     "duration": "5 min/dispute",
+     "n": "2",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "Investigating party responds within 5 business days with findings: dispute valid, partially valid, or not valid",
+     "duration": "Varies",
+     "n": "3",
+     "r": "Investigator"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "If dispute valid: AR Supervisor approves credit note issuance — system generates BIR-compliant credit note referencing original sales invoice, with VAT adjustment; GL posts: Dr. Sales Returns / Cr. AR; Dr. Output VAT (reversal)",
+     "duration": "10 min/dispute",
+     "n": "4",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "If dispute not valid: AR Clerk communicates decision to customer with supporting evidence; payment expected per original terms",
+     "duration": "10 min/dispute",
+     "n": "5",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Monthly: AR Supervisor reviews dispute analytics — top reasons, resolution time, disputed amount as % of AR, repeat customers",
+     "duration": "30 min/month",
+     "n": "6",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W110"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Monthly comprehensive review; weekly for high-risk accounts",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Supervisor, Credit Analyst, Trade Sales Manager, Store Manager, Controller",
+    "Trigger": "Monthly trade account review cycle (first week of month)",
+    "Volume": "~5,200 active trade accounts; ~200 corporate accounts"
+   },
+   "id": "W1200",
+   "level": 2,
+   "name": "Trade Account Monthly Statement Review, Credit Limit Recalibration & Churn Prevention",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"account health report\" (replaces manual Step 1).",
+     "- System auto-review of \"Account segmentation and prioritization\" (replaces manual Step 2).",
+     "- System auto-calculate of \"recalculates appropriate credit limit based\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Trade (contractor/builder) and corporate (developer/institutional) accounts represent 40% of BuildRight Depot's revenue but carry significant credit risk. Trade customers operate in a cyclical, project-based business with irregular cash flows; contractor defaults are common in the Philippine construction industry. This workflow manages the monthly proactive review of trade account health — not just collection of overdue amounts (covered by W889, W890) but forward-looking credit limit management, churn detection, and relationship retention."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: conservative initial credit limits (W160), regular recalibration, and credit insurance for limits > PHP 1M; operational: system-driven segmentation in Step 2 and Controller approval requirement in Step 3; operational: comparing to same-month prior year rather than trailing 3-month average"
+    ],
+    "Pain Points / Risks": [
+     "- **Contractor default in Philippine construction**: Philippine construction industry has high contractor failure rate; small contractors may abandon projects and leave suppliers unpaid; mitigated by conservative initial credit limits (W160), regular recalibration, and credit insurance for limits > PHP 1M",
+     "- **Personal relationships overriding credit discipline**: Trade Sales Managers may resist credit limit reductions on long-standing customer relationships; mitigated by system-driven segmentation in Step 2 and Controller approval requirement in Step 3",
+     "- **Seasonal volume fluctuations misread as churn**: construction activity is seasonal in the Philippines (slow during rainy season Jun–Aug); mitigated by comparing to same-month prior year rather than trailing 3-month average",
+     "- **Manual effort for 5,200 accounts**: reviewing every trade account monthly is labor-intensive; mitigated by automated health scoring and segmentation that focuses manual effort on flagged accounts only"
+    ],
+    "Staffing Implication": [
+     "- **AR Supervisor**: ~6 hours/month on account segmentation and prioritization. Absorbed within existing role.",
+     "- **Credit Analyst**: ~15 hours/month on credit limit recalibration (for ~100 Watch/At Risk accounts). Absorbed within existing role.",
+     "- **Trade Sales Manager**: ~10 hours/month on churn prevention outreach (~30 accounts). Absorbed within existing role.",
+     "- **Store Managers**: ~30 min/month per store on top-10 trade account review. Absorbed within existing role.",
+     "- **No permanent incremental headcount**.",
+     "---",
+     "*Date: 2026-06-09*"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated Trade Account Health Report with multi-dimensional scoring (W1200.1)",
+     "- Credit limit recalibration module with approval workflow (W1200.3)",
+     "- CRM integration for churn prevention outreach tracking (W1200.4)",
+     "- Trade portfolio analytics dashboard for executive review (W1200.6)"
+    ],
+    "Time Estimate": [
+     "Monthly cycle 2.5 hours (account segmentation and prioritization 2 hours + store-level relationship review 30 min) ≈ 30 hours/year; credit-limit recalibration 15 min per Watch/At-Risk account and churn-prevention outreach 20 min per Churn-Risk account at realized segment counts; quarterly executive portfolio review 2 hours ≈ 8 hours/year (trade account health report generation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "**Monthly trade account health report**: System generates \"Trade Account Health Report\" for all active trade and corporate accounts: (a) current balance and aging (30/60/90/120+ days), (b) credit utilization (outstanding ÷ credit limit), (c) payment behavior score (on-time % over trailing 6 months), (d) purchase volume trend (current month vs. trailing 3-month average), (e) days sales outstanding (DSO), (f) accounts flagged for: (i) credit utilization > 80%, (ii) payment score < 70%, (iii) purchase volume decline > 30%, (iv) new account < 6 months with first late payment",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Account segmentation and prioritization**: AR Supervisor categorizes accounts into four segments: (a) **Healthy** (green): utilization < 60%, payment score > 90%, stable or growing purchases → standard monitoring, (b) **Watch** (yellow): utilization 60–80% or payment score 70–90% or purchase decline 15–30% → proactive outreach and possible credit limit review, (c) **At Risk** (orange): utilization > 80% or payment score < 70% or purchase decline > 30% → immediate credit limit review and collection escalation per W889, (d) **Churn Risk** (blue): previously healthy account with sudden purchase volume decline > 40% over 2 months → sales outreach for retention",
+     "duration": "2 hours/month",
+     "n": "2",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Credit limit recalibration**: For Watch and At Risk accounts: Credit Analyst reviews account profile: (a) updates financial standing based on recent payment behavior and trade references, (b) recalculates appropriate credit limit based on: (i) trailing 6-month average monthly purchases, (ii) payment history, (iii) years of relationship, (iv) external credit data if available, (c) recommends: (i) credit limit increase (for healthy growing accounts), (ii) credit limit decrease (for deteriorating accounts), (iii) credit hold (for accounts with 120+ day overdue per W229), (d) Controller approves changes > 20% or > PHP 500K",
+     "duration": "15 min/account",
+     "n": "3",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Churn prevention outreach**: For Churn Risk accounts: Trade Sales Manager contacts customer within 5 business days: (a) determines reason for volume decline (project completed, competitor switch, financial difficulty, seasonal slowdown), (b) for competitor switch: offers competitive re-engagement package (discount, extended terms, or loyalty bonus points), (c) for financial difficulty: explores restructured payment plan or reduced credit limit, (d) for project completion: discusses upcoming project pipeline and material needs; documents outcome in CRM",
+     "duration": "20 min/account",
+     "n": "4",
+     "r": "Trade Sales Manager"
+    },
+    {
+     "a": "Trade Sales Manager",
+     "activity": "**Store-level account relationship review**: For trade accounts serviced primarily through specific stores: Store Manager reviews top 10 trade accounts at their store monthly: (a) discusses account health with Sales Associates who interact with the customer, (b) identifies opportunities for cross-sell or upsell based on purchase history, (c) escalates any relationship concerns (complaints, competitor interest) to Trade Sales Manager",
+     "duration": "30 min/month",
+     "n": "5",
+     "r": "Store Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Executive review**: Quarterly: Controller presents trade portfolio summary to CFO: (a) total trade receivable balance and aging distribution, (b) bad debt expense trend and allowance adequacy, (c) portfolio quality distribution (Healthy/Watch/At Risk/Default), (d) credit limit changes summary, (e) churn rate and recovery rate, (f) recommended reserve adjustments and write-off proposals",
+     "duration": "2 hours/quarter",
+     "n": "6",
+     "r": "Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W160",
+    "W229",
+    "W889",
+    "W890"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Annual policy renewal; quarterly premium reconciliation; claims as needed (estimated 5–10 claims/year for accounts written off > PHP 500,000)",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Supervisor, Controller, CFO, Credit Insurance Underwriter, Insurance Broker, VP Legal",
+    "Trigger": "Annual policy renewal; quarterly premium review; or trade account write-off event (W81) triggering insurance claim",
+    "Volume": "~5,200 trade accounts insured under group credit insurance policy; ~5–10 claims/year for significant bad debts"
+   },
+   "id": "W1414",
+   "level": 2,
+   "name": "Customer Trade Account Credit Insurance Premium Review, Claims Filing & Recovery Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review current policy coverage\" (replaces manual Step 1).",
+     "- System auto-count of \"account portfolio to the underwriter for coverage assessment\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify insured receivable balance matches AR sub-ledger\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight extends trade credit to ~5,200 trade and ~200 corporate accounts, creating significant accounts receivable exposure. Credit insurance protects BuildRight against non-payment due to customer insolvency, bankruptcy, or protracted default. At BuildRight's scale (monthly AR of ~PHP 500M–1B across trade/corporate accounts), credit insurance is a prudent risk management tool that converts uncertain bad debt risk into a known annual premium cost. Philippine trade credit insurance is provided by underwriters such as Coface, Euler Hermes (Allianz Trade), and local insurers, typically covering 75–90% of the insured receivable."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Supervisor review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Underwriter coverage reductions**: the credit insurer may reduce or withdraw coverage for specific customers (especially small contractors during economic downturns), leaving BuildRight exposed to bad debt risk without insurance protection for those accounts",
+     "- **Claim denial risk**: underwriters may deny claims if BuildRight cannot prove it followed the policy's notification and collection procedures (e.g., failure to notify underwriter of overdue account within 60-day window, or continuing to ship to a customer after knowledge of financial difficulty); mitigated by the AR Supervisor review and approval gate and operational: periodic reconciliation against source documents",
+     "- **Premium cost vs. bad debt loss**: at ~PHP 1.25M/year in premiums, the insurance is cost-effective only if BuildRight's annual bad debt write-offs would exceed PHP 1.56M without insurance (80% recovery × PHP 1.56M = PHP 1.25M); at a 0.5% bad debt rate on ~PHP 6B annual trade AR, expected bad debts are ~PHP 30M — insurance is highly cost-effective",
+     "- **Policy exclusions**: credit insurance typically excludes government accounts, related-party transactions, and foreign currency receivables — precisely the categories with elevated default risk"
+    ],
+    "Staffing Implication": [
+     "- AR Supervisor: ~10–15 hours/month on credit insurance administration; primary responsibility; absorbed within existing role",
+     "- Controller: ~2 hours/quarter on premium review + 1 hour per claim for approval; absorbed",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Credit insurance policy master: underwriter details, policy number, coverage %, premium rate, portfolio limit, renewal date (W1414.1)",
+     "- Customer coverage tracker: per-customer approved insurance limit from underwriter, linked to credit limit master (W24, W1414.2)",
+     "- Quarterly premium reconciliation: AR sub-ledger balance × premium rate vs. underwriter invoice (W1414.3)",
+     "- Claim filing workspace: document checklist, submission tracking, underwriter communication log (W1414.5–6)",
+     "- Claim settlement posting: cash receipt with GL coding to credit insurance recovery account (W1414.8)",
+     "- Subrogation obligation tracker: customer recovery events linked to settled claims (W1414.9)",
+     "- Annual policy performance dashboard: premiums, claims, recovery, loss ratio (W1414.10)",
+     "- Integration with W24 (credit application — credit limit source), W81 (bad debt write-off — claim trigger), W108 (collections — collection history for claim), W812 (field collection — escalation documentation), W460 (customer onboarding — coverage request trigger), W1300 (credit limit review — coverage adjustment)"
+    ],
+    "Time Estimate": [
+     "- Annual policy renewal: ~2 days",
+     "- Quarterly premium reconciliation: ~2 hours/quarter = ~8 hours/year",
+     "- New customer coverage requests: ~30 min × ~200 new accounts/year = ~100 hours/year",
+     "- Per claim filing: ~4–8 hours × ~7 claims/year = ~28–56 hours/year",
+     "- Annual review: ~4 hours/year",
+     "- Total: ~140–170 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "**Policy selection and renewal**: annually, AR Supervisor and Controller evaluate credit insurance options: (a) review current policy coverage (% of receivable insured, maximum tenor, country/customer exclusions), (b) obtain competitive quotes from 2–3 underwriters, (c) negotiate premium rate (typically 0.15–0.40% of insured receivable volume), (d) CFO approves policy selection and premium budget; policy covers 80% of approved receivable balances up to a portfolio limit",
+     "duration": "2 days/year",
+     "n": "1",
+     "r": "AR Supervisor / Controller"
+    },
+    {
+     "a": "Underwriter",
+     "activity": "**Customer coverage submission**: AR Supervisor submits the complete trade account portfolio to the underwriter for coverage assessment: (a) each customer's credit limit request (aligned with BuildRight's internal credit limits per W24), (b) customer financial statements (for corporate accounts > PHP 5M credit limit), (c) payment history (aging and days sales outstanding per customer), (d) industry risk classification; underwriter approves, reduces, or declines coverage per customer",
+     "duration": "1 week/annual cycle",
+     "n": "2",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Quarterly premium reconciliation**: AR Supervisor reconciles quarterly premium invoice from underwriter: (a) premium = insured receivable balance at quarter-end × premium rate, (b) verify insured receivable balance matches AR sub-ledger, (c) verify no premium charged for cash/advance-payment customers, (d) submit premium invoice for payment per W7; typical annual premium at 0.25% rate on ~PHP 500M average insured AR = ~PHP 1.25M/year",
+     "duration": "2 hours/quarter",
+     "n": "3",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**New customer coverage request**: when a new trade account is onboarded (W460) or an existing account's credit limit is increased (W1300), AR Supervisor submits a coverage request to the underwriter: (a) customer name and TIN, (b) requested credit limit, (c) customer trade references, (d) payment terms; underwriter responds within 5–10 business days with approved coverage limit",
+     "duration": "30 min/request",
+     "n": "4",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Claim filing — protracted default**: when a trade account is identified for write-off (W81) after exhaustion of collection efforts (W108, W812): (a) AR Supervisor gathers claim documentation: original invoice copies, delivery receipts, proof of demand letters, statement of account, collection history log, customer TIN and registration, (b) submits claim to underwriter within policy notification period (typically 60–90 days from due date or 180 days from invoice date), (c) AR Supervisor certifies that BuildRight has complied with all policy conditions (collection efforts, notice of overdue, retention of title if applicable)",
+     "duration": "4–8 hours/claim",
+     "n": "5",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Claim filing — insolvency/bankruptcy**: if a trade account customer files for bankruptcy or is placed under receivership: (a) VP Legal provides court filing documentation, (b) AR Supervisor submits claim with proof of insolvency (court order, SEC petition, published notice), (c) claim must be filed within 30 days of knowledge of insolvency event per most policy terms",
+     "duration": "4–8 hours/claim",
+     "n": "6",
+     "r": "AR Supervisor / VP Legal"
+    },
+    {
+     "a": "—",
+     "activity": "Underwriter reviews claim: (a) verifies customer was covered under policy at time of sale, (b) verifies credit limit was not exceeded, (c) verifies BuildRight complied with notification requirements, (d) may request additional documentation or conduct independent investigation; claim processing time: 30–90 days",
+     "duration": "External",
+     "n": "7",
+     "r": "Underwriter"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Claim settlement**: underwriter approves claim and pays indemnity: 80% of approved receivable (per policy terms); AR Supervisor receives payment, posts to GL: Dr. Cash / Cr. Credit Insurance Recovery (other income); remaining 20% uninsured portion remains as BuildRight's loss per W81",
+     "duration": "30 min",
+     "n": "8",
+     "r": "AR Supervisor / Treasury"
+    },
+    {
+     "a": "—",
+     "activity": "**Subrogation**: if the customer later pays (full or partial), BuildRight must remit the proportional recovery to the underwriter per subrogation clause; AR Supervisor tracks subrogation obligations in system",
+     "duration": "15 min/recovery",
+     "n": "9",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Annual policy performance review**: AR Supervisor prepares credit insurance scorecard for CFO: (a) total premiums paid, (b) total claims filed, (c) total claims recovered, (d) net cost/benefit of insurance, (e) policy loss ratio (claims/premiums), (f) underwriter service quality (claim processing time, communication), (g) recommendation for renewal, modification, or cancellation",
+     "duration": "4 hours/year",
+     "n": "10",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W108",
+    "W1300",
+    "W24",
+    "W460",
+    "W7",
+    "W81",
+    "W812"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Monthly statement generation (all 5,200 trade accounts); weekly aging review (Watch and At-Risk accounts per W1200 segmentation); daily field collection visits for overdue accounts",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Supervisor, Collection Officer, Trade Sales Manager, Regional Sales Coordinator, Controller",
+    "Trigger": "Monthly AR cycle (1st business day of the month); or weekly for high-risk accounts",
+    "Volume": "~5,200 trade accounts generating ~3,500 AR invoices/month; ~500–800 accounts in active collection at any time; ~30–50 field collection visits per week across all regions"
+   },
+   "id": "W1420",
+   "level": 2,
+   "name": "Trade Account Monthly Statement Generation, Aging Analysis & Field Collection Route Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Monthly statement generation\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews weekly aging report\" (replaces manual Step 2).",
+     "- System auto-route of \"Collection prioritization and route planning\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's trade and corporate accounts (5,200 trade + 200 corporate) represent ~40% of total revenue (~PHP 2.1B/month: Trade 30% + Corporate 10% per §9.1, at the §9.4 PHP 5.19B monthly gross) and are the primary source of accounts receivable risk. Unlike retail POS transactions (cash/card/e-wallet — immediate payment), trade accounts have Net 30–60 day payment terms, creating a receivables portfolio of ~PHP 500M–1B at any time. Effective collection requires more than sending statements — it requires field-level relationship management: (a) Philippine trade customers (contractors, builders) often prefer face-to-face collection, (b) collection officers must travel to customer sites across the Philippines (200 store regions across Mindanao, Visayas, Luzon), (c) route planning must optimize travel time to maximize collection visits per day, (d) collection activity data must feed back into credit scoring per W24/W1200. This workflow manages the monthly statement cycle, aging analysis, and field collection route planning for BuildRight's trade receivables."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: Trade Sales Manager involvement in collection visits"
+    ],
+    "Pain Points / Risks": [
+     "- **Philippine collection culture**: Filipino business culture emphasizes personal relationships (utang na loob, pakikisama); trade customers may prioritize paying suppliers with whom they have deeper personal connections over those who send formal demand letters; mitigated by Trade Sales Manager involvement in collection visits",
+     "- **Geographic dispersion**: trade customers are spread across the Philippines' 7,641 islands; collection officers in Visayas and Mindanao may need to travel by ferry/boat to reach customers on smaller islands, limiting daily visit capacity",
+     "- **Seasonal contractor cash flow**: Philippine construction slows during rainy season (June–August); contractors may delay payments not because they are insolvent but because their own project payments are delayed; requires judgment to distinguish temporary delay from actual default",
+     "- **Manual field collection effort**: at ~30–50 visits/week, field collection is labor-intensive; opportunity for mobile app automation and GPS route optimization"
+    ],
+    "Staffing Implication": [
+     "- AR Supervisor: ~8–10 hours/week on aging analysis, route planning oversight, and performance tracking. Absorbed within existing role.",
+     "- Collection Officers: 2–3 FTEs dedicated to field collection (covering Mindanao, Visayas, Luzon regions). These are likely existing roles or absorbed by Trade Sales Managers for relationship-based collection.",
+     "- No incremental headcount beyond existing AR and trade sales roles."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Monthly statement generator: auto-generated from AR sub-ledger with email/print distribution (W1420.1)",
+     "- Aging analysis dashboard: real-time aging buckets with drill-down to invoice level, trend charts, exception highlighting (W1420.2)",
+     "- Collection route planner: geographic clustering of overdue accounts, Google Maps/fleet routing integration, visit scheduling (W1420.3)",
+     "- Field collection mobile app: visit logging, payment collection recording, customer signature capture, GPS check-in (W1420.4)",
+     "- Collection performance dashboard: DSO, CEI, aging distribution, collection target vs. actual (W1420.5)",
+     "- Integration with W24 (credit scoring — collection activity feeds credit review), W1200 (trade account health — segmentation input), W108 (collections — formal demand letters), W812 (field collection — escalation), W81 (bad debt write-off — terminal action)"
+    ],
+    "Time Estimate": [
+     "- Monthly statement generation: 2–3 hours/month (mostly automated)",
+     "- Weekly aging analysis: 1–2 hours/week = 52–104 hours/year",
+     "- Weekly route planning: 2–3 hours/week = 104–156 hours/year",
+     "- Field collection execution: ~30–50 visits/week (per the Volume register) × 2–3 hours/visit = ~60–150 person-hours/week, covered by 2–3 collection officers at 6–8 visits/day over 4–5 field days/week (48–120 visits/week capacity incl. travel buffers)",
+     "- Performance tracking: 2–3 hours/week = 104–156 hours/year",
+     "- Total annual: ~3,000–4,000 hours/year (primarily field collection officer time)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "**Monthly statement generation** (1st business day): System generates monthly statements for all 5,200 trade accounts: (a) opening balance, (b) invoices raised during month (with invoice number, date, amount, PO reference), (c) payments received during month, (d) closing balance, (e) payment due date per terms (Net 30 or Net 60), (f) statements emailed automatically to customer contact on file; hard copy mailed to customers without email (estimated ~10% of trade accounts)",
+     "duration": "2–3 hours (review + exception handling)",
+     "n": "1",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Weekly aging analysis**: AR Supervisor reviews weekly aging report: (a) current (0–30 days), (b) 31–60 days, (c) 61–90 days, (d) 90+ days, (e) identify accounts moving to next aging bucket — these are prioritized for collection, (f) compare to prior week: is overall AR health improving or deteriorating?",
+     "duration": "1–2 hours/week",
+     "n": "2",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Collection prioritization and route planning**: Collection Officer plans weekly field collection route: (a) prioritize by: (i) accounts 90+ days overdue (highest priority), (ii) accounts moving from 60→90 days, (iii) accounts with broken payment promises, (iv) high-value accounts (> PHP 500K overdue), (b) group visits by geographic area to minimize travel time (cluster customers by city/municipality), (c) schedule 6–8 visits per day per collection officer, (d) Trade Sales Manager provides customer relationship context (personal issues, project delays affecting payment)",
+     "duration": "2–3 hours/week",
+     "n": "3",
+     "r": "Collection Officer / Trade Sales Manager"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Field collection execution**: Collection Officer visits trade account customer: (a) present statement and discuss outstanding invoices, (b) obtain commitment: (i) specific payment date, (ii) partial payment collected on-site (cash or check), (iii) payment plan for large overdue amounts, (c) update collection notes in system: visit date, customer contact, commitment details, payment collected, (d) if customer refuses or is unreachable: escalate to W812 (field collection — formal demand)",
+     "duration": "6–8 visits/day",
+     "n": "4",
+     "r": "Collection Officer"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Collection performance tracking**: (a) AR Supervisor tracks weekly collection metrics: (i) total collections vs. target, (ii) DSO (days sales outstanding) trend, (iii) collection effectiveness index (CEI), (iv) field visit conversion rate (visits resulting in payment commitment), (b) Controller reviews monthly: are we on track to keep bad debt below 0.5% of trade revenue? (c) escalate to CFO if DSO exceeds 45 days for 2+ consecutive months",
+     "duration": "2–3 hours/week",
+     "n": "5",
+     "r": "AR Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W108",
+    "W1200",
+    "W24",
+    "W81",
+    "W812"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-287"
+   ],
+   "fields": {
+    "Frequency": "Monthly statements for ~5,200 trade accounts; aging analysis weekly",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Supervisor, AR Clerk, Collection Agent, Trade Account Manager, Credit Manager",
+    "Trigger": "Monthly statement cycle (1st business day of month); or ad-hoc request from Trade Account Manager",
+    "Volume": "~3,500 AR invoices/month generating ~5,200 statements"
+   },
+   "id": "W1540",
+   "level": 2,
+   "name": "Trade Account Monthly Statement Generation, Aging Analysis & Collection Priority Scoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts — opening balance, all invoices and credit memos for the month, payments…\" (replaces manual Step 1).",
+     "- System auto-generate of \"prints and mails\" (replaces manual Step 2).",
+     "- System auto-capture of \"entering 60+ day aging, bad debt exposure estimate\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "With ~5,400 trade/corporate accounts generating ~PHP 2.1B in monthly B2B revenue (~40% of total: Trade 30% + Corporate 10% per §9.1), effective AR management is critical for BuildRight's cash flow. Monthly statement generation provides each trade customer with a comprehensive account summary, while aging analysis and collection priority scoring ensure that collection efforts are focused on the highest-risk accounts. This workflow bridges the gap between invoice-level processing (W8) and escalated collections (W108) with systematic prioritization."
+    ],
+    "Controls": [
+     "- CTL-287 (ensure controlled execution — AR & Collections (PA-16.2).)",
+     "- operational: AR Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Statement disputes**: Customers frequently dispute statements due to missing payments, unapplied credits, or invoice discrepancies; unresolved disputes delay collection and may mask genuine payment issues",
+     "- **Collection vs. relationship tension**: Aggressive collection on trade accounts can damage the commercial relationship, especially for active buyers; Trade Account Manager coordination (Step 6) balances collection urgency with relationship preservation",
+     "- **Dormant account drag**: ~15–20% of trade accounts are dormant (no transactions > 6 months) but carry small outstanding balances; collection cost may exceed recovery value"
+    ],
+    "Staffing Implication": [
+     "- AR Supervisor: ~10 hours/week on aging analysis and team oversight; dedicated role",
+     "- Collection Agents (3–4): dedicated collection team handling ~5,200 accounts",
+     "- AR Clerk: 2 hours/month on physical statement distribution; shared with other AR duties",
+     "- No incremental headcount beyond existing AR structure",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated monthly statement generation with BIR-compliant formatting (W1540.1)",
+     "- Multi-channel statement distribution (email, physical, personal delivery) (W1540.2)",
+     "- AR aging dashboard with DSO, CEI, and trend analysis (W1540.3)",
+     "- Collection priority scoring engine with configurable weights (W1540.4)",
+     "- Collection activity logging with promise-to-pay tracking (W1540.5)",
+     "- Trade Account Manager collaboration workspace for joint collection strategy (W1540.6)"
+    ],
+    "Time Estimate": [
+     "- Statement generation: automated",
+     "- Distribution: 2 hours/month",
+     "- Aging analysis: 2 hours/week = 8 hours/month",
+     "- Collection activities: ~40 hours/week for collection team",
+     "- Trade Account Manager coordination: 4 hours/month",
+     "- **Total AR team: ~200 hours/month**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Supervisor",
+     "activity": "**Monthly statement generation**: System generates statements for all active trade accounts — opening balance, all invoices and credit memos for the month, payments received, closing balance, current amount due, overdue amount by aging bucket (Current, 1–30 days, 31–60 days, 61–90 days, > 90 days); statements formatted per BIR requirements with BuildRight TIN, customer TIN, and invoice references",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Statement distribution**: System distributes statements via email (PDF attachment with digital signature); for customers requesting physical statements, AR Clerk prints and mails; high-value Platinum/Gold accounts receive personal statement delivery through Trade Account Manager",
+     "duration": "2 hours/month",
+     "n": "2",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "**Aging analysis**: AR Supervisor reviews weekly AR aging report — total receivables by aging bucket, aging trend vs. prior week, top 50 accounts by outstanding balance, accounts newly entering 60+ day aging, bad debt exposure estimate; system auto-calculates DSO (Days Sales Outstanding) and CEI (Collection Effectiveness Index)",
+     "duration": "2 hours/week",
+     "n": "3",
+     "r": "AR Supervisor"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Collection priority scoring**: System assigns collection priority score to each overdue account based on: (a) aging days (longer overdue = higher priority), (b) outstanding amount (higher amount = higher priority), (c) payment history score (chronic late payer = higher priority), (d) customer tier (Platinum/Gold accounts get dedicated attention), (e) recent order activity (active accounts prioritized over dormant); generates prioritized collection queue for Collection Agents",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Collection activity execution**: Collection Agents work the prioritized queue — (a) send automated reminder for 1–30 day aging (email + SMS), (b) phone call for 31–60 day aging with promise-to-pay tracking, (c) formal demand letter for 61–90 day aging, (d) credit hold and escalation to Credit Manager for > 90 day aging; all activities logged in collection system with timestamps and outcomes",
+     "duration": "Ongoing",
+     "n": "5",
+     "r": "Collection Agents"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Trade Account Manager coordination**: For high-priority accounts (top 50 by exposure) and Platinum/Gold accounts in aging, AR Supervisor coordinates with Trade Account Manager — leverages relationship for collection while maintaining commercial relationship; joint call strategy for disputed accounts",
+     "duration": "4 hours/month",
+     "n": "6",
+     "r": "AR Supervisor / Trade Account Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W108",
+    "W8"
+   ]
+  }
+ ]
+}

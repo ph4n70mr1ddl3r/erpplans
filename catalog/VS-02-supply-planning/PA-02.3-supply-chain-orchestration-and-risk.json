@@ -1,0 +1,1910 @@
+{
+ "process_area": {
+  "id": "PA-02.3",
+  "title": "Supply Chain Orchestration & Risk"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-02-supply-planning/PA-02.3-supply-chain-orchestration-and-risk.md",
+ "value_stream": {
+  "directory": "VS-02-supply-planning",
+  "id": "VS-02",
+  "name": "Supply Planning"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Annual full review; ad-hoc triggered by fuel price spikes > 15%, new store cluster openings, or DC lease renewal decisions",
+    "Owner": "COO",
+    "Participants": "VP Supply Chain, Logistics Manager, Finance Analyst, External Logistics Consultant",
+    "Time Estimate": "Data extraction: 1 day; Network modeling: 1 week; Cost analysis: 3 days; Recommendation and presentation: 2 hours; Total: ~2 weeks annual effort",
+    "Trigger": "Annual strategic review; or significant change in logistics costs/fuel prices",
+    "Volume": "Covers all 200 stores, 4 DCs, and ~200 delivery routes across Luzon, Visayas, and Mindanao"
+   },
+   "id": "W183",
+   "level": 2,
+   "name": "Supply Chain Network Optimization Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route\" (replaces manual Step 1).",
+     "- System auto-capture of \"Center of Gravity\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approved, trigger W116\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: COO review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Data quality for modeling**: Store-level sales data, actual transport costs per route, and DC throughput data must be accurate and complete; Philippine logistics cost data (fuel, toll, driver wages) is volatile and modeling with stale data produces unreliable recommendations",
+     "- **DC lease commitment rigidity**: Existing DC leases (typically 3–5 year terms) with early exit penalties (W117) limit the financial viability of recommended network changes; an optimal 6-DC configuration may not be achievable until current leases expire",
+     "- **Inter-island logistics complexity**: Modeling optimal DC locations for an archipelagic network (Luzon, Visayas, Mindanao) requires incorporating RoRo ferry schedules, port fees, and inter-island shipping costs that change frequently and are difficult to forecast",
+     "- **Executive resistance to change**: Closing or relocating a DC disrupts existing vendor delivery patterns, employee commutes, and store replenishment cycles; the operational risk of network changes may cause leadership to defer action even when the business case is clear"
+    ],
+    "Staffing Implication": [
+     "Annual review requiring ~2 weeks of effort. VP Supply Chain leads (~1 week). Finance Analyst: ~1 day for data extraction. External Logistics Consultant: ~1 week for modeling (project-based fee). Logistics Manager: ~3 days for cost analysis. All absorbed by existing roles plus external consultant engagement. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Big Data extraction from ERP (Sales + Inventory + Transport costs)",
+     "- Simulation/Integration with Logistics Optimization software",
+     "- Strategic decision support dashboards"
+    ],
+    "Time Estimate": [
+     "- Data extraction from ERP (step 1): 1 day (Finance Analyst pulls historical store sales, DC throughput, and transport costs by route for the full network)",
+     "- Network modeling and simulation (step 2): 1 week (VP Supply Chain and External Logistics Consultant run Center of Gravity and network optimization scenarios across 200 stores and 4 DCs; includes modeling 6-DC, 4-DC, and consolidated DC configurations)",
+     "- Cost analysis and comparison (step 3): 3 days (Logistics Manager compares current 4-DC cost baseline against alternative scenarios including lease exit costs per W117, transport cost projections, and service level impact)",
+     "- Board recommendation and presentation (step 4): 2 hours (COO presents findings and recommendation to Board)",
+     "- Implementation plan development (step 5): varies; if new DC approved, triggers W116 site selection process",
+     "- **Total annual review effort**: ~2 weeks concentrated effort (1 day data extraction + 1 week modeling + 3 days cost analysis + 2 hours presentation); primarily VP Supply Chain and External Logistics Consultant with Finance Analyst and Logistics Manager support"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Data Extraction**: Pull historical store sales, DC throughput, and transport costs by route",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Modeling**: Use \"Center of Gravity\" and \"Network Optimization\" tools to simulate optimal DC locations vs. 200-store footprint",
+     "duration": "1 week",
+     "n": "2",
+     "r": "SC Director"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Cost Analysis**: Compare current \"4-DC\" cost vs. potential \"6-DC\" or \"Consolidated DC\" scenarios; include lease exit costs (W117)",
+     "duration": "3 days",
+     "n": "3",
+     "r": "Logistics Mgr"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Recommendation**: Present optimal network configuration (e.g., \"Open DC6 in North Luzon\") to Board",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "COO"
+    },
+    {
+     "a": "—",
+     "activity": "**Implementation Plan**: If approved, trigger W116 (Site Selection) for the new DC",
+     "duration": "—",
+     "n": "5",
+     "r": "VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W116",
+    "W117"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Ongoing per shipment",
+    "Owner": "VP Supply Chain",
+    "Participants": "Logistics Manager, Import Coordinator, Store Operations Rep, 3PL Partners",
+    "Trigger": "Shipment of import PO (W144 / W2B) or inter-island freight dispatch (W66)",
+    "Volume": "~20–30 import shipments (multiple containers each; ~400–600 TEUs/month) and ~40–50 inter-island shipments/month"
+   },
+   "id": "W250",
+   "level": 2,
+   "name": "Supply Chain Control Tower & Real-Time Shipment Visibility",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-dispatch of \"dispatches\" (replaces manual Step 1).",
+     "- System auto-track of \"tracking\" (replaces manual Step 2).",
+     "- System auto-calculate of \"recalculates estimated time of arrival\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: VP Supply Chain review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Carrier API reliability**: Not all 3PL partners and shipping lines provide reliable real-time API/EDI feeds; smaller inter-island carriers may only offer manual phone/SMS updates, creating visibility gaps for ~20–30% of shipments",
+     "- **Alert fatigue**: With 60–80 active shipments, minor delays generate frequent alerts; operations teams may start ignoring non-critical exceptions, potentially missing a genuine stockout-threatening delay",
+     "- **GPS coverage gaps in provincial routes**: Cellular/GPS coverage is unreliable in remote Philippine provincial areas (mountainous terrain in Cordillera, rural Mindanao), causing tracking blackouts during the last-mile portion of inter-island delivery",
+     "- **Reactive vs. proactive limitation**: Control Tower is primarily reactive (alerting after delay occurs); true proactive supply chain management would require predictive analytics based on port congestion patterns, weather forecasts, and carrier historical performance",
+     "---"
+    ],
+    "Staffing Implication": [
+     "Largely automated tracking. Import Coordinator spends ~3 hours/week on exception investigation. VP Supply Chain: ~2 hours/month for re-routing/mitigation decisions. Logistics Manager: 2 hours/month for carrier performance review. All absorbed by existing roles. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Control Tower Dashboard with GIS integration",
+     "- Carrier EDI/API tracking integrations",
+     "- Dynamic ETA recalculation engine",
+     "- Automated SMS/Email delay exception notifications"
+    ],
+    "Time Estimate": [
+     "- Shipment dispatch integration: Automated",
+     "- Milestone tracking and ETA recalculation: Automated",
+     "- Geofence alert processing: Automated",
+     "- Delay investigation (per exception): 1 hour",
+     "- Re-routing/mitigation decision: 2 hours (only when critical delays threaten stockout)",
+     "- Monthly carrier performance review: 2 hours/month",
+     "- **Total**: Largely automated; ~3 hours/week for exception management across 60–80 active shipments"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Shipment Dispatch**: 3PL partner dispatches shipment and transmits Container ID / GPS tracker link via API/EDI to BuildRight.",
+     "duration": "Automated",
+     "n": "1",
+     "r": "3PL Partner"
+    },
+    {
+     "a": "—",
+     "activity": "**Milestones Tracking**: Control Tower system aggregates tracking data (vessel GPS, port gate-out/gate-in, inland truck GPS) to trace shipment in transit.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Dynamic ETA Update**: System dynamically recalculates estimated time of arrival (ETA) based on weather, port speed, and transit history.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Geofence Alerts**: System detects container entering port/DC zone; auto-alerts DC gate crew (W3) and Import Coordinator to prepare receiving.",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Mgr",
+     "activity": "**Exception Trigger**: If a shipment is delayed > 24 hours from original ETA, system triggers alert. Import Coordinator investigates bottleneck.",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Re-routing / Mitigation**: If critical delay threatens store stockout, VP Supply Chain authorizes inventory reallocation (W105) or alternative local sourcing (W60).",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Carrier Review**: Monthly, Logistics Manager reviews carrier lead-time performance and delay metrics in S&OP dashboard (W133).",
+     "duration": "2 hours",
+     "n": "7",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W105",
+    "W133",
+    "W144",
+    "W2B",
+    "W3",
+    "W60",
+    "W66"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Ongoing per delivery transaction (~573 delivery orders/day)",
+    "Owner": "Last-Mile Operations Supervisor",
+    "Participants": "WMS, Dispatch Crew, Driver (Fleet/3PL), Customer Service Representative, Customer",
+    "Time Estimate": "Dispatch: 5 min; In-transit updates: Automated; Delivery & POD: 10 min",
+    "Trigger": "Order dispatched from DC or Store for home delivery (W19 / W19B)",
+    "Volume": "Covers ~17,200 deliveries/month"
+   },
+   "id": "W268",
+   "level": 2,
+   "name": "Last-Mile Home Delivery Tracking & Proof-of-Delivery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"loads delivery vehicle\" (replaces manual Step 1).",
+     "- System auto-dispatch of \"triggers SMS/email notifications to customer\" (replaces manual Step 2).",
+     "- System auto-calculate of \"recalculates ETA based on traffic conditions.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Connectivity Blackout (Offline Mode)**: In remote areas with no cellular signal, the mobile app caches signature and photo data locally, syncing with the ERP automatically once connection is restored.",
+     "- **Delivery Refusal / Damaged Goods**: If customer rejects delivery due to damage, driver marks \"Refused - Damaged\" in app, takes photo of damage, and returns goods to DC. ERP automatically flags case to CSR for expedited replacement order or refund processing (W19 step 12).",
+     "- **POD compliance gaps**: Drivers may forget to capture photos or signatures during high-volume delivery days, creating incomplete POD records that complicate dispute resolution and AR collection for large B2B deliveries.",
+     "- **GPS accuracy in dense urban areas**: Multi-story construction sites and dense Metro Manila neighborhoods produce inaccurate GPS stamps, undermining the geofence proximity alert and delivery location verification for disputed deliveries."
+    ],
+    "Staffing Implication": [
+     "~17,200 deliveries/month. Last-Mile Operations Supervisor manages driver fleet and POD compliance (~4–6 hours/day). CSR handles delivery exception escalations (~1–2 hours/day). Driver POD capture: 3 min/delivery, absorbed into delivery routine. No incremental headcount beyond existing Last-Mile Supervisor and driver pool.",
+     "---"
+    ],
+    "Steps": [],
+    "Success Metrics / KPIs": [
+     "- On-Time In-Full (OTIF) Delivery rate: > 95%",
+     "- Failed delivery rate: < 2.0%",
+     "- Delivery ETA notification accuracy: ±15 minutes",
+     "- Proof of Delivery (POD) capture compliance (photo + signature): 100%"
+    ],
+    "System Touchpoints": [
+     "- Last-Mile Driver Mobile App (barcode scanning, signature & photo capture, offline sync capability)",
+     "- Real-time customer tracking web portal (GIS integrated route map & ETA update)",
+     "- ERP Control Tower tracking dashboard integration",
+     "- Integration with W19 (Home Delivery), W19B (Ship from Store), and W250 (Control Tower)"
+    ],
+    "Time Estimate": [
+     "- Driver loading and barcode scan confirmation (step 1): 5 min per delivery stop; ~573 delivery orders/day across all DCs, batch-loaded per route with ~10–15 orders per vehicle = ~5 min/stop",
+     "- Customer dispatch alert and ETA notification (step 2): automated (instant)",
+     "- Real-time GPS tracking and ETA recalculation (step 3): automated (continuous; no manual effort)",
+     "- Proximity alert to customer via SMS (step 4): automated (instant)",
+     "- Delivery, site inspection, and customer verification (step 5): 5–15 min depending on item count and size (bulky items like cement bags, tiles, and lumber require longer unloading and staging time)",
+     "- Digital POD capture — signature, photo, and GPS stamp (step 6): 3 min per delivery",
+     "- Delivery completion, inventory posting, invoice generation, and CSAT request (step 7): automated (instant)",
+     "- **Per delivery (staff time)**: ~13–25 min total (5 min loading/scan + 5–15 min delivery/inspection + 3 min POD capture + automated steps)",
+     "- **Daily delivery volume**: ~573 deliveries/day across all DCs; ~17,200 deliveries/month requiring ~145–240 driver-hours/day",
+     "- **Exception handling**: failed deliveries (~2% rate = ~11/day) add 15–30 min each for return-to-DC processing per W19.12"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**Driver Loading & Scan**: Dispatch crew loads delivery vehicle; driver scans order barcodes using the last-mile mobile app, changing order status in ERP to \"Out for Delivery\".",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Driver / Dispatch Crew"
+    },
+    {
+     "a": "—",
+     "activity": "**Customer Dispatch Alert**: System automatically triggers SMS/email notifications to customer with an updated ETA, contact details for the driver, and a link to the real-time tracking map.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**Real-Time GPS Tracking**: Driver's mobile app streams GPS location to the ERP Supply Chain Control Tower (W250); system dynamically recalculates ETA based on traffic conditions.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "Driver / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Proximity Alert**: When the delivery vehicle enters a 2 km geofenced radius of the destination, the system sends an automated proximity SMS alert to the customer.",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**Delivery & Site Inspection**: Driver arrives at address; unloads goods (cement, tiles, fixtures); customer inspects items to verify correct SKUs and quantity.",
+     "duration": "5–15 min",
+     "n": "5",
+     "r": "Driver / Customer"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**POD Capture**: Driver captures digital Proof of Delivery (POD) via mobile app: (a) customer's electronic signature, (b) photo of items staged at the site, (c) GPS coordinate stamp confirming vehicle was at delivery location.",
+     "duration": "3 min",
+     "n": "6",
+     "r": "Driver"
+    },
+    {
+     "a": "—",
+     "activity": "**Delivery Completion**: Mobile app uploads POD data; ERP changes order status to \"Delivered\", posts inventory reduction, generates official sales invoice to customer, and sends CSAT rating request (W65).",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W19",
+    "W19B",
+    "W250",
+    "W65"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Annual full review of all ~1,000 vendors; continuous monitoring of ~50 critical/single-source vendors; ~4–6 significant disruption events per year",
+    "Owner": "VP Supply Chain / Procurement Director",
+    "Participants": "Procurement Director, Category Manager, Supply Planning Manager, VP Merchandising (C), Finance Manager (C for cost impact), Customs Broker (C for import disruptions)",
+    "Trigger": "Annual supplier risk review cycle (Q1); ad-hoc disruption event (typhoon, port congestion, supplier bankruptcy, geopolitical trade restriction, raw material shortage)",
+    "Volume": "~1,000 vendors assessed annually; ~20–30 critical single-source dependencies identified; ~8–12 contingency plan activations per year"
+   },
+   "id": "W558",
+   "level": 2,
+   "name": "Supplier Risk Assessment & Supply Disruption Contingency Planning",
+   "parent": null,
+   "req_refs": [
+    "PUR-003",
+    "PUR-004",
+    "SCP-007",
+    "SCP-009"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"assigns risk assessment to each Category Manager for vendors in their category\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics risk: shipping route exposure\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculated with configurable weights\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W44 covers vendor performance scorecards (quality, delivery, cost). W491 covers supplier financial health and credit risk monitoring. W60 covers emergency procurement. W56 covers customer backorder management. W31 covers demand forecasting. However, no workflow covers holistic supplier risk assessment and supply disruption contingency planning — the systematic identification, assessment, and mitigation of supply chain risks including: single-source dependency, geographic concentration, financial instability, geopolitical trade restrictions, natural disaster exposure, and logistics bottleneck vulnerability. For a Philippine hardware retailer with ~40% of COGS from imports (China, Taiwan, Indonesia, Malaysia, Japan, Europe) and operations across an archipelago with 20+ typhoons per year, supply disruption risk is a constant operational reality. The company imports ~400–600 TEUs per month and relies on Manila North/South Harbor and regional ports that experience periodic congestion."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: diversifying port of entry (Subic, Batangas, Cebu) per W144 and maintaining safety stock buffers per W312; operational: pre-positioned buffer inventory and pre-qualified alternative vendors; operational: W32 seasonal buy planning and W312 safety stock adjustment"
+    ],
+    "Pain Points / Risks": [
+     "- Philippine port congestion (especially Manila North/South Harbor) is chronic and unpredictable — container dwell times can spike from 5 days to 15+ days during peak periods (Ber months, pre-Christmas); mitigated by diversifying port of entry (Subic, Batangas, Cebu) per W144 and maintaining safety stock buffers per W312",
+     "- Typhoon paths are difficult to forecast beyond 3 days — PAGASA provides 3-day tropical cyclone warnings; supply chain decisions must be made quickly once a typhoon track is confirmed; mitigated by pre-positioned buffer inventory and pre-qualified alternative vendors",
+     "- Chinese New Year factory closures affect ~40% of import vendors for 2–3 weeks every January–February — this is a predictable annual disruption but requires significant pre-buying and inventory build; mitigated by W32 seasonal buy planning and W312 safety stock adjustment",
+     "- Alternative vendor qualification takes 3–6 months per W36 — during an active disruption, there is no time to qualify a new vendor; mitigated by pre-qualifying alternative vendors during the annual review (step 5) and maintaining a bench of warm standby vendors",
+     "- Political instability in source countries (Myanmar, Indonesia) can disrupt supply overnight — government-imposed export restrictions, currency controls, or civil unrest; mitigated by geographic diversification of source countries and maintaining inventory buffers for politically unstable source regions"
+    ],
+    "Staffing Implication": [
+     "- Covered by existing Supply Planning Manager and Category Managers; no incremental headcount needed.",
+     "- Annual review adds ~320 person-hours in Q1 distributed across ~5 Category Managers (~64 hours each).",
+     "- Per-disruption response (~8–16 hours) absorbed by Supply Planning Manager and Category Managers as part of operational duties.",
+     "- Procurement Director quarterly review (~4 hours) absorbed within existing reporting cadence.",
+     "- **Capital expenditure**: Temperature monitoring sensors, climate-controlled storage expansion, and HVAC maintenance are Capex items (W21/W240).",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Supplier risk assessment module with scoring and tiering (SCP-009)",
+     "- Purchase recommendation — alternative vendor suggestion (SCP-007)",
+     "- Vendor management — vendor data source (PUR-003)",
+     "- Import POs — import risk assessment (PUR-004)",
+     "- Vendor performance scorecard — quality/delivery data (W44)",
+     "- Supplier financial health — financial risk data (W491)",
+     "- Emergency procurement — disruption response (W60)",
+     "- Backorder management — customer impact (W56)",
+     "- Demand forecasting — demand data (W31)",
+     "- Replenishment parameters — safety stock override (W312)",
+     "- Multi-channel allocation — allocation during shortage (W105)",
+     "- Product substitution — substitute recommendation (W279)",
+     "- Store communication — disruption notification (W571)",
+     "- Supply chain control tower — real-time visibility (W250)"
+    ],
+    "Time Estimate": [
+     "Annual full review: ~320 person-hours (1,000 vendors × ~20 min each). Per-disruption response: ~8–16 hours (initial assessment + escalation + communication). Quarterly dashboard: ~4 hours. Total annual effort: ~450–500 person-hours. Distributed across Category Managers (assessment), Supply Planning Manager (response), and Procurement Director (review)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Annual supplier risk assessment cycle initiation (Q1): Procurement Director assigns risk assessment to each Category Manager for vendors in their category; provides assessment template with risk dimensions, scoring criteria, and deadline; Category Managers responsible for assessing all vendors with annual spend > PHP 500K and all single-source vendors regardless of spend",
+     "duration": "1 day (kickoff)",
+     "n": "1",
+     "r": "Procurement Director"
+    },
+    {
+     "a": "Procurement Director",
+     "activity": "Risk classification for each vendor across six dimensions: (a) **Financial risk**: pull W491 financial health data, payment behavior trends, credit reports (where available), years in business; (b) **Geographic risk**: country of origin political stability, distance from Philippines, port dependency (Manila vs. regional port), shipping route vulnerability; (c) **Single-source dependency** — count SKUs exclusive to this vendor with no alternative source identified, percentage of category spend concentrated with this vendor; (d) **Logistics risk**: shipping route exposure (South China Sea, Pacific typhoon belt), port congestion history (Manila North/South Harbor delays), inter-island dependency for domestic vendors; (e) **Regulatory risk**: import restriction exposure, tariff change probability, customs clearance delay history (BOC red lane frequency); (f) **Quality risk**: defect rate history per W44, product recall history, quality audit findings",
+     "duration": "15–20 min/vendor",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Procurement Director",
+     "activity": "Risk scoring: each dimension scored 1–5 (1 = Low risk, 2 = Minor, 3 = Moderate, 4 = High, 5 = Critical); weighted composite score calculated with configurable weights: financial risk (25%), geographic risk (15%), single-source dependency (25%), logistics risk (15%), regulatory risk (10%), quality risk (10%); system auto-calculates composite and flags dimension scores ≥ 4 for individual attention",
+     "duration": "5 min/vendor (system calculation)",
+     "n": "3",
+     "r": "Category Manager / System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Vendor classification by risk tier: (a) **Tier A — Critical** (composite score >4.0, OR single-source dependency score = 5, OR annual spend > PHP 50M); (b) **Tier B — Important** (composite score 3.0–4.0); (c) **Tier C — Standard** (composite score <3.0); system generates risk-tiered vendor list with drill-down by category and risk dimension; Procurement Director reviews and approves tier classifications",
+     "duration": "4–6 hours (review session)",
+     "n": "4",
+     "r": "Category Manager / Procurement Director"
+    },
+    {
+     "a": "Procurement Director",
+     "activity": "For Tier A Critical vendors: mandatory contingency plan per SKU category — Category Manager develops contingency plan in collaboration with Supply Planning Manager; plan must address: (a) qualified alternative source (minimum 2 qualified vendors per critical SKU per W36 vendor qualification); (b) safety stock policy override (increase safety stock per W312 for disruption-prone items — target: 45 days of supply for Tier A vendor SKUs vs. standard 21 days); (c) pre-positioned buffer inventory at alternate DC (e.g., if primary vendor supplies through Manila, pre-position buffer at Cebu DC); (d) emergency logistics route (alternative port, air freight for critical items — air freight cost premium documented and pre-approved per W60); (e) customer communication template for potential stockouts (pre-drafted per W571 store communication format)",
+     "duration": "4–8 hours/Tier A vendor",
+     "n": "5",
+     "r": "Category Manager / Supply Planning Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Contingency plan approval and activation readiness: Procurement Director reviews all Tier A contingency plans — verifies alternative vendor qualification status per W36, confirms safety stock levels are updated per W312, validates emergency logistics route feasibility with Logistics Manager; approved contingency plans loaded into supply chain control tower per W250 for activation when triggered",
+     "duration": "2–4 hours (review session)",
+     "n": "6",
+     "r": "Procurement Director"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply disruption response protocol — **disruption detected**: (a) disruption signal received (supplier notification of force majeure, PAGASA typhoon warning Signal No. 3+, port closure advisory, BOC congestion alert, news of supplier bankruptcy, geopolitical trade restriction announcement); (b) Supply Planning Manager assesses impact within 4 hours: affected SKUs, current inventory on hand at DCs, days of supply by SKU, affected stores, customer order exposure (open SOs for affected SKUs); (c) **If >30 days of supply**: monitor only — increase monitoring frequency to daily, no immediate action",
+     "duration": "2–4 hours (initial assessment)",
+     "n": "7",
+     "r": "Supply Planning Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Supply disruption response — **escalation tiers**: (d) **If 14–30 days of supply**: activate safety stock buffer per contingency plan, expedite alternative vendor quotes per W36 (fast-track qualification for pre-identified alternatives), notify Category Manager for demand-side management; (e) **If <14 days of supply**: emergency procurement per W60, customer allocation per W105 (allocate remaining stock to highest-margin channels and B2B contractual obligations), substitute product recommendation per W279 (Merchandising identifies acceptable substitute SKUs); (f) VP Supply Chain authorizes emergency response expenditure > PHP 5M (air freight, spot-market premium purchases, expedited customs clearance fees)",
+     "duration": "4–8 hours/response",
+     "n": "8",
+     "r": "Supply Planning Manager / Category Manager"
+    },
+    {
+     "a": "Procurement Director",
+     "activity": "Disruption communication: Category Manager notifies stakeholders per disruption communication matrix — (a) Store Operations per W571 (store communication): affected SKUs, expected stockout dates, substitute product recommendations, customer messaging guidance; (b) Merchandising for assortment adjustment per W279: temporary product substitution, website/catalog update for out-of-stock items; (c) Customer Service for affected B2B orders: proactive outreach to top B2B accounts with open orders for affected SKUs, offer substitutes or revised delivery dates; (d) Finance Manager for cost impact assessment: emergency procurement premium, air freight cost, revenue at risk from stockouts",
+     "duration": "2–4 hours/disruption",
+     "n": "9",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Post-disruption review (within 2 weeks of resolution): (a) root cause analysis — what caused the disruption, was it predictable, could it have been prevented; (b) response effectiveness — how quickly was the disruption detected, how effective was the contingency plan, were alternative vendors able to supply, what was the stockout impact (lost sales, customer complaints); (c) contingency plan update — revise plan based on lessons learned; (d) vendor scorecard impact per W44 — document disruption in vendor performance record, adjust vendor risk score if warranted; (e) cost impact report — total disruption cost (premium freight, lost sales, substitute product margin impact) submitted to Finance Manager",
+     "duration": "4–8 hours/post-mortem",
+     "n": "10",
+     "r": "Supply Planning Manager / Category Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quarterly disruption risk dashboard: Procurement Director presents to VP Supply Chain and VP Merchandising — (a) active disruptions and response status; (b) Tier A vendor risk score trends (improving/worsening); (c) contingency plan coverage (% of Tier A SKUs with qualified alternative source); (d) response time metrics (time from disruption detection to contingency activation); (e) disruption cost trend (quarterly comparison); (f) new risks identified during quarter (geopolitical, regulatory, market)",
+     "duration": "4 hours/quarter (dashboard + presentation)",
+     "n": "11",
+     "r": "Procurement Director"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W105",
+    "W144",
+    "W21",
+    "W240",
+    "W250",
+    "W279",
+    "W31",
+    "W312",
+    "W32",
+    "W36",
+    "W44",
+    "W491",
+    "W56",
+    "W571",
+    "W60"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Monthly cost analysis; quarterly optimization review; annual strategic assessment",
+    "Owner": "VP Supply Chain",
+    "Participants": "DC Operations Manager, Logistics Manager, FP&A Analyst, Procurement Manager",
+    "Trigger": "Monthly cost analysis cycle; quarterly optimization review",
+    "Volume": "~PHP 3-4B annual supply chain cost (inbound freight, DC operations, outbound distribution, 3PL, port/customs); ~60,000 store replenishment orders/year"
+   },
+   "id": "W680",
+   "level": 2,
+   "name": "Supply Chain Cost Analysis & Logistics Optimization Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"FP&A Analyst extracts monthly supply chain cost data from\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews cost-per-unit metrics\" (replaces manual Step 2).",
+     "- System auto-route of \"Logistics Manager analyzes distribution cost\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: VP Supply Chain review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Philippine island geography limiting distribution optimization",
+     "- Port congestion (Manila, Cebu) causing unpredictable dwell time costs",
+     "- 3PL rate escalation in provinces with limited carrier options",
+     "- DC labor cost rising faster than productivity improvements"
+    ],
+    "Staffing Implication": [
+     "- VP Supply Chain: ~2 days/month + 2 days/quarter + 5 days/year",
+     "- FP&A Analyst: ~1 day/month data extraction",
+     "- Absorbed within existing roles",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GL cost accounting",
+     "- DC labor management system",
+     "- Fleet telematics (W199)",
+     "- 3PL billing module",
+     "- Freight audit (W277)",
+     "- BI analytics"
+    ],
+    "Time Estimate": [
+     "- Monthly: 2 days",
+     "- Quarterly review: 2 days",
+     "- Annual strategy: 5 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "FP&A Analyst extracts monthly supply chain cost data from GL: inbound freight (vendor-to-DC), import logistics (port/customs/brokerage per W464), DC operating costs (labor, equipment, utilities per W584), outbound distribution (DC-to-store, 3PL per W242), inter-island freight (W66), last-mile delivery (W268), and fleet costs (W198 fuel + W199 telematics)",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "FP&A Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "VP Supply Chain reviews cost-per-unit metrics: cost per case received, cost per case shipped, cost per store delivery, cost per ecommerce order fulfilled, cost per TEU imported; compares against prior month, same period last year, and industry benchmarks",
+     "duration": "3 hours",
+     "n": "2",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "DC Operations Manager provides DC cost analysis: labor cost per unit handled (receiving, putaway, picking, shipping), equipment cost per hour, facility cost per sqm, overtime as % of total DC labor; identifies cost reduction opportunities",
+     "duration": "3 hours",
+     "n": "3",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Logistics Manager analyzes distribution cost: owned fleet vs. 3PL cost per km per kg, route efficiency (deliveries per route, utilization rate per W196), fuel cost per delivery (per W198), port demurrage avoidance per W249",
+     "duration": "3 hours",
+     "n": "4",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "VP Supply Chain identifies optimization opportunities: DC network rebalancing (can any DC serve more stores with shorter routes), consolidation opportunities (combining shipments to reduce truck count), mode shift evaluation (DSD vs. DC fulfillment for specific categories), 3PL contract renegotiation per W242",
+     "duration": "4 hours",
+     "n": "5",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "COO",
+     "activity": "Monthly: VP Supply Chain produces cost trend dashboard for COO: total supply chain cost as % of revenue (target ≤ 6%), per-unit cost trends, and top 3 cost reduction initiatives in progress",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "COO, CFO",
+     "activity": "Quarterly: VP Supply Chain conducts optimization review with COO and CFO: presents cost reduction roadmap, capital investment proposals (e.g., DC automation, fleet replacement), and make-vs-buy analysis for logistics",
+     "duration": "4 hours",
+     "n": "7",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "COO, CFO",
+     "activity": "Annual: VP Supply Chain develops 3-year logistics strategy aligned with store expansion plan (10-15 new stores/year): DC capacity planning, fleet sizing, 3PL partner strategy, and technology roadmap",
+     "duration": "5 days",
+     "n": "8",
+     "r": "VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W196",
+    "W198",
+    "W199",
+    "W242",
+    "W249",
+    "W268",
+    "W277",
+    "W464",
+    "W584",
+    "W66"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Daily review; real-time SLA monitoring",
+    "Owner": "Logistics Manager",
+    "Participants": "DC Dispatch Supervisor, Carrier Account Manager, Supply Chain Planner",
+    "Trigger": "Start of supply chain operations day; or carrier SLA breach alert",
+    "Volume": "~20–30 active carriers/freight forwarders; ~100–150 truck movements/day; 400-600 TEU shipments/month (imports)"
+   },
+   "id": "W727",
+   "level": 2,
+   "name": "Carrier & Freight Forwarder Daily Performance Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics Manager reviews carrier performance dashboard\" (replaces manual Step 1).",
+     "- System auto-document of \"SLA breach investigation and escalation\" (replaces manual Step 2).",
+     "- System auto-review of \"review upcoming 48-hour dispatch plan from W106\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W242 covers periodic 3PL performance reviews (quarterly/annual). W44 covers vendor performance scoring. Neither addresses the daily operational monitoring of carrier and freight forwarder performance that is essential for a 4-DC, 200-store logistics network processing ~5,000 replenishment orders/month. Daily carrier performance monitoring enables early detection of service degradation, proactive issue resolution, and data-driven carrier selection. This workflow complements W250 (supply chain control tower) which provides real-time shipment visibility, by adding the carrier performance management layer."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: Logistics Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Carrier consolidation in Philippines**: limited number of reliable trucking companies, especially for provincial routes (Mindanao, Visayas); over-reliance on few carriers creates vulnerability",
+     "- **Informal carrier practices**: some Philippine carriers operate informally with inconsistent documentation, making performance tracking difficult",
+     "- **Seasonal capacity shortages**: during peak periods (Christmas, back-to-school), carrier availability drops and rates increase; Logistics Manager must secure capacity early",
+     "- **Subjective damage claims**: distinguishing carrier-caused damage from inadequate packaging or DC loading errors is frequently disputed, delaying resolution per W500"
+    ],
+    "Staffing Implication": [
+     "Logistics Manager: ~1–1.5 hours/day on carrier monitoring and allocation. Import Coordinator: ~15–20 min/day on freight forwarder tracking. Absorbed within existing team. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Carrier performance dashboard with automated SLA monitoring",
+     "- TMS (Transportation Management System) for shipment tracking and delivery confirmation",
+     "- W106 DC outbound dispatch integration for pickup and delivery data",
+     "- W250 supply chain control tower for real-time shipment visibility",
+     "- Carrier scorecard system linked to W44 vendor performance",
+     "- Cost analysis module for rate benchmarking per lane",
+     "- W304 routing/carrier master for performance history"
+    ],
+    "Time Estimate": [
+     "**Total daily**: ~60–90 min (20-30 min dashboard + 15-30 min breach investigation + 20-30 min allocation + 15-20 min import monitoring). **Weekly summary**: 1-2 hours.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Daily carrier performance dashboard review**: Logistics Manager reviews carrier performance dashboard: (a) on-time delivery (OTD) rate per carrier: target ≥95% for DC-to-store deliveries; (b) on-time pickup rate for DC outbound per W106; (c) transit time adherence: actual vs. promised delivery lead time per W304 routing master; (d) damage rate: % of shipments with damage claims per W500; (e) truck utilization: % of truck capacity used per shipment (target ≥85%); (f) documentation compliance: delivery receipts, proof of delivery, fuel surcharge documentation; (g) SLA breaches in past 24 hours highlighted for immediate action",
+     "duration": "20-30 min/day",
+     "n": "1",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**SLA breach investigation and escalation**: for each SLA breach: (a) Logistics Manager identifies root cause: (i) carrier-caused: vehicle breakdown, driver no-show, overbooking, routing error; (ii) BuildRight-caused: late dispatch from DC, incorrect loading, documentation error; (iii) external: traffic, weather, road closure, port congestion; (b) for carrier-caused delays: (i) first occurrence: verbal notification to carrier account manager; (ii) repeat occurrence within 30 days: formal written notice and improvement plan; (iii) three occurrences in 90 days: carrier review meeting with VP Supply Chain and potential volume reduction; (c) document investigation and resolution in carrier performance log",
+     "duration": "15-30 min per breach",
+     "n": "2",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Carrier allocation decision**: Logistics Manager makes daily carrier allocation decisions: (a) review upcoming 48-hour dispatch plan from W106; (b) allocate shipments to carriers based on: (i) current performance score (weighted: OTD 40%, damage 20%, cost 20%, documentation 20%); (ii) geographic coverage: carrier has routes serving destination store; (iii) capacity availability: carrier has vehicles available; (iv) cost: lane-specific rate competitiveness; (c) for underperforming carriers: reduce allocation until performance improves; (d) for top-performing carriers: offer volume commitments and preferred status",
+     "duration": "20-30 min/day",
+     "n": "3",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Import freight forwarder monitoring**: for import shipments: (a) track freight forwarder performance per shipment: (i) booking confirmation timeliness; (ii) container availability for stuffing; (iii) documentation accuracy (bill of lading, packing list); (iv) customs clearance speed per W464; (v) port-to-DC delivery timeliness; (b) compare forwarder performance across trade lanes (China, Taiwan, Indonesia, Japan, Europe); (c) flag forwarders with recurring issues for review",
+     "duration": "15-20 min/day",
+     "n": "4",
+     "r": "Logistics Manager / Import Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Weekly carrier performance summary**: Logistics Manager compiles weekly carrier scorecard: (a) all carriers ranked by composite performance score; (b) trend analysis: improving vs. declining carriers; (c) cost analysis: cost per ton-km by carrier and lane; (d) volume allocation vs. performance alignment; (e) recommendations: carrier additions, removals, volume shifts; (f) report submitted to VP Supply Chain",
+     "duration": "1-2 hours/week",
+     "n": "5",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W106",
+    "W242",
+    "W250",
+    "W304",
+    "W44",
+    "W464",
+    "W500"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc (2-4 significant disruptions per year)",
+    "Owner": "VP Supply Chain",
+    "Participants": "Supply Chain Planner, Category Manager, Procurement Manager, Logistics Manager, VP Merchandising, CFO",
+    "Trigger": "Major supply disruption: supplier force majeure, port closure, natural disaster, geopolitical event, critical quality failure, carrier strike, or any event threatening >10% of planned supply",
+    "Volume": "Each disruption potentially affecting 100-1,000 SKUs across multiple categories"
+   },
+   "id": "W729",
+   "level": 2,
+   "name": "Supply Chain Disruption Rapid Response & Escalation Protocol",
+   "parent": null,
+   "req_refs": [
+    "INV-002",
+    "INV-004"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-escalate of \"escalate to VP Supply Chain with initial assessment\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics Manager, Finance representative\" (replaces manual Step 2).",
+     "- System auto-count of \"Inventory triage and allocation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W558 covers supply chain risk assessment and contingency planning at the strategic level. This workflow addresses the operational rapid response when a disruption actually occurs — the critical first 24-72 hours when decisions must be made quickly to minimize stockout impact on 200 stores. Philippine supply chains face frequent disruptions: typhoons closing ports and roads, volcanic activity affecting Central Luzon, port strikes, supplier bankruptcies, global shipping disruptions (Suez Canal, Red Sea), and pandemic-related restrictions. With 35,000 active SKUs and ~40% import dependency, a major disruption can cascade quickly through the supply chain."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: VP Supply Chain review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Speed vs. accuracy trade-off**: rapid response requires making decisions with incomplete information; wrong assessments can lead to over-reaction (expensive unnecessary alternative sourcing) or under-reaction (stockouts)",
+     "- **Alternative supplier quality risk**: emergency suppliers activated per W670 may not meet BuildRight's standard quality requirements; customers receiving substitute products may notice quality differences",
+     "- **Cost escalation**: emergency procurement, expedited freight, and spot-market pricing can increase COGS by 15-30% for affected items, eroding margins",
+     "- **Cascading disruption effects**: a disruption affecting one supplier or port can cascade through the supply chain: affected SKUs out of stock → customers buy alternatives → alternative SKUs run low → further stockouts",
+     "- **Communication lag to stores**: with 200 stores across the archipelago, ensuring all store managers receive and act on disruption communications within 24 hours is challenging"
+    ],
+    "Staffing Implication": [
+     "Ad-hoc (2-4 times/year). Each disruption response requires 10-30 person-days of concentrated effort over 2-4 weeks. VP Supply Chain: 1-2 hours/day during disruption. Supply Chain Planner: 4-6 hours/day during active response. Procurement Manager: 4-8 hours for alternative sourcing. Category Managers: 2-4 hours for product decisions. Absorbed by existing team with reprioritization. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Supply chain control tower per W250 for real-time disruption detection",
+     "- Inventory visibility across all locations per INV-002",
+     "- ABC classification per INV-004 for SKU prioritization",
+     "- W105 multi-channel inventory allocation for emergency allocation",
+     "- W60 emergency procurement for rapid PO creation",
+     "- W670 supplier emergency onboarding for alternative vendor activation",
+     "- W279 product substitution rules for substitute product authorization",
+     "- W571 store communication for store-level disruption messaging",
+     "- Financial impact tracking for lost sales and expedited cost documentation"
+    ],
+    "Time Estimate": [
+     "**Initial response (first 24 hours)**: 8-16 hours across the team. **Daily tracking**: 30-60 min/day. **Post-disruption review**: 1-2 days. Total disruption lifecycle: typically 2-4 weeks from detection to full resolution.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Disruption identification and initial assessment** (within 2 hours): (a) disruption alert received from: customs broker, supplier, carrier, news monitoring, or supply chain control tower per W250; (b) Supply Chain Planner conducts rapid impact assessment: (i) which suppliers/POs/shipments are affected?; (ii) estimated duration of disruption; (iii) which SKUs and categories are at risk?; (iv) current inventory position: weeks of supply for affected SKUs at DC and store level; (v) impact severity: Critical (>100 SKUs, A-items, promotional items), Major (50-100 SKUs, B-items), Moderate (<50 SKUs, C-items); (c) escalate to VP Supply Chain with initial assessment",
+     "duration": "1-2 hours",
+     "n": "1",
+     "r": "Supply Chain Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Cross-functional response team activation** (within 4 hours): VP Supply Chain activates response team: (a) participants: Supply Chain Planner, affected Category Manager(s), Procurement Manager, Logistics Manager, Finance representative; (b) for Critical disruptions: include VP Merchandising and CFO; (c) initial war room meeting (virtual or physical): (i) review initial assessment; (ii) align on disruption severity and response level; (iii) assign action items with owners and deadlines; (iv) establish communication cadence: daily standups until resolved",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Inventory triage and allocation** (within 8 hours): Supply Chain Planner executes inventory triage: (a) for each affected SKU: calculate days of supply remaining at DC level; (b) classify affected SKUs by urgency: (i) Red (<1 week supply): immediate action required; (ii) Amber (1-2 weeks supply): alternative sourcing within 2 weeks; (iii) Green (>2 weeks supply): monitor only; (c) for Red SKUs: implement emergency allocation per W105: prioritize allocation to top-performing stores and B2B key accounts; (d) activate demand reduction: (i) reduce ecommerce ATP for affected SKUs; (ii) notify Category Manager to pause promotional plans for affected items; (iii) notify Store Operations to manage customer expectations for product availability",
+     "duration": "2-4 hours",
+     "n": "3",
+     "r": "Supply Chain Planner"
+    },
+    {
+     "a": "VP Supply Chain / VP Merchandising",
+     "activity": "**Alternative sourcing activation** (within 24 hours): Procurement Manager activates alternative sourcing: (a) identify alternative suppliers for affected SKUs from pre-qualified vendor list per W670 (emergency onboarding); (b) for import-dependent items: check if local suppliers can provide temporary supply; (c) for single-source items: activate emergency procurement from secondary markets (regional distributors, spot market); (d) evaluate cost impact of alternative sourcing (spot pricing typically 10-30% above contract pricing); (e) obtain VP Merchandising approval for any product substitution or quality deviation per W279 (substitution rules); (f) place emergency POs per W60 with expedited logistics",
+     "duration": "4-8 hours",
+     "n": "4",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Customer and store communication** (within 24-48 hours): (a) for stores: communicate affected SKUs, expected outage duration, substitute products, and customer messaging per W571; (b) for ecommerce: update product availability on website; if item is BOPIS-listed, show \"Temporarily Unavailable\" or offer alternative per W536; (c) for B2B key accounts: proactive outreach from Trade Sales per W617 with inventory status and alternative product recommendations; (d) for promotional items: coordinate with Marketing per W83 on promotional plan adjustment or substitution",
+     "duration": "2-4 hours",
+     "n": "5",
+     "r": "Category Manager / Ecommerce Ops Mgr / Trade Sales"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Daily disruption status tracking** (until resolution): VP Supply Chain conducts daily disruption standup: (a) update on disruption status: is it worsening, stable, or resolving?; (b) inventory position update: days of supply trend for affected SKUs; (c) alternative sourcing progress: PO status, expected delivery dates; (d) financial impact estimate: lost sales, expedited freight cost, alternative sourcing premium; (e) adjust response actions based on evolving situation; (f) document all decisions and rationale for post-disruption review",
+     "duration": "30-60 min/day",
+     "n": "6",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "COO",
+     "activity": "**Post-disruption review** (within 2 weeks of resolution): VP Supply Chain conducts post-disruption review: (a) timeline reconstruction: what happened, when, and how did BuildRight respond?; (b) effectiveness assessment: how quickly was the disruption detected? How effective was the response? What was the financial impact?; (c) lessons learned: what worked well, what could be improved?; (d) action items for risk mitigation: update contingency plans per W558, qualify additional alternative suppliers, adjust safety stock levels for vulnerable SKUs; (e) update supply chain risk register per W626; (f) report to COO and CFO",
+     "duration": "1-2 days",
+     "n": "7",
+     "r": "VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W105",
+    "W250",
+    "W279",
+    "W536",
+    "W558",
+    "W571",
+    "W60",
+    "W617",
+    "W626",
+    "W670",
+    "W83"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Weekly",
+    "Owner": "Logistics Manager",
+    "Participants": "Logistics Manager, Procurement (W62B 3PL onboarding), Finance (W277 freight bill audit), VP Supply Chain",
+    "Trigger": "Weekly carrier performance review schedule",
+    "Volume": "~15–20 active carriers (own fleet + 3PL partners)"
+   },
+   "id": "W762",
+   "level": 2,
+   "name": "Carrier Performance Weekly Review & Freight Rate Benchmarking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles carrier performance data for the past week\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates weekly scorecard per carrier\" (replaces manual Step 2).",
+     "- System auto-log of \"Logistics Manager reviews scorecards\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot relies on a mix of owned fleet (10 trucks per DC × 4 DCs = 40 trucks, per the fleet canon) and third-party carriers (3PL partners) to move merchandise from DCs to 200 stores. Weekly carrier performance review ensures delivery SLA compliance, identifies cost optimization opportunities through freight rate benchmarking, and maintains carrier accountability for the ~2,000–2,500 store deliveries per month."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: Logistics Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Carrier data quality — 3PL carriers may provide incomplete or delayed delivery data; real-time tracking (W199/W250) mitigates but requires carrier technology investment",
+     "- Market rate volatility — fuel price surges (W198) and seasonal demand (Ber months) make benchmarking a moving target",
+     "- Carrier concentration risk — over-reliance on a single high-performing carrier creates vulnerability if that carrier experiences disruption",
+     "- Own fleet vs. 3PL cost comparison — internal fleet costs (depreciation, driver wages, fuel, maintenance) must be fully loaded to enable fair comparison with 3PL rates",
+     "- Renegotiation cycle time — carrier rate renegotiations may take 2–3 months; during this period, BuildRight pays above-market rates"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing Logistics Manager role. 1 Logistics Manager per DC (4 DCs) conducts weekly review for their carrier portfolio. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Carrier performance data warehouse: delivery records, transit times, damage claims, exception logs",
+     "- Automated scorecard generation with configurable KPI thresholds",
+     "- W277 freight bill audit — cost data source",
+     "- W500 transfer order damage claims — damage data source",
+     "- W62B 3PL onboarding/offboarding — carrier lifecycle management",
+     "- W199 fleet telematics — own fleet performance data",
+     "- W242 3PL performance review — quarterly strategic review integration",
+     "- Freight rate benchmarking module with market rate API integration"
+    ],
+    "Time Estimate": [
+     "Weekly review: 1 hour. Monthly benchmarking: 4 hours. Monthly report: 2 hours. Carrier escalation: 30 min × 2–3 carriers = ~1.5 hours/week. Total monthly: ~18 hours (incl. step-7 carrier rotation optimization at 2 hours/month)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Weekly data compilation — System compiles carrier performance data for the past week: (a) on-time delivery rate (delivery within scheduled window), (b) transit time vs. standard, (c) damage rate (W500), (d) delivery exception rate (refused, short-shipped, wrong store), (e) cost per delivery vs. budget",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Carrier scorecard generation — System generates weekly scorecard per carrier: KPI performance, trend vs. prior 4 weeks, SLA compliance status (Green/Amber/Red), and cost variance",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Performance review — Logistics Manager reviews scorecards; identifies: (a) carriers below SLA threshold, (b) cost outliers, (c) emerging trends (declining performance, increasing damage)",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Carrier escalation — For Amber/Red carriers: Logistics Manager contacts carrier account manager; documents performance concerns; agrees on corrective action plan with timeline; follows up next week",
+     "duration": "30 min per carrier",
+     "n": "4",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "Procurement",
+     "activity": "Freight rate benchmarking — Monthly: Logistics Manager benchmarks carrier rates against: (a) market rates from industry sources, (b) alternative carrier quotes, (c) internal fleet cost per kilogram; identifies rate renegotiation opportunities",
+     "duration": "4 hours/month",
+     "n": "5",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "Rate renegotiation — For carriers with rates above benchmark: Logistics Manager initiates rate renegotiation with Procurement support (W62B); presents data-driven proposal with alternative carrier options",
+     "duration": "Per W62B",
+     "n": "6",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Carrier rotation optimization — Based on performance and cost data: Logistics Manager adjusts carrier allocation — awarding more volume to high-performing, cost-effective carriers and reducing volume to underperformers",
+     "duration": "2 hours/month",
+     "n": "7",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly executive report — Logistics Manager presents carrier performance summary to VP Supply Chain: overall delivery performance, cost per delivery trend, carrier portfolio health, and recommended actions",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "Logistics Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W198",
+    "W199",
+    "W242",
+    "W250",
+    "W277",
+    "W500",
+    "W62B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Annual comprehensive review; quarterly updates; ad-hoc during disruptions",
+    "Owner": "Procurement Manager (Strategic Sourcing)",
+    "Participants": "Category Manager, Procurement Manager, Quality (W150), Logistics Manager, VP Supply Chain",
+    "Trigger": "Annual category sourcing review; or supply disruption event (W558)",
+    "Volume": "~13 product categories with ~4–6 flagged critical requiring diversification plans (profile §6.2)"
+   },
+   "id": "W763",
+   "level": 2,
+   "name": "Supply Chain Vendor Diversification & Alternative Sourcing Maintenance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-import of \"Important — limited sources, moderate revenue\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates vendor concentration using Herfindahl-Hirschman Index\" (replaces manual Step 2).",
+     "- System auto-review of \"review, TIN verification\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight Depot's 35,000 SKUs include critical categories where supply concentration creates risk: cement (2–3 dominant suppliers), steel (import-dependent), lumber (limited domestic sources), and electrical supplies. Supply chain disruptions from typhoons, import delays, and vendor financial distress (W491) expose BuildRight to stockout risk. This workflow maintains vendor diversification plans and alternative sourcing readiness for critical categories."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: Procurement Manager (Strategic Sourcing) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Incumbent vendor resistance — existing vendors may resist volume reduction; must be managed diplomatically through JBP (W155) discussions",
+     "- Alternative vendor quality risk — new vendors may not meet BuildRight quality standards during initial trials; customer-facing quality issues damage brand",
+     "- Minimum order quantity constraints — alternative vendors may require higher MOQs than BuildRight's trial volume, making qualification uneconomical",
+     "- Philippine market limitations — some categories genuinely have limited domestic supply options; diversification may require import sourcing with longer lead times",
+     "- Dual-sourcing complexity — managing two vendors per category increases procurement administration, quality testing, and logistics coordination overhead"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing Procurement Manager and Category Manager roles. 1 Procurement Manager (Strategic Sourcing) oversees diversification program across all critical categories. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Category vendor concentration dashboard with HHI calculation",
+     "- W36 vendor onboarding — alternative vendor qualification workflow",
+     "- W44 vendor scorecard — alternative vendor performance tracking",
+     "- W625 product quality testing — sample evaluation tracking",
+     "- W312 replenishment parameters — dual-source allocation configuration",
+     "- W558 supplier risk assessment — risk data integration",
+     "- W60 emergency procurement — disruption activation workflow",
+     "- W491 supplier financial health — vendor viability monitoring",
+     "- W680 supply chain cost analysis — dual-sourcing cost comparison"
+    ],
+    "Time Estimate": [
+     "Annual assessment: 2 days. Quarterly review: 4 hours. Alternative vendor identification: 2 days/quarter. Trial order management: absorbed in W2. Total annual: ~120 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Category criticality assessment — Annual: Procurement Manager classifies all categories by supply risk: (a) Critical — single/dual source, high revenue, long lead time, (b) Important — limited sources, moderate revenue, (c) Standard — multiple sources, short lead time",
+     "duration": "2 days/year",
+     "n": "1",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Concentration risk scoring — For each Critical category: system calculates vendor concentration using Herfindahl-Hirschman Index (HHI); flags categories where top vendor supplies > 60% of volume",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Alternative vendor identification — For high-concentration categories: Procurement Manager identifies 2–3 alternative vendors through: (a) industry trade shows, (b) competitor intelligence (W130), (c) PH vendor directories, (d) international sourcing for import-eligible categories",
+     "duration": "2 days/quarter",
+     "n": "3",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "Quality Team",
+     "activity": "Alternative vendor qualification — Each alternative vendor undergoes abbreviated qualification: (a) W36 vendor onboarding (financial review, TIN verification), (b) W625 product quality testing (sample evaluation), (c) W620 site visit (factory/warehouse inspection)",
+     "duration": "Per W36/W625",
+     "n": "4",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Trial order execution — Place trial order with alternative vendor: 5–10% of category volume; monitor delivery performance, quality, and cost vs. incumbent",
+     "duration": "Per W2",
+     "n": "5",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Dual-sourcing implementation — If trial successful: establish dual-sourcing agreement with volume split (e.g., 70/30 incumbent/alternative); system configures split allocation in W312 planning parameters",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quarterly diversification review — Quarterly: Procurement Manager reviews diversification status per category: concentration score, alternative vendor readiness, trial results, and recommended volume adjustments",
+     "duration": "4 hours/quarter",
+     "n": "7",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Disruption activation — When supply disruption occurs (W558): Procurement Manager activates alternative vendor from diversification plan; issues emergency PO (W60); system adjusts replenishment parameters to redirect volume",
+     "duration": "Per W558",
+     "n": "8",
+     "r": "Procurement Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W130",
+    "W150",
+    "W155",
+    "W2",
+    "W312",
+    "W36",
+    "W44",
+    "W491",
+    "W558",
+    "W60",
+    "W620",
+    "W625",
+    "W680"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Daily route planning; weekly optimization review",
+    "Owner": "Logistics Planner",
+    "Participants": "Logistics Planner, DC Dispatcher, Fleet Manager, 3PL Carrier Coordinator",
+    "Trigger": "Daily dispatch planning cycle; or weekly route optimization review",
+    "Volume": "4 DCs × ~4–10 delivery routes per DC per day = ~15–40 route plans/day, each route serving ~2–3 stores (consistent with the ~2,000–2,600 monthly delivery canon)"
+   },
+   "id": "W786",
+   "level": 2,
+   "name": "DC-to-Store Delivery Route Optimization & Multi-Stop Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"Daily order-to-store assignment\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics Planner runs route optimization\" (replaces manual Step 2).",
+     "- System auto-review of \"review and adjustment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 4 DCs serve 200 stores with 2-3 deliveries per store per week (~5,000 replenishment orders/month per W4). Each delivery truck typically serves 2-3 stores on a multi-stop route. Route planning directly impacts: delivery cost per store (fuel, driver hours, truck utilization), on-time delivery rate (target ≥ 95% per W44), and DC-to-store lead time (target 1-3 days). While W196 covers route planning at the governance level and W52 covers fleet management, this workflow manages the daily operational route optimization — balancing delivery SLAs, truck capacity, store time windows, and route efficiency."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: Logistics Planner review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- LGU truck ban complexity — different cities/municipalities have different truck ban hours per W431; route planning must account for jurisdiction boundaries",
+     "- Philippine traffic unpredictability — Manila/Cebu traffic can double planned delivery times; real-time rerouting capability essential",
+     "- Multi-stop unloading time — each store stop takes 30-60 minutes for unloading and goods receipt; underestimated unloading time delays subsequent stops",
+     "- Truck capacity constraints — oversized items (lumber, plywood sheets) consume disproportionate truck space; cubic capacity often constrains before weight",
+     "- 3PL reliability — 80% of trucks are third-party per model company profile; 3PL no-shows disrupt route plans; backup carrier contracts per W242 essential"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing Logistics Planner and DC Dispatcher roles. Daily: ~2–3 hours per DC. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Route optimization engine — multi-stop route planning with constraints",
+     "- W196 route planning & dispatch optimization — governance level",
+     "- W52 fleet management — truck availability and maintenance status",
+     "- W199 fleet telematics — GPS tracking and real-time monitoring",
+     "- W197 driver performance — driver availability and certification",
+     "- W198 fuel management — fuel consumption tracking",
+     "- W431 LGU truck ban — time window constraints",
+     "- W242 3PL performance review — 3PL carrier availability",
+     "- W727 carrier performance monitoring — carrier scorecard",
+     "- W109 store inventory receiving — delivery receipt confirmation",
+     "- W310 geographic hierarchy master — store location data"
+    ],
+    "Time Estimate": [
+     "Daily: route optimization (30-60 min) + review (30 min) + assignment (30 min) + monitoring (continuous) + reconciliation (15 min) = ~2–3 hours focused time. Weekly review: 2 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Planner",
+     "activity": "**Daily order-to-store assignment**: System groups approved transfer orders by delivery date and DC: (a) priority orders (perishable, promotional stock per W57, emergency per W596), (b) standard replenishment orders, (c) store delivery time windows (7AM-5PM standard; some LGU truck ban restrictions per W431)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Route optimization run**: Logistics Planner runs route optimization: (a) inputs: store locations per W310 geographic master, order volumes per store (cubic meters, weight), truck capacity (6-wheeler: 5 tons / 20 CBM; 10-wheeler: 10 tons / 40 CBM), delivery time windows, LGU truck ban hours per W431, traffic pattern data; (b) constraints: max 8-hour route duration, max 3 stops per route (for manageable unloading time), refrigerated/hazmat items on compliant trucks per W699; (c) outputs: optimized route plans minimizing total distance and time",
+     "duration": "30-60 min",
+     "n": "2",
+     "r": "Logistics Planner"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Route plan review and adjustment**: Logistics Planner reviews system-generated routes: (a) verify priority orders on earliest routes, (b) balance loads across available trucks (owned per W52 + 3PL per W242), (c) adjust for known road closures or construction, (d) confirm driver availability per W654 certification, (e) finalize dispatch sequence",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Logistics Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Driver and carrier assignment**: DC Dispatcher assigns: (a) owned fleet drivers per W197 driver management, (b) 3PL carriers per W242 contract and W727 daily performance, (c) provide driver with: route plan, store contact numbers, delivery documents (manifest, transfer orders), GPS device per W199 telematics",
+     "duration": "30 min",
+     "n": "4",
+     "r": "DC Dispatcher"
+    },
+    {
+     "a": "—",
+     "activity": "**Real-time route monitoring**: Throughout delivery day: (a) Logistics Planner monitors fleet via telematics per W199, (b) tracks on-time delivery vs. planned schedule, (c) reroutes for traffic incidents or road closures, (d) communicates delays to receiving stores per W708",
+     "duration": "Continuous during delivery hours",
+     "n": "5",
+     "r": "Logistics Planner"
+    },
+    {
+     "a": "Logistics Planner",
+     "activity": "**Delivery completion reconciliation**: End of delivery day: (a) system reconciles planned vs. actual deliveries per route, (b) records on-time delivery rate, (c) captures store receipt confirmations per W109, (d) logs route exceptions (missed deliveries, access issues, partial deliveries)",
+     "duration": "15 min",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**Weekly route optimization review**: Logistics Planner analyzes: (a) average stops per route, (b) average delivery time per stop, (c) truck utilization rate (target ≥ 85%), (d) on-time delivery rate by route and carrier, (e) fuel consumption per delivery per W198, (f) route efficiency improvement opportunities (store clustering, time window optimization)",
+     "duration": "2 hours/week",
+     "n": "7",
+     "r": "Logistics Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W109",
+    "W196",
+    "W197",
+    "W198",
+    "W199",
+    "W242",
+    "W310",
+    "W4",
+    "W431",
+    "W44",
+    "W52",
+    "W57",
+    "W596",
+    "W654",
+    "W699",
+    "W708",
+    "W727"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Quarterly review × 200 stores; real-time validation at every delivery order",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Supply Chain Planner, Store Manager, 3PL Partner Manager, IT GIS Analyst",
+    "Trigger": "New store opening; periodic zone review (quarterly); customer address validation at checkout",
+    "Volume": "200 delivery zones; ~42,900 ecommerce orders/month + ~5,000–8,000 in-store delivery orders/month"
+   },
+   "id": "W1031",
+   "level": 2,
+   "name": "Customer Delivery Service Area Geo-Fencing & Coverage Management",
+   "parent": null,
+   "req_refs": [
+    "MDM-019"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"account for road network, natural barriers, and 3PL partner coverage areas\" (replaces manual Step 1).",
+     "- System auto-log of \"3PL Partner Coverage Mapping\" (replaces manual Step 2).",
+     "- System auto-capture of \"enters delivery address\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot fulfills home delivery orders from 200 stores and 4 DCs, each serving a geographic delivery zone. The Philippine geography — 7,641 islands, dense urban areas with narrow streets, rural areas without standardized addresses, and variable infrastructure quality — makes delivery zone management uniquely challenging. Currently, delivery zone boundaries are loosely defined by zip code, which is insufficient for Philippine conditions where a single zip code can cover vastly different terrain (e.g., a Davao City zip code includes both urban commercial districts and remote mountain barangays). Without precise geo-fencing, BuildRight experiences: (a) customers outside the delivery zone placing orders that are later cancelled when the store/3PL cannot reach the address (8–12% cancellation rate for out-of-zone orders); (b) stores assigned deliveries that should be fulfilled by a different, closer store (increasing delivery cost and time); (c) inability to offer differentiated service levels (same-day delivery for Zone 1, 2–3 day delivery for Zone 3). This workflow defines delivery zones using geographic information system (GIS) polygons, assigns each zone to a fulfillment location (store or DC), sets delivery SLAs and pricing per zone, and manages zone updates as new stores open. This is distinct from W1004 (delivery scheduling self-service) which is the customer-facing interface; this workflow defines the underlying zone infrastructure."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: must support temporary zone suspension with customer notification"
+    ],
+    "Pain Points / Risks": [
+     "- **Address geocoding accuracy**: Philippine address geocoding accuracy is ~75–80% due to non-standard addressing; fallback to landmark-based geocoding and manual customer service agent assignment is necessary for 20–25% of orders; investment in address verification at customer profile creation (loyalty enrollment per W263) improves accuracy over time",
+     "- **3PL coverage gaps**: 3PL partners (Lalamove, Transportify) have excellent Metro Manila coverage but spotty provincial coverage; for provinces, BuildRight may need to contract local transporters (tricycle, multicab operators) for last-mile delivery; these informal carriers lack tracking capability and have inconsistent quality",
+     "- **Zone boundary disputes**: Overlapping zones between stores in dense urban areas (e.g., 8 BuildRight stores within Davao City) create routing complexity; automated optimization (step 4) resolves most cases but Store Managers may dispute assignments that reduce their store's sales credit; sales attribution rules must be clearly defined",
+     "- **Rainy season zone contraction**: During heavy monsoon, some Zone 3 areas become temporarily unreachable (flooded roads, landslides); system must support temporary zone suspension with customer notification; seasonal zone contraction is a Philippine retail reality"
+    ],
+    "Staffing Implication": [
+     "- **IT GIS Analyst**: Initial zone mapping for 200 stores requires ~800–1,200 hours (4–6 hours × 200 stores); quarterly updates require ~400–600 hours/quarter; this is a dedicated role or outsourced to GIS consultancy for initial setup",
+     "- **Supply Chain Planner**: Zone performance review and optimization adds ~8–12 hours/quarter; absorbed by existing Supply Chain team",
+     "- **Ecommerce Operations Manager**: 3PL partner mapping and zone strategy adds ~8–12 hours/quarter; absorbed by existing role",
+     "- **No permanent incremental headcount** after initial setup; GIS analyst may be project-based"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GIS polygon delivery zone database with store/DC assignment per zone",
+     "- Address geocoding engine (Google Maps API + PSA PSGC hierarchy from MDM-019)",
+     "- Real-time delivery SLA and pricing engine per zone",
+     "- ATP (Available-to-Promise) check per fulfillment location",
+     "- 3PL partner management module with zone coverage, cost, and SLA per carrier per zone",
+     "- Order routing engine with multi-factor optimization (distance, stock, cost, workload)",
+     "- Customer-facing delivery options display at ecommerce checkout and in-store POS",
+     "- BOPIS redirect module (W11) for undeliverable addresses",
+     "- BI analytics dashboard for zone performance metrics (SLA compliance, cost, complaints)",
+     "- New store zone creation workflow (W16, W702)"
+    ],
+    "Time Estimate": [
+     "- Initial zone mapping: 800–1,200 hours (one-time project)",
+     "- Quarterly zone review: 8–12 hours/quarter",
+     "- 3PL coverage mapping: 8–12 hours/quarter",
+     "- Real-time address validation: automated (< 10 sec per order)",
+     "- Zone conflict resolution: 2–4 hours/month",
+     "- **Total ongoing**: ~30–50 hours/quarter",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Zone Boundary Definition & GIS Mapping**: IT GIS Analyst defines delivery zones for each store: (a) **Zone 1 (Core)**: 0–5 km radius from store; delivery SLA: same-day or next-day; delivery fee: PHP 99 or free above PHP 5,000; coverage: urban barangays within easy driving distance; polygon drawn on GIS map considering natural boundaries (rivers, highways, gated communities); (b) **Zone 2 (Standard)**: 5–15 km radius; delivery SLA: 1–2 business days; delivery fee: PHP 199 or free above PHP 8,000; (c) **Zone 3 (Extended)**: 15–30 km radius; delivery SLA: 2–3 business days; delivery fee: PHP 350+ based on distance; (d) **Zone 4 (Remote/DC-fulfilled)**: 30+ km from nearest store; delivery SLA: 3–5 business days; fulfillment from nearest DC; delivery fee: PHP 500+ based on distance and weight; (e) **Excluded areas**: areas unreachable by standard vehicles (island barangays without bridge access, mountain roads impassable during rainy season) — customer redirected to BOPIS (W11) or smart locker (W247); (f) zones defined as GIS polygons (not simple radius circles) to account for road network, natural barriers, and 3PL partner coverage areas",
+     "duration": "4–6 hours per store (initial setup); 2–3 hours per store (quarterly update)",
+     "n": "1",
+     "r": "IT GIS Analyst / Supply Chain Planner"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**3PL Partner Coverage Mapping**: Ecommerce Operations Manager maps 3PL partner capabilities per zone: (a) Lalamove: strong coverage in Metro Manila, Cebu, and Davao urban areas; motorcycle and car for small-medium items; limited for bulky items (lumber, cement); (b) Transportify: covers wider geographic area including provincial routes; van and truck options for bulky items; (c) Own fleet (BuildRight Logistics): 10-wheeler wing vans for DC-to-store and large B2B deliveries; limited availability for B2C last-mile; (d) local provincial transporters: contracted per region for areas outside 3PL coverage; (e) system stores 3PL partner-zone mapping: which carrier serves which zone, at what cost, with what vehicle type, and SLA; (f) when multiple carriers serve the same zone, system selects based on: cost optimization, vehicle availability, SLA compliance history per W1013",
+     "duration": "8–12 hours/quarter",
+     "n": "2",
+     "r": "Ecommerce Operations Manager / 3PL Partner Manager"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Real-Time Address Validation & Zone Assignment at Checkout**: Customer places delivery order on buildright.com.ph or in-store: (a) customer enters delivery address; system geocodes address to GPS coordinates using PSA PSGC hierarchy (MDM-019) and Google Maps API; (b) system matches GPS coordinates against zone GIS polygons; (c) if address falls within a defined zone: (i) system displays delivery SLA and fee for that zone, (ii) assigns fulfillment location (nearest store or DC) based on zone mapping, (iii) customer sees \"Delivery available: 1–2 business days, PHP 199\"; (d) if address falls outside all zones (excluded area): (i) system displays \"Home delivery not available for this address. Would you like to pick up at [nearest store]? (BOPIS available)\", (ii) customer redirected to BOPIS flow per W11; (e) if address geocoding fails (ambiguous Philippine address): (i) system prompts customer to add landmark and nearest major road, (ii) manual zone assignment by customer service agent within 2 hours for orders with failed geocoding",
+     "duration": "< 10 sec (automated); 5–10 min (manual override)",
+     "n": "3",
+     "r": "System / Customer Service Agent"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Zone Conflict Resolution & Store Overlap Management**: When two stores' zones overlap: (a) system assigns order to store with: (i) shortest driving distance to delivery address (via Google Maps routing API), (ii) best in-stock position for ordered items (ATP check), (iii) lowest delivery cost (considering 3PL vs. own fleet); (b) tiebreaker: store with lower current fulfillment workload (balanced workload distribution); (c) DM can override zone assignment in exceptional cases (e.g., one store is temporarily out of a critical item); (d) monthly: system generates zone overlap analysis — identify orders where a different fulfillment store would have been more cost-effective; optimize zone boundaries accordingly",
+     "duration": "2–4 hours/month",
+     "n": "4",
+     "r": "System / Supply Chain Planner"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Quarterly Zone Review & New Store Integration**: Quarterly zone review: (a) analyze delivery performance per zone: SLA compliance rate, delivery cost per order, customer complaint rate for delivery; (b) identify underperforming zones: high SLA breach rate → re-evaluate carrier assignment or adjust SLA; high cost → optimize route or renegotiate 3PL rates; (c) adjust zone boundaries based on: new road infrastructure, 3PL coverage expansion, population growth areas; (d) **new store integration**: when a new store opens per W16 (New Store Opening): (i) new store's zones carved from adjacent stores' zones (step 1), (ii) existing orders in transition period rerouted to new store, (iii) affected customers notified of new closer delivery option; (e) update GIS polygons, 3PL partner mapping, and system configuration",
+     "duration": "8–12 hours/quarter",
+     "n": "5",
+     "r": "Supply Chain Planner / IT GIS Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1004",
+    "W1013",
+    "W11",
+    "W16",
+    "W247",
+    "W263",
+    "W702"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "~3–5 major events/year (typhoons, flooding); localized flooding more frequent in low-lying areas",
+    "Owner": "VP Supply Chain",
+    "Participants": "VP Supply Chain, Supply Planner, DC Supervisor, Category Managers (Lumber, Plumbing, Paint), Logistics Manager, Purchasing Manager, Store Managers (affected region)",
+    "Trigger": "PAGASA typhoon signal lowered to Storm Signal No. 1 or below; or regional disaster declaration by NDRRMC / LGU",
+    "Volume": "200–400% demand surge on roofing, plywood, nails, cement, waterproofing, and tarpaulins in affected regions for 2–4 weeks post-event"
+   },
+   "id": "W1187",
+   "level": 2,
+   "name": "Post-Disaster Construction Material Demand Surge Fulfillment & Emergency Replenishment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-flag of \"flags all stores within affected provinces\" (replaces manual Step 1).",
+     "- System auto-count of \"count and baseline demand\" (replaces manual Step 2).",
+     "- System auto-allocate of \"allocates available stock to affected stores by priority\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "The Philippines experiences ~20 typhoons per year, with 3–5 causing significant property damage. BuildRight Depot, as the \"Home Building Partner,\" experiences extreme demand surges for construction repair materials in the days and weeks following a major typhoon or flood event. This workflow governs the rapid activation of emergency replenishment, supply prioritization, and inter-DC rebalancing to meet post-disaster demand while maintaining service to unaffected regions."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: pre-negotiated emergency supply agreements with vendors outside typhoon-prone regions; operational: maintaining 2-week safety stock buffers at each DC for disaster SKUs during typhoon season (Jun–Nov); operational: automated price lock mechanism in Step 7"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor capacity constraints during widespread disasters**: major typhoons (e.g., Odette, Yolanda) affect both BuildRight stores and vendor manufacturing/supply chains simultaneously; mitigated by pre-negotiated emergency supply agreements with vendors outside typhoon-prone regions",
+     "- **Inter-island logistics bottlenecks**: post-disaster port closures and ferry disruptions delay inter-DC transfers to affected islands (Visayas, Mindanao); mitigated by maintaining 2-week safety stock buffers at each DC for disaster SKUs during typhoon season (Jun–Nov)",
+     "- **Price freeze compliance risk**: failure to comply with DTI/LGU price freezes results in fines up to PHP 1M and criminal liability per RA 7581; mitigated by automated price lock mechanism in Step 7",
+     "- **Over-procurement risk**: post-disaster demand is unpredictable; over-procurement leads to excess inventory that must be rebalanced or marked down; mitigated by phased procurement in Step 4 and de-escalation protocol in Step 9"
+    ],
+    "Staffing Implication": [
+     "- **VP Supply Chain**: ~20–30 hours during the first 72 hours of a major event; ~8 hours/week during recovery phase. Absorbed within existing role but represents peak workload periods.",
+     "- **Supply Planner**: ~10–15 hours during activation and first 72 hours. Absorbed within existing role.",
+     "- **Purchasing Manager**: ~8–12 hours for emergency procurement activation. Absorbed within existing role.",
+     "- **Logistics Manager**: ~10–15 hours for delivery reprioritization. Absorbed within existing role.",
+     "- **No permanent incremental headcount**. During major events (2–3/year), temporary overtime may be authorized for supply chain team."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Disaster Response Mode activation flag in ERP (W1187.1)",
+     "- PAGASA weather alert API integration for automated disaster SKU list activation",
+     "- Automated emergency replenishment calculation using historical surge multipliers (W1187.2)",
+     "- DC inventory sweep and allocation engine (W1187.3)",
+     "- DTI price freeze compliance lock mechanism (W1187.7)",
+     "- Supply chain control tower dashboard (W250) for real-time monitoring (W1187.8)"
+    ],
+    "Time Estimate": [
+     "~10.5–13.5 hours of management effort per major event (alert activation 30 min + demand-surge estimation 1 hour + allocation sweep 30 min + emergency procurement 2–4 hours + inter-DC transfer 1–2 hours + delivery re-prioritization 1 hour + price-freeze check 30 min + post-event review 4 hours), plus hourly dashboard monitoring through the first 72 hours under shift rotation and weekly de-escalation reviews; at ~3–5 major events/year ≈ 32–68 hours/year plus monitoring coverage.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "**Disaster alert activation**: Upon PAGASA Signal No. 2 or higher for any region, VP Supply Chain activates \"Disaster Response Mode\" in ERP; system flags all stores within affected provinces; pre-positioned disaster SKU list (50–80 SKUs: roofing GI sheets, plywood, nails, cement, tarpaulins, waterproofing sealant, lumber) is automatically loaded",
+     "duration": "30 min",
+     "n": "1",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Demand surge estimation**: System calculates estimated demand surge using historical post-disaster sales patterns (3–5x normal for roofing, 2–3x for cement, 4–6x for tarpaulins) applied to affected store count and baseline demand; generates emergency replenishment quantities per SKU per store",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "System / Supply Planner"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**DC inventory allocation sweep**: System sweeps available inventory across all 4 DCs for disaster SKUs; allocates available stock to affected stores by priority (highest-damage zones first); flags shortfalls for emergency procurement",
+     "duration": "30 min",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Emergency procurement activation**: For shortfalls identified in Step 3: Purchasing Manager contacts top 20 vendors for disaster SKUs via emergency PO; negotiates expedited production and delivery; issues emergency POs with shortened lead time targets (local: 3–5 days vs. normal 7–21 days); activates backup vendors per W921 if primary vendors are also affected",
+     "duration": "2–4 hours",
+     "n": "4",
+     "r": "Purchasing Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "**Inter-DC emergency transfer**: If one DC is incapacitated or depleted, VP Supply Chain authorizes emergency inter-DC transfers from unaffected DCs per W22 (inter-DC transfers); Logistics Manager arranges expedited long-haul transport (e.g., Davao → Manila if Luzon DCs affected)",
+     "duration": "1–2 hours",
+     "n": "5",
+     "r": "VP Supply Chain / Logistics Mgr"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Store delivery prioritization**: Logistics Manager re-prioritizes DC outbound delivery schedule; disaster replenishment orders get highest dispatch priority; stores in affected areas receive daily deliveries (vs. normal 2–3x/week); system auto-adjusts route plans",
+     "duration": "1 hour",
+     "n": "6",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Price freeze compliance check**: VP Legal & Compliance confirms if DTI / LGU has imposed a price freeze on construction materials under RA 7581 (Price Act); if yes, system locks SRP for affected SKUs in affected regions; any promotional markdowns on disaster SKUs are suspended",
+     "duration": "30 min",
+     "n": "7",
+     "r": "VP Legal"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Hourly dashboard monitoring**: During the first 72 hours post-disaster, Supply Planner monitors real-time sell-through rates for disaster SKUs via control tower dashboard (W250); compares actual demand surge vs. estimated; triggers additional procurement if actual exceeds estimate by > 20%",
+     "duration": "Continuous (72h)",
+     "n": "8",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "COO",
+     "activity": "**Gradual de-escalation**: As demand normalizes (typically 2–4 weeks post-event), VP Supply Chain gradually de-escalates from Disaster Response Mode; normal replenishment parameters resume; emergency PO commitments are fulfilled; excess inventory from over-procurement is rebalanced across unaffected stores per W22",
+     "duration": "Weekly review",
+     "n": "9",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "COO",
+     "activity": "**Post-event review**: Within 30 days, VP Supply Chain conducts post-disaster supply chain review: (a) actual vs. estimated demand surge by SKU, (b) DC response time, (c) vendor emergency fulfillment rate, (d) stockout rate during surge period, (e) inter-DC transfer effectiveness; findings update disaster playbook parameters",
+     "duration": "4 hours",
+     "n": "10",
+     "r": "VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W22",
+    "W250",
+    "W921"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Annual preparedness planning (May); active response 10–15 typhoon events per year affecting BuildRight store regions; post-storm replenishment as needed (estimated 3–5 significant events/year requiring rapid replenishment)",
+    "Owner": "Supply Planning Manager",
+    "Participants": "Supply Planning Manager, DC Supervisor, Logistics Coordinator, Store Manager, VP Store Operations, VP Merchandising, Category Manager (Building Materials)",
+    "Trigger": "PAGASA typhoon advisory (Signal 1 or higher approaching BuildRight store regions); or annual typhoon season preparedness review (May, before rainy season)",
+    "Volume": "~40 stores in typhoon-prone Visayas region + ~50 stores in Luzon typhoon corridor = ~90 stores at elevated typhoon risk (per profile §2 regional split); post-storm rapid replenishment: ~20–30 stores per significant event, each requiring emergency delivery of high-demand items"
+   },
+   "id": "W1432",
+   "level": 2,
+   "name": "Store-Level Typhoon Season Advance Inventory Pre-Positioning, Protective Stocking & Post-Storm Rapid Replenishment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews historical typhoon demand patterns\" (replaces manual Step 1).",
+     "- System auto-track of \"Event-specific protective stocking\" (replaces manual Step 2).",
+     "- System auto-post of \"Post-storm damage assessment and demand estimation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "The Philippines experiences an average of 20 typhoons per year, with 8–10 making landfall. BuildRight Depot's 200 stores are distributed across typhoon-prone regions: Visayas (40 stores), Bicol (included in Luzon's 50 stores), and Eastern Mindanao are particularly vulnerable. Typhoons create a triple supply chain challenge: (a) pre-typhoon demand spike for emergency supplies (tarpaulins, nails, plywood, cement, waterproofing) — customers rush to prepare, (b) during typhoon: stores in the path may close for 1–3 days (safety per W850), and roads may be impassable for delivery trucks, (c) post-typhoon: massive demand for reconstruction materials (roofing, plywood, cement, nails, paint) as communities repair damage, while simultaneously the supply chain may be disrupted (DC flooding, port closures, road damage). This workflow manages the advance inventory pre-positioning before typhoon season, protective stocking before specific typhoon events, and rapid post-storm replenishment to capture reconstruction demand."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: Supply Planning Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Forecasting typhoon demand**: typhoon severity and landfall location are inherently unpredictable; pre-positioning inventory in the wrong region ties up stock that could be needed elsewhere, while under-stocking in the actual impact zone leads to stockouts during peak demand",
+     "- **Infrastructure damage to supply chain**: typhoons may damage DC infrastructure (flooding at DC2 Cebu or DC3 Calamba), close ports (affecting import container delivery), or destroy roads (preventing truck delivery to affected stores); the supply chain must be resilient enough to route around infrastructure damage",
+     "- **Vendor supply constraints during calamity**: post-typhoon demand for construction materials surges across all retailers, not just BuildRight; vendors may allocate limited supply, requiring BuildRight's purchasing team to secure priority allocation through relationships and advance orders",
+     "- **Price gouging regulatory risk**: during declared calamities, the Philippine DTI strictly monitors pricing of essential construction materials; BuildRight must maintain SRP even as wholesale costs may increase due to supply scarcity; mitigated by the Supply Planning Manager review and approval gate"
+    ],
+    "Staffing Implication": [
+     "- Supply Planning Manager: ~20–40 hours/month during typhoon season (Jun–Nov). Absorbed within existing role with overtime authorization during active events.",
+     "- DC Supervisors: surge picking labor for post-typhoon replenishment managed per W652.",
+     "- Logistics Coordinators: extended hours during active typhoon events. Absorbed with overtime.",
+     "- No permanent incremental headcount; temporary surge labor authorized per event.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Typhoon demand model: historical post-typhoon demand patterns by item and region (W1432.1)",
+     "- PAGASA integration: automated weather alert triggering supply chain response workflow (W1432.2)",
+     "- Emergency replenishment engine: fast-track PO and picking for typhoon items with DC and logistics priority queuing (W1432.4)",
+     "- Post-storm damage reporting: store-level status reporting with damage photos and inventory loss estimates (W1432.3)",
+     "- Typhoon response analytics: event-level and seasonal performance metrics (W1432.5)",
+     "- Integration with W1221 (store typhoon preparation), W850 (store emergency closure), W1213 (store flood response), W852 (supply chain disruption recovery), W2 (demand forecasting — base demand model), W652 (DC surge planning — post-typhoon throughput)"
+    ],
+    "Time Estimate": [
+     "- Annual pre-positioning planning: 3–5 days",
+     "- Per-event protective stocking: 4–8 hours × 10–15 events = 40–120 hours/year",
+     "- Per-event post-storm assessment: 4–8 hours × 5 significant events = 20–40 hours/year",
+     "- Per-event rapid replenishment management: 20–40 hours × 5 events = 100–200 hours/year",
+     "- Post-season review: 1–2 days",
+     "- Total annual: ~190–420 hours/year (per the itemization)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "**Annual typhoon season pre-positioning** (May, before rainy season): (a) Supply Planning Manager reviews historical typhoon demand patterns: (i) top 20 post-typhoon items by volume and revenue (typically: plywood, G.I. sheets, cement, nails, tarpaulins, waterproofing, electrical wire, PVC pipes, paint, lumber), (ii) demand multiplier: post-typhoon demand for these items is typically 3–5× normal demand in affected stores, (b) pre-position inventory at DCs: (i) increase safety stock for top 20 typhoon items at DC2 (Cebu) and DC3 (Calamba) — the DCs serving the most typhoon-prone regions, (ii) advance import orders for items sourced internationally (plywood, G.I. sheets) to arrive before typhoon season, (c) VP Merchandising pre-negotiates with key vendors for emergency supply agreements: guaranteed allocation during post-typhoon demand surge",
+     "duration": "3–5 days",
+     "n": "1",
+     "r": "Supply Planning Manager / VP Merchandising"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Event-specific protective stocking** (when PAGASA issues typhoon warning): (a) Supply Planning Manager activates event-specific response: (i) identify stores in projected typhoon path using PAGASA track forecast, (ii) for stores in the path: push emergency delivery of top 20 typhoon items (if DC has stock and roads are still passable — typically 24–48 hours before landfall), (iii) for stores outside the path but near enough to receive evacuees: increase stock of emergency supplies (tarpaulins, flashlights, batteries, water containers), (b) Store Manager executes protective measures per W1221 (typhoon preparation): (i) move outdoor lumber yard inventory indoors or secure with tarps and tie-downs, (ii) elevate bottom-shelf merchandise (flood risk), (iii) stage sandbags at entry points",
+     "duration": "4–8 hours per typhoon event",
+     "n": "2",
+     "r": "Supply Planning Manager / Store Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Post-storm damage assessment and demand estimation** (within 24 hours of typhoon passage): (a) Store Managers report store status: (i) store damage (structural, flooding, inventory loss), (ii) store operational status (open/closed, operating hours), (iii) local community damage assessment (residential damage drives reconstruction demand), (b) Supply Planning Manager estimates post-storm demand: (i) based on historical post-typhoon patterns × community damage severity, (ii) identify which stores will see reconstruction demand spike, (iii) prioritize replenishment: stores in hardest-hit areas first",
+     "duration": "4–8 hours",
+     "n": "3",
+     "r": "Store Manager / Supply Planning Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "**Rapid replenishment execution** (T+1 to T+14 days): (a) Supply Planning Manager creates emergency replenishment orders: (i) top 20 typhoon items in 3–5× normal quantities for affected stores, (ii) DC Supervisor prioritizes emergency picks over routine replenishment, (b) Logistics Coordinator arranges emergency transport: (i) assess road conditions (some roads may be impassable), (ii) deploy additional trucks from third-party logistics partners if own fleet is insufficient, (iii) coordinate with LGU for road clearance priority (BuildRight may receive priority as essential goods supplier), (c) Store Manager manages post-storm selling: (i) extended operating hours if community needs, (ii) potential price gouging scrutiny per Consumer Act (RA 7394) — BuildRight must maintain SRP for essential reconstruction materials during declared calamities",
+     "duration": "7–14 days per event",
+     "n": "4",
+     "r": "Supply Planning Manager / DC Supervisor / Logistics Coordinator"
+    },
+    {
+     "a": "COO",
+     "activity": "**Post-season review** (November, after typhoon season): (a) Supply Planning Manager conducts post-season typhoon response review: (i) number of typhoon events and stores affected, (ii) pre-positioning accuracy: were the right items pre-stocked?, (iii) replenishment speed: how quickly were affected stores re-stocked?, (iv) lost sales estimate: revenue missed due to stockouts during/after typhoons, (v) inventory damage: total inventory lost to typhoon damage (insurance claims per W853), (b) update typhoon response playbook for next season",
+     "duration": "1–2 days",
+     "n": "5",
+     "r": "Supply Planning Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1213",
+    "W1221",
+    "W2",
+    "W652",
+    "W850",
+    "W852",
+    "W853"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Weekly planning; daily monitoring during peak import season (Sep–Dec ber-months and Mar–Apr summer construction season)",
+    "Owner": "Import & Customs Manager",
+    "Participants": "Import & Customs Manager, Logistics Coordinator, Category Managers (import categories), Freight Forwarder Partners, Customs Broker",
+    "Trigger": "Weekly import planning cycle; or container space availability alert from freight forwarder",
+    "Volume": "~400–600 TEUs/month across all import vendors; ~45–70 FCL containers/week (predominantly 40' HQ) requiring port processing"
+   },
+   "id": "W1435",
+   "level": 2,
+   "name": "Import Container Consolidation Optimization, Carrier Space Allocation & Port Congestion Mitigation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculate total CBM and weight per shipment group\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews consolidation opportunities\" (replaces manual Step 2).",
+     "- System auto-forecast of \"port congestion forecast\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot imports ~40% of its COGS value from international suppliers (China, Taiwan, Indonesia, Malaysia, Japan, Europe), representing ~400–600 TEUs/month. Philippine ports — particularly Manila South Harbor, Manila International Container Terminal (MICT), and Batangas Port — are chronically congested, with average container dwell times of 7–14 days during peak periods. Port congestion delays inventory availability, increases demurrage and detention costs (per W249), and disrupts store replenishment schedules. Additionally, BuildRight's imports span diverse product categories with different containerization characteristics: heavy/bulky items (tiles, cement, steel) achieve high weight utilization but low value-per-TEU, while lighter items (power tools, hardware) achieve high value-per-TEU but leave container space underutilized. This workflow optimizes container consolidation across vendors and categories to maximize container utilization, reduce per-unit freight cost, and mitigate port congestion delays through strategic carrier and port selection."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: Import & Customs Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Multi-vendor consolidation complexity**: coordinating shipments from different vendors at the same origin requires aligned production schedules, compatible packaging, and clear cost allocation for shared container expenses; vendors may resist consolidation if it delays their individual shipments",
+     "- **Port congestion unpredictability**: Philippine ports can shift from normal (3–5 day dwell) to severely congested (14+ day dwell) within days due to vessel bunching, customs system downtime, or typhoon-related port closures",
+     "- **Container shortage during peak season**: global container shortages (recurring post-pandemic issue) may limit available space, forcing BuildRight to accept higher freight rates or delay shipments"
+    ],
+    "Staffing Implication": [
+     "- Import & Customs Manager: primary owner; ~8–10 hours/week during peak season, ~4–6 hours/week off-peak. Absorbed within existing role.",
+     "- Logistics Coordinator: ~2–3 hours/week on port monitoring and carrier liaison. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import PO aggregation engine — consolidate open POs by origin, destination, and commodity (W1435.1)",
+     "- Container utilization calculator — CBM and weight optimization tool (W1435.2)",
+     "- Carrier booking system integration — container space reservation and confirmation (W1435.4)",
+     "- PPA port congestion API — real-time dwell time data (W1435.5)",
+     "- Integration with W2B (import PO), W464 (customs clearance), W249 (demurrage/detention), W1169 (port drayage), W3 (DC receiving)"
+    ],
+    "Time Estimate": [
+     "- Weekly consolidation planning: 4–5 hours (per the step durations 1+2+1+0.5)",
+     "- Daily port congestion monitoring: 30 min/day during peak season",
+     "- Monthly review: 2 hours",
+     "- **Annual estimate: ~300–400 hours/year**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Import Manager",
+     "activity": "**Weekly import container demand consolidation**: System aggregates all open import POs with expected ship dates in the next 2–4 weeks; group by origin port, destination port, and commodity type; calculate total CBM and weight per shipment group",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "System / Import Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Container utilization optimization**: Import Manager reviews consolidation opportunities: (a) combine partial-container shipments from same origin (e.g., two vendors in Guangzhou sharing one 40' HQ container), (b) balance weight and volume — pair heavy items (tiles) with light items (hardware) to maximize both weight and cube utilization, (c) identify LCL (less-than-container-load) candidates for consolidation into FCL, (d) calculate target utilization: ≥ 85% cube or ≥ 90% weight capacity",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "Import Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Carrier and port selection**: Based on consolidation plan: (a) select carrier based on: transit time reliability, container availability at origin, Manila/Batangas port congestion forecast, freight rate competitiveness, (b) select destination port: Manila (MICT/South Harbor) for Luzon DCs; Batangas for DC3 Calamba (shorter inland transport); Cebu/Mandaue port for DC2 direct discharge if volume justifies, (c) for peak season: pre-book container space 2–3 weeks ahead to secure allocation",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Import Manager / Freight Forwarder"
+    },
+    {
+     "a": "Import Manager",
+     "activity": "**Carrier space confirmation and booking**: Freight forwarder confirms container allocation and booking; Import Manager validates: (a) ETD and ETA align with DC receiving capacity, (b) container type matches cargo (40' HQ for tiles, 20' GP for heavy steel), (c) transit time meets replenishment deadline; escalate to alternate carrier if primary cannot confirm within 48 hours",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Freight Forwarder"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Port congestion monitoring and contingency**: Daily monitoring of target port congestion status via Philippine Ports Authority (PPA) bulletins and freight forwarder updates; if congestion exceeds 5-day dwell time: (a) activate contingency: reroute to alternate port (e.g., Subic Bay for Luzon-bound, Cebu for Visayas), (b) notify DC of delayed arrival and adjust replenishment schedules, (c) authorize overtime receiving at DC for expedited processing upon arrival",
+     "duration": "30 min/day",
+     "n": "5",
+     "r": "Import Manager / Logistics Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Monthly container utilization review**: Import Manager compiles monthly utilization report: (a) average container utilization rate (target: ≥ 85%), (b) demurrage/detention cost per container (target: < PHP 15,000/container), (c) port dwell time trends, (d) per-unit freight cost by category; present to VP Supply Chain for carrier performance review and rate negotiation",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "Import Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1169",
+    "W249",
+    "W2B",
+    "W3",
+    "W464"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Monthly formal review; weekly price monitoring during volatile periods; ad-hoc triggered by commodity price spikes",
+    "Owner": "VP Merchandising",
+    "Participants": "VP Merchandising, Category Managers (Lumber, Plumbing, Electrical, Tiles, Paint), Purchasing Manager, Finance Controller, VP Supply Chain",
+    "Trigger": "Monthly commodity price review; or significant price movement alert (> 5% change in key commodity index)",
+    "Volume": "~15–20 key commodities monitored (steel rebar, cement, plywood, G.I. sheets, copper wire, PVC resin, ceramic tiles, paint raw materials); ~PHP 42–45B annual COGS exposure"
+   },
+   "id": "W1436",
+   "level": 2,
+   "name": "Philippine Construction Material Price Volatility Monitoring, Forward Buy Decision & Cost Hedge Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Monthly commodity price review\" (replaces manual Step 1).",
+     "- System auto-import of \"Price trend analysis and forecast\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculates forward buy quantity\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Construction material prices in the Philippines are highly volatile due to: (a) global commodity price fluctuations (steel, copper, petroleum-based products), (b) PHP/USD exchange rate movements (imports are ~40% of COGS), (c) domestic supply constraints (cement industry consolidation, limited local steel production), (d) seasonal demand spikes (post-typhoon reconstruction, ber-months construction boom), and (e) government infrastructure spending cycles (Build! Build! Build! program). Price increases of 10–30% within a quarter are not uncommon for key materials (e.g., steel rebar, G.I. sheets, cement). BuildRight's ~28–32% gross margin can be eroded by 3–5 percentage points during commodity price spikes if purchasing decisions are reactive. This workflow establishes a proactive commodity price monitoring and forward buy decision process to protect margins while managing inventory carrying cost."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: VP Merchandising review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Forecasting inaccuracy**: commodity price movements are inherently unpredictable; a forward buy based on expected price increases may lock in a price that subsequently drops, resulting in above-market inventory cost",
+     "- **Working capital constraint**: forward buying ties up significant working capital (a PHP 350M forward buy of steel represents ~3 days of total COGS); during tight cash periods, forward buy opportunities may be missed",
+     "- **Storage capacity limitation**: DC capacity for bulk materials (cement, steel, tiles) is limited; forward buying 6 months of cement may exceed DC storage capacity, requiring leased warehouse space that erodes the cost savings",
+     "- **Competitor response**: if BuildRight raises SRP to pass through commodity costs but competitors absorb the increase, BuildRight loses price-sensitive customers (particularly trade professionals who comparison-shop)"
+    ],
+    "Staffing Implication": [
+     "- VP Merchandising: ~4–6 hours/month. Absorbed within existing role.",
+     "- Category Managers: ~2 hours/month each for price data compilation. Absorbed.",
+     "- Finance Controller: ~2–3 hours/month for margin analysis. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Commodity price tracking dashboard — automated price index feeds from global and local sources (W1436.1)",
+     "- Forward buy PO module — price-locked purchase orders with future delivery dates (W1436.3)",
+     "- Margin impact simulator — scenario modeling for price increase pass-through vs. absorption (W1436.4)",
+     "- Integration with W2A (demand forecasting), W2B (import PO), W13 (pricing), W85 (product costing), W102 (margin analysis)"
+    ],
+    "Time Estimate": [
+     "- Monthly commodity review: 4 hours",
+     "- Monthly forward buy decisions: 2–4 hours",
+     "- Weekly price monitoring (peak): 1 hour/week",
+     "- Quarterly review: 3 hours",
+     "- **Annual estimate: ~120–160 hours/year**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Monthly commodity price review**: Category Managers compile price data for 15–20 key commodities: (a) current supplier quoted prices vs. previous month, (b) global commodity indices (LME steel, copper; Shanghai plywood index), (c) PHP/USD exchange rate trend, (d) DTI suggested retail price advisories for basic construction materials, (e) competitor pricing intelligence; present summary dashboard to VP Merchandising",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Category Managers"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Price trend analysis and forecast**: VP Merchandising and Finance Controller analyze: (a) 6-month price trend for each commodity, (b) upcoming demand drivers (typhoon season, government projects, holiday construction), (c) supply-side risks (port congestion, supplier capacity constraints, import restrictions), (d) recommend forward buy decision for commodities expected to increase > 5% in next 90 days",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "VP Merchandising / Finance Controller"
+    },
+    {
+     "a": "VP Merchandising / CFO",
+     "activity": "**Forward buy authorization**: For recommended forward buys: (a) Category Manager calculates forward buy quantity (3–6 months supply for A-items expected to spike), (b) Finance Controller evaluates working capital impact and storage capacity at DCs, (c) VP Merchandising approves forward buy up to PHP 10M; CFO approves PHP 10–50M; CEO approves > PHP 50M, (d) Purchasing Manager issues forward buy PO with negotiated price lock",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Category Manager / Finance Controller"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Price protection pass-through analysis**: Finance Controller and VP Merchandising evaluate whether to: (a) absorb price increase (reduce margin but maintain competitive positioning), (b) pass through to SRP (protect margin but risk price-sensitive customer defection), (c) negotiate vendor cost sharing (vendor absorbs partial increase to maintain volume), (d) implement promotional pricing to offset customer perception of price increase",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Finance Controller / VP Merchandising"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly hedge effectiveness review**: VP Merchandising and Finance Controller review: (a) actual commodity prices vs. forward buy prices locked, (b) total savings (or loss) from forward buy decisions, (c) inventory carrying cost of forward-bought stock, (d) working capital tied up in forward buys, (e) adjust forward buy strategy parameters for next quarter",
+     "duration": "3 hours",
+     "n": "5",
+     "r": "VP Merchandising / Finance Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W102",
+    "W13",
+    "W2A",
+    "W2B",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-245"
+   ],
+   "fields": {
+    "Frequency": "Annual pre-positioning review (May); event-driven pre-positioning ~8–15 times per typhoon season (June–November); post-typhoon reallocation ~5–10 times/season",
+    "Owner": "VP Supply Chain",
+    "Participants": "Merchandise Planner, DC Manager, Logistics Manager, Store Manager, VP Merchandising",
+    "Trigger": "PAGASA raises typhoon Signal No. 2 or higher over any region where BuildRight operates; also triggered by the annual pre-typhoon season review (May)",
+    "Volume": "Emergency material stock: ~5,000–10,000 units tarpaulins, ~3,000–5,000 sheets plywood, ~2,000–4,000 bundles CGI sheets pre-positioned across 4 DCs; post-typhoon demand surge: 300–500% normal volume for affected stores"
+   },
+   "id": "W1492",
+   "level": 2,
+   "name": "Typhoon Season Pre-Positioning of Emergency Construction Materials (Tarpaulins, Plywood, CGI Sheets) & Demand Allocation Across Store Network",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Annual pre-typhoon season emergency stock planning\" (replaces manual Step 1).",
+     "- System auto-track of \"track forecast\" (replaces manual Step 2).",
+     "- System auto-allocate of \"allocated to stores proportionally\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "The Philippines experiences an average of 20 typhoons per year, with 8–10 making landfall and 3–5 causing significant infrastructure damage. After a major typhoon, demand for emergency construction materials — tarpaulins for roof covering, plywood for boarding windows and temporary repairs, and corrugated galvanized iron (CGI) sheets for roof replacement — surges 300–500% in affected areas within 24–72 hours. Stores that are not adequately stocked lose sales to competitors and local hardware stores; worse, the company's reputation as \"Your Home Building Partner\" suffers when customers most need building supplies. Pre-positioning emergency stock at DCs and strategic stores before and during typhoon season, combined with rapid post-typhoon reallocation from unaffected stores, is essential for capturing surge demand while avoiding excess inventory after the season."
+    ],
+    "Controls": [
+     "- CTL-245 (ensure controlled execution — Supply Chain Orchestration & Risk (PA-02.3).)",
+     "- operational: VP Supply Chain review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Forecast accuracy**: typhoon tracks can shift dramatically in 24 hours; pre-positioning stock at stores that end up unaffected wastes transport cost and disrupts normal operations",
+     "- **Supplier surge pricing**: suppliers know demand will spike and may increase prices 30–50% during typhoon events; pre-negotiated contracts with price caps are essential",
+     "- **Store accessibility**: typhoons often flood roads and knock out bridges; pre-positioned stock at a store that becomes inaccessible helps no one; distributing across multiple nearby stores mitigates this risk",
+     "- **Post-season excess**: an inactive typhoon season leaves BuildRight with PHP 5–15M in unsold emergency materials; while most items sell eventually, carrying cost and markdown risk are real",
+     "- **Competitor pre-emption**: local hardware chains and sari-sari stores also stock up before typhoons; speed of pre-positioning determines market share capture"
+    ],
+    "Staffing Implication": [
+     "- VP Supply Chain: ~1–2 days/year on seasonal planning + ~4–8 hours per typhoon event × ~10 events = ~50–80 hours/typhoon season. Primary responsibility.",
+     "- Merchandise Planner: ~1 day on seasonal planning + ~1–2 days per post-typhoon allocation × ~5 events = ~30–50 hours. Absorbed.",
+     "- Logistics Manager: ~4–8 hours per event for coordination. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PAGASA weather alert integration with store location mapping (W1492.2)",
+     "- Emergency stock buffer management with pre-positioned inventory tracking at DC and store level (W1492.1–3)",
+     "- Automated store-in-path identification based on typhoon track forecast (W1492.2)",
+     "- Post-typhoon demand estimation model using historical data and severity scoring (W1492.3)",
+     "- Inter-store transfer optimization for emergency stock reallocation (W1492.3)",
+     "- Seasonal buffer disposition workflow with markdown recommendation (W1492.4)"
+    ],
+    "Time Estimate": [
+     "- Annual planning: 1–2 days",
+     "- Per typhoon event: 4–8 hours (VP Supply Chain) + 1–2 days (Merchandise Planner)",
+     "- Post-season disposition: 1 day",
+     "- **Annual: ~100–150 hours total across involved roles**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Annual pre-typhoon season emergency stock planning** (May): (a) VP Supply Chain convenes typhoon preparedness meeting with Merchandise Planning and Logistics; (b) review historical typhoon impact data: which regions affected, which stores experienced demand surge, stock-out duration; (c) determine emergency stock targets by material: (i) tarpaulins: based on average roof damage incidents × estimated units per incident; (ii) plywood: based on historical board-up and temporary repair demand; (iii) CGI sheets: based on historical roof replacement demand; (iv) nails, roofing nails, tie wire: complement materials; (d) allocate emergency buffer across 4 DCs proportional to historical typhoon exposure; (e) negotiate advance purchase commitments with key suppliers (plywood mills, CGI sheet manufacturers, tarpaulin importers) for seasonal supply guarantee; (f) emergency buffer budget approved by VP Merchandising",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "COO",
+     "activity": "**Event-driven pre-positioning**: When PAGASA raises Signal No. 2+: (a) VP Supply Chain activates typhoon response protocol; (b) system identifies stores in projected typhoon path based on PAGASA track forecast; (c) for stores in high-impact zone: (i) emergency materials expedited from DC to store — maximum 24-hour delivery if store is accessible; (ii) standard replenishment orders for emergency SKUs converted to priority fulfillment; (iii) stores instructed to maximize shelf and yard display of emergency materials; (d) for nearby stores outside direct path: (i) pre-position additional stock as secondary supply points; (ii) these stores serve as replenishment sources for affected stores post-typhoon; (e) Logistics Manager coordinates truck availability for emergency deliveries, prioritizing over routine shipments",
+     "duration": "4–8 hours per event",
+     "n": "2",
+     "r": "VP Supply Chain / Logistics Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-typhoon demand surge allocation**: Within 48 hours after typhoon passes: (a) affected stores report damage assessment and remaining emergency material stock; (b) Merchandise Planner estimates post-typhoon demand by store based on: (i) typhoon severity in store's area; (ii) historical post-typhoon sales patterns; (iii) news reports of damage extent; (c) remaining DC emergency stock allocated to stores proportionally; (d) if DC stock insufficient: (i) emergency procurement orders placed with suppliers at pre-negotiated surge pricing; (ii) stock transferred from unaffected stores with surplus (Visayas/Luzon stores may be unaffected while Mindanao stores are hit, or vice versa); (e) allocation priority: (i) stores with complete roof material stock-out (highest revenue impact); (ii) stores in areas with reported widespread housing damage; (iii) remaining stores based on demand forecast",
+     "duration": "1–2 days post-event",
+     "n": "3",
+     "r": "Merchandise Planner / VP Supply Chain"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-season emergency stock disposition** (December): (a) remaining emergency buffer stock at DCs and stores counted; (b) if stock is sellable at normal prices: returned to regular inventory allocation; (c) if seasonal-specific items (e.g., heavy-duty typhoon tarps that don't sell in dry season): marked down 20–30% or held for next season with proper storage; (d) emergency stock performance review: (i) stock-out incidents during typhoon events; (ii) overstock cost (carrying cost of unsold emergency buffer); (iii) total revenue from emergency material sales during typhoon season; (iv) customer satisfaction data from post-typhoon period; (e) lessons learned feed into next year's pre-positioning plan",
+     "duration": "1 day",
+     "n": "4",
+     "r": "Merchandise Planner / VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

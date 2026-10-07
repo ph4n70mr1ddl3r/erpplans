@@ -1,0 +1,562 @@
+{
+ "process_area": {
+  "id": "PA-151.2",
+  "title": "Label & Price-Tag Production, Printing & In-Store Application"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.2-label-and-price-tag-production-printing-and-application.md",
+ "value_stream": {
+  "directory": "VS-151-auto-id-barcode-rfid-labeling-and-eas-operations",
+  "id": "VS-151",
+  "name": "Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Daily ops + per-store replenishment",
+    "Owner": "Auto-ID Lead / IT (VS-27) / Stores (VS-07)",
+    "Participants": "ITAM (VS-99), Procurement (VS-34), DC (VS-04), IFM (VS-138)",
+    "Trigger": "Fleet ops; consumable reorder; new store (VS-37)",
+    "Volume": "Label printers + media (thermal rolls, tags, ribbons) across 200 stores + 4 DCs + HQ"
+   },
+   "id": "W4489",
+   "level": 2,
+   "name": "Label Production Fleet Operations & Consumable Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Printer media-level monitoring → auto-reorder; predictive PM on printhead wear; consumable spend analytics"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: media supply chain-controlled (VS-23); printer fleet PM'd (VS-138/VS-99); RA 7394 stock continuity"
+    ],
+    "Cross-references": [
+     "- links to VS-99 (ITAM), VS-34 (procurement), VS-138 (IFM), VS-27.1 (service desk), VS-23 (shrink), W4485 (hardware standard)"
+    ],
+    "Pain Points / Risks": [
+     "- **Stockout-of-media risk**: Store runs out of label stock → no price tags (RA 7394 risk); mitigated by min-max auto-reorder",
+     "- **Counterfeit-media risk**: Unauthorized media/labels enable tag-switch fraud (VS-23); mitigated by controlled supply & serialized media"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ITAM fleet (VS-99); procurement/consumables (VS-34); IFM PM (VS-138); service desk (VS-27.1); shrink control (VS-23)"
+    ],
+    "Time Estimate": [
+     "- ~15 min/day per store media ops; ~weekly consumable replenishment"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / IT Asset Manager",
+     "activity": "Stores/IT operate the per-store label-printer fleet (load media, replace ribbons, clean printheads), following the W4485 standard and IFM preventative maintenance (VS-138)",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Stores / IT"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "Procurement/Auto-ID Lead manage consumable supply (media/ribbon min-max per store, central reorder, vendor consolidation VS-34), with shrink-controlled media (links to VS-23 — media is a fraud/counterfeit vector)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Procurement / Auto-ID Lead"
+    },
+    {
+     "a": "CIO",
+     "activity": "IT/ITAM track printer fleet health, PM, and refresh via VS-99, and feed failures to the service desk (VS-27.1)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "IT / ITAM"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4485"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Daily (price/promo), per onboarding",
+    "Owner": "Auto-ID Lead / Pricing (VS-01.2)",
+    "Participants": "IT (VS-27), PIM (VS-137), Stores (VS-07), Marketing (VS-14)",
+    "Trigger": "Price/promo change; new-item setup; reprint request",
+    "Volume": "Print jobs across 35K SKUs × 200 stores; bi-monthly sale events"
+   },
+   "id": "W4490",
+   "level": 2,
+   "name": "Centralized Label/Price-Tag Print Job Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Price-change-driven auto job generation; print-receipt confirmation; compliance-close in task app (VS-63)"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: print job receipt-confirmed & application-compliance-closed; RA 7394 price current (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-137 (PIM), VS-01.2/VS-58 (pricing/promo), VS-63 (task mgmt), VS-27 (IT), W4491/W4492 (application), W4496 (reconciliation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Missed-print risk**: Job not printed/applied → stale price (RA 7394/VS-118 risk); mitigated by receipt confirmation + compliance close",
+     "- **Volume-spike risk**: Bi-monthly sale events overwhelm printers; mitigated by staged job scheduling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM/template (VS-137); pricing (VS-01.2); store task mgmt (VS-63); IT distribution (VS-27); promo (VS-58)"
+    ],
+    "Time Estimate": [
+     "- Per job minutes; bi-monthly events ~0.5 day/store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merch",
+     "activity": "Pricing/Auto-ID Lead generate print jobs from the PIM/template library (VS-137/W4483) — shelf-edge, hang-tag, adhesive — filtered by store/section/SKU and effective date",
+     "duration": "Per change",
+     "n": "1",
+     "r": "Pricing / Auto-ID Lead"
+    },
+    {
+     "a": "CIO",
+     "activity": "IT distribute print jobs to store/DC printers (push to RF/PC printers), confirm print receipt, and log the job for reconciliation (W4496)",
+     "duration": "Per change",
+     "n": "2",
+     "r": "IT / Auto-ID Lead"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Stores execute the print job, apply labels (W4491/W4492), and close the job with application confirmation/compliance (links to VS-63 task mgmt)",
+     "duration": "Per change",
+     "n": "3",
+     "r": "Stores"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4483",
+    "W4491",
+    "W4492",
+    "W4496"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Daily + on reset",
+    "Owner": "Stores (VS-07) / Auto-ID Lead",
+    "Participants": "Merchandising (VS-01), Planogram (VS-55), Pricing (VS-01.2)",
+    "Trigger": "Price change; reset; new-item; audit gap",
+    "Volume": "Shelf-edge labels across ~2.3–4.4 SKUs/sqm × ~1.6–3.0M sqm (profile §6.1)"
+   },
+   "id": "W4491",
+   "level": 2,
+   "name": "Shelf-Edge Label & Planogram Price Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- RF-guided label-to-facing scan-match; stale-label detector (price-change vs applied); shelf-edge image audit"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: label-to-facing verified; stale labels replaced; RA 7394 price accuracy audited (W4486/VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-55 (planogram), VS-01.2 (pricing), VS-63 (task mgmt), VS-118 (revenue assurance), W4486 (conformance), W4490 (print job)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-facing risk**: Label under wrong SKU → scan/price error (VS-118); mitigated by label-to-facing verification",
+     "- **Stale-label risk**: Old price left after change → over/under-charge + RA 7394 violation; mitigated by replace-old-first rule"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Planogram (VS-55); pricing (VS-01.2); store task mgmt (VS-63); revenue assurance (VS-118); W4486 conformance"
+    ],
+    "Time Estimate": [
+     "- ~1–2 hr/day per store; resets ~0.5–1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Stock associates apply shelf-edge price labels per the print job/planogram (VS-55), matching label to facing and verifying barcode/price/unit correctness (RA 7394)",
+     "duration": "Daily/on reset",
+     "n": "1",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Supervisor verify shelf-edge compliance vs planogram (VS-55) and price accuracy (W4486), and flag/reprint mismatches",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Stores capture shelf-edge compliance in the task app (VS-63) and feed exceptions to Revenue Assurance (VS-118)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Stores"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4486",
+    "W4490"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Per receipt + daily",
+    "Owner": "Stores (VS-07) / DC (VS-04)",
+    "Participants": "Receiving (VS-07.3), Merchandising (VS-01), LP (VS-23)",
+    "Trigger": "Receiving (VS-07.3); new-item; tag damage",
+    "Volume": "Hang-tags/adhesive on tools/hardware/appliances; bulk-yard tags on lumber/cement/tiles"
+   },
+   "id": "W4492",
+   "level": 2,
+   "name": "Hang-Tag, Adhesive & Bulk-Yard Tag Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Receipt-driven tag-print trigger; durable-media selection by environment; yard-tag re-issue on cycle-count gap"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: items tagged at receipt before floor; high-value EAS-tagged (W4484); bulk-tag durable & lot-traced"
+    ],
+    "Cross-references": [
+     "- links to VS-07.3 (receiving), VS-04 (DC), VS-23 (LP/EAS), VS-29 (lot), W4482/W4494 (variable), W4498 (source-tagging)"
+    ],
+    "Pain Points / Risks": [
+     "- **Untagged-at-receipt risk**: Item hits floor without tag → can't sell/scan; mitigated by receipt tagging gate",
+     "- **Bulk-tag-loss risk**: Yard tags weather off lumber/cement; mitigated by durable media + cycle re-tag"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Receiving (VS-07.3/VS-04); WMS putaway (VS-04); LP/EAS (VS-23/W4484); lot trace (VS-29/W4482); catch-weight (VS-08)"
+    ],
+    "Time Estimate": [
+     "- ~5–10 min/receipt batch; yard tagging continuous"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Receiving applies hang-tags/adhesive price tags at goods receipt for items lacking source-tagging (links to VS-07.3/VS-04), verifying barcode readability (W4486)",
+     "duration": "Per receipt",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "Lumber/bulk-yard staff apply bulk-yard tags (price/board-foot, lot) to lumber/cement/tiles, with catch-weight/variable format (W4494) and lot traceability (W4482)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Stock Associate / Yard Staff"
+    },
+    {
+     "a": "LP Director / Store Manager",
+     "activity": "LP/Stores ensure high-value items carry the EAS tag per policy (W4484) at tagging time (source-tagging preferred W4498)",
+     "duration": "Per item",
+     "n": "3",
+     "r": "LP / Stores"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4482",
+    "W4484",
+    "W4486",
+    "W4494",
+    "W4498"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Frequent (price/promo daily; 6 major sales/yr)",
+    "Owner": "Pricing (VS-01.2) / Stores (VS-07)",
+    "Participants": "Auto-ID Lead, Marketing (VS-14), Promotions (VS-58), Task mgmt (VS-63)",
+    "Trigger": "Price change (VS-01.2); promo (VS-58); bi-monthly sale event",
+    "Volume": "Re-labeling across affected SKUs × stores per change"
+   },
+   "id": "W4493",
+   "level": 2,
+   "name": "Price-Change & Promotional Re-Labeling Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Effective-time-coordinated job+POS sync; mobile re-label checklist with scan-confirm; stale-label exception"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: re-labeling before effective time; old labels removed; shelf/POS consistency verified (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-01.2/VS-58 (pricing/promo), W4488 (sync), VS-63 (task), VS-118 (revenue assurance), VS-08.3 (override)"
+    ],
+    "Pain Points / Risks": [
+     "- **Timing-mismatch risk**: Shelf shows old, POS charges new (or vice-versa) → customer dispute + RA 7394; mitigated by effective-time coordination & remove-old-first",
+     "- **Incomplete-relabel risk**: Some facings missed → stale price; mitigated by compliance close & exception report"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing (VS-01.2); promo (VS-58); POS sync (W4488); task mgmt (VS-63); revenue assurance (VS-118); override audit (VS-08.3)"
+    ],
+    "Time Estimate": [
+     "- Per change ~2–4 hr/store; major sale event ~0.5–1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merch",
+     "activity": "Pricing/Auto-ID Lead generate the re-label job for affected SKUs/stores with effective-time coordination to POS (W4488) and promo tags (VS-58), staged to avoid peak-hour disruption",
+     "duration": "Per change",
+     "n": "1",
+     "r": "Pricing / Auto-ID Lead"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Stores execute re-labeling before effective time, remove old labels first (avoid stale-price RA 7394 risk), and confirm via task app (VS-63)",
+     "duration": "Per change",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "VP Merch",
+     "activity": "Pricing/Revenue Assurance verify shelf/POS price consistency post-change (links to VS-118), investigate overrides (VS-08.3), and close the change",
+     "duration": "Per change",
+     "n": "3",
+     "r": "Pricing / Revenue Assurance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4488"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Continuous (2.8M monthly POS, catch-weight subset)",
+    "Owner": "Stores (VS-07/VS-09) / Auto-ID Lead",
+    "Participants": "POS (VS-08), Custom fabrication (VS-09.1), Calibration (VS-115), Revenue Assurance (VS-118)",
+    "Trigger": "Catch-weight sale (lumber/wire/nails); cutting (pipe/sheet)",
+    "Volume": "Variable-measure labels at 600 POS + cutting stations every store"
+   },
+   "id": "W4494",
+   "level": 2,
+   "name": "Catch-Weight / Variable-Measure Labeling at POS & Cutting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Scale→label→POS auto-posting (no manual entry); calibration-expiry lock on scale"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: scales calibrated (VS-115); variable-measure scanned not keyed; price = weight × unit verified (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-09.1 (cutting), VS-115 (calibration), VS-118 (revenue assurance), W4482 (format), W4486 (read-rate)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mismeasure risk**: Uncalibrated scale → wrong price (revenue loss/overcharge VS-118); mitigated by VS-115 calibration gate",
+     "- **Keying-error risk**: Manual weight entry → error; mitigated by variable-barcode scan (no manual)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS catch-weight (VS-08); cutting/fabrication (VS-09.1); calibration (VS-115); revenue assurance (VS-118); W4482 format"
+    ],
+    "Time Estimate": [
+     "- ~30–60 sec per catch-weight item"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Cashier/cutting staff weigh/measure catch-weight items on calibrated scales (VS-115) and print the variable-measure label (weight/length, unit price, total, barcode) using the W4482 format",
+     "duration": "Per sale",
+     "n": "1",
+     "r": "Cashier / Cutting Staff"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "POS scans the variable-measure barcode to ring exact price (links to VS-08), preventing keying error (VS-118)",
+     "duration": "Per sale",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "Calibration/Auto-ID Lead ensure scales/printers are calibrated (VS-115) and variable-format labels pass the W4486 read-rate standard",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Calibration / Auto-ID Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4482",
+    "W4486"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Seasonal + on markdown decision",
+    "Owner": "Merchandising (VS-64) / Stores (VS-07)",
+    "Participants": "Pricing (VS-01.2), Auto-ID Lead, Marketing (VS-14), Revenue Assurance (VS-118)",
+    "Trigger": "Markdown (VS-64); clearance; seasonal transition; end-of-life",
+    "Volume": "Markdown labels across seasonal/clearance SKUs (~500 seasonal + clearance)"
+   },
+   "id": "W4495",
+   "level": 2,
+   "name": "Markdown, Clearance & Seasonal Transition Labeling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Markdown-job auto-generation; clean-label-over enforcement; markdown-integrity audit (VS-118)"
+    ],
+    "Controls": [
+     "- CTL-684 (ensure controlled execution — Label & Price-Tag Production, Printing & In-Store Application (PA-151.2).)",
+     "- CTL-684: single current price (no old-label ambiguity); markdown SKU/% correct; no unauthorized stacking (VS-118/VS-58)"
+    ],
+    "Cross-references": [
+     "- links to VS-64 (seasonal/clearance), VS-01.2 (pricing), W4488 (sync), VS-58 (promo/discount), VS-118 (revenue assurance), VS-23 (tag-switch)"
+    ],
+    "Pain Points / Risks": [
+     "- **Tag-switch-fraud risk**: Old label left visible enables price manipulation (VS-23); mitigated by clean label-over + single-current-price rule",
+     "- **Markdown-leakage risk**: Wrong SKU/% or discount stacking (VS-118); mitigated by markdown integrity audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seasonal/clearance (VS-64); pricing (VS-01.2); POS sync (W4488); promo/discount (VS-58); revenue assurance (VS-118)"
+    ],
+    "Time Estimate": [
+     "- Per markdown cycle ~2–4 hr/store; seasonal ~1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merch",
+     "activity": "Merchandising/Pricing generate markdown/clearance label jobs (was/now price, markdown reason, clearance) per the seasonal plan (VS-64), with POS price coordination (W4488)",
+     "duration": "Per markdown",
+     "n": "1",
+     "r": "Merchandising / Pricing"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Stores apply markdown labels (over old price cleanly — no tag-switch ambiguity), update shelf-edge, and execute the seasonal transition (VS-64)",
+     "duration": "Per transition",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "VP Merch",
+     "activity": "Revenue Assurance/Pricing verify markdown integrity (right SKU, right %, no double-discount stacking VS-118/VS-58) and recover/report leakage",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Revenue Assurance / Pricing"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4488"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-150",
+    "CTL-684"
+   ],
+   "fields": {
+    "Frequency": "Periodic + on media disposal",
+    "Owner": "Auto-ID Lead / Quality (VS-31) / LP (VS-23)",
+    "Participants": "Stores (VS-07), DC (VS-04), Audit (VS-21), Sustainability (VS-73)",
+    "Trigger": "Periodic audit; reconciliation; media disposal",
+    "Volume": "Application-quality audit + end-of-life media control across 205 sites"
+   },
+   "id": "W4496",
+   "level": 2,
+   "name": "Label Application Quality, Reconciliation & End-of-Life Media Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Print-vs-applied reconciliation analytics; media-issue/destruction log; consumable-waste tracking (VS-73)"
+    ],
+    "Controls": [
+     "- CTL-150 (ensure labeling & Auto-ID data integrity.)",
+     "- CTL-684: print job reconciled to application (VS-118); end-of-life media secured/destroyed (VS-23); media waste compliant (VS-73)"
+    ],
+    "Cross-references": [
+     "- links to VS-31/W4486 (quality), VS-23 (LP/media), VS-73 (waste), VS-21 (audit), VS-135 (consumables), W4490 (print job)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unreconciled-job risk**: Printed ≠ applied → untracked price gaps (VS-118); mitigated by job-application reconciliation",
+     "- **Media-misuse risk**: Discarded labels/ribbons enable fraud/counterfeit (VS-23); mitigated by secure media destruction"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Quality audit (VS-31/W4486); LP/shrink (VS-23); waste/circular (VS-73); audit (VS-21); TBM/consumables (VS-135)"
+    ],
+    "Time Estimate": [
+     "- ~monthly audit cycle; ongoing media control"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Master Data Manager / Quality Manager",
+     "activity": "Auto-ID Lead/Quality run application-quality audits (label present, correct, readable, planogram-matched) per W4486, reconcile print jobs vs applied (W4490), and quantify the gap",
+     "duration": "Periodic",
+     "n": "1",
+     "r": "Auto-ID Lead / Quality / Stores"
+    },
+    {
+     "a": "LP Director",
+     "activity": "LP/Auto-ID Lead control end-of-life media — collect/destroy obsolete price labels/tags and spent ribbons to prevent tag-switch fraud and counterfeit-label reuse (links to VS-23)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "LP / Stores"
+    },
+    {
+     "a": "Sustainability Lead / IT Asset Manager",
+     "activity": "Sustainability/Stores ensure label media waste is handled per the circular-economy/waste program (VS-73) and consumable spend is reported (VS-135)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Sustainability / Stores"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4486",
+    "W4490"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,463 @@
+{
+ "process_area": {
+  "id": "PA-59.2",
+  "title": "Store Wind-Down & Asset Recovery"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-59-store-closure-decommissioning/PA-59.2-store-wind-down-asset-recovery.md",
+ "value_stream": {
+  "directory": "VS-59-store-closure-decommissioning",
+  "id": "VS-59",
+  "name": "Store Closure & Decommissioning"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-176",
+    "CTL-21"
+   ],
+   "fields": {
+    "Frequency": "Per closure; 90-day window",
+    "Owner": "Merchandising Planner",
+    "Participants": "Marketing, Store Manager, Category Manager",
+    "Trigger": "Month 2–4 of closure",
+    "Volume": "~35K SKUs; ~PHP 15–25M inventory"
+   },
+   "id": "W2270",
+   "level": 2,
+   "name": "Inventory Liquidation Planning & Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Markdown-schedule auto-configured from sell-through data; transfer-need auto-identified from demand-at-nearby-stores"
+    ],
+    "Controls": [
+     "- CTL-176: asset-grade clearance disposition; CTL-21 (inventory-count integrity); operational: Category Manager sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory-write-down risk**: the liquidation doesn't clear enough inventory, forcing a large write-down; mitigated by the aggressive progressive-markdown schedule",
+     "- **Transfer-disruption risk**: transferring high-demand items to nearby stores overwhelms their receiving capacity; mitigated by the phased transfer aligned with the receiving-store capacity"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory/disposition (links to VS-05 / W220 slow-moving, W91 damaged/obsolete, VS-64 / W2390 markdown engine) — the liquidation strategy",
+     "- Transfers (links to VS-05 / W22 store transfers) — the high-demand transfer to nearby stores",
+     "- Analytics (links to VS-27 / W113) — the sell-through tracking"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks/closure planning + 90-day execution absorbed into store-ops = **~60 hours/closure** Merch Planner."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Designs strategy: transfer high-demand to nearby stores, progressive markdown (10→25→50→75%), bulk sale for residual; Marketing promotes; system tracks sell-through; remaining to DC or bulk",
+     "duration": "1–2 weeks + 90 days",
+     "n": "1",
+     "r": "Merch Planner / Marketing / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W22",
+    "W220",
+    "W2390",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-184",
+    "CTL-26"
+   ],
+   "fields": {
+    "Frequency": "Per closure",
+    "Owner": "Facilities Coordinator",
+    "Participants": "Finance, COO",
+    "Trigger": "Month 4–5 of closure",
+    "Volume": "~PHP 5–10M in fixtures/equipment per closure (per W807)"
+   },
+   "id": "W2271",
+   "level": 2,
+   "name": "Fixed Asset Recovery & Disposal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Asset-inventory auto-generated from the fixed-asset register; reuse-demand auto-checked against new-store pipeline"
+    ],
+    "Controls": [
+     "- CTL-26: asset disposal authorization — links to VS-35; CTL-184 (fixed-asset audit); operational: COO sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Asset-loss risk**: assets are scrapped/sold below recoverable value due to time pressure; mitigated by the reuse-first policy and the new-store-demand check before disposal",
+     "- **Asset-register-inaccuracy risk**: the disposed assets aren't removed from the register, inflating the asset base; mitigated by the atomic disposal-and-register-update"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fixed-asset register (links to VS-35 / W399 fixed-asset master, W184 fixed-asset audit) — the asset inventory and disposal",
+     "- Transfer/disposal (links to VS-35 / W39 asset disposal) — the asset movement",
+     "- Finance/GL (links to VS-17 / W9, W39) — the asset-register adjustment and gain/loss posting"
+    ],
+    "Time Estimate": [
+     "~4 days + ~2.5 weeks/closure = **~140 hours/closure** Facilities + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "Inventories assets: POS, shelving, forklifts, tools, office equipment; determines reuse vs. disposal; reusable transferred to new stores/DCs; disposable sold or scrapped; Finance adjusts asset register",
+     "duration": "3–5 days + 2–3 weeks",
+     "n": "1",
+     "r": "Facilities Coordinator / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W184",
+    "W39",
+    "W399",
+    "W807",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-221",
+    "CTL-407"
+   ],
+   "fields": {
+    "Frequency": "Per closure",
+    "Owner": "COO / Legal",
+    "Participants": "CEO",
+    "Trigger": "Month 5–6 of closure",
+    "Volume": "1 lease per store"
+   },
+   "id": "W2272",
+   "level": 2,
+   "name": "Lease Termination & Handover",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Termination-checklist auto-assembled from the lease terms; restoration-scope auto-referenced from the lease"
+    ],
+    "Controls": [
+     "- CTL-221 (ensure controlled store-closure execution.)",
+     "- CTL-407: lease-termination accuracy — links to VS-42; operational: CEO sign-off on termination terms >PHP 1M"
+    ],
+    "Pain Points / Risks": [
+     "- **Restoration-cost risk**: the landlord claims extensive restoration (beyond the lease's \"make good\" obligation), inflating the cost; mitigated by the documented condition-at-handover (photos, inspection report) and the lease-term review",
+     "- **Deposit-forfeiture risk**: the landlord withholds the security deposit on disputable grounds; mitigated by the mutual-release clause in the termination documentation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease (links to VS-42 / W117 lease admin, VS-97 real estate) — the lease-termination execution",
+     "- Legal (links to VS-100 / W230 contract review) — the mutual-release documentation",
+     "- Finance (links to VS-17 / W118 rent payment) — the final rent settlement and deposit recovery"
+    ],
+    "Time Estimate": [
+     "~3 weeks/closure (~120 hours) × ~2.5/year = **~300 hours/year** COO + Legal."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "Negotiates termination: executes clause, pays penalty, coordinates site restoration, schedules handover inspection; Legal ensures documentation: inspection report, deposit return, mutual release",
+     "duration": "2–4 weeks + 1–2 weeks",
+     "n": "1",
+     "r": "COO / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W117",
+    "W118",
+    "W230"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-172",
+    "CTL-407"
+   ],
+   "fields": {
+    "Frequency": "Per closure; ~29 employees",
+    "Owner": "CHRO",
+    "Participants": "CHRO",
+    "Trigger": "Month 1–5 of closure",
+    "Volume": "~29 employees per store"
+   },
+   "id": "W2273",
+   "level": 2,
+   "name": "Employee Redeployment & Separation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Redeployment-options auto-identified from the nearby-store vacancies; severance auto-calculated per DOLE formula; DOLE-reporting auto-generated"
+    ],
+    "Controls": [
+     "- CTL-407: DOLE-compliant separation — links to VS-19 / W43, VS-84; CTL-172 (PPE/payroll-deduction on separation); operational: CHRO sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Labor-dispute risk**: a non-redeployed employee disputes the separation (claims it was constructive dismissal); mitigated by the DOLE-compliant 30-day notice, the documented severance, and the redeployment-first policy",
+     "- **Redeployment-capacity-gap risk**: nearby stores can't absorb all redeployed employees; mitigated by the DC/HQ/new-opening alternatives and the phased-redeployment timeline"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR/separation (links to VS-19 / W43 separation & offboarding, W10 payroll) — the redeployment and separation processing",
+     "- DOLE (links to VS-19 / W43, VS-84 labor relations) — the DOLE-compliant separation",
+     "- Nearby-store capacity (links to VS-19 / W34 shift scheduling) — the redeployment-availability check"
+    ],
+    "Time Estimate": [
+     "~2.5 weeks + ~5 weeks/closure = **~300 hours/closure** CHRO + team."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "Identifies redeployment: transfers to nearby stores (priority performers), DC, HQ, new openings; for non-redeployed: 30-day notice, severance (0.5–1 month/year), clearance, final pay, DOLE reporting",
+     "duration": "2–3 weeks + 4–6 weeks",
+     "n": "1",
+     "r": "CHRO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W34",
+    "W43"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-26",
+    "CTL-407"
+   ],
+   "fields": {
+    "Frequency": "Per closure",
+    "Owner": "IT Operations Manager",
+    "Participants": "IT Ops Manager, CIO",
+    "Trigger": "Month 5 of closure",
+    "Volume": "3 POS terminals + network"
+   },
+   "id": "W2274",
+   "level": 2,
+   "name": "IT Systems Decommissioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Decommissioning-checklist auto-sequenced; data-destruction auto-verified; store-locator auto-updated"
+    ],
+    "Controls": [
+     "- CTL-407: data-security on decommissioning — links to VS-27, VS-91; CTL-26 (IT-asset disposition — links to VS-99); operational: CIO sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Data-breach risk**: the decommissioned POS terminals retain customer/payment data that isn't securely wiped; mitigated by the secure-data-destruction (not just format)",
+     "- **Orphaned-system risk**: the store is deactivated in ERP but the POS terminals remain connected (zombie), creating a security surface; mitigated by the network-disconnection synchronized with the deactivation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS/network (links to VS-27 / W265 POS-terminal management, W366 network) — the hardware decommissioning",
+     "- ERP/location master (links to VS-29 / W254 location master) — the store deactivation",
+     "- Data retention (links to VS-88 / W256, the 10-year retention rule) — the archived data",
+     "- IT-asset (links to VS-99 / W99 IT-asset lifecycle) — the terminal asset-status update"
+    ],
+    "Time Estimate": [
+     "~5 days/closure × ~2.5/year = **~100 hours/year** IT Ops."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "Closes POS terminals, disconnects network/VPN, deactivates store in ERP, archives data per retention, secure data destruction; removes from store locator",
+     "duration": "3–5 days + 2–3 days",
+     "n": "1",
+     "r": "IT Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W254",
+    "W256",
+    "W265",
+    "W366",
+    "W99"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-214",
+    "CTL-407"
+   ],
+   "fields": {
+    "Frequency": "Per closure",
+    "Owner": "Finance Manager",
+    "Participants": "CFO",
+    "Trigger": "Closure complete",
+    "Volume": "Full store financial close"
+   },
+   "id": "W2275",
+   "level": 2,
+   "name": "Final Financial Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Final-P&L auto-assembled; cost-center-closure auto-processed; settlement-checklist auto-tracked"
+    ],
+    "Controls": [
+     "- CTL-407 (ensure controlled execution — Store Wind-Down & Asset Recovery (PA-59.2).)",
+     "- CTL-407: financial-close accuracy — links to VS-17; CTL-214 (tax-settlement & filing integrity — links to VS-79 / W90); operational: CFO sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-center-not-closed risk**: the store cost center remains open, accumulating phantom costs; mitigated by the atomic closure-and-archive",
+     "- **Residual-liability-miss risk**: a vendor payable or a tax liability is missed in the final settlement, surfacing later; mitigated by the comprehensive-settlement checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Financial close (links to VS-17 / W9A month-end close, W9B year-end close) — the store cost-center closure",
+     "- Asset/tax (links to VS-35 / W39 asset disposal, VS-79 / W90 tax filing, W437 branch deregistration) — the final tax filings",
+     "- Records (links to VS-88 / W256) — the 10-year archive"
+    ],
+    "Time Estimate": [
+     "~7.5 days + ~2.5 weeks/closure = **~160 hours/closure** Finance Manager (60 h + 100 h at the 40-hour week basis)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Prepares final P&L: closure costs, asset gains/losses, write-downs, severance, lease penalty; closes cost center; settles payables; collects receivables; final tax filings; archives 10 years",
+     "duration": "5–10 days + 2–3 weeks",
+     "n": "1",
+     "r": "Finance Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W256",
+    "W39",
+    "W437",
+    "W90",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-407"
+   ],
+   "fields": {
+    "Frequency": "Per closure",
+    "Owner": "COO",
+    "Participants": "VP Store Operations, Legal",
+    "Trigger": "6–12 months post-closure",
+    "Volume": "1 site per closure"
+   },
+   "id": "W2276",
+   "level": 2,
+   "name": "Post-Closure Site Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Post-closure-obligation calendar auto-tracked; business-case-vs-actual auto-compared"
+    ],
+    "Controls": [
+     "- CTL-407 (ensure controlled execution — Store Wind-Down & Asset Recovery (PA-59.2).)",
+     "- CTL-407: post-closure obligation monitoring; operational: Legal sign-off on obligation clearance"
+    ],
+    "Pain Points / Risks": [
+     "- **Post-closure-dispute risk**: the landlord raises a dispute months after handover (a hidden defect claim); mitigated by the documented handover-condition and the mutual-release",
+     "- **Business-case-validation-blindness risk**: no one checks whether the closure delivered the projected savings; mitigated by the post-closure financial-impact analysis (W2280)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease/legal (links to VS-42 / W117, VS-100 / W230) — the post-closure obligation monitoring",
+     "- Customer migration (links to VS-59 / W2279 customer migration tracking) — the business-case validation",
+     "- Analytics (links to VS-27 / W113) — the nearby-store impact"
+    ],
+    "Time Estimate": [
+     "~2 hours/month × 12 months/closure = **~24 hours/closure** COO."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Legal",
+     "activity": "Monitors post-closure obligations: landlord compliance, dispute resolution, non-compete clauses; tracks customer migration at nearby stores for business case validation",
+     "duration": "Ongoing 6–12 months",
+     "n": "1",
+     "r": "COO / VP Store Operations"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W117",
+    "W2279",
+    "W2280",
+    "W230"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-407"
+   ],
+   "fields": {
+    "Frequency": "Per closure",
+    "Owner": "Store Closure Project Manager",
+    "Participants": "Closure PM, COO",
+    "Trigger": "Post-closure retrospective",
+    "Volume": "1 retrospective per closure"
+   },
+   "id": "W2277",
+   "level": 2,
+   "name": "Closure Lessons Learned",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Retrospective-template auto-assembled from the project-actuals; playbook-change-diff auto-generated"
+    ],
+    "Controls": [
+     "- CTL-407 (ensure controlled execution — Store Wind-Down & Asset Recovery (PA-59.2).)",
+     "- Operational: COO sign-off on the retrospective and playbook update"
+    ],
+    "Pain Points / Risks": [
+     "- **Lessons-not-captured risk**: the retrospective is skipped (the team moves to the next project), losing the learning; mitigated by the retrospective as a hard project-milestone",
+     "- **Playbook-not-updated risk**: the lessons are captured but the playbook isn't updated; mitigated by the playbook-update step in the retrospective"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Knowledge management (links to VS-30 / W381, VS-88 / W255) — the lessons-learned document",
+     "- Closure playbook (links to VS-59 / W2285) — the updated playbook",
+     "- Analytics inputs (links to VS-59 / W2279–W2282) — the actual-vs-projected data"
+    ],
+    "Time Estimate": [
+     "~2.5 days/closure × ~2.5/year = **~50 hours/year** Closure PM."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "Conducts retrospective: timeline vs. actual, cost vs. budget, customer retention, employee redeployment success, vendor transition; updates closure playbook; shares with Executive Committee",
+     "duration": "1–2 days + 1 day",
+     "n": "1",
+     "r": "Closure PM"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2279",
+    "W2282",
+    "W2285",
+    "W255",
+    "W381"
+   ]
+  }
+ ]
+}

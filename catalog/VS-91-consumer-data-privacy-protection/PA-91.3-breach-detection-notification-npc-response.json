@@ -1,0 +1,523 @@
+{
+ "process_area": {
+  "id": "PA-91.3",
+  "title": "Breach Detection, Notification & NPC Regulatory Response"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-91-consumer-data-privacy-protection/PA-91.3-breach-detection-notification-npc-response.md",
+ "value_stream": {
+  "directory": "VS-91-consumer-data-privacy-protection",
+  "id": "VS-91",
+  "name": "Consumer Data Privacy & Data Protection Program"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Security, DPO, SOC, Customer Service, LP",
+    "Trigger": "Suspected breach signal (SIEM alert, report, anomaly)",
+    "Volume": "Varies; majority false-positive"
+   },
+   "id": "W3057",
+   "level": 2,
+   "name": "Personal Data Breach Detection, Triage & Incident Activation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"IT Security/SOC detect potential breach via monitoring\" (replaces manual Step 1).",
+     "- System auto-report of \"reportable personal-data breach\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: monitoring and triage SLA"
+    ],
+    "Pain Points / Risks": [
+     "- **Detection-delay risk**: Breach undetected, eroding notification window; mitigated by monitoring and triage SLA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SIEM/SOC (links to VS-27); incident response case; breach response playbook"
+    ],
+    "Time Estimate": [
+     "- <24 hr to activate"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Manager",
+     "activity": "IT Security/SOC detect potential breach via monitoring (links to VS-27); log incident; perform initial triage and severity scoring",
+     "duration": "<1 hr",
+     "n": "1",
+     "r": "IT Security / SOC"
+    },
+    {
+     "a": "DPO",
+     "activity": "IT Security/DPO assess whether incident constitutes a reportable personal-data breach (confidentiality/integrity/availability of personal data); activate incident response if yes",
+     "duration": "<24 hr",
+     "n": "2",
+     "r": "IT Security / DPO"
+    },
+    {
+     "a": "DPO",
+     "activity": "DPO activates breach response team (IT Security, Legal, Comms, HR, Customer Service, executive); appoint incident commander; start 72-hour clock for NPC notification (W3059)",
+     "duration": "Per activation",
+     "n": "3",
+     "r": "DPO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3059"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Per incident",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Security, DPO, Legal, Forensics, affected Business Process Owners",
+    "Trigger": "Breach confirmed",
+    "Volume": "Per incident"
+   },
+   "id": "W3058",
+   "level": 2,
+   "name": "Breach Containment, Forensic Investigation & Scope Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"IT Security contains breach\" (replaces manual Step 1).",
+     "- System auto-flag for investigation of \"investigate root cause, entry vector, and timeline\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: ROPA-driven scoping and forensics"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-uncertainty risk**: Under/over-stating affected subjects; mitigated by ROPA-driven scoping and forensics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Forensic tooling/evidence preservation; ROPA (W3042); incident case"
+    ],
+    "Time Estimate": [
+     "- Hours to days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Manager",
+     "activity": "IT Security contains breach (isolate systems, revoke access, reset credentials, patch); preserves forensic evidence and logs",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "IT Security"
+    },
+    {
+     "a": "IT Security Manager",
+     "activity": "Forensics/IT Security investigate root cause, entry vector, and timeline; determine data categories, volume, and subjects affected",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "Forensics / IT Security"
+    },
+    {
+     "a": "DPO",
+     "activity": "DPO/Business Process Owners assess scope using ROPA (W3042): which data, how many subjects, sensitivity, and likely harm; feeds notification decisions",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "DPO / Process Owners"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3042"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Per reportable breach",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, Legal, IT Security, Compliance, Records",
+    "Trigger": "Reportable breach confirmed",
+    "Volume": "Subset of incidents"
+   },
+   "id": "W3059",
+   "level": 2,
+   "name": "NPC Breach Notification (72-Hour) & Regulatory Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepare NPC breach notification\" (replaces manual Step 1).",
+     "- System auto-submit of \"submits notification to NPC per prescribed format/channel\" (replaces manual Step 2).",
+     "- System auto-record of \"Records/Legal retain breach documentation per VS-88\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: activation-to-notification playbook and templates"
+    ],
+    "Pain Points / Risks": [
+     "- **Late-notification risk**: Missing 72-hour window triggers penalties; mitigated by activation-to-notification playbook and templates"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- NPC notification template/channel; records retention (links to VS-88); incident case"
+    ],
+    "Time Estimate": [
+     "- <72 hr"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "DPO/Legal prepare NPC breach notification (nature, data categories, approximate subjects, likely harm, measures taken) within 72 hours of knowledge where required",
+     "duration": "<72 hr",
+     "n": "1",
+     "r": "DPO / Legal"
+    },
+    {
+     "a": "DPO",
+     "activity": "DPO submits notification to NPC per prescribed format/channel; coordinates any law-enforcement notification (cybercrime, PNP-ACG) where applicable",
+     "duration": "<72 hr",
+     "n": "2",
+     "r": "DPO"
+    },
+    {
+     "a": "DPO",
+     "activity": "Records/Legal retain breach documentation per VS-88; support NPC follow-up inquiries and supplementary reports as scope refines",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Records / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Per qualifying breach",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, Comms, Customer Service, Legal, IT",
+    "Trigger": "Breach likely to cause harm to subjects",
+    "Volume": "Up to affected subjects (could be large for loyalty/ecommerce breach)"
+   },
+   "id": "W3060",
+   "level": 2,
+   "name": "Affected Data Subject Notification & Remediation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"DPO/Comms draft subject notification\" (replaces manual Step 1).",
+     "- System auto-log of \"Comms/Customer Service deliver notification to affected subjects via appropriate\" (replaces manual Step 2).",
+     "- System auto-track of \"track remediation uptake\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: timely, transparent, supportive communication"
+    ],
+    "Pain Points / Risks": [
+     "- **Reputational risk**: Poor notification damages trust; mitigated by timely, transparent, supportive communication"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer communication (links to VS-13/VS-14); incident case; remediation tracking"
+    ],
+    "Time Estimate": [
+     "- Per breach; ongoing support"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "DPO/Comms draft subject notification (what happened, data involved, harm, remediation, contact); Legal reviews; calibrate to NPC guidance",
+     "duration": "Per breach",
+     "n": "1",
+     "r": "DPO / Comms / Legal"
+    },
+    {
+     "a": "Marketing Communications Manager",
+     "activity": "Comms/Customer Service deliver notification to affected subjects via appropriate channel; staff dedicated support hotline/chat; log inquiries",
+     "duration": "Per breach",
+     "n": "2",
+     "r": "Comms / Customer Service"
+    },
+    {
+     "a": "DPO",
+     "activity": "IT/DPO provide remediation (credit-monitoring equivalent, password reset, fraud-alert guidance, free identity-protection where offered); track remediation uptake",
+     "duration": "Per breach",
+     "n": "3",
+     "r": "IT / DPO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Per qualifying breach",
+    "Owner": "Risk & Insurance Manager",
+    "Participants": "Risk/Insurance, Finance, Legal, DPO, Broker",
+    "Trigger": "Breach with covered costs",
+    "Volume": "Subset of breaches"
+   },
+   "id": "W3061",
+   "level": 2,
+   "name": "Cyber Insurance Coordination & Breach Cost Recovery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review cyber-liability / breach-response policy for coverage, deductibles,…\" (replaces manual Step 1).",
+     "- System auto-compile of \"compile breach cost ledger\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconcile to incident case\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: panel-vendor pre-engagement and notice-condition checklist"
+    ],
+    "Pain Points / Risks": [
+     "- **Coverage-gap risk**: Costs exceed coverage or notice missed; mitigated by panel-vendor pre-engagement and notice-condition checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance claim registry (links to W59/VS-26); breach cost ledger; cyber policy record"
+    ],
+    "Time Estimate": [
+     "- Weeks to months"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Risk & Insurance Manager",
+     "activity": "Risk/Insurance review cyber-liability / breach-response policy for coverage, deductibles, panel-vendor requirements; notify insurer/broker within policy window",
+     "duration": "Per breach (<window)",
+     "n": "1",
+     "r": "Risk / Insurance"
+    },
+    {
+     "a": "Risk & Insurance Manager",
+     "activity": "Finance/Risk compile breach cost ledger (forensics, legal, notification, remediation, regulatory penalty, business loss); engage panel vendors per policy where required",
+     "duration": "Per breach",
+     "n": "2",
+     "r": "Finance / Risk"
+    },
+    {
+     "a": "Risk & Insurance Manager",
+     "activity": "Risk/Finance negotiate settlement; post recovery; reconcile to incident case; capture lessons for coverage adequacy",
+     "duration": "Per breach",
+     "n": "3",
+     "r": "Risk / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W59"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Per breach",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, IT Security, Legal, Internal Audit, affected Process Owners",
+    "Trigger": "Breach contained and notified",
+    "Volume": "Per incident"
+   },
+   "id": "W3062",
+   "level": 2,
+   "name": "Breach Post-Incident Review & Corrective Action",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"DPO facilitates post-incident review\" (replaces manual Step 1).",
+     "- System auto-assign of \"assign owners and deadlines\" (replaces manual Step 2).",
+     "- System auto-validate of \"Internal Audit/DPO verify effectiveness\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: tracked actions and playbook updates"
+    ],
+    "Pain Points / Risks": [
+     "- **Repeat-incident risk**: Lessons not embedded; mitigated by tracked actions and playbook updates"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Post-incident review record; action tracker; risk register (links to VS-21); playbook CMS"
+    ],
+    "Time Estimate": [
+     "- 2–6 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "DPO facilitates post-incident review: timeline, root cause, detection/containment/notification effectiveness, gaps",
+     "duration": "Per breach",
+     "n": "1",
+     "r": "DPO"
+    },
+    {
+     "a": "IT Security Manager",
+     "activity": "IT Security/Process Owners define corrective actions (controls, monitoring, training, architecture); assign owners and deadlines; track to closure",
+     "duration": "Per breach",
+     "n": "2",
+     "r": "IT Security / Process Owners"
+    },
+    {
+     "a": "DPO",
+     "activity": "Internal Audit/DPO verify effectiveness; update breach response playbook and risk register (links to VS-21); report to Steering Committee and board",
+     "duration": "Through closure",
+     "n": "3",
+     "r": "Internal Audit / DPO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + annual",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, Data Analytics, Compliance, Steering Committee",
+    "Trigger": "Quarterly + annual",
+    "Volume": "Enterprise"
+   },
+   "id": "W3063",
+   "level": 2,
+   "name": "Privacy Metrics, Compliance Reporting & DPO Board Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-post of \"posture, breach incidents, remediation\" (replaces manual Step 1).",
+     "- System auto-report of \"reports compliance status to Steering Committee and board\" (replaces manual Step 2).",
+     "- System continuous audit of \"DPO publishes annual privacy report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: board-level reporting"
+    ],
+    "Pain Points / Risks": [
+     "- **Visibility risk**: Privacy risk invisible to leadership; mitigated by board-level reporting"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Privacy metrics dashboard (links to VS-28); board reporting (links to VS-36); compliance calendar"
+    ],
+    "Time Estimate": [
+     "- Quarterly/annual"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "DPO/Data Analytics maintain privacy metrics: DSAR volume/SLA, consent coverage, training completion, processor posture, breach incidents, remediation status",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "DPO / Data Analytics"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "DPO reports compliance status to Steering Committee and board (links to VS-36); highlights risks, regulatory changes, and resourcing needs",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "DPO"
+    },
+    {
+     "a": "DPO",
+     "activity": "DPO publishes annual privacy report (program maturity, incidents, improvements); supports external/audit assurance (links to VS-21/VS-22)",
+     "duration": "Annual",
+     "n": "3",
+     "r": "DPO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-504"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + scheduled",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, Legal, Internal Audit, Compliance, Records, IT Security",
+    "Trigger": "NPC investigation, complaint, or scheduled audit",
+    "Volume": "Per investigation/complaint"
+   },
+   "id": "W3064",
+   "level": 2,
+   "name": "Data Privacy Audit, NPC Investigation Response & Remediation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records, DPIAs, incident files\" (replaces manual Step 1).",
+     "- System continuous audit of \"Audit/Compliance support with control evidence, interviews, and walkthroughs\" (replaces manual Step 2).",
+     "- System auto-update of \"updates risk register and controls\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-504 (ensure controlled execution — Breach Detection, Notification & NPC Regulatory Response (PA-91.3).)",
+     "- operational: complete ROPA/DPIA/consent records and audit readiness"
+    ],
+    "Pain Points / Risks": [
+     "- **Adverse-finding risk**: Inadequate records lead to penalties; mitigated by complete ROPA/DPIA/consent records and audit readiness"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Audit evidence repository (links to VS-88); NPC correspondence; controls register (links to VS-22)"
+    ],
+    "Time Estimate": [
+     "- Per event; weeks to months"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "DPO/Legal coordinate NPC investigation or complaint response; assemble evidence (ROPA, consent records, DPIAs, incident files) per VS-88",
+     "duration": "Per event",
+     "n": "1",
+     "r": "DPO / Legal / Records"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Internal Audit/Compliance support with control evidence, interviews, and walkthroughs; Legal manages privileged content and regulator communication",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Internal Audit / Compliance / Legal"
+    },
+    {
+     "a": "DPO",
+     "activity": "DPO executes remediation per NPC directive or finding; reports closure; updates risk register and controls (links to VS-21/VS-22)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "DPO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

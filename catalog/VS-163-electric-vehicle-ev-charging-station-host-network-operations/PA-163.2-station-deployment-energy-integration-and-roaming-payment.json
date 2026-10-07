@@ -1,0 +1,593 @@
+{
+ "process_area": {
+  "id": "PA-163.2",
+  "title": "Station Deployment, Energy Integration & Roaming/Payment"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.2-station-deployment-energy-integration-and-roaming-payment.md",
+ "value_stream": {
+  "directory": "VS-163-electric-vehicle-ev-charging-station-host-network-operations",
+  "id": "VS-163",
+  "name": "Electric Vehicle (EV) Charging Station Host Network Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per procurement batch",
+    "Owner": "EV Program Manager / Procurement (VS-03/VS-34)",
+    "Participants": "EVSE vendors, Energy (VS-108), Facilities (VS-138), TPRM (VS-161)",
+    "Trigger": "Own-operate deployment (W4776); EVSE refresh; CPO hardware selection (W4770)",
+    "Volume": "~2–6 charge points/site; ~group-wide ports in phases"
+   },
+   "id": "W4777",
+   "level": 2,
+   "name": "EVSE Hardware Specification, Standards & Procurement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Vendor-configurator; TCO auto-comparison; asset-register auto-creation on receipt (VS-35)"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: OCPP/OCPI + cyber + metering-accuracy in spec; TPRM DD; warranty/parts SLA; assets registered (VS-35)"
+    ],
+    "Cross-references": [
+     "- links to VS-03/VS-34 (procurement), VS-35 (asset), VS-161 (TPRM), VS-31 (parts), VS-115 (metering calibration), W4770 (vendor), W4778 (install)"
+    ],
+    "Pain Points / Risks": [
+     "- **Standards-mismatch risk**: EVSE with the wrong connector/standard → stranded customers; mitigated by PH-market connector spec",
+     "- **Cyber risk**: Networked EVSE as an IoT attack surface (VS-161/VS-27.3); mitigated by cyber DD and OCPP-security config",
+     "- **Metering-accuracy risk**: Inaccurate metering → billing disputes/revenue leakage; mitigated by VS-115 calibration/verification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Procurement/PO (VS-03/VS-34); asset register (VS-35); TPRM (VS-161); parts/quality (VS-31); facilities (VS-138)"
+    ],
+    "Time Estimate": [
+     "- ~per batch 6–10 weeks (spec → procure → receive)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Specify the EVSE hardware: charging level (AC L2 Type-2 up to 22 kW for dwell/destination; DC fast-charge CCS2 50–150+ kW for high-traffic/throughway sites), connector standards for the PH market, smart/networked (OCPP-compliant), metering accuracy (DTI weights & measures / VS-115), PWD-accessible design, durability for tropical/outdoor conditions, and cybersecurity hardening",
+     "duration": "Per batch",
+     "n": "1",
+     "r": "EV Program / Energy / Facilities"
+    },
+    {
+     "a": "COO",
+     "activity": "Procure via RFP/panel: evaluate vendors on hardware, OCPP/OCPI compliance, warranty/parts (VS-31), TPRM cyber/financial DD (VS-161), and total cost of ownership; negotiate warranty, SLA, spare-parts lead time, and software-update commitment",
+     "duration": "Per batch",
+     "n": "2",
+     "r": "Procurement / EV Program / TPRM"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Receive, asset-register (VS-35), and stage EVSE for installation (W4778); capture firmware baseline and certificates (electrical safety, DOE-EVCS provider accreditation where applicable); manage vendor performance ongoing (W4792)",
+     "duration": "Per batch",
+     "n": "3",
+     "r": "Procurement / Facilities / Asset Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4770",
+    "W4776",
+    "W4778",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per site",
+    "Owner": "EV Program Manager / Facilities (VS-138) / Construction (VS-20)",
+    "Participants": "Electrical contractor, Facilities (VS-138), Energy (VS-108), Real Estate (VS-97)",
+    "Trigger": "Site selected (W4771) & EVSE procured (W4777); capex approved (W4776)",
+    "Volume": "~10–25 prioritized sites per phase (per the W4769 roadmap: ~400–1,200 ports across ~205 sites)"
+   },
+   "id": "W4778",
+   "level": 2,
+   "name": "Site Civil & Electrical Construction, EVSE Installation & Commissioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-run of \"run the commissioning test suite (charge handshake, metering, emergency-stop, GFCI, comms)\" (replaces manual Step 2).",
+     "- System auto-capture of \"as-built documentation; record assets (VS-35)\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: electrical (PEC) inspection passed; PWD-accessible bays; LGU permit signed; OCPP commissioning test passed; as-built recorded"
+    ],
+    "Cross-references": [
+     "- links to VS-20/VS-138/VS-109 (construction/facilities/remodel), VS-22/VS-76 (permits), VS-35 (asset), VS-14 (signage), W4774 (permits), W4779/W4780/W4781 (energy/comms), W4784 (acceptance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Safety-defect risk**: A mis-wired high-voltage EVSE → fire/shock/injury; mitigated by electrical inspection and the commissioning test suite",
+     "- **Accessibility-non-compliance risk**: Bays not PWD-accessible → RA 7277/BP 344 violation; mitigated by accessible-bay spec",
+     "- **Rework risk**: Construction without utility/permit coordination → rework; mitigated by the playbook and dependency management (VS-112)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Construction/facilities (VS-20/VS-138/VS-109); compliance/permits (VS-22/VS-76); asset register (VS-35); signage (VS-14)"
+    ],
+    "Time Estimate": [
+     "- ~per site 2–6 weeks construction + commissioning (varies by scope)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager / Facilities Lead",
+     "activity": "Execute site civil & electrical construction: trenching/conduit, EVSE pad/foundations, electrical panel/transformer upgrades (coordinate utility W4779), PWD-accessible bay layout (RA 7277/BP 344), signage/wayfinding (VS-14), lighting, and protection from vehicles/weather; manage via the construction playbook (VS-20/VS-109)",
+     "duration": "Per site",
+     "n": "1",
+     "r": "Facilities / Construction / Contractor"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Install and mechanically/electrically commission the EVSE: mount, connect to the electrical infrastructure (W4779) and to solar/storage where applicable (W4780), energize per Philippine Electrical Code safety standards, configure OCPP to the CSMS (W4781), and run the commissioning test suite (charge handshake, metering, emergency-stop, GFCI, comms)",
+     "duration": "Per site",
+     "n": "2",
+     "r": "Facilities / EVSE vendor / Energy"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Obtain electrical inspection & certification (Philippine Electrical Code), the LGU installation permit sign-off (W4774), and as-built documentation; record assets (VS-35) and hand to operations with the site-acceptance test (W4784)",
+     "duration": "Per site",
+     "n": "3",
+     "r": "Facilities / Compliance / Asset Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4769",
+    "W4771",
+    "W4774",
+    "W4776",
+    "W4777",
+    "W4779",
+    "W4780",
+    "W4781",
+    "W4784"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per site",
+    "Owner": "EV Program Manager / Energy (VS-120)",
+    "Participants": "Meralco/electric cooperative, Energy (VS-108), Facilities (VS-138)",
+    "Trigger": "Site construction (W4778); capacity upgrade",
+    "Volume": "~10–25 sites per phase across multiple utilities (Meralco + electric cooperatives)"
+   },
+   "id": "W4779",
+   "level": 2,
+   "name": "Utility Interconnection, Metering & Grid Service Connection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Utility-application tracking; sub-meter data feed to billing (W4783); power-quality monitoring (links VS-138 BMS)"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: utility connection before energization; sub-meter verified (VS-115); power-quality compliant; backup/fail-safe"
+    ],
+    "Cross-references": [
+     "- links to VS-120 (energy), VS-108 (net-metering), VS-115 (metering), VS-138 (genset/BMS), VS-69 (brownout/typhoon), VS-88 (records), W4774 (utility engagement), W4775 (demand-charge), W4780 (storage)"
+    ],
+    "Pain Points / Risks": [
+     "- **Lead-time risk**: Utility upgrade delays gating deployment; mitigated by early engagement (W4774) and phased planning",
+     "- **Power-quality risk**: Charging load causing voltage/flicker issues → utility non-compliance / equipment damage; mitigated by load study and storage (W4780)",
+     "- **Brownout risk**: Charger offline during outage → customer disappointment; mitigated by backup power and fail-safe recovery"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Energy/RA 11285 (VS-120); solar/net-metering (VS-108); metering calibration (VS-115); finance/cost-allocation (VS-17/VS-72); facilities/genset (VS-138); records (VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~per site utility lead-time 4–16 weeks (schedule-critical)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Arrange the utility service connection/upgrade for the charging load: application, load study, transformer/panel upgrade if needed, utility-side work, meter installation, and energization; manage lead times (can be the schedule-critical path)",
+     "duration": "Per site",
+     "n": "1",
+     "r": "Energy / Facilities / Utility"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Configure metering & tariffs: sub-metering for charging energy (for billing W4783 and cost-allocation W4772), the utility tariff structure (time-of-use, demand-charge management W4775), and net-metering where own solar exports (VS-108); verify meter accuracy (VS-115)",
+     "duration": "Per site",
+     "n": "2",
+     "r": "Energy / Finance / Facilities"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Coordinate grid services and reliability: voltage/flicker/quality compliance, backup power (integrate with store generator/UPS VS-138 and own storage W4780), and brownout/typhoon continuity (the charger should fail-safe and recover per VS-69); manage interconnection agreements and records (VS-88)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Energy / Facilities"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4772",
+    "W4774",
+    "W4775",
+    "W4778",
+    "W4780",
+    "W4783"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per site + continuous optimization",
+    "Owner": "EV Program Manager / Energy (VS-108)",
+    "Participants": "Renewable ops (VS-108), Facilities (VS-138), Finance (VS-17)",
+    "Trigger": "Site with own solar/storage (VS-108); peak-shaving strategy (W4775)",
+    "Volume": "~40–80 sites co-located with BuildRight solar/storage (the rooftop-solar subset of ~205 sites per VS-108)"
+   },
+   "id": "W4780",
+   "level": 2,
+   "name": "Solar/Storage Integration & Behind-the-Meter Energy Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- EMS dispatch optimization (solar→EV vs export vs storage); demand-charge-prediction; green-attribution auto-feed to ESG (VS-25)"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: EMS balances store + EVSE + storage; demand-charge managed; renewable kWh attributed once (ESG VS-25)"
+    ],
+    "Cross-references": [
+     "- links to VS-108 (solar/storage/EMS), VS-120 (energy), VS-25 (ESG/GHG), VS-17/VS-72 (cost-allocation), W4775 (demand-charge), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Dispatch-suboptimization risk**: Wrong solar→EV vs export decision → lost revenue/carbon; mitigated by the EMS optimization logic",
+     "- **Capacity-mismatch risk**: Storage undersized for peak-shaving → demand-charges still trigger; mitigated by load-modeling",
+     "- **Green-attribution risk**: Double-counting renewable kWh in ESG (VS-25); mitigated by rigorous REC/metering attribution"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Solar/storage/EMS (VS-108); energy/RA 11285 (VS-120); ESG/GHG (VS-25); finance/cost-allocation (VS-17/VS-72); analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~per site integration 2–4 weeks; ~continuous dispatch optimization absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Integrate the charging load behind-the-meter with BuildRight's own solar PV + battery storage (VS-108): direct solar-to-EV charging (greenest, lowest cost), storage peak-shaving to avoid demand-charges (W4775), and load-balancing across the store + EVSE + storage via the energy management system (EMS)",
+     "duration": "Per site",
+     "n": "1",
+     "r": "Renewable Ops / Energy / Facilities"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Coordinate energy dispatch: prioritize solar to EVSE when generation is high, discharge storage during peak to shave demand, charge storage off-peak, and manage the trade-off between selling/exporting (net-metering VS-108) vs self-consuming for EV revenue; optimize for cost + decarbonization",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Renewable Ops / Energy / Finance"
+    },
+    {
+     "a": "EV Program Manager / ESG Lead",
+     "activity": "Account for the green-energy attribute: attribute renewable kWh to EV charging for ESG/decarbonization reporting (VS-25 Scope 2/3) and \"100% renewable charging\" marketing (VS-14); verify via the REC/metering (VS-108); feed to analytics (W4792)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Energy / ESG / Marketing"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4775",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per site + continuous platform ops",
+    "Owner": "EV Program Manager / IT (VS-27) / Cyber (VS-27.3)",
+    "Participants": "CSMS vendor/CPO, IT (VS-27), Cyber (VS-27.3), Privacy (VS-91)",
+    "Trigger": "EVSE installation (W4778); own-operate or CPO backend",
+    "Volume": "~all networked charge points"
+   },
+   "id": "W4781",
+   "level": 2,
+   "name": "CSMS Backend, OCPP Configuration & Network Commissioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-provisioning to CSMS; firmware-central management; fault-auto-ticketing; cyber-monitoring (VS-27.3)"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: OCPP security profile + network segmentation; session data classified/secured (VS-91/VS-27.3); CSMS vendor under TPRM (VS-161)"
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT), VS-27.3 (cyber), VS-113 (integration), VS-75 (app), VS-91 (privacy), VS-161 (TPRM), W4782 (roaming), W4783 (session), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Connectivity-failure risk**: OCPP link down → charger stranded (offline, can't bill/start); mitigated by resilient connectivity and offline fallback",
+     "- **Cyber risk**: OCPP/IoT compromise → payment/operational disruption or pivot to BuildRight network (VS-27.3); mitigated by security profile + segmentation",
+     "- **Privacy risk**: Driver/session data mishandled (VS-91); mitigated by classification & security"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT platform/integration (VS-27/VS-113); cyber (VS-27.3); app (VS-75); privacy (VS-91); TPRM (VS-161); analytics (VS-28/W4792)"
+    ],
+    "Time Estimate": [
+     "- ~per site backend commissioning 1–3 days; ~continuous platform ops absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager / IT",
+     "activity": "Deploy/configure the Charging Station Management System (CSMS): OCPP 1.6/2.0.1 backend connectivity, charger provisioning, firmware management, remote diagnostics/start-stop, real-time status (available/charging/faulted), and the operations dashboard (uptime, sessions, faults); integrate to BuildRight IT (VS-27) and the app (VS-75)",
+     "duration": "Per site + continuous",
+     "n": "1",
+     "r": "IT / CSMS vendor / EV Program"
+    },
+    {
+     "a": "EV Program Manager / CIO",
+     "activity": "Configure the customer-facing platform: charger discovery/reservation (app VS-75), session start/stop (W4783), tariff/billing (W4775/W4783), notifications (charge-complete, idle-fee), and the roaming interface (OCPI W4782); manage cybersecurity (VS-27.3) — OCPP security profile, certificates, network segmentation, and the IoT attack-surface hardening",
+     "duration": "Per site + continuous",
+     "n": "2",
+     "r": "IT / Cyber / App team / EV Program"
+    },
+    {
+     "a": "DPO / EV Program Manager",
+     "activity": "Govern the data: charging-session data is personal/transactional (driver ID, payment) — classify (VS-91), secure (VS-27.3), retain per policy (VS-88), and feed to analytics (W4792) and loyalty (VS-13); manage the CSMS vendor as a TPRM/IoT risk (VS-161)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Privacy / Cyber / IT / EV Program"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4775",
+    "W4778",
+    "W4782",
+    "W4783",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per partnership + continuous",
+    "Owner": "EV Program Manager / IT (VS-27) / Finance (VS-80)",
+    "Participants": "eMSP/roaming-hub partners, Finance (VS-80), IT (VS-27)",
+    "Trigger": "Network launch; eMSP roaming partnership; CPO interoperability",
+    "Volume": "~3–6 roaming partners/eMSPs for cross-network access"
+   },
+   "id": "W4782",
+   "level": 2,
+   "name": "OCPI Roaming, eMSP Integration & Cross-Network Interoperability",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- OCPI auto-sync; CDR validation/recon; roaming-revenue-share dashboard (W4792)"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: OCPI roaming enabled; CDRs validated & reconciled; tariff transparent; DPAs in place (VS-91)"
+    ],
+    "Cross-references": [
+     "- links to VS-27/VS-113 (integration), VS-80 (settlement), VS-91 (privacy), VS-100.3 (contract), W469 (tariff transparency), W4781 (CSMS), W4783 (session), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Walled-garden risk**: Non-OCPI network → only BuildRight-app users can charge → low utilization; mitigated by OCPI roaming",
+     "- **CDR-reconciliation risk**: Failed/mismatched CDRs → revenue leakage/disputes; mitigated by CDR validation and recon",
+     "- **Tariff-transparency risk**: Confusing cross-network pricing → Consumer Act complaint (W469); mitigated by clear tariff display"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT/integration (VS-27/VS-113); payment/settlement (VS-80); privacy/DPA (VS-91); legal (VS-100.3); analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~per partnership 4–8 weeks integration; ~continuous reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager / CIO",
+     "activity": "Implement OCPI (Open Charge Point Interface) roaming: expose BuildRight charge points to roaming hubs/eMSPs (so any EV driver's app/card works), consume external networks where useful, and manage the cdr (charge-detail-record) exchange; this maximizes utilization by removing \"wrong-app\" friction",
+     "duration": "Per partnership",
+     "n": "1",
+     "r": "IT / EV Program / CPO"
+    },
+    {
+     "a": "EV Program Manager / Finance",
+     "activity": "Negotiate and contract roaming/eMSP partnerships: revenue-share/clearing terms, branding, SLA, and data-sharing (RA 10173 VS-91); manage the CDR clearing/settlement (links VS-80 payment settlement) and reconciliation",
+     "duration": "Per partnership",
+     "n": "2",
+     "r": "Finance / Legal / IT / EV Program"
+    },
+    {
+     "a": "EV Program Manager / Finance",
+     "activity": "Operate and reconcile roaming: monitor cross-network session success, settle CDR-based revenue-share monthly, manage disputes/failed-CDRs, and report roaming contribution to analytics (W4792); ensure tariff transparency across networks (Consumer Act W469)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Finance / IT / EV Program"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W469",
+    "W4781",
+    "W4783",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per charging session",
+    "Owner": "EV Program Manager / Payment Ops (VS-80)",
+    "Participants": "Driver, Payment/Acquirer (VS-80), Loyalty (VS-13), App (VS-75)",
+    "Trigger": "Driver initiates a charge (per session)",
+    "Volume": "~2,000–6,000 sessions/month at scale (~400–1,200 ports at early-utilization rates)"
+   },
+   "id": "W4783",
+   "level": 2,
+   "name": "Payment, Access (RFID/App/QR) & Loyalty/Promotion Activation at the Charger",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Tap-to-charge auto-start; metering-to-bill auto-compute; BIR e-invoice auto-issue; loyalty auto-accrue; exception dashboard (VS-118)"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: payment pre-authorized or loyalty/subscription validated before start; metering calibrated (VS-115); BIR e-invoice issued; revenue reconciled"
+    ],
+    "Cross-references": [
+     "- links to VS-80 (payment), VS-13 (loyalty), VS-75 (app), VS-115 (metering), VS-79 (BIR), VS-17/VS-157 (revenue), VS-118 (revenue assurance), W4775 (tariff), W4781/W4782 (backend/roaming), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Access-failure risk**: App/RFID/payment failure at the charger → stranded/angry driver; mitigated by multiple access methods + offline fallback",
+     "- **Billing-leakage risk**: Under-metered/under-billed sessions (links VS-118); mitigated by meter calibration (VS-115) and CDR validation",
+     "- **Tax-compliance risk**: Charging revenue not BIR-invoiced; mitigated by e-invoicing (VS-79)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payment/acquirer (VS-80); loyalty/CRM (VS-13); app (VS-75); metering (VS-115); BIR e-invoice (VS-79 W473); GL/revenue (VS-17/VS-157); analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~per session auto (seconds-to-minutes for the customer; settlement automated)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Manage the session-start access methods: BuildRight app/QR (VS-75), RFID card, contactless payment (card/phone tap per VS-80), or roaming eMSP card; pre-authorize payment (VS-80) or validate subscription/loyalty (VS-13); start the session via CSMS (W4781)",
+     "duration": "Per session",
+     "n": "1",
+     "r": "Payment Ops / IT / EV Program"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Apply the tariff (W4775), loyalty/promotion (VS-13/W4773), and dwell-offer during the session; capture metering (kWh, time) for billing (VS-115 calibrated); send charge-complete and idle-fee notifications (VS-75)",
+     "duration": "Per session",
+     "n": "2",
+     "r": "Payment Ops / Loyalty / EV Program"
+    },
+    {
+     "a": "EV Program Manager / Finance",
+     "activity": "Settle the session: compute the charge (kWh tariff + time + idle-fee − loyalty discount), capture payment (VS-80), issue the BIR-compliant e-invoice/receipt (VS-79 W473), post revenue (VS-17/VS-157), accrue loyalty points (VS-13), and reconcile (W4792)",
+     "duration": "Per session",
+     "n": "3",
+     "r": "Payment Ops / Finance / Loyalty"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W473",
+    "W4773",
+    "W4775",
+    "W4781",
+    "W4782",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-720"
+   ],
+   "fields": {
+    "Frequency": "Per site",
+    "Owner": "EV Program Manager / PMO (VS-112) / Facilities (VS-138)",
+    "Participants": "Facilities, IT (VS-27), OCM (VS-134), Store Ops (VS-07), CPO",
+    "Trigger": "Commissioning complete (W4778/W4781); site about to go live",
+    "Volume": "~each site at launch"
+   },
+   "id": "W4784",
+   "level": 2,
+   "name": "Go-Live Readiness, Site Acceptance & Hypercare Handover",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SAT checklist automation; CSMS health dashboard; fault-rate-gated hypercare-exit; OCM training module"
+    ],
+    "Controls": [
+     "- CTL-720 (ensure controlled execution — Station Deployment, Energy Integration & Roaming/Payment (PA-163.2).)",
+     "- CTL-720: SAT passed before public launch; store team trained (VS-134); hypercare exited only on stability criteria"
+    ],
+    "Cross-references": [
+     "- links to VS-112 (PMO/go-live), VS-134 (OCM/training), VS-07 (store ops), VS-27/W4781 (CSMS), VS-138 (facilities), VS-133 (lessons), W4789 (steady-state ops)"
+    ],
+    "Pain Points / Risks": [
+     "- **Premature-go-live risk**: Launching with unresolved faults → poor first impression; mitigated by the SAT gate",
+     "- **Store-team-unprepared risk**: Staff can't assist/escalate → customer frustration; mitigated by OCM training (VS-134)",
+     "- **Hypercare-exit-too-early risk**: Moving to steady-state before stability → recurring faults; mitigated by stability criteria"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PMO/go-live (VS-112); OCM/training (VS-134); IT/CSMS (VS-27/W4781); store ops (VS-07); facilities (VS-138)"
+    ],
+    "Time Estimate": [
+     "- ~per site SAT + hypercare 2–4 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Run the go-live readiness & site-acceptance test (SAT): end-to-end test (access → charge → bill → notify → idle-fee), safety checks (emergency-stop, GFCI, signage), accessibility (PWD bays), tariff display (Consumer Act W469), OCPP/OCPI/CSMS health, and store-team readiness; obtain sign-off before public launch",
+     "duration": "Per site",
+     "n": "1",
+     "r": "EV Program / Facilities / IT / OCM"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Train the store team (VS-134 OCM): basic customer assistance (\"how to start a charge\"), escalation path for faults (W4789), safety/emergency response, and the basket-offer script (W4773); brief on PWD assistance and the dwell-offer",
+     "duration": "Per site",
+     "n": "2",
+     "r": "OCM / Store Ops / EV Program"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Enter hypercare: intensified monitoring (uptime, faults, session success) for the first weeks, rapid-issue resolution with the CPO/vendor, and the transition to steady-state operations (W4789) once stable; capture lessons for the next site (VS-133)",
+     "duration": "Per site",
+     "n": "3",
+     "r": "EV Program / IT / CPO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W469",
+    "W4773",
+    "W4778",
+    "W4781",
+    "W4789"
+   ]
+  }
+ ]
+}

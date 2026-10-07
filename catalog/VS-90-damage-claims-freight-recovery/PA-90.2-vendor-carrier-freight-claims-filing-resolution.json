@@ -1,0 +1,537 @@
+{
+ "process_area": {
+  "id": "PA-90.2",
+  "title": "Vendor, Carrier & Freight Claims Filing & Resolution"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-90-damage-claims-freight-recovery/PA-90.2-vendor-carrier-freight-claims-filing-resolution.md",
+ "value_stream": {
+  "directory": "VS-90-damage-claims-freight-recovery",
+  "id": "VS-90",
+  "name": "Damage, Claims & Freight Recovery Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-500"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Vendor Management Manager",
+    "Participants": "Vendor Mgmt, AP, Quality, Inventory Control",
+    "Trigger": "Vendor-attributable discrepancy confirmed",
+    "Volume": "~800–1,000 vendors; subset of receipts"
+   },
+   "id": "W3025",
+   "level": 2,
+   "name": "Vendor Shortage, Damage & Non-Conformance Claim Filing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"files vendor claim via vendor portal\" (replaces manual Step 1).",
+     "- System auto-track of \"tracks claim to vendor acknowledgment\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-500 (ensure controlled execution — Vendor, Carrier & Freight Claims Filing & Resolution (PA-90.2).)",
+     "- operational: automated claim-trigger at goods-receipt discrepancy"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA risk**: Claims filed past vendor notice window are denied; mitigated by automated claim-trigger at goods-receipt discrepancy"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor portal claim (links to VS-03); AP credit/debit (links to W7); damage case linkage"
+    ],
+    "Time Estimate": [
+     "- Per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Vendor Mgmt/AP files vendor claim via vendor portal (links to VS-03) with discrepancy details, evidence (W3020), quantity, and claimed value (cost + handling)",
+     "duration": "Per claim (<vendor SLA)",
+     "n": "1",
+     "r": "Vendor Mgmt / AP"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality provides non-conformance detail (spec deviation, wrong item, defective); supports liability assertion",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Quality"
+    },
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Vendor Mgmt tracks claim to vendor acknowledgment; pursues credit memo, replacement, or debit per purchase terms; updates damage case",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3020",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-500"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Logistics Manager",
+    "Participants": "Logistics, Inventory Control, AP, 3PL/Carrier",
+    "Trigger": "Carrier/3PL-attributable transit damage or shortage",
+    "Volume": "Owned fleet (20%) + 3PL (80%); inter-island + last-mile"
+   },
+   "id": "W3026",
+   "level": 2,
+   "name": "Freight Carrier / 3PL Damage & Shortage Claim Filing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics files carrier/3PL claim with waybill, delivery exception, photos\" (replaces manual Step 1).",
+     "- System auto-track of \"Inventory Control confirms transit-leg responsibility via seal/tracking evidence\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconcile to damage case\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-500 (ensure controlled execution — Vendor, Carrier & Freight Claims Filing & Resolution (PA-90.2).)",
+     "- operational: claim-trigger automation and short SLA"
+    ],
+    "Pain Points / Risks": [
+     "- **Notice-window risk**: Late filing forfeits carrier liability; mitigated by claim-trigger automation and short SLA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Carrier claim record; freight payable offset (links to W277); damage case linkage"
+    ],
+    "Time Estimate": [
+     "- Per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics files carrier/3PL claim with waybill, delivery exception, photos (W3020), and claimed value within carrier notice window (typically 7–15 days)",
+     "duration": "Per claim (<window)",
+     "n": "1",
+     "r": "Logistics"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control confirms transit-leg responsibility via seal/tracking evidence; differentiates pickup damage vs. in-transit vs. delivery",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Inventory Control"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Logistics/AP track carrier settlement (credit/refund/offset against freight payable); reconcile to damage case; pursue denial disputes (W3031)",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Logistics / AP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W277",
+    "W3020",
+    "W3031"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-500"
+   ],
+   "fields": {
+    "Frequency": "~400–600 TEUs/month; subset with discrepancy",
+    "Owner": "Import & Customs Manager",
+    "Participants": "Import/Customs, Logistics, Surveyor, Broker, Finance",
+    "Trigger": "Import container discrepancy (damage, short-landing, contamination)",
+    "Volume": "Import vendors ~40% of COGS"
+   },
+   "id": "W3027",
+   "level": 2,
+   "name": "Import Container Damage, Short-Landing & Surveyor Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-import of \"Import/Customs engages independent marine surveyor at port for container…\" (replaces manual Step 1).",
+     "- System auto-file of \"files claim against ocean carrier, marine insurer, or vendor per bill of lading…\" (replaces manual Step 2).",
+     "- System auto-log of \"Logistics coordinate with marine insurance and customs\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-500 (ensure controlled execution — Vendor, Carrier & Freight Claims Filing & Resolution (PA-90.2).)",
+     "- operational: mandatory pre-gate-out port-discharge survey gate with findings photographed and attached to the claim file"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence-window risk**: Surveyor not engaged before container leaves terminal forfeits claim; mitigated by port-discharge survey SOP"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import/container record (links to VS-02/VS-87); marine survey report; customs duty adjustment (links to VS-87)"
+    ],
+    "Time Estimate": [
+     "- Per event; 1–4 weeks to resolve"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Import & Customs Manager",
+     "activity": "Import/Customs engages independent marine surveyor at port for container damage/short-landing; obtains survey report before container leaves terminal",
+     "duration": "Per event (<port free-time)",
+     "n": "1",
+     "r": "Import / Customs"
+    },
+    {
+     "a": "Import & Customs Manager",
+     "activity": "Import/Customs/Broker files claim against ocean carrier, marine insurer, or vendor per bill of lading and Incoterms; preserves lien rights",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Import / Customs / Broker"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance/Logistics coordinate with marine insurance and customs (duty refund on damaged/destroyed imports per BIR rules); reconcile recovery",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Finance / Logistics"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-500"
+   ],
+   "fields": {
+    "Frequency": "Per claim",
+    "Owner": "Claims Analyst",
+    "Participants": "Claims Analyst, Inventory Control, Finance, Legal",
+    "Trigger": "Claim filed or pre-filing preparation",
+    "Volume": "Enterprise claims"
+   },
+   "id": "W3028",
+   "level": 2,
+   "name": "Claim Evidence Package, Liability Determination & Valuation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"assembles evidence package\" (replaces manual Step 1).",
+     "- System auto-document of \"document apportionment and rationale\" (replaces manual Step 2).",
+     "- System auto-log of \"Finance values claim at landed cost + attributable handling/logistics\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-500 (ensure controlled execution — Vendor, Carrier & Freight Claims Filing & Resolution (PA-90.2).)",
+     "- operational: landed-cost-based valuation template"
+    ],
+    "Pain Points / Risks": [
+     "- **Valuation risk**: Under-claiming value forfeits recovery; mitigated by landed-cost-based valuation template"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Claim case module with evidence package (links to VS-88); landed cost (links to W2B); liability apportionment"
+    ],
+    "Time Estimate": [
+     "- Per claim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Analyst assembles evidence package: damage case, photos, PO/ASN, waybill, survey, QC report, correspondence — per claim type template",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Claims Analyst"
+    },
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Analyst/Inventory Control determine liability split where shared (vendor vs. carrier vs. self); document apportionment and rationale",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Claims Analyst / Inventory Control"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance values claim at landed cost + attributable handling/logistics; validates against recovery potential and materiality threshold",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-75"
+   ],
+   "fields": {
+    "Frequency": "Per claim",
+    "Owner": "Claims Manager",
+    "Participants": "Claims Mgr, Vendor Mgmt/Logistics, AP/AR, Finance",
+    "Trigger": "Counterparty responds to claim",
+    "Volume": "Enterprise claims"
+   },
+   "id": "W3029",
+   "level": 2,
+   "name": "Claim Negotiation, Settlement & Credit/Refund Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"negotiate settlement with counterparty\" (replaces manual Step 1).",
+     "- System auto-reconcile of \"reconciles to damage case and GL\" (replaces manual Step 2).",
+     "- System auto-flag of \"flags residual for insurance/subrogation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-75 (detect and recover freight & receiving damage.)",
+     "- operational: settlement SLAs and escalation tiers"
+    ],
+    "Pain Points / Risks": [
+     "- **Settlement-delay risk**: Negotiation stalls and claim ages; mitigated by settlement SLAs and escalation tiers"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Claim settlement; AP/AR credit-offset (links to W7/W8); damage case closure"
+    ],
+    "Time Estimate": [
+     "- 2–12 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Mgr/Vendor Mgmt/Logistics negotiate settlement with counterparty; defends claim with evidence; agrees credit memo, refund, replacement, or freight offset",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Claims Mgr / Vendor Mgmt / Logistics"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "AP/AR posts settlement: vendor credit memo, carrier offset, AR/customer-side (W3036), or cash refund; reconciles to damage case and GL",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "AP / AR"
+    },
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Mgr closes claim in case system with settlement value and recovery %; flags residual for insurance/subrogation (W3030) or dispute (W3031)",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Claims Mgr"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3030",
+    "W3031",
+    "W3036",
+    "W7",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-500"
+   ],
+   "fields": {
+    "Frequency": "Per qualifying claim",
+    "Owner": "Risk & Insurance Manager",
+    "Participants": "Risk/Insurance, Claims Mgr, Finance, Legal, Broker",
+    "Trigger": "Claim settlement short of full recovery, or insured event",
+    "Volume": "Subset of high-value claims"
+   },
+   "id": "W3030",
+   "level": 2,
+   "name": "Subrogation, Insurance Recovery & Dual-Claim Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Risk/Insurance evaluates cargo/transit/goods-in-transit and property policies for recovery beyond\" (replaces manual Step 1).",
+     "- System auto-record of \"Risk/Insurance files insurer claim with evidence package\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles total recovery vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-500 (ensure controlled execution — Vendor, Carrier & Freight Claims Filing & Resolution (PA-90.2).)",
+     "- operational: net-recovery reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Double-recovery risk**: Claiming vendor + insurer for same loss; mitigated by net-recovery reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance claim registry (links to W59/VS-26); subrogation case; recovery reconciliation"
+    ],
+    "Time Estimate": [
+     "- 4–16 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Risk & Insurance Manager",
+     "activity": "Risk/Insurance evaluates cargo/transit/goods-in-transit and property policies for recovery beyond counterparty settlement; avoids double-recovery",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Risk / Insurance"
+    },
+    {
+     "a": "Risk & Insurance Manager",
+     "activity": "Risk/Insurance files insurer claim with evidence package (W3028) and settlement record; pursues subrogation against responsible carrier/vendor",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Risk / Insurance"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance posts insurer recovery; reconciles total recovery vs. loss; coordinates vendor/carrier recovery (W3025/3026) and customer recovery (W3038) to net total",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3025",
+    "W3028",
+    "W3038",
+    "W59"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-500"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Claims Manager",
+    "Participants": "Claims Mgr, Legal, Vendor Mgmt/Logistics, Finance",
+    "Trigger": "Claim denied or settlement unacceptable",
+    "Volume": "Subset of claims"
+   },
+   "id": "W3031",
+   "level": 2,
+   "name": "Claim Denial Dispute, Escalation & Legal Handoff",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documents denial rationale\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics pursue commercial escalation with counterparty\" (replaces manual Step 2).",
+     "- System workflow orchestration of \"coordinates with finance write-off decision for non-recoverable amounts\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-500 (ensure controlled execution — Vendor, Carrier & Freight Claims Filing & Resolution (PA-90.2).)",
+     "- operational: materiality threshold and tiered escalation"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost/benefit risk**: Disputing low-value claims costs more than recovery; mitigated by materiality threshold and tiered escalation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Claim dispute case; contract repository (links to VS-03); legal matter management (links to VS-36)"
+    ],
+    "Time Estimate": [
+     "- 4–24 weeks for material disputes"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Mgr documents denial rationale; assesses dispute viability (evidence strength, contract terms, materiality); escalates within escalation tiers",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Claims Mgr"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Vendor Mgmt/Logistics pursue commercial escalation with counterparty; Legal issues demand letter where contract supports",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Vendor Mgmt / Logistics / Legal"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Legal evaluates litigation/arbitration for material claims; coordinates with finance write-off decision for non-recoverable amounts; closes case",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-75"
+   ],
+   "fields": {
+    "Frequency": "Weekly + monthly",
+    "Owner": "Claims Manager",
+    "Participants": "Claims Mgr, Supply Chain Analytics, Vendor Mgmt, Logistics, Finance",
+    "Trigger": "Weekly/monthly reporting",
+    "Volume": "Enterprise open claims"
+   },
+   "id": "W3032",
+   "level": 2,
+   "name": "Vendor/Carrier Claim Aging, Recovery Analytics & Scorecard Feed",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counterparty, age, value, recovery rate, denial rate\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics feed claim performance into vendor scorecard\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-75 (detect and recover freight & receiving damage.)",
+     "- operational: aging alerts and recovery-rate KPIs"
+    ],
+    "Pain Points / Risks": [
+     "- **Recovery-leakage risk**: Old claims written off without recovery; mitigated by aging alerts and recovery-rate KPIs"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Claim aging/recovery dashboard (links to VS-28); vendor scorecard feed (links to VS-67); carrier SLA (links to VS-56)"
+    ],
+    "Time Estimate": [
+     "- Weekly/monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Claims Manager",
+     "activity": "Claims Mgr maintains claim aging dashboard: open claims by counterparty, age, value, recovery rate, denial rate",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "Claims Mgr"
+    },
+    {
+     "a": "Supply Chain Analytics Manager",
+     "activity": "Supply Chain Analytics produces recovery analytics: recovery % by vendor/carrier/lane, trend, and recovery-value leakage",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Supply Chain Analytics"
+    },
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Vendor Mgmt/Logistics feed claim performance into vendor scorecard (links to VS-67) and carrier performance review (links to VS-56); drives corrective action",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Vendor Mgmt / Logistics"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  }
+ ]
+}

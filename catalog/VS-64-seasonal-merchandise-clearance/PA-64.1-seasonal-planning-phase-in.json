@@ -1,0 +1,473 @@
+{
+ "process_area": {
+  "id": "PA-64.1",
+  "title": "Seasonal Planning & Phase-In Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-64-seasonal-merchandise-clearance/PA-64.1-seasonal-planning-phase-in.md",
+ "value_stream": {
+  "directory": "VS-64-seasonal-merchandise-clearance",
+  "id": "VS-64",
+  "name": "Seasonal Merchandise Transition & Clearance"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-39"
+   ],
+   "fields": {
+    "Frequency": "6 seasons/year; 13 categories reviewed",
+    "Owner": "Category Manager",
+    "Participants": "Category Mgr, Merch Planner, Buyer, VP Merchandising",
+    "Trigger": "Pre-season planning (3 months before season)",
+    "Volume": "~6 seasonal assortment plans/year"
+   },
+   "id": "W2382",
+   "level": 2,
+   "name": "Seasonal Assortment Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Assortment auto-suggested from the prior-year same-season sell-through by format; seasonal-PO auto-generated from the approved assortment"
+    ],
+    "Controls": [
+     "- CTL-39: rebate/co-op terms on seasonal POs validated; operational: VP Merchandising sign-off on the seasonal assortment plan"
+    ],
+    "Pain Points / Risks": [
+     "- **Import-lead-time risk**: a seasonal SKU sourced via import (40% of COGS) has a 10–12 week lead time, so the PO must place before sell-through signal confirms demand; mitigated by the 3-month-pre-season trigger and the W2399 post-season forecast-accuracy feedback loop",
+     "- **Format-mismatch risk**: the compact format can't carry the full seasonal assortment, and over-assortment creates fixture crowding; mitigated by the format-tiered assortment per W299 store-cluster master"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Assortment/item master (links to VS-01 / W1 SKU planning, VS-29 / W299 assortment & store-cluster master) — the seasonal SKU set per format",
+     "- Seasonal calendar (links to VS-29 / W306 seasonal-calendar master) — the 6-season Philippine retail calendar driving the planning trigger",
+     "- Purchase orders (links to VS-03 / W2B import POs, VS-15 P2P) — the seasonal PO placement"
+    ],
+    "Time Estimate": [
+     "~4 days Category Manager + ~7.5 days Merch Planner/Buyer × 6 seasons = **~690–840 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager identifies seasonal opportunities per Philippine calendar: summer (garden, aircon, outdoor), rainy (waterproofing, flood control), ber-months (holiday décor, gifts, appliances); selects seasonal SKUs",
+     "duration": "3–5 days",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Merch Planner determines store-level assortment by format (flagship/standard/compact); Buyer places seasonal POs with vendors; confirms delivery timeline 6–8 weeks before season start",
+     "duration": "5–10 days",
+     "n": "2",
+     "r": "Merch Planner / Buyer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W2399",
+    "W299",
+    "W2B",
+    "W306"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-21"
+   ],
+   "fields": {
+    "Frequency": "Pre-season; 6 cycles/year",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Ops Mgr, Merch Planner, Logistics Mgr",
+    "Trigger": "Seasonal inventory arriving at DCs",
+    "Volume": "~4 DCs receiving seasonal inventory"
+   },
+   "id": "W2383",
+   "level": 2,
+   "name": "Seasonal Inventory Positioning at DCs",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Allocation auto-generated from the assortment plan × store-cluster demand; outbound auto-scheduled against the store display-readiness flag"
+    ],
+    "Controls": [
+     "- CTL-21: seasonal inventory tracked separately to prevent commingling with sellable stock; operational: DC Ops Manager staging-plan sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **DC-congestion risk**: seasonal inventory arrives in bulk and competes for DC staging space with regular replenishment; mitigated by the pre-season staging reservation and cross-dock-fast-forward for high-volume seasonal SKUs",
+     "- **Mis-timed-outbound risk**: DC ships to stores before the display zone is ready, leaving seasonal inventory in the backroom; mitigated by the outbound shipment aligned with the W2384 display-setup readiness signal"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS (links to VS-04 / W3 receiving/putaway, W106 dispatch) — seasonal-inventory receiving, staging, and outbound",
+     "- Allocation (links to VS-02 / W4 replenishment, W105 multi-channel allocation) — the SKU-per-store-group allocation",
+     "- Inventory (links to VS-05 / W220 slow-moving tracking) — seasonal inventory flagged as time-bound"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks/season × 6 seasons across 4 DCs = **~350–500 hours/year** DC Ops + Merch Planner."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Merch Planner provides DC with seasonal allocation plan: quantity per SKU per store group; DC receives seasonal inventory; stages for store allocation; schedules outbound shipments aligned with store display readiness",
+     "duration": "1–2 weeks/season",
+     "n": "1",
+     "r": "Merch Planner / DC Ops Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W105",
+    "W106",
+    "W220",
+    "W2384",
+    "W3",
+    "W4"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-421"
+   ],
+   "fields": {
+    "Frequency": "6/year; 200 stores",
+    "Owner": "Merchandising Coordinator",
+    "Participants": "Merch Coord, Store Managers, Regional Ops",
+    "Trigger": "Seasonal display zone activation",
+    "Volume": "~1,200 display setups/year"
+   },
+   "id": "W2384",
+   "level": 2,
+   "name": "Seasonal Planogram & Display Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Display-plan auto-distributed per format; compliance-photo auto-scored against the spec (links to VS-55 W2175 pattern)"
+    ],
+    "Controls": [
+     "- CTL-421 (ensure controlled execution — Seasonal Planning & Phase-In Management (PA-64.1).)",
+     "- operational: planogram currency; operational: Merchandising Planner compliance-photo sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance-variance risk**: stores interpret the display plan differently, producing inconsistent execution across the chain; mitigated by the detailed visual-merchandising guide and the compliance-photo verification",
+     "- **Window-pressure risk**: the 1-week window collides with regular store ops, producing rushed execution; mitigated by the W2389 transition planning that sequences the outgoing-season teardown with the incoming-season setup"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Planogram (links to VS-55 / W2166 seasonal refresh, W314 planogram template) — the seasonal display spec",
+     "- Store comms (links to VS-07 / W571) — the display-plan distribution and compliance-photo return",
+     "- VS-55 / W2181 planogram-change-implementation tracking — the compliance-verification pattern"
+    ],
+    "Time Estimate": [
+     "~1 week/season Coordinator + ~4 hours/store setup × 200 stores × 6 seasons = **~5,000–6,000 hours/year** Coordinator + Store teams (setup absorbed into store-ops)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Merchandising Planner",
+     "activity": "Coordinator distributes seasonal display plan: zone assignment, product list, signage, visual merchandising guide; stores set up within 1-week window; compliance photos submitted and verified",
+     "duration": "1 week per season",
+     "n": "1",
+     "r": "Merch Coord / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2166",
+    "W2175",
+    "W2181",
+    "W2389",
+    "W314",
+    "W571"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-421"
+   ],
+   "fields": {
+    "Frequency": "6/year; aligned with merchandising calendar",
+    "Owner": "Pricing Analyst",
+    "Participants": "Pricing Analyst, Category Mgr, Marketing",
+    "Trigger": "Seasonal promotional pricing activation",
+    "Volume": "~6 seasonal pricing events/year"
+   },
+   "id": "W2385",
+   "level": 2,
+   "name": "Seasonal Pricing & Promotion Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Markdown-trigger auto-armed at the configured sell-through threshold (links to W2390); seasonal-price auto-pushed to POS/label"
+    ],
+    "Controls": [
+     "- CTL-421 (ensure controlled execution — Seasonal Planning & Phase-In Management (PA-64.1).)",
+     "- CTL-421 (price/promo accuracy — links to VS-08 / W69 price-compliance audit); operational: Category Manager sign-off on the seasonal pricing plan"
+    ],
+    "Pain Points / Risks": [
+     "- **DTI-promo-permit risk**: a seasonal promo requires the \"Per DTI Permit No.\" (links to W833 campaign compliance review); missing it triggers a DTI complaint (W2682); mitigated by the promo-setup checklist that gates activation on the DTI-permit field",
+     "- **Margin-erosion risk**: aggressive launch promos + planned markdowns compress seasonal margin below plan; mitigated by the W2397 post-clearance reconciliation feeding the next season's pricing model"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing master (links to VS-29 / W289, VS-57 / W107 pricing-hierarchy governance) — the seasonal price and markdown-trigger configuration",
+     "- Promo setup (links to VS-14 / W13 promotions, W262 store promotional setup, VS-58 coupon) — the seasonal promo",
+     "- Price-tag (links to VS-08 / W181) — the label generation for the seasonal price"
+    ],
+    "Time Estimate": [
+     "~1.5 days/season × 6 seasons = **~70–90 hours/year** Pricing Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Pricing Analyst sets seasonal pricing: launch price (may include early-bird promo), regular price, planned markdown triggers (based on sell-through rate); configures in ERP per VS-57",
+     "duration": "1–2 days/season",
+     "n": "1",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W107",
+    "W13",
+    "W181",
+    "W2390",
+    "W2397",
+    "W262",
+    "W2682",
+    "W289",
+    "W69",
+    "W833"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-421"
+   ],
+   "fields": {
+    "Frequency": "6/year; 200 stores × ~29 staff",
+    "Owner": "HR Training Manager",
+    "Participants": "HR Training Mgr, Category Mgr, Store Managers",
+    "Trigger": "Pre-season staff training",
+    "Volume": "~5,800 staff training events/year"
+   },
+   "id": "W2386",
+   "level": 2,
+   "name": "Seasonal Staff Training & Product Knowledge",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Training auto-assigned per role 2 weeks pre-launch; completion-rate auto-reported to Store Managers"
+    ],
+    "Controls": [
+     "- CTL-421 (ensure controlled execution — Seasonal Planning & Phase-In Management (PA-64.1).)",
+     "- Operational: HR Training Manager completion-rate sign-off per store"
+    ],
+    "Pain Points / Risks": [
+     "- **Just-in-time-failure risk**: the training lands too close to the season launch and staff aren't ready when customers ask; mitigated by the 2-week-pre-launch training trigger",
+     "- **Completion-gap risk**: store staff don't complete the e-learning module and the knowledge gap shows up as missed sales; mitigated by the LMS completion-tracking with Store Manager follow-up"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LMS (links to VS-19.4 / W51 training calendar & compliance tracking) — the e-learning platform and completion tracking",
+     "- Product knowledge (links to VS-124 / sales enablement, VS-137 PIM) — the seasonal product content",
+     "- Store comms (links to VS-07 / W571) — the store-meeting-guide distribution"
+    ],
+    "Time Estimate": [
+     "~1 week/season HR Training + ~30 min/staff module × ~5,800 staff = **~3,000–3,500 hours/year** HR + Store staff (staff time absorbed into store-ops)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "Category Manager provides product knowledge materials: new seasonal products, features, selling points, FAQs; HR Training distributes via e-learning platform and store meeting guides",
+     "duration": "1 week/season",
+     "n": "1",
+     "r": "Category Mgr / HR Training Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W51",
+    "W571"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-421"
+   ],
+   "fields": {
+    "Frequency": "6/year; first 2 weeks of each season",
+    "Owner": "Merchandising Planner",
+    "Participants": "Merch Planner, Category Mgr, Analytics Manager",
+    "Trigger": "First 2 weeks of seasonal selling",
+    "Volume": "200 stores × 6 seasons"
+   },
+   "id": "W2387",
+   "level": 2,
+   "name": "Seasonal Launch Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sell-through-vs-plan auto-flagged daily; slow-starter/fast-seller auto-categorized with suggested action"
+    ],
+    "Controls": [
+     "- CTL-421 (ensure controlled execution — Seasonal Planning & Phase-In Management (PA-64.1).)",
+     "- Operational: Category Manager daily-flash review sign-off during the launch window"
+    ],
+    "Pain Points / Risks": [
+     "- **False-alarm risk**: a slow first 3 days triggers a premature markdown on a SKU that was just waiting for the weekend traffic; mitigated by the 2-week observation window before action and the weekday-vs-weekend normalization",
+     "- **Reorder-too-late risk**: a fast seller is identified but the import reorder lead time (10–12 weeks) means it won't arrive in-season; mitigated by the W2388 vendor coordination for expedite/transfer options"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113, W208 retail analytics) — the daily sell-through dashboard",
+     "- Replenishment (links to VS-02 / W4, W56 backorder) — the fast-seller reorder trigger",
+     "- Markdown (links to VS-64 / W2390) — the slow-starter markdown trigger"
+    ],
+    "Time Estimate": [
+     "~30 min/day × ~10 launch days/season × 6 seasons = **~30 hours/year** Planner + system automated."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "System monitors daily sell-through: compares vs. plan; identifies slow starters (may need markdown acceleration) and fast sellers (may need reorder); daily flash report to Category Manager",
+     "duration": "30 min/day during launch",
+     "n": "1",
+     "r": "System / Merch Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W208",
+    "W2388",
+    "W2390",
+    "W4",
+    "W56"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-39",
+    "CTL-48"
+   ],
+   "fields": {
+    "Frequency": "6/year; ~50–100 seasonal vendors",
+    "Owner": "Buyer",
+    "Participants": "Buyer, Category Mgr, Vendor",
+    "Trigger": "Pre-season vendor alignment",
+    "Volume": "~50–100 vendors/season"
+   },
+   "id": "W2388",
+   "level": 2,
+   "name": "Seasonal Vendor Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Seasonal-vendor term sheet auto-assembled from the agreement master; delivery-status auto-tracked against the season-start date"
+    ],
+    "Controls": [
+     "- CTL-39: rebate/markdown-allowance accuracy; CTL-48 (rebate-dispute resolution); operational: Category Manager sign-off on seasonal vendor terms"
+    ],
+    "Pain Points / Risks": [
+     "- **Markdown-support-dispute risk**: the vendor agreed to markdown support but disputes the unsold-quantity claim at season end; mitigated by the documented return/swap agreement term and the W2394 allowance calculation",
+     "- **Delivery-slippage risk**: a seasonal vendor delivers late, missing the season window entirely; mitigated by the 6–8 week pre-season delivery target and the vendor-scorecard penalty for late seasonal delivery"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor agreement (links to VS-03 / W36 vendor onboarding, VS-39 / W27 rebate & co-op, VS-100 / W230 contracts) — the seasonal terms",
+     "- Vendor scorecard (links to VS-67 / W2458) — the vendor's seasonal-performance record",
+     "- Markdown allowance (links to VS-64 / W2394) — the markdown-support term"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks/season × 6 seasons across ~75 vendors = **~250–350 hours/year** Buyer."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Buyer confirms with vendors: delivery dates, quantities, quality standards, marketing support (co-op funds), markdown support (return/swap agreements for unsold seasonal inventory)",
+     "duration": "1–2 weeks/season",
+     "n": "1",
+     "r": "Buyer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W230",
+    "W2394",
+    "W2458",
+    "W27",
+    "W36"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-421"
+   ],
+   "fields": {
+    "Frequency": "6/year; overlap period ~2–3 weeks",
+    "Owner": "Merchandising Planner",
+    "Participants": "Merch Planner, Category Mgr, DC Ops, Store Ops",
+    "Trigger": "Transition between seasons",
+    "Volume": "~2–3 week transition per season"
+   },
+   "id": "W2389",
+   "level": 2,
+   "name": "Multi-Season Inventory Transition Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Transition-window timeline auto-generated per zone; outgoing-remainder auto-flagged for consolidation"
+    ],
+    "Controls": [
+     "- CTL-421 (ensure controlled execution — Seasonal Planning & Phase-In Management (PA-64.1).)",
+     "- operational: planogram transition currency; operational: Merchandising Planner transition-completion sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Zone-handover-collision risk**: the outgoing season's clearance event and the incoming season's setup collide in the same zone and the same week, confusing customers and overwhelming staff; mitigated by the sequenced handover (clearance completes, then teardown, then setup) within the transition window",
+     "- **Outgoing-season-remainder risk**: the outgoing season's inventory isn't fully cleared before the incoming setup, forcing it into the backroom (dead stock); mitigated by the W2393 clearance-inventory consolidation before the handover"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seasonal calendar (links to VS-29 / W306) — the season-overlap window",
+     "- Planogram transition (links to VS-55 / W2166, W264 seasonal transition) — the zone handover",
+     "- Replenishment (links to VS-02 / W4) — the outgoing→incoming replenishment switch"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks/transition × 6 transitions + DC/Store coordination absorbed = **~300–400 hours/year** Planner + coordination."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Planner manages transition: outgoing seasonal markdown (clear remaining), incoming seasonal setup (stage new display); coordinates display zone handover; adjusts replenishment from outgoing to incoming",
+     "duration": "1–2 weeks/transition",
+     "n": "1",
+     "r": "Merchandising Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2166",
+    "W2393",
+    "W264",
+    "W306",
+    "W4"
+   ]
+  }
+ ]
+}

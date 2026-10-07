@@ -1,0 +1,597 @@
+{
+ "process_area": {
+  "id": "PA-163.3",
+  "title": "Operations, Maintenance, Compliance & Network Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.3-operations-maintenance-compliance-and-network-analytics.md",
+ "value_stream": {
+  "directory": "VS-163-electric-vehicle-ev-charging-station-host-network-operations",
+  "id": "VS-163",
+  "name": "Electric Vehicle (EV) Charging Station Host Network Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-140",
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Per EVSE quarterly + continuous monitoring",
+    "Owner": "EV Program Manager / Facilities (VS-138)",
+    "Participants": "Facilities/EVSE technician, CPO/vendor (W4770), Energy (VS-108)",
+    "Trigger": "Calendar/metering interval; CSMS health alert (W4781); post-storm (VS-69)",
+    "Volume": "~all charge points across ~205 sites"
+   },
+   "id": "W4785",
+   "level": 2,
+   "name": "Preventive Maintenance, Cleaning & EVSE Health Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- CSMS health-driven PM scheduling; predictive-fault from pattern analytics; auto-fault ticketing (W4786)"
+    ],
+    "Controls": [
+     "- CTL-140 (ensure EV-charging uptime & tariff compliance.)",
+     "- CTL-721: quarterly PM per EVSE; health monitored continuously; connectors/safety devices tested; bay maintained"
+    ],
+    "Cross-references": [
+     "- links to VS-138 (facilities PM), VS-115 (metering), VS-69 (typhoon), W4781 (CSMS), W4786 (fault response), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Connector-wear risk**: Worn connectors → poor contact/safety/failed sessions; mitigated by wear inspection and replacement",
+     "- **Fault-degradation risk**: Unnoticed gradual degradation → surprise outages; mitigated by health monitoring and predictive maintenance (VS-133)",
+     "- **Storm-damage risk**: Typhoon/water damage (VS-69) → outage/safety; mitigated by post-storm inspection and weatherproofing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CSMS health/asset (W4781); facilities/PM (VS-138 W240 pattern); metering (VS-115); CPO SLA; analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~per EVSE PM 1–2 hrs; ~continuous monitoring absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager / Facilities Lead",
+     "activity": "Run the PM schedule per EVSE: connector/cable wear inspection, cooling/fan, ground-fault/RCD test, emergency-stop test, firmware/OCPP health, metering check (VS-115), signage/wayfinding condition, and the electrical-safety visual; trigger from the CSMS asset register",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Facilities / EVSE Technician"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Monitor EVSE health continuously via the CSMS (W4781): uptime, fault codes, session-success rate, connector utilization, temperature, and connectivity; auto-flag degradation (e.g., rising fault rate, connector wear) before failure; coordinate with the CPO/vendor SLA",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT / Facilities / EV Program"
+    },
+    {
+     "a": "Facilities Lead",
+     "activity": "Clean and maintain the bay: cable management, screen/camera cleaning, bay cleaning (VS-138), weatherproofing (tropical/outdoor), and post-typhoon inspection (VS-69) for water/debris damage; keep the bay safe and presentable (customer-experience VS-13)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Facilities / Store Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W240",
+    "W4770",
+    "W4781",
+    "W4786",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Per fault",
+    "Owner": "EV Program Manager / Facilities (VS-138) / IT (VS-27)",
+    "Participants": "EVSE technician, CPO/vendor, Store Ops (VS-07), IT (VS-27)",
+    "Trigger": "CSMS fault alert (W4781); customer-reported fault; session failure",
+    "Volume": "~30–80 faults/month at scale (scales with network size & utilization)"
+   },
+   "id": "W4786",
+   "level": 2,
+   "name": "Reactive Fault Triage, Field Repair & Vendor Dispatch",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- CSMS auto-fault-ticket + dispatch routing; parts-availability check; charge-test automation; root-cause analytics"
+    ],
+    "Controls": [
+     "- CTL-721 (ensure controlled execution — Operations, Maintenance, Compliance & Network Analytics (PA-163.3).)",
+     "- CTL-721: faults triaged & dispatched per SLA; safety-critical faults isolated immediately; fixes retested; root-cause fed to PM"
+    ],
+    "Cross-references": [
+     "- links to VS-138 (facilities), VS-31 (parts), VS-27 (IT), W4770 (vendor SLA), W4781 (CSMS), W4785 (PM), W4787 (safety), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Long-downtime risk**: Slow fault response → lost revenue + poor CX; mitigated by SLA + spare-parts availability",
+     "- **Safety-fault-mishandling risk**: A safety-critical fault not isolated → injury/fire (W4787); mitigated by immediate isolation protocol",
+     "- **Recurring-defect risk**: Same fault repeating across units; mitigated by root-cause → vendor escalation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CSMS fault/asset (W4781); facilities/service (VS-138); parts (VS-31); CPO SLA; analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~per fault 1 hr–2 days depending on severity/parts"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Triage the fault from CSMS data: classify (hardware/electrical/software/connectivity/payment), severity (safety-critical vs degraded), and scope (single charger vs site vs network); safety-critical faults → immediate isolation/de-energization (W4787)",
+     "duration": "Per fault",
+     "n": "1",
+     "r": "Facilities / IT / EV Program"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Dispatch repair: in-house technician for simple fixes (restart, connector, fuse, cleaning) or CPO/vendor field service under SLA (W4770); manage spare-parts (VS-31), substitute routing of drivers to adjacent chargers/sites, and the repair SLA",
+     "duration": "Per fault",
+     "n": "2",
+     "r": "Facilities / CPO / Procurement"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Restore, retest, and return to service: verify the fix end-to-end (charge test), update the asset/fault record (VS-35/W4781), feed root-cause to PM/analytics (W4785/W4792), and if a recurring manufacturer defect, escalate to vendor/warranty (W4770)",
+     "duration": "Per fault",
+     "n": "3",
+     "r": "Facilities / EV Program"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4770",
+    "W4781",
+    "W4785",
+    "W4787",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Per event (rare)",
+    "Owner": "EV Program Manager / Safety (VS-24) / Facilities (VS-138)",
+    "Participants": "Safety Officer (VS-24), BFP, Facilities, Legal (VS-100), Insurance (VS-26)",
+    "Trigger": "Safety-critical fault (W4786); fire/shock/arc incident; vehicle incident at a bay",
+    "Volume": "Rare: ~2–6 safety events/year, scaling with network size"
+   },
+   "id": "W4787",
+   "level": 2,
+   "name": "Charging-Site Safety, Emergency Response & Incident Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- CSMS auto-isolate on safety-fault; emergency-response playbook; auto-evidence preservation; fleet-wide defect detection"
+    ],
+    "Controls": [
+     "- CTL-721 (ensure controlled execution — Operations, Maintenance, Compliance & Network Analytics (PA-163.3).)",
+     "- CTL-721: safety events isolated immediately; emergency services engaged; evidence preserved; corrective action + fleet-wide if systemic"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (safety), VS-26 (insurance/claims), VS-100 (legal), VS-138 (facilities), W4781 (CSMS evidence), W4785/W4786 (PM/fault), W4791 (audit), VS-133 (improvement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Fire/shock risk**: High-voltage EVSE fire/shock → catastrophic injury/property damage; mitigated by safety design (GFCI/RCD, emergency-stop), PM (W4785), and isolation protocol",
+     "- **Evidence-loss risk**: Lost CSMS/evidence → failed investigation/claim; mitigated by immediate evidence preservation",
+     "- **Systemic-defect risk**: A defect affecting all units of a model; mitigated by fleet-wide corrective action"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Safety incident (VS-24); CSMS evidence (W4781); insurance claim (VS-26); legal (VS-100); facilities (VS-138); audit (W4791)"
+    ],
+    "Time Estimate": [
+     "- ~per event 2–8 hrs response + investigation days-weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Safety Officer / EV Program Manager",
+     "activity": "Respond to the safety event: emergency-stop/isolation/de-energization of the affected EVSE, scene safety, call emergency services (BFP fire / medical) if needed, evacuate/cordon the bay, and notify Safety (VS-24), Facilities, Legal (VS-100), and Insurance (VS-26) for serious events",
+     "duration": "Per event (urgent)",
+     "n": "1",
+     "r": "Facilities / Store Ops / Safety"
+    },
+    {
+     "a": "Safety Officer / Legal",
+     "activity": "Investigate and document: preserve the EVSE/fault data (CSMS W4781), gather statements/photos, coordinate with the EVSE vendor/CPO, and determine root cause (electrical, thermal, vehicle-side, misuse); manage any injury/property-damage claim (VS-26) and regulatory notification (BFP/DOE/DOLE per VS-24)",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Safety / Facilities / Legal / CPO"
+    },
+    {
+     "a": "Safety Officer / EV Program Manager",
+     "activity": "Remediate and prevent: corrective action on the affected EVSE and fleet-wide if systemic (e.g., firmware recall, connector model replacement), update the safety case/procedures, and feed lessons to continuous improvement (VS-133) and the audit (W4791)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Safety / Facilities / EV Program"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4781",
+    "W4785",
+    "W4786",
+    "W4791"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-140",
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic audit",
+    "Owner": "EV Program Manager / Store Ops (VS-07) / Compliance",
+    "Participants": "Store Ops (VS-07), Compliance (VS-22), CX (VS-13)",
+    "Trigger": "Site launch (W4784); accessibility audit (VS-76/VS-21); customer-assistance need",
+    "Volume": "~200–400 PWD/assisted charging customers/month across the network"
+   },
+   "id": "W4788",
+   "level": 2,
+   "name": "Accessibility, Bay Compliance & Customer-Assistance Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Accessibility-audit checklist; bay-condition monitoring; assistance-request button → store-team alert"
+    ],
+    "Controls": [
+     "- CTL-140 (ensure EV-charging uptime & tariff compliance.)",
+     "- CTL-721: PWD-accessible bays per RA 7277/BP 344; assistance available; eligible customers treated per VS-85; audited periodically"
+    ],
+    "Cross-references": [
+     "- links to VS-07 (store ops), VS-76/VS-22 (LGU/accessibility compliance), VS-13 (CX/NPS), VS-85 (mandatory discount/eligible), VS-133 (improvement), W4784 (OCM/training)"
+    ],
+    "Pain Points / Risks": [
+     "- **Accessibility-non-compliance risk**: Bays not RA 7277/BP 344 compliant → regulatory + exclusion; mitigated by accessible spec and audit",
+     "- **Assistance-gap risk**: Drivers who can't start a charge → poor CX; mitigated by store-team assistance",
+     "- **Mandatory-treatment risk**: Eligible customers (VS-85) not served correctly at the charging service; mitigated by compliance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store ops (VS-07); compliance/LGU (VS-22/VS-76); CX/NPS (VS-13); accessibility master (new); mandatory discount (VS-85)"
+    ],
+    "Time Estimate": [
+     "- ~continuous; ~periodic audit absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager / Compliance",
+     "activity": "Maintain PWD-accessible charge bays and accessibility compliance: accessible bay width/clearance, reachable connector height, accessible payment/QR, wayfinding/signage (RA 7277/BP 344, links VS-76), and assistance availability; audit periodically",
+     "duration": "Continuous + periodic",
+     "n": "1",
+     "r": "Store Ops / Compliance / Facilities"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Provide customer assistance at the bay: store-team help to start a charge (especially for PWD/senior/less-tech-savvy drivers per VS-85 mandatory-discount-eligible segments), connector/plug assistance, and troubleshooting before escalation (W4786); brief per OCM (W4784)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Store Ops / EV Program"
+    },
+    {
+     "a": "EV Program Manager / CX",
+     "activity": "Manage the accessibility customer experience and feedback: capture EV-driver accessibility feedback/NPS (VS-13), remediate barriers (VS-133), and ensure mandatory-discount/treatment-compliant service for eligible customers (VS-85) at the charging service",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CX / Store Ops / Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4784",
+    "W4786"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-140",
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Continuous + monthly",
+    "Owner": "EV Program Manager / IT (VS-27)",
+    "Participants": "CPO (W4770), IT (VS-27), Finance (VS-17), Legal (VS-100.3)",
+    "Trigger": "Continuous SLA monitoring; monthly CPO review; SLA breach",
+    "Volume": "1 network SLA across all ~205 sites (uptime target ≥ 97%)"
+   },
+   "id": "W4789",
+   "level": 2,
+   "name": "Uptime/SLA Management, Availability Reporting & Penalty Administration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- CSMS availability auto-dashboard; SLA-breach auto-penalty; live availability feed to app/roaming"
+    ],
+    "Controls": [
+     "- CTL-140 (ensure EV-charging uptime & tariff compliance.)",
+     "- CTL-721: uptime monitored vs SLA; penalties/credits administered; live availability published; performance feeds strategy"
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT), W4770 (CPO SLA), W4781 (CSMS), W4786 (repair), VS-75 (app), W4782 (roaming), W4769/W4792 (strategy/analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-underperformance risk**: Persistent CPO underperformance → poor CX + lost revenue; mitigated by penalty administration and re-compete",
+     "- **Availability-opacity risk**: Drivers not seeing live status → failed trips; mitigated by live availability publishing",
+     "- **Penalty-dispute risk**: Disputed SLA measurements; mitigated by CSMS-sourced authoritative metrics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CSMS availability (W4781); CPO SLA/governance (W4770); finance (VS-17); legal (VS-100.3); app (VS-75); analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~continuous monitoring; ~monthly review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Monitor uptime/SLA per the CPO contract (W4770) and internal targets: per-charger and network availability, session-success rate, time-to-repair (W4786), and fault frequency; track against the SLA thresholds (e.g., 97–99% availability) via the CSMS (W4781)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "IT / EV Program"
+    },
+    {
+     "a": "EV Program Manager / Legal",
+     "activity": "Administer SLA penalties/credits and vendor governance: where the CPO underperforms, apply contractual credits/penalties (W4770), manage performance improvement plans, and escalate persistent underperformance to re-compete (W4770); reconcile with Finance",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "EV Program / Finance / Legal"
+    },
+    {
+     "a": "EV Program Manager",
+     "activity": "Report availability to internal stakeholders (store ops, leadership) and publish charger availability to drivers (app VS-75 / roaming W4782) so drivers see live status; feed uptime performance to analytics (W4792) and the network-strategy review (W4769)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "IT / EV Program / App team"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4769",
+    "W4770",
+    "W4781",
+    "W4782",
+    "W4786",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-140",
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Monthly + period close",
+    "Owner": "Finance (VS-17/VS-80) / EV Program",
+    "Participants": "Finance (VS-17), Treasury (VS-18), CPO, Legal (VS-100.3)",
+    "Trigger": "Monthly settlement; financial close (VS-17); CPO revenue-share recon",
+    "Volume": "~monthly settlements across the network"
+   },
+   "id": "W4790",
+   "level": 2,
+   "name": "Host-Revenue Settlement, CPO Recon & Financial Close",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- CDR-to-GL auto-recon; revenue-recognition engine link (VS-157); variance exception dashboard (VS-118)"
+    ],
+    "Controls": [
+     "- CTL-140 (ensure EV-charging uptime & tariff compliance.)",
+     "- CTL-721: revenue reconciled to metering/sessions; PFRS 15/lease accounting applied; intercompany allocated; variances investigated"
+    ],
+    "Cross-references": [
+     "- links to VS-80 (settlement), VS-17/VS-157 (GL/revenue), VS-148 (lease), VS-18 (treasury), VS-72 (intercompany), VS-115 (metering), VS-118 (revenue assurance), W4770/W4772 (commercial), W4792 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Settlement-leakage risk**: Unreconciled CDRs/revenue-share → revenue loss (VS-118); mitigated by CDR validation and recon",
+     "- **Revenue-recognition risk**: Mis-applied PFRS 15/lease accounting (VS-157/VS-148); mitigated by Finance/Legal review",
+     "- **Cost-allocation risk**: Energy/demand-charge mis-allocated across entities (VS-72); mitigated by clear allocation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payment/settlement (VS-80); GL/revenue (VS-17/VS-157); lease accounting (VS-148); treasury (VS-18); intercompany (VS-72); metering (VS-115); CPO contract (W4770); analytics (W4792)"
+    ],
+    "Time Estimate": [
+     "- ~monthly settlement 2–4 days; ~period close absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Settle host revenue: for own-operate, reconcile charging revenue (W4783) to metering (VS-115) and bank settlement (VS-80); for host-partner, reconcile the CPO revenue-share/lease settlement per the contract (W4770/W4772); manage CDR-based roaming settlements (W4782)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Finance / Treasury / EV Program"
+    },
+    {
+     "a": "Finance Controller / CFO",
+     "activity": "Reconcile and post: match revenue to sessions/metering, allocate costs (energy W4775, demand-charge, maintenance, insurance, capex amortization) per the unit economics (W4772), recognize revenue per PFRS 15 (VS-157) or lease accounting (VS-148), and post to GL (VS-17) with correct intercompany (VS-72)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Finance / Treasury"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Manage exceptions and disputes: failed/reconciled CDRs (W4782), CPO settlement disputes, unreconciled variances (links VS-118 revenue assurance), and the period close (VS-17); feed financial performance to analytics (W4792)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance / EV Program"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4770",
+    "W4772",
+    "W4775",
+    "W4782",
+    "W4783",
+    "W4792"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-140",
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Annual + on inspection/event",
+    "Owner": "Compliance (VS-22) / Internal Audit (VS-21) / EV Program",
+    "Participants": "Internal Audit (VS-21), Compliance (VS-22), Legal (VS-100), Cyber (VS-27.3), Privacy (VS-91)",
+    "Trigger": "Annual audit cycle; regulatory inspection; incident (W4787); compliance review",
+    "Volume": "1 compliance program across the network"
+   },
+   "id": "W4791",
+   "level": 2,
+   "name": "Charging Compliance Audit — DOE/LGU/RA 11697/RA 7394 & Cyber/Privacy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Compliance-obligation calendar; audit checklist automation; cyber/privacy control monitoring (VS-27.3/VS-91)"
+    ],
+    "Controls": [
+     "- CTL-140 (ensure EV-charging uptime & tariff compliance.)",
+     "- CTL-721: DOE/electrical/LGU/RA 11697/RA 7394/PWD/metering/BIR compliance audited annually; cyber/privacy posture assured; findings CAPA-tracked"
+    ],
+    "Cross-references": [
+     "- links to VS-22 (compliance), VS-21 (audit), VS-27.3 (cyber), VS-91 (privacy), VS-161 (TPRM), VS-79 (BIR), W469/VS-151 (tariff/price-tag), VS-115 (metering), W4787 (safety incident)"
+    ],
+    "Pain Points / Risks": [
+     "- **Electrical-safety-non-compliance risk**: EVSE without valid electrical certification → safety + regulatory exposure; mitigated by inspection/audit",
+     "- **Cyber/privacy-non-compliance risk**: IoT/session-data mishandling (VS-27.3/VS-91); mitigated by cyber/privacy audit",
+     "- **Tariff-transparency risk**: Non-compliant price display (RA 7394/VS-151) → Consumer Act penalty; mitigated by tariff-display audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance/legal (VS-22/VS-100); audit (VS-21); cyber (VS-27.3); privacy (VS-91); records (VS-88); TPRM (VS-161); BIR (VS-79); DTI (W469)"
+    ],
+    "Time Estimate": [
+     "- ~annual audit 2–4 weeks; ~continuous absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Lead / EV Program Manager",
+     "activity": "Maintain and audit the compliance map: electrical (Philippine Electrical Code) inspection & certification of EVSE, LGU installation permits (W4774), RA 11697 charging-infrastructure mandates, Consumer Act (RA 7394) tariff transparency/price-tag display (W469/VS-151), PWD accessibility (RA 7277/BP 344, W4788), metering accuracy (VS-115), and BIR invoicing (VS-79)",
+     "duration": "Annual + on inspection",
+     "n": "1",
+     "r": "Compliance / Audit / EV Program"
+    },
+    {
+     "a": "Compliance Lead / CIO/DPO",
+     "activity": "Audit the cyber/privacy posture: OCPP security profile & network segmentation (VS-27.3), session/driver-data classification & consent (VS-91/VS-88), CPO/vendor TPRM (VS-161), and breach readiness; assure via Internal Audit (VS-21 W331 ITGC/W359 AI/data-ethics pattern)",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Audit / Cyber / Privacy / TPRM"
+    },
+    {
+     "a": "Compliance Lead / Legal",
+     "activity": "Manage regulator interactions and findings: DOE/LGU/BFP inspections, Consumer Act complaints (W469), audit findings & CAPA (VS-21 W333), and officer-awareness of personal liability; maintain records (VS-88) and report to the board/audit committee (VS-36)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Compliance / Legal / Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W331",
+    "W333",
+    "W359",
+    "W469",
+    "W4774",
+    "W4787",
+    "W4788"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-721"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly + annual",
+    "Owner": "EV Program Manager / Analytics (VS-28)",
+    "Participants": "Finance (VS-17.4), ESG (VS-25), Marketing (VS-14), Store Ops (VS-07)",
+    "Trigger": "Monthly/quarterly review; annual strategy/capex (W4769/W4776); ESG reporting (VS-25)",
+    "Volume": "1 group analytics view"
+   },
+   "id": "W4792",
+   "level": 2,
+   "name": "Network Analytics, Utilization & Decarbonization Impact Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- CSMS-to-analytics auto-feed; basket-uplift attribution (POS × charging-dwell); tCO₂e auto-calc; capex-reallocation recommendations"
+    ],
+    "Controls": [
+     "- CTL-721 (ensure controlled execution — Operations, Maintenance, Compliance & Network Analytics (PA-163.3).)",
+     "- CTL-721: network performance + basket-uplift + decarbonization reported; green-attribution validated; outcomes feed strategy/capex/improvement"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-25 (ESG/GHG), VS-108 (renewable attribution), VS-17.4 (FP&A), VS-08/VS-10 (basket), VS-13 (NPS), W4769/W4776 (strategy/capex), W4780 (attribution), W4789/W4790 (uptime/revenue)"
+    ],
+    "Pain Points / Risks": [
+     "- **Strategic-invisibility risk**: If basket-uplift/decarbonization not measured, the program is cut; mitigated by the KPI set",
+     "- **Green-attribution risk**: Double-counting renewable kWh in ESG; mitigated by rigorous attribution (W4780)",
+     "- **Utilization-blindspot risk**: Idle ports at some sites; mitigated by the reallocation loop"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (VS-28); CSMS data (W4781); finance/FP&A (VS-17.4); POS/basket (VS-08/VS-10); ESG/GHG (VS-25); solar (VS-108); loyalty (VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~monthly 2–3 days; ~quarterly leadership review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "EV Program Manager",
+     "activity": "Track network performance: ports live, availability/uptime (W4789), utilization (sessions/port/day, kWh), session-success, revenue/host-revenue (W4790), cost per kWh, margin, basket-uplift (POS VS-08/VS-10 attributed to charging dwell), and customer NPS (VS-13); benchmark across sites/regions",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Analytics / Finance / EV Program"
+    },
+    {
+     "a": "ESG Lead / EV Program Manager",
+     "activity": "Track decarbonization impact: kWh delivered, renewable fraction (own solar W4780), tCO₂e enabled (displaced fuel), and contribution to BuildRight's Scope 1/2/3 + customer-Scope-3 reporting (VS-25); validate the green-attribution (W4780) to avoid double-counting",
+     "duration": "Monthly/quarterly",
+     "n": "2",
+     "r": "ESG / Analytics / Energy"
+    },
+    {
+     "a": "COO",
+     "activity": "Report to leadership quarterly and feed the annual strategy/capex case (W4769/W4776): reallocate capex from under- to over-performing sites, adjust own-operate/host mix, drive continuous improvement (VS-133), and report decarbonization impact to the board/ESG stakeholders (VS-25/VS-36)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Analytics / EV Program / Strategy"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4769",
+    "W4776",
+    "W4780",
+    "W4781",
+    "W4789",
+    "W4790"
+   ]
+  }
+ ]
+}

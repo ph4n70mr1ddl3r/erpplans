@@ -1,0 +1,1978 @@
+{
+ "process_area": {
+  "id": "PA-04.1",
+  "title": "DC Inbound Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-04-dc-warehouse/PA-04.1-dc-inbound-operations.md",
+ "value_stream": {
+  "directory": "VS-04-dc-warehouse",
+  "id": "VS-04",
+  "name": "DC & Warehouse Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-09",
+    "CTL-56"
+   ],
+   "fields": {
+    "Cement & masonry": "Bag integrity (no tears, moisture damage, hardened lumps); manufacturing date check (cement shelf-life typically 3 months); weight spot-check on sampled bags | Per pallet: inspect 5 bags from top, middle, bottom | 2.5% | Reject damaged bags; accept sound bags; Buyer adjusts PO quantity",
+    "Frequency": "~6,000 goods receipts/month across all DCs; ~1,500/DC/month; ~50/day per DC",
+    "Hardware & fasteners": "Quantity count (weigh-count or piece count); rust/corrosion check; grade/size verification against PO | Per line: weigh-count verification | 4.0% | Reject if count variance > 5%; Buyer adjusts PO",
+    "Lumber & wood": "Moisture content spot-check (if meter available); warping/bowing check (visual); species/treatment verification; grade stamp verification; length/piece count | Per bundle: inspect 5 pieces from each bundle | 4.0% (visual) | Reject non-conforming pieces; accept remainder; Buyer adjusts PO quantity",
+    "Owner": "DC Receiving Supervisor",
+    "Paint & chemicals": "Manufacturing date and shelf-life capture (mandatory per shelf-life management); container integrity (dents, leaks, tamper seal); color match for tinted items; safety data sheet availability check | Per delivery: inspect 10% of cartons, minimum 2 | 1.5% (critical: leaks/tamper) | Reject entire lot if critical defect found; quarantine for Buyer review",
+    "Participants": "Receiving Clerk, Quality Checker, Putaway Staff, DC Supervisor, Buyer (if discrepancy)",
+    "Plumbing & electrical": "Visual defect check (finish, threads, connectors); brand/model verification against PO; quantity count; packaging integrity | Per line item: inspect 10% of units, minimum 2 | 2.5% | Reject non-conforming units; Buyer coordinates with vendor",
+    "Power tools & appliances": "External packaging check; serial number capture for high-value items (> PHP 10,000); physical damage check; accessory completeness vs. product spec | Per unit: 100% inspection for high-value; 10% for standard | 1.0% (high-value); 2.5% (standard) | Reject damaged units; serial-tracked items logged for warranty (W33)",
+    "Tiles & ceramics": "Visual defects (chips, cracks, glaze inconsistencies on sampled pieces); color consistency vs. reference sample; dimensional check (±1mm tolerance on length/width); PEI rating confirmation per packaging | Per lot: ≤ 100 pcs → inspect 5; 101–500 → inspect 20; 501+ → inspect 32 | 2.5% | Reject entire lot if defect rate exceeds AQL; Buyer notifies vendor",
+    "Trigger": "Vendor delivery truck arrives at DC (or container from port)",
+    "Volume": "~15 lines per receipt on average"
+   },
+   "id": "W3",
+   "level": 2,
+   "name": "Warehouse Receiving & Putaway",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Truck arrives at DC gate\" (replaces manual Step 1).",
+     "- System auto-scan of \"Scan/verify each item against PO\" (replaces manual Step 4).",
+     "- System auto-validate of \"check on sampled items\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-09 (separate purchasing from receiving.); CTL-56 (ensure barcode/GTIN master consistency.)",
+     "- operational: DC Receiving Supervisor review and approval gate"
+    ],
+    "Cross-Dock Flow (Fast-Movers — ~30% of receipts)": [
+     "For high-velocity items (A-class), steps 8–9 are skipped. Instead:",
+     "- After step 7, goods are moved directly to outbound staging area",
+     "- Allocated to pending store replenishment orders",
+     "- Loaded onto outbound trucks same day"
+    ],
+    "Pain Points / Risks": [
+     "- Quality inspection bottleneck at receiving dock: with ~50 receipts/day per DC (per the ~6,000/month DC goods-receipt canon) and category-specific AQL sampling requiring 10–20 min per receipt, the 1–2 Quality Checkers per DC are a throughput constraint during peak morning receiving hours (8–10 AM).",
+     "- Cross-dock flow dependency on pre-existing outbound orders — if the matching replenishment orders (W4) are delayed or cancelled after goods are already diverted to outbound staging, cross-docked inventory has no putaway location assigned and must be manually rerouted.",
+     "- Catch-weight measurement at yard receiving (W3B.3) for lumber and rebar is time-consuming and prone to measurement inconsistency between receiving associates; measurement disputes with vendors on quantity discrepancies delay GR posting.",
+     "- Shelf-life capture compliance varies across receiving clerks — missed manufacturing date entry for paint, adhesives, and cement means the expiry management engine lacks data, resulting in expired stock being dispatched to stores undetected.",
+     "- PO discrepancies (shortage, wrong item, damage) requiring Buyer involvement (W3.6b) create a receiving dock wait-time dependency — the truck and unloading crew are idle while the Buyer coordinates with the vendor, consuming dock door capacity."
+    ],
+    "Quality Inspection Standards (W3 Step 5 Detail)": [
+     "Quality inspection at receiving uses configurable, category-specific checklists. The system presents the Quality Checker with the appropriate checklist per SKU category on the RF device. AQL (Acceptable Quality Level) sampling is applied per ANSI Z1.4 single sampling plan, normal inspection level II, with configurable AQL per category.",
+     "| Category | Inspection Criteria | Sampling Plan | AQL | Reject Action |",
+     "|---|---|---|---|---|"
+    ],
+    "Staffing Implication": [
+     "- **Per DC (Receiving)**: 3–4 Receiving Clerks handling ~50 receipts/day in shifts (~1.5–3 hours per receipt); each clerk processes ~13–17 receipts/day. Absorbed within ~150 DC headcount.",
+     "- **Per DC (Quality Check)**: 1–2 Quality Checkers performing category-specific AQL inspections at ~10–20 min per receipt; during peak morning receiving hours (8–10 AM), 2 Quality Checkers are necessary to prevent dock congestion.",
+     "- **Per DC (Putaway)**: 4–6 Putaway Staff moving goods from receiving dock to assigned bins at ~15–30 min per receipt; cross-dock receipts (~30% of volume) bypass putaway, reducing average putaway load.",
+     "- **Per DC (Unloading Crew)**: 3–4 Unloading Crew members per shift handling physical unloading of vendor trucks and import containers at ~30–60 min per receipt.",
+     "- **DC Receiving Supervisor**: 1 per DC overseeing all inbound operations including scheduling (W3C), receiving quality, and discrepancy resolution. Absorbed within existing DC management structure.",
+     "- **Total per DC**: ~10–13 staff dedicated to receiving/putaway out of ~150 DC headcount. Reasonable.",
+     "- **No incremental headcount beyond planned DC staffing.**"
+    ],
+    "Steps": [],
+    "System Touchpoints (W3 — Warehouse Receiving & Putaway)": [
+     "- Gate check against delivery schedule / appointment log (W3.1)",
+     "- PO / Transfer Order pull-up for receiving validation (W3.2)",
+     "- Barcode/RF scanning against PO: SKU, quantity, lot/batch verification (W3.4)",
+     "- Quality inspection checklists per category on RF device with AQL sampling (W3.5)",
+     "- Discrepancy flagging and Buyer notification (W3.6)",
+     "- Damage disposition workflow: RTV initiation, scrap authorization, insurance claim capture (W3.6a–c)",
+     "- Goods Receipt posting with real-time inventory increase; perpetual WAC recalculation at each receipt: new WAC = (prior inventory value + receipt value) ÷ (prior quantity + receipt quantity) (W3.7)",
+     "- Putaway direction: zone, bin, velocity-based location suggestion (W3.8)",
+     "- Cross-dock allocation to outbound orders for fast-movers (W3 cross-dock variant, bypassing putaway)",
+     "- DC forward-pick zone replenishment: system monitors forward-pick quantities; when below minimum, generates replenishment task from reserve/bulk to forward-pick; prioritized ahead of picking waves (W3.8 post-putaway, integrated with W4 picking)",
+     "- Shelf-life / expiry date management: manufacturing date and shelf-life capture at GR for date-sensitive items; expiry date calculated per batch/lot; items below configurable remaining-shelf-life threshold flagged for priority picking or markdown; expired items blocked from dispatch (W3.4)",
+     "- Inventory ownership: all merchandise received into DCs is owned by BuildRight Depot Inc. even though DC facilities are operated by BuildRight Logistics Inc.; Logistics Inc. provides warehousing and distribution services billed monthly per W14; goods are Depot Inc. inventory throughout the DC-to-Store flow",
+     "- RTV physical logistics and tracking: Receiving Clerk stages RTV items in designated RTV holding area; system creates RTV shipment record with lifecycle tracking (Initiated → Packed → Shipped → In Transit → Vendor Received → Credit Note Issued → Settled); DC dispatch arranges carrier or vendor pickup per Buyer coordination; system tracks RTV aging by status; for store-initiated RTVs (W6.8a, W12A.8, W33.6), system creates RTV shipment record and Buyer coordinates pickup or shipment to DC for consolidation",
+     "- RTV vendor credit note SLA: system enforces configurable SLA per vendor (default 15 business days from vendor receipt to credit note); auto-escalation to Buyer if overdue; unresolved after 30 days escalated to Category Manager for W44 vendor scorecard impact; credit note SLA compliance tracked in W44; monthly AP Clerk generates RTV credit note aging report feeding into W7D reconciliation",
+     "- RTV freight cost allocation: freight cost borne by party responsible for return reason — vendor fault (vendor bears cost, deducted from credit note), buyer-initiated (BuildRight bears cost, posted to write-down), carrier damage (claimed from carrier insurance per W3.6a); system captures RTV freight cost as separate line on RTV shipment record",
+     "- DC RTV consolidation & vendor return shipment batching: DC Receiving Clerks accumulate RTV items in designated holding area organized by vendor; system maintains DC-level RTV consolidation dashboard with accumulated items, total value, and aging per vendor; weekly, Buyer reviews dashboard and schedules batch shipment per vendor — high-volume vendors when accumulated value exceeds configurable threshold (e.g., PHP 20,000), low-volume vendors held until cost-justified or consolidated with next regular vendor delivery backhaul; system generates RTV shipment manifest per vendor for advance confirmation",
+     "- Integration with W2A (auto-replenishment POs), W2B (import container receiving), W4 (outbound picking), W18 (DSD receiving), W22 (transfer order receiving), W44 (vendor scorecard — inspection pass rate, quality reject rate), W52 (carrier performance), W82 (hazardous waste disposal), W88 (RTV workflow)"
+    ],
+    "Time Estimate": [
+     "Total per receipt: ~1.5–3 hours from gate to bin (5 min gate check + 2 min PO pull-up + 30–60 min unloading + 20–40 min scanning + 10–20 min quality check + 5–15 min discrepancy handling if any + 5 min GR posting + 15–30 min putaway). Cross-dock receipts bypass putaway (steps 8–9), reducing to ~1.5–2 hours. Total daily per DC: ~50 receipts requiring ~75–150 labor-hours across shifts."
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Supervisor",
+     "activity": "Truck arrives at DC gate; guard checks delivery schedule vs. appointment log",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Guard"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Receiving Clerk pulls up expected PO or Transfer Order in system",
+     "duration": "2 min",
+     "n": "2",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Receiving Clerk",
+     "activity": "Unload truck; stage in receiving area",
+     "duration": "30–60 min",
+     "n": "3",
+     "r": "Unloading Crew (3–4)"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Scan/verify each item against PO: SKU, quantity, lot/batch (if applicable)",
+     "duration": "20–40 min",
+     "n": "4",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Quality check on sampled items (damage, correctness, expiry if applicable) per category-specific inspection checklist (see Quality Inspection Standards below)",
+     "duration": "10–20 min",
+     "n": "5",
+     "r": "Quality Checker"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "If discrepancy (shortage, damage, wrong item): flag in system; notify Buyer",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "If damaged goods: Receiving Clerk creates damage report with photos; initiates one of: (a) Return to Vendor (RTV) via Buyer, (b) scrap with DC Supervisor authorization, or (c) insurance claim for insured shipments. For insurance claims: Receiving Clerk documents damage with photos and notes on delivery receipt; Import Coordinator or DC Supervisor files claim with insurance provider within required notification window (typically 3–5 business days); system tracks claim status; upon settlement, Finance posts insurance recovery to income and reduces inventory loss",
+     "duration": "10 min",
+     "n": "6a",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Buyer reviews RTV request; coordinates with vendor for credit note or replacement shipment",
+     "duration": "15 min/occurrence",
+     "n": "6b",
+     "r": "Buyer"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "If scrap authorized: DC Supervisor approves scrap disposition; system removes inventory and posts loss to damage/scrapping account",
+     "duration": "5 min",
+     "n": "6c",
+     "r": "DC Supervisor"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Confirm Goods Receipt in system; inventory increases in real-time",
+     "duration": "5 min",
+     "n": "7",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System suggests putaway location based on zone, bin capacity, item velocity",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Putaway staff moves goods to assigned bin; scan-confirm in system",
+     "duration": "15–30 min",
+     "n": "9",
+     "r": "Putaway Staff"
+    },
+    {
+     "a": "—",
+     "activity": "Update PO/TO status; trigger vendor invoice matching (AP)",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12A",
+    "W14",
+    "W18",
+    "W22",
+    "W2A",
+    "W2B",
+    "W33",
+    "W3B",
+    "W3C",
+    "W4",
+    "W44",
+    "W52",
+    "W6",
+    "W7D",
+    "W82",
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [],
+   "fields": {
+    "Frequency": "Daily; ~10–20 yard receipts per DC/day",
+    "Owner": "DC Yard Supervisor (DC); Department Supervisor (Store)",
+    "Participants": "Receiving Clerk, Yard Staff, Stock Associate, DC Supervisor / Dept. Supervisor",
+    "Trigger": "Vendor delivery of lumber, cement, steel/rebar, or other bulky items requiring outdoor yard storage",
+    "Volume": "~30–40% of total DC inventory by volume stored in yard zones across 4 DCs and 200 store yards"
+   },
+   "id": "W3B",
+   "level": 3,
+   "name": "Yard & Outdoor Inventory Management",
+   "parent": "W3",
+   "req_refs": [],
+   "sections": {
+    "Pain Points / Risks": [
+     "- Zone-level (not bin-level) tracking reduces pick accuracy for fast-moving yard SKUs, leading to longer retrieval times and potential miscounts.",
+     "- Catch-weight items (lumber, rebar) are prone to measurement disputes between receiving and dispatch, requiring manual re-verification.",
+     "- Weather exposure causes accelerated deterioration (warped lumber, water-damaged cement bags, rusted rebar), resulting in higher shrinkage than indoor storage.",
+     "- Safety risk during yard operations — heavy loads, forklift traffic in open areas, and inadequate lighting at night increase incident probability."
+    ],
+    "Staffing Implication (Yard)": [
+     "- **Per DC**: 2–3 Yard Staff dedicated to outdoor yard receiving, staging, and inventory management; additional support from Stock Associates during peak receiving periods. Absorbed within ~150 DC headcount.",
+     "- **Per Store**: yard management is a collateral duty of Department Supervisor and Stock Associates; ~10–20 min/day for yard walkthrough and weather damage checks. Absorbed.",
+     "- **DC Yard Supervisor**: role exists at each DC; oversees yard operations in addition to indoor receiving. Absorbed within existing DC management structure."
+    ],
+    "Steps": [],
+    "System Touchpoints (Yard)": [
+     "- Zone-level location master for yard areas (not bin-level) (W3B.2)",
+     "- Catch-weight/variable-length receipt and tracking in yard zones (W3B.3)",
+     "- Weather damage reporting and disposition (W3B.6)",
+     "- Yard-to-indoor inventory transfer (W3B.7)",
+     "- Yard inventory visible in real-time alongside indoor inventory (W3B.2)"
+    ],
+    "Time Estimate": [
+     "~1.5–3 hours per yard receipt (gate-in through staging); weather damage response adds ~10 min per incident; yard-to-indoor transfers ~10 min each."
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Supervisor / Dept. Supervisor",
+     "activity": "Goods received at yard gate (separate from indoor receiving); Receiving Clerk verifies against PO/TO using handheld",
+     "duration": "20–40 min",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System records receipt into yard zone (zone-level tracking, not individual bin); inventory tracked by yard zone (e.g., Yard-A: Lumber, Yard-B: Cement/Blocks, Yard-C: Steel/Rebar)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "For catch-weight items (lumber, rebar): associate measures and records actual length/piece count at receipt; system calculates quantity in board feet / linear meters / pieces",
+     "duration": "10–20 min",
+     "n": "3",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Goods staged in designated yard zone; organized by SKU type and length/size for easy retrieval",
+     "duration": "15–30 min",
+     "n": "4",
+     "r": "Yard Staff"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Physical counting: yard items counted by zone during cycle counts (W6) and annual physical inventory (W42); counted by piece/bundle rather than individual bin scan",
+     "duration": "Per W6/W42",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "DC Supervisor / Dept. Supervisor",
+     "activity": "Weather damage discovered during daily yard walkthrough: Stock Associate reports damage (warped lumber, water-damaged cement, rusted rebar); DC Supervisor/Dept. Supervisor approves disposition (markdown, scrap, RTV, insurance claim) per W3.6a process",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Yard-to-sales-floor movement: when yard stock is needed indoors (e.g., small lumber pieces moved to indoor display), Stock Associate transfers items in system from yard zone to indoor location",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Stock Associate"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3",
+    "W42",
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [],
+   "fields": {
+    "Frequency": "Daily; ~50 receipts/day per DC (~200/day chain-wide per the canon)",
+    "Owner": "DC Receiving Supervisor",
+    "Participants": "Buyer, Import Coordinator, DC Receiving Supervisor, DC Dispatch, Vendor/Carrier",
+    "Trigger": "Purchase order confirmed with vendor or import shipment ETA confirmed",
+    "Volume": "~1,200 merchandise receipts/month + ~80–240 blanket releases + ~20–30 import containers + ~30–50 non-merchandise receipts per DC per month"
+   },
+   "id": "W3C",
+   "level": 3,
+   "name": "DC Inbound Delivery Scheduling",
+   "parent": "W3",
+   "req_refs": [],
+   "sections": {
+    "Pain Points / Risks (W3C — DC Inbound Delivery Scheduling)": [
+     "- Unscheduled vendor arrivals (step 5) consume dock door capacity and receiving staff time that was allocated to scheduled appointments; during peak morning hours, even 2–3 unscheduled deliveries can cascade delays across the entire receiving schedule for the day.",
+     "- Import container appointment booking (step 4) depends on port release timing, which is unpredictable and subject to Customs inspection holds; last-minute container releases create scheduling chaos when dock doors are already fully booked for domestic vendor appointments.",
+     "- Vendor appointment no-show rate of 10–15% (based on Philippine vendor logistics patterns) wastes reserved dock door capacity; with ~40 appointments/day per DC, 4–6 no-shows represent significant lost receiving capacity that cannot be reallocated in real-time.",
+     "- Appointment compliance data feeding vendor scorecard (W44) lacks teeth — underperforming vendors face no financial penalty for late or missed appointments, reducing the incentive to comply with delivery windows.",
+     "- Monthly appointment compliance review (step 7) is backward-looking; there is no real-time rescheduling mechanism when a morning appointment is cancelled, leaving the dock door idle for the remainder of the time slot."
+    ],
+    "Staffing Implication": [
+     "- Per DC: 3–4 Receiving Clerks (handling ~50 receipts/day in shifts, ~1.5–3 hrs each)",
+     "- Per DC: 4–6 Putaway Staff (handling putaway flow across zones)",
+     "- Per DC: 1–2 Quality Checkers",
+     "- Per DC: 1 Receiving Supervisor overseeing all inbound",
+     "- Total per DC: ~10–13 dedicated to receiving/putaway out of ~150 headcount. Reasonable.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints (DC Scheduling)": [
+     "- Inbound delivery forecast from open PO data with dock door requirements (W3C.1)",
+     "- Delivery appointment booking with vendor confirmation tracking (W3C.3–4)",
+     "- Dock door utilization dashboard with real-time capacity visibility (W3C.6)",
+     "- Appointment compliance reporting feeding vendor scorecard (W3C.7)",
+     "- Unscheduled delivery handling with PO validation at gate (W3C.5)",
+     "- Integration with W3 (DC receiving — appointments feed step 1 guard check), W2A (auto-replenishment POs generate appointments), W2B (import container appointments), W18B (DSD scheduling — store equivalent), W44 (vendor scorecard — appointment compliance), W52 (carrier performance)"
+    ],
+    "Time Estimate (W3C — DC Inbound Delivery Scheduling)": [
+     "Daily scheduling review (step 2): 15 min/day. Appointment booking per PO (step 3): 5 min/PO. Import container booking (step 4): 10 min/container. Dock door utilization dashboard monitoring: continuous (embedded in receiving operations). Monthly compliance review (step 7): 30 min/month. Total: ~2–3 hours/month for DC Receiving Supervisor scheduling duties."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System generates inbound delivery forecast from open POs: PO number, vendor, expected delivery date (from PO promised date or import ETA), number of lines, estimated pallet/cube count, and dock door requirements (refrigerated none; hazardous materials for paint/chemicals; standard for general merchandise)",
+     "duration": "Automated (nightly)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "DC Receiving Supervisor reviews next 3-day inbound forecast each morning; identifies days with high receiving volume (> 50 receipts) or overlapping large deliveries; adjusts dock door assignments and staff scheduling",
+     "duration": "15 min/day",
+     "n": "2",
+     "r": "DC Receiving Supervisor"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "For domestic vendor deliveries: Buyer or system transmits delivery appointment to vendor with requested delivery date and time window (typically 8:00 AM – 4:00 PM, 2-hour windows); vendor confirms or proposes alternative; system logs appointment confirmation",
+     "duration": "5 min/PO",
+     "n": "3",
+     "r": "Buyer / System"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "For import containers: Import Coordinator books delivery appointment with DC once container is released from port; provides container number, commodity, estimated weight, and special handling requirements; DC Receiving Supervisor confirms appointment and assigns dock door",
+     "duration": "10 min/container",
+     "n": "4",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "If vendor arrives without appointment: guard checks against open PO list; if valid PO exists, Receiving Supervisor accepts on a space-available basis (may result in extended wait time); if no valid PO, guard turns delivery away with Buyer notification",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Guard / DC Receiving Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System maintains dock door utilization dashboard per DC: shows scheduled appointments, completed receipts, and available capacity by time slot; Receiving Supervisor uses dashboard to optimize dock assignments and avoid congestion",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Monthly: DC Receiving Supervisor reviews appointment compliance report — vendor on-time arrival %, no-show rate, unscheduled delivery rate; feeds into vendor scorecard (W44) and carrier performance review (W52)",
+     "duration": "30 min/month",
+     "n": "7",
+     "r": "DC Receiving Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W18B",
+    "W2A",
+    "W2B",
+    "W3",
+    "W44",
+    "W52"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "~200–400 kit assemblies/month across DCs; primarily tool sets, bathroom combo kits, paint starter kits",
+    "Owner": "DC Supervisor",
+    "Participants": "Merchandise Planner (BOM setup), DC Assembly Staff, DC Supervisor",
+    "Trigger": "Kit demand (auto-assembly) or planned batch assembly schedule",
+    "Volume": "~50–100 active kit SKUs"
+   },
+   "id": "W46",
+   "level": 2,
+   "name": "Kit / Bundle Assembly & Disassembly",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates assembly order when kit is ordered\" (replaces manual Step 2).",
+     "- System auto-validate of \"checks component availability at DC\" (replaces manual Step 3).",
+     "- System auto-alert of \"alerts Buyer for expedited replenishment or suggests substitution\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: DC Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Component availability for kit assembly is volatile — when a single component in a multi-SKU kit is out of stock, the entire assembly order is blocked; this is especially problematic for promotional kits (W57) where all components must be available simultaneously for pre-positioning.",
+     "- Kit disassembly (step 9) to reclaim components for individual sale is a manual exception process with no standard frequency trigger — DC Supervisors often defer disassembly decisions until the kit is already aged, recovering less component value than if disassembled earlier.",
+     "- Kit cost calculation (sum of component WAC at assembly time) creates margin distortion when component costs fluctuate — a kit assembled during a price spike records higher cost than one assembled during normal pricing, even if sold at the same retail price.",
+     "- Assembly labor scheduling conflicts with outbound picking waves (W4) — DC Assembly Staff are typically drawn from the general DC labor pool, and picking demand always takes priority over kit assembly, causing assembly backlogs.",
+     "- Kit BOM maintenance burden: with ~50–100 active kit SKUs, Merchandise Planners must update BOMs whenever component SKUs change (vendor substitution, discontinuation), but BOM updates are often delayed, leading to assembly orders with obsolete component references."
+    ],
+    "Staffing Implication": [
+     "- **DC Assembly Staff**: ~200–400 assemblies/month × 20 min average = ~70–130 hours/month. With 4 DCs, that's ~18–33 hours/DC/month. Absorbed by existing DC staff (within ~150/DC) as a scheduled weekly activity.",
+     "- **Merchandise Planner**: ~50–100 active kits × initial setup + occasional BOM updates = ~4–6 hours/month. Absorbed.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Kit BOM definition in item master with component quantities (W46.1)",
+     "- Assembly order auto-generation triggered by demand or planned schedule (W46.2–3)",
+     "- Component availability check and reservation against assembly order (W46.3)",
+     "- Component consumption and kit creation with automatic costing (W46.5–7)",
+     "- Kit disassembly with component restoration (W46.9)",
+     "- Kit inventory tracked separately from components; kit excluded from ROP/replenishment (assembled on demand)"
+    ],
+    "Time Estimate": [
+     "Kit BOM setup (step 1): 15 min/kit. Assembly order creation (steps 2–3): automated. Component picking (step 5): 10–30 min/kit. Assembly and labeling (step 6): 5–15 min/kit. System posting (step 7): automated. Kit putaway (step 8): 5 min/kit. Disassembly (step 9): 10 min/kit. Total: ~30–60 min per kit from assembly order to finished goods putaway. Monthly DC time: ~18–33 hours/DC for ~50–100 assemblies (~200–400/month chain-wide ÷ 4 DCs)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Merchandise Planner defines kit Bill of Materials (BOM) in item master: kit SKU + component SKUs with quantities per unit; kit item type = 'Kit / Bundle'",
+     "duration": "15 min/kit",
+     "n": "1",
+     "r": "Merchandise Planner"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Assembly triggered by: (a) demand-driven — system auto-generates assembly order when kit is ordered (ecommerce) or picked (store replenishment) but insufficient kit stock exists, or (b) planned batch — DC Supervisor schedules weekly assembly of popular kits based on forecast",
+     "duration": "5 min",
+     "n": "2",
+     "r": "System / DC Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "System creates assembly order: lists required component quantities; checks component availability at DC; reserves components against assembly order",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "If component shortage: DC Supervisor alerts Buyer for expedited replenishment or suggests substitution (with Merchandise Planner approval)",
+     "duration": "10 min",
+     "n": "4",
+     "r": "DC Supervisor"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Assembly Staff picks components from DC bins per assembly order; scan-confirms each component",
+     "duration": "10–30 min/kit",
+     "n": "5",
+     "r": "Assembly Staff"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Assembly Staff assembles kit (physical packaging, labeling, shrink-wrap); applies kit barcode label",
+     "duration": "5–15 min/kit",
+     "n": "6",
+     "r": "Assembly Staff"
+    },
+    {
+     "a": "—",
+     "activity": "System consumes component inventory (decreases) and creates kit inventory (increases); kit cost = sum of component WAC at time of assembly",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Kit received into finished goods storage location in DC; available for picking and shipping",
+     "duration": "5 min",
+     "n": "8",
+     "r": "Assembly Staff"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Kit disassembly (if components needed individually): DC Supervisor initiates disassembly order; system reverses process — consumes kit inventory, restores component inventory at original component WAC; disassembly labor posted to overhead",
+     "duration": "10 min",
+     "n": "9",
+     "r": "DC Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4",
+    "W57"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "Continuous; daily operations + periodic scheduled maintenance",
+    "Owner": "Fleet Manager (within Supply Chain team)",
+    "Participants": "Fleet Manager, Drivers, DC Dispatch, Finance, External carriers",
+    "Trigger": "Vehicle registration renewal, scheduled maintenance, fuel purchase, driver assignment, route planning review",
+    "Volume": "~30–40 owned vehicles (20% of total fleet); remainder 80% third-party (Lalamove, Transportify, contracted carriers)"
+   },
+   "id": "W52",
+   "level": 2,
+   "name": "Fleet Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route schedule, driver qualifications\" (replaces manual Step 1).",
+     "- System auto-record of \"records in system via mobile app\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews fuel consumption per vehicle monthly\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's distribution fleet operates with a mixed model: ~20% owned vehicles (primarily 10-wheeler wing vans and 6-wheeler trucks for regular DC-to-store routes) and ~80% third-party carriers (for seasonal surge, inter-island routes, last-mile ecommerce delivery via Lalamove/Transportify). Owned vehicles are registered under BuildRight Logistics Inc. Third-party carrier management for ecommerce is covered in W19 (3PL management) and for general distribution in W4 (outbound logistics)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: Fleet Manager (within Supply Chain team) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Mixed fleet model (20% owned, 80% third-party) creates accountability gaps — 3PL carrier performance issues (late delivery, damage) are harder to enforce than with owned vehicles, and 3PL cost escalation during peak construction season (Q4) can be 30–50% above contracted rates.",
+     "- Pre-trip inspection compliance (step 2) is inconsistent across regions — Davao and Cebu drivers are less consistent than Manila/Laguna drivers in completing the mobile app checklist, leading to unreported vehicle defects that surface as roadside breakdowns.",
+     "- Fuel card fraud risk: drivers may fuel personal vehicles or collude with fuel station attendants to inflate fuel volume; the km/L benchmark review (step 3) catches anomalies only in monthly review, creating a 30-day detection lag.",
+     "- Vehicle registration and insurance expiry blocking (step 7) can remove vehicles from service with short notice if the Fleet Manager misses the 60-day alert — during peak periods, losing even one owned vehicle to an expired registration shifts significant volume to more expensive 3PL alternatives.",
+     "- Route performance review (step 8) data quality depends on GPS/telematics coverage; owned vehicles have full GPS but 3PL carriers provide only delivery confirmation (no real-time tracking), creating blind spots in the 80% of fleet operations that are third-party."
+    ],
+    "Staffing Implication": [
+     "- **1 Fleet Manager** (within Supply Chain team): manages owned fleet (30–40 vehicles) and third-party carrier relationships. This role reports to Supply Chain Manager and coordinates daily with DC Dispatch.",
+     "- **30–40 Drivers** (BuildRight Logistics Inc. employees): assigned to owned vehicles; each driver covers ~1–2 routes/day, 5–6 days/week. Drivers are part of Logistics Inc. headcount (~600 total DC staff includes drivers).",
+     "- **Approved workshops**: 2–3 workshops per region (Davao, Cebu, Laguna, Clark) for scheduled and unscheduled maintenance. Fleet Manager manages workshop relationships and rate negotiations.",
+     "- **Fuel card program**: corporate fuel card (e.g., Petron Value Card, Shell Fleet Card) for all owned vehicles. Eliminates cash handling for fuel and enables automated consumption tracking.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vehicle master record: plate number, VIN, model, year, capacity, assigned DC, registration expiry, insurance expiry, assigned driver (W52.1)",
+     "- Pre-trip inspection checklist on mobile app with defect reporting and dispatch block for critical failures (W52.2)",
+     "- Fuel card integration: automated fuel transaction capture with per-vehicle km/L tracking and anomaly alerting (W52.3)",
+     "- Maintenance scheduling with automated alerts per vehicle based on km or calendar interval (W52.4)",
+     "- Maintenance history tracking with cost per vehicle and cost per km (W52.6, 8)",
+     "- Registration and insurance calendar with expiry alerting and dispatch blocking (W52.7)",
+     "- Route and delivery performance tracking per vehicle (W52.8)",
+     "- Integration with W4 (route scheduling), W19 (3PL management), W21 (vehicle replacement capex), W39 (vehicle disposal), W30 (fuel expense GL posting)"
+    ],
+    "Time Estimate": [
+     "Driver assignment (step 1): 30 min/week. Daily pre-trip inspections (step 2): 15 min/vehicle/day. Fuel management (step 3): 5 min/refuel + 1 hour/month review. Scheduled maintenance coordination (step 4): varies by event. Unscheduled repair (step 5): 30 min/occurrence. Registration/insurance (step 7): 30 min/vehicle/year. Route performance review (step 8): 2 hours/month. Vehicle replacement planning (step 10): 4 hours/year."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Chain Manager",
+     "activity": "**Driver assignment**: Fleet Manager assigns drivers to owned vehicles based on route schedule, driver qualifications (LTO license type — professional driver's license with restriction codes for heavy vehicles), and duty hour limits",
+     "duration": "30 min/week",
+     "n": "1",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**Daily pre-trip inspection**: Driver conducts vehicle inspection checklist (tires, brakes, lights, fluid levels, cargo area, safety equipment) before departure; records in system via mobile app; vehicle not cleared for dispatch if critical items fail",
+     "duration": "15 min/vehicle/day",
+     "n": "2",
+     "r": "Driver"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "**Fuel management**: Driver refuels at designated fuel stations using company fuel card; system captures fuel volume, odometer reading, and cost per transaction; Fleet Manager reviews fuel consumption per vehicle monthly (km/L benchmark per vehicle type; flags vehicles > 15% below benchmark for maintenance investigation)",
+     "duration": "5 min/refuel + 1 hour/month review",
+     "n": "3",
+     "r": "Driver / Fleet Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Scheduled maintenance**: Fleet Manager maintains maintenance calendar per vehicle based on manufacturer intervals (typically every 5,000–10,000 km or 3–6 months): (a) oil change and basic service, (b) tire rotation and replacement, (c) brake inspection, (d) annual comprehensive service; system alerts Fleet Manager 1 week before service due",
+     "duration": "Per schedule",
+     "n": "4",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Unscheduled repair**: Driver reports vehicle issue; Fleet Manager assesses severity: (a) minor — schedule repair at next available slot, substitute 3PL for pending deliveries, (b) major — vehicle taken out of service, substitute vehicle or 3PL arranged",
+     "duration": "30 min/occurrence",
+     "n": "5",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Maintenance or repair executed at company-approved workshop per region; Fleet Manager approves work order and cost; system tracks maintenance history per vehicle",
+     "duration": "Varies",
+     "n": "6",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Vehicle registration & insurance**: Fleet Manager maintains calendar for LTO registration renewal (annual per vehicle), CTPL insurance renewal, and comprehensive insurance; system alerts 60 days before expiry; vehicles with expired registration blocked from dispatch",
+     "duration": "30 min/vehicle/year",
+     "n": "7",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "**Route performance review**: monthly, Fleet Manager reviews route metrics per vehicle: km driven, fuel efficiency, delivery punctuality (on-time % per W4 SLA), maintenance cost per km; identifies vehicles with declining performance for maintenance escalation or replacement planning",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "**3PL carrier performance**: Fleet Manager monitors third-party carrier performance per W19 (on-time delivery, damage rate, cost per delivery) in coordination with DC Dispatch; quarterly carrier review per W44 vendor scorecard methodology",
+     "duration": "Per W19/W44",
+     "n": "9",
+     "r": "Fleet Manager / DC Dispatch"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "**Vehicle replacement planning**: annually, Fleet Manager evaluates vehicles > 5 years or > 300,000 km for replacement; submits capex request per W21; considers total cost of ownership (maintenance cost trajectory, fuel efficiency decline, reliability) vs. new vehicle cost plus financing",
+     "duration": "Annual (4 hours)",
+     "n": "10",
+     "r": "Fleet Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W19",
+    "W21",
+    "W30",
+    "W39",
+    "W4",
+    "W44"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "~10–15 inter-island shipments/month (supplementing ~30–40 inter-DC transfers/month in W22); additional ad-hoc shipments during peak season and disaster response (W49)",
+    "Owner": "Import Coordinator / Fleet Manager",
+    "Participants": "Import Coordinator, Fleet Manager, DC Supervisor, Supply Planner, carrier (ro-ro or cargo vessel), Customs (if applicable)",
+    "Trigger": "Inter-DC transfer (W22) between islands (e.g., DC3 Luzon → DC2 Visayas, DC1 Mindanao → DC2 Visayas), or direct-to-store delivery to island locations not served by a DC on the same island",
+    "Volume": "Typically 1–5 TEU containers per shipment; some loose cargo (LCL) for smaller transfers"
+   },
+   "id": "W66",
+   "level": 2,
+   "name": "Inter-Island Logistics & Freight Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"Import Coordinator or Fleet Manager selects inter-island carrier and\" (replaces manual Step 2).",
+     "- System auto-create of \"creates Transfer Order per W22\" (replaces manual Step 3).",
+     "- System auto-import of \"Import Coordinator books shipment with carrier\" (replaces manual Step 5)."
+    ],
+    "Background": [
+     "BuildRight's 4-DC footprint spans the Philippine archipelago: DC1 Davao (Mindanao), DC2 Cebu (Visayas), DC3 Laguna (South Luzon and NCR), and DC4 Clark (North/Central Luzon). Inter-DC transfers between islands require sea transport via roll-on/roll-off (ro-ro) ferries or containerized cargo vessels. Lead times are 3–7 days longer than same-island transfers. Cost per TEU for inter-island shipping: ~PHP 20,000–50,000 depending on route and carrier."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: Import Coordinator / Fleet Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Typhoon season (June–November) disrupts ro-ro ferry schedules unpredictably — a single typhoon can delay inter-island shipments by 3–7 days, during which in-transit inventory is unavailable to any demand channel; with PHP 20,000–50,000/TEU of inventory in transit, the working capital impact is significant.",
+     "- Inter-island freight cost allocation (step 8) adds to transferred inventory cost, potentially making items uncompetitive at the destination DC's store pricing; the cost allocation decision (absorb vs. pass through) is contentious between Supply Chain and Merchandising.",
+     "- Ro-ro ferry booking availability during peak construction season (Q4) is limited — BuildRight competes with general cargo and passenger ferries for space, and late booking can mean waiting 2–3 days for the next available sailing.",
+     "- Container seal integrity during inter-island transit is a persistent concern — rough seas and multiple handling points (truck to vessel to truck) increase damage rates compared to same-island transfers; insurance claims (W59) for inter-island damage are more complex and slower to settle.",
+     "- Limited visibility into carrier performance for inter-island routes compared to domestic road freight — fewer tracking touchpoints and longer transit times create extended blind spots on the in-transit dashboard."
+    ],
+    "Staffing Implication": [
+     "- **Import Coordinator**: absorbs inter-island coordination as an extension of existing import logistics duties. ~10–15 shipments/month × ~2 hours each = ~20–30 hours/month. Manageable given the Import Coordinator's existing workload managing ~20–30 import POs/month (W2B), as inter-island shipments use similar logistics skills.",
+     "- **Fleet Manager**: coordinates owned vehicle ro-ro transport when applicable. Absorbed.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inter-island transfer order with extended lead time and transport mode flag (W66.3)",
+     "- Carrier booking integration or manual booking reference capture (W66.5)",
+     "- In-transit tracking with ETA updates (W66.6)",
+     "- Freight cost allocation to transferred inventory (W66.8)",
+     "- Inter-island logistics cost and performance reporting by route and carrier (W66.9)",
+     "- Integration with W22 (inter-DC transfers — this is the inter-island variant), W2B (import logistics — similar carrier booking process), W49 (typhoon season — ferry disruptions), W52 (fleet — owned vehicles on ro-ro), W59 (cargo insurance)"
+    ],
+    "Time Estimate": [
+     "Carrier and route selection (step 2): 1–2 hours/shipment. Transfer order creation (step 3): per W22 standard. Shipment booking (step 5): 30 min/shipment. Daily in-transit monitoring (step 6): 15 min/day per active shipment. Destination receiving (step 7): per W22 standard. Monthly cost review (step 9): 1 hour/month. Total planning and coordination: ~20–30 hours/month for Import Coordinator across ~10–15 shipments."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Planning Manager",
+     "activity": "Supply Planner identifies need for inter-island transfer (W22) when demand at a DC cannot be met from same-island supply and vendor PO lead time is too long; or when seasonal inventory rebalancing requires inter-island movement",
+     "duration": "Per W22",
+     "n": "1",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "Import Coordinator or Fleet Manager selects inter-island carrier and route: (a) **ro-ro ferry** — for truck-loaded cargo; vehicle driven onto ferry; 12–36 hours transit; routes: Manila→Cebu, Cebu→Davao, Manila→Davao (via Matnog); (b) **container vessel** — for containerized cargo; 3–7 days transit depending on route and vessel schedule; (c) **LCL consolidator** — for small transfers that don't fill a container",
+     "duration": "1–2 hours/shipment",
+     "n": "2",
+     "r": "Import Coordinator / Fleet Manager"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "System creates Transfer Order per W22 with \"Inter-Island\" transport mode flag; extended lead time applied (3–7 days vs. 1–3 days for same-island); in-transit insurance coverage confirmed per W59 (cargo/in-transit policy)",
+     "duration": "Per W22",
+     "n": "3",
+     "r": "Supply Planner"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Source DC picks and loads goods; for container shipments: DC packs into container and seals; for ro-ro: goods loaded on owned or 3PL truck",
+     "duration": "Per W3/W4",
+     "n": "4",
+     "r": "DC Team"
+    },
+    {
+     "a": "Fleet Manager",
+     "activity": "Import Coordinator books shipment with carrier; provides container number or truck plate number, commodity description, and destination DC; receives booking confirmation and estimated arrival date",
+     "duration": "30 min/shipment",
+     "n": "5",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "In-transit tracking: Import Coordinator monitors shipment status via carrier tracking or direct communication; updates system ETA; for ro-ro: monitors ferry schedule (weather delays common during typhoon season — W49)",
+     "duration": "15 min/day per shipment",
+     "n": "6",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Goods arrive at destination port/DC; destination DC receives and processes Goods Receipt per W22 step 7; system records inter-island freight cost allocation to transferred inventory",
+     "duration": "Per W22",
+     "n": "7",
+     "r": "Receiving Clerk (DC)"
+    },
+    {
+     "a": "Finance",
+     "activity": "System allocates inter-island freight cost to transferred items: freight cost ÷ total transferred value × per-item value added to destination inventory cost (similar to landed cost allocation in W2B.12 but for domestic inter-island movement)",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "Monthly: Import Coordinator and Fleet Manager review inter-island logistics cost and performance: cost per TEU by route, on-time delivery %, damage rate, carrier comparison; recommends route or carrier optimization",
+     "duration": "1 hour/month",
+     "n": "9",
+     "r": "Import Coordinator / Fleet Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W22",
+    "W2B",
+    "W3",
+    "W4",
+    "W49",
+    "W52",
+    "W59"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "Daily at Distribution Centers",
+    "Owner": "DC Operations Manager",
+    "Participants": "Receiving Clerk, Cross-Dock Coordinator, Forklift Operator, Shipping Clerk",
+    "Trigger": "Advance Shipping Notice (ASN) or incoming import container contains fast-moving bulk items (cement, steel rebar, standard tiles) with active store replenishment demands or backorders",
+    "Volume": "~10–20 container-loads cross-docked per day"
+   },
+   "id": "W221",
+   "level": 2,
+   "name": "Cross-Docking Operations for Fast-Moving Bulky Items",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"assigns inbound container to a receiving dock\" (replaces manual Step 2).",
+     "- System auto-scan of \"scan-confirms receipt via WMS terminal\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Pre-allocation matching accuracy depends on clean ASN data from vendors; incomplete or delayed ASNs force manual cross-dock decisions, increasing error risk and staging time.",
+     "- Dock door congestion when multiple cross-dock containers arrive simultaneously — limited adjacent receiving/dispatch doors create bottlenecks during peak morning hours.",
+     "- Misrouted pallets (cross-dock items accidentally put away into bulk storage) break the fulfillment chain and cause store delivery shortfalls that are difficult to trace.",
+     "- High coordination overhead between Receiving, Cross-Dock Coordinator, and Outbound Dispatch; any communication gap delays the time-sensitive cross-dock window.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Cross-Dock Coordinator**: 1 per DC (within existing DC staff), dedicated to cross-dock assignments, routing, and staging coordination. Spends ~60–90 min/day on cross-dock activities. Absorbed within existing DC operations team.",
+     "- **Forklift Operators**: existing DC forklift operators handle cross-dock pallet movement as part of their standard duties; no incremental operators required.",
+     "- **Receiving Clerk**: cross-dock scanning adds ~5 min/pallet to existing receiving workload; with ~10–20 containers/day and cross-dock applicable to ~30% of receipts, this is ~15–30 min/day additional. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS pre-allocation engine (ASN cross-reference with store demand)",
+     "- Cross-dock staging zone barcode/RFID scanning",
+     "- Putaway bypass logic and real-time destination tag printing",
+     "- Integration with W4 (store replenishment), W106 (outbound dispatch), and W56 (backorders)"
+    ],
+    "Time Estimate": [
+     "~45–90 min per container from gate-in to outbound staging (bypasses normal putaway); cross-dock coordinator spends ~60–90 min/day on dock assignments and routing. Total dock-to-truck cycle: 2–4 hours for a fully matched container."
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Mgr",
+     "activity": "**Pre-Allocation Matching**: System evaluates incoming container ASN against active store replenishment orders (W4) and customer backorders (W56); identifies high-matching fast-moving SKUs suitable for cross-docking",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Dock Assignment**: Cross-Dock Coordinator assigns inbound container to a receiving dock adjacent to outbound store dispatch doors",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Cross-Dock Coord"
+    },
+    {
+     "a": "Receiving Supervisor",
+     "activity": "**Unloading & Direct Scan**: Forklift Operator unloads pallets; scan-confirms receipt via WMS terminal; system detects pre-allocation and flags pallet for \"Direct Cross-Dock Staging\" (bypassing normal bulk putaway racks)",
+     "duration": "15 min/pallet",
+     "n": "3",
+     "r": "Forklift Operator"
+    },
+    {
+     "a": "—",
+     "activity": "**Sorting & Routing**: Receiving Clerk scan-confirms pallet; system generates store-specific routing labels and prints destination tags; Forklift Operator moves pallets directly to the designated outbound lane",
+     "duration": "5 min/pallet",
+     "n": "4",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Load Integration**: System automatically merges cross-docked pallets into the active outbound DC load planning schedule (W106) for store deliveries",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "DC Operations Mgr",
+     "activity": "**Outbound Loading**: Forklift Operator loads the pallets directly onto the designated store delivery truck; scan-confirms loading; Shipping Clerk generates Outbound Transfer document",
+     "duration": "10 min/pallet",
+     "n": "6",
+     "r": "Forklift Operator / Shipping Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W106",
+    "W4",
+    "W56"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "20–50 container movements per day",
+    "Owner": "Yard Superintendent",
+    "Participants": "Gate Guard, Yard Coordinator, Reach Stacker Operator, Dispatcher, 3PL Truck Driver",
+    "Trigger": "Import container arrives at DC gate, or empty container requires scheduling for port return",
+    "Volume": "200-slot yard capacity"
+   },
+   "id": "W222",
+   "level": 2,
+   "name": "DC Container Yard & Chassis Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan-registers container number in Yard Management System\" (replaces manual Step 1).",
+     "- System auto-assign of \"Yard Slot Assignment\" (replaces manual Step 2).",
+     "- System auto-update of \"update the real-time yard map\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Demurrage and detention costs escalate rapidly (PHP 2,000–5,000/day per container) when stripping is delayed due to dock congestion or labor shortages; with 20–50 containers/day, even one day of delay across a batch can cost PHP 100K+.",
+     "- Limited 200-slot yard capacity becomes a binding constraint during peak import seasons (Q4 construction peak), forcing costly off-site container storage.",
+     "- Chassis availability from carriers is unpredictable — containers cannot be moved from yard to dock without a chassis, creating deadlock situations when carriers fail to deliver on schedule.",
+     "- Manual seal verification and physical condition inspection at gate-in are error-prone; missed damage or broken seals discovered at stripping leads to vendor disputes and insurance claim complications.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Yard Superintendent**: 1 per DC with significant container yard operations (primarily DC3 Laguna with port proximity); manages yard team and coordinates with Import Logistics. Absorbed within existing DC management structure.",
+     "- **Yard Coordinator**: 1 per DC; handles slot assignment, stripping scheduling, and container movement coordination. Spends ~4–6 hours/day on yard coordination for 20–50 container movements. Absorbed within existing DC staff.",
+     "- **Gate Guard**: existing gate guard handles container gate-in/gate-out registration as part of standard access control duties; adds ~10 min per container movement. Absorbed.",
+     "- **Reach Stacker Operator**: 1–2 per DC; dedicated equipment operator for container stacking and dock movement. Absorbed within existing DC equipment operations team.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Yard Management System (YMS) visual slot coordinate mapping",
+     "- Gate-In / Gate-Out timestamp and seal-verification log",
+     "- Carrier demurrage & detention countdown timers with email alert engine",
+     "- Integration with W3 (warehouse receiving) and W144 (import operations)"
+    ],
+    "Time Estimate": [
+     "Gate-in to stacking: ~15 min per container; stripping scheduling: ~20 min per container; empty gate-out: ~10 min per container. Yard Superintendent spends ~1–2 hours/day coordinating movements across 20–50 containers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Yard Superintendent",
+     "activity": "**Gate-In Registration**: Gate Guard inspects seal integrity, container physical state, and chassis lease records; scan-registers container number in Yard Management System (YMS); records gate-in timestamp",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Gate Guard"
+    },
+    {
+     "a": "—",
+     "activity": "**Yard Slot Assignment**: YMS automatically assigns slot coordinates (grid lane, stack height) based on container status (Full Import, Empty Return, Hazmat quarantine) and priority",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Yard Coordinator",
+     "activity": "**Physical Stacking**: Reach Stacker Operator picks container from truck chassis; places in assigned yard slot; scan-confirms the grid coordinates in YMS to update the real-time yard map",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Reach Stacker Operator"
+    },
+    {
+     "a": "Yard Superintendent",
+     "activity": "**Demurrage & Detention Tracking**: YMS starts carrier-specific free-time countdown timers (e.g., 4 days yard free time, 7 days container lease); triggers daily priority warnings to Import Logistics team",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Stripping Scheduling**: Yard Coordinator assigns yard container to a warehouse dock; Reach Stacker Operator moves container to dock chassis; Receiving Clerk scan-registers goods receipt (W3)",
+     "duration": "20 min",
+     "n": "5",
+     "r": "Yard Coordinator / Reach Stacker Operator"
+    },
+    {
+     "a": "Yard Superintendent",
+     "activity": "**Empty Container Gate-Out**: System marks container \"Empty\"; Dispatcher books return logistics; Reach Stacker Operator loads empty container to carrier chassis; Gate Guard records gate-out, verifies empty status, and registers time in YMS",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Reach Stacker Operator / Gate Guard"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W144",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "Daily zone counting (A-items monthly, B-items quarterly, C-items semi-annually); full annual wall-to-wall per W42",
+    "Owner": "DC Inventory Supervisor",
+    "Participants": "Cycle Counter, DC Manager, Inventory Planner, LP Analyst (variance investigation)",
+    "Trigger": "Daily per DC zone schedule; triggered by variance alert",
+    "Volume": "~7,000 SKUs per DC; ~100–150 counts/day per DC on the A/B/C cadence (~400–600 counts/day across 4 DCs)"
+   },
+   "id": "W648",
+   "level": 2,
+   "name": "DC Cycle Counting & Inventory Accuracy Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"count task list by zone based on ABC classification frequency schedule and…\" (replaces manual Step 1).",
+     "- System auto-scan of \"Cycle Counter performs physical count at system-directed bin locations\" (replaces manual Step 2).",
+     "- System auto-post of \"posted with cycle count reference\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: DC Inventory Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Counting accuracy compromised by improperly labeled bins; catch-weight items difficult to count precisely; high-velocity items (cement, lumber) require yard counts in weather-exposed conditions; recount fatigue reducing accuracy in afternoon counts"
+    ],
+    "Staffing Implication": [
+     "- **Cycle Counter** (2 per DC shift): dedicated counting role; ~6 hours/day on physical counting and recount execution across 4 DCs = 8 FTE minimum (2 per DC, single shift). This is a dedicated role.",
+     "- **DC Inventory Supervisor**: ~1 hour/day on variance investigation + 1 hour/week reporting. Absorbed within existing role.",
+     "- **DC Manager**: ~30 min/day on accuracy review and approval. Absorbed within existing role.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS cycle count module, RF devices, inventory management module, approval workflow, DC KPI dashboard (W586)"
+    ],
+    "Time Estimate": [
+     "- Daily: 4–6 hours counting + 1 hour investigation; weekly: 1 hour reporting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "System generates daily cycle count task list by zone based on ABC classification frequency schedule and variance-triggered recounts; assigns to Cycle Counter via RF device",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "Cycle Counter performs physical count at system-directed bin locations using RF scanner; records count quantity; system flags variance against book quantity",
+     "duration": "4–6 hours/day",
+     "n": "2",
+     "r": "Cycle Counter"
+    },
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "For items within tolerance (A-items: ±0.5%, B-items: ±1%, C-items: ±2%): system auto-adjusts book quantity; adjustment posted with cycle count reference",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "For items outside tolerance: system generates recount task; Cycle Counter performs blind recount (no prior count visible)",
+     "duration": "30 min/recount",
+     "n": "4",
+     "r": "Cycle Counter"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "If recount confirms variance: DC Inventory Supervisor investigates root cause (receiving error, miscount, misplacement, picking error, system error, theft); classifies root cause in system",
+     "duration": "15 min/item",
+     "n": "5",
+     "r": "DC Inventory Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "DC Inventory Supervisor submits adjustment for approval per threshold: DC Manager for adjustments < PHP 50,000; VP Supply Chain for adjustments PHP 50,000–500,000; CFO for adjustments > PHP 500,000",
+     "duration": "Varies by threshold",
+     "n": "6",
+     "r": "DC Inventory Supervisor"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "DC Manager reviews daily cycle count accuracy rate; targets ≥ 99.5% accuracy for A-items, ≥ 98% for B-items, ≥ 95% for C-items; investigates recurring variance locations",
+     "duration": "30 min/day",
+     "n": "7",
+     "r": "DC Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Weekly: DC Inventory Supervisor produces cycle count accuracy report feeding DC daily KPI dashboard (W586) and variance investigation queue",
+     "duration": "1 hour/week",
+     "n": "8",
+     "r": "DC Inventory Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W42",
+    "W586"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "4 major seasons/year: Christmas (Sep–Dec), Summer (Mar–May), Back-to-School (May–Jun), Rainy Season (Jun–Aug); plus 6 bi-monthly sale events",
+    "Owner": "DC Manager",
+    "Participants": "VP Supply Chain, HR Manager (temporary labor), DC Inventory Supervisor, Category Manager",
+    "Trigger": "Seasonal demand forecast (W32); triggered 8–12 weeks before peak season",
+    "Volume": "up to 1.5× normal DC volume at the canonical peak-day sizing (§1.1: 200 receipts/day → 300/day), with surge staffing plans for Christmas; extended-receipt days scheduled rather than single-day 2–3× spikes"
+   },
+   "id": "W652",
+   "level": 2,
+   "name": "Seasonal Warehouse Surge Planning & Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-forecast of \"forecast per DC\" (replaces manual Step 1).",
+     "- System auto-count of \"headcount, duration, shift pattern — extended hours or additional shift\" (replaces manual Step 2).",
+     "- System auto-schedule of \"schedule alignment with surge plan\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Seasonal volume forecast underestimation leading to capacity crisis; temporary worker productivity 30–50% lower than permanent staff; rental equipment unfamiliarity causing safety incidents; extended hours causing permanent staff fatigue and turnover; overflow area security and inventory accuracy challenges"
+    ],
+    "Staffing Implication": [
+     "- **DC Manager**: ~5 days planning per major surge event, ~1–2 days per minor (4 major + 6 minor = ~26–32 days/year surge planning). Absorbed within existing role but requires dedicated planning time.",
+     "- **HR Manager**: seasonal staffing coordination per W555. Absorbed within existing HR role.",
+     "- **Temporary workers**: ~20–40 per DC during Christmas peak (80–160 total across 4 DCs); ~10–20 per DC during other peaks. Staffed via W555 seasonal staffing process.",
+     "- **No incremental permanent headcount** — surge capacity managed through temporary labor and equipment rental.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Demand planning (W31), WMS (capacity planning, slotting), labor scheduling (W1241 DC labor shift scheduling), DC KPI dashboard (W586), equipment management (W650)"
+    ],
+    "Time Estimate": [
+     "- Planning: 5 days; execution monitoring: daily during peak; wind-down: 1 week; post-mortem: 2 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "T-12 weeks: VP Supply Chain provides seasonal volume forecast per DC (units, lines, orders); DC Manager compares forecast against current DC capacity (receiving docks, putaway zones, pick faces, shipping docks, labor)",
+     "duration": "2 days",
+     "n": "1",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "T-10 weeks: DC Manager develops surge plan: temporary labor requirement (headcount, duration, shift pattern — extended hours or additional shift), equipment rental plan (forklifts, reach stackers, RF devices), overflow staging area activation plan, seasonal SKU forward-pick zone re-slotting",
+     "duration": "3 days",
+     "n": "2",
+     "r": "DC Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "T-8 weeks: HR Manager initiates seasonal staffing process (W555): temporary worker recruitment, abbreviated onboarding (safety + basic WMS operation), schedule alignment with surge plan",
+     "duration": "Per W555",
+     "n": "3",
+     "r": "HR Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "T-6 weeks: DC Manager executes seasonal re-slotting: high-velocity seasonal SKUs moved to forward-pick zones; reserve storage consolidated to create overflow receiving space; seasonal promotional displays and bulk staging areas designated",
+     "duration": "1 week",
+     "n": "4",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "T-4 weeks: Equipment rental delivery and commissioning; temporary worker first shift with supervised onboarding; extended operating hours commence; overflow area activated and stocked",
+     "duration": "1 week",
+     "n": "5",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "During peak: DC Manager monitors daily volume vs. forecast; adjusts labor allocation daily; activates 3rd shift if volume exceeds 2× normal for 3+ consecutive days; daily stand-up meetings with shift supervisors",
+     "duration": "30 min/day",
+     "n": "6",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "T+2 weeks post-peak: DC Manager executes wind-down: return rental equipment, release temporary workers per W555 offboarding, restore normal slotting, deactivate overflow areas, return to normal operating hours",
+     "duration": "1 week",
+     "n": "7",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "T+4 weeks post-peak: DC Manager produces seasonal surge performance report: volume vs. forecast, labor productivity, overtime cost, equipment utilization, service level maintained, lessons learned for next surge",
+     "duration": "2 days",
+     "n": "8",
+     "r": "DC Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1241",
+    "W31",
+    "W32",
+    "W555",
+    "W586",
+    "W650"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "Per delivery; ~6,000 inbound deliveries/month across 4 DCs (per the DC goods-receipt canon)",
+    "Owner": "QC Inspector",
+    "Participants": "Receiving Supervisor, DC Operations Manager, Procurement Quality Engineer",
+    "Trigger": "Each inbound delivery at DC receiving dock",
+    "Volume": "~1,500 deliveries/DC/month; AQL sampling per PUR-016 on designated categories"
+   },
+   "id": "W681",
+   "level": 2,
+   "name": "DC Quality Control & Vendor Compliance Inspection at Receiving",
+   "parent": null,
+   "req_refs": [
+    "FIN-013",
+    "PUR-016"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Delivery arrives at DC\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks for transit damage\" (replaces manual Step 2).",
+     "- System auto-inspect of \"Inspector performs AQL sampling per PUR-016 on designated categories\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: QC Inspector review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Import container inspection time pressure (demurrage clock per W249)",
+     "- Paint/chemical quality testing requiring laboratory turnaround",
+     "- Inconsistent AQL application across 4 DCs",
+     "- Vendor resistance to quality holds"
+    ],
+    "Staffing Implication": [
+     "- QC Inspector (1 per DC, 4 total): ~8 hours/day during receiving shifts",
+     "- Dedicated role",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS receiving module",
+     "- Quality inspection module",
+     "- AQL sampling engine",
+     "- Vendor scorecard (W44)",
+     "- CAPA module (W110)",
+     "- Quarantine management (W219)"
+    ],
+    "Time Estimate": [
+     "- Per delivery: 30-60 min for AQL inspection",
+     "- Full-lot inspection (failures): 2-4 hours"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Delivery arrives at DC; dock assigned per W585 scheduling; Receiving Supervisor verifies carrier appointment and documentation (delivery receipt, packing list, customs clearance for imports per W464)",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Receiving Supervisor"
+    },
+    {
+     "a": "QC Inspector",
+     "activity": "Receiving Supervisor performs unloading with visual inspection: checks for transit damage (crushed packaging, wet cartons, broken pallets), temperature indicator for sensitive goods per W492, and seal integrity for import containers; segregates suspect items in quarantine zone per W219",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Receiving Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "QC Inspector performs AQL sampling per PUR-016 on designated categories: selects random sample from lot per sampling plan; inspects for product quality (cosmetic defects, dimensional accuracy, finish quality), labeling compliance (barcode readability, required markings per DTI-BPS ICC/SOC per W447), and shelf-life verification for date-sensitive items (paint, adhesives, chemicals)",
+     "duration": "30-60 min",
+     "n": "3",
+     "r": "QC Inspector"
+    },
+    {
+     "a": "—",
+     "activity": "QC Inspector records inspection results in quality module: pass, conditional pass (minor issues — accepted with notation), fail (rejected per W110); captures photos of defects",
+     "duration": "15 min",
+     "n": "4",
+     "r": "QC Inspector"
+    },
+    {
+     "a": "Procurement Quality Engineer",
+     "activity": "For failed inspections: QC Inspector creates quality hold per W219; Procurement Quality Engineer notified; vendor CAPA per W110 initiated; Receiving Supervisor processes partial receipt for accepted quantity",
+     "duration": "1-2 hours",
+     "n": "5",
+     "r": "QC Inspector"
+    },
+    {
+     "a": "—",
+     "activity": "For import shipments: QC Inspector verifies customs documentation completeness per W239, performs landed cost component verification (duty rate applied, freight allocation per FIN-013), and checks product certification compliance per W625 for regulated categories",
+     "duration": "30 min",
+     "n": "6",
+     "r": "QC Inspector"
+    },
+    {
+     "a": "—",
+     "activity": "Receiving Supervisor completes goods receipt in ERP for accepted items; system updates inventory with QC status; vendor scorecard per W44 updated with quality data",
+     "duration": "15 min",
+     "n": "7",
+     "r": "Receiving Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Monthly: DC Operations Manager produces vendor quality report: defect rate by vendor, category, and DC; recurring defect patterns; vendor response time to CAPA",
+     "duration": "3 hours",
+     "n": "8",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "Quarterly: Procurement Quality Engineer reviews AQL sampling parameters and inspection criteria per PUR-016; adjusts sampling levels based on vendor quality history",
+     "duration": "4 hours",
+     "n": "9",
+     "r": "Procurement Quality Engineer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W110",
+    "W219",
+    "W239",
+    "W249",
+    "W44",
+    "W447",
+    "W464",
+    "W492",
+    "W585",
+    "W625"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "~400–600 TEUs/month across all DCs; ~100–150 containers/DC/month; ~3–5 containers/DC/day",
+    "Owner": "DC Receiving Supervisor",
+    "Participants": "DC Receiving Supervisor, Receiving Clerk, Quality Checker, Putaway Staff, Forklift Operator, Customs Broker (if exception)",
+    "Trigger": "Import container arrives at DC container yard from port; customs clearance completed per W464",
+    "Volume": "~15–25 pallets per container; ~300–500 units per container depending on product category"
+   },
+   "id": "W1271",
+   "level": 2,
+   "name": "DC Inbound Import Container Devanning, Staging & Quality Sampling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs container arrival in system with timestamp\" (replaces manual Step 1).",
+     "- System auto-assign of \"assignment and staging area preparation\" (replaces manual Step 2).",
+     "- System auto-document of \"documentation one final time\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot imports ~40% of its COGS from international vendors (China, Taiwan, Indonesia, Malaysia, Japan, Europe), generating ~400–600 TEUs/month of import containers across its 4 DCs. W3 covers standard warehouse receiving and putaway for all inbound goods. W222 covers container yard and chassis management. W464 covers in-house customs brokerage and port operations. W681 covers quality control at receiving. However, import container devanning (the physical unloading of a sealed shipping container) involves a distinct process that differs significantly from standard truck receiving: (a) containers are sealed with customs seal that must be verified and broken under controlled conditions, (b) import goods have longer supply chains and higher quality risk (transit damage, moisture, pilferage), (c) landed cost components (duty, freight, insurance) must be captured for accurate WAC calculation, (d) containers have demurrage/detention deadlines requiring expedited unloading per W249. This workflow covers the specific import container devanning process from container arrival at DC through quality sampling, staging, and putaway-ready status."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Demurrage and detention pressure** — Philippine ports (especially Manila) are congested; container free time is typically 5 days at port + 5 days at DC; devanning delays due to dock congestion, quality issues, or labor shortages can trigger demurrage charges of PHP 2,000–5,000/day/container; at 400–600 containers/month, even a 2-day average delay = ~PHP 1.6M–6M/month in avoidable charges",
+     "- **Container seal tampering risk**: broken or tampered customs seals indicate potential pilferage during transit; if detected, the entire container must be inventoried count-by-count against the packing list, delaying devanning by hours; mitigated by standard operating procedures and system-enforced validation rules",
+     "- **Tropical moisture damage** — containers shipped through tropical waters (South China Sea, Pacific) experience condensation; metal goods (hardware, tools, rebar) and cardboard-packaged items are vulnerable to rust and water damage; quality sampling must include thorough moisture inspection",
+     "- **Mixed-SKU containers** — some import vendors ship mixed-SKU containers (multiple PO lines, multiple product categories) requiring sorting and cross-referencing during devanning; significantly slower than single-SKU containers",
+     "- **Landed cost estimation timing** — actual landed cost may not be known until customs entry is finalized (W464), which can occur after devanning; system must allow provisional landed cost with subsequent adjustment when final duty assessment is received per W1233"
+    ],
+    "Staffing Implication": [
+     "- **Forklift Operators**: already allocated per W3 for receiving; import container devanning absorbed into daily receiving workload",
+     "- **Receiving Clerks**: ~15 min check-in per container × 500/month = ~125 hours/month across 4 DCs = ~31 hours/DC/month. Absorbed.",
+     "- **Quality Checkers**: ~45 min per container × 500/month = ~375 hours/month across 4 DCs = ~94 hours/DC/month. Absorbed within existing quality team.",
+     "- **No incremental headcount.** Devanning is a standard DC receiving activity with import-specific variations."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Container check-in with seal verification and PO/ASN matching (W1271.1)",
+     "- Dock door assignment and scheduling integration per W585 (W1271.2)",
+     "- RF gun scanning during devanning with real-time ASN quantity matching (W1271.4)",
+     "- Quality sampling module with import-specific check templates (W1271.5)",
+     "- Landed cost calculation engine integrating duty, freight, insurance, and handling fees (W1271.6)",
+     "- Discrepancy logging with photographic evidence and vendor claim integration (W1271.7)",
+     "- Putaway assignment generation per W3 (W1271.8)",
+     "- Container dwell time tracking with demurrage deadline alerting per W249 (W1271.9)",
+     "- Integration with W3 (standard receiving/putaway), W222 (container yard management), W464 (customs brokerage), W249 (demurrage/detention), W681 (quality control), W110 (vendor quality/CAPA), W88 (RTV), W191 (marine insurance), W1169 (port drayage), W1222 (hazmat storage), W1029 (environmental monitoring), W85 (product costing)"
+    ],
+    "Time Estimate": [
+     "- Per container: ~2–3 hours total (check-in 15 min + dock assignment 10 min + seal breaking 15 min + devanning 45–90 min + quality sampling 30–45 min + putaway varies)",
+     "- With discrepancies: additional 30–60 min per container",
+     "- Daily per DC: ~4–7 containers × 2.5 hours avg = ~10–18 hours/day of DC resources",
+     "- Monthly chain-wide: ~500 containers × 2.5 hours = ~1,250 hours/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Container arrival and check-in**: container chassis arrives at DC container yard from port drayage (W1169); Receiving Clerk verifies: (a) container number matches purchase order and advance shipping notice (ASN), (b) customs seal number matches customs clearance documents per W464, (c) container condition — no visible damage, holes, or water intrusion, (d) container weight matches documented gross weight; Receiving Clerk logs container arrival in system with timestamp",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Dock assignment and staging area preparation**: DC Receiving Supervisor assigns dock door for devanning based on: (a) container contents — heavy items (tiles, cement) require ground-level dock; lighter items (tools, hardware) can use standard dock, (b) putaway zone proximity — if container contains lumber, assign dock near lumber storage area, (c) current dock availability per W585 (dock scheduling); DC Receiving Supervisor ensures staging area cleared and receiving lane marked for import container",
+     "duration": "10 min",
+     "n": "2",
+     "r": "DC Receiving Supervisor"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Container positioning and seal breaking**: Forklift Operator positions container at assigned dock door; Receiving Clerk and DC Receiving Supervisor jointly: (a) photograph customs seal before breaking, (b) verify seal number against documentation one final time, (c) break seal and open container doors, (d) photograph interior condition immediately after opening — note any shifted pallets, damaged goods, water marks, or pest evidence, (e) if seal discrepancy or visible damage: halt devanning, document with photos, notify customs broker per W464 and Buyer",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Receiving Clerk / DC Receiving Supervisor"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Devanning (container unloading)**: Forklift Operator and Putaway Staff unload container: (a) palletized goods — forklift removes pallets from container and places in staging lane, (b) floor-loaded goods — manual unloading onto pallets in staging lane, (c) each pallet scanned with RF gun against ASN — system matches item, quantity, and PO line, (d) system flags any quantity discrepancy between ASN and actual count, (e) hazardous materials (paint, solvents, thinners) segregated to designated hazmat staging area per W1222; devanning continues until container fully emptied; target: 45–90 min per container depending on load type",
+     "duration": "45–90 min",
+     "n": "4",
+     "r": "Forklift Operator / Putaway Staff"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Import quality sampling**: Quality Checker performs quality sampling per W681 with import-specific checks: (a) **Moisture damage check**: inspect for water stains, mold, or rust — especially critical for metal goods (rebar, pipes, hardware) and paper-packaged goods (cement, adhesives), (b) **Transit damage check**: inspect for crushed boxes, broken items, or shifted loads causing damage, (c) **Quantity verification**: count check against ASN — sample minimum 10% of cartons; if any discrepancy found, expand to 30% or full count, (d) **Vendor compliance check**: verify labeling, barcoding, and packaging compliance per vendor agreement, (e) **AQL sampling**: for new vendors or categories, perform AQL (Acceptable Quality Level) inspection per W110 standards; quality results recorded in system with pass/fail and disposition recommendation",
+     "duration": "30–45 min",
+     "n": "5",
+     "r": "Quality Checker"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Landed cost capture**: system automatically calculates landed cost per unit during devanning: (a) product cost (FOB or CIF per PO terms), (b) import duty per customs entry (W464), (c) customs brokerage fees allocated per container, (d) port charges and drayage allocated per container (W1169), (e) marine insurance allocation per W191, (f) DC handling fee estimate; landed cost per unit drives WAC update for inventory valuation — critical for margin accuracy in W102 and W85",
+     "duration": "Automated + 15 min review",
+     "n": "6",
+     "r": "System / Finance Analyst"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Discrepancy resolution**: if quality or quantity discrepancies found: (a) **Quantity shortage**: Receiving Clerk logs shortage in system; system adjusts goods receipt to actual count; Buyer notified for vendor claim per W88 (RTV) or debit note, (b) **Quantity overage**: Receiving Clerk logs overage; Buyer determines — accept (amend PO quantity) or return excess to vendor, (c) **Quality failure**: Quality Checker logs defect rate and types; disposition options: (i) accept with vendor debit note for defective units, (ii) reject entire shipment — segregate for return per W88, (iii) accept at discounted cost — negotiate vendor credit, (d) all discrepancies documented with photographs for vendor claim evidence per W110",
+     "duration": "30–60 min (if discrepancy)",
+     "n": "7",
+     "r": "Receiving Clerk / Quality Checker / Buyer"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Putaway**: once quality sampling passed and landed cost captured: (a) system generates putaway assignments per W3 — directing each pallet to optimal bin location based on item velocity and storage requirements, (b) hazardous materials routed to hazmat storage zone per W1222, (c) temperature-sensitive items (adhesives, chemicals) routed to climate-controlled area per W1029, (d) Putaway Staff executes putaway with RF-directed scanning; system updates inventory in real-time",
+     "duration": "Per W3",
+     "n": "8",
+     "r": "Putaway Staff"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Container release and demurrage tracking**: once container fully devanned: (a) Receiving Clerk inspects empty container for any remaining goods or damage, (b) container released to chassis for return to port/container depot, (c) system logs container empty timestamp — tracks total dwell time from arrival to release, (d) if dwell time exceeds free period (typically 5–7 days), system alerts DC Receiving Supervisor and W249 demurrage management workflow activated",
+     "duration": "10 min",
+     "n": "9",
+     "r": "Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W102",
+    "W1029",
+    "W110",
+    "W1169",
+    "W1222",
+    "W1233",
+    "W191",
+    "W222",
+    "W249",
+    "W3",
+    "W464",
+    "W585",
+    "W681",
+    "W85",
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~30–40% of inbound volume for A-class SKUs",
+    "Owner": "DC Operations Supervisor",
+    "Participants": "DC Receiving Lead, DC Dispatch, Supply Planner, Transportation Coordinator",
+    "Trigger": "Inbound shipment of fast-moving A-class items (cement, nails, paint) where DC acts as flow-through rather than storage node",
+    "Volume": "~1,200–1,600 cross-dock pallet positions/month across 4 DCs"
+   },
+   "id": "W1279",
+   "level": 2,
+   "name": "DC Cross-Dock Fast-Mover Processing & Direct Putaway to Outbound",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspection hold per W681\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates cross-dock allocation plan\" (replaces manual Step 2).",
+     "- System auto-route of \"Pre-staging outbound trucks\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 4-DC network handles ~70% of goods by value through DCs. For fast-moving A-class items (top 20% of SKUs representing 80% of revenue), the DC functions as a cross-dock flow-through node: inbound goods are received, briefly staged (typically <4 hours), and loaded directly onto outbound trucks for store delivery. This eliminates the putaway → pick → pack cycle, reducing handling cost by ~30% and improving store replenishment speed by 1–2 days. Key cross-dock categories include: cement, common nails, popular paint SKUs, basic electrical supplies, and standard plumbing fittings. This workflow complements W221 (cross-docking for bulky items) by focusing on high-velocity A-class replenishment items."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: restricting cross-dock to high-reliability vendors (quality score >95% per W44)"
+    ],
+    "Pain Points / Risks": [
+     "- **Inbound-outbound timing mismatch** — if inbound truck is delayed but outbound truck is ready, cross-dock efficiency is lost; outbound truck may depart partially loaded, requiring separate shipment for remaining items",
+     "- **Quality bypass risk**: reduced quality sampling (5% vs. the standard 10%) means defective goods may reach stores; mitigated by restricting cross-dock to high-reliability vendors (quality score >95% per W44)",
+     "- **Volume variability** — cross-dock works best with predictable, consistent inbound flow; import shipments with variable arrival dates and local DSD with unpredictable schedules reduce cross-dock effectiveness",
+     "- **Seasonal surge pressure** — during Ber months and typhoon season, DC throughput increases 30–50%; cross-dock lanes may become bottlenecked, forcing goods into standard putaway"
+    ],
+    "Staffing Implication": [
+     "- **DC Receiving Lead**: ~2–3 hours/day on cross-dock coordination. Absorbed by existing role.",
+     "- **DC Warehouse Crew**: cross-dock pallet movement is faster than standard putaway+pick (15 min vs. 45 min per pallet); net labor saving of ~30 min per cross-docked pallet.",
+     "- **DC Operations Supervisor**: ~30 min/day on cross-dock performance review. Absorbed.",
+     "- **Net effect**: cross-dock reduces DC labor by ~600 hours/month across 4 DCs."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cross-dock eligibility engine with ABC classification and open order matching (W1279.1)",
+     "- Inbound-outbound allocation and routing optimization (W1279.2)",
+     "- WMS dock door management with cross-dock lane assignment",
+     "- RF-directed pallet movement with store-specific labeling",
+     "- Real-time inventory update (goods receipt + goods issue in single batch)",
+     "- Integration with W3 (DC receiving), W196 (outbound dispatch), W221 (bulky cross-dock)"
+    ],
+    "Time Estimate": [
+     "- Per cross-dock truck: receiving 30–60 min + transfer 15–30 min + dispatch 30 min = ~75–120 min total dock-to-dispatch",
+     "- Daily per DC: ~2–3 cross-dock trucks × 90 min avg = ~3–4.5 hours",
+     "- Chain-wide monthly: ~300 cross-dock operations × 90 min = ~450 hours",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Supervisor",
+     "activity": "**Cross-dock eligibility flag**: Supply Planner or system identifies inbound PO lines eligible for cross-dock based on: (a) ABC classification = A, (b) active store replenishment orders exist for the item, (c) inbound quantity ≤ sum of open replenishment quantities (no excess requiring storage), (d) item does not require quality inspection hold per W681",
+     "duration": "Automated + 15 min review",
+     "n": "1",
+     "r": "System / Supply Planner"
+    },
+    {
+     "a": "DC Operations Supervisor",
+     "activity": "**Inbound-outbound matching**: System matches cross-dock-eligible inbound lines to pending store replenishment orders; generates cross-dock allocation plan: (a) inbound PO line → outbound delivery assignment, (b) pallet-level allocation to specific stores, (c) outbound truck loading sequence based on delivery route per W196",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "DC Operations Supervisor",
+     "activity": "**Pre-staging outbound trucks**: DC Dispatch pre-positions outbound trailers at designated cross-dock doors; confirms truck readiness (clean, no residual cargo, correct vehicle for route); DC Receiving Lead assigns dedicated cross-dock receiving lane with direct sightline to outbound dock",
+     "duration": "30 min",
+     "n": "3",
+     "r": "DC Dispatch / DC Receiving Lead"
+    },
+    {
+     "a": "DC Operations Supervisor",
+     "activity": "**Rapid receiving & quality check**: Inbound truck arrives; DC Receiving Lead performs expedited receiving: (a) scan ASN barcode per W1365, (b) visual quality inspection (no visible damage, correct packaging), (c) pallet count verification against ASN; for cross-dock A-items, quality sampling reduced to 5% (vs. the standard 10% sampling per W1600) based on historical vendor quality score per W44",
+     "duration": "30–60 min/truck",
+     "n": "4",
+     "r": "DC Receiving Lead"
+    },
+    {
+     "a": "DC Operations Supervisor",
+     "activity": "**Direct transfer to outbound**: Goods moved directly from inbound dock to outbound dock via forklift or pallet jack; each pallet scanned and system confirms store assignment; pallet labeled with store-specific routing label; system updates inventory in real-time as goods move through DC without putaway",
+     "duration": "15–30 min/truck",
+     "n": "5",
+     "r": "DC Warehouse Crew"
+    },
+    {
+     "a": "DC Operations Supervisor",
+     "activity": "**Outbound dispatch**: Once all cross-dock pallets loaded onto outbound truck, DC Dispatch completes dispatch per W196; system generates delivery manifest; truck departs for store delivery; inventory records show goods receipt and goods issue in same transaction batch",
+     "duration": "30 min",
+     "n": "6",
+     "r": "DC Dispatch"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Daily cross-dock performance tracking**: DC Operations Supervisor reviews daily cross-dock metrics: (a) cross-dock throughput (pallets/hour), (b) dock-to-stock time (target: <4 hours from inbound arrival to outbound dispatch), (c) cross-dock accuracy (correct store allocation), (d) exceptions requiring putaway (inbound qty exceeded replenishment demand)",
+     "duration": "30 min/day",
+     "n": "7",
+     "r": "DC Operations Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1365",
+    "W1600",
+    "W196",
+    "W221",
+    "W3",
+    "W44",
+    "W681"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "Daily at each DC; ~30–40% of inbound volume flows through cross-dock",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Receiving Lead, Cross-Dock Sortation Team, DC Dispatch Coordinator, Transportation Planner",
+    "Trigger": "Inbound shipment arrives at DC containing pre-identified cross-dock items (fast-movers, promotional stock, urgent replenishment)",
+    "Volume": "~10–15 cross-dock pallets/containers per DC per day; ~1,200–1,600 cross-dock pallet positions/month chain-wide (per W1279)"
+   },
+   "id": "W1307",
+   "level": 2,
+   "name": "DC Cross-Dock Fast-Mover Expedited Receiving, Sortation & Same-Day Dispatch Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates cross-dock sort plan\" (replaces manual Step 1).",
+     "- System auto-scan of \"scan ASN barcode on pallet/case — system confirms item is cross-dock eligible\" (replaces manual Step 2).",
+     "- System auto-route of \"Same-day dispatch & loadout\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 4 DCs process inbound shipments from ~800–1,000 vendors. For fast-moving items (A-class SKUs representing 20% of SKUs but 80% of revenue per ABC classification), the traditional receive → putaway → pick → pack → ship cycle adds 1–3 days of DC dwell time before the product reaches stores. Cross-docking eliminates putaway and picking: inbound goods are received, sorted by store destination, and loaded directly onto outbound delivery trucks — reducing DC dwell time from days to hours. Cross-docking is particularly valuable for: (a) high-velocity A-class items (cement, nails, paint, electrical wire) that sell through quickly and need rapid replenishment, (b) promotional stock for imminent sale events that must reach stores before the promotion starts, (c) seasonal surge items (typhoon prep materials, Christmas lights) where timing is critical, (d) bulky items (cement bags, lumber, large appliances) that consume excessive warehouse space if stored. With ~30–40% of inbound volume qualifying for cross-dock, efficient cross-dock processing is essential to DC throughput and store fill rates. This workflow manages the expedited cross-dock receiving, sortation, and same-day dispatch process."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: DC Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Dock door contention** — cross-dock requires dedicated dock space separate from standard receiving; during peak inbound days, cross-dock and standard receiving may compete for limited dock doors",
+     "- **Sortation labor peaks** — cross-dock sortation requires concentrated labor during a short window (truck arrival to dispatch); if the sortation team is understaffed, cross-dock items miss same-day dispatch",
+     "- **Quality risk**: deferring full QC for cross-dock items means quality issues may reach stores; rapid exception handling (step 4) mitigates but does not eliminate this risk",
+     "- **System dependency** — cross-dock sortation relies on real-time handheld scanning and system-directed putaway; if WMS or network goes down, cross-dock reverts to manual sorting (much slower, higher error rate)"
+    ],
+    "Staffing Implication": [
+     "- **Cross-Dock Sortation Team**: 3–5 workers per DC dedicated to cross-dock operations during receiving hours (6 AM – 2 PM shift). At peak: 5 workers; off-peak: 3 workers. Total: ~16 workers across 4 DCs.",
+     "- **DC Receiving Lead**: cross-dock receiving adds ~30 min per truck to existing role. Absorbed.",
+     "- **DC Dispatch Coordinator**: cross-dock loadout adds ~30 min per route. Absorbed.",
+     "- **No incremental headcount beyond existing DC staffing** — cross-dock team resourced from existing DC warehouse staff with shift reallocation."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS cross-dock module — pre-arrival planning, sort plan generation, real-time sortation tracking",
+     "- ASN integration — vendor advance ship notice for pre-arrival cross-dock identification",
+     "- Replenishment order module — backorder urgency flags for cross-dock priority",
+     "- Route planning module — outbound delivery route assignment and manifest generation",
+     "- Inventory status management — direct in-transit-to-store status for cross-dock items",
+     "- BI dashboard — daily cross-dock KPI dashboard"
+    ],
+    "Time Estimate": [
+     "- Pre-arrival planning: 30–60 min per truck",
+     "- Receiving & sortation: 60–90 min per truck",
+     "- Dispatch: 30–60 min per route",
+     "- Daily performance tracking: 30 min",
+     "- **Per DC per day**: ~4–6 hours of direct cross-dock labor across 2–3 trucks",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Pre-arrival cross-dock planning**: (a) before inbound shipment arrival: system identifies cross-dock eligible items from the inbound ASN: (i) items flagged as cross-dock in item master (A-class, fast-mover designation), (ii) items on store replenishment order backorder (urgency flag), (iii) promotional items with upcoming sale event dates; (b) system generates cross-dock sort plan: (i) item × quantity × destination store, (ii) assign to outbound delivery routes departing same day, (iii) allocate dock door for cross-dock staging (separate from standard receiving dock); (c) Cross-Dock Sortation Team receives sort plan on handheld devices before truck arrival",
+     "duration": "30–60 min before arrival",
+     "n": "1",
+     "r": "System / DC Receiving Lead"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Expedited receiving & sortation**: (a) inbound truck arrives at designated cross-dock door; (b) DC Receiving Lead performs rapid receiving: (i) scan ASN barcode on pallet/case — system confirms item is cross-dock eligible, (ii) verify quantity against ASN (tolerance: ± 2% for case count), (iii) quick quality check: packaging intact, no visible damage, correct labeling — full QC deferred for cross-dock (performed on exception basis); (c) Cross-Dock Sortation Team immediately sorts received items: (i) scan item barcode → system displays destination store and outbound route, (ii) place item in store-labeled staging lane on dock (each lane corresponds to a store delivery route), (iii) system tracks sortation progress in real-time; (d) target: from truck arrival to sortation complete = 60–90 minutes for a full truck",
+     "duration": "60–90 min per truck",
+     "n": "2",
+     "r": "DC Receiving Lead / Cross-Dock Sortation Team"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Same-day dispatch & loadout**: (a) as sortation completes for each outbound route: DC Dispatch Coordinator stages outbound truck: (i) load cross-docked items onto delivery truck in reverse-stop sequence (last store loaded first), (ii) combine cross-docked items with standard warehouse-picked items for the same route, (iii) generate load manifest with all items (cross-dock + standard) per route; (b) cross-dock items received before 10:00 AM dispatched same day on afternoon delivery routes; (c) cross-dock items received after 10:00 AM dispatched next morning; (d) system updates inventory status: cross-dock items move from \"In Transit to DC\" directly to \"In Transit to Store\" (bypassing \"In DC\" status)",
+     "duration": "30–60 min per route",
+     "n": "3",
+     "r": "DC Dispatch Coordinator / Transportation Planner"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Cross-dock exception handling**: (a) **Overshipment**: vendor ships more than ordered → excess received into standard putaway (not cross-docked), vendor notified per W109; (b) **Quality failure**: quick check reveals damaged or wrong items → failed items pulled from cross-dock, received into standard receiving for QC hold per W1225, replacement sourced from DC stock if available; (c) **Missing store allocation**: item received but no open replenishment order for any store → received into standard putaway (converts from cross-dock to stock); (d) **Sortation error**: item placed in wrong store lane → discovered at loadout when scanning item to manifest, corrected to correct lane; if discovered after dispatch: receiving store processes transfer per W219 to correct store",
+     "duration": "Per exception: 10–30 min",
+     "n": "4",
+     "r": "DC Receiving Lead"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Daily cross-dock performance tracking**: (a) system tracks daily cross-dock KPIs: (i) cross-dock volume as % of total inbound, (ii) average dock-to-dispatch time (target: < 4 hours), (iii) same-day dispatch rate (target: ≥ 80% of cross-dock items dispatched same day), (iv) sortation accuracy (target: ≥ 99.5%), (v) exception rate (target: < 5%); (b) DC Operations Manager reviews daily KPIs and addresses bottlenecks; (c) weekly: compare cross-dock performance across 4 DCs — identify and replicate best practices from top-performing DC",
+     "duration": "30 min/day",
+     "n": "5",
+     "r": "System / DC Operations Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W109",
+    "W1225",
+    "W1279",
+    "W219"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "~6,000 DC goods receipts/month across 4 DCs; ~80% of receipt volume comes from portal-enabled vendors submitting ASN before delivery (portal access covers top vendors by volume; ~40% of vendors by count lack access — see pain points)",
+    "Owner": "DC Inbound Supervisor",
+    "Participants": "DC Inbound Supervisor, Receiving Clerk, Buyer, Vendor (via portal), Import Coordinator (for import shipments)",
+    "Trigger": "Vendor submits Advance Shipping Notice (ASN) via vendor portal or EDI for an incoming shipment",
+    "Volume": "~4,800 ASN submissions/month; ~15–20% have discrepancies requiring exception handling = ~720–960 exceptions/month"
+   },
+   "id": "W1365",
+   "level": 2,
+   "name": "DC Inbound Vendor ASN Pre-Receipt Verification & PO Matching Exception Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits ASN via vendor portal\" (replaces manual Step 1).",
+     "- System auto-match of \"matches ASN to open PO\" (replaces manual Step 2).",
+     "- System auto-scan of \"scan-based receiving upon truck arrival\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Vendor Advance Shipping Notices (ASNs) allow DCs to pre-plan receiving resources (dock door assignment, labor allocation, staging space) before the truck arrives. When an ASN matches the corresponding PO (correct SKUs, quantities, and PO number), the receiving process is streamlined to a confirmation scan. However, ASN-PO mismatches — wrong quantities, unauthorized SKUs, missing lot numbers, or shipments against cancelled POs — create exception processing that delays putaway, consumes supervisory time, and may result in accepting goods that cannot be matched to a PO for AP 3-way match (W7). This workflow manages the ASN pre-receipt verification and exception resolution process."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: DC Inbound Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Vendors without portal access (~40% of vendors, typically smaller local suppliers) do not submit ASNs; their shipments arrive unannounced, forcing the DC to perform full manual receiving without pre-planning, creating dock congestion when multiple unannounced trucks arrive simultaneously",
+     "- ASN quantity discrepancies for import containers: the ASN may reflect the PO quantity, but the actual container may contain less due to vendor short-shipment at origin; this discrepancy is discovered only during devanning (W1271), not during ASN pre-receipt",
+     "- Frequent PO amendments to accommodate ASN mismatches erode PO discipline and create audit trail noise that complicates 3-way match in AP (W7)"
+    ],
+    "Staffing Implication": [
+     "- DC Inbound Supervisor: ~30–80 hours/DC/month on ASN exception handling; this is a core supervisory function absorbed within existing DC operations headcount",
+     "- Buyer: ~50 hours/month total across all buyers for PO amendments triggered by ASN mismatches; ~5 hours/buyer/month, absorbed within buying duties",
+     "- No incremental headcount required",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor portal ASN submission with PO reference validation",
+     "- Automated ASN-to-PO matching engine with configurable tolerance rules",
+     "- Pre-receipt record generation with dock door assignment",
+     "- Exception management workflow with routing to appropriate resolver",
+     "- Vendor portal messaging for clarification requests",
+     "- PO amendment integration with procurement module (W2)",
+     "- Weekly ASN accuracy reporting dashboard by vendor"
+    ],
+    "Time Estimate": [
+     "- Auto-matched ASNs (80%): zero manual intervention",
+     "- Exception handling (20%): 10–20 min × 720–960 exceptions/month = ~120–320 hours/month across 4 DCs = ~30–80 hours/DC/month",
+     "- Buyer involvement for PO amendments: ~15 min × ~200 cases/month = ~50 hours/month across all buyers",
+     "- Weekly report: 1 hour/week × 4 DCs = 4 hours/week",
+     "- Total: ~175–375 hours/month across all participants"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Vendor submits ASN via vendor portal: PO reference, SKU list with quantities, expected delivery date, carrier, and number of pallets/cases",
+     "duration": "Vendor-initiated",
+     "n": "1",
+     "r": "Vendor"
+    },
+    {
+     "a": "—",
+     "activity": "System auto-matches ASN to open PO: verifies PO number exists, PO status is \"Open\" (not cancelled or closed), SKU numbers match PO lines, quantities are within PO tolerance (+/- 10%)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "If full match: system pre-assigns dock door, generates pre-receipt record with expected items; Receiving Clerk proceeds to rapid scan-based receiving upon truck arrival",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "If partial match or mismatch: system creates exception record with discrepancy details (wrong SKU, quantity overage/shortage, PO not found, PO closed); routes to DC Inbound Supervisor",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "DC Inbound Supervisor reviews exception: determines resolution — (a) accept shipment with PO amendment by Buyer, (b) accept partial shipment (only matched lines), (c) reject entire shipment, or (d) hold shipment pending vendor clarification",
+     "duration": "10–20 min/exception",
+     "n": "5",
+     "r": "DC Inbound Supervisor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "For resolution (a): Supervisor contacts Buyer to create PO amendment or new PO; Buyer approves or rejects based on current demand",
+     "duration": "15 min/case",
+     "n": "6",
+     "r": "Buyer"
+    },
+    {
+     "a": "—",
+     "activity": "For resolution (d): Supervisor contacts vendor via portal messaging; vendor provides corrected ASN or explanation; system matches corrected ASN to PO",
+     "duration": "1–24 hours",
+     "n": "7",
+     "r": "DC Inbound Supervisor / Vendor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Weekly: DC Inbound Supervisor produces ASN accuracy report by vendor; vendors with < 70% ASN accuracy are flagged for Vendor Performance review (W26)",
+     "duration": "1 hour/week",
+     "n": "8",
+     "r": "DC Inbound Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1271",
+    "W2",
+    "W26",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-250"
+   ],
+   "fields": {
+    "Frequency": "~2–3% of inbound shipments have some damage = ~120–180 damage incidents/month across 4 DCs",
+    "Owner": "DC Inbound Supervisor",
+    "Participants": "DC Inbound Supervisor, Receiving Clerk, Buyer, Finance (AP/AR), Vendor, Freight Carrier/Forwarder, Import Coordinator (for import shipments)",
+    "Trigger": "Receiving Clerk identifies damaged goods during DC inbound receiving inspection (W3, W681)",
+    "Volume": "~120–180 incidents/month; damage value ranges from PHP 5,000 (minor carton damage) to PHP 500,000+ (full container of shattered tiles)"
+   },
+   "id": "W1366",
+   "level": 2,
+   "name": "DC Inbound Damage Claim Processing, Vendor Chargeback & Freight Recovery Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records damaged SKU, quantity, and damage type\" (replaces manual Step 1).",
+     "- System auto-count of \"DC Inbound Supervisor assesses damage severity\" (replaces manual Step 2).",
+     "- System auto-update of \"Supervisor segregates damaged goods to designated damage staging area\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Inbound shipment damage at BuildRight's 4 DCs stems from multiple sources: vendor poor packaging (common for local suppliers using substandard corrugated cartons), carrier rough handling during transit (especially for inter-island shipments via RoRo ferry), import container condensation damage (tiles, cement bags), and forklift damage during devanning. The damage claim process must quickly identify the responsible party (vendor, carrier, or internal), document the damage with evidence, process the financial claim (vendor chargeback, carrier claim, or internal write-off), and ensure damaged goods are properly dispositioned (return to vendor, scrap, or discounted sale) — all while maintaining accurate inventory records and AP 3-way match integrity."
+    ],
+    "Controls": [
+     "- CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).)",
+     "- operational: DC Inbound Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Evidence insufficiency: Receiving Clerks under time pressure may not photograph damage thoroughly enough to support carrier or insurance claims; carriers routinely reject claims lacking photographic evidence of packaging condition at arrival vs. damage",
+     "- Vendor dispute on chargebacks: vendors may dispute damage claims, arguing the damage occurred during transit (carrier responsibility) or at the DC (internal handling); disputed chargebacks delay AP settlement and can strain vendor relationships",
+     "- Slow carrier claim resolution: Philippine domestic freight carriers typically take 60–90 days to process damage claims; during this period, the damaged inventory sits in hold status, consuming warehouse space and inflating inventory carrying costs"
+    ],
+    "Staffing Implication": [
+     "- DC Inbound Supervisors: damage claim processing is a core receiving function; ~30–60 hours/month total across 4 DCs, distributed as ~8–15 hours/DC/month; absorbed within existing supervisory capacity",
+     "- Finance: ~30–45 hours/month on claim financial processing; absorbed within existing AP team",
+     "- Import Coordinator: ~5–20 hours/month on marine insurance claims; absorbed within import coordination duties",
+     "- No incremental headcount required",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Receiving exception report with photo attachment capability",
+     "- Inventory status update to \"damaged/hold\" preventing order allocation",
+     "- Vendor chargeback module integrated with AP payment processing",
+     "- Carrier claim tracking with documentation attachment and deadline monitoring",
+     "- Marine insurance claim integration for import shipments",
+     "- Finance integration for chargeback offset, recovery recording, and write-off processing",
+     "- Monthly damage analysis dashboard with vendor/carrier/category drill-down"
+    ],
+    "Time Estimate": [
+     "- Damage identification and documentation: 5–10 min × 120–180 incidents/month = ~10–30 hours/month (Receiving Clerks)",
+     "- Damage assessment and segregation: 15–20 min × 120–180 incidents/month = ~30–60 hours/month (DC Inbound Supervisor, all 4 DCs)",
+     "- Vendor chargeback processing: 15–20 min × ~60–90 vendor-caused incidents/month = ~15–30 hours/month",
+     "- Carrier claim processing: 20–30 min × ~30–50 carrier-caused incidents/month = ~10–25 hours/month",
+     "- Import insurance claims: 1–2 hours × ~5–10 cases/month = ~5–20 hours/month",
+     "- Finance processing: 15 min × 120–180 claims/month = ~30–45 hours/month",
+     "- Monthly analysis: 2 hours/DC × 4 DCs = 8 hours/month",
+     "- Total: ~100–220 hours/month across all participants"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Inbound Supervisor",
+     "activity": "Receiving Clerk identifies damaged goods during receiving inspection: photographs damage (multiple angles), records damaged SKU, quantity, and damage type (crushed, water-damaged, broken, scratched, missing parts) on receiving exception report",
+     "duration": "5–10 min/incident",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "DC Inbound Supervisor assesses damage severity: minor (salvageable at discount), moderate (usable with rework), or total loss; determines responsible party based on damage pattern and transit chain",
+     "duration": "10–15 min/incident",
+     "n": "2",
+     "r": "DC Inbound Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "Supervisor segregates damaged goods to designated damage staging area; updates inventory status to \"damaged/hold\" in system to prevent allocation to store orders",
+     "duration": "5 min/incident",
+     "n": "3",
+     "r": "DC Inbound Supervisor"
+    },
+    {
+     "a": "Buyer",
+     "activity": "For vendor-caused damage (packaging failure, manufacturing defect): Supervisor creates vendor chargeback in system with photo evidence; chargeback amount deducted from next vendor payment via AP (W7)",
+     "duration": "15–20 min/incident",
+     "n": "4",
+     "r": "DC Inbound Supervisor"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "For carrier-caused damage (transit damage): Supervisor creates carrier claim with supporting documentation (delivery receipt noting damage, photos, commercial invoice value); submits claim to carrier within 48 hours per carrier contract terms",
+     "duration": "20–30 min/incident",
+     "n": "5",
+     "r": "DC Inbound Supervisor"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "For import container damage (condensation, shifting): Import Coordinator files claim with marine insurance provider; provides survey report, photos, and cargo manifest",
+     "duration": "1–2 hours/case",
+     "n": "6",
+     "r": "Import Coordinator"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance processes approved chargebacks: vendor chargeback offset against open AP; carrier claim recovery recorded as other income; insurance claim recovery recorded upon settlement; unrecoverable damage written off as inventory shrinkage",
+     "duration": "15 min/claim",
+     "n": "7",
+     "r": "Finance (AP/AR)"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Monthly: DC Inbound Supervisor produces damage analysis report: damage rate by vendor, by carrier, by product category, and by damage type; high-damage vendors flagged for Vendor Performance review (W26) and packaging improvement requirements",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "DC Inbound Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W26",
+    "W3",
+    "W681",
+    "W7"
+   ]
+  }
+ ]
+}

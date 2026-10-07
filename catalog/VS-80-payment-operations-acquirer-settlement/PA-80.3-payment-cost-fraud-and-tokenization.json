@@ -1,0 +1,517 @@
+{
+ "process_area": {
+  "id": "PA-80.3",
+  "title": "Payment Cost, Fraud & Tokenization Governance"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-80-payment-operations-acquirer-settlement/PA-80.3-payment-cost-fraud-and-tokenization.md",
+ "value_stream": {
+  "directory": "VS-80-payment-operations-acquirer-settlement",
+  "id": "VS-80",
+  "name": "Payment Operations, Acquirer & Settlement Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, IT Security, QSA (if applicable), Compliance",
+    "Trigger": "Annual PCI-DSS attestation; scope change",
+    "Volume": "1 enterprise SAQ-D (or P2PE SAQ) covering 600 terminals + ecommerce"
+   },
+   "id": "W2793",
+   "level": 2,
+   "name": "PCI-DSS SAQ Scope Management & Annual Self-Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"IT Security maps PCI-DSS scope\" (replaces manual Step 1).",
+     "- System auto-scan of \"Compliance validates control evidence\" (replaces manual Step 2).",
+     "- System auto-submit of \"submits to acquirer/scheme\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: annual scope review and segmentation validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Scope creep or missed controls trigger fines/termination; mitigated by annual scope review and segmentation validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PCI-DSS scope register; ASV scan platform; AOC repository"
+    ],
+    "Time Estimate": [
+     "- 4–8 weeks per annual cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "IT Security maps PCI-DSS scope (CDE, connected systems, people); selects appropriate SAQ (P2PE for stores with validated terminals; SAQ-D for ecommerce)",
+     "duration": "Annual",
+     "n": "1",
+     "r": "IT Security"
+    },
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Compliance validates control evidence (network segmentation, access controls, encryption, logging); runs internal ASV vulnerability scan quarterly",
+     "duration": "Quarterly + Annual",
+     "n": "2",
+     "r": "Compliance / IT Security"
+    },
+    {
+     "a": "CFO",
+     "activity": "Payment Ops Manager completes SAQ and Attestation of Compliance (AOC); submits to acquirer/scheme; archives for 12 months",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Payment Ops Manager / QSA"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Continuous governance",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Security, Ecommerce, Payment Ops Manager",
+    "Trigger": "New system touching PAN or scope change",
+    "Volume": "Tokenization vault servicing ecommerce + repeat customers"
+   },
+   "id": "W2794",
+   "level": 2,
+   "name": "Cardholder Data Environment (CDE) Boundary & Tokenization Vault Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates no PAN storage outside vault/tokenization\" (replaces manual Step 1).",
+     "- System auto-log of \"Ecommerce/Payment Ops Manager ensures all integrations use tokens not\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: PAN-detection tooling and developer guidelines"
+    ],
+    "Pain Points / Risks": [
+     "- **Security risk**: PAN leakage in logs creates breach exposure; mitigated by PAN-detection tooling and developer guidelines"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tokenization vault; CDE segmentation; logging/SIEM with PAN-detection alerting"
+    ],
+    "Time Estimate": [
+     "- Continuous; 1 day per key rotation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "IT Security maintains CDE boundary diagram; enforces network segmentation; validates no PAN storage outside vault/tokenization",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "IT Security"
+    },
+    {
+     "a": "IT Security Manager",
+     "activity": "IT Security governs tokenization vault (format-preserving tokens for repeat customers, vaulted card for subscription/installation services); manages key rotation",
+     "duration": "Per rotation",
+     "n": "2",
+     "r": "IT Security"
+    },
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Ecommerce/Payment Ops Manager ensures all integrations use tokens not raw PAN; validates no PAN in logs/screenshots/error messages",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Ecommerce / Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Monthly review; event-driven",
+    "Owner": "Fraud Operations Analyst",
+    "Participants": "Fraud Ops Analyst, Ecommerce, LP, Payment Ops Manager",
+    "Trigger": "Fraud pattern detected or periodic rule tuning",
+    "Volume": "~42,900 ecommerce orders/month; CNP fraud exposure"
+   },
+   "id": "W2795",
+   "level": 2,
+   "name": "Payment Fraud Rule & Velocity/Limit Configuration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"fingerprint mismatch, address mismatch\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews manual-review queue\" (replaces manual Step 2).",
+     "- System auto-update of \"updates velocity limits and blocklists\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: rule tuning and manual review"
+    ],
+    "Pain Points / Risks": [
+     "- **Fraud risk**: Exceeding scheme chargeback threshold triggers monitoring program/fines; mitigated by rule tuning and manual review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fraud-scoring engine; manual-review queue; scheme chargeback-monitoring program"
+    ],
+    "Time Estimate": [
+     "- Continuous; 1–2 days/month tuning"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Fraud Ops Analyst monitors fraud signals (velocity, BIN risk, device fingerprint mismatch, address mismatch); tunes fraud-scoring rules in gateway/ecommerce",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Fraud Ops Analyst"
+    },
+    {
+     "a": "Fraud Ops Analyst",
+     "activity": "Ecommerce/LP reviews manual-review queue; approves/declines flagged orders; contacts customer for verification on borderline cases",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Ecommerce / LP"
+    },
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Fraud Ops Analyst updates velocity limits and blocklists; reports fraud rate vs. target (< 0.1%) and chargeback ratio vs. scheme threshold (1% Visa/MC)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Fraud Ops Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~600 terminals",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Security, Terminal Vendor, Payment Ops Manager",
+    "Trigger": "Terminal provisioning or key injection cycle",
+    "Volume": "~600 POS terminals across 200 stores (3/store); key injection at provisioning + periodic rotation per scheme mandates"
+   },
+   "id": "W2796",
+   "level": 2,
+   "name": "Terminal Key Injection, HSM & PIN Security Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documents key-injection certificate\" (replaces manual Step 1).",
+     "- System auto-log of \"IT Security maintains Hardware Security Module\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates terminal encryption\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: dual-control and certified facility"
+    ],
+    "Pain Points / Risks": [
+     "- **Security risk**: Compromised injection process exposes PIN; mitigated by dual-control and certified facility"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSM; key-injection certificate repository; terminal encryption validation"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per terminal; per-rotation 1–2 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Manager",
+     "activity": "Terminal vendor injects cryptographic keys (under dual-control) at secured facility or remotely via HSM; documents key-injection certificate",
+     "duration": "Per terminal",
+     "n": "1",
+     "r": "Terminal Vendor / IT Security"
+    },
+    {
+     "a": "IT Security Manager",
+     "activity": "IT Security maintains Hardware Security Module (HSM) for key generation/storage; rotates keys per scheme mandates; audits access logs",
+     "duration": "Per rotation",
+     "n": "2",
+     "r": "IT Security"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager validates terminal encryption (PIN block, SRED) before deployment; archives key-injection certificates for audit",
+     "duration": "Per deployment",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Fraud Operations Analyst",
+    "Participants": "Fraud Ops Analyst, Ecommerce, Payment Ops Manager",
+    "Trigger": "Card-not-present transaction or 3DS version update",
+    "Volume": "~42,900 ecommerce orders/month"
+   },
+   "id": "W2797",
+   "level": 2,
+   "name": "3-D Secure (3DS) Authentication & Liability Shift Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"routes frictionless vs.\" (replaces manual Step 1).",
+     "- System auto-validate of \"checkout conversion impact\" (replaces manual Step 2).",
+     "- System auto-test of \"contested with ECI/CAVV evidence\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: frictionless optimization"
+    ],
+    "Pain Points / Risks": [
+     "- **Conversion risk**: Over-aggressive 3DS challenge reduces conversion; mitigated by frictionless optimization"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 3DS server; fraud-scoring integration; chargeback evidence (ECI/CAVV)"
+    ],
+    "Time Estimate": [
+     "- Continuous; monthly tuning 1–2 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Ecommerce enforces 3DS (EMV 3DS 2.x) on CNP transactions; routes frictionless vs. challenge flow based on risk score",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Ecommerce"
+    },
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Fraud Ops Analyst tracks authentication success rate and frictionless ratio; balances fraud reduction vs. checkout conversion impact",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Fraud Ops Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager validates liability shift (issuer liability on authenticated txns); ensures chargebacks on 3DS-authenticated sales are contested with ECI/CAVV evidence",
+     "duration": "Per chargeback",
+     "n": "3",
+     "r": "Payment Ops Manager / Chargeback Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; rare",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, IT Security, IT Incident, Legal, BSP/NPC (if breach), Acquirer",
+    "Trigger": "Suspected breach, terminal compromise, or acquirer incident notice",
+    "Volume": "~1–5 incidents/year"
+   },
+   "id": "W2798",
+   "level": 2,
+   "name": "Payment System Incident, Breach & Forensic Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"IT Incident contains incident\" (replaces manual Step 1).",
+     "- System workflow orchestration of \"Payment Ops Manager coordinates PCI-PFI\" (replaces manual Step 2).",
+     "- System auto-review of \"Legal manages regulatory notification and customer notification per Data\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: rehearsed runbook and pre-engaged PFI"
+    ],
+    "Pain Points / Risks": [
+     "- **Reputational/regulatory risk**: Mishandled breach triggers fines and trust loss; mitigated by rehearsed runbook and pre-engaged PFI"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Incident response runbook; forensic tooling; BSP/NPC breach notification portal"
+    ],
+    "Time Estimate": [
+     "- Hours to weeks depending on severity"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "IT Incident contains incident (isolate terminal/system); IT Security starts forensic capture; Payment Ops Manager notifies acquirer/scheme per agreement",
+     "duration": "1–4 hours",
+     "n": "1",
+     "r": "IT Incident / IT Security"
+    },
+    {
+     "a": "CFO",
+     "activity": "Payment Ops Manager coordinates PCI-PFI (PCI Forensic Investigator) engagement if breach suspected; notifies BSP and NPC where cardholder/personal data involved",
+     "duration": "24–72 hours",
+     "n": "2",
+     "r": "Payment Ops Manager / Legal"
+    },
+    {
+     "a": "CFO",
+     "activity": "Legal manages regulatory notification and customer notification per Data Privacy Act; Payment Ops Manager executes remediation and post-incident review",
+     "duration": "Weeks",
+     "n": "3",
+     "r": "Legal / Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, IT Security, Compliance, Legal",
+    "Trigger": "Scheme/BSP audit notice or compliance program",
+    "Volume": "~2–4 assessments/year"
+   },
+   "id": "W2799",
+   "level": 2,
+   "name": "Acquirer/Network Compliance (Visa/MC/BSP) & Assessment Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-countof \"Payment Ops Manager tracks scheme compliance programs (Visa\" (replaces manual Step 1).",
+     "- System auto-scan of \"scans, incident records\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks any fines/penalties\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: proactive program management"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Non-compliance triggers termination of card acceptance; mitigated by proactive program management"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance evidence binder; assessment tracker; fine/penalty ledger"
+    ],
+    "Time Estimate": [
+     "- 2–4 weeks per assessment"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager tracks scheme compliance programs (Visa VFMP, MC AMP, breach accountability; acquirer flow-down of BSP IT-risk rules — Cir. 808/982); maintains evidence binder",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Payment Ops Manager"
+    },
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Compliance responds to assessment scope; provides evidence (PCI AOC, scans, incident records); coordinates onsite assessment if required",
+     "duration": "Per assessment",
+     "n": "2",
+     "r": "Compliance / IT Security"
+    },
+    {
+     "a": "CFO",
+     "activity": "Payment Ops Manager remediates findings; reports compliance posture to CFO and Audit Committee; tracks any fines/penalties",
+     "duration": "Per assessment",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-471"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly board",
+    "Owner": "Finance Analyst",
+    "Participants": "Finance Analyst, Payment Ops Manager, FP&A, Marketing",
+    "Trigger": "Monthly management reporting",
+    "Volume": "All tenders, all channels"
+   },
+   "id": "W2800",
+   "level": 2,
+   "name": "Payment Channel Performance, Cost-to-Serve & Tender Mix Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares payment dashboard\" (replaces manual Step 1).",
+     "- System auto-report of \"reports to FP&A and Marketing\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-471 (ensure controlled execution — Payment Cost, Fraud & Tokenization Governance (PA-80.3).)",
+     "- operational: data-driven migration incentives"
+    ],
+    "Pain Points / Risks": [
+     "- **Strategic risk**: Suboptimal tender mix inflates cost-to-serve; mitigated by data-driven migration incentives"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payment analytics warehouse; tender-mix dashboard; FP&A planning module"
+    ],
+    "Time Estimate": [
+     "- 2–3 days/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Finance Analyst prepares payment dashboard: tender mix %, cost-per-transaction by tender, settlement timing, dispute/chargeback ratio, fraud rate",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager reports to FP&A and Marketing; recommends tender-mix strategy (e-wallet incentives to reduce cash handling cost, BNPL expansion in appliances)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Payment Ops Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "FP&A incorporates payment cost into financial plan; benchmarks vs. industry; presents quarterly to Executive Committee",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "FP&A"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  }
+ ]
+}

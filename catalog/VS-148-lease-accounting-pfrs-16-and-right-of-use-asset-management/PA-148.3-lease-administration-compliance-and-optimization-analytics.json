@@ -1,0 +1,579 @@
+{
+ "process_area": {
+  "id": "PA-148.3",
+  "title": "Lease Administration, Compliance & Optimization Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/PA-148.3-lease-administration-compliance-and-optimization-analytics.md",
+ "value_stream": {
+  "directory": "VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management",
+  "id": "VS-148",
+  "name": "Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-111",
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly + annual",
+    "Owner": "Lease Accounting / Controller / Consolidation (VS-17)",
+    "Participants": "Controller, Consolidation (VS-17), Finance (VS-17.4), AP (VS-15), Treasury (VS-18), Audit (VS-21), External Auditor",
+    "Trigger": "Month/quarter/year-end close",
+    "Volume": "5-entity lease portfolio each close"
+   },
+   "id": "W4425",
+   "level": 2,
+   "name": "Lease Accounting Period-End Close, Reconciliation & Disclosures",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-reconciliation; disclosure-pack auto-generation; maturity-analysis engine; audit-support pack"
+    ],
+    "Controls": [
+     "- CTL-111 (ensure PFRS 16 lease-accounting completeness.)",
+     "- CTL-676: system reconciled to GL/AP/cash/FA monthly; eliminations validated; PFRS 16 disclosures complete; reviewed & auditor-supported"
+    ],
+    "Cross-references": [
+     "- links to VS-17 (R2R/consolidation), VS-15 (AP), VS-18 (treasury), VS-35 (FA), VS-21 (audit), W4417 (engine), W4424 (elimination), W4428 (controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation-break risk**: lease-system vs GL mismatch → close delay/finding; mitigated by monthly reconciliation",
+     "- **Disclosure-incompleteness risk**: missing PFRS 16 disclosure → auditor/SEC finding; mitigated by disclosure template & checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting engine (W4427); GL/consolidation (VS-17); AP/cash (VS-15/VS-18); FA (VS-35); BI (VS-28); disclosure templates; audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~2–4 days monthly; ~1–2 weeks annual"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting close the period — run final engine (W4417), reconcile lease-accounting system to GL ROU/liability, to AP/cash (VS-15/VS-18), and to FA register (VS-35)",
+     "duration": "Per close",
+     "n": "1",
+     "r": "Lease Accounting / Controller"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Lease Accounting/Consolidation run intercompany eliminations (W4424), validate consolidation, and prepare the **PFRS 16 disclosures** (maturity analysis, total cash outflow, ROU additions, depreciation/interest expense, variable/short-term/low-value expense, extensions/terminations/modifications)",
+     "duration": "Per close",
+     "n": "2",
+     "r": "Lease Accounting / Consolidation / Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Controller/Audit review & sign off, support external-audit (VS-21), and file the audited FS with SEC (links VS-22/VS-79)",
+     "duration": "Per close",
+     "n": "3",
+     "r": "Controller / Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4417",
+    "W4424",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-111",
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic data-quality audit",
+    "Owner": "Lease Accounting / Master Data (VS-29) / Controller",
+    "Participants": "Master Data (VS-29), Lease Admin (VS-42), Legal (VS-100), Real Estate (VS-97), IT (VS-27)",
+    "Trigger": "Repository setup; new/amended lease; data-quality review",
+    "Volume": "~205+ lease records + amendments across 5 entities"
+   },
+   "id": "W4426",
+   "level": 2,
+   "name": "Lease Data Governance, Master & Contract Repository",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Canonical lease repository with contract-link; data-quality rule-engine; duplicate/version detection; legal-hold integration"
+    ],
+    "Controls": [
+     "- CTL-111 (ensure PFRS 16 lease-accounting completeness.)",
+     "- CTL-676: canonical repository maintained; data-quality checked; abstract-vs-contract validated; records retained (VS-88); SoD-governed access"
+    ],
+    "Cross-references": [
+     "- links to VS-29 (master data), VS-42 (lease admin), VS-100 (legal), VS-88 (records), W4411 (abstract), W4427 (system), W4428 (controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **Data-quality risk**: incomplete/stale abstracts → wrong recognition; mitigated by data-quality checks & abstract-vs-contract match",
+     "- **Version-control risk**: superseded contracts retained as current; mitigated by status/version control & source-link"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease repository (W4427); master data (VS-29); contract/legal (VS-100/VS-42); records (VS-88); IT (VS-27); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~ongoing governance; periodic data-quality audit days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting/Master Data maintain the **lease repository** — canonical lease record (abstract W4411, source contract, entity, asset class, dates, payments, options, status) linked to contract-management (VS-100/VS-42) and master data (VS-29)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Lease Accounting / Master Data"
+    },
+    {
+     "a": "Controller",
+     "activity": "Lease Accounting run data-quality checks — completeness, duplicate detection, abstract-vs-contract match, key-field validation — and remediate exceptions",
+     "duration": "Periodic",
+     "n": "2",
+     "r": "Lease Accounting"
+    },
+    {
+     "a": "Controller / VP Legal",
+     "activity": "Lease Accounting/Legal retain contracts & audit trail (VS-88), manage legal-hold (VS-100), and govern access per SoD (VS-29/W4428)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Lease Accounting / Legal / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4411",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Per lifecycle + continuous operation",
+    "Owner": "Lease Accounting / IT (VS-27) / EA (VS-113)",
+    "Participants": "IT (VS-27), EA (VS-113), Controller, BI (VS-28), Consolidation (VS-17), TBM (VS-135)",
+    "Trigger": "System lifecycle; policy change (W4409); integration need",
+    "Volume": "One lease-accounting platform across 5 entities"
+   },
+   "id": "W4427",
+   "level": 2,
+   "name": "Lease Accounting System (Technology) Configuration & Integration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Integrated PFRS 16 engine; auto-journal to GL; AP/FA feed; consolidation feed; index-data integration"
+    ],
+    "Controls": [
+     "- CTL-676 (ensure controlled execution — Lease Administration, Compliance & Optimization Analytics (PA-148.3).)",
+     "- CTL-676: platform security-assessed (VS-27.3); integrated to GL/AP/FA/consolidation; engine config tested; cost governed (VS-135); reconciled (W4425)"
+    ],
+    "Cross-references": [
+     "- links to VS-27 (IT), VS-113 (EA), VS-28 (BI), VS-135 (TBM), W4409 (policy), W4425 (close), W4431 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Integration-gap risk**: lease system not integrated to GL/AP/FA → manual rekey/error; mitigated by end-to-end integration & reconciliation (W4425)",
+     "- **Engine-config-error risk**: wrong engine config (rate/method) → systematic mis-statement; mitigated by config testing & dual review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting platform; GL (VS-17); AP (VS-15); FA (VS-35); consolidation (VS-17); BI (VS-28); index feed; security (VS-27.3); TBM (VS-135)"
+    ],
+    "Time Estimate": [
+     "- Per-deployment weeks–months; continuous governance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / CIO",
+     "activity": "Lease Accounting/EA/IT select/configure the lease-accounting platform — PFRS 16 engine (PV, depreciation, interest, remeasurement, elimination), multi-entity/multi-currency, integration to GL (VS-17), AP (VS-15), FA (VS-35), BI (VS-28)",
+     "duration": "Per lifecycle",
+     "n": "1",
+     "r": "Lease Accounting / EA / IT / Controller"
+    },
+    {
+     "a": "CIO",
+     "activity": "IT/EA integrate & test — GL posting, AP/cash feed, FA-register link, consolidation feed, index/CPI feed — and migrate the portfolio (W4426)",
+     "duration": "Per deployment",
+     "n": "2",
+     "r": "IT / EA / Lease Accounting"
+    },
+    {
+     "a": "CIO / Controller",
+     "activity": "IT/Lease Accounting govern the platform — security (VS-27.3), change (VS-27.1), TBM cost (VS-135), roadmap — and optimize on analytics (W4431)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "IT / Lease Accounting / BI"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4409",
+    "W4425",
+    "W4426",
+    "W4431"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-111",
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Periodic audit + annual control review",
+    "Owner": "Internal Audit (VS-21) / Lease Accounting / Controller",
+    "Participants": "Audit (VS-21), Controller, Lease Accounting, Compliance (VS-22), External Auditor, Governance (VS-36)",
+    "Trigger": "Audit cycle; control review; SOX-style scoping",
+    "Volume": "Lease-accounting control set + audit cycle"
+   },
+   "id": "W4428",
+   "level": 2,
+   "name": "Audit, Internal Control & SOX-Style Compliance for Leases",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Control register linked to lease workflows; SoD/access analytics; sample-testing automation; finding-remediation workflow"
+    ],
+    "Controls": [
+     "- CTL-111 (ensure PFRS 16 lease-accounting completeness.)",
+     "- CTL-676: risk-based control set over the lease lifecycle; SoD & dual review; key controls tested; findings remediated; reported to Audit Committee"
+    ],
+    "Cross-references": [
+     "- links to VS-21 (audit), VS-36 (governance), VS-22 (compliance), W4410–W4414 (lifecycle), W4425 (close), internal-controls-matrix"
+    ],
+    "Pain Points / Risks": [
+     "- **Control-gap risk**: key control missing at high-risk points (identification, modification, disclosure) → mis-statement; mitigated by risk-based control set",
+     "- **SoD-breach risk**: same person abstracts & posts → override; mitigated by SoD & dual review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Audit (VS-21); controls register (internal-controls-matrix); lease-accounting (W4427); governance (VS-36); compliance (VS-22); GL (VS-17)"
+    ],
+    "Time Estimate": [
+     "- ~weeks per audit cycle; annual control review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / Audit Committee",
+     "activity": "Lease Accounting/Audit design the lease-accounting internal-control set — identification (W4410), abstracting review (W4411), rate/term/payment review (W4412), classification (W4413), recognition (W4414), modification (W4418), close/disclosure (W4425), SoD, access",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Lease Accounting / Audit"
+    },
+    {
+     "a": "Audit Lead",
+     "activity": "Audit test key controls (SoD, dual review, reconciliation, disclosure completeness), sample-test transactions, and assess SOX-style design & operating effectiveness",
+     "duration": "Per cycle",
+     "n": "2",
+     "r": "Audit / Lease Accounting"
+    },
+    {
+     "a": "Audit Committee / CFO",
+     "activity": "Audit/Controller remediate findings, support external-audit (VS-21), and report to Audit Committee/Governance (VS-36)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Audit / Controller / Governance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4410",
+    "W4411",
+    "W4412",
+    "W4413",
+    "W4414",
+    "W4418",
+    "W4425",
+    "W4427"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Per payment + periodic review",
+    "Owner": "Tax (VS-79) / Lease Accounting / Lease Admin (VS-42)",
+    "Participants": "Tax (VS-79), Lease Accounting, Lease Admin (VS-42), AP (VS-15), Treasury (VS-18), Legal (VS-100)",
+    "Trigger": "Lease payment; tax review; BIR change",
+    "Volume": "Lease payments across ~205+ leases × multiple periods"
+   },
+   "id": "W4429",
+   "level": 2,
+   "name": "Tax (VAT/WHT/Documentary Stamp) on Lease Payments",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Tax-treatment rule-engine per lease; AP WHT-gate; DST contract-trigger filing; BIR eFPS integration"
+    ],
+    "Controls": [
+     "- CTL-676 (ensure controlled execution — Lease Administration, Compliance & Optimization Analytics (PA-148.3).)",
+     "- CTL-676: tax treatment determined per lease; EWT withheld & VAT/DST filed; reconciled to GL/AP; BIR-audit supported"
+    ],
+    "Cross-references": [
+     "- links to VS-79 (tax/BIR), VS-15 (AP), VS-17 (GL), VS-100 (legal), W4411 (abstract), W4425 (close), W4428 (controls)"
+    ],
+    "Pain Points / Risks": [
+     "- **WHT-miss risk**: EWT not withheld on rent → disallowance + penalty; mitigated by AP-payment WHT gate",
+     "- **DST-miss risk**: DST not filed on lease contract → penalty; mitigated by contract-trigger DST filing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax/BIR eFPS (VS-79); lease-accounting (W4427); AP (VS-15); GL (VS-17); BIR forms; audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- Per payment/contract; periodic reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Lead / Controller",
+     "activity": "Tax/Lease Accounting determine the tax treatment per lease — VAT (12%) on residential/commercial rent as applicable, Expanded Withholding Tax (EWT) on rent, Documentary Stamp Tax (DST) on the lease contract, percentage tax considerations",
+     "duration": "Per lease + on change",
+     "n": "1",
+     "r": "Tax / Lease Accounting"
+    },
+    {
+     "a": "Tax Lead",
+     "activity": "Lease Admin/AP withhold EWT on rent payments, file DST on lease contracts, and remit VAT/EWT via BIR (VS-79); issue/withhold BIR forms (2307)",
+     "duration": "Per payment/contract",
+     "n": "2",
+     "r": "Lease Admin / AP / Tax"
+    },
+    {
+     "a": "Tax Lead / Controller",
+     "activity": "Tax/Lease Accounting reconcile tax to GL/AP (VS-15/VS-17), support BIR audit (VS-79/VS-21), and update on tax-law change",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Tax / Lease Accounting / Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4411",
+    "W4425",
+    "W4427",
+    "W4428"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-111",
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Monthly settlement",
+    "Owner": "Intercompany (VS-72) / Lease Accounting / Lease Admin (VS-42)",
+    "Participants": "Intercompany (VS-72), Lease Admin (VS-42), Treasury (VS-18), AP/AR (VS-15/VS-16), Property Mgmt (VS-97), Consolidation (VS-17)",
+    "Trigger": "Intercompany lease; monthly settlement; third-party landlord payment",
+    "Volume": "Intercompany (Property Mgmt → Depot etc.) + third-party landlord settlements"
+   },
+   "id": "W4430",
+   "level": 2,
+   "name": "Lessor/Property-Owner Counterparty Settlement (links VS-97/VS-72)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Intercompany auto-billing & matching; settlement engine; lessee-vs-lessor reconciliation; transfer-pricing validation"
+    ],
+    "Controls": [
+     "- CTL-111 (ensure PFRS 16 lease-accounting completeness.)",
+     "- CTL-676: rent/intercompany processed per transfer pricing; intercompany matched & settled monthly; lessee-vs-lessor reconciled; consolidated"
+    ],
+    "Cross-references": [
+     "- links to VS-72 (intercompany), VS-15/VS-16 (AP/AR), VS-97 (lessor/RE), VS-18 (treasury), W4414 (liability), W4424 (elimination)"
+    ],
+    "Pain Points / Risks": [
+     "- **Intercompany-mismatch risk**: lessee & lessor sides differ → settlement/elimination failure; mitigated by monthly match & reconciliation",
+     "- **Transfer-pricing risk**: non-arm's-length intercompany rent → tax exposure; mitigated by transfer-pricing policy"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Intercompany (VS-72); AP/AR (VS-15/VS-16); lease-accounting (W4427); consolidation (VS-17); treasury (VS-18); lessor/RE (VS-97)"
+    ],
+    "Time Estimate": [
+     "- ~monthly settlement hours"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / Treasurer",
+     "activity": "Lease Admin/Intercompany process rent/lease payments to third-party landlords (AP VS-15) and intercompany lease charges between the 5 entities (Property Mgmt as lessor, Depot as lessee) per arm's-length transfer pricing",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Lease Admin / Intercompany"
+    },
+    {
+     "a": "Controller",
+     "activity": "Intercompany/Consolidation settle intercompany lease balances at month-end, match to the elimination (W4424), and reconcile to intercompany AR/AP (VS-72)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Intercompany / Consolidation"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Lease Accounting/Property Mgmt reconcile lessee liability (W4414) to lessor receivable/asset (VS-97), resolve differences, and report consolidated (VS-17)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Lease Accounting / Property Mgr / Consolidation"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4414",
+    "W4424",
+    "W4427"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Monthly + annual portfolio review",
+    "Owner": "Lease Accounting / BI (VS-28) / Finance (VS-17.4) / Real Estate (VS-97)",
+    "Participants": "BI (VS-28), Finance (VS-17.4), Real Estate (VS-97), Lease Accounting, Strategy (VS-33), Controller",
+    "Trigger": "Reporting cycle; strategy; portfolio review",
+    "Volume": "~205+ lease portfolio analytics"
+   },
+   "id": "W4431",
+   "level": 2,
+   "name": "Lease Portfolio Analytics, Total Cost of Occupancy & Benchmarking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Lease/occupancy-cost dashboard; cost-per-sqm/%-of-revenue analytics; benchmark import; outlier detection"
+    ],
+    "Controls": [
+     "- CTL-676 (ensure controlled execution — Lease Administration, Compliance & Optimization Analytics (PA-148.3).)",
+     "- CTL-676: analytics complete & reconciled; total-occupancy-cost calculated; benchmarked; outliers actioned; reviewed by Finance/Strategy"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (BI), VS-97 (RE), VS-33 (strategy), VS-17.4 (FP&A), W4425 (close), W4432 (decisions)"
+    ],
+    "Pain Points / Risks": [
+     "- **Siloed-cost risk**: occupancy cost fragmented across rent/CAM/utilities → obscured; mitigated by total-occupancy-cost view",
+     "- **Benchmark-absence risk**: no benchmark → can't judge value; mitigated by industry benchmarking"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI (VS-28); lease-accounting (W4427); RE/portfolio (VS-97); strategy (VS-33); finance FP&A (VS-17.4); treasury (VS-18)"
+    ],
+    "Time Estimate": [
+     "- Monthly analytics; annual benchmarking/review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / CFO",
+     "activity": "Lease Accounting/BI build lease analytics — ROU/liability balances, depreciation/interest expense, total-lease cash outflow, cost per sqm, cost-as-%-of-revenue, by entity/site/category",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Lease Accounting / BI / Finance"
+    },
+    {
+     "a": "COO / CFO",
+     "activity": "Real Estate/Finance calculate **total cost of occupancy** (rent + CAM + utilities + property tax + maintenance) per site, benchmark vs retail/home-improvement norms, and identify outliers",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Real Estate / Finance / BI"
+    },
+    {
+     "a": "CFO / Strategy Lead",
+     "activity": "Strategy/Finance feed analytics into strategy (VS-33), site decisions (VS-20/VS-97), and lease-vs-buy/renewal decisions (W4432)",
+     "duration": "Annual/continuous",
+     "n": "3",
+     "r": "Strategy / Finance / Real Estate"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4425",
+    "W4427",
+    "W4432"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-111",
+    "CTL-676"
+   ],
+   "fields": {
+    "Frequency": "Per decision (~10–15 store + multiple equipment decisions/yr)",
+    "Owner": "Finance (VS-17.4) / Real Estate (VS-97) / Lease Accounting",
+    "Participants": "Finance (VS-17.4), Real Estate (VS-97/VS-20), Treasury (VS-18), Capex (VS-40), Strategy (VS-33), Lease Accounting, Tax (VS-79)",
+    "Trigger": "Lease expiry; new asset need; capex decision; optimization review",
+    "Volume": "Renewal/new-lease/buy decisions across portfolio"
+   },
+   "id": "W4432",
+   "level": 2,
+   "name": "Lease vs Buy, Renewal & Optimization Decision Support",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Lease-vs-buy model with PFRS 16 impact; market-rent benchmark; renewal-decision dashboard; benefit-realization tracking"
+    ],
+    "Controls": [
+     "- CTL-111 (ensure PFRS 16 lease-accounting completeness.)",
+     "- CTL-676: structured lease-vs-buy/renewal analysis; market-rent benchmarked; optimization measured; approved by Finance/Strategy"
+    ],
+    "Cross-references": [
+     "- links to VS-97 (RE), VS-40 (capex), VS-18 (treasury), VS-33 (strategy), VS-42 (lease admin/negotiation), VS-112 (benefit), W4431 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Sub-optimal-renewal risk**: auto-renew above market → value leakage; mitigated by market-rent benchmark & analysis",
+     "- **Wrong-lease-vs-buy risk**: leasing what should be owned (or vice versa) → higher TCO; mitigated by structured lease-vs-buy model"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lease-accounting/analytics (W4427/W4431); RE (VS-97); treasury (VS-18); capex (VS-40); strategy (VS-33); finance FP&A (VS-17.4)"
+    ],
+    "Time Estimate": [
+     "- ~1–3 days per major decision"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO / COO",
+     "activity": "Finance/Real Estate build the **lease-vs-buy** analysis — compare PFRS 16 ROU/liability + total-lease-cost vs purchase capex + depreciation + financing + residual, with tax/cash-flow modeling",
+     "duration": "Per decision",
+     "n": "1",
+     "r": "Finance / Real Estate / Treasury"
+    },
+    {
+     "a": "COO / CFO",
+     "activity": "Finance/Real Estate assess renewal vs relocate vs downsize at expiry — market rent, renewal terms, strategic fit, total occupancy (W4431), and negotiate (VS-42)",
+     "duration": "Per expiry",
+     "n": "2",
+     "r": "Finance / Real Estate / Lease Admin"
+    },
+    {
+     "a": "CFO / Strategy Lead",
+     "activity": "Finance/Strategy execute optimization — consolidate sites, renegotiate outliers, right-size space, convert to own (VS-97) where economic — and measure benefit realization (VS-112)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Finance / Strategy / Real Estate"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4427",
+    "W4431"
+   ]
+  }
+ ]
+}

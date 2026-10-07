@@ -1,0 +1,574 @@
+{
+ "process_area": {
+  "id": "PA-157.1",
+  "title": "Multi-Element Arrangement Identification & Performance Obligation Assessment"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/PA-157.1-multi-element-arrangement-identification-and-performance-obligation-assessment.md",
+ "value_stream": {
+  "directory": "VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting",
+  "id": "VS-157",
+  "name": "Revenue Recognition (PFRS 15) & Complex Contract Accounting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Continuous register maintenance + quarterly reconcile",
+    "Owner": "Revenue Accounting Manager (Controller org)",
+    "Participants": "Controller, CFO, Channel owners (VS-10/11/13/45/47/48/53/54/92/95/142/154/155/156), Tax (VS-79), External Auditor",
+    "Trigger": "New channel/revenue stream; quarterly close; annual policy refresh",
+    "Volume": "1 enterprise revenue-stream register; ~20+ distinct revenue types across 5 entities"
+   },
+   "id": "W4625",
+   "level": 2,
+   "name": "Revenue-Stream & Contract-Portfolio Register Maintenance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Contract/revenue-stream register auto-populated from ERP contract & channel modules; GL-revenue-account coverage exception report; change-detection alert when a channel posts a new revenue GL"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: every revenue stream has a documented PFRS 15 decision (links VS-21 financial-controls audit); register reconciled to GL quarterly; new streams gated by W4645"
+    ],
+    "Cross-references": [
+     "- elevates W487 (VS-15.1); links to VS-17.1 (GL), VS-13/VS-54 (loyalty/gift card), W4643 (disclosure), W4645 (new-stream gate)"
+    ],
+    "Pain Points / Risks": [
+     "- **Shadow-revenue risk**: A new stream (e.g., a Pass-17 service) books revenue with no PFRS 15 decision on record → mis-recognition accumulates silently; mitigated by register-to-GL reconciliation and the W4645 pre-launch gate",
+     "- **Orphan-account risk**: GL revenue accounts with no owning stream hide errors; mitigated by account-to-stream mapping and quarterly reconcile"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Revenue/Contract module (revenue-stream master, performance-obligation tags); GL account mapping (links VS-17.1); legacy W487 register (VS-15.1); channel subledgers (VS-10/13/54)"
+    ],
+    "Time Estimate": [
+     "- ~2–3 days/quarter register maintenance + reconcile; absorbed in Revenue Accounting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Revenue Accounting maintains the enterprise revenue-stream & contract-portfolio register: each stream mapped to (a) owning channel/VS, (b) entity, (c) PFRS 15 treatment summary, (d) performance obligation(s), (e) recognition trigger, (f) gross/net posture, (g) deferred vs. current, (h) disclosure category",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Revenue Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Each channel owner confirms its streams (POS cash-and-carry, BOPIS, delivery, installation, subscription, retail media, marketplace commission, consignment sell-through, gift card, loyalty, trade-in, COD, VAS/bills-payment, construction-finance referral) are captured and unchanged/changed",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Channel Owners / Revenue Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Revenue Accounting reconciles the register to GL revenue accounts and to the W487 legacy scenario list; flags any stream lacking a documented PFRS 15 decision or any GL account lacking an owning stream",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Revenue Accounting Manager / Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4643",
+    "W4645",
+    "W487"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Per significant contract + periodic review of template contracts",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Legal (VS-100.3), Channel owners, Tax (VS-79), Controller",
+    "Trigger": "New/custom contract; contract modification; bundling of separate contracts",
+    "Volume": "~hundreds of B2B/project/template contracts/yr; ~5–10 complex combinations/yr"
+   },
+   "id": "W4626",
+   "level": 2,
+   "name": "Contract Identification, Combination & Modification Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Contract-clause extraction to flag combination/modification triggers; modification decision-template workflow linked to the project module"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: contract-identification decision documented for atypical arrangements; modification classification reviewed by Controller; Legal sign-off on combined-contract conclusions"
+    ],
+    "Cross-references": [
+     "- links to VS-100.3 (legal/contracts), VS-11.2/VS-46.2 (project/B2B), VS-66 (design), W4577/W4553/W4265 (Pass-17 streams), W4641 (close)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-combined-contracts risk**: Treating one commercial deal as several contracts (or vice versa) mis-allocates the transaction price across obligations; mitigated by Legal+Accounting joint assessment and documented criteria",
+     "- **Modification mis-classification risk**: A change order treated as a new contract when it should be a cumulative catch-up (or the reverse) distorts period revenue; mitigated by the modification-decision template"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contract lifecycle (VS-100.3); project/job module (VS-11.2); revenue-stream register (W4625); modification journal (VS-17.1)"
+    ],
+    "Time Estimate": [
+     "- ~1–3 hours per complex contract; ~5–10 days/yr aggregate for combinations/modifications"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / VP Legal",
+     "activity": "Revenue Accounting/Legal determine whether a contract exists under PFRS 15 (enforceable rights/obligations, commercial substance, collectibility probable) for atypical arrangements (trade-in W4577, construction-finance referral W4553, COD W4265, design-service MOUs VS-66)",
+     "duration": "Per contract",
+     "n": "1",
+     "r": "Revenue Accounting / Legal"
+    },
+    {
+     "a": "Controller",
+     "activity": "Assess contract combination (multiple contracts with same customer entered near in time with single commercial objective — common in project/B2B VS-11/VS-46) and contract modification (change-scope/price — is it a separate contract or a cumulative catch-up?)",
+     "duration": "Per modification",
+     "n": "2",
+     "r": "Revenue Accounting / Legal"
+    },
+    {
+     "a": "Controller",
+     "activity": "Document the identification/combination/modification conclusion and the resulting performance-obligation remeasurement; route consequential changes to W4641 close cycle and W4645 if a new pattern",
+     "duration": "Per contract",
+     "n": "3",
+     "r": "Revenue Accounting Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4265",
+    "W4553",
+    "W4577",
+    "W4625",
+    "W4641",
+    "W4645"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Per bundle SKU/service combo + annual review",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Merchandising (VS-01.1/VS-92), Services (VS-12/VS-66), Pricing, Controller",
+    "Trigger": "New bundle/kit launch (VS-92); installation-with-product sale (VS-12); design+build (VS-66)",
+    "Volume": "~300–500 kit/bundle SKUs in catalog; every product+install sale (VS-12)"
+   },
+   "id": "W4627",
+   "level": 2,
+   "name": "Performance-Obligation Identification for Bundled Product + Service Arrangements",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Performance-obligation tagging on the kit/BOM master; auto-split of bundle revenue at POS based on obligation tags"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: distinct-obligation assessment documented per bundle; recognition-timing criteria checklist; obligation tags reviewed at kit setup"
+    ],
+    "Cross-references": [
+     "- links to VS-92 (kitting), VS-12 (installation), VS-66 (design), VS-01.1 (assortment), W544 (service work order), W4634 (allocation)"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden-service-in-product risk**: Recognizing the entire bundle at product delivery overstates period revenue when installation is a separate obligation not yet complete; mitigated by obligation split at the SKU/work-order level",
+     "- **Over-time mis-application risk**: Applying over-time recognition to installation that does not meet the no-alternative-use/right-to-payment test → premature revenue; mitigated by the criteria checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Kit/BOM module (VS-92.1); service work order (W544); POS/order-to-cash posting (VS-08/VS-16); revenue obligation tags"
+    ],
+    "Time Estimate": [
+     "- ~1–2 hours per new bundle/combo; ~3–5 days/yr aggregate"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "For each bundle (VS-92) and product+installation sale (VS-12), identify the distinct performance obligations: is the product distinct from the installation service? Is the design service (VS-66) distinct from materials? Apply the \"distinct\" criteria (capable of being used alone; identifiable in the contract)",
+     "duration": "Per bundle/combo",
+     "n": "1",
+     "r": "Revenue Accounting / Merchandising / Services"
+    },
+    {
+     "a": "Controller",
+     "activity": "Determine recognition timing per obligation: product = point in time (delivery/POS, control transfer); installation = point in time (completion) or over-time if it creates an asset with no alternative use + right to payment; design = over-time/point-in-time per terms",
+     "duration": "Per combo",
+     "n": "2",
+     "r": "Revenue Accounting"
+    },
+    {
+     "a": "Controller / CIO",
+     "activity": "Tag the kit/BOM (VS-92.1) and the service-work-order (W544) with the performance-obligigation structure so POS/order posting routes revenue to the correct obligation and period",
+     "duration": "Per setup",
+     "n": "3",
+     "r": "Revenue Accounting / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4634",
+    "W544"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Per flow + annual",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Channel owners (VS-48/95/156/142/154/155), Legal (VS-100.3), Tax (VS-79), Controller, External Auditor",
+    "Trigger": "New marketplace/retail-media/VAS/COD flow; annual gross/net review",
+    "Volume": "~7 principal-vs-agent decisions across VS-48/VS-95/VS-156/VS-142/VS-154/VS-155/VS-11(3P)"
+   },
+   "id": "W4628",
+   "level": 2,
+   "name": "Principal-vs-Agent (Gross-vs-Net) Determination for Marketplace, Retail Media, VAS & COD",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Principal-vs-agent decision template with indicator scoring; auto-routing of commission vs. gross revenue at the transaction per the decision"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: documented indicator-based principal-vs-agent decision per flow (reviewed by External Auditor); system posting matches the conclusion; re-assessed annually"
+    ],
+    "Cross-references": [
+     "- links to VS-48 (retail media), VS-95 (marketplace), VS-156 (VAS agency), VS-142 (COD), VS-154 (construction finance), VS-155 (trade-in), W4643 (disclosure), W4645 (gate)"
+    ],
+    "Pain Points / Risks": [
+     "- **Gross-vs-net error risk**: Mis-stating a net commission flow as gross inflates reported revenue (and COGS) — a top external-audit focus (the group is privately held; no SEC disclosure regime applies); mitigated by the documented indicator analysis and annual re-assessment",
+     "- **Inconsistent-posting risk**: A gross/net conclusion not reflected in system posting → books diverge from the accounting decision; mitigated by IT config + Controller sign-off"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Marketplace/retail-media/VAS/COD subledgers; POS/ecommerce revenue posting (VS-08/VS-10); GL gross-vs-net account structure; disclosure schedule (W4643)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 days per new flow decision; ~3–5 days annual re-assessment across all flows"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller / VP Legal",
+     "activity": "For each flow where BuildRight sits between a third party and a customer (marketplace 3P seller VS-95, retail media VS-48, VAS/financial-agency VS-156, COD VS-142, construction-finance referral VS-154, trade-in resale VS-155), apply the principal-vs-agent indicators: control of the good/service before transfer; primary obligor; inventory risk; pricing discretion; credit risk",
+     "duration": "Per flow",
+     "n": "1",
+     "r": "Revenue Accounting / Channel / Legal"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Conclude gross (recognize full revenue + offsetting cost) vs. net (recognize only commission/fee) and document the rationale + indicator evidence; for VAS (VS-156) confirm BuildRight is agent of the principal; for marketplace confirm BuildRight is platform operator (net on commission)",
+     "duration": "Per flow",
+     "n": "2",
+     "r": "Revenue Accounting Manager"
+    },
+    {
+     "a": "Controller / CIO",
+     "activity": "Configure the ERP/POS/ecommerce posting to gross or net per the conclusion; reflect in the disclosure schedule (W4643) and re-assess annually or on flow change",
+     "duration": "Per setup + annual",
+     "n": "3",
+     "r": "Revenue Accounting / IT"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4643",
+    "W4645"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Monthly settlement + per setup",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Merchandising (VS-45), Vendor Mgmt (VS-03), Controller, Tax (VS-79)",
+    "Trigger": "Consignment/VMI setup (VS-45); monthly sell-through settlement",
+    "Volume": "~300 VMI/consignment SKUs from 12 vendors; monthly settlements"
+   },
+   "id": "W4629",
+   "level": 2,
+   "name": "Consignment & VMI Revenue-Timing & Sell-Through Recognition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sell-through-triggered auto-posting of consignment revenue + vendor payable; exception dashboard for unmatched sell-through"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: ownership-flag prevents premature recognition; three-way reconcile (POS × vendor settlement × consignment inventory) monthly; principal/gross posture documented"
+    ],
+    "Cross-references": [
+     "- links to VS-45 (consignment/VMI), W543 (sell-through trigger), VS-45.3 (settlement), VS-05 (inventory), W4647 (contract-liability reconcile)"
+    ],
+    "Pain Points / Risks": [
+     "- **Premature-recognition risk**: Recognizing consignment revenue at store receipt (as if purchased) overstates revenue and inventory; mitigated by the ownership-flag gate and sell-through trigger",
+     "- **Unreconciled-sell-through risk**: POS sell-through and vendor settlement mismatch → revenue or payable error; mitigated by the monthly three-way reconcile (POS × settlement × inventory)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consignment/VMI module (VS-45); POS sell-through trigger (W543); AP/vendor settlement (VS-45.3); consignment inventory ownership flag (VS-05)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 days/month consignment/VMI revenue accounting"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Confirm revenue is NOT recognized at consignment-stock receipt (goods remain vendor-owned per VS-45.1); recognize only at customer sell-through (W543 trigger) — verify the inventory ownership flag and the sell-through feed",
+     "duration": "Per settlement",
+     "n": "1",
+     "r": "Revenue Accounting / Merchandising"
+    },
+    {
+     "a": "Controller",
+     "activity": "Compute consignment/VMI revenue at sell-through price, validate against the POS sell-through report (W543) and the vendor settlement (VS-45.3), and confirm BuildRight is principal (gross) for consignment sales to the consumer",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Revenue Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "Post revenue + AP/vendor-payable at sell-through; reconcile the consignment inventory balance (vendor-owned) against recognized revenue and the monthly vendor statement; investigate any unmatched sell-through",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Revenue Accounting / AP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4647",
+    "W543"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Per arrangement type + quarterly deposit review",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Store/Trade ops (VS-07/VS-11), AR (VS-16), Controller, Legal (VS-100.3)",
+    "Trigger": "Layaway/deposit transaction (VS-08/VS-11); bill-and-hold request; annual review",
+    "Volume": "Layaway/custom-order deposits on project & special orders (~thousands/yr); bill-and-hold rare"
+   },
+   "id": "W4630",
+   "level": 2,
+   "name": "Layaway, Customer-Deposit & Bill-and-Hold Recognition Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Deposit-to-deferred-revenue auto-posting; control-transfer-triggered release; contract-liability aging dashboard"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: deposits posted to contract liability (not revenue); bill-and-hold criteria checklist; contract-liability GL reconciled to open-deposit list quarterly"
+    ],
+    "Cross-references": [
+     "- links to VS-08/VS-11/VS-16 (layaway/deposit/AR), W546 (project deposit), W4647 (contract-liability reconcile), W4635 (gift-card breakage — analogous deferred model)"
+    ],
+    "Pain Points / Risks": [
+     "- **Deposit-as-revenue risk**: Booking customer deposits as revenue at cash receipt overstates revenue and understates contract liability; mitigated by the deferred-revenue posting rule and quarterly reconcile",
+     "- **Bill-and-hold abuse risk**: Recognizing bill-and-hold revenue without meeting all criteria → premature revenue (a classic audit finding); mitigated by the mandatory criteria checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Layaway/deposit module (VS-08/VS-11/VS-16); contract-liability GL (VS-17.1); project deposit W546; AR (VS-16)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 days/quarter deposit/contract-liability reconciliation; bill-and-hold cases ad-hoc"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Assess revenue recognition for customer deposits & layaway: deposit = contract liability (deferred) until control transfers (delivery for layaway; milestone for project deposits W546); do NOT recognize at cash receipt",
+     "duration": "Per type",
+     "n": "1",
+     "r": "Revenue Accounting"
+    },
+    {
+     "a": "Controller",
+     "activity": "For bill-and-hold (customer pays but asks BuildRight to hold inventory), apply the PFRS 15 criteria (commercial reason, segregated, ready for transfer, timing fixed) before recognizing at billing rather than delivery",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Revenue Accounting / Trade Ops"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile the customer-deposit/contract-liability GL balance to the open layaway/deposit/POU (point-of-use) list quarterly; release to revenue at the control-transfer trigger",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Revenue Accounting / AR"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4635",
+    "W4647",
+    "W546"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Per change + annual fair-value reset",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Loyalty (VS-13), Marketing (VS-14), Actuarial/Analytics, Controller, External Auditor",
+    "Trigger": "Loyalty program change (VS-13); new reward tier/partner; annual fair-value refresh",
+    "Volume": "1 loyalty program; 600K members; ~ points earned on every one of 2.8M monthly POS transactions"
+   },
+   "id": "W4631",
+   "level": 2,
+   "name": "Loyalty-Points, Rewards & Deferred-Revenue Performance Obligation Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Transaction-price auto-allocation to points at POS; engine-to-GL auto-reconcile with exception routing; redemption-triggered revenue release"
+    ],
+    "Controls": [
+     "- CTL-701 (ensure controlled execution — Multi-Element Arrangement Identification & Performance Obligation Assessment (PA-157.1).)",
+     "- CTL-701: documented SSP/breakage methodology (External-Auditor reviewed); engine-to-GL monthly reconcile; estimate refreshed quarterly"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (loyalty), W104/W17 (points liability), W4633/W4636 (SSP/breakage measurement), W4647 (reconcile), W4643 (disclosure)"
+    ],
+    "Pain Points / Risks": [
+     "- **Actuarial-estimation risk**: The points fair value and breakage rate drive a material deferred-revenue balance and are estimation-heavy → audit scrutiny and period volatility; mitigated by documented methodology (W4636) and quarterly true-up",
+     "- **Engine-to-GL drift risk**: Loyalty-engine points liability and GL deferred revenue diverge → mis-statement; mitigated by monthly reconcile"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Loyalty engine (VS-13 W17/W104); POS earning feed (VS-08); deferred-revenue GL (VS-17.1); redemption feed"
+    ],
+    "Time Estimate": [
+     "- ~3–5 days/quarter points accounting + estimate refresh; monthly ~1 day reconcile"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Confirm loyalty points are a separate performance obligation (distinct from the underlying sale); allocate a portion of the transaction price to points at each earning transaction based on standalone selling price (W4633/W4636) — defer that portion",
+     "duration": "Per setup + ongoing",
+     "n": "1",
+     "r": "Revenue Accounting / Loyalty"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Set the breakage/forfeiture estimate and the points fair value; recognize deferred revenue to revenue when points are redeemed (or expire/forfeit) per W4636; review the estimate each period",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Revenue Accounting / Analytics"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile the points-deferred-revenue GL to the loyalty-engine points liability (W104/W17) and the redemption feed monthly; investigate redemption-rate drift",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Revenue Accounting / Loyalty ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W104",
+    "W17",
+    "W4633",
+    "W4636",
+    "W4643",
+    "W4647"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-114",
+    "CTL-701"
+   ],
+   "fields": {
+    "Frequency": "Per project type + periodic",
+    "Owner": "Revenue Accounting Manager",
+    "Participants": "Trade/Government sales (VS-11/VS-46), Project Finance, Controller, Tax (VS-79), External Auditor",
+    "Trigger": "Project/contract milestone (VS-11/VS-46); annual policy review",
+    "Volume": "~ Project/B2B/G2G contracts (VS-11/VS-46); material project revenue (~30% trade + 10% corporate)"
+   },
+   "id": "W4632",
+   "level": 2,
+   "name": "Project & Government Over-Time-vs-Point-in-Time Recognition Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-to-cost % complete auto-computation from the project module; contract asset/liability auto-derivation from billings-vs-revenue; onerous-contract trigger on margin breach"
+    ],
+    "Controls": [
+     "- CTL-114 (ensure PFRS 15 recognition & cut-off control.)",
+     "- CTL-701: documented over-time/point-in-time decision per contract; measure-of-progress reviewed by Controller; contract asset/liability reconciled monthly; onerous-contract provision assessed each period"
+    ],
+    "Cross-references": [
+     "- links to VS-11.2/VS-46.2 (project/government), W165/W1288 (progress billing), W918 (project margin), W4641 (close), W4643 (disclosure)"
+    ],
+    "Pain Points / Risks": [
+     "- **Measure-of-progress error risk**: An inappropriate input/output measure mis-states period revenue (front-loading or back-loading); mitigated by documented method selection and periodic review",
+     "- **Onerous-contract miss risk**: Failing to recognize a PAS 37 onerous-contract provision on a loss project understates the liability; mitigated by the periodic onerous check tied to margin monitoring (VS-11.2 W918)",
+     "- **Billings-vs-revenue drift risk**: Billings and revenue diverge without a clean contract asset/liability split → cut-off errors; mitigated by monthly reconcile"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Project/job module (VS-11.2); progress billing (W165/W1288); contract asset/liability GL (VS-17.1); government module (VS-46)"
+    ],
+    "Time Estimate": [
+     "- ~3–6 days/quarter project/government revenue accounting + measure-of-progress review; per-contract ~2–4 hours"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "For project/government contracts (VS-11.2/VS-46.2), assess over-time recognition: does BuildRight create an asset with no alternative use AND an enforceable right to payment for performance to date? If both → over-time (input/output measure of progress); else point-in-time at delivery/handover",
+     "duration": "Per contract",
+     "n": "1",
+     "r": "Revenue Accounting / Project Finance"
+    },
+    {
+     "a": "Controller / CFO",
+     "activity": "Select and document the measure of progress (cost-to-cost input method typical for project supply; output/milestone if more faithful); compute % complete, contract revenue, and the onerous-contract check (PAS 37) each period",
+     "duration": "Per period",
+     "n": "2",
+     "r": "Revenue Accounting / Project Finance"
+    },
+    {
+     "a": "Controller",
+     "activity": "Reconcile over-time/point-in-time revenue to billings (W165/W1288 progress billing) and the contract asset/liability (billed-but-unrecognized vs. recognized-but-unbilled); investigate cumulative catch-up at each measurement date",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Revenue Accounting / AR"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1288",
+    "W165",
+    "W4641",
+    "W4643",
+    "W918"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,596 @@
+{
+ "process_area": {
+  "id": "PA-170.2",
+  "title": "Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/PA-170.2-trust-receipt-warehouse-receipt-and-import-inventory-financing-operations.md",
+ "value_stream": {
+  "directory": "VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing",
+  "id": "VS-170",
+  "name": "Inventory Pledge, Asset-Based Lending & Trust-Receipt (Warehouse-Receipt) Financing"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-116",
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Per setup + on legal/bank change",
+    "Owner": "ABL & Collateral Operations Manager / Treasury / Legal",
+    "Participants": "Treasury (VS-18), Legal (VS-100), Import/Customs (VS-02.2/VS-87), AP (VS-15), Finance (VS-17), Compliance (VS-86)",
+    "Trigger": "Import-line close (W4937); TR program launch; legal/regulatory update (PD 115)",
+    "Volume": "1 TR program × import-line facilities × ~400–600 TEUs/month"
+   },
+   "id": "W4945",
+   "level": 2,
+   "name": "Trust-Receipt Financing Program Setup & PD 115 Compliance Framework",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- TR subledger auto-create on import release; goods-in-trust inventory status auto-flag; proceeds-auto-link to sale; remittance-due alerts"
+    ],
+    "Controls": [
+     "- CTL-116 (ensure borrowing-base & covenant compliance.)",
+     "- CTL-741: TR framework per PD 115; goods-in-trust segregated; anti-diversion controls; officer trained; audited (VS-21/VS-86)"
+    ],
+    "Cross-references": [
+     "- links to VS-15.1 (W232 LC/W239 customs), VS-05/VS-29 (inventory status), VS-100 (PD 115 legal), VS-86 (anti-diversion/AML), W4937 (facility), W4946–W4948 (TR lifecycle)"
+    ],
+    "Pain Points / Risks": [
+     "- **Diversion risk**: Trust goods sold/consumed without remittance → PD 115 criminal liability (officer personal) + bank default; mitigated by segregation, proceeds tracking, and anti-diversion controls (W4947)",
+     "- **Segregation risk**: Trust goods commingled with owned inventory → untraceable proceeds; mitigated by goods-in-trust inventory status",
+     "- **Compliance-ignorance risk**: Staff unaware of PD 115 obligations; mitigated by training and the compliance review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/TR subledger (VS-18/VS-27); inventory status master — goods-in-trust (VS-05/VS-29); import/LC (VS-15.1 W232); customs (VS-15.1 W239/VS-87); document repository (VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~4–6 weeks initial setup; ~continuous governance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO / Legal",
+     "activity": "Establish the TR-financing framework per PD 115 (Trust Receipts Law) and the credit agreement: the trust-receipt instrument, the goods covered (imported goods under LC/DA/DP — links VS-15.1 W232), the proceeds obligation (sell and remit, or hold and pay at term), segregation of trust goods from general inventory, recordkeeping, and the compliance/anti-diversion controls (PD 115 Sec. 13 criminal liability)",
+     "duration": "Per setup",
+     "n": "1",
+     "r": "Legal / ABL Manager / Treasury"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Configure the TR operational model in ERP/treasury: TR subledger (per shipment/lc/BL), goods-in-trust inventory status (distinct from owned — links VS-05/VS-29), proceeds tracking, remittance scheduling, and the integration with import settlement (W232/W239) and inventory ownership transfer on remittance/release",
+     "duration": "Per setup",
+     "n": "2",
+     "r": "ABL Manager / Treasury / IT (VS-27) / Finance"
+    },
+    {
+     "a": "CFO / Treasurer",
+     "activity": "Train & govern: brief Import/Customs, AP, Inventory, and DC/Store Ops on goods-in-trust segregation, the prohibition on diversion/sale-without-remittance, and the audit trail; establish the compliance review (links VS-21/VS-86) and reporting to the bank",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "ABL Manager / Legal / Compliance / Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W232",
+    "W239",
+    "W4937",
+    "W4946",
+    "W4947",
+    "W4948"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Per import shipment (~400–600 TEUs/month; ~10–15 regulated shipments)",
+    "Owner": "ABL & Collateral Operations Manager / Import Finance / Treasury",
+    "Participants": "Import/Customs (VS-02.2/VS-87), AP (VS-15.1), Treasury (VS-18), DC Ops (VS-04), Legal (VS-100)",
+    "Trigger": "Import arrival & clearance (VS-02.2/VS-87); bank document release request",
+    "Volume": "~1 TR per shipment/lc × import volume"
+   },
+   "id": "W4946",
+   "level": 2,
+   "name": "Import Document Release Against Trust Receipt & Goods-in-Trust Establishment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- TR auto-create on import clearance; goods-in-trust status auto-flag; TR-payable auto-post; duty/freight/LC auto-settle"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: TR executed per template; goods-in-trust status enforced; TR-payable recorded; cost-settlement reconciled"
+    ],
+    "Cross-references": [
+     "- links to VS-02.2 (W144/W464 import), VS-87 (customs), VS-15.1 (W232 LC/W239 duty/W249 demurrage), VS-05/VS-29 (inventory status), VS-04 (DC), W4945 (framework), W4947 (proceeds), W4948 (remittance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Document-execution risk**: TR improperly executed → goods released without enforceable bank security; mitigated by Legal-reviewed TR template and execution log",
+     "- **Status-error risk**: Goods-in-trust not flagged in inventory → sold as owned, proceeds lost; mitigated by mandatory goods-in-trust status on receipt",
+     "- **Cost-settlement risk**: Duty/freight/LC mis-settled against TR → reconciliation breaks; mitigated by the integrated settlement flow"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/TR subledger (VS-18); import/LC (VS-15.1 W232); customs (VS-15.1 W239/VS-87); inventory status — goods-in-trust (VS-05/VS-29); DC WMS (VS-04)"
+    ],
+    "Time Estimate": [
+     "- ~1–3 days per shipment (document release + receipt + posting)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasurer",
+     "activity": "On import arrival & customs clearance (VS-02.2 W144/W464, VS-87), request the bank release the shipping documents (BL, invoice, LC) against execution of a trust receipt: execute the TR instrument (W4945), acknowledge goods held in trust for the bank, and take physical/constructive possession for sale/manufacture per the TR terms",
+     "duration": "Per shipment",
+     "n": "1",
+     "r": "Import Finance / Treasury / Legal"
+    },
+    {
+     "a": "ABL Manager",
+     "activity": "Establish goods-in-trust: receive the documents, post the inventory as goods-in-trust status (distinct from owned — links VS-05/VS-29), record the TR obligation (principal + interest/charges), and stage at the DC (VS-04) under the segregated status",
+     "duration": "Per shipment",
+     "n": "2",
+     "r": "Import Finance / DC Ops / Treasury / IT"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Settle the import costs & integrate: settle customs duty (VS-15.1 W239), freight/demurrage (W249), and the LC (W232); record the trust-receipt receivable payable to the bank; and trigger proceeds tracking (W4947) and remittance scheduling (W4948)",
+     "duration": "Per shipment",
+     "n": "3",
+     "r": "Import Finance / AP / Treasury"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W144",
+    "W232",
+    "W239",
+    "W249",
+    "W464",
+    "W4945",
+    "W4947",
+    "W4948"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Continuous (per transaction against trust goods)",
+    "Owner": "ABL & Collateral Operations Manager / Finance / Treasury",
+    "Participants": "Finance (VS-17), Treasury (VS-18), POS/Ecommerce (VS-08/VS-10), B2B (VS-11), Data (VS-28)",
+    "Trigger": "Sale/usage of trust goods (POS VS-08, B2B VS-11, ecommerce VS-10)",
+    "Volume": "~15–25% of the 2.8M monthly POS + B2B + ecommerce transactions tied to trust goods"
+   },
+   "id": "W4947",
+   "level": 2,
+   "name": "Trust-Receipt Sell-Through Tracking & Proceeds Segregation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Proceeds auto-segregate on sale; FIFO/lot attribution engine; TR-payable auto-reduce; shortfall alerts; bank reporting auto-feed"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: proceeds segregated; anti-diversion enforced; attribution reconciled to sales/depletion; shortfalls alerted"
+    ],
+    "Cross-references": [
+     "- links to VS-08/VS-10/VS-11 (sales), VS-05 (depletion), VS-17 (cash/GL), W4945 (anti-diversion), W4946 (TR establishment), W4948 (remittance), W4942 (availability)"
+    ],
+    "Pain Points / Risks": [
+     "- **Diversion risk**: Proceeds used for other purposes before remittance → PD 115 violation + default; mitigated by proceeds segregation and anti-diversion controls (W4945)",
+     "- **Attribution-error risk**: Proceeds mis-attributed to the wrong TR/shipment → remittance errors; mitigated by FIFO/lot-identified tracking and reconciliation",
+     "- **Shortfall risk**: Proceeds lag trust-payable as goods deplete (markdown/discount below cost); mitigated by monitoring and reserve/cash cover"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/TR-proceeds subledger (VS-18); POS/ecommerce/B2B sales (VS-08/VS-10/VS-11); inventory depletion (VS-05); GL/cash (VS-17); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~continuous (automated); ~daily recon"
+    ]
+   },
+   "steps": [
+    {
+     "a": "ABL Manager",
+     "activity": "Track trust-goods sell-through: as goods-in-trust inventory sells (POS VS-08, B2B VS-11, ecommerce VS-10), compute the proceeds attributable to the trust shipment (FIFO/identified-lot per TR terms), and segregate the proceeds from general cash into the TR-proceeds bucket for the bank",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Finance / Analytics / Treasury"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Segregate & hold proceeds: hold the segregated proceeds pending remittance (W4948), apply against the TR-payable (principal + charges), and prevent commingling/diversion to other uses (anti-diversion per PD 115 W4945); reconcile proceeds to sales and trust-goods depletion",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Finance / Treasury / Analytics"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Report & monitor trust-goods position: report trust-goods-on-hand vs sold vs proceeds-segregated to the bank/management, flag shortfalls (proceeds < obligation as goods deplete), and feed remittance scheduling (W4948) and availability (W4942)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Finance / Treasury / ABL Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4942",
+    "W4945",
+    "W4946",
+    "W4948"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Per TR (event-driven)",
+    "Owner": "ABL & Collateral Operations Manager / Treasury / Finance",
+    "Participants": "Treasury (VS-18), Finance (VS-17), AP (VS-15), Legal (VS-100), Data (VS-28)",
+    "Trigger": "TR remittance due date (per term); trust-goods fully sold; maturity",
+    "Volume": "~1 remittance/release per TR × import volume (~400–600 TEUs/month → hundreds of TRs/yr)"
+   },
+   "id": "W4948",
+   "level": 2,
+   "name": "Trust-Receipt Proceeds Remittance & Release Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Remittance auto-trigger at term; TR-payable auto-settle; inventory auto-release on settlement; exception flagging (short-pay/unsold-at-maturity)"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: proceeds remitted on term; TR-payable settled & bank-reconciled; inventory released on settlement; exceptions managed; audited (VS-21)"
+    ],
+    "Cross-references": [
+     "- links to VS-18 (treasury), VS-15 (AP), VS-05/VS-29 (inventory release), VS-17 (GL), VS-21 (audit), W4946/W4947 (TR lifecycle), W4939 (borrowing base), W4942 (availability)"
+    ],
+    "Pain Points / Risks": [
+     "- **Late-remittance risk**: Proceeds not remitted on term → PD 115 default + charges; mitigated by due-date alerts and automated remittance",
+     "- **Release-error risk**: Inventory not released from trust after settlement → overstated encumbrance; mitigated by the release-on-settlement control",
+     "- **Maturity-shortfall risk**: Unsold trust goods at maturity (slow-moving import) → cash-settle or rollover; mitigated by monitoring and the rollover/cash-cover process"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/TR subledger (VS-18); bank portal; AP (VS-15); inventory status release (VS-05/VS-29); GL (VS-17); document repository (VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~per TR remittance/release 1–2 hours (automated); ~exception handling per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasurer",
+     "activity": "Remit proceeds to the bank per the TR term (sell-and-remit on sale, or hold-and-pay at maturity): draw from the segregated proceeds (W4947), settle the TR-payable (principal + interest/charges), reconcile to the bank, and record the release of the corresponding trust-goods from trust status",
+     "duration": "Per TR",
+     "n": "1",
+     "r": "Treasury / Finance / AP"
+    },
+    {
+     "a": "ABL Manager",
+     "activity": "Release the inventory from goods-in-trust to owned status: once the TR is settled, reclassify the remaining/sold trust goods to owned inventory (links VS-05/VS-29), update the inventory valuation/ownership, and release the bank's security interest in that shipment",
+     "duration": "Per TR",
+     "n": "2",
+     "r": "Finance / Inventory / Treasury"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Close the TR & document: archive the TR instrument, settlement evidence, and release; report to the bank; feed availability (W4942), the borrowing base (W4939), and audit (VS-21); manage exceptions (short-pay, unsold trust goods at maturity → rollover/cash-settle per agreement)",
+     "duration": "Per TR",
+     "n": "3",
+     "r": "Treasury / Finance / Legal / Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4939",
+    "W4942",
+    "W4946",
+    "W4947"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Per arrangement + periodic verification",
+    "Owner": "ABL & Collateral Operations Manager / Treasury / DC Ops",
+    "Participants": "Treasury (VS-18), DC/Store Ops (VS-04/VS-07), Finance (VS-17), Legal (VS-100), Inventory (VS-05)",
+    "Trigger": "Warehouse-receipt collateral arrangement; ABL inventory pledge over DC stock",
+    "Volume": "~8–12 collateralized DC/store inventory pools across 4 DCs + designated store locations"
+   },
+   "id": "W4949",
+   "level": 2,
+   "name": "Warehouse-Receipt & Field-Warehousing Collateral Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Collateral-zone WMS integration; release-authorization gate; receipt-vs-ledger auto-recon; bank reporting auto-feed"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: designated collateral pool; release-authorization enforced; periodic count; reconciled to ledger; TPRM on collateral manager (VS-161)"
+    ],
+    "Cross-references": [
+     "- links to VS-04/VS-05 (DC/inventory), VS-05.1 (W6/W42 counts), VS-161 (TPRM collateral manager), W4939 (borrowing base), W4951 (perfection), W4952 (release authorization)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unauthorized-release risk**: Collateral released without authorization → bank security breached; mitigated by release-authorization controls (W4952)",
+     "- **Count-discrepancy risk**: Collateral pool short vs receipts → over-advance; mitigated by periodic counts and ≥97% accuracy",
+     "- **Collateral-manager risk**: Third-party collateral-manager failure (TPRM VS-161); mitigated by TPRM and the bank's oversight"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS/collateral zone (VS-04/VS-05); inventory ledger (VS-05); treasury/borrowing-base (VS-18); cycle count (VS-05.1); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~per arrangement setup 2–4 weeks; ~continuous operations; ~periodic verification per cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasurer / Legal",
+     "activity": "Establish warehouse-receipt / field-warehousing collateral: where the bank requires a collateral manager/warehouse-receipt structure over designated DC inventory (distinct from trust-receipt import financing), set up the warehouse receipts, the designated/collateralized bin/zone, the collateral-manager or field-warehousing arrangement, and the access/segregation controls",
+     "duration": "Per arrangement",
+     "n": "1",
+     "r": "ABL Manager / Legal / Treasury / DC Ops"
+    },
+    {
+     "a": "ABL Manager",
+     "activity": "Operate collateralized-inventory controls: maintain the designated collateral pool, control releases (no release without authorization W4952), reconcile receipts/issues, and support periodic bank/collateral-manager counts (links VS-05.1 W6/W42)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "DC Ops / Inventory / ABL Manager"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Verify & report: periodic verification of warehouse-receipt collateral vs the inventory ledger, report to the bank/collateral-manager, manage substitutions/releases (W4952), and feed the borrowing base (W4939) and availability (W4942)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Finance / Inventory / Treasury / Analytics"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W42",
+    "W4939",
+    "W4942",
+    "W4951",
+    "W4952",
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Per import shipment",
+    "Owner": "ABL & Collateral Operations Manager / Import Finance / Treasury",
+    "Participants": "Import/Customs (VS-02.2/VS-87), AP (VS-15.1), Treasury (VS-18), Finance (VS-17)",
+    "Trigger": "Import PO & LC issuance (VS-15.1 W232); pre-shipment financing need",
+    "Volume": "~400–600 TEUs/month × in-transit financing"
+   },
+   "id": "W4950",
+   "level": 2,
+   "name": "Import-Inventory-In-Transit Financing & Pre-Shipment / LC Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- In-transit eligibility flag; LC/landed-cost auto-accumulate; in-transit→TR auto-transition; availability impact auto-update"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: in-transit eligibility per agreement; financing cost in landed cost; transition reconciled; availability updated"
+    ],
+    "Cross-references": [
+     "- links to VS-15.1 (W232 LC), VS-02.2/VS-02.3 (import/in-transit W250), VS-158 (landed cost), W4938 (eligibility), W4946 (TR establishment), W4939/W4942 (borrowing base/availability)"
+    ],
+    "Pain Points / Risks": [
+     "- **In-transit eligibility risk**: In-transit inventory excluded from the borrowing base during 45–90-day transit → availability gap; mitigated by structuring eligible-in-transit (W4938) where the agreement allows",
+     "- **Cost-accumulation risk**: Financing cost not captured in landed cost → understated COGS (VS-158); mitigated by integrated landed-cost capture",
+     "- **Transition risk**: In-transit → TR transition mis-handled → double-counting or gap in availability; mitigated by the controlled transition flow"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Treasury/import-line (VS-18); LC (VS-15.1 W232); in-transit tracking (VS-02.3 W250); landed cost (VS-158); AP (VS-15); GL (VS-17)"
+    ],
+    "Time Estimate": [
+     "- ~per shipment tracking continuous over transit; ~settlement per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasurer",
+     "activity": "Finance the in-transit/pre-shipment stage: from LC issuance (VS-15.1 W232) through ocean transit (45–90 days) to arrival, fund the LC/supplier payment via the import line, classify the in-transit inventory for borrowing-base eligibility (W4938), and track the in-transit position (links VS-02.3 control tower W250)",
+     "duration": "Per shipment",
+     "n": "1",
+     "r": "Import Finance / Treasury / Supply Chain"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Settle the pre-shipment/LC: draw on the facility for the LC/supplier, settle freight forwarder (VS-02.2), and accumulate landed cost (links VS-158 landed-cost) pending the trust-receipt release (W4946) at arrival; track the financing cost (interest/charges) into the import cost",
+     "duration": "Per shipment",
+     "n": "2",
+     "r": "Import Finance / AP / Treasury / Costing"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Transition to trust receipt at arrival: on arrival & clearance, transition the in-transit financing to the trust-receipt (W4946), reconcile the pre-shipment draws, and update availability (W4942) and the borrowing base (W4939)",
+     "duration": "Per shipment",
+     "n": "3",
+     "r": "Import Finance / Treasury / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W232",
+    "W250",
+    "W4938",
+    "W4939",
+    "W4942",
+    "W4946"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Per facility + on collateral change",
+    "Owner": "ABL & Collateral Operations Manager / Legal / Treasury",
+    "Participants": "Legal (VS-100), Treasury (VS-18), Finance (VS-17), Compliance (VS-22)",
+    "Trigger": "Facility close (W4937); new collateral; legal/perfection requirement",
+    "Volume": "1 security/pledge structure per facility × inventory/AR/collateral classes"
+   },
+   "id": "W4951",
+   "level": 2,
+   "name": "Inventory Pledge Perfection, Registration & Security Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Security-register management; encumbrance auto-disclosure to PFRS notes; perfection-expiry alerts; change-triggered updates from location/entity master"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: security perfected & registered; pledge register maintained; encumbrance disclosed (VS-17.4); audited (VS-21)"
+    ],
+    "Cross-references": [
+     "- links to VS-100 (legal/perfection), VS-72 (multi-entity), VS-17.4 (PFRS notes), VS-21 (audit), VS-37/VS-109 (new locations), W4937 (facility/structuring), W4939 (borrowing base)"
+    ],
+    "Pain Points / Risks": [
+     "- **Perfection-defect risk**: Security interest not perfected → unenforceable against third parties; mitigated by Legal review and perfection evidence",
+     "- **Encumbrance-disclosure risk**: Encumbered assets not disclosed in PFRS notes → audit finding; mitigated by the disclosure control",
+     "- **Stale-collateral risk**: Collateral descriptions not updated on location/entity change; mitigated by change-triggered updates"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Legal/security repository (VS-100/VS-88); treasury (VS-18); GL/notes (VS-17.4); entity master (VS-72/VS-29); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~per facility perfection 4–8 weeks; ~continuous maintenance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO / Legal",
+     "activity": "Perfect the security interest over inventory/AR per Philippine law (Civil Code pledge, personal-property collateral concepts, the security documents in W4937): execute the pledge/security agreement, any required notices/registration, and ensure enforceability against third parties; manage the multi-entity guarantor/pledgor structure (VS-72)",
+     "duration": "Per facility",
+     "n": "1",
+     "r": "Legal / ABL Manager / Treasury"
+    },
+    {
+     "a": "Legal",
+     "activity": "Maintain the security documentation: the security/pledge register, the perfection evidence, the collateral descriptions (inventory classes, locations, AR), and the bank's lien positions; update on collateral changes (new locations VS-37/VS-109, new entities, releases)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Legal / ABL Manager / Finance"
+    },
+    {
+     "a": "CFO / Controller",
+     "activity": "Govern encumbrance disclosure & compliance: disclose encumbered assets in the PFRS notes (links VS-17.4), manage covenant/registration compliance, and support external audit (VS-21) and Legal review on enforceability",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Finance / Legal / Internal Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4937",
+    "W4939"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-741"
+   ],
+   "fields": {
+    "Frequency": "Continuous (per movement/release)",
+    "Owner": "ABL & Collateral Operations Manager / DC Ops / Finance",
+    "Participants": "DC/Store Ops (VS-04/VS-07), Inventory (VS-05), Treasury (VS-18), Finance (VS-17)",
+    "Trigger": "Inventory movement/transfer (VS-05.2); sale (W4947); release request; collateral substitution",
+    "Volume": "~10–20% of ~134M annual POS line items + transfers tied to pledged/collateralized inventory"
+   },
+   "id": "W4952",
+   "level": 2,
+   "name": "Pledged-Inventory Movement, Location Control & Release Authorization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Movement gate against eligible-location master; release-authorization workflow; auto-substitution validation; movement-to-borrowing-base auto-recon"
+    ],
+    "Controls": [
+     "- CTL-741 (ensure controlled execution — Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations (PA-170.2).)",
+     "- CTL-741: movement gated by eligibility; release dual-authorized; substitution equivalent; reconciled to borrowing base; audited (W4943)"
+    ],
+    "Cross-references": [
+     "- links to VS-04/VS-05 (inventory/DC), VS-05.2 (W22/W218 transfers), W4947 (sale/proceeds), W4949 (warehouse-receipt collateral), W4939 (borrowing base), W4942 (availability), W4943 (field exam)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unauthorized-movement risk**: Pledged inventory moved to ineligible location or sold without authorization → bank security breached; mitigated by movement gates and release authorization",
+     "- **Substitution-error risk**: Released collateral not replaced with equivalent → availability true-down; mitigated by the equivalent-substitution control",
+     "- **Reconciliation risk**: Movements not reconciled to the borrowing base → availability error; mitigated by automated reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS/inventory movement (VS-04/VS-05); transfer order (VS-05.2 W22); treasury/borrowing-base (VS-18); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~continuous (automated gates); ~release authorization per event 15–30 min"
+    ]
+   },
+   "steps": [
+    {
+     "a": "ABL Manager",
+     "activity": "Control pledged/collateralized-inventory movement: gate transfers (VS-05.2 W22) and inter-DC moves (W218) of pledged/collateralized stock against the facility/location rules, prevent movement to ineligible locations, and maintain the location/encumbrance register (W4951)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "DC Ops / Inventory / ABL Manager"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Authorize releases & substitutions: release collateralized inventory only on authorized sale (W4947 — with proceeds segregation) or authorized substitution (replace with equivalent eligible collateral), maintain the dual-control release authorization, and reconcile releases to the borrowing base (W4939)",
+     "duration": "Per release",
+     "n": "2",
+     "r": "ABL Manager / Treasury / DC Ops"
+    },
+    {
+     "a": "Treasurer",
+     "activity": "Reconcile & report: reconcile pledged/collateralized inventory movements to the ledger and the borrowing base, report location/movement exceptions, and support the field exam (W4943) and availability (W4942)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Finance / Inventory / Analytics / ABL Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W218",
+    "W22",
+    "W4939",
+    "W4942",
+    "W4943",
+    "W4947",
+    "W4949",
+    "W4951"
+   ]
+  }
+ ]
+}

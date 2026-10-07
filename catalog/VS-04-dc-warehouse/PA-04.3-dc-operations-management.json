@@ -1,0 +1,2481 @@
+{
+ "process_area": {
+  "id": "PA-04.3",
+  "title": "DC Operations Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-04-dc-warehouse/PA-04.3-dc-operations-management.md",
+ "value_stream": {
+  "directory": "VS-04-dc-warehouse",
+  "id": "VS-04",
+  "name": "DC & Warehouse Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Ongoing",
+    "Owner": "Fleet Manager",
+    "Participants": "Driver, Workshop Supervisor, Procurement (for parts)",
+    "Trigger": "Scheduled maintenance interval or spare part depletion",
+    "Volume": "Managing parts for ~40 owned vehicles"
+   },
+   "id": "W188",
+   "level": 2,
+   "name": "Fleet Spare Parts & Preventive Maintenance (PM) Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"tracks odometer/hours for each vehicle\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews spare parts inventory\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates PO for parts\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: Fleet Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Spare parts stockouts for critical components (tires, batteries) can take vehicles off the road for days, disrupting DC delivery schedules and increasing reliance on costly 3PL alternatives.",
+     "- No single integrated fleet maintenance system in the current ERP — maintenance history, parts consumption, and cost tracking are fragmented across spreadsheets and workshop records.",
+     "- Inconsistent preventive maintenance compliance across regions (Davao, Cebu, Laguna, Clark) leads to uneven vehicle reliability and higher unplanned repair costs.",
+     "- Difficulty tracking actual vs. standard maintenance cost per kilometer across vehicle brands and age brackets, making replacement planning subjective rather than data-driven.",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Fleet Manager**: absorbs spare parts inventory review (~30 min/week) and quarterly cost analysis (~2 hours/quarter) as an extension of existing fleet management duties (W52). No incremental headcount.",
+     "- **Workshop Supervisor**: at each approved workshop (2–3 per region), performs maintenance per Fleet Manager work order. External service provider, not BuildRight headcount.",
+     "- **Parts procurement**: system-generated POs (W2A) for spare parts are processed by existing Procurement team. ~5–10 spare parts POs/month. Absorbed."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost-per-Kilometer Analytics Dashboard (W188.8)"
+    ],
+    "Time Estimate": [
+     "Scheduled PM service: 4–8 hours per vehicle per event; emergency repair: 1–3 days depending on parts availability. Fleet Manager spends ~30 min/week on parts review and ~2 hours/quarter on cost analysis."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System tracks odometer/hours for each vehicle; triggers \"Maintenance Alert\" (W52.4)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Fleet Manager reviews spare parts inventory (tires, batteries, oil, filters, brake pads)",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "—",
+     "activity": "If parts below reorder point: System generates PO for parts (W2A)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Vehicle sent to workshop; Fleet Manager issues \"Maintenance Work Order\"",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Workshop performs service; consumes spare parts from fleet inventory",
+     "duration": "4-8 hours",
+     "n": "5",
+     "r": "Workshop Staff"
+    },
+    {
+     "a": "—",
+     "activity": "Record maintenance details: parts used, labor hours, costs, next service interval",
+     "duration": "20 min",
+     "n": "6",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Update vehicle status in Fleet Module: \"Available\"",
+     "duration": "5 min",
+     "n": "7",
+     "r": "Fleet Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quarterly: Analyze maintenance cost per km across all vehicle brands/models",
+     "duration": "2 hours",
+     "n": "8",
+     "r": "Fleet Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2A",
+    "W52"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "DC Manager (DC-level); Store Receiving Clerk (store-level)",
+    "Participants": "DC Receiving Clerk, Store Receiving Clerk, Yard Coordinator, Vendor Logistics, AP Clerk, Finance",
+    "Trigger": "Receipt of goods on vendor-owned pallets/crates or shipment to stores using internal RTP",
+    "Volume": "Hundreds of pallets/crates per DC per day; ~50–100 vendor RTP exchanges/day across all DCs"
+   },
+   "id": "W270",
+   "level": 2,
+   "name": "Pallet & Returnable Transport Packaging (RTP) Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs quantity and type of vendor-owned RTPs\" (replaces manual Step 1).",
+     "- System auto-count of \"accountability per vendor\" (replaces manual Step 2).",
+     "- System auto-record of \"records the store as the current RTP holder\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)"
+    ],
+    "Pain Points / Risks": [
+     "- High cost of lost pallets and disputes with vendors over unreturned crates — with ~50–100 vendor RTP exchanges/day across DCs (~1,500–3,000/month), even a 5% loss rate (75–150 lost RTPs) represents PHP 25,000–75,000/month in penalties or unrecovered assets at the PHP 300–500 standard-pallet rate.",
+     "- BuildRight-owned RTPs returned from stores via DC truck backhaul compete with store-to-DC returns (W22B) and proactive rebalancing shipments (W154) for limited reverse-logistics space, causing RTP accumulation at stores.",
+     "- Vendor RTP statement reconciliation (step 5) frequently shows discrepancies because vendor delivery drivers sometimes exchange RTPs informally (handing over pallets without system recording) during receiving, bypassing the formal RTP logging process.",
+     "- Custom crates for tiles and fragile items are expensive (PHP 1,000–3,000 each) and prone to damage during return transit; vendors dispute liability for damaged crates, leading to extended reconciliation cycles.",
+     "- Store-level RTP tracking compliance is inconsistent — Store Receiving Clerks focused on product receiving (W4 step 10) sometimes skip the RTP quantity entry, causing the RTP liability balance to drift from actual inventory over time."
+    ],
+    "Staffing Implication": [
+     "- **DC Receiving Clerk**: ~3 min additional per receipt for RTP logging; with ~40 receipts/day/DC, this adds ~2 hours/day across the receiving team. Absorbed.",
+     "- **AP Clerk**: ~1 hour/month for RTP reconciliation and penalty processing. Absorbed.",
+     "- **DC Manager**: ~2 hours/quarter for RTP return rate review. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS RTP tracking module: non-valuated asset tracking per vendor with quantity and type (W270.1–2)",
+     "- Internal RTP location tracking across DC-to-store-to-DC cycle (W270.3, 4a)",
+     "- Vendor RTP liability balance with automated debit/credit on receipt and return (W270.2, 4)",
+     "- RTP aging report: outstanding vendor RTP receivables by vendor, type, and days outstanding (W270.5)",
+     "- Penalty invoice / debit memo generation per vendor RTP agreement terms (W270.6)",
+     "- Quarterly RTP return rate analytics per vendor and per store (W270.7)",
+     "- Integration with W3 (DC receiving — RTP logging at GR), W4 (store receiving — internal RTP tracking), W7 (AP — penalty invoice processing), W22 (transfers — RTP movement with stock)"
+    ],
+    "Time Estimate": [
+     "3–5 min per receipt/return for RTP logging; 1 hour/month for reconciliation; 2 hours/quarter for analytics review.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Receiving Clerk logs quantity and type of vendor-owned RTPs (pallets, crates, totes) received alongside each PO Goods Receipt; records RTP type (standard pallet, custom crate, collapsible tote), vendor ID, and quantity in WMS",
+     "duration": "3 min/receipt",
+     "n": "1",
+     "r": "DC Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System updates the RTP liability balance for the vendor — increases vendor RTP receivable by quantity received; RTPs tracked as non-valuated assets (no inventory value) but with quantity accountability per vendor",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC transfers goods to stores using internal (BuildRight-owned) RTPs; system tracks internal RTP location from DC to store and records the store as the current RTP holder",
+     "duration": "2 min/dispatch",
+     "n": "3",
+     "r": "DC Dispatch / Store Receiving Clerk"
+    },
+    {
+     "a": "Store Manager / DC Supervisor",
+     "activity": "Store Receiving Clerk or DC Receiving Clerk returns empty vendor-owned RTPs to vendor during next vendor delivery or scheduled pickup; system debits the vendor RTP liability balance by quantity returned; Guard verifies RTP count at gate-out",
+     "duration": "5 min/return",
+     "n": "4",
+     "r": "Store Receiving Clerk / DC Receiving Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store returns empty BuildRight-owned RTPs to DC via DC delivery truck backhaul; system updates internal RTP location from store to DC",
+     "duration": "2 min/return",
+     "n": "4a",
+     "r": "Store Receiving Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "Finance reconciles RTP balances monthly per vendor: system generates RTP aging report showing outstanding vendor RTP receivables by vendor, RTP type, and days outstanding; AP Clerk compares system RTP balance to vendor's RTP statement",
+     "duration": "1 hour/month",
+     "n": "5",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "For lost or damaged RTPs: system generates penalty invoice per vendor RTP agreement terms (standard penalty: PHP 300–500 per standard pallet, PHP 1,000–3,000 per custom crate); AP Clerk issues debit memo to vendor or deducts from next payment; if BuildRight-owned RTP lost by store, Store Manager investigates and absorbs cost in store shrinkage",
+     "duration": "15 min/case",
+     "n": "6",
+     "r": "AP Clerk / Store Manager"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "Quarterly: DC Manager reviews RTP return rate per vendor and per store; identifies stores with low RTP return compliance for process improvement; flags vendors with persistent RTP discrepancies for contract renegotiation",
+     "duration": "2 hours/quarter",
+     "n": "7",
+     "r": "DC Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W154",
+    "W22",
+    "W22B",
+    "W3",
+    "W4",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Continuous; 2 shifts per day, 7 days/week per DC",
+    "Owner": "DC Manager",
+    "Participants": "DC Shift Supervisors (2 per DC), DC Receiving Supervisor, DC Dispatch Supervisor, DC Receiving Clerks, Putaway Staff, Pickers, Loaders, Quality Checkers, Yard Staff, Forklift Operators, Cross-Dock Coordinator, Gate Guard",
+    "Trigger": "Daily DC operations cycle; shift start (6:00 AM for Day Shift A, 2:00 PM for Night Shift B)",
+    "Volume": "4 DCs; each DC operates ~16 hours/day; ~40 inbound trucks/day + ~30 outbound loads/day per DC; ~150 DC staff per DC in total across two shifts (~60–80 on duty per shift)"
+   },
+   "id": "W584",
+   "level": 2,
+   "name": "DC Daily Operations & Shift Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"backlog from current shift\" (replaces manual Step 1).",
+     "- System auto-count of \"count, outbound load count, total lines to process\" (replaces manual Step 2).",
+     "- System auto-record of \"records shift labor allocation for W586 labor utilization tracking\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Each BuildRight DC processes ~70 truck movements per day (40 inbound receipts + 30 outbound dispatches) across 8–12 dock doors, with ~60–80 staff on duty per shift (150 per DC across two shifts) managing receiving, putaway, picking, packing, dispatch, and yard operations. With 2 shifts covering ~16 hours of operation, structured shift management is essential to maintain throughput, ensure labor alignment with daily volume, and prevent operational gaps at shift transitions. This workflow covers the holistic daily command-and-control layer that sits above individual operational workflows (W3 receiving, W106 dispatch, W585 dock scheduling, W586 KPI tracking)."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: mandatory handover log acknowledgment but not fully eliminated; operational: handover log acknowledgment but not fully eliminated"
+    ],
+    "Pain Points / Risks": [
+     "- **Shift handover information loss**: despite structured handover logs (step 7), critical nuances (e.g., \"vendor driver said he will return with missing documents after lunch\") are often communicated verbally and lost when the incoming shift supervisor was not present during the conversation; mitigated by mandatory handover log acknowledgment but not fully eliminated.",
+     "- **Labor reallocation disrupts picking productivity**: when Shift Supervisors pull Pickers to help with receiving during the 8–10 AM inbound peak (step 3), picking Wave 1 completion is delayed, cascading into late morning dispatches; the trade-off between receiving throughput and picking throughput has no optimal answer during high-volume days with > 50 inbound trucks.",
+     "- **Exception handling consumes disproportionate supervisor time**: with 4–6 exceptions per shift at 5–30 min each, DC Shift Supervisors spend 30–120 min/shift on exception resolution, pulling them away from proactive operational management (floor walks, pace checks); during typhoon season (June–November in the Philippines), exceptions spike to 8–12 per shift due to delivery delays, flooded yard areas, and carrier cancellations.",
+     "- **Night shift staffing gaps for specialized functions**: Quality Checkers (requiring category-specific inspection training) and Reach Stacker Operators (licensed equipment operators) are typically scheduled only on day shift; night shift receiving that requires quality inspection or container movements must wait for the following day, creating a 10-hour process gap.",
+     "- **End-of-day KPI snapshot data quality** depends on real-time transaction posting compliance by DC staff; if Receiving Clerks delay GR posting (batch-entering at end of shift instead of real-time), the KPI snapshot understates actual throughput and overstates backlog."
+    ],
+    "Staffing Implication": [
+     "- **DC Manager** (1 per DC): adds ~20 min/day for daily KPI review and operational summary (step 11), plus 1 hour/week for weekly operations review (step 12). Absorbed within existing DC Manager role.",
+     "- **DC Shift Supervisors** (2 per DC): each shift supervisor spends ~1.5–2 hours/shift on daily operations management activities (briefing, labor allocation, pace checks, exception handling, handover). These are core supervisory duties absorbed within existing Shift Supervisor roles.",
+     "- **No incremental headcount** — all activities are core DC supervisory management functions that formalize existing informal practices into structured workflow steps."
+    ],
+    "Steps": [],
+    "System Touchpoints (W584 — DC Daily Operations & Shift Management)": [
+     "- Night-before operations plan generation from inbound appointments (W585), outbound dispatch plan (W106), backlog data, and staffing availability (W584.1)",
+     "- Shift labor allocation module: records staff-to-function assignments per shift with real-time reallocability (W584.3)",
+     "- Real-time operational dashboard: dock door utilization (W585), receiving throughput, putaway backlog, pick wave progress, outbound staging status (W584.4, 6)",
+     "- Exception logging with categorization, time-to-resolve tracking, and escalation triggers (W584.5)",
+     "- Shift handover log: structured digital handover with incoming supervisor acknowledgment (W584.7)",
+     "- Automated end-of-day KPI snapshot calculation and posting to W586 dashboard (W584.10)",
+     "- DC Manager daily operational summary report with automated submission to VP Supply Chain (W584.11)",
+     "- Weekly operations review analytics: KPI trends, labor productivity, exception patterns, dock utilization (W584.12)",
+     "- Integration with W3 (receiving — throughput and quality data), W106 (dispatch — loading and departure data), W585 (dock scheduling — appointment data and dock utilization), W586 (KPI dashboard — performance data feed), W6 (cycle counting — night shift count data), W48 (IT helpdesk — equipment/system exceptions), W188 (fleet maintenance — equipment availability), W52 (fleet — carrier performance), W57 (promotions — pre-positioning priority)"
+    ],
+    "Time Estimate": [
+     "~2.2–4.8 hours of supervisor effort per DC-day (two shift briefings 25 min + labor allocation 15 min + two pace checks 35 min + handover log 20 min + KPI snapshot 15 min + 4–6 exceptions at 5–30 min each); across 4 DCs × 365 days ≈ 3,200–7,000 shift-supervisor hours/year, plus DC Manager 20 min/day and the weekly 1-hour review ≈ 700 hours/year across the 4 DCs; night-shift floor operations are standing shift staffing, not incremental effort.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Night-before preparation** (10:00 PM prior day): System generates next-day DC operations plan from: (a) inbound delivery appointments from W585 dock scheduling (confirmed inbound trucks, expected POs, estimated pallet/cube volume per time slot), (b) outbound dispatch plan from W106 (confirmed store replenishment orders, home delivery batches, inter-DC transfers), (c) pending putaway backlog from current shift, (d) pending pick/pack backlog from current shift, (e) staffing availability (planned absences, approved leaves, overtime authorizations); system calculates projected labor-hours required per function (receiving, putaway, picking, packing, dispatch, yard) vs. scheduled staff per shift",
+     "duration": "Automated (overnight batch)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Day Shift A start-up briefing** (6:00 AM): DC Shift Supervisor (A) conducts 15-minute standing briefing with functional leads (Receiving Supervisor, Dispatch Supervisor, Cross-Dock Coordinator, Yard Supervisor) covering: (a) today's volume forecast from step 1 (inbound truck count, outbound load count, total lines to process), (b) critical priorities (promotional pre-positioning shipments per W57, import container appointments, urgent backorder fulfillments per W56), (c) staffing adjustments (reallocate labor from low-volume function to bottleneck function — e.g., shift 2 putaway staff to receiving during 8–10 AM peak), (d) carry-over exceptions from Night Shift B (unresolved receiving discrepancies per W3.6, incomplete picks, delayed dispatches), (e) safety reminders (daily topic: forklift pedestrian zones, hazmat handling, wet floor from yard rain)",
+     "duration": "15 min",
+     "n": "2",
+     "r": "DC Shift Supervisor (A)"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Labor allocation and task assignment** (6:15 AM): DC Shift Supervisor assigns staff to functional areas based on step 2 briefing: (a) Receiving: 3–4 Receiving Clerks + 3–4 Unloading Crew for ~40 inbound trucks (peak 8–10 AM: 15–20 trucks in 2-hour window requiring maximum receiving staffing); (b) Quality Check: 2 Quality Checkers during peak receiving, 1 during off-peak; (c) Putaway: 4–6 Putaway Staff, prioritizing cross-dock items and forward-pick zone replenishment before standard putaway; (d) Picking: 8–10 Pickers for outbound replenishment orders per W4 picking waves (Wave 1: 8:00 AM, Wave 2: 12:00 PM, Wave 3: 4:00 PM); (e) Dispatch: 2–3 Loaders for outbound truck loading per W106; (f) Yard: 2–3 Yard Staff for outdoor receipts and staging; system records shift labor allocation for W586 labor utilization tracking",
+     "duration": "15 min",
+     "n": "3",
+     "r": "DC Shift Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Mid-morning operational pace check** (9:00 AM): DC Shift Supervisor walks DC floor and reviews real-time operational dashboard on wall-mounted display: (a) dock door utilization per W585 — are all scheduled inbound trucks on time? Any no-shows?; (b) receiving throughput — actual receipts completed vs. planned for the morning window; (c) putaway backlog — staged pallets awaiting putaway should not exceed 2-hour backlog; (d) picking progress — Wave 1 pick completion % (target: 100% by 10:00 AM for morning dispatch); (e) outbound staging — trucks loaded and departing on schedule per W106; (f) any congestion or bottleneck observed during floor walk; DC Shift Supervisor reassigns labor in real-time if any function is behind plan",
+     "duration": "20 min",
+     "n": "4",
+     "r": "DC Shift Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Exception handling** (ongoing throughout shift): DC Shift Supervisor resolves escalated operational exceptions: (a) receiving discrepancies requiring immediate Buyer coordination (W3.6b) — truck occupying dock door while awaiting Buyer response; (b) equipment failures (forklift breakdown, conveyor jam, RF scanner issues) — arrange backup equipment or manual workaround, notify IT per W48 if system-related; (c) staffing emergencies (no-show, medical incident) — cross-trained staff redeployment from lower-priority function; (d) vendor/carrier disputes at gate (unscheduled delivery, documentation issues) — authorize or reject per W585 unscheduled delivery protocol; (e) quality holds blocking putaway (W3 quality hold process) — coordinate with Buyer for expedited vendor resolution; log all exceptions in shift log with resolution and time-to-resolve",
+     "duration": "5–30 min per exception; ~4–6 exceptions/shift",
+     "n": "5",
+     "r": "DC Shift Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Afternoon operational pace check** (1:00 PM): DC Shift Supervisor reviews second operational dashboard snapshot: (a) total inbound receipts completed vs. plan (target: 100% of morning appointments completed by 1:00 PM); (b) total outbound dispatches completed vs. plan; (c) afternoon inbound appointment schedule for 1:00–6:00 PM window; (d) picking progress — Wave 2 completion status; (e) dock door availability for afternoon dispatch wave per W106 step 9; (f) putaway and picking backlogs — should be near-zero before shift handover",
+     "duration": "15 min",
+     "n": "6",
+     "r": "DC Shift Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Shift handover log** (1:45 PM — end of Day Shift A / start of Night Shift B): DC Shift Supervisor (A) completes shift handover log in system and conducts face-to-face handover with incoming DC Shift Supervisor (B). Handover log captures: (a) inbound status: receipts completed (count and lines), receipts pending (with reason — late truck, quality hold, Buyer pending), dock door occupancy, unscheduled deliveries handled; (b) outbound status: dispatches completed, dispatches pending (with reason — pick incomplete, truck late, 3PL no-show), truck utilization rate for completed dispatches; (c) inventory operations: putaway backlog (pallet count and estimated hours to clear), pick wave completion status, cycle count results if any per W6; (d) exceptions: unresolved exceptions from step 5 with current status and required actions; (e) equipment status: forklift availability, RF scanner status, dock leveler issues; (f) staffing: actual headcount vs. planned, overtime hours consumed, any injuries or incidents; incoming Shift Supervisor (B) acknowledges handover in system",
+     "duration": "20 min",
+     "n": "7",
+     "r": "DC Shift Supervisor (A) / DC Shift Supervisor (B)"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Night Shift B start-up briefing** (2:00 PM): DC Shift Supervisor (B) conducts abbreviated briefing with night shift functional leads covering: (a) carry-over items from Day Shift A handover log; (b) afternoon inbound appointment schedule; (c) afternoon dispatch wave per W106; (d) any night-specific activities (cycle counts per W6, scheduled maintenance per W188, putaway catch-up, next-day preparation tasks)",
+     "duration": "10 min",
+     "n": "8",
+     "r": "DC Shift Supervisor (B)"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Night shift operations** (2:00–10:00 PM): Night shift focuses on: (a) completing remaining afternoon inbound receipts and outbound dispatches; (b) putaway backlog clearance — target: zero staged pallets in receiving area by end of shift; (c) picking for next-morning dispatch wave (Wave 1 for following day); (d) cycle counting per W6 schedule (if tonight's zone is due); (e) yard organization and staging for next-morning deliveries; (f) next-day preparation: confirm dock appointments for following day per W585, pre-stage outbound loads for early morning dispatch",
+     "duration": "8 hours",
+     "n": "9",
+     "r": "DC Shift Supervisor (B)"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**End-of-day KPI snapshot** (10:00 PM — end of Night Shift B): System automatically calculates end-of-day operational KPIs per DC and posts to W586 dashboard: (a) **Receiving throughput**: total receipts completed vs. planned, average time per receipt (gate-to-bin), receiving accuracy % (correct GRs / total GRs); (b) **Putaway**: total pallets put away, putaway backlog at EOD (target: 0), average putaway time per pallet; (c) **Picking productivity**: lines picked per picker-hour, pick accuracy %, wave completion on-time %; (d) **Dispatch**: outbound loads dispatched vs. planned, on-time departure rate, truck utilization %, delivery on-time rate (from prior-day dispatch POD returns); (e) **Labor utilization**: actual labor-hours vs. planned, overtime hours, labor-hours per unit processed (receipts + dispatches); (f) **Exceptions**: count and category breakdown, average time-to-resolve; DC Shift Supervisor (B) reviews snapshot, adds narrative comments for any KPI below target, and closes shift log",
+     "duration": "15 min (supervisor review) + automated calculation",
+     "n": "10",
+     "r": "System / DC Shift Supervisor (B)"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**DC Manager daily review** (8:00 AM following morning): DC Manager reviews overnight KPI snapshot from step 10, shift handover logs from both shifts, and exception log; identifies: (a) trends requiring corrective action (e.g., receiving throughput declining 3 consecutive days), (b) staffing adjustments needed for today's volume, (c) escalation items for Supply Chain Manager (e.g., chronic carrier no-shows, vendor quality issues); DC Manager documents daily operational summary and submits to VP Supply Chain via automated report",
+     "duration": "20 min/day",
+     "n": "11",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Weekly operations review** (Monday 9:00 AM): DC Manager conducts weekly review with Shift Supervisors and functional leads: (a) weekly KPI trend analysis per W586 (comparing daily snapshots across 7 days); (b) labor productivity trend — lines processed per labor-hour, overtime trend; (c) recurring exception analysis — top 5 exception categories by frequency and impact; (d) dock utilization patterns — peak hours, under-utilized slots per W585; (e) staffing forecast for next week based on projected inbound/outbound volume; (f) action items from previous week — status update; (g) improvement initiatives — at least 1 process improvement proposal per month (e.g., new putaway zone strategy, revised pick wave timing)",
+     "duration": "1 hour/week",
+     "n": "12",
+     "r": "DC Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W106",
+    "W188",
+    "W3",
+    "W4",
+    "W48",
+    "W52",
+    "W56",
+    "W57",
+    "W585",
+    "W586",
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~70 appointment slots managed per day per DC (40 inbound + 30 outbound)",
+    "Owner": "DC Receiving Supervisor (inbound) / DC Dispatch Supervisor (outbound)",
+    "Participants": "DC Receiving Supervisor, DC Dispatch Supervisor, DC Shift Supervisor, Gate Guard, Buyers, Import Coordinator, Vendors/Carriers, 3PL dispatch, Fleet Manager",
+    "Trigger": "Inbound delivery appointment request (from vendor, carrier, or Buyer) or outbound dispatch scheduling requirement",
+    "Volume": "~1,200 inbound appointments/month per DC; ~900 outbound load slots/month per DC; peak receiving window 8:00–10:00 AM with 15–20 inbound trucks arriving"
+   },
+   "id": "W585",
+   "level": 2,
+   "name": "DC Dock Scheduling & Appointment Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logged in dock appointment system with request timestamp and requested…\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews appointment requests against dock door availability calendar\" (replaces manual Step 2).",
+     "- System auto-send of \"sends automated appointment confirmation to vendor or carrier via\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Each BuildRight DC has 8–12 dock doors serving both inbound and outbound operations. With ~70 total truck movements per day (40 inbound + 30 outbound) and a peak receiving concentration of 15–20 trucks during the 8:00–10:00 AM window, dock door congestion is the single largest throughput constraint in DC operations. Without systematic scheduling, trucks queue at the gate, occupy dock doors beyond their needed time while waiting for receiving staff, and outbound dispatches are delayed because loading doors are occupied by inbound trucks. This workflow establishes structured appointment management to optimize dock door throughput and prevent congestion. It extends the basic scheduling concepts in W3C (DC Inbound Delivery Scheduling) into a comprehensive dock appointment system covering both inbound and outbound movements."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Receiving Supervisor (inbound) / DC Dispatch Supervisor (outbound) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Peak morning congestion (8:00–10:00 AM) is structurally unavoidable**: Philippine vendor logistics patterns concentrate domestic deliveries in the morning to avoid Metro Manila afternoon traffic; even with appointment scheduling, 15–20 trucks arriving in a 2-hour window at a DC with 8–12 dock doors creates inevitable queuing; the holding area must accommodate 5–8 waiting trucks during peak.",
+     "- **Import container scheduling unpredictability**: port release timing from Manila South Harbor or Batangas port can shift by hours or days due to Customs inspection, port congestion, or berthing delays; a container appointment booked for Tuesday 10:00 AM may need to be rescheduled to Wednesday 4:00 PM with 2 hours' notice, disrupting the carefully planned dock calendar.",
+     "- **3PL carrier appointment compliance is weaker than owned-fleet compliance**: 3PL drivers service multiple clients and may prioritize deliveries based on their own route optimization rather than BuildRight's dock schedule; with 80% of fleet operations being 3PL, appointment adherence for outbound dispatch is harder to enforce.",
+     "- **Unscheduled walk-ins from local Davao and Cebu vendors**: provincial vendors in Mindanao and Visayas often deliver without advance appointment, relying on personal relationships with DC Receiving Clerks rather than the formal scheduling system; cultural expectations of flexibility conflict with systematic scheduling, creating tension between operational discipline and vendor relationship management.",
+     "- **Dock turn time variability is high for catch-weight and oversized items**: lumber, steel rebar, and cement deliveries at yard dock doors take 45–90 minutes to unload and measure (W3B catch-weight process), vs. 20–30 minutes for standard palletized merchandise; the 2-hour default time slot is insufficient for oversized loads, causing appointment overrun and cascading delays to subsequent appointments at the same door."
+    ],
+    "Staffing Implication": [
+     "- **DC Receiving Supervisor**: adds ~30 min/day for appointment review and dock door assignment (steps 1–2, 6), plus 30 min/week for compliance reporting review (step 7). Absorbed within existing DC Receiving Supervisor role — this formalizes scheduling duties already performed informally per W3C.",
+     "- **Gate Guard**: adds ~5 min per truck for structured check-in vs. current informal gate process; with ~70 trucks/day, this is ~6 hours/day across 2 guards. Absorbed within existing gate security staffing.",
+     "- **DC Manager**: adds 1 hour/month for monthly dock capacity planning review (step 8). Absorbed.",
+     "- **No incremental headcount** — the system-automated scheduling, notifications, and compliance tracking reduce manual coordination effort, offsetting the additional structure."
+    ],
+    "Steps": [],
+    "System Touchpoints (W585 — DC Dock Scheduling & Appointment Management)": [
+     "- Dock appointment request intake module with PO/container linkage (W585.1)",
+     "- Dock door calendar with configurable time slots, door capability categories, and capacity management (W585.2)",
+     "- Automated carrier/vendor notification: email, SMS, vendor portal update (W585.3)",
+     "- Gate check-in module with appointment verification, walk-in handling, and status update (W585.4)",
+     "- Real-time dock door status dashboard with utilization rate, time-over alerts, and availability (W585.5)",
+     "- No-show detection, release, and escalation with vendor scorecard feed (W585.6)",
+     "- Appointment compliance metrics: on-time rate, dock turn time, utilization rate, walk-in rate, slot adherence (W585.7)",
+     "- Monthly dock capacity analytics with peak/valley identification (W585.8)",
+     "- Integration with W3 (receiving — appointment feeds gate check, dock door feeds receiving flow), W3C (inbound scheduling — extended appointment management), W106 (dispatch — outbound dock slots, loading schedule), W52 (fleet — owned vehicle scheduling, carrier notification), W44 (vendor scorecard — appointment compliance, no-show rate), W242 (3PL review — carrier appointment compliance), W584 (daily operations — pace check dashboard, labor allocation to dock), W586 (KPI dashboard — dock utilization KPI feed), W57 (promotions — priority pre-positioning appointments), W66 (inter-island — container scheduling)"
+    ],
+    "Time Estimate": [
+     "~10–15 min of scheduler effort per appointment (request intake 5–10 min + dock/slot assignment 5 min) plus 5 min gate check-in per truck, 15 min/day no-show management, 30 min/week compliance reporting, and 1 hour/month capacity planning per DC; at ~1,200 inbound + ~900 outbound appointments per DC-month (4 DCs ≈ 8,400/month chain-wide) ≈ 16,800–25,200 scheduling hours/year, plus gate check-ins ≈ 500 hours/year and recurring reviews ≈ 520 hours/year — total ≈ 17,800–26,200 hours/year across the 4 DC scheduling desks.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Receiving Supervisor (inbound) / DC Dispatch Supervisor (outbound)",
+     "activity": "**Appointment request intake**: Three sources generate dock appointment requests: (a) **Inbound — domestic vendor**: Buyer or vendor submits delivery appointment request via vendor portal or email to DC Receiving Supervisor with PO number, vendor name, commodity category, estimated pallet/cube count, special requirements (hazmat, catch-weight, oversized); (b) **Inbound — import container**: Import Coordinator submits appointment request with container number, commodity, port release confirmation, estimated weight, and special handling; (c) **Outbound — dispatch**: DC Dispatch Supervisor requests outbound dock slot based on dispatch plan from W106 step 2 (truck type, destination route, estimated loading time, owned vs. 3PL carrier); all requests logged in dock appointment system with request timestamp and requested date/time window",
+     "duration": "5–10 min per request",
+     "n": "1",
+     "r": "Buyer / Import Coordinator / DC Dispatch Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Dock door assignment and time slot allocation**: DC Receiving Supervisor reviews appointment requests against dock door availability calendar: (a) each dock door has a configurable capacity per time slot (default: 2-hour slot, 1 truck per slot, extendable to 3 hours for import containers or oversized loads); (b) dock doors are categorized by capability — standard (general merchandise), heavy-duty (cement, steel, lumber — reinforced dock leveler), hazmat-equipped (paint, chemicals — ventilation and spill containment); (c) system suggests optimal dock door assignment based on: door capability match, proximity to staging area (inbound: near receiving staging; outbound: near pick-pack staging), current loading at adjacent doors (avoid congestion at single dock area); (d) DC Receiving Supervisor confirms or adjusts door assignment and time slot; system blocks the assigned slot on the dock calendar",
+     "duration": "5 min per appointment",
+     "n": "2",
+     "r": "DC Receiving Supervisor / DC Dispatch Supervisor"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Carrier/vendor notification**: System sends automated appointment confirmation to vendor or carrier via: (a) email with appointment details (date, time window, dock door number, DC address, PO reference, special instructions); (b) SMS reminder to driver/contact number 24 hours before appointment; (c) vendor portal update with confirmed appointment status; confirmation includes: DC gate entry requirements (valid ID, delivery receipt, PO copy), estimated unloading time, and contact number for day-of issues; for outbound: system notifies 3PL carrier or owned-fleet Driver of assigned loading slot and dock door via SMS and fleet management system (W52)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "**Day-of check-in** (at DC gate): Truck arrives at DC gate; Gate Guard performs check-in: (a) verifies appointment in system — matches truck plate, vendor/carrier name, and PO number against confirmed appointment; (b) if appointment confirmed and on-time (within scheduled 2-hour window): Guard issues gate pass, directs truck to assigned dock door, and updates appointment status to \"Arrived — On Time\"; (c) if appointment confirmed but early (arrived before scheduled window): Guard directs truck to designated holding area, updates status to \"Arrived — Early — Waiting\", and instructs driver to wait until scheduled window; (d) if appointment confirmed but late (arrived after scheduled window ended): Guard checks dock availability — if dock door is free, accepts and reassigns; if dock door is occupied by next appointment, places truck in holding area for next available slot and updates status to \"Arrived — Late — Rescheduled\"; (e) if no appointment (walk-in): Guard follows W3C.5 unscheduled delivery protocol — checks against open PO list, accepts only if dock door available and receiving staff capacity exists; logs as \"Unscheduled Walk-In\"",
+     "duration": "5 min per truck",
+     "n": "4",
+     "r": "Gate Guard"
+    },
+    {
+     "a": "—",
+     "activity": "**Dock door utilization tracking** (real-time): System maintains real-time dock door status dashboard visible to DC Shift Supervisor, DC Receiving Supervisor, and DC Dispatch Supervisor: (a) each dock door shows current status: Available, Occupied (with truck ID, vendor/carrier, appointment time, elapsed time), Reserved (next appointment with countdown to arrival), Out of Service (maintenance, equipment issue); (b) system calculates live dock utilization rate: occupied doors / total available doors; target utilization: 75–85% (below 75% = underutilized capacity; above 85% = congestion risk); (c) system flags doors occupied beyond scheduled time slot with amber (15 min over) and red (30+ min over) alerts to DC Shift Supervisor for intervention; (d) historical dock utilization data feeds W586 KPI dashboard",
+     "duration": "Automated (real-time)",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**No-show management**: System monitors appointment status at 30 minutes past scheduled window end: (a) if carrier/vendor has not arrived and no communication received: system marks appointment as \"No-Show\" and releases dock door back to available pool; (b) DC Receiving Supervisor notifies Buyer (inbound) or Fleet Manager (outbound) of no-show; (c) for recurring no-show vendors (3+ no-shows in rolling 30-day window): system escalates to DC Manager for vendor scorecard impact per W44; (d) released dock door slots from no-shows are immediately available for: unscheduled walk-in acceptance, rescheduling late arrivals, or pulling forward afternoon appointments to fill morning gaps; (e) monthly: DC Receiving Supervisor generates no-show rate report per vendor and per carrier; feeds into W44 vendor scorecard and W242 3PL performance review",
+     "duration": "Automated monitoring + 15 min/day manual follow-up",
+     "n": "6",
+     "r": "System / DC Receiving Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Appointment compliance reporting**: System calculates daily appointment compliance metrics: (a) **On-time arrival rate**: % of appointments where truck arrived within scheduled window (target: ≥ 85%); (b) **Dock turn time**: average time from truck dock-in to dock-out, by appointment type (inbound domestic, inbound import, outbound store delivery, outbound home delivery, outbound inter-DC); (c) **Dock door utilization rate**: average % of available dock-door-hours occupied during operating hours; (d) **Unscheduled walk-in rate**: % of total movements that were unscheduled (target: ≤ 5%); (e) **Slot adherence rate**: % of appointments that completed within the scheduled time slot (target: ≥ 80%); daily metrics feed W586 KPI dashboard; weekly trend analysis feeds W584 weekly operations review",
+     "duration": "Automated calculation + 30 min/week review",
+     "n": "7",
+     "r": "System / DC Receiving Supervisor"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Monthly dock capacity planning**: DC Manager reviews monthly dock utilization trends with DC Receiving Supervisor and DC Dispatch Supervisor: (a) identify peak hours and under-utilized windows — consider extending operating hours or adding temporary dock doors during seasonal peaks (e.g., Q4 construction season, Chinese New Year import surge); (b) review vendor appointment compliance trends from W44 — initiate conversation with chronic offenders through Buyer; (c) evaluate dock door configuration changes (e.g., convert standard door to heavy-duty if yard receipts increasing); (d) assess need for overflow staging area expansion; (e) feed capacity planning recommendations into annual DC capacity review and capex planning per W21",
+     "duration": "1 hour/month",
+     "n": "8",
+     "r": "DC Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W106",
+    "W21",
+    "W242",
+    "W3",
+    "W3B",
+    "W3C",
+    "W44",
+    "W52",
+    "W57",
+    "W584",
+    "W586",
+    "W66"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Daily per DC (overnight calculation, morning review); weekly trend analysis; monthly executive summary",
+    "Owner": "DC Manager",
+    "Participants": "DC Shift Supervisors, DC Receiving Supervisor, DC Dispatch Supervisor, VP Supply Chain, Supply Planning Manager",
+    "Trigger": "Automated overnight KPI calculation cycle; DC Manager morning review",
+    "Volume": "4 DCs; ~20 KPIs tracked per DC across 6 operational categories"
+   },
+   "id": "W586",
+   "level": 2,
+   "name": "DC Daily KPI Dashboard & Performance Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"Automated overnight KPI calculation\" (replaces manual Step 1).",
+     "- System auto-review of \"review W585 appointment schedule\" (replaces manual Step 2).",
+     "- System auto-document of \"documents review notes and action items in dashboard\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "With 4 DCs processing ~6,000 receipts/month and ~3,600 outbound dispatches/month, DC-level operational performance visibility is critical for the VP Supply Chain to identify issues early, benchmark DCs against each other, and drive continuous improvement. Currently, DC performance data is fragmented across WMS (receiving and putaway metrics), TMS (dispatch and delivery metrics), ERP (inventory accuracy and financial metrics), and timekeeping (labor metrics). This workflow establishes a unified daily KPI dashboard that consolidates data from all systems into a single view per DC, with automated exception alerting and corrective action tracking."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: configurable per-DC targets but requires initial calibration effort; operational: pairing throughput KPIs with accuracy/quality KPIs in the same dashboard view"
+    ],
+    "Pain Points / Risks": [
+     "- **Data latency across systems**: WMS transactions (receiving, putaway, picking) post in near-real-time, but TMS delivery confirmation (POD returns from drivers) lags by 1–2 days because drivers submit physical delivery receipts upon return to DC; this means the on-time delivery rate KPI is always 1–2 days behind, reducing its value as a same-day management tool.",
+     "- **KPI target thresholds require DC-specific calibration**: Clark DC (serving Northern/Central Luzon stores with longer delivery routes) will have lower truck utilization than Calamba DC (serving Metro Manila and Southern Luzon with shorter, denser routes); applying uniform targets across all 4 DCs creates misleading red/amber status for DCs with structurally different operating conditions; mitigated by configurable per-DC targets but requires initial calibration effort.",
+     "- **Corrective action completion does not guarantee KPI improvement**: many KPIs are influenced by factors outside DC Manager control (e.g., receiving throughput depends on vendor on-time delivery which feeds W44; picking productivity depends on order profile complexity from store replenishment planning); corrective actions assigned to DC staff may not address the true root cause if the root cause is external.",
+     "- **Dashboard fatigue and alert desensitization**: with ~20 KPIs tracked per DC and automated exception rules, DC Managers may receive 3–5 exception alerts per day; over time, the alerts may be acknowledged without genuine investigation, reducing the system's effectiveness as an early warning mechanism.",
+     "- **4-DC benchmarking can create unhealthy competition**: public side-by-side KPI comparison may incentivize DC Managers to game metrics (e.g., rushing receiving to improve throughput at the expense of accuracy) rather than driving genuine operational improvement; mitigated by pairing throughput KPIs with accuracy/quality KPIs in the same dashboard view."
+    ],
+    "Staffing Implication": [
+     "- **DC Manager** (1 per DC): adds ~35–50 min/day for dashboard review, exception handling, and corrective action management (steps 3–5), plus 30 min/week for trend analysis (step 7), plus 1 hour/month for executive report review (step 8). This is a core management responsibility absorbed within the existing DC Manager role — formalizes performance management that is currently ad-hoc.",
+     "- **VP Supply Chain**: adds ~20 min/day for multi-DC dashboard review (step 6). Absorbed.",
+     "- **IT/Business Intelligence**: initial dashboard development and KPI calculation engine build (~40–80 hours one-time); ongoing maintenance (~4–8 hours/month for threshold calibration, report modifications, data quality issue resolution). This is within planned BI/analytics capabilities.",
+     "- **No incremental DC headcount** — the dashboard automates data collection and calculation that would otherwise require manual spreadsheet compilation by DC administrative staff, saving ~3–4 hours/week per DC of manual reporting effort."
+    ],
+    "Steps": [],
+    "System Touchpoints (W586 — DC Daily KPI Dashboard & Performance Tracking)": [
+     "- Overnight data extraction from WMS (receiving, putaway, picking transactions), TMS (dispatch, delivery, POD data), ERP (inventory, PO data), and timekeeping (labor-hours, overtime) (W586.1)",
+     "- Automated KPI calculation engine with configurable target thresholds per KPI per DC (W586.1)",
+     "- Dashboard rendering with summary scorecard (green/amber/red), 4-DC comparison view, 7-day trend sparklines, exception list, and corrective action tracker (W586.2)",
+     "- Exception rule engine with single-day red, 3-day amber, 7-day decline, and cross-DC outlier rules (W586.4)",
+     "- Corrective action lifecycle tracking: Assigned → In Progress → Completed → Verified, with escalation triggers (W586.5)",
+     "- Multi-DC consolidated dashboard for VP Supply Chain (W586.6)",
+     "- Weekly trend analytics with corrective action effectiveness assessment (W586.7)",
+     "- Monthly executive report generation with KPI trends, benchmarking, capacity analysis, and cost per unit (W586.8)",
+     "- Integration with W584 (daily operations — KPI data source from shift management activities), W3 (receiving — receiving throughput, accuracy, quality pass rate), W106 (dispatch — departure rate, utilization, delivery on-time rate), W585 (dock scheduling — dock utilization, appointment compliance), W4 (picking — pick productivity, accuracy, wave completion), W6 (cycle counting — count accuracy), W44 (vendor scorecard — quality data cross-reference), W52 (fleet — truck utilization, delivery performance), W242 (3PL review — carrier performance data), W21 (capex — capacity investment recommendations from monthly report)"
+    ],
+    "Time Estimate": [
+     "Per DC-day: morning KPI review 15–20 min + exception acknowledgment 5–10 min + corrective-action assignment 10 min × 2–3 exceptions ≈ 40–60 min ≈ 243–365 hours/year per DC × 4 DCs ≈ 973–1,460 hours/year; chain-level: VP multi-DC dashboard 20 min/day ≈ 122 hours/year, weekly trend review 30 min ≈ 26 hours/year, monthly executive report 1 hour ≈ 12 hours/year (overnight calculation and dashboards automated) — total ≈ 1,133–1,622 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Automated overnight KPI calculation** (10:30 PM — after Night Shift B closes): System extracts transaction data from WMS, TMS, ERP, and timekeeping systems for the completed operational day (6:00 AM current day through 10:00 PM current day) and calculates the following KPIs per DC: **(A) Receiving Throughput**: (i) total receipts completed vs. planned (target: ≥ 95% of scheduled appointments), (ii) average receiving time per receipt — gate-to-GR posting (target: ≤ 2 hours), (iii) receiving accuracy — % of GRs with zero discrepancies (target: ≥ 98%), (iv) quality inspection pass rate (target: ≥ 95% per W3 quality standards); **(B) Putaway Performance**: (v) total pallets put away vs. received (target: 100% same-day putaway), (vi) putaway backlog at EOD — pallet count (target: 0), (vii) average putaway time per pallet (target: ≤ 20 min from GR to bin-scan confirmation); **(C) Picking Productivity**: (viii) lines picked per picker-hour (target: ≥ 25 lines/picker-hour for standard merchandise, ≥ 15 for bulky/heavy items), (ix) pick accuracy — % of picks with zero errors (target: ≥ 99.5%), (x) pick wave on-time completion % (target: ≥ 95% of waves completed within scheduled window); **(D) Shipping & Dispatch**: (xi) outbound loads dispatched vs. planned (target: ≥ 95%), (xii) on-time departure rate (target: ≥ 95% depart within 30 min of scheduled time), (xiii) truck utilization rate — loaded volume ÷ capacity (target: ≥ 75%), (xiv) on-time delivery rate from prior-day POD returns (target: ≥ 90%); **(E) Labor Utilization**: (xv) actual labor-hours vs. planned (target: ± 5%), (xvi) overtime hours as % of total labor-hours (target: ≤ 8%), (xvii) labor-hours per receipt processed, (xviii) labor-hours per dispatch processed; **(F) Accuracy & Quality**: (xix) cycle count accuracy — if cycle count conducted today per W6 (target: ≥ 99.5%), (xx) shipping accuracy — % of outbound orders with zero errors (correct items, correct quantities, correct store) (target: ≥ 99%)",
+     "duration": "Automated (30 min batch)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Morning dashboard generation** (5:30 AM): System generates DC daily KPI dashboard with: (a) **Summary scorecard**: green/amber/red status per KPI category (green = within target, amber = within 10% of target threshold, red = below target threshold by > 10%); (b) **DC comparison view**: side-by-side KPI comparison across all 4 DCs (Davao, Cebu, Calamba, Clark) to enable benchmarking; (c) **7-day trend sparklines**: mini-trend charts for each KPI showing daily values for the past week; (d) **Exception list**: KPIs in red status with automatic root-cause suggestions based on correlation analysis (e.g., if receiving throughput is red and dock utilization is red, system suggests \"dock congestion — review W585 appointment schedule\"); (e) **Corrective action tracker**: open corrective actions from prior days with due-date status; dashboard is accessible via browser on DC Manager's desktop and on wall-mounted displays in each DC's operations office",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**DC Manager morning review** (8:00 AM): DC Manager opens daily KPI dashboard and reviews: (a) overall DC performance — is the summary scorecard predominantly green?; (b) any red-status KPIs — drill down to underlying transaction data to understand root cause; (c) 7-day trends — are any KPIs showing declining trajectory even if still green?; (d) DC comparison — is this DC underperforming vs. other DCs on any metric?; (e) open corrective actions — are prior corrective actions completed or overdue?; DC Manager documents review notes and action items in dashboard",
+     "duration": "15–20 min/day",
+     "n": "3",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Exception flagging and escalation**: System automatically flags exceptions based on configurable rules: (a) **Single-day red alert**: any KPI in red status triggers automated email to DC Manager and DC Shift Supervisor with exception detail and suggested root cause; (b) **3-day amber trend**: any KPI in amber status for 3 consecutive days escalates to DC Manager for investigation; (c) **7-day declining trend**: any KPI showing consistent daily decline over 7 days (even if still green) triggers trend alert to DC Manager and VP Supply Chain; (d) **Cross-DC outlier**: any DC that is > 15% below the 4-DC average on any KPI triggers outlier alert to VP Supply Chain; DC Manager must acknowledge each exception within 4 hours (weekdays) or by next business day (weekends)",
+     "duration": "5–10 min/day for acknowledgment",
+     "n": "4",
+     "r": "System / DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Corrective action assignment**: For each acknowledged exception, DC Manager assigns corrective action: (a) assigns responsible person (Shift Supervisor, Receiving Supervisor, Dispatch Supervisor, or specific staff member), (b) sets target resolution date (default: 5 business days for operational issues, 10 business days for systemic issues), (c) describes corrective action plan, (d) system tracks corrective action through lifecycle: Assigned → In Progress → Completed → Verified; (e) if corrective action not completed by target date: system escalates to VP Supply Chain; (f) completed corrective actions are reviewed for effectiveness in the next weekly trend review (step 7) — did the KPI improve?",
+     "duration": "10 min/exception; ~2–3 exceptions/day",
+     "n": "5",
+     "r": "DC Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "**VP Supply Chain multi-DC dashboard review** (9:00 AM): VP Supply Chain reviews consolidated dashboard across all 4 DCs: (a) 4-DC summary scorecard with side-by-side comparison; (b) cross-DC outlier alerts; (c) open corrective action status across DCs; (d) identifies systemic issues affecting multiple DCs (e.g., if all 4 DCs show declining truck utilization, the issue is likely in load planning or fleet management rather than individual DC operations); (e) escalates systemic issues to COO with root-cause analysis and proposed resolution",
+     "duration": "20 min/day",
+     "n": "6",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Weekly trend review** (Monday 10:00 AM — part of W584 weekly operations review): DC Manager analyzes 7-day KPI trends: (a) calculate weekly averages for each KPI and compare to prior week; (b) identify KPIs with sustained improvement or decline over 4+ weeks; (c) review effectiveness of corrective actions completed in the past week — did the targeted KPI improve?; (d) identify emerging capacity constraints (e.g., if receiving throughput is steady but inbound volume is increasing, the DC is approaching a capacity ceiling); (e) prepare 1-page weekly DC performance summary for VP Supply Chain with top 3 wins, top 3 concerns, and action plan for the coming week",
+     "duration": "30 min/week (in addition to W584 weekly review)",
+     "n": "7",
+     "r": "DC Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Monthly executive DC performance report**: System generates monthly DC performance report for VP Supply Chain and COO: (a) monthly KPI averages per DC with month-over-month and year-over-year comparison; (b) 4-DC benchmarking ranking per KPI category; (c) top 10 corrective actions closed with effectiveness assessment; (d) open corrective actions aging report; (e) capacity utilization trend — is the DC approaching physical or labor capacity limits?; (f) cost per unit processed trend (total DC operating cost / units received + dispatched); (g) recommendations for capex investment (dock expansion, automation, equipment) or process changes based on performance trends; report auto-distributed to VP Supply Chain, COO, and CFO",
+     "duration": "Automated generation + 1 hour/month DC Manager review and commentary",
+     "n": "8",
+     "r": "System / DC Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W106",
+    "W21",
+    "W242",
+    "W3",
+    "W4",
+    "W44",
+    "W52",
+    "W584",
+    "W585",
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Daily safety checks; weekly safety meeting; monthly safety audit; annual comprehensive review",
+    "Owner": "DC Safety Officer",
+    "Participants": "DC Manager, Forklift Operators, Safety Committee Members, DOLE-accredited Safety Practitioner",
+    "Trigger": "Daily safety operations cadence; triggered by incident or near-miss",
+    "Volume": "4 DCs × daily operations"
+   },
+   "id": "W649",
+   "level": 2,
+   "name": "DC Safety Operations & Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check at entry point, dock leveler safety interlocks functional\" (replaces manual Step 1).",
+     "- System auto-record of \"records on mobile app\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews near-miss reports, reinforces one safety topic\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Safety Officer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- High worker turnover requiring continuous safety retraining; forklift-pedestrian interaction risk in busy DCs; hazmat area safety compliance with DENR requirements; seasonal temporary workers (W555) with minimal safety training; racking damage from forklift strikes creating structural collapse risk"
+    ],
+    "Staffing Implication": [
+     "- **DC Safety Officer** (1 per DC): ~40 min/day on walkthroughs, ~1 hour/week on safety meetings, ~4 hours/month on audits, ~2 days/year on annual exercises. This is a dedicated safety role per DC (4 FTE total), typically shared with or reporting to the DC Manager.",
+     "- **Forklift Operators**: ~10 min/vehicle/day on pre-use inspections. Absorbed within existing role as part of standard operating procedure.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Safety management module, incident reporting system, forklift inspection mobile app, training module (certification tracking)"
+    ],
+    "Time Estimate": [
+     "- Daily: ~60 min (30 min × 2 shifts); weekly: 30 min meeting + 30 min prep; monthly: 4 hours audit; quarterly: 1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Manager",
+     "activity": "Daily: DC Safety Officer conducts pre-shift safety walkthrough: forklift pedestrian zone barriers intact, emergency exits clear, fire extinguisher accessibility verified, spill kit availability in hazmat area, PPE compliance check at entry point, dock leveler safety interlocks functional",
+     "duration": "30 min/shift",
+     "n": "1",
+     "r": "DC Safety Officer"
+    },
+    {
+     "a": "DC Safety Officer",
+     "activity": "Daily: Forklift operator pre-use inspection checklist (fluid levels, tire condition, horn, lights, seat belt, forks, overhead guard); records on mobile app; out-of-service vehicles tagged and reported",
+     "duration": "10 min/vehicle",
+     "n": "2",
+     "r": "Forklift Operator"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Weekly: DC Safety Officer conducts safety meeting with shift team: reviews near-miss reports, reinforces one safety topic (manual handling, forklift safety, hazmat, dock safety), shares industry incident lessons",
+     "duration": "30 min/week",
+     "n": "3",
+     "r": "DC Safety Officer"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Monthly: DC Safety Officer conducts formal safety audit: fire suppression system test, emergency lighting test, first aid kit replenishment, eyewash station verification, electrical panel clearance check, racking structural integrity visual inspection, housekeeping (5S) assessment",
+     "duration": "4 hours/month",
+     "n": "4",
+     "r": "DC Safety Officer"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "For incidents and near-misses: DC Safety Officer completes incident report with root cause analysis (5-Why method); implements immediate corrective action; submits to DC Manager and Safety Committee for review; tracks corrective action to completion",
+     "duration": "1–2 hours/incident",
+     "n": "5",
+     "r": "DC Safety Officer"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Quarterly: DOLE-accredited Safety Practitioner reviews DC safety program; verifies compliance with DOLE OSH Standards; provides recommendations; DC Manager implements",
+     "duration": "1 day/quarter",
+     "n": "6",
+     "r": "Safety Practitioner"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Annual: DC Safety Officer coordinates forklift operator recertification, fire drill execution, emergency evacuation drill, and comprehensive safety training refresh for all DC personnel",
+     "duration": "2 days/year",
+     "n": "7",
+     "r": "DC Safety Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W555"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Weekly inspection; monthly PM for forklifts and reach stackers; quarterly PM for conveyors and dock levelers; annual overhaul",
+    "Owner": "DC Maintenance Supervisor",
+    "Participants": "Equipment Technician, DC Manager, Equipment Vendor Service Engineer, Finance Analyst (capex)",
+    "Trigger": "Maintenance schedule trigger; triggered by equipment failure or inspection finding",
+    "Volume": "~20–30 forklifts/reach stackers per DC × 4 DCs = ~80–120 units; ~40 dock levelers; ~200 RF devices; misc. equipment"
+   },
+   "id": "W650",
+   "level": 2,
+   "name": "Warehouse Equipment Preventive Maintenance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates PM work orders based on equipment maintenance schedule\" (replaces manual Step 1).",
+     "- System auto-scan of \"scanner, screen, firmware update\" (replaces manual Step 2).",
+     "- System auto-record of \"records PM completion in system\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Maintenance Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Equipment aging in high-utilization DC operations (multi-shift, 6 days/week); spare parts availability delays from Philippine equipment vendors; rental equipment quality variability; equipment breakdown during peak season (Christmas) with limited vendor service availability; unauthorized operator modifications compromising safety"
+    ],
+    "Staffing Implication": [
+     "- **Equipment Technician** (2–3 per DC): dedicated maintenance role executing PM and repairs. ~6–8 hours/day per DC. This is a dedicated maintenance team per DC (8–12 FTE total across 4 DCs).",
+     "- **DC Maintenance Supervisor** (1 per DC): ~2 hours/month on reporting + ad-hoc vendor coordination. Absorbed within existing supervisory role.",
+     "- **Finance Analyst**: ~1 day/quarter on equipment cost analysis. Absorbed within existing Finance role.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Equipment maintenance module (EAM), telematics (W199 for forklifts), parts inventory, vendor service portal, GL (maintenance cost posting)"
+    ],
+    "Time Estimate": [
+     "- Weekly: 4–8 hours per DC; monthly PM: 1–2 days per DC; quarterly review: 1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Maintenance Supervisor",
+     "activity": "System generates PM work orders based on equipment maintenance schedule (manufacturer-recommended intervals + usage hours from telematics); assigns to Equipment Technician",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "DC Maintenance Supervisor",
+     "activity": "Equipment Technician executes PM per equipment-specific checklist: forklifts (engine/motor, hydraulic system, mast/chain, brakes, steering, tires, battery/charging), reach stackers (hydraulics, spreader, steering), dock levelers (hydraulic cylinder, lip extension, safety legs, weather seal), RF devices (battery, scanner, screen, firmware update), barcode printers (print head cleaning, label sensor, calibration), stretch-wrap machines (tension adjustment, film carriage, turntable)",
+     "duration": "1–2 hours/unit",
+     "n": "2",
+     "r": "Equipment Technician"
+    },
+    {
+     "a": "DC Maintenance Supervisor",
+     "activity": "Equipment Technician records PM completion in system: checklist results, parts consumed, hours spent, any findings requiring follow-up repair; system updates next PM due date based on hours/interval",
+     "duration": "15 min/unit",
+     "n": "3",
+     "r": "Equipment Technician"
+    },
+    {
+     "a": "DC Maintenance Supervisor",
+     "activity": "For equipment requiring repair beyond PM scope: Equipment Technician creates repair work order with severity (critical: equipment out of service, major: degraded but functional, minor: non-urgent); for critical repairs, DC Maintenance Supervisor authorizes vendor service call",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Equipment Technician"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "For critical equipment failures during operations: DC Maintenance Supervisor activates backup equipment plan (rental forklift from vendor pool, manual pallet jack substitution, manual dock operations); communicates impact to DC Manager for labor reallocation",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "DC Maintenance Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Monthly: DC Maintenance Supervisor reviews equipment uptime report (target: ≥ 95% for forklifts and reach stackers); analyzes MTBF and MTTR trends; identifies units approaching end-of-life for replacement planning",
+     "duration": "2 hours/month",
+     "n": "6",
+     "r": "DC Maintenance Supervisor"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Quarterly: Finance Analyst reviews equipment maintenance costs vs. depreciation schedule; recommends repair-vs-replace decisions for units with excessive maintenance cost per W39",
+     "duration": "1 day/quarter",
+     "n": "7",
+     "r": "Finance Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W199",
+    "W39"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "~6,000–9,000 return items/month across 4 DCs (per the ~50–75/DC/day Volume)",
+    "Owner": "DC Returns Processor",
+    "Participants": "Quality Inspector, DC Inventory Supervisor, Vendor Relations Coordinator, LP Analyst",
+    "Trigger": "Store return shipment received at DC; ecommerce return received at DC",
+    "Volume": "~50–75 return items/DC/day"
+   },
+   "id": "W651",
+   "level": 2,
+   "name": "Reverse Logistics Processing (Customer/Store Returns at DC)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans return authorization\" (replaces manual Step 1).",
+     "- System auto-inspect of \"Inspector inspects each returned item against return reason code and item…\" (replaces manual Step 2).",
+     "- System auto-count of \"discount staging area, Grade C → RTV staging\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Returns Processor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- High volume during post-holiday return season (January); subjective grading between Grade A and Grade B leading to inconsistency; vendor resistance to accepting RTV claims; return processing creating bottleneck in DC receiving area; seasonal items returned after season close with no resale opportunity"
+    ],
+    "Staffing Implication": [
+     "- **DC Returns Processor** (1 per DC): ~4–6 hours/day on return processing. Dedicated role within DC operations (4 FTE total).",
+     "- **Quality Inspector**: shared with receiving quality function; ~2–3 hours/day on return inspection. Absorbed within existing receiving quality role.",
+     "- **DC Inventory Supervisor**: ~2 hours/week on returns reporting. Absorbed within existing role.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS returns module, quality inspection module, inventory status management, RTV module (W88), LP analytics, vendor claim system"
+    ],
+    "Time Estimate": [
+     "- Daily: 4–6 hours processing; weekly: 2 hours reporting; monthly: 1 hour review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "DC Returns Processor receives return shipment from store or ecommerce carrier; scans return authorization (RA) number; verifies shipment matches RA manifest (item, quantity, condition)",
+     "duration": "15 min/shipment",
+     "n": "1",
+     "r": "DC Returns Processor"
+    },
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "Quality Inspector inspects each returned item against return reason code and item condition: Grade A (sealed/original packaging, undamaged — restock to saleable inventory), Grade B (opened, minor cosmetic damage, complete accessories — eligible for discount bin or open-box sale per W549), Grade C (defective, damaged, missing parts — vendor RTV per W88, repair, or destroy), Grade D (safety hazard, contamination — immediate quarantine and destroy)",
+     "duration": "5 min/item",
+     "n": "2",
+     "r": "Quality Inspector"
+    },
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "DC Returns Processor updates system with inspection grade; system routes item to appropriate disposition: Grade A → saleable putaway (W3), Grade B → discount staging area, Grade C → RTV staging (W88) or repair queue, Grade D → quarantine for destruction",
+     "duration": "3 min/item",
+     "n": "3",
+     "r": "DC Returns Processor"
+    },
+    {
+     "a": "DC Inventory Supervisor",
+     "activity": "For Grade C vendor-caused defects: Vendor Relations Coordinator initiates vendor claim with evidence (photos, defect description, original GR data); tracks vendor credit receipt per W88 SLA",
+     "duration": "15 min/claim",
+     "n": "4",
+     "r": "Vendor Relations Coordinator"
+    },
+    {
+     "a": "LP Analyst",
+     "activity": "For LP-flagged returns (high-value items, serial returner items per W605, patterns suggesting return fraud): DC Returns Processor sets aside for LP Analyst investigation before disposition",
+     "duration": "As flagged",
+     "n": "5",
+     "r": "DC Returns Processor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Weekly: DC Inventory Supervisor produces returns analytics: return rate by category and store, grade distribution, vendor defect rate, processing cycle time, recovery rate (value recovered ÷ value returned)",
+     "duration": "2 hours/week",
+     "n": "6",
+     "r": "DC Inventory Supervisor"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly: DC Manager reviews return trend data with Merchandising (W102) and Supply Chain (W31); identifies systemic quality issues for vendor CAPA (W110) and assortment review (W1)",
+     "duration": "1 hour/month",
+     "n": "7",
+     "r": "DC Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W102",
+    "W110",
+    "W3",
+    "W31",
+    "W549",
+    "W605",
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Monthly reconciliation; quarterly vendor settlement",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Ops Manager, Receiving Supervisor, AP Accountant, Vendor, 3PL Carrier",
+    "Trigger": "Monthly RTP reconciliation cycle; or vendor RTP balance dispute",
+    "Volume": "~12,000–15,000 RTP items (pallets, crates, IBCs) in circulation across 4 DCs"
+   },
+   "id": "W785",
+   "level": 2,
+   "name": "Vendor Returnable Transport Packaging Reconciliation & Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs RTP receipt against vendor account\" (replaces manual Step 1).",
+     "- System auto-record of \"Outbound RTP recording\" (replaces manual Step 2).",
+     "- System auto-send of \"sending DC credits vendor RTP balance\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot receives goods on returnable transport packaging (RTP) — wooden pallets, plastic crates, intermediate bulk containers (IBCs), and roll cages — from vendors who charge deposits or track ownership. While W270 tracks pallets at a high level, this workflow manages the detailed operational reconciliation of RTP: tracking inbound and outbound RTP movements, reconciling balances per vendor, managing damage and loss, and processing vendor settlements for deposits or rental fees. With ~12,000–15,000 RTP items in circulation and deposit values of PHP 200-1,500 per item, unreconciled RTP represents ~PHP 3-5M in vendor liabilities."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- Tracking accuracy — manual RTP counting at receiving/dispatch is error-prone; under-recording inbound or over-recording outbound creates apparent shortages",
+     "- Vendor disputes — vendors may claim more RTP returned than DC records show; photographic evidence and signed delivery receipts are essential",
+     "- RTP theft — returnable pallets and crates have resale value; loss prevention per W755 applies to RTP as well as merchandise",
+     "- Deposit escalation — vendor RTP deposit rates may increase annually; total deposit liability must be monitored and budgeted",
+     "- Environmental condition — wooden pallets deteriorate in Philippine tropical climate (humidity, termites); faster depreciation than expected"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing DC Operations Manager and Receiving Supervisor roles. Monthly: ~5 hours per DC. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- RTP tracking module — inbound, outbound, and balance management per vendor",
+     "- W3 warehouse receiving — RTP receipt recording integration",
+     "- W106 DC outbound dispatch — RTP return recording integration",
+     "- W22 stock transfers — inter-DC RTP movement tracking",
+     "- W270 pallet tracking — high-level pallet management",
+     "- W7 AP processing — RTP settlement payment processing",
+     "- W100 vendor statement reconciliation — RTP balance on vendor statement",
+     "- W500 transfer order damage claim — carrier damage RTP claim"
+    ],
+    "Time Estimate": [
+     "Monthly: reconciliation (4 hours) + analytics (1 hour) = 5 hours per DC. Quarterly: settlement (2 hours). Total: ~28 hours per DC per year."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Inbound RTP recording**: At receiving per W3: (a) Receiving Supervisor counts and records all RTP received per delivery: pallet count, crate count, IBC count by vendor, (b) system logs RTP receipt against vendor account, (c) RTP condition assessed: good, damaged, or non-returnable",
+     "duration": "5 min/delivery",
+     "n": "1",
+     "r": "Receiving Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Outbound RTP recording**: At dispatch per W106: (a) Receiving Supervisor records RTP returned to vendor (empty pallets/crates on backhaul), (b) system logs RTP return against vendor account, (c) carrier confirms RTP pickup quantity on delivery receipt",
+     "duration": "5 min/dispatch",
+     "n": "2",
+     "r": "Receiving Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Inter-DC RTP tracking**: For RTP transferred between DCs per W22: (a) system tracks RTP movement inter-DC, (b) sending DC credits vendor RTP balance, (c) receiving DC debits vendor RTP balance, (d) net vendor balance unchanged",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Monthly RTP reconciliation**: DC Operations Manager reconciles per vendor: (a) opening balance + inbound receipts - outbound returns - inter-DC net = closing balance, (b) physical count of RTP at DC (sample count of 20% per month, full count quarterly), (c) variance investigation: missing, damaged, or unrecorded RTP",
+     "duration": "4 hours/month",
+     "n": "4",
+     "r": "DC Ops Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Damage and loss documentation**: For damaged or lost RTP: (a) DC Ops Manager documents damage with photos, (b) classifies cause: carrier damage, DC handling damage, natural wear, unexplained loss, (c) vendor deposit forfeited for DC-caused damage per agreement, (d) carrier claim initiated for carrier-caused damage per W500",
+     "duration": "15 min/case",
+     "n": "5",
+     "r": "DC Ops Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Quarterly vendor RTP settlement**: AP Accountant processes quarterly settlement: (a) per-vendor RTP balance confirmed with vendor, (b) deposit charges for unreturned/damaged RTP per agreement, (c) vendor credits for excess returns, (d) settlement amount applied to vendor AP balance per W7, (e) vendor statement reconciliation per W100",
+     "duration": "2 hours/quarter",
+     "n": "6",
+     "r": "AP Accountant"
+    },
+    {
+     "a": "—",
+     "activity": "**RTP analytics**: Monthly: DC Ops Manager reports: (a) RTP balance by type and vendor, (b) return rate (target: > 95%), (c) damage rate by cause, (d) deposit liability on balance sheet, (e) RTP cost per unit shipped",
+     "duration": "1 hour/month",
+     "n": "7",
+     "r": "DC Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W100",
+    "W106",
+    "W22",
+    "W270",
+    "W3",
+    "W500",
+    "W7",
+    "W755"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Weekly scheduling; daily shift execution; monthly productivity review",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Shift Supervisors, HR, Temporary Staffing Agency, VP Supply Chain",
+    "Trigger": "Weekly labor planning cycle; daily shift start; seasonal surge planning per W652",
+    "Volume": "4 DCs × ~150 workers per DC (600 total DC headcount) across 2-shift operations (6 AM–2 PM, 2 PM–10 PM); peak seasons require overtime and temporary staffing"
+   },
+   "id": "W796",
+   "level": 2,
+   "name": "DC Workforce Scheduling, Labor Planning & Productivity Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counts per W648, seasonal surge per W652, returns processing per W651\" (replaces manual Step 1).",
+     "- System auto-schedule of \"Shift Schedule Publication\" (replaces manual Step 2).",
+     "- System auto-validate of \"Daily Shift Briefing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's 4 distribution centers (DC1 Davao, DC2 Cebu, DC3 Laguna, DC4 Clark) each employ ~150 workers (600 total DC headcount per profile §3.2) across receiving, putaway, picking, packing, shipping, and value-added services. Labor is the largest controllable cost at DCs (40-50% of DC operating cost). Seasonal demand (ber months September-December) increases throughput by 30-40%, requiring temporary staffing. Without structured workforce scheduling and productivity tracking, DCs face chronic overtime, labor shortages during peak, idle labor during off-peak, and inability to measure individual and team productivity. This workflow governs DC workforce planning, scheduling, and performance management."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Seasonal labor scarcity**: during ber months (September-December), competing logistics companies and retailers all hire temporary workers; BuildRight may not secure enough temporary staff, forcing expensive overtime on permanent workers",
+     "- **Temporary worker productivity**: temporary workers typically achieve 50-70% of permanent worker productivity in the first 2 weeks; training investment on workers who leave after peak season is a sunk cost",
+     "- **Fatigue-related safety incidents**: extended overtime during peak season increases risk of workplace accidents per W649; DOLE may investigate if accident rate increases during peak",
+     "- **Shift handover information loss**: critical information (incomplete picks, pending receiving issues, equipment problems) lost between shift handovers if not formally documented",
+     "- **Inaccurate labor planning**: weekly labor plans based on forecast volume that significantly deviates from actual volume lead to over-staffing (wasted cost) or under-staffing (SLA failures)"
+    ],
+    "Staffing Implication": [
+     "- **DC Operations Manager**: ~6–8 hours/week on labor planning and scheduling; absorbed by existing role",
+     "- **DC Shift Supervisors**: ~2–3 hours/week on schedule creation and daily briefings; absorbed by existing role",
+     "- **No incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS labor management module with productivity tracking",
+     "- ERP workforce scheduling module integrated with HR per W34",
+     "- Time & attendance integration per W5",
+     "- WMS real-time productivity dashboard",
+     "- Temporary staffing management per W555",
+     "- Safety training verification per W655, W696",
+     "- Overtime tracking per W561",
+     "- Budget integration per W489"
+    ],
+    "Time Estimate": [
+     "- Weekly labor planning: 4-6 hours",
+     "- Shift schedule publication: 2-3 hours/week",
+     "- Daily shift briefing: 10-15 min/day",
+     "- Monthly productivity review: 4-6 hours",
+     "- **Ongoing**: ~10–15 hours/week of DC Ops Manager + Shift Supervisor time",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Weekly Labor Plan**: DC Operations Manager develops weekly labor plan based on: (a) expected inbound volume (PO schedule per W2, W2B); (b) expected outbound volume (store replenishment orders per W4, ecommerce orders per W11, W19); (c) special activities (cycle counts per W648, seasonal surge per W652, returns processing per W651); (d) available workforce (permanent staff, approved leaves per W7, scheduled training per W655); (e) temporary staffing needs: request to HR per W555 with required headcount, skill level, and dates",
+     "duration": "4-6 hours/week",
+     "n": "1",
+     "r": "DC Ops Manager"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Shift Schedule Publication**: DC Shift Supervisor publishes detailed shift assignments: (a) assign workers to functional areas (receiving dock, putaway, picking zones, packing, shipping dock, returns); (b) assign team leads per zone; (c) publish schedule 1 week in advance via ERP and mobile app; (d) manage shift swap requests and approval; (e) ensure minimum staffing per zone per DC safety requirements per W649",
+     "duration": "2-3 hours/week",
+     "n": "2",
+     "r": "Shift Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Daily Shift Briefing**: At shift start, Shift Supervisor conducts 10-minute briefing: (a) safety reminder per W649; (b) volume targets for the shift (units received, picks, shipments); (c) priority orders (urgent store replenishment, ecommerce SLA-critical per W591); (d) special instructions (hazmat receiving per W236, temperature-sensitive goods per W492); (e) attendance check: verify actual vs. planned headcount; (f) if short-staffed: activate overtime or call temporary workers",
+     "duration": "10-15 min/day",
+     "n": "3",
+     "r": "Shift Supervisor"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Real-Time Productivity Monitoring**: During shift, WMS tracks individual and team productivity: (a) receiving: units received per worker per hour; (b) putaway: locations per hour; (c) picking: lines per hour, units per hour; (d) packing: orders per hour; (e) shipping: shipments loaded per hour; (f) system flags workers below minimum productivity threshold (75% of standard rate) for supervisor coaching; (g) real-time dashboard shows DC throughput vs. daily target",
+     "duration": "Continuous",
+     "n": "4",
+     "r": "System / Shift Supervisor"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Overtime Management**: When daily volume exceeds planned capacity: (a) Shift Supervisor requests overtime approval from DC Ops Manager; (b) system calculates required OT hours based on remaining volume; (c) OT limited to maximum 4 hours/day per DOLE labor standards; (d) weekly OT hours tracked per employee per W561 to prevent fatigue and legal non-compliance; (e) monthly OT cost tracked vs. budget per W489",
+     "duration": "Daily as needed",
+     "n": "5",
+     "r": "Shift Supervisor"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Temporary Worker Integration**: For seasonal surge per W652: (a) HR provides temporary workers per W555; (b) DC Safety Officer conducts safety orientation per W696 before worker enters DC floor; (c) assign temporary workers to low-skill areas (putaway, packing) with permanent worker supervision; (d) track temporary worker productivity separately; (e) end-of-assignment evaluation shared with HR for future reference",
+     "duration": "Per W555 cycle",
+     "n": "6",
+     "r": "Shift Supervisor / HR"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Monthly Productivity Review**: DC Ops Manager reviews monthly productivity metrics: (a) units per labor hour (UPLH) by function; (b) labor cost per unit processed; (c) overtime hours and cost vs. budget; (d) absenteeism rate; (e) temporary worker productivity vs. permanent; (f) productivity trends by shift and zone; (g) benchmark against BuildRight DC peer group; (h) recommendations for process improvement, equipment investment, or staffing adjustments",
+     "duration": "4-6 hours/month",
+     "n": "7",
+     "r": "DC Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W11",
+    "W19",
+    "W2",
+    "W236",
+    "W2B",
+    "W34",
+    "W4",
+    "W489",
+    "W492",
+    "W5",
+    "W555",
+    "W561",
+    "W591",
+    "W648",
+    "W649",
+    "W651",
+    "W652",
+    "W655",
+    "W696",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "24/7 continuous operations; quarterly security review",
+    "Owner": "DC Security Supervisor",
+    "Participants": "DC Operations Manager, Security Guard Force, LP team per W466, Local Police/Barangay",
+    "Trigger": "Daily DC operations; security incident; new vendor/visitor arrival; quarterly security review",
+    "Volume": "4 DCs; ~200–300 personnel movements per DC per day (staff, contractors, drivers, visitors)"
+   },
+   "id": "W797",
+   "level": 2,
+   "name": "DC Security Operations, Perimeter Management & Access Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"entering DC must\" (replaces manual Step 1).",
+     "- System auto-log of \"logs all incidents observed on CCTV in shift report\" (replaces manual Step 2).",
+     "- System auto-validate of \"checks at shift start\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's 4 distribution centers hold inventory valued at PHP 2-4 billion at any given time (estimated 35,000 SKUs × 200 stores worth of replenishment stock). DCs are high-value targets for theft, both internal and external. Philippine DCs face additional risks: typhoon damage, flooding, unauthorized entry during off-hours, and organized theft rings. This workflow governs DC physical security, access control, CCTV management, and incident response."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: bag checks, CCTV, and access zone restrictions"
+    ],
+    "Pain Points / Risks": [
+     "- **Internal theft**: DC workers with access to high-value inventory (power tools, appliances) are the primary theft risk; mitigated by bag checks, CCTV, and access zone restrictions",
+     "- **Guard force reliability**: outsourced security guards may be underpaid, poorly trained, or susceptible to collusion; regular guard force rotation and quarterly performance review mitigates",
+     "- **Off-hours vulnerability**: DCs are most vulnerable during off-hours when minimal staff is present; typhoon-related evacuations may leave DC unattended",
+     "- **Truck driver access**: hundreds of delivery and pickup truck drivers access DC grounds daily; each driver is a potential theft risk while on premises",
+     "- **Cybersecurity-physical security intersection**: unauthorized physical access to server rooms or network cabinets can compromise IT security; server room access restricted to IT personnel only"
+    ],
+    "Staffing Implication": [
+     "- **DC Security Supervisor**: 1 per DC, 4 total; manages guard force, conducts quarterly reviews, coordinates with LP and police; absorbed into existing DC management team",
+     "- **Security Guard Force**: outsourced to licensed security agency; minimum 6 guards per DC (2 per shift × 3 shifts); 24 total across 4 DCs",
+     "- **No incremental BuildRight headcount** beyond DC Security Supervisors."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Access control system (biometric + badge) integrated with HR employee master per W292",
+     "- Visitor management system with ID scanning and escort tracking",
+     "- CCTV system with 30-day retention and motion detection alerts",
+     "- Guard tour system with checkpoint scanning",
+     "- Alarm system with 24/7 monitoring",
+     "- Incident reporting module linked to W37 LP and W466 LPAP",
+     "- Access log analytics dashboard for anomaly detection"
+    ],
+    "Time Estimate": [
+     "- Access control: 2-3 min per person × 200-300 persons/DC/day = ~10–15 hours/DC/day (absorbed by guard force)",
+     "- Perimeter check: 30 min/day",
+     "- Off-hours patrols: 8 hours/night (guard tour)",
+     "- Quarterly review: 1 day/quarter per DC",
+     "- Incident response: variable, 2-8 hours per incident",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Security Supervisor",
+     "activity": "**Access Control Management**: All personnel entering DC must: (a) employees: biometric scan (fingerprint) + ID badge; entry/exit time logged in system; (b) contractors/visitors: register at guard house, present valid ID, receive visitor badge, escorted by BuildRight staff at all times; (c) truck drivers: present delivery appointment per W585, present driver's license and vehicle registration, logged in visitor management system; (d) all bags and personal items inspected at exit per LP policy per W37",
+     "duration": "2-3 min per person",
+     "n": "1",
+     "r": "Security Guard / System"
+    },
+    {
+     "a": "DC Security Supervisor",
+     "activity": "**CCTV Operations**: Security guard monitors CCTV system: (a) 24/7 coverage of all entry/exit points, dock doors, yard areas, high-value zones (power tools, appliances); (b) minimum 30-day recording retention per W207; (c) guard logs all incidents observed on CCTV in shift report; (d) system alerts for motion detection during off-hours in restricted areas; (e) monthly camera health check: verify all cameras operational, recording quality acceptable, no blind spots",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Security Guard"
+    },
+    {
+     "a": "DC Security Supervisor",
+     "activity": "**Perimeter Security**: Daily perimeter checks at shift start: (a) verify all fence lines intact; (b) verify gate locks and barriers functional; (c) verify exterior lighting operational (especially loading dock and yard per W3B); (d) verify signage: \"No Unauthorized Entry,\" \"CCTV Surveillance,\" \"Private Property\"; (e) report any damage or security gaps to DC Security Supervisor for immediate resolution",
+     "duration": "30 min/day",
+     "n": "3",
+     "r": "Security Guard"
+    },
+    {
+     "a": "DC Security Supervisor",
+     "activity": "**Off-Hours Security**: During non-operating hours (10 PM-6 AM): (a) minimum 2 guards on duty; (b) hourly perimeter patrol logged in guard tour system; (c) all internal doors locked except guard room; (d) alarm system armed; (e) only authorized personnel (DC Ops Manager, Security Supervisor) can authorize off-hours entry; (f) all off-hours entries logged with reason, person, and time",
+     "duration": "Nightly",
+     "n": "4",
+     "r": "Security Guard"
+    },
+    {
+     "a": "DC Security Supervisor",
+     "activity": "**Security Incident Response**: If security incident occurs (unauthorized entry, theft detected, alarm trigger): (a) guard responds to incident location; (b) assess situation: intruder, employee theft, false alarm; (c) if intruder: do not confront, observe and record, call local police/Barangay per W471; (d) if employee theft: document evidence per W37 LP procedures, detain if safe to do so, notify DC Ops Manager and LP team per W466; (e) incident report filed within 4 hours with CCTV footage preserved",
+     "duration": "Per incident",
+     "n": "5",
+     "r": "Security Guard"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Quarterly Security Review**: DC Security Supervisor and LP team conduct quarterly review: (a) review all security incidents for the quarter: theft, unauthorized access, alarm events; (b) review CCTV camera coverage for blind spots; (c) review access log analytics: unusual entry patterns (employees entering during off-hours, visitors in restricted areas); (d) review guard force performance; (e) update security procedures as needed; (f) coordinate with local police/Barangay on security situation in the area",
+     "duration": "1 day/quarter",
+     "n": "6",
+     "r": "DC Security Supervisor / LP Team"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W207",
+    "W292",
+    "W37",
+    "W3B",
+    "W466",
+    "W471",
+    "W585"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Daily utility monitoring; weekly preventive maintenance; quarterly facility condition assessment; annual major maintenance",
+    "Owner": "DC Facilities Manager",
+    "Participants": "DC Operations Manager, Maintenance Technicians, Utility Providers, External Contractors, VP Supply Chain, Finance",
+    "Trigger": "Daily operations; preventive maintenance schedule; facility condition assessment per W700; utility meter reading; weather alert",
+    "Volume": "4 DCs totaling 130,000 sqm; ~PHP 15-25M annual maintenance budget across all DCs"
+   },
+   "id": "W798",
+   "level": 2,
+   "name": "DC Building Maintenance, Utility Operations & Facility Condition Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Daily Utility Monitoring\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspect and lubricate material handling equipment\" (replaces manual Step 2).",
+     "- System auto-capture of \"Monthly Building Systems Check\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's 4 DCs (DC1 Davao 35,000 sqm, DC2 Cebu 30,000 sqm, DC3 Laguna 40,000 sqm, DC4 Clark 25,000 sqm) are large industrial facilities with complex building systems: HVAC (for temperature-sensitive goods per W492), electrical systems (high-capacity for material handling equipment), fire suppression (sprinkler systems for BFP compliance), roofing (critical in Philippine tropical climate), loading dock equipment (levelers, doors), and security systems per W797. Building maintenance directly impacts operational continuity — a roof leak damages inventory, an HVAC failure compromises temperature-sensitive goods, and a loading dock breakdown halts outbound shipments."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Roof leaks during typhoon season**: Philippine typhoons (20+ per year) stress warehouse roofing; undetected roof leaks damage inventory before being discovered; regular inspection is critical but often deferred during peak operational periods",
+     "- **Generator failure during brownout**: rotational brownouts are common in Philippine provinces; DC generators must be load-tested monthly to ensure reliability; generator failure during brownout risks temperature-sensitive goods loss per W492",
+     "- **Contractor availability for emergency repairs**: specialized contractors (HVAC, fire suppression, roofing) may have 1-2 week backlogs during typhoon season when all buildings need repairs simultaneously",
+     "- **Aging infrastructure**: DC1 Davao (if older) may require higher maintenance investment; facility condition assessment drives proactive replacement before failure",
+     "- **Utility cost escalation**: Philippine electricity rates are among the highest in Southeast Asia (~PHP 10-12/kWh); utility monitoring identifies energy efficiency opportunities per W692"
+    ],
+    "Staffing Implication": [
+     "- **1 DC Facilities Manager**: per DC, 4 total; manages daily utility monitoring, weekly PM coordination, corrective maintenance dispatch, and quarterly assessments; absorbed into existing DC management team",
+     "- **2-3 Maintenance Technicians per DC**: 8-12 total across 4 DCs; execute weekly PM, respond to corrective maintenance, support major maintenance; mix of BuildRight employees and contracted technicians",
+     "- **External Contractors**: HVAC, fire suppression, and roofing specialists on annual framework agreements; not BuildRight headcount",
+     "- **Total incremental**: 4 Facilities Managers + 8-12 Technicians (may partially overlap with existing W650 and W240 roles)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Building Management System (BMS) for HVAC and environmental monitoring",
+     "- Maintenance management module (CMMS) integrated with W650",
+     "- Utility monitoring dashboard per W701",
+     "- Work order system for corrective maintenance",
+     "- Asset management per W400 for equipment lifecycle tracking",
+     "- Weather alert integration for typhoon preparedness",
+     "- Insurance claims module per W610 for weather damage",
+     "- CAPEX budget integration per W21 for major maintenance planning"
+    ],
+    "Time Estimate": [
+     "- Daily utility monitoring: 30 min/day",
+     "- Weekly PM: 4-6 hours/week",
+     "- Monthly building systems check: 1 day/month",
+     "- Corrective maintenance: variable, ~2–8 hours per incident",
+     "- Quarterly facility assessment: 2-3 days/quarter",
+     "- Annual major maintenance: 1-2 weeks/year",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Daily Utility Monitoring**: DC Facilities Manager monitors utility consumption: (a) electricity meter readings logged daily (main panel and sub-panels for refrigeration, lighting, office); (b) water consumption logged daily; (c) diesel generator fuel level checked daily; (d) compare daily consumption to baseline; (e) flag any abnormal consumption (>20% above baseline) for investigation; (f) monthly utility cost tracked per W701",
+     "duration": "30 min/day",
+     "n": "1",
+     "r": "Facilities Manager"
+    },
+    {
+     "a": "Facilities Manager",
+     "activity": "**Weekly Preventive Maintenance**: Maintenance Technicians execute weekly PM tasks per W650: (a) inspect and lubricate material handling equipment (forklifts, reach trucks, pallet jacks); (b) inspect loading dock levelers and dock doors; (c) inspect fire suppression system gauges and valves; (d) inspect electrical panels for abnormal heat or damage; (e) inspect roof drainage channels (critical during rainy season); (f) log all PM activities in maintenance management system",
+     "duration": "4-6 hours/week",
+     "n": "2",
+     "r": "Maintenance Technicians"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Monthly Building Systems Check**: Monthly inspection of major building systems: (a) HVAC: check refrigerant levels, condenser coil cleanliness, thermostat calibration for temperature-sensitive zones per W492; (b) fire alarm: test notification devices, verify panel functionality; (c) emergency lighting: test all emergency lights and exit signs; (d) plumbing: check for leaks, verify backflow preventers; (e) structural: visual inspection for cracks, settlement signs, especially after earthquakes",
+     "duration": "1 day/month",
+     "n": "3",
+     "r": "Facilities Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Weather Preparedness**: During Philippine typhoon season (June-November): (a) pre-typhoon: inspect roof tie-downs, clear drainage channels, test generators, verify emergency supplies; (b) during typhoon: activate emergency protocol per W330, secure dock doors, protect outdoor inventory per W3B; (c) post-typhoon: inspect for damage (roof, walls, flooding), photograph and document for insurance per W610, prioritize repairs for operational continuity",
+     "duration": "As needed during typhoon season",
+     "n": "4",
+     "r": "Facilities Manager / DC Ops Manager"
+    },
+    {
+     "a": "DC Ops Manager",
+     "activity": "**Corrective Maintenance**: When equipment or building system fails: (a) DC staff submits maintenance work order via system; (b) Facilities Manager triages: emergency (safety risk or operational stoppage — respond within 2 hours), urgent (operational degradation — respond within 24 hours), routine (non-critical — schedule within 1 week); (c) assign to internal maintenance technician or external contractor; (d) track repair completion and verify resolution; (e) update asset maintenance record per W400",
+     "duration": "Per incident",
+     "n": "5",
+     "r": "Facilities Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Quarterly Facility Condition Assessment**: Facilities Manager conducts quarterly assessment per W700: (a) structural condition: roof, walls, floors, foundation; (b) building systems: HVAC, electrical, plumbing, fire suppression; (c) site: parking lot, fencing, drainage, landscaping; (d) equipment: forklifts, dock levelers, conveyors; (e) rate each element on condition scale (good, fair, poor, critical); (f) estimate remaining useful life and replacement cost; (g) input to annual CAPEX budget per W21 for major maintenance and replacement",
+     "duration": "2-3 days/quarter",
+     "n": "6",
+     "r": "Facilities Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Annual Major Maintenance**: Schedule major maintenance during lowest-volume period (typically January-February): (a) roof inspection and repair; (b) HVAC system overhaul; (c) floor resurfacing (high-traffic areas); (d) fire suppression system annual certification per BFP requirements; (e) electrical system thermographic survey; (f) loading dock equipment overhaul; (g) plan and budget per W21 CAPEX process",
+     "duration": "1-2 weeks/year",
+     "n": "7",
+     "r": "Facilities Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W21",
+    "W240",
+    "W330",
+    "W3B",
+    "W400",
+    "W492",
+    "W610",
+    "W650",
+    "W692",
+    "W700",
+    "W701",
+    "W797"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Continuous monitoring (24/7 × 365); monthly environmental report; quarterly system calibration",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Shift Supervisor, Quality Control Inspector, Maintenance Technician, Environmental Compliance Officer",
+    "Trigger": "Continuous automated monitoring with alert thresholds; also triggered by seasonal planning (pre-summer, pre-rainy season)",
+    "Volume": "4 DCs; ~50–200 sensor points per DC (temperature, humidity, air quality)"
+   },
+   "id": "W1029",
+   "level": 2,
+   "name": "DC-Level Temperature, Humidity & Environmental Monitoring for Sensitive Goods",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitoring dashboard via Wi-Fi/LoRaWAN every 5 minutes\" (replaces manual Step 1).",
+     "- System auto-send of \"sends alert to DC Shift Supervisor via mobile notification\" (replaces manual Step 2).",
+     "- System auto-log of \"log response action and resolution time in system\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 4 distribution centers store a diverse product mix including temperature-sensitive and humidity-sensitive goods: paint and coatings (degrade above 35°C, optimal 15–25°C), adhesives and sealants (lose bonding strength if frozen or overheated), cement (absorbs moisture, hardens in bag), electrical components (corrosion risk in >70% humidity), vinyl flooring and adhesives (warp in high heat/humidity), and lithium-ion batteries for power tools (thermal runaway risk above 45°C, reduced lifespan above 30°C). Philippine ambient conditions present extreme challenges: summer temperatures reach 35–40°C, rainy season humidity exceeds 85–95%, and DC warehouses — typically steel-frame structures with limited climate control — experience internal temperatures 5–10°C above ambient during peak daytime hours. Without active environmental monitoring, BuildRight risks: (a) product degradation (paint separation, adhesive failure, cement clumping) discovered only at customer point of use; (b) inventory write-offs (entire pallet of paint ruined by heat exposure); (c) safety hazards (Li-ion battery off-gassing in enclosed spaces); (d) regulatory non-compliance for hazmat storage per W236. This workflow implements IoT-based environmental monitoring across all 4 DCs with automated alerting and response procedures."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: (heartbeat check — if sensor goes silent > 15 minutes, alert generated)"
+    ],
+    "Pain Points / Risks": [
+     "- **HVAC cost vs. coverage**: Full climate control across a 25,000–40,000 sqm DC costs ~PHP 2–6M/month in electricity (PHP 1,000–1,800/sqm/year for full climate control, above the PHP 960–1,440/sqm/year ordinary-warehouse benchmark per W1687); most BuildRight DCs are partially climate-controlled (only sensitive zones air-conditioned); expanding climate-controlled zones requires capital investment per W21 with ROI justified by inventory loss prevention",
+     "- **Sensor reliability**: IoT sensors in warehouse environments are subject to dust, vibration, and fork truck impact; sensors must be industrial-grade (IP65+ rated); sensor failure must be detected by the monitoring system (heartbeat check — if sensor goes silent > 15 minutes, alert generated)",
+     "- **Dock door discipline**: Receiving dock doors are the primary source of temperature/humidity excursions; each door opening during summer admits 35–40°C air; dock shelters and rapid-roll doors minimize exposure; but dock staff often prop doors open for convenience; management enforcement is essential",
+     "- **Power outage**: Philippine power grid instability (brownouts, rotational outages per W470) interrupts HVAC and monitoring; DCs must have backup generator capacity per W808 that covers HVAC for sensitive zones (not just lighting and fire suppression)"
+    ],
+    "Staffing Implication": [
+     "- **DC Shift Supervisor**: Environmental monitoring adds ~15–30 minutes/day for alert response; absorbed by existing role",
+     "- **Maintenance Technician**: Sensor calibration and HVAC maintenance add ~4–8 hours/month per DC; absorbed by existing DC maintenance team",
+     "- **Quality Control Inspector**: Monthly reporting adds 2–3 hours/month; absorbed by existing role",
+     "- **No incremental headcount**; IoT infrastructure investment ~PHP 500,000–1,000,000 per DC"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IoT sensor network (temperature, humidity, air quality) with 5-minute telemetry interval",
+     "- Centralized environmental monitoring dashboard (web-based, mobile-accessible)",
+     "- Automated alert engine with configurable thresholds per zone and escalation logic (amber → red → black)",
+     "- WMS zone management integration for product location mapping",
+     "- Inventory quality hold module (W219) with environmental exposure flag",
+     "- Maintenance work order system (W650) for HVAC and sensor maintenance",
+     "- Facility condition assessment module (W700) for infrastructure improvement planning",
+     "- Analytics/BI integration for trend analysis and predictive maintenance (W202)",
+     "- DENR compliance documentation (W477) for environmental reporting"
+    ],
+    "Time Estimate": [
+     "- Sensor deployment: 40–80 hours (one-time per DC)",
+     "- Continuous monitoring: automated",
+     "- Amber alert response: 15–30 min per event",
+     "- Red alert response: 30–60 min per event",
+     "- Monthly reporting: 2–3 hours/month",
+     "- Sensor calibration: 4–8 hours/quarter",
+     "- **Total ongoing per DC**: ~8–15 hours/month",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Sensor Deployment & Zone Configuration**: DC is divided into environmental zones: (a) **General warehouse**: temperature target 20–35°C, humidity target 30–70%; (b) **Paint & chemical storage zone**: temperature target 15–25°C, humidity target 30–60%, ventilation required; (c) **Cement & powder materials zone**: humidity target < 60%, sealed storage, no direct water exposure; (d) **Battery & electronics zone**: temperature target 15–30°C, fire suppression system active, ventilation required; (e) **Cold chain (if applicable)**: temperature target 15–25°C for specialty chemicals; (f) IoT sensors deployed per zone: temperature sensor (1 per 100 sqm), humidity sensor (1 per 200 sqm), air quality sensor (VOC/particulate, 1 per paint/chemical zone); (g) sensors transmit data to centralized environmental monitoring dashboard via Wi-Fi/LoRaWAN every 5 minutes",
+     "duration": "Initial: 40–80 hours per DC; ongoing: 2–4 hours/month",
+     "n": "1",
+     "r": "Maintenance Technician / IT Infrastructure"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Continuous Monitoring & Automated Alerting**: Environmental monitoring dashboard provides real-time visibility: (a) **Green (normal)**: all readings within zone target range; (b) **Amber (warning)**: temperature or humidity approaching threshold (e.g., temperature within 2°C of upper limit); system sends alert to DC Shift Supervisor via mobile notification; (c) **Red (critical)**: threshold exceeded (e.g., paint zone temperature > 25°C, cement zone humidity > 60%); system sends immediate alert to DC Shift Supervisor + DC Operations Manager + automated response trigger; (d) **Black (emergency)**: hazardous condition detected (VOC spike in chemical zone indicating off-gassing, temperature > 45°C in battery zone); system triggers fire alarm and evacuation protocol per W649",
+     "duration": "Continuous (automated)",
+     "n": "2",
+     "r": "System (IoT Sensors)"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Amber Alert Response**: DC Shift Supervisor responds to amber alert: (a) identify root cause: HVAC failure, dock door left open, external weather event, or sensor malfunction; (b) **HVAC failure**: contact maintenance for emergency repair per W650; deploy portable fans/dehumidifiers from emergency equipment stockpile; (c) **Open dock door**: close door immediately; train receiving staff on dock door discipline during temperature-sensitive zone operations; (d) **External weather**: during extreme heat (Philippine summer, April–May), pre-cool zones during early morning hours (4–6 AM) before peak heat; during rainy season, verify roof integrity and drainage per W798; (e) **Sensor malfunction**: Maintenance Technician verifies sensor reading with calibrated handheld device; if sensor is defective, replace and recalibrate per manufacturer instructions; (f) log response action and resolution time in system",
+     "duration": "15–30 min per alert",
+     "n": "3",
+     "r": "DC Shift Supervisor / Maintenance Technician"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Red Alert Response & Product Protection**: DC Shift Supervisor responds to red alert: (a) immediately assess affected zone — is product integrity at risk? (b) **Paint/chemical zone overheating**: relocate temperature-sensitive pallets to cooler zone or staging area with portable cooling; check product for signs of degradation (bulging cans, separation, unusual odor); (c) **Cement zone humidity breach**: verify all cement pallets are wrapped in plastic sheeting; re-wrap any compromised pallets; inspect for clumping or hardening; (d) **Battery zone overheating**: activate additional ventilation; check Li-ion batteries for swelling or off-gassing per W1008 safety protocols; if any battery shows signs of thermal event, follow emergency protocol per W330; (e) log all product inspections with photos; system flags products with environmental exposure for quality hold pending inspection before shipment; (f) if product degradation confirmed: initiate inventory quality hold per W219 (Quarantine & Recertification); damaged product dispositioned per W91 (Damaged/Defective Goods)",
+     "duration": "30–60 min per alert",
+     "n": "4",
+     "r": "DC Shift Supervisor / Quality Control Inspector"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Monthly Environmental Report & Trend Analysis**: DC Quality Control Inspector compiles monthly report: (a) temperature and humidity compliance rate per zone (target: ≥ 95% within range); (b) number and duration of amber/red alerts; (c) root cause analysis of repeated alerts; (d) product quality incidents linked to environmental conditions; (e) HVAC system performance metrics (uptime, energy consumption); (f) trending: month-over-month, season-over-season comparison; (g) recommendations: zone reconfiguration, HVAC upgrade, insulation improvement, or operational changes; (h) report submitted to DC Operations Manager and VP Supply Chain for capital planning per W21",
+     "duration": "2–3 hours/month",
+     "n": "5",
+     "r": "Quality Control Inspector"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1008",
+    "W1687",
+    "W202",
+    "W21",
+    "W219",
+    "W236",
+    "W330",
+    "W470",
+    "W477",
+    "W649",
+    "W650",
+    "W700",
+    "W798",
+    "W808",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Daily sampling at each DC; ~5–10 shipments/day inspected per DC",
+    "Owner": "DC Quality Control Inspector",
+    "Participants": "DC Pick/Pack Staff, DC Shift Supervisor, Store Receiving Clerk (feedback loop)",
+    "Trigger": "Outbound shipment staged for dispatch; or triggered by receiving store's quality complaint history",
+    "Volume": "4 DCs × 5–10 inspections/day = 20–40 inspections/day chain-wide"
+   },
+   "id": "W1041",
+   "level": 2,
+   "name": "DC-Level Outbound Quality Sampling & Pre-Shipment Inspection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspection using risk-based sampling\" (replaces manual Step 1).",
+     "- System auto-scan of \"scan each item barcode to verify correct SKU\" (replaces manual Step 2).",
+     "- System auto-log of \"Error Correction & Root Cause Analysis\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 4 DCs dispatch ~4,500–5,500 store replenishment orders per month (Section 7.2), with each shipment containing 15–50 SKUs picked, packed, and loaded onto trucks for delivery to 200 stores. Outbound quality — correct items, correct quantities, correct packaging, and undamaged condition — directly impacts store inventory accuracy and customer availability. Analysis shows that ~3–5% of outbound shipments contain at least one error: wrong item picked (SKU substitution), incorrect quantity (under-pick or over-pick), damaged items (improper packing or loading), or missing items (picked but not loaded). Each outbound error creates a cascading impact: the store's inventory record is wrong (they expected 10 units of SKU X but received 8), leading to phantom stock (system shows 10 but shelf has 8), phantom stockouts (system shows 0 but shelf has 5 from an over-pick), and ultimately incorrect replenishment calculations. This workflow implements outbound quality sampling and pre-shipment inspection at DCs to catch errors before they propagate to stores. This is distinct from W681 (DC Quality Control at Receiving) which inspects inbound vendor deliveries; this inspects outbound store shipments. It complements W836 (DC Outbound Load Verification & Pre-Dispatch Quality Check) with more detailed inspection procedures and sampling methodology."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Quality Control Inspector review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Inspection bottleneck**: Inspecting 5–10 shipments/day at 15–30 min each = 1.5–5 hours/day; during peak dispatch periods (pre-promotion, pre-holiday), all shipments must go out and inspection creates a bottleneck; risk-based sampling (not 100% inspection) is the solution; during peak, increase sampling rate for new/temporary pickers only",
+     "- **Picker demotivation**: Pickers may feel \"policed\" by quality inspections; frame the program as \"quality support\" not \"error catching\"; share positive results publicly; tie picker accuracy to performance incentive per W1001 (Profit Sharing)",
+     "- **Damaged in transit**: Items that pass DC inspection in good condition may be damaged during truck transport (rough roads, improper truck loading, rain exposure on open trucks); the quality program must distinguish between DC-caused errors and transit-caused damage — store receiving inspection per W666 should note if packaging shows transit damage (crushed, wet, shifted) vs. picking error (wrong item)",
+     "- **Resource constraint**: Small DCs (DC4 — Clark, 25,000 sqm) may not have a dedicated Quality Control Inspector; the role is absorbed by DC Shift Supervisor; training per W567 is essential"
+    ],
+    "Staffing Implication": [
+     "- **DC Quality Control Inspector**: 1 per DC (4 total); main responsibility is outbound and inbound quality inspection; role may be combined with other DC quality functions per W681",
+     "- **DC Shift Supervisor**: Daily error review adds 15–30 min/day; absorbed by existing role",
+     "- **Incremental headcount**: 4 DC Quality Control Inspectors (if not already included in DC headcount of 150 per DC)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS pick list with barcode scanning for pick verification",
+     "- Quality inspection checklist module with barcode scanning and condition codes",
+     "- Sampling selection engine with risk-based prioritization rules",
+     "- Error logging module with picker ID, error type, and root cause tracking",
+     "- Picker accuracy scorecard integrated with workforce management (W796)",
+     "- Store receiving feedback integration (W666) for closed-loop quality tracking",
+     "- BI dashboard for outbound quality metrics (pass rate, error rate, trend)",
+     "- Re-slotting recommendation engine (W784) triggered by SKU-specific error patterns"
+    ],
+    "Time Estimate": [
+     "- Sampling selection: 5–10 min/day",
+     "- Inspection execution: 15–30 min per shipment × 5–10 shipments = 1.5–5 hours/day",
+     "- Error correction: 10–15 min per error (varies)",
+     "- Root cause analysis: 15–30 min/day",
+     "- Monthly reporting: 2–4 hours/month",
+     "- **Total per DC per day**: 3–6 hours (Quality Control Inspector)",
+     "---",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Sampling Selection & Risk-Based Prioritization**: System selects shipments for quality inspection using risk-based sampling: (a) **Mandatory inspection** (100%): (i) first 3 shipments after new DC pick staff starts (training verification), (ii) shipments containing high-value items (> PHP 10,000 per unit), (iii) shipments containing hazmat items per W236, (iv) shipments to stores with recent receiving quality complaints (store flagged in W666 with > 3 quality complaints in past 30 days); (b) **Random sampling** (10% of remaining shipments): system randomly selects 10% of daily outbound shipments for inspection; (c) **Targeted sampling**: DC Quality Control Inspector may select additional shipments based on observed patterns (e.g., a specific picker's error rate has increased, or a specific SKU category has had frequent errors)",
+     "duration": "5–10 min/day (selection)",
+     "n": "1",
+     "r": "System / DC Quality Control Inspector"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Pre-Shipment Inspection Execution**: DC Quality Control Inspector inspects selected shipment: (a) verify pick accuracy: compare each picked item/quantity against pick list — scan each item barcode to verify correct SKU; count each item to verify correct quantity; (b) verify item condition: no visible damage (crushed packaging, broken seals, wet cartons, dented cans); (c) verify packaging: items packed securely for transit — heavy items on bottom, fragile items protected, no overhanging pallets, stretch wrap applied; (d) verify labeling: each carton labeled with correct store number, shipment number, and handling instructions; (e) verify load security: items loaded onto truck safely — no unstable stacking, weight distributed evenly, items secured with straps; (f) record results in system: pass (all items correct, undamaged, properly packed) or fail (detail the discrepancy — wrong item, wrong qty, damaged, improperly packed); (g) inspection pass rate target: ≥ 98%",
+     "duration": "15–30 min per shipment",
+     "n": "2",
+     "r": "DC Quality Control Inspector"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "**Error Correction & Root Cause Analysis**: For failed inspections: (a) DC Quality Control Inspector and DC Pick/Pack Staff correct the error immediately: (i) wrong item: replace with correct SKU; (ii) wrong quantity: add missing units or remove excess; (iii) damaged item: replace from inventory (damaged item routed to W91); (iv) improper packaging: repack correctly; (b) after correction, shipment reinspected before release for dispatch; (c) system logs error by: picker ID (who picked it), error type (wrong SKU, wrong qty, damage, packaging), SKU category, and store destination; (d) daily: DC Shift Supervisor reviews error log and identifies patterns: (i) specific picker with high error rate → retraining per W567 (Cross-Training), (ii) specific SKU category with recurring errors → evaluate storage/pick location (may need re-slotting per W784), (iii) specific time-of-day pattern → evaluate fatigue factor; (e) weekly: picker accuracy scorecard generated per employee for performance review per W796 (DC Workforce Productivity Tracking)",
+     "duration": "10–15 min per error + 15–30 min/day (analysis)",
+     "n": "3",
+     "r": "DC Quality Control Inspector / DC Shift Supervisor"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Store Feedback Loop & Continuous Improvement**: (a) store receiving quality feedback (from W666) feeds back to DC quality program: when a store reports a receiving discrepancy (wrong item, wrong qty, damage not caught at DC), the discrepancy is linked to the specific DC shipment and picker; (b) monthly: DC Quality Control Inspector compiles outbound quality report: (i) inspection pass rate (target ≥ 98%), (ii) error rate by type, by category, by picker, by store, (iii) store-reported discrepancy rate vs. DC inspection pass rate — gap indicates errors missed by inspection; (iv) trend vs. prior month; (c) quarterly: DC Operations Manager reviews quality program effectiveness: (i) has the outbound error rate decreased since program implementation? (ii) are we inspecting the right shipments? (adjust sampling methodology based on error patterns); (iii) ROI of quality program: cost of inspection labor vs. cost of outbound errors avoided (reduced store discrepancies, reduced shrinkage, improved customer availability)",
+     "duration": "2–4 hours/month",
+     "n": "4",
+     "r": "DC Quality Control Inspector / DC Operations Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1001",
+    "W236",
+    "W567",
+    "W666",
+    "W681",
+    "W784",
+    "W796",
+    "W836",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Monthly compliance inspection per DC; quarterly comprehensive audit; annual third-party certification",
+    "Owner": "DC Safety Officer",
+    "Participants": "DC Safety Officer, DC Manager, DENR Compliance Officer, Fire Safety Inspector, HSE Coordinator",
+    "Trigger": "Scheduled (monthly inspection cycle); or triggered by DENR/Fire Bureau advisory; or triggered by hazmat incident",
+    "Volume": "4 DCs × 12 monthly inspections = 48 inspections/year + 4 quarterly audits + annual certification"
+   },
+   "id": "W1222",
+   "level": 2,
+   "name": "DC Hazardous Material Storage Compliance & Inspection Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Monthly compliance inspection\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspection findings in system\" (replaces manual Step 2).",
+     "- System rule-based authorization of \"authorizes restart after verification,\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's DCs store significant quantities of hazardous materials: paint and solvents (flammable), adhesives and thinners (flammable, toxic), cement and silica dust (respiratory hazard), fertilizers and garden chemicals (toxic, environmental hazard), and cleaning chemicals. Philippine regulations require: (a) DENR Environmental Compliance Certificate (ECC) for facilities storing hazardous materials, (b) Fire Code compliance (BFP — Bureau of Fire Protection) for flammable material storage, (c) DOLE Occupational Safety and Health standards for worker protection, (d) hazardous waste management per RA 6969 (Toxic Substances and Hazardous and Nuclear Wastes Control Act). Each DC's special handling areas for paint/chemicals must maintain: proper ventilation, fire suppression, spill containment, segregated storage (incompatible chemicals separated), proper labeling (GHS — Globally Harmonized System), and emergency wash stations. This workflow ensures continuous regulatory compliance through regular inspections and corrective action tracking."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: tracks SDS version dates and flags > 3 years old"
+    ],
+    "Pain Points / Risks": [
+     "- **ECC permit limit breach** — if seasonal inventory build (e.g., paint for summer renovation peak) exceeds ECC storage quantity limits, DC must either: (a) obtain permit amendment (2–3 month process), (b) refuse excess inventory, or (c) store at alternative compliant location",
+     "- **SDS currency** — vendors may reformulate products without updating SDS; Safety Officer must request updated SDS from vendor per W698; system tracks SDS version dates and flags > 3 years old",
+     "- **Fire safety during peak** — additional seasonal inventory (Christmas items, garden chemicals) may crowd hazmat storage areas, blocking fire suppression access; DC Manager must enforce clearance zones",
+     "- **Contractor awareness** — 3PL delivery drivers and temporary warehouse staff may not be trained on hazmat storage rules; Safety Officer must ensure all personnel in hazmat areas have completed orientation per W56",
+     "- **Waste disposal cost** — hazmat waste disposal (expired paint, contaminated materials) via DENR-registered transporter is expensive (~PHP 50–100/kg); proper storage and inventory management minimizes waste"
+    ],
+    "Staffing Implication": [
+     "- DC Safety Officer: ~8–12 hours/month on inspections and corrective action follow-up per DC = ~400–600 hours/year across 4 DCs",
+     "- HSE Coordinator: ~4 days/quarter for comprehensive audits = ~16 days/year",
+     "- DC Manager: ~2 hours/month reviewing inspection reports",
+     "- External consultant: ~2–3 days/year per DC for annual certification",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Hazmat storage compliance checklist module (mobile app for Safety Officer walkthrough)",
+     "- Corrective action tracking: assignment, deadline, verification, photo documentation",
+     "- Hazmat inventory management: real-time quantity tracking vs. ECC permit limits",
+     "- SDS document management: digital SDS library with version control",
+     "- Inspection scheduling and audit calendar",
+     "- Integration with W24.3 (hazmat management), W508 (facility maintenance), W56 (PPE), W24.2 (emergency preparedness)"
+    ],
+    "Time Estimate": [
+     "- Monthly inspection: 2–3 hours per DC",
+     "- Corrective action follow-up: ~2–4 hours per DC per month",
+     "- Quarterly audit: 1 day per DC",
+     "- Annual certification: 2–3 days per DC",
+     "- **Annual estimate: ~290–370 person-hours for inspections and audits (monthly 96–144 + quarterly ~128 + annual 64–96) + ~40 hours for corrective actions**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Manager",
+     "activity": "**Monthly compliance inspection**: DC Safety Officer conducts walkthrough of all hazmat storage areas using standardized checklist: (a) **Storage segregation**: flammables separated from oxidizers; acids separated from bases; paint/solvents in dedicated ventilated cage; (b) **Labeling**: all containers have GHS-compliant labels with hazard pictograms, signal words, and first-aid information; no unlabeled containers; (c) **Containment**: spill pallets under liquid hazmat containers; drain covers in place; containment berms intact; (d) **Ventilation**: exhaust fans operational in paint/solvent storage cage; air quality within permissible exposure limits; (e) **Fire safety**: fire extinguishers (correct type for stored materials — CO2 for flammable liquids, dry chemical for general) present and within inspection date; sprinkler heads unobstructed; no ignition sources in flammable areas; (f) **PPE**: hazmat handling PPE (gloves, goggles, respirators) available and in good condition per W56; (g) **Documentation**: Safety Data Sheets (SDS) binder current and accessible for all stored hazmat",
+     "duration": "2–3 hours",
+     "n": "1",
+     "r": "DC Safety Officer"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "Safety Officer documents inspection findings in system: (a) photographs of any deficiencies, (b) severity rating (Critical: immediate danger — stop operations until corrected; Major: regulatory violation — correct within 48 hours; Minor: best practice deviation — correct within 7 days), (c) assigns corrective actions with responsible person and deadline",
+     "duration": "30 min",
+     "n": "2",
+     "r": "DC Safety Officer"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Corrective action execution**: responsible person addresses deficiency: (a) Critical: DC Manager halts affected operations; Safety Officer oversees immediate correction; DC Manager authorizes restart after verification, (b) Major: corrected within 48 hours; Safety Officer verifies; (c) Minor: corrected within 7 days; Safety Officer verifies at next inspection; all corrections documented with before/after photos",
+     "duration": "Variable",
+     "n": "3",
+     "r": "DC Staff / DC Safety Officer"
+    },
+    {
+     "a": "COO",
+     "activity": "**Quarterly comprehensive audit**: HSE Coordinator conducts in-depth audit per DC: (a) review all monthly inspection findings and corrective action closure rate, (b) interview DC staff on hazmat handling procedures — verify knowledge of SDS access, spill response, and emergency procedures, (c) inspect emergency equipment: eye wash stations, spill kits, emergency showers — test functionality, (d) review hazmat inventory: verify stored quantities within ECC permit limits, (e) check waste manifest: hazmat waste disposed per DENR-registered transporter with proper documentation, (f) compile audit score and trend against prior quarters",
+     "duration": "1 day per DC",
+     "n": "4",
+     "r": "HSE Coordinator"
+    },
+    {
+     "a": "COO",
+     "activity": "**Annual third-party certification**: engage DENR-accredited environmental compliance consultant for: (a) comprehensive facility inspection, (b) ECC compliance review and renewal recommendation, (c) hazardous waste management audit, (d) Fire Safety Inspection Certificate (FSIC) from Bureau of Fire Protection, (e) any required emissions or discharge testing, (f) certification report submitted to DENR if required by ECC conditions",
+     "duration": "2–3 days per DC",
+     "n": "5",
+     "r": "External Consultant / HSE Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W24",
+    "W508",
+    "W56",
+    "W698"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Weekly; ~20–40 kit assemblies per week per DC",
+    "Owner": "DC Operations Supervisor",
+    "Participants": "DC Operations Supervisor, Stock Associate (Kit Assembly), Category Manager, Merchandise Analyst",
+    "Trigger": "Kit/assembly work order generated from merchandise plan or promotional calendar",
+    "Volume": "4 DCs × ~30 kits/week = ~120 kits/week; ~6,240 kits/year"
+   },
+   "id": "W1237",
+   "level": 2,
+   "name": "DC Value-Added Kit Assembly, Bundle Preparation & Pre-Pack Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks component availability at DC\" (replaces manual Step 1).",
+     "- System auto-scan of \"scan each component from storage bin\" (replaces manual Step 2).",
+     "- System auto-create of \"creates kit SKU inventory at received quantity\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight Depot sells kit/bundle items (Section 6.4): tool sets, bathroom combo kits, and contractor packages. These kits require assembly at the DC from individual component SKUs into a single kit SKU with its own barcode. For example, a \"Bathroom Complete Set\" kit may contain a toilet, faucet, sink, P-trap, flexible hose, and mounting hardware — all individually procured but sold together at a bundle price. The DC is the natural assembly point because: (a) all components are in stock at the DC, (b) kit assembly requires picking multiple SKUs and packaging them together, (c) assembled kits are then stored as a single SKU and replenished to stores like any standard item. Additionally, promotional pre-packs (e.g., \"Contractor Starter Kit\" for seasonal events per W13) require bulk assembly before promotional launch. The ERP must support kit BOM (Bill of Materials) per W46 and inventory ownership transfer from component SKUs to kit SKU."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Component availability** — kit assembly is only as fast as the slowest component; if one component is out of stock, the entire kit cannot be assembled; cross-referencing component availability across multiple SKUs is complex",
+     "- **BOM accuracy** — incorrect BOM (wrong component, wrong quantity) leads to incomplete kits reaching stores; BOM must be reviewed and validated per W302 whenever component specifications change",
+     "- **Labor cost vs. kit margin** — assembly labor is a real cost that must be factored into kit pricing; if assembly labor exceeds the bundle discount benefit, kits destroy value rather than create it",
+     "- **Kit inventory obsolescence** — assembled kits that don't sell tie up component inventory that could have been sold individually; kit disassembly per step 6 recovers components but adds handling cost"
+    ],
+    "Staffing Implication": [
+     "- Stock Associates perform kit assembly as part of regular DC duties; absorbed within existing ~150 FTEs per DC. Merchandise Analyst: ~1 hour/week on work order planning. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W46 kit assembly/disassembly for BOM management and inventory transformation",
+     "- W4 store replenishment for kit SKU demand planning",
+     "- W297 warehouse location & bin master for component picking and kit putaway",
+     "- W302 kit/BOM master for kit structure governance",
+     "- W279 product substitution for component alternatives",
+     "- W13 promotions for promotional kit assembly scheduling"
+    ],
+    "Time Estimate": [
+     "- Per kit assembly: ~30–55 minutes (picking + assembly + putaway). Weekly per DC: ~15–30 hours. Annual across 4 DCs: ~3,100–6,200 hours.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Manager",
+     "activity": "**Kit assembly work order creation**: Merchandise Analyst generates kit assembly work order: (a) specify kit SKU and quantity to assemble; (b) system explodes BOM per W46: lists all component SKUs and quantities required; (c) system checks component availability at DC; (d) reserve component inventory for assembly",
+     "duration": "15 min/work order",
+     "n": "1",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Component picking**: Stock Associate picks component items from storage locations per WMS pick directive: (a) scan each component from storage bin; (b) verify quantity matches BOM; (c) stage components at kit assembly workstation",
+     "duration": "15–30 min/kit",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Kit assembly & quality check**: Stock Associate assembles kit: (a) place all components into kit packaging; (b) verify all BOM items included (checklist); (c) apply kit barcode label; (d) quality check: all components present, undamaged, correct variant; (e) seal/secure kit packaging",
+     "duration": "10–20 min/kit",
+     "n": "3",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Kit receipt & putaway**: (a) scan kit barcode to receive into inventory as kit SKU; (b) system consumes component SKUs from inventory (reduces component stock by BOM quantities); (c) system creates kit SKU inventory at received quantity; (d) putaway kit SKU to storage location per WMS directive",
+     "duration": "5 min/kit",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Component shortage handling**: If insufficient component stock: (a) system flags shortage during work order creation; (b) Merchandise Analyst decides: (i) defer assembly until component arrives, (ii) substitute component per W279 (requires BOM update), or (iii) partial assembly (assemble available kits); (c) update work order accordingly",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Kit disassembly (if needed)**: For kit SKUs with slow movement or component shortage: (a) generate kit disassembly work order; (b) break kit back into component SKUs; (c) system reverses BOM consumption: component stock restored, kit stock reduced; (d) components returned to storage",
+     "duration": "10 min/kit",
+     "n": "6",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Weekly kit assembly reporting**: DC Supervisor reports: (a) kits assembled vs. planned; (b) component yield and waste; (c) assembly labor hours; (d) kit inventory levels vs. store demand",
+     "duration": "30 min/week",
+     "n": "7",
+     "r": "DC Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W13",
+    "W279",
+    "W297",
+    "W302",
+    "W4",
+    "W46"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Weekly planning; daily adjustments",
+    "Owner": "DC Manager",
+    "Participants": "DC Manager, DC Supervisor, HR – Workforce Planning, Stock Associates, Forklift Operators, Receiving Clerks",
+    "Trigger": "Weekly labor planning cycle; also triggered by unexpected volume spikes (promotional surges, import container arrivals)",
+    "Volume": "4 DCs × ~150 employees = ~600 DC staff across shifts"
+   },
+   "id": "W1241",
+   "level": 2,
+   "name": "DC Labor Shift Scheduling, Overtime Management & Cross-Training Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-dispatch of \"dispatch, physical inventory per W42\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares weekly shift schedule\" (replaces manual Step 2).",
+     "- System auto-identify of \"identify projected overtime needs for the week\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Each BuildRight Depot DC employs ~150 staff across multiple functions (receiving, putaway, picking, packing, shipping, inventory control, supervision). DC operations run 1–2 shifts per day depending on volume, with seasonal peaks during promotional events (6 bi-monthly sales) and import arrival surges (400–600 TEUs/month). Labor scheduling must balance: (a) adequate staffing for peak receiving/dispatch windows, (b) overtime cost control (Philippine labor law: 125% premium for overtime, 200% for rest day/holiday overtime), (c) cross-training to ensure flexibility across receiving, picking, and shipping functions, (d) compliance with DOLE labor standards (mandatory rest day, maximum overtime hours). Poor scheduling leads to either understaffing (missed dispatch SLAs, receiving backlog) or overstaffing (unnecessary labor cost). Cross-training ensures operational resilience — if the receiving team is overwhelmed by a large import shipment, cross-trained pickers can be redeployed."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Overtime cost creep** — DC operations consistently requiring overtime indicates understaffing; sustained overtime >15% of regular hours signals need for additional headcount",
+     "- **Cross-training resistance** — employees may resist cross-training if they perceive it as additional work without additional compensation; incentive alignment is needed",
+     "- **Seasonal peak staffing** — during promotional surges (bi-monthly sales) and typhoon recovery, temporary labor may be needed; Philippine labor agencies provide seasonal workers but training time reduces productivity",
+     "- **Shift handover gaps** — incomplete shift handover between outgoing and incoming supervisors leads to missed priorities, unfinished loads, and communication failures"
+    ],
+    "Staffing Implication": [
+     "- DC Manager: ~3 hours/week on scheduling and labor management. DC Supervisor: ~3 hours/week on schedule preparation. Absorbed by existing roles. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W34 shift scheduling and attendance for time & attendance integration",
+     "- W10 payroll for overtime pay calculation and DOLE compliance",
+     "- W31 demand forecasting for volume-based labor planning",
+     "- W42 physical inventory for special event staffing",
+     "- W585 dock scheduling for dock labor alignment",
+     "- W584 DC daily operations for daily labor deployment"
+    ],
+    "Time Estimate": [
+     "- Weekly scheduling: ~3–4 hours per DC. Daily adjustments: ~15 min/day. Monthly cross-training: ~4 hours. Annual per DC: ~250–300 hours. Across 4 DCs: ~1,000–1,200 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Weekly volume forecast**: DC Manager receives weekly volume forecast from Supply Planning per W31: (a) expected inbound volume (vendor deliveries, import containers); (b) expected outbound volume (store replenishment orders); (c) special events (promotional dispatch, physical inventory per W42); (d) seasonal factors (typhoon season delays, holiday demand)",
+     "duration": "30 min/week",
+     "n": "1",
+     "r": "DC Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Shift schedule preparation**: DC Supervisor prepares weekly shift schedule: (a) map staffing requirements per function (receiving, putaway, picking, packing, shipping, inventory control); (b) assign staff to shifts based on volume forecast; (c) ensure minimum staffing per function (e.g., at least 2 forklift operators per shift, 1 receiving clerk per dock door); (d) distribute overtime equitably across team",
+     "duration": "2–3 hours/week",
+     "n": "2",
+     "r": "DC Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Overtime pre-approval**: (a) identify projected overtime needs for the week; (b) obtain DC Manager pre-approval for planned overtime; (c) for unplanned overtime (same-day spike): DC Supervisor requests verbal approval from DC Manager, followed by system confirmation; (d) system enforces maximum overtime limits per DOLE compliance per W10",
+     "duration": "30 min/week",
+     "n": "3",
+     "r": "DC Supervisor"
+    },
+    {
+     "a": "HR – Workforce Planning",
+     "activity": "**Cross-training matrix maintenance**: DC Manager maintains cross-training matrix: (a) track which employees are certified for which functions (receiving, putaway, picking, packing, shipping, forklift, inventory); (b) identify cross-training gaps; (c) schedule cross-training sessions during low-volume periods; (d) target: every DC employee certified in ≥2 functions",
+     "duration": "1 hour/month",
+     "n": "4",
+     "r": "DC Manager"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Daily attendance & exception handling**: (a) biometric attendance tracked per W34; (b) DC Supervisor notified of absences/tardiness; (c) for unplanned absences: redeploy cross-trained staff from other functions; (d) if critical gap: call in off-duty staff with overtime approval; (e) system logs attendance exceptions for payroll per W10",
+     "duration": "15 min/day",
+     "n": "5",
+     "r": "DC Supervisor"
+    },
+    {
+     "a": "COO",
+     "activity": "**Weekly labor cost review**: DC Manager reviews: (a) actual labor hours vs. scheduled; (b) overtime hours and cost; (c) labor cost per unit processed (inbound + outbound); (d) cross-training utilization rate; (e) adjust next week's schedule based on learnings",
+     "duration": "30 min/week",
+     "n": "6",
+     "r": "DC Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W31",
+    "W34",
+    "W42",
+    "W584",
+    "W585"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "6 major catalog-based promotions per year + 4 seasonal transitions (summer, rainy season, ber-months, post-holiday) = ~10 pre-staging events/year per DC",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Operations Manager, Warehouse Supervisor, Inventory Planner, Merchandising Coordinator, Receiving Lead",
+    "Trigger": "Upcoming seasonal event or major promotional catalog launch (from S&OP calendar W13); typically 3–4 weeks before promotional go-live date",
+    "Volume": "~500–800 promotional SKUs per major catalog event; ~200–300 seasonal transition SKUs; across 4 DCs and ~10 events/year = ~15,000–24,000 SKU-location pre-staging set-ups/year"
+   },
+   "id": "W1402",
+   "level": 2,
+   "name": "DC Seasonal Merchandise Pre-Staging, Forward-Pick Slot Reallocation & Promotional Lane Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-distribute of \"distributes promotional/seasonal SKU list to DC Operations Manager\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews current forward-pick slot utilization\" (replaces manual Step 2).",
+     "- System auto-create of \"creates slot reallocation plan\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight runs 6 major catalog-based promotions per year and experiences significant seasonal demand shifts (summer garden/aircon, rainy season waterproofing, ber-months holiday décor, post-holiday renovation). DCs must pre-stage promotional and seasonal SKUs in forward-pick locations 1–2 weeks before go-live to ensure immediate store replenishment availability on Day 1. Failure to pre-stage results in stockouts at stores during the critical first weekend of a promotion, directly impacting sales targets and vendor-funded promotional commitments."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Forward-pick slot contention**: multiple promotions or seasonal events may overlap (e.g., ber-months and a bi-monthly catalog sale), competing for the same limited forward-pick slots; DC Operations Manager must prioritize based on revenue forecast",
+     "- **Late PO deliveries**: if vendors deliver promotional merchandise late (after go-live), the pre-staging effort is wasted and stores face Day 1 stockouts; escalation to Buyer at T-7 provides some buffer but cannot guarantee delivery",
+     "- **Reserve storage congestion**: moving end-of-season SKUs to reserve storage during a reallocation creates temporary congestion in reserve areas; if reserve is near capacity, there may be nowhere to put displaced inventory",
+     "- **WMS pick-path disruption**: changing forward-pick slot assignments alters the optimized pick path; if many slots are changed simultaneously, picker productivity drops during the adjustment period as they learn new locations"
+    ],
+    "Staffing Implication": [
+     "- DC Operations Manager: ~2–3 hours per pre-staging event; ~30 hours/year; absorbed within existing role",
+     "- Warehouse Supervisor: ~1 day per event for physical execution oversight; ~10 days/year; absorbed",
+     "- DC Staff: ~10–15 person-hours per event for physical slot moves; absorbed with temporary reallocation from other duties",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS forward-pick slot utilization dashboard: current occupancy, velocity by slot, empty slot availability (W1402.2)",
+     "- WMS bin/location master update: forward-pick slot assignment changes with real-time pick-path optimization recalculation (W1402.3–4)",
+     "- Directed putaway override: receiving team puts promotional SKUs directly to designated forward-pick slots per pre-assignment rather than system-default reserve location (W1402.5)",
+     "- Forward-pick fill rate monitor: daily dashboard showing promotional SKU fill status vs. go-live target (W1402.6)",
+     "- Reserve-to-forward replenishment triggers: adjusted min/max thresholds for promotional SKUs during promotion period (W1402.9)",
+     "- Integration with W13 (S&OP — promotional calendar trigger), W3 (DC receiving — inbound prioritization), W4 (store replenishment — Day 1 release), W22 (inter-DC transfer — gap filling), W220 (SLOB disposition — post-promotion cleanup), W532 (clearance markdown — post-promotion markdown)"
+    ],
+    "Time Estimate": [
+     "- Per pre-staging event: ~2–3 days of planning and physical execution per DC; ~20 person-hours",
+     "- Forward-pick fill rate monitoring: 15 min/day × 7 days pre-go-live = ~1.75 hours per event",
+     "- Post-promotion cleanup: ~1 day per DC",
+     "- Annual total for 4 DCs × 10 events: ~800–1,000 person-hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Merchandising Coordinator distributes promotional/seasonal SKU list to DC Operations Manager: item numbers, expected velocity (A/B/C classification for the promotion), planned quantity per DC, and go-live date; list arrives 3–4 weeks before go-live per S&OP calendar (W13)",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Merchandising Coordinator"
+    },
+    {
+     "a": "—",
+     "activity": "DC Operations Manager reviews current forward-pick slot utilization: identifies which current forward-pick SKUs are end-of-season or low-velocity candidates for relocation to reserve storage",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "—",
+     "activity": "DC Operations Manager creates slot reallocation plan: (a) remove end-of-season SKUs from forward-pick to reserve storage, (b) assign incoming promotional/seasonal SKUs to vacated forward-pick slots by velocity (A-items nearest to dispatch bay), (c) update bin/location master in WMS for each moved SKU",
+     "duration": "3 hours",
+     "n": "3",
+     "r": "DC Operations Manager / Warehouse Supervisor"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "Warehouse team executes slot reallocation: physically move end-of-season inventory from forward-pick to reserve locations; update WMS bin confirmation per move; sweep and clean forward-pick locations for incoming promotional SKUs",
+     "duration": "1–2 days",
+     "n": "4",
+     "r": "Warehouse Supervisor / DC Staff"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "As promotional/seasonal merchandise arrives through standard receiving (W3), receiving team prioritizes putaway to the pre-assigned forward-pick locations rather than default reserve storage; WMS directs putaway to the designated promotional forward-pick slots",
+     "duration": "Ongoing during receiving",
+     "n": "5",
+     "r": "Receiving Lead / System"
+    },
+    {
+     "a": "—",
+     "activity": "DC Operations Manager monitors forward-pick slot fill rate daily: system shows % of promotional SKUs that have reached forward-pick locations vs. total planned; target: 100% fill by T-3 days before go-live",
+     "duration": "15 min/day",
+     "n": "6",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "Supply Planning Manager",
+     "activity": "If fill rate is below target at T-7 days: DC Operations Manager escalates to Inventory Planner and Buyer for expedited PO fulfillment or inter-DC transfer (W22) to fill gaps",
+     "duration": "30 min",
+     "n": "7",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "At go-live (T-0): DC Operations Manager confirms all promotional forward-pick slots are stocked; sends \"Promo Ready\" confirmation to Merchandising Coordinator and Store Operations; first wave of store replenishment orders (W4) for promotional SKUs is released",
+     "duration": "30 min",
+     "n": "8",
+     "r": "DC Operations Manager"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "During promotion: DC monitors forward-pick depletion rates daily; triggers emergency replenishment from reserve storage to forward-pick when slot quantity drops below 2-day supply; adjusts reserve-to-forward replenishment triggers in WMS for high-velocity promotional SKUs",
+     "duration": "15 min/day",
+     "n": "9",
+     "r": "Warehouse Supervisor / System"
+    },
+    {
+     "a": "Merchandising Coordinator",
+     "activity": "Post-promotion: DC Operations Manager reviews residual promotional inventory in forward-pick; coordinates with Merchandising for clearance markdown (W532) or return-to-vendor (W88); remaining stock relocated back to reserve storage or dispositioned per W220 (SLOB)",
+     "duration": "1 day",
+     "n": "10",
+     "r": "DC Operations Manager / Warehouse Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W13",
+    "W22",
+    "W220",
+    "W3",
+    "W4",
+    "W532",
+    "W88"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Bi-annual surge staffing cycles: (a) Mar–May (dry season construction peak + summer home improvement), (b) Sep–Dec (ber-months/Christmas peak); each surge lasting 2–4 months",
+    "Owner": "DC Supervisor",
+    "Participants": "DC Supervisor, HR Recruitment Specialist, HR Specialist (Payroll), Safety Officer, Training Coordinator, Workforce Planning Analyst",
+    "Trigger": "Seasonal demand surge forecast (S&OP per W2); or DC capacity planning identifies staffing gap for upcoming peak season",
+    "Volume": "~30–50 temporary workers per DC per surge = 120–200 temporary workers across 4 DCs per surge event; 2 surges/year = 240–400 temporary worker lifecycles/year"
+   },
+   "id": "W1428",
+   "level": 2,
+   "name": "DC Seasonal Surge Temporary Staffing, Onboarding & Season-End Separation Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits staffing request to HR\" (replaces manual Step 1).",
+     "- System auto-post of \"posting near DC locations\" (replaces manual Step 2).",
+     "- System auto-assign of \"assigns temporary workers to shift and team\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's DCs experience significant seasonal volume fluctuations: (a) the dry season (Mar–May) drives construction activity and home improvement projects, increasing outbound store replenishment volume by 20–30% above baseline, (b) the ber-months (Sep–Dec) drive Christmas peak and year-end renovation activity, increasing DC throughput by 25–40% above baseline, (c) each DC (150 headcount baseline) needs 30–50 additional workers during peak to handle increased receiving, picking, packing, and dispatch activity, (d) temporary workers are typically hired on 3–6 month fixed-term contracts (Project Employment per Philippine Labor Code), (e) temporary workers must be onboarded quickly (safety training is mandatory — DCs handle forklifts, heavy materials, and hazmat) and separated cleanly at season end (no severance obligation for legitimate project employment, but documentation must be watertight per DOLE requirements). This workflow manages the end-to-end lifecycle of seasonal temporary workers in DCs: recruitment, onboarding, deployment, and separation."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Recruitment timeline pressure**: surge staffing must be ready before the season starts; if recruitment is delayed (few applicants, medical clearance delays), DCs may be understaffed at peak volume, leading to overtime costs and service level failures",
+     "- **Training quality with rapid onboarding**: 2-day onboarding is compressed compared to permanent employee training; temporary workers may make more picking errors or safety violations in their first weeks, requiring closer supervision",
+     "- **DOLE compliance risk for project employment**: Philippine DOLE strictly scrutinizes \"project employment\" to prevent employers from avoiding regularization; if project employment documentation is insufficient (no definite project, no completion date), DOLE may rule that the worker should have been regularized, entitling them to severance pay; mitigated by standard operating procedures and system-enforced validation rules",
+     "- **Re-hire rate and institutional knowledge**: high re-hire rate of previous temporary workers (target > 60%) reduces training time and improves productivity; tracking reliable vs. unreliable temps is critical"
+    ],
+    "Staffing Implication": [
+     "- DC Supervisor: ~10–15 hours/surge on staffing requests and assignment. Absorbed.",
+     "- HR Recruitment Specialist: ~2–3 weeks/surge on recruitment. Absorbed with surge support from manpower agency.",
+     "- Safety Officer: ~2–4 days/surge on safety orientation. Absorbed.",
+     "- HR Specialist (Payroll): bulk of separation processing (~480–1,200 hours/year = ~1 FTE for 3 months/year). Absorbed with temporary overtime authorization.",
+     "- No permanent incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seasonal staffing forecast module: demand-driven FTE projection per DC per season (W1428.1)",
+     "- Temporary worker recruitment tracker: applicant tracking for seasonal positions with re-hire flag for previous temps (W1428.2)",
+     "- Onboarding checklist: digital checklist for safety training, PPE issuance, WMS access, shift assignment (W1428.3)",
+     "- Separation processing module: final pay computation, clearance workflow, project employment documentation (W1428.4)",
+     "- Integration with W652 (DC seasonal surge planning — volume forecast), W19 (recruitment — sourcing), W643 (final pay — separation settlement), W1416 (13th month — pro-rated computation), W584 (DC daily operations — shift assignment), W649 (DC safety — safety orientation), W796 (DC workforce scheduling — shift integration)"
+    ],
+    "Time Estimate": [
+     "- Surge staffing planning: 3–5 days/surge × 2 surges/year = 6–10 days/year",
+     "- Recruitment: 2–3 weeks/surge × 2 = 4–6 weeks/year",
+     "- Onboarding: 2 days/batch × ~4 batches/surge × 2 = ~16 days/year",
+     "- Separation: 2–3 hours/worker × 240–400 workers/year = ~480–1,200 hours/year",
+     "- Total annual: ~800–1,500 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Surge staffing planning** (T-8 weeks): (a) Workforce Planning Analyst forecasts DC staffing needs per W652 (seasonal warehouse surge planning): (i) projected outbound volume increase per DC for upcoming season, (ii) translate to FTE needs: pickers, packers, loaders, forklift operators, (iii) identify skill requirements: forklift certification needed for 30% of temporary workers, (b) DC Supervisor submits staffing request to HR: number of temporary workers, start date, contract duration (typically 3–6 months), required skills, (c) HR Recruitment Specialist initiates recruitment per W19 (recruitment) with temporary/seasonal posting",
+     "duration": "3–5 days",
+     "n": "1",
+     "r": "Workforce Planning Analyst / DC Supervisor"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Rapid recruitment and selection** (T-6 to T-4 weeks): (a) HR Recruitment Specialist sources temporary workers: (i) previous season's temporary workers (re-hire reliable workers — reduces training time), (ii) local community recruitment (job posting near DC locations), (iii) manpower agency for bulk positions (laborers, pickers), (b) selection criteria: (i) physical fitness (DC work involves heavy lifting up to 25 kg), (ii) basic literacy (must read pick lists and labels), (iii) forklift operator certification (for forklift positions), (c) pre-employment requirements: (i) medical certificate (fit to work), (ii) SSS/PhilHealth/Pag-IBIG enrollment (mandatory even for project employees), (iii) signed project employment contract per Philippine Labor Code Article 297 (project employment)",
+     "duration": "2–3 weeks",
+     "n": "2",
+     "r": "HR Recruitment Specialist"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Expedited onboarding and safety training** (T-1 to T-0): (a) Safety Officer conducts mandatory safety orientation (1 day): (i) DC safety rules, (ii) forklift/powered equipment awareness, (iii) hazmat handling basics (paint, chemicals per W1222), (iv) emergency evacuation procedures, (v) PPE requirements and issuance, (b) Training Coordinator provides DC operations orientation (1 day): (i) WMS/RF gun basics for pickers, (ii) pick path and bin location system, (iii) quality standards at pick and pack, (iv) attendance and timekeeping rules, (c) DC Supervisor assigns temporary workers to shift and team: paired with experienced permanent worker as mentor for first 2 weeks",
+     "duration": "2 days/worker batch",
+     "n": "3",
+     "r": "Safety Officer / Training Coordinator / DC Supervisor"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Season-end separation processing** (T+3 to T+6 months): When the seasonal surge ends: (a) DC Supervisor confirms seasonal volume has returned to baseline and temporary workers are no longer needed, (b) HR Specialist (Payroll) processes separation per W643 (final pay): (i) compute final pay including any pro-rated 13th month per W1416, (ii) return company property (uniforms, PPE, RF guns, access badges), (iii) clear any cash or inventory accountability, (c) documentation: (i) project completion certificate (confirming project employment has ended), (ii) clearance form signed by DC Supervisor (no pending accountability), (iii) certificate of employment issued per DOLE requirement, (d) HR Specialist flags high-performing temporary workers for priority re-hire in next surge cycle",
+     "duration": "2–3 hours/worker",
+     "n": "4",
+     "r": "DC Supervisor / HR Specialist"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1222",
+    "W1416",
+    "W19",
+    "W2",
+    "W584",
+    "W643",
+    "W649",
+    "W652",
+    "W796"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Continuous temperature monitoring (24/7); daily expiry scan; monthly FIFO compliance audit",
+    "Owner": "DC Operations Manager",
+    "Participants": "Warehouse Associate, Quality Assurance Associate, DC Supervisor, Category Manager",
+    "Trigger": "Continuous IoT temperature monitoring; daily expiry scan; triggered when storage temperature deviates > 5°C from manufacturer-recommended range for any SKU category",
+    "Volume": "~500–800 temperature-sensitive SKUs per DC; 4 DCs; estimated PHP 30–50M in temperature-sensitive inventory per DC"
+   },
+   "id": "W1498",
+   "level": 2,
+   "name": "DC Temperature-Sensitive Material (Adhesives, Sealants, Paint) Storage Monitoring, Expiry Alert & FIFO Enforcement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitoring setup & alerting\" (replaces manual Step 1).",
+     "- System auto-scan of \"scan & alert generation\" (replaces manual Step 2).",
+     "- System auto-document of \"documented with QA Associate signature and DC Manager approval for write-offs\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight carries approximately 500–800 temperature-sensitive SKUs in each DC, including: construction adhesives (epoxy, silicone sealants, polyurethane adhesives), paint products (oil-based, latex, specialty coatings), chemical products (cleaning solvents, concrete additives, waterproofing membranes), and selected electrical products (batteries, certain wire insulation types). These products degrade when stored outside manufacturer-recommended temperature ranges: adhesives can lose bonding strength, paint can separate or thicken, and chemicals can become hazardous. Philippine tropical temperatures (28–38°C ambient) frequently exceed the recommended storage range of 15–30°C for many products, especially during the dry season (March–May) when warehouse temperatures can reach 40°C+ in uninsulated areas. Product degradation leads to: (a) customer returns and complaints, (b) inventory write-offs (estimated PHP 2–5M/year chain-wide from temperature damage), and (c) potential safety hazards if degraded chemicals are used."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **HVAC investment vs. write-off cost**: air conditioning a 10,000 sqm DC zone costs PHP 3–5M/year in electricity; temperature-related write-offs are PHP 2–5M/year; the investment case is marginal unless losses increase",
+     "- **Sensor reliability in warehouse environment**: sensors in dusty, humid warehouse environments require frequent calibration and have ~10–15% annual failure rate; sensor maintenance is an ongoing cost",
+     "- **Supplier-labeled shelf life accuracy**: some suppliers (especially importers) use conservative expiry dates that don't reflect actual Philippine storage conditions; products may degrade faster than labeled",
+     "- **FIFO vs. store demand conflict**: stores may request newer stock because customers prefer \"fresh\" product with longer remaining shelf life; strict FIFO may conflict with customer preference"
+    ],
+    "Staffing Implication": [
+     "- Quality Assurance Associate: ~2–4 hours per temperature breach incident × ~2–4 incidents/quarter = ~10–20 hours/quarter. Absorbed.",
+     "- DC Supervisor: ~30 min/day on expiry review + 2 hours/month on FIFO audit. Absorbed.",
+     "- DC Operations Manager: ~1 day/quarter on storage environment assessment. Absorbed.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IoT temperature sensor network with 15-minute reporting interval and threshold-based alerting (W1498.1)",
+     "- Temperature monitoring dashboard with real-time zone-level temperature display (W1498.1)",
+     "- SKU master with manufacturer-recommended storage temperature range and shelf life (W1498.1–2)",
+     "- Automated daily expiry scan with tiered alert generation (30/60 day thresholds) (W1498.2)",
+     "- FIFO enforcement in WMS pick directive generation with override approval workflow (W1498.4)",
+     "- Temperature breach inventory identification and QA disposition workflow (W1498.3)"
+    ],
+    "Time Estimate": [
+     "- Daily monitoring: automated + 30 min/day review",
+     "- Per temperature breach incident: 2–4 hours QA evaluation",
+     "- Monthly FIFO audit: 2 hours",
+     "- Quarterly assessment: 1 day",
+     "- **Annual per DC: ~150–250 hours**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Manager",
+     "activity": "**IoT temperature monitoring setup & alerting**: (a) IoT temperature sensors installed in all temperature-sensitive storage zones: adhesive aisle, paint storage area, chemical storage cage; (b) sensors report temperature every 15 minutes to DC operations dashboard; (c) temperature thresholds configured per SKU category: (i) adhesives: max 30°C; (ii) paint: max 35°C (oil-based), 30°C (latex); (iii) chemicals: per SDS recommendation (varies); (d) if temperature exceeds threshold for > 2 consecutive readings (30 min): (i) alert sent to DC Supervisor via SMS + dashboard; (ii) DC Supervisor investigates cause (HVAC failure, dock door left open, sensor malfunction); (iii) corrective action taken immediately; (iv) if temperature breach persists > 4 hours: Quality Assurance Associate evaluates affected inventory per Step 3",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "DC Operations Manager / IoT System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Daily expiry scan & alert generation**: Daily: (a) system scans all temperature-sensitive inventory for expiry status: (i) expired items: flagged for immediate removal and write-off; (ii) expiring within 30 days: flagged for priority dispatch (FIFO push to stores); (iii) expiring within 60 days: flagged for review — can it be sold before expiry?; (b) expiring items reported to DC Supervisor; (c) expired items physically pulled from storage and moved to quarantine area; (d) write-off initiated per PA-05.3 disposition workflow; (e) items expiring within 30 days: DC Supervisor coordinates with Merchandise Planner for expedited allocation to stores",
+     "duration": "30 min/day",
+     "n": "2",
+     "r": "System / Warehouse Associate"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Temperature breach product quality evaluation**: When temperature breach occurs: (a) Quality Assurance Associate identifies all SKUs that were stored in the affected zone during the breach period; (b) evaluates product integrity per manufacturer guidelines: (i) visual inspection (separation, discoloration, unusual viscosity for paint/adhesives); (ii) lot/batch number cross-referenced with manufacturer quality contact; (c) disposition decision: (i) \"Release\" — product quality unaffected; (ii) \"Quarantine\" — hold for further testing; (iii) \"Downgrade\" — sell at markdown with quality disclosure; (iv) \"Dispose\" — write-off as unsellable/unsafe; (d) disposition documented with QA Associate signature and DC Manager approval for write-offs",
+     "duration": "2–4 hours per incident",
+     "n": "3",
+     "r": "Quality Assurance Associate"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**FIFO compliance enforcement**: (a) system enforces FIFO (First-In, First-Out) for all temperature-sensitive SKUs: (i) pick instructions always direct warehouse associate to the oldest lot first; (ii) if associate attempts to pick a newer lot when older stock exists: system blocks and prompts with older lot location; (iii) override requires DC Supervisor approval with reason code; (b) monthly FIFO compliance audit: (i) random sample of 50 temperature-sensitive picks reviewed for FIFO compliance; (ii) target: > 98% FIFO compliance; (iii) non-compliance incidents tracked and addressed with associates",
+     "duration": "Continuous + 2 hours/month audit",
+     "n": "4",
+     "r": "System / Warehouse Associate"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Quarterly storage environment assessment**: Quarterly: (a) DC Operations Manager reviews: (i) total temperature breach incidents and duration; (ii) value of inventory affected by temperature damage; (iii) write-off value from temperature damage; (iv) HVAC system effectiveness and maintenance needs; (v) investment case for climate-controlled storage expansion if incidents exceed threshold; (b) recommendations submitted to VP Supply Chain for capital expenditure approval if infrastructure upgrades needed",
+     "duration": "1 day/quarter",
+     "n": "5",
+     "r": "DC Operations Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-252"
+   ],
+   "fields": {
+    "Frequency": "Daily (4 DCs); peak season may run 2 shifts",
+    "Owner": "DC Night Shift Supervisor",
+    "Participants": "Night Shift Supervisor, Night Shift Associates, Security Guards, DC Manager (on-call)",
+    "Trigger": "Daily night shift activation (typically 10:00 PM – 6:00 AM); or peak season extended operations",
+    "Volume": "~30–40 DC employees on the overnight (10 PM–6 AM) shift per DC (~150 per DC total across shifts; a supplemental shift beyond W584's two-shift core model)"
+   },
+   "id": "W1534",
+   "level": 2,
+   "name": "DC Night Shift Operations, Security Protocol & Shift Handover Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"log — pending picks, inbound receipts awaiting putaway, priority shipments for…\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitoring station staffed, badge-only access to warehouse floor,…\" (replaces manual Step 2).",
+     "- System auto-count of \"counting in designated zones\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "DC night shift operations are critical for BuildRight's replenishment cycle. With stores receiving 2–3 deliveries per week and daytime dock congestion at peak, night shift handles a significant portion of outbound pick/pack/ship and inbound putaway. Night operations require additional security protocols due to reduced staffing, limited visibility, and higher theft risk. Proper shift handover ensures continuity of work-in-progress."
+    ],
+    "Controls": [
+     "- CTL-252 (ensure controlled execution — DC Operations Management (PA-04.3).)",
+     "- operational: DC Night Shift Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Reduced supervision**: Night shift has fewer management layers, increasing risk of procedural shortcuts in pick accuracy and safety compliance",
+     "- **Emergency response**: Medical emergencies or security incidents at night have slower emergency response times; first-aid trained associate must be present on every night shift",
+     "- **Fatigue-related errors**: Night shift associates have higher error rates in picking and putaway; task rotation every 2 hours mitigates fatigue"
+    ],
+    "Staffing Implication": [
+     "- 1 Night Shift Supervisor per DC (4 total): dedicated night shift role",
+     "- ~30–40 Night Shift Associates per DC (varies by season): absorbed into DC headcount (150/DC includes night shift)",
+     "- Security Guards: 2 per DC per night shift (8 total), part of security vendor contract",
+     "- No incremental headcount beyond existing DC staffing plan",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Shift handover log with task status tracking (W1534.5)",
+     "- Night shift labor scheduling and task assignment (W1534.1)",
+     "- Perimeter access control integration with badge system (W1534.2)",
+     "- Wave management for night shift picking operations (W1534.3)",
+     "- Automated night shift KPI calculation (W1534.7)"
+    ],
+    "Time Estimate": [
+     "- Shift start-up: 20 min",
+     "- Operations execution: 6–8 hours",
+     "- Handover preparation: 20 min",
+     "- Handover execution: 15 min",
+     "- **Total per DC per night: ~7–9 hours of supervised operations**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Shift start-up**: Night Shift Supervisor reviews day shift handover log — pending picks, inbound receipts awaiting putaway, priority shipments for next-day dispatch, equipment issues; assigns tasks to night shift associates based on priority and labor plan",
+     "duration": "20 min",
+     "n": "1",
+     "r": "Night Shift Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Security protocol activation**: Security Guards activate night shift perimeter controls — gate lockdown to single entry/exit point, CCTV monitoring station staffed, badge-only access to warehouse floor, visitor/contractor prohibition after 10 PM; Night Shift Supervisor verifies all non-night-shift personnel have exited the building",
+     "duration": "15 min",
+     "n": "2",
+     "r": "Security Guards / Night Shift Supervisor"
+    },
+    {
+     "a": "Night Shift Supervisor",
+     "activity": "**Night operations execution**: (a) Outbound pick/pack for next-day store deliveries — wave picking of replenishment orders (W4) scheduled for morning dispatch; (b) Inbound putaway of late-arriving vendor deliveries; (c) Cycle counting in designated zones (W6) — night shift targets low-traffic areas; (d) Kit assembly (W46) for promotional bundles; (e) Equipment charging and maintenance area clearing",
+     "duration": "6–8 hours",
+     "n": "3",
+     "r": "Night Shift Associates"
+    },
+    {
+     "a": "Night Shift Supervisor",
+     "activity": "**Incident management**: Any security incident (unauthorized access attempt, alarm trigger), safety incident (forklift collision, slip/trip), or equipment failure is immediately reported to Night Shift Supervisor; critical incidents escalate to DC Manager (on-call); non-critical incidents logged for day shift review",
+     "duration": "As needed",
+     "n": "4",
+     "r": "Night Shift Associates / Security"
+    },
+    {
+     "a": "—",
+     "activity": "**Shift handover preparation**: Night Shift Supervisor prepares handover log — tasks completed, tasks pending, incidents occurred, equipment status, dock door assignments for morning shift, priority items requiring DC Manager attention; system updates wave completion status",
+     "duration": "20 min",
+     "n": "5",
+     "r": "Night Shift Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Shift handover execution**: Night Shift Supervisor briefs incoming day shift DC Supervisor on handover log; walk-through of active work areas; physical verification of staged outbound shipments against dispatch plan; acknowledgment sign-off by both supervisors",
+     "duration": "15 min",
+     "n": "6",
+     "r": "Night Shift Supervisor / DC Supervisor"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "**Night shift KPI reporting**: System automatically generates night shift performance report — lines picked, pallets put away, cycle count completion, incident count, labor productivity vs. target; feeds into daily DC KPI dashboard (W586)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4",
+    "W46",
+    "W584",
+    "W586",
+    "W6"
+   ]
+  }
+ ]
+}

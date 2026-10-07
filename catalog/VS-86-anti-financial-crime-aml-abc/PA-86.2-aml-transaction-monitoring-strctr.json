@@ -1,0 +1,517 @@
+{
+ "process_area": {
+  "id": "PA-86.2",
+  "title": "AML Transaction Monitoring & STR/CTR Reporting (AMLC)"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-86-anti-financial-crime-aml-abc/PA-86.2-aml-transaction-monitoring-strctr.md",
+ "value_stream": {
+  "directory": "VS-86-anti-financial-crime-aml-abc",
+  "id": "VS-86",
+  "name": "Anti-Financial Crime, AML/KYC & Anti-Corruption"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-237"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Compliance Analyst",
+    "Participants": "Compliance, Treasury, AR",
+    "Trigger": "Cash transaction in single business day",
+    "Volume": "~2.8M POS transactions/month; cash-heavy retail"
+   },
+   "id": "W2929",
+   "level": 2,
+   "name": "Cash Transaction Monitoring & Covered Transaction (PHP 500K Single-Day) Detection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors aggregate single-day cash transactions per customer\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates customer identity and transaction legitimacy\" (replaces manual Step 2).",
+     "- System auto-file of \"files Covered Transaction Report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-237 (ensure AML/KYC & sanctions compliance.)",
+     "- operational: automated monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Failure to file CTR incurs PHP 500K penalty per transaction; mitigated by automated monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cash-transaction monitoring engine; CTR generator; AMLC portal"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours per covered transaction"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Analyst",
+     "activity": "ERP monitors aggregate single-day cash transactions per customer; flags covered transactions exceeding PHP 500K (single or series) per AMLA",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "ERP automation"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance validates customer identity and transaction legitimacy; determines covered-transaction reportability",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "Compliance Analyst"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance files Covered Transaction Report (CTR) with AMLC within 5 working days; archives filing",
+     "duration": "Per covered txn",
+     "n": "3",
+     "r": "Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-488"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Compliance Analyst",
+    "Participants": "Compliance, LP, Trade Sales",
+    "Trigger": "Monitoring rule alert or analyst referral",
+    "Volume": "~50–200 alerts/month"
+   },
+   "id": "W2930",
+   "level": 2,
+   "name": "Suspicious Transaction Detection, Alert Triage & Escalation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates suspicious-activity alerts based on rules\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews customer KYC, transaction pattern, business rationale\" (replaces manual Step 2).",
+     "- System auto-document of \"documents decision rationale\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-488 (ensure controlled execution — AML Transaction Monitoring & STR/CTR Reporting (AMLC) (PA-86.2).)",
+     "- operational: tuned rules and analyst training"
+    ],
+    "Pain Points / Risks": [
+     "- **Detection risk**: Missed suspicious activity; mitigated by tuned rules and analyst training"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Alert/exception engine; case triage workflow; documentation repository"
+    ],
+    "Time Estimate": [
+     "- 1–4 hours per alert"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Analyst",
+     "activity": "ERP generates suspicious-activity alerts based on rules (unusual size, velocity, structure, customer profile mismatch)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "ERP automation"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance triages alerts: reviews customer KYC, transaction pattern, business rationale; dismisses false positives",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "Compliance Analyst"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance escalates true positives for STR filing and possible relationship exit; documents decision rationale",
+     "duration": "Per escalation",
+     "n": "3",
+     "r": "Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-237"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Compliance Officer",
+    "Participants": "Compliance Officer, MLRO, Legal",
+    "Trigger": "Confirmed suspicious transaction",
+    "Volume": "~10–30 STRs/year"
+   },
+   "id": "W2931",
+   "level": 2,
+   "name": "Suspicious Transaction Report (STR) Filing with AMLC",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares STR with required details\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews and approves STR\" (replaces manual Step 2).",
+     "- System auto-record of \"records per AMLA retention\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-237 (ensure AML/KYC & sanctions compliance.)",
+     "- operational: MLRO process and confidentiality controls"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance/legal risk**: Failure to file STR or tipping-off incurs penalty and criminal liability; mitigated by MLRO process and confidentiality controls"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AMLC STR portal; case file; tipping-off prevention controls"
+    ],
+    "Time Estimate": [
+     "- 4–8 hours per STR"
+    ]
+   },
+   "steps": [
+    {
+     "a": "MLRO",
+     "activity": "Compliance prepares STR with required details: subject identity, transaction details, grounds for suspicion, supporting evidence",
+     "duration": "Per STR",
+     "n": "1",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "MLRO reviews and approves STR; files via AMLC portal within 5 days of determination; maintains confidentiality (no tipping-off)",
+     "duration": "Per STR",
+     "n": "2",
+     "r": "MLRO"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Compliance/Legal supports any AMLC follow-up investigation; preserves records per AMLA retention; manages customer relationship outcome",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Compliance / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-237"
+   ],
+   "fields": {
+    "Frequency": "Daily/weekly batch",
+    "Owner": "Compliance Analyst",
+    "Participants": "Compliance, MLRO",
+    "Trigger": "Covered transaction batch",
+    "Volume": "~10–50 CTRs/year"
+   },
+   "id": "W2932",
+   "level": 2,
+   "name": "Covered Transaction Report (CTR) Filing & AMLC Portal Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Compliance compiles CTR data\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews and files CTR via AMLC portal within prescribed period\" (replaces manual Step 2).",
+     "- System auto-record of \"Compliance archives CTR records\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-237 (ensure AML/KYC & sanctions compliance.)",
+     "- operational: batch process and timeliness tracking"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Late/inaccurate CTR; mitigated by batch process and timeliness tracking"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CTR generator; AMLC portal; filing archive"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours per batch"
+    ]
+   },
+   "steps": [
+    {
+     "a": "MLRO",
+     "activity": "Compliance compiles CTR data: subject identity, transaction type, amount, date, account/reference",
+     "duration": "Per batch",
+     "n": "1",
+     "r": "Compliance Analyst"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "MLRO reviews and files CTR via AMLC portal within prescribed period; maintains filing acknowledgment",
+     "duration": "Per batch",
+     "n": "2",
+     "r": "MLRO"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance archives CTR records; tracks filing timeliness for audit",
+     "duration": "Per batch",
+     "n": "3",
+     "r": "Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-488"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Compliance Analyst",
+    "Participants": "Compliance, LP, IT",
+    "Trigger": "Pattern-based alert",
+    "Volume": "~5–20 investigations/year"
+   },
+   "id": "W2933",
+   "level": 2,
+   "name": "Structuring / Smurfing Pattern Detection & Investigation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-detect of \"detects structuring patterns\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews intent, business rationale\" (replaces manual Step 2).",
+     "- System auto-file of \"files STR if structuring confirmed\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-488 (ensure controlled execution — AML Transaction Monitoring & STR/CTR Reporting (AMLC) (PA-86.2).)",
+     "- operational: pattern analytics"
+    ],
+    "Pain Points / Risks": [
+     "- **Detection risk**: Sophisticated structuring evades single-transaction threshold; mitigated by pattern analytics"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pattern-detection engine; case workflow; LP coordination"
+    ],
+    "Time Estimate": [
+     "- 4–8 hours per investigation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Analyst",
+     "activity": "ERP detects structuring patterns: multiple sub-threshold cash transactions by same customer/related parties within short period",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "ERP automation"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance investigates: identifies related customers/accounts, reviews intent, business rationale",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "Compliance Analyst"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance files STR if structuring confirmed; restricts/blocks customer; coordinates with LP for any in-store angle",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Compliance / LP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-488"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Compliance Analyst",
+    "Participants": "Compliance, Procurement, Trade Sales, Logistics",
+    "Trigger": "Import/export transaction or vendor red flag",
+    "Volume": "~400–600 TEUs/month imports; trade accounts"
+   },
+   "id": "W2934",
+   "level": 2,
+   "name": "Trade-Based Money Laundering (TBML) Monitoring for Import/Export",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitors import/export for TBML indicators\" (replaces manual Step 1).",
+     "- System auto-file of \"files STR if TBML suspected\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-488 (ensure controlled execution — AML Transaction Monitoring & STR/CTR Reporting (AMLC) (PA-86.2).)",
+     "- operational: red-flag indicators and cross-reference"
+    ],
+    "Pain Points / Risks": [
+     "- **Detection risk**: Complex TBML schemes hard to detect; mitigated by red-flag indicators and cross-reference"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- TBML indicators dashboard; invoice/shipping reconciliation; AMLC/BOC portal"
+    ],
+    "Time Estimate": [
+     "- 4–8 hours per investigation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance monitors import/export for TBML indicators: invoice over/under-valuation, phantom shipments, third-party payment, rapid movement of goods",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Compliance Analyst"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance cross-references invoice value vs. market price, shipping docs vs. actual goods, payment source vs. customer",
+     "duration": "Per alert",
+     "n": "2",
+     "r": "Compliance / Procurement"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance files STR if TBML suspected; coordinates with BOC and AMLC; exits vendor relationship if warranted",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Compliance / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-488"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Compliance Officer",
+    "Participants": "Compliance, Legal, MLRO, AMLC, PNP, NBI",
+    "Trigger": "AMLC request, court order, or internal escalation",
+    "Volume": "~1–5 major cases/year"
+   },
+   "id": "W2935",
+   "level": 2,
+   "name": "AML Case Management, Investigation & Law Enforcement Cooperation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Compliance/Legal responds to AMLC request for information or freeze\" (replaces manual Step 1).",
+     "- System auto-count of \"account freeze, asset preservation, or relationship exit per order\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-488 (ensure controlled execution — AML Transaction Monitoring & STR/CTR Reporting (AMLC) (PA-86.2).)",
+     "- operational: legal-led process"
+    ],
+    "Pain Points / Risks": [
+     "- **Legal risk**: Non-cooperation or breach of confidentiality; mitigated by legal-led process"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Case management; legal hold; asset-freeze execution"
+    ],
+    "Time Estimate": [
+     "- Weeks to months per case"
+    ]
+   },
+   "steps": [
+    {
+     "a": "MLRO",
+     "activity": "Compliance/Legal responds to AMLC request for information or freeze order; preserves records; maintains confidentiality",
+     "duration": "Per case",
+     "n": "1",
+     "r": "Compliance / Legal"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Legal cooperates with PNP/NBI investigation per lawful order; provides evidence under court supervision",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Legal"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance executes account freeze, asset preservation, or relationship exit per order; tracks resolution",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-488"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Compliance Officer",
+    "Participants": "Compliance, IT, Internal Audit",
+    "Trigger": "Quarterly review or model-performance issue",
+    "Volume": "~30–50 monitoring rules"
+   },
+   "id": "W2936",
+   "level": 2,
+   "name": "AML Rule Tuning, Threshold Governance & False-Positive Reduction",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-analyze of \"analyzes rule performance\" (replaces manual Step 1).",
+     "- System auto-log of \"IT tunes thresholds and scenario logic\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews rule-tuning governance annually\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-488 (ensure controlled execution — AML Transaction Monitoring & STR/CTR Reporting (AMLC) (PA-86.2).)",
+     "- operational: shadow validation and audit"
+    ],
+    "Pain Points / Risks": [
+     "- **Effectiveness risk**: Over-tuning suppresses real alerts; mitigated by shadow validation and audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rule-performance analytics; tuning workflow; audit evidence"
+    ],
+    "Time Estimate": [
+     "- 3–5 days/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance analyzes rule performance: alert volume, false-positive rate, true-positive yield, coverage gaps",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Compliance Officer"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "IT tunes thresholds and scenario logic; validates in shadow mode before production; documents change",
+     "duration": "Per change",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "Audit Committee",
+     "activity": "Internal Audit reviews rule-tuning governance annually; validates detection effectiveness",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

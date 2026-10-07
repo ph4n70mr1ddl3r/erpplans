@@ -1,0 +1,556 @@
+{
+ "process_area": {
+  "id": "PA-151.3",
+  "title": "EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.3-eas-rfid-tagging-source-tagging-and-loss-prevention-integration.md",
+ "value_stream": {
+  "directory": "VS-151-auto-id-barcode-rfid-labeling-and-eas-operations",
+  "id": "VS-151",
+  "name": "Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Daily ops + continuous monitoring",
+    "Owner": "Loss Prevention (VS-23) / Stores (VS-07) / IT (VS-27)",
+    "Participants": "IFM (VS-138), ITAM (VS-99), Auto-ID Lead",
+    "Trigger": "Store open (VS-07.1); alarm; system health check",
+    "Volume": "EAS gates at all 200 store exits + deactivators at 600 POS"
+   },
+   "id": "W4497",
+   "level": 2,
+   "name": "EAS System Operations (Gates, Deactivators, Exception Alerts)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- EAS health/alarm dashboard; false-alarm-rate analytics; auto-sensitivity tuning guidance"
+    ],
+    "Controls": [
+     "- CTL-685 (ensure controlled execution — EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration (PA-151.3).)",
+     "- CTL-685: EAS daily-tested; sensitivity tuned; true alarms routed to response (W4501)"
+    ],
+    "Cross-references": [
+     "- links to VS-23 (LP), VS-138 (IFM), VS-99 (ITAM), VS-08 (POS), W4485 (standard), W4501 (response)"
+    ],
+    "Pain Points / Risks": [
+     "- **False-alarm fatigue risk**: Over-sensitive gates → ignored real alarms; mitigated by sensitivity tuning & false-alarm tracking",
+     "- **Deactivator-failure risk**: Pad fails → legitimate exit alarms & customer friction; mitigated by daily function test"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LP/exception (VS-23); IFM maintenance (VS-138); ITAM (VS-99); POS deactivation (VS-08); service desk (VS-27.1)"
+    ],
+    "Time Estimate": [
+     "- ~15 min/day per store EAS ops; continuous monitoring"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / LP Director",
+     "activity": "Stores/LP operate EAS gates/deactivators daily (power-up test, sensitivity check, deactivator-pad function), logging health per W4485 standard",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Stores / LP"
+    },
+    {
+     "a": "LP Director",
+     "activity": "IT/LP monitor EAS exception alerts (gate triggers), classify (true alarm vs false), and route true positives to LP response (W4501)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "IT / LP"
+    },
+    {
+     "a": "LP Director / IFM Manager",
+     "activity": "IFM/IT maintain EAS hardware (gate calibration/deactivator replacement) via VS-138/VS-99, tuning sensitivity to minimize false alarms while catching real events",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "IFM / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4485",
+    "W4501"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Per vendor/category program",
+    "Owner": "Auto-ID Lead / LP (VS-23) / Vendor Mgmt (VS-03)",
+    "Participants": "Procurement (VS-34), Merchandising (VS-01), DC (VS-04), Private Label (VS-41)",
+    "Trigger": "Vendor contracting (VS-03); tagging-policy update (W4484); cost program",
+    "Volume": "Source-tagged SKUs from ~800–1,000 vendors (high-value categories)"
+   },
+   "id": "W4498",
+   "level": 2,
+   "name": "Source-Tagging & Vendor-Applied EAS/RFID Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Source-tag coverage/ROI analytics; receipt auto-flag of untagged source-tag SKUs; vendor scorecard integration (VS-67)"
+    ],
+    "Controls": [
+     "- CTL-685 (ensure controlled execution — EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration (PA-151.3).)",
+     "- CTL-685: source-tag spec in contract; verified at receipt (VS-04); vendor compliance scored (VS-67)"
+    ],
+    "Cross-references": [
+     "- links to VS-03 (vendor), VS-04 (DC), VS-41 (private label), VS-23 (LP), VS-67 (scorecard), W4484 (tag policy), W4492 (in-store apply)"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor-noncompliance risk**: Promised source-tags missing → in-store labor to apply; mitigated by receipt verification + vendor scorecard (VS-67)",
+     "- **Encoding-mismatch risk**: Vendor encodes wrong format; mitigated by spec-in-contract + receipt read-test"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor mgmt (VS-03); DC receive (VS-04); private label (VS-41); LP/shrink (VS-23); W4484 tag policy"
+    ],
+    "Time Estimate": [
+     "- Per vendor ~2–4 weeks; ongoing receipt verification"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Director / VP Merch",
+     "activity": "Auto-ID Lead/LP/Vendor Mgmt negotiate source-tagging agreements (vendor applies EAS/RFID at manufacture), selecting tag type/encoding per W4484 and reconciling cost (cheaper than in-store application)",
+     "duration": "Per vendor",
+     "n": "1",
+     "r": "Auto-ID Lead / LP / Vendor Mgmt"
+    },
+    {
+     "a": "DC Manager / LP Director",
+     "activity": "DC/Auto-ID Lead verify source-tags at goods receipt (tag present, correct, read-able) per VS-04, flag missing tags for in-store application (W4492)",
+     "duration": "Per receipt",
+     "n": "2",
+     "r": "DC / Auto-ID Lead"
+    },
+    {
+     "a": "VP Merch",
+     "activity": "Private Label (VS-41) embeds source-tagging into own-brand production spec; Merchandising tracks source-tag coverage and ROI (W4503)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Private Label / Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4484",
+    "W4492",
+    "W4503"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Per program + continuous read-zone ops",
+    "Owner": "Auto-ID Lead / IT (VS-27) / Inventory (VS-05)",
+    "Participants": "DC (VS-04), Stores (VS-07), Omnichannel (VS-60), ITAM (VS-99)",
+    "Trigger": "RFID program rollout; cycle-count (VS-05); real-time inventory (VS-60)",
+    "Volume": "RFID readers (handheld/fixed/smart-shelf) at RFID-enabled stores/DCs"
+   },
+   "id": "W4499",
+   "level": 2,
+   "name": "RFID Infrastructure, Encoding & Read-Zone Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- RFID-driven automated cycle-count; read-zone health/interference analytics; EPC auto-encoding"
+    ],
+    "Controls": [
+     "- CTL-685 (ensure controlled execution — EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration (PA-151.3).)",
+     "- CTL-685: RFID encoded to GS1 EPC (W4482); reads reconciled to inventory (VS-05); interference mitigated"
+    ],
+    "Cross-references": [
+     "- links to VS-05 (inventory/cycle-count), VS-04 (DC), VS-60 (omnichannel), VS-99 (ITAM), VS-23 (LP), W4482/W4484 (encoding/policy)"
+    ],
+    "Pain Points / Risks": [
+     "- **Read-interference risk**: Metal/liquid SKUs (paint, cement, metal) degrade RFID reads; mitigated by tag-placement/reader-tuning & mixed-EAS fallback",
+     "- **Phantom-read risk**: Mis-placed tags create inventory ghosts; mitigated by read-zone validation & count reconciliation (VS-05)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory/cycle-count (VS-05); DC receive (VS-04); omnichannel visibility (VS-60); ITAM (VS-99); LP (VS-23); IFM (VS-138)"
+    ],
+    "Time Estimate": [
+     "- Per program weeks; ongoing ops integrated into cycle-count"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO / Inventory Manager",
+     "activity": "Auto-ID Lead/IT design/deploy RFID read-zones (DC portals, store handhelds, smart-shelf) per the W4484 policy, encode tags to the GS1 EPC standard (W4482), and integrate reads to inventory (VS-05/VS-60)",
+     "duration": "Per program",
+     "n": "1",
+     "r": "Auto-ID Lead / IT / Inventory"
+    },
+    {
+     "a": "DC Manager / Store Manager",
+     "activity": "DC/Stores use RFID for cycle-counting (VS-05.1) and receiving (VS-04) — bulk scan vs line-by-line — improving count speed/accuracy toward the ≥97% target",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "DC / Stores / Auto-ID Lead"
+    },
+    {
+     "a": "CIO / LP Director",
+     "activity": "IT/ITAM operate the RFID infrastructure (reader health, read-zone tuning, interference mgmt) via VS-99/VS-138, and feed exceptions (reads-outside-expected) to LP (VS-23)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "IT / ITAM / LP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4482",
+    "W4484"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-150",
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Continuous (per sale/return)",
+    "Owner": "Stores (VS-07/VS-08) / LP (VS-23)",
+    "Participants": "POS (VS-08), Returns (VS-32), Auto-ID Lead, DC (VS-04)",
+    "Trigger": "Sale completion (VS-08); return (VS-32); tag pool replenishment",
+    "Volume": "Reusable hard-tags (EAS) cycled across high-value SKUs"
+   },
+   "id": "W4500",
+   "level": 2,
+   "name": "EAS/RFID Tag Detachment, Reuse & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- POS-driven detach-confirmation; tag-pool count reconciliation app; shortage auto-alert to LP (VS-23)"
+    ],
+    "Controls": [
+     "- CTL-150 (ensure labeling & Auto-ID data integrity.)",
+     "- CTL-685: tags detached/deactivated at paid sale; reusable pool reconciled per shift; shortages investigated (VS-23)"
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-32 (returns), VS-23 (LP), VS-34 (reorder), VS-04 (DC pool), W4497 (EAS ops)"
+    ],
+    "Pain Points / Risks": [
+     "- **Tag-leakage risk**: Reusable tags not returned to pool → shrink signal + replenishment cost; mitigated by shift pool reconciliation",
+     "- **Undetached-sale risk**: Tag not deactivated → exit alarm & customer friction; mitigated by detach-before-bag SOP"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS detach (VS-08); returns (VS-32); LP/shrink (VS-23); procurement reorder (VS-34); DC tag pool (VS-04)"
+    ],
+    "Time Estimate": [
+     "- ~10–20 sec/sale detach; per-shift pool count ~10 min"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Cashier detach/deactivate EAS hard-tags at paid sale (VS-08) using the detacher, and return reusable tags to the pool; soft-labels are deactivated",
+     "duration": "Per sale",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Returns (VS-32) re-apply tags to returned high-value items before restock, and reconcile tag pool counts (expected vs on-hand) per shift",
+     "duration": "Per return/shift",
+     "n": "2",
+     "r": "Returns / Stock Associate"
+    },
+    {
+     "a": "LP Director",
+     "activity": "LP/Auto-ID Lead investigate tag-pool shortages (lost/stolen tags = shrink/fraud signal), reorder pool stock (VS-34), and report shrink impact (VS-23)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "LP / Auto-ID Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4497"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Per alarm (true-positive subset)",
+    "Owner": "Loss Prevention (VS-23) / Stores (VS-07)",
+    "Participants": "LP Officers, Store Manager, Legal (VS-100.3), Security (VS-98)",
+    "Trigger": "EAS gate alarm (W4497); suspected concealment",
+    "Volume": "EAS exceptions across 200 store exits"
+   },
+   "id": "W4501",
+   "level": 2,
+   "name": "EAS Exception Response, Detention & Investigation Handoff",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Alarm+CCTV+receipt correlation; case-management handoff to LP investigation (VS-23); wrongful-stop risk analytics"
+    ],
+    "Controls": [
+     "- CTL-685 (ensure controlled execution — EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration (PA-151.3).)",
+     "- CTL-685: verify-receipt-first SOP; lawful-procedure for detention; CCTV-documented; ORC escalation (VS-23)"
+    ],
+    "Cross-references": [
+     "- links to VS-23 (LP/ORC), VS-100.3 (legal), VS-98 (security), VS-14.3 (PR/reputation), W4497 (EAS alert)"
+    ],
+    "Pain Points / Risks": [
+     "- **Wrongful-detention risk**: False stop → customer harm, legal/PR exposure (VS-100.3/VS-14.3); mitigated by verify-receipt-first SOP & dignity standard",
+     "- **Evidence-gap risk**: Weak evidence → failed prosecution; mitigated by CCTV sync (VS-23) & documented procedure"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LP/ORC investigation (VS-23); legal/litigation (VS-100.3); security/contingent (VS-98); EAS alert (W4497)"
+    ],
+    "Time Estimate": [
+     "- ~5–15 min per alarm; confirmed cases hours+"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / LP Director",
+     "activity": "LP/Stores respond to EAS alarms per SOP (approach, verify receipt, re-scan), balancing loss prevention with customer dignity and avoiding false detention (legal risk VS-100.3)",
+     "duration": "Per alarm",
+     "n": "1",
+     "r": "LP Officer / Store Staff"
+    },
+    {
+     "a": "LP Director / VP Legal",
+     "activity": "LP detains/interviews only on confirmed concealment with evidence, following lawful-procedure (DOLE/legal), and escalates to police/charges where warranted (links to VS-23 W840 ORC)",
+     "duration": "Per confirmed case",
+     "n": "2",
+     "r": "LP / Store Manager"
+    },
+    {
+     "a": "LP Director / VP Legal",
+     "activity": "LP documents the incident, feeds organized/serial cases to ORC investigation (VS-23 W840/W1542), and reports to Legal (VS-100.3) for prosecution/civil recovery",
+     "duration": "Per case",
+     "n": "3",
+     "r": "LP / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1542",
+    "W4497",
+    "W840"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Per lifecycle + continuous",
+    "Owner": "IT (VS-27) / Auto-ID Lead / Data (VS-28)",
+    "Participants": "LP (VS-23), Inventory (VS-05), EA (VS-113), BI (VS-28)",
+    "Trigger": "System integration; analytics need; data-quality issue",
+    "Volume": "Auto-ID event stream (scans, EAS, RFID reads) → LP/inventory analytics"
+   },
+   "id": "W4502",
+   "level": 2,
+   "name": "Auto-ID Data Integration to Loss-Prevention & Inventory Systems",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Event-stream auto-correlation; LP exception-pattern ML (VS-125/VS-28); data-quality dashboards"
+    ],
+    "Controls": [
+     "- CTL-685 (ensure controlled execution — EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration (PA-151.3).)",
+     "- CTL-685: event architecture EA-governed (VS-113); data secured (VS-27.3) & retained per policy (VS-88); privacy-respecting (VS-91)"
+    ],
+    "Cross-references": [
+     "- links to VS-28/VS-27 (data/IT), VS-113 (EA), VS-23 (LP), VS-05 (inventory), VS-27.3/VS-88/VS-91 (security/retention/privacy)"
+    ],
+    "Pain Points / Risks": [
+     "- **Data-gap risk**: Events not captured → blind LP analytics; mitigated by event-completeness monitoring",
+     "- **Privacy risk**: Auto-ID event data on customers/shoppers; mitigated by security (VS-27.3) & retention limits (VS-88/VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT/data platform (VS-28/VS-27); EA (VS-113); LP analytics (VS-23); inventory (VS-05); security (VS-27.3); retention (VS-88)"
+    ],
+    "Time Estimate": [
+     "- Per integration weeks; ongoing analytics/data-quality"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "IT/EA/Auto-ID Lead design the auto-ID event architecture (POS scans, EAS exceptions, RFID reads → event stream → LP & inventory systems), per EA standards (VS-113) and data platform (VS-28)",
+     "duration": "Per lifecycle",
+     "n": "1",
+     "r": "IT / EA / Auto-ID Lead"
+    },
+    {
+     "a": "CIO / LP Director",
+     "activity": "Data/IT build LP analytics (exception patterns, scan-fail hotspots, tag-leakage) and inventory analytics (RFID count accuracy, phantom reads) on the platform (VS-28)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Data / IT / LP"
+    },
+    {
+     "a": "CIO / LP Director",
+     "activity": "Auto-ID Lead/LP govern data quality (event completeness, latency), security (VS-27.3), and retention (VS-88) of auto-ID event data",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Auto-ID Lead / LP / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly",
+    "Owner": "LP (VS-23) / Auto-ID Lead / BI (VS-28)",
+    "Participants": "Merchandising (VS-01), Finance (VS-17.4), Revenue Assurance (VS-118)",
+    "Trigger": "Periodic review; program ROI; shrink trend",
+    "Volume": "EAS/RFID/tagging performance vs shrink (< 1.5% target) enterprise-wide"
+   },
+   "id": "W4503",
+   "level": 2,
+   "name": "EAS/RFID Performance, Tag-ROI & Shrink Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Automated tag-ROI/shrink-correlation model; under-protection auto-flag; shrink-vs-spend dashboard"
+    ],
+    "Controls": [
+     "- CTL-685 (ensure controlled execution — EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration (PA-151.3).)",
+     "- CTL-685: tagging ROI measured against shrink outcome (< 1.5%); policy tuned on data (W4484); spend governed (VS-135)"
+    ],
+    "Cross-references": [
+     "- links to VS-23 (LP/shrink), VS-28 (BI), VS-118 (revenue assurance), VS-17.4/VS-135 (finance/TBM), W4484 (tagging policy)"
+    ],
+    "Pain Points / Risks": [
+     "- **ROI-blindness risk**: Tagging spend without shrink-correlation → wasted cost; mitigated by tag-ROI analytics",
+     "- **Metric-gaming risk**: Catch-rate up but shrink unchanged → measuring activity not outcome; mitigated by shrink-outcome linkage"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LP/shrink (VS-23); BI (VS-28); revenue assurance (VS-118); finance (VS-17.4); TBM (VS-135)"
+    ],
+    "Time Estimate": [
+     "- ~monthly analytics cycle; quarterly review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Director",
+     "activity": "LP/BI measure EAS/RFID performance (catch rate, false-alarm rate, tag coverage, read accuracy) and tag-ROI (shrink reduction vs tagging cost) by category/store",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "LP / BI / Auto-ID Lead"
+    },
+    {
+     "a": "LP Director / VP Merch",
+     "activity": "LP/Merchandising correlate tagging coverage with shrink outcomes (VS-23/W840), identify under-protected categories, and tune the W4484 tagging policy",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "LP / Merchandising"
+    },
+    {
+     "a": "CFO / LP Director",
+     "activity": "Finance/LP report shrink impact vs the < 1.5% target (profile §12.3) and tagging spend (links to VS-17.4/VS-135), driving investment decisions",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Finance / LP"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4484",
+    "W840"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-150",
+    "CTL-685"
+   ],
+   "fields": {
+    "Frequency": "Continuous + on incident",
+    "Owner": "LP (VS-23) / Fraud (VS-125) / Auto-ID Lead",
+    "Participants": "Compliance (VS-22), Privacy (VS-91), IT Security (VS-27.3), Audit (VS-21)",
+    "Trigger": "Fraud incident (VS-23/VS-125); privacy review; audit",
+    "Volume": "Auto-ID fraud-vector control (counterfeit labels, cloned barcodes, tag-switch) enterprise-wide"
+   },
+   "id": "W4504",
+   "level": 2,
+   "name": "Auto-ID Security, Privacy & Fraud-Vector Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Anti-clone/2D-signature validation at POS; return-label match automation; EAS-defeat detection analytics"
+    ],
+    "Controls": [
+     "- CTL-150 (ensure labeling & Auto-ID data integrity.)",
+     "- CTL-685: anti-counterfeit labeling (VS-71); price-switch fraud controls (VS-23/VS-118); RFID privacy respected (VS-91); practices audited (VS-21)"
+    ],
+    "Cross-references": [
+     "- links to VS-23/VS-125 (LP/fraud), VS-71 (anti-counterfeit), VS-117 (PS/ICC), VS-32 (returns), VS-91 (privacy), VS-08.3 (override), VS-21 (audit)"
+    ],
+    "Pain Points / Risks": [
+     "- **Price-switch-fraud risk**: Cloned barcode → low-price scan on high-value item (VS-23/VS-118); mitigated by anti-clone codes & override audit (VS-08.3)",
+     "- **Privacy risk**: RFID tracking of customers; mitigated by tag-deactivation at sale & data minimization (VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- LP/fraud (VS-23/VS-125); anti-counterfeit (VS-71); compliance (VS-22); privacy (VS-91); IT security (VS-27.3); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~ongoing control design + incident response"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Director / Head of Fraud",
+     "activity": "LP/Fraud/Auto-ID Lead identify auto-ID fraud vectors (cloned/counterfeit barcodes for price-switching, fake PS/ICC labels VS-117, RFID/EAS defeat, label-swap at return VS-32) and design countermeasures",
+     "duration": "Annual + on incident",
+     "n": "1",
+     "r": "LP / Fraud / Auto-ID Lead"
+    },
+    {
+     "a": "LP Director",
+     "activity": "LP/Auto-ID Lead deploy countermeasures (anti-clone 2D codes, tamper-evident tags, return-receipt label match, EAS-defeat detection) and coordinate with Anti-Counterfeit (VS-71)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "LP / Auto-ID Lead"
+    },
+    {
+     "a": "VP Legal / Head of Internal Audit & Risk",
+     "activity": "Compliance/Privacy/Audit ensure auto-ID practices respect data privacy (RFID/EAS event data on shoppers VS-91) and are audited (VS-21), with incident response (VS-23/VS-125)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Compliance / Privacy / Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

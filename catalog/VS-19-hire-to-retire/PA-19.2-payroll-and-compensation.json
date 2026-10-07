@@ -1,0 +1,1369 @@
+{
+ "process_area": {
+  "id": "PA-19.2",
+  "title": "Payroll & Compensation"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-19-hire-to-retire/PA-19.2-payroll-and-compensation.md",
+ "value_stream": {
+  "directory": "VS-19-hire-to-retire",
+  "id": "VS-19",
+  "name": "Hire-to-Retire"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-13",
+    "CTL-34"
+   ],
+   "fields": {
+    "Frequency": "10 payroll runs/month (5 entities × 2)",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Officer, HR Assistant, Department Heads (OT/leave approval), Finance (bank file)",
+    "Trigger": "Semi-monthly payroll calendar (15th and 30th)",
+    "Volume": "~6,762 employees total"
+   },
+   "id": "W10",
+   "level": 2,
+   "name": "Payroll Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"schedule adjustments are posted\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates: basic salary + OT + night differential + holiday pay + allowances\" (replaces manual Step 3).",
+     "- Deduction engine auto-applies SSS/PhilHealth/Pag-IBIG/TRAIN withholding, loans, and advances (Step 4, already system-executed)."
+    ],
+    "Controls": [
+     "- CTL-13 (separate payroll computation from approval.); CTL-34 (ensure complete tax compliance.)",
+     "- operational: must dynamically cap deductions, but manual overrides can bypass this safeguard"
+    ],
+    "Pain Points / Risks": [
+     "- **Statutory deduction errors**: SSS, PhilHealth, and Pag-IBIG contribution tables change periodically; failure to update payroll tables results in under- or over-deduction per employee, requiring manual retroactive adjustments and potential penalties from government agencies",
+     "- **Bank file generation failures**: Incorrect bank file formats (BDO, BPI, etc.) or transmission errors can delay salary crediting for thousands of employees, triggering immediate employee complaints and trust erosion",
+     "- **Multi-entity reconciliation complexity**: Running 10 payroll cycles/month across 5 legal entities with different TIN registrations creates significant reconciliation overhead; intercompany employee transfers (W43.15) add further complexity to entity-specific payroll totals",
+     "- **Negative net pay risk**: When loan deductions, salary advances, and statutory contributions coincide, an employee's net pay may fall below minimum wage; the system must dynamically cap deductions, but manual overrides can bypass this safeguard; mitigated by CTL-13 (separate payroll computation from approval.); CTL-34 (ensure complete tax compliance)",
+     "- **Payroll anomaly detection gaps**: With ~6,762 employees, manual review of the payroll register for anomalies (unusually high OT, negative net pay, incorrect deductions) is time-consuming and error-prone; undetected errors cascade into incorrect payslips and bank transfers"
+    ],
+    "Staffing Implication": [
+     "- **2–3 Payroll Officers**: 5 entities × 2 runs = 10 runs/month. Each run takes ~6 hours. Total ~60 hours/month of payroll processing. 2 officers can handle this with time for reconciliation and inquiries.",
+     "- **1 Payroll Manager**: Approval, oversight, statutory compliance.",
+     "- **1–2 HR Assistants**: Leave and OT verification (data entry-heavy during payroll week).",
+     "- Fits within the 26-person HR department (profile §3.3)."
+    ],
+    "Statutory Compliance Calendar": [
+     "The following table shows all recurring statutory remittance deadlines per entity. System generates alerts 5 business days before each deadline.",
+     "| Statutory Obligation | Frequency | Deadline | Remittance Method | Responsible | Cross-Reference |",
+     "|---|---|---|---|---|---|",
+     "| SSS employee + employer contributions | Monthly | Last day of following month (or 10th of second month per SSS schedule) | PRN via SSS online portal or bank | Payroll Officer | W10.11 |",
+     "| PhilHealth contributions | Monthly | Every 10th of the following month | Electronic remittance via PhilHealth portal | Payroll Officer | W10.11 |",
+     "| Pag-IBIG contributions | Monthly | Every 10th of the following month | Online remittance via Pag-IBIG portal | Payroll Officer | W10.11 |",
+     "| BIR Withholding Tax on Compensation (1601-C) | Monthly | 10th of following month | eFPS / eBIRForms | Tax Accountant | W9A.16 |",
+     "| BIR Expanded Withholding Tax (1601-EQ) | Quarterly | Last day of month following quarter close | eFPS / eBIRForms | Tax Accountant | W9A.16a |",
+     "| BIR VAT Return (2550M) | Monthly | 20th or 25th of following month (per BIR filing threshold) | eFPS / eBIRForms | Tax Accountant | W9A.16 |",
+     "| BIR Quarterly VAT / Income Tax (2550Q / 1702Q) | Quarterly | 25th of month following quarter end | eFPS / eBIRForms | Tax Accountant | W9A.16 |",
+     "| Local Business Tax per LGU | Per LGU calendar (annual or quarterly) | Per LGU deadline | Per LGU (online, OTC, or LGU office) | Tax Accountant | W9A.16c |",
+     "| 13th Month Pay distribution | Annual | On or before December 24 | Via payroll run | Payroll Officer | W10, W9B.18 |",
+     "| BIR Annual Income Tax Return (1702RT) | Annual | April 15 (or as extended) | eFPS / eBIRForms | Tax Accountant | W9B.21 |",
+     "> **Note**: Deadlines are based on current BIR and statutory agency guidelines; Payroll Manager reviews for regulatory changes quarterly. The 5-entity structure means each obligation is filed per-entity TIN; Payroll Officer and Tax Accountant process 5 submissions per deadline."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Time & attendance import from biometric system (W10.1)",
+     "- Leave and overtime approval workflow (W10.2)",
+     "- Philippine payroll computation engine (TRAIN law, SSS, PhilHealth, Pag-IBIG tables) (W10.3–4)",
+     "- Payroll anomaly detection (W10.5)",
+     "- Bank file generation in Philippine bank formats (W10.7)",
+     "- GL posting from payroll (W10.9)",
+     "- Payslip distribution (W10.10)",
+     "- Statutory contribution file generation with PRN (W10.11)",
+     "- Statutory remittance reconciliation: per-employee contribution schedule vs. remittance file vs. bank confirmation; discrepancy flagging (W10.11a)",
+     "- Contractual/fixed-term worker management: contract date tracking, pro-rated benefit computation, end-of-contract settlement, regularization conversion (W10.11b)",
+     "- Agency / manpower contractor worker management: for seasonal and peak-period staffing (Christmas season, bi-monthly sale events, new store openings), BuildRight engages licensed manpower agencies per DOLE Department Order No. 174 (Labor-Only Contracting rules); agency workers are NOT employees of BuildRight entities — they appear in the agency's payroll, not in BuildRight's W10 payroll run; system tracks agency worker headcount separately from regular headcount for workforce planning; Store Manager submits agency staffing request to HR with headcount, duration, and skill requirements; HR coordinates with approved agency partners; agency invoices are processed as non-PO service invoices per W7C with DOLE-compliant documentation (agency service agreement, worker deployment list, attendance records); agency workers are issued temporary POS and access badges with limited system permissions and defined expiry dates; system distinguishes agency hours from regular employee hours for labor cost reporting (agency cost is a contract service expense, not payroll); typical agency worker deployment: 2–5 per store during November–December peak, and 10–15 per new store opening (W16) for the first 2 weeks of operations",
+     "- Agency worker access provisioning: Store Manager submits agency worker access request to IT via W48 helpdesk ticket, specifying worker name, agency, assignment duration, and required access level; IT creates temporary system account with predefined \"Agency Worker\" permission template (POS transaction processing only — no voids, no price overrides, no manager functions, no reports); access badge created with defined expiry date matching deployment end date; system auto-revokes access on expiry date; at end of deployment, Store Manager verifies badge return and IT confirms system deactivation; if deployment extended, Store Manager submits extension request before expiry; system logs all agency worker access with agency name, worker name, store, start/end dates, and permission level; monthly: IT generates agency worker access report showing active, expired, and unreturned badges; unreturned badges flagged for Store Manager follow-up (W10, cross-reference W71 access badge management)"
+    ],
+    "Time Estimate": [
+     "**Per payroll run**: ~6 hours per entity (data validation + computation + review + bank file generation). With 5 entities and bi-monthly runs, total monthly payroll processing time is ~60 hours (5 entities × 2 runs × 6 hours). Quarter-end and year-end runs (13th month, bonus periods) add ~50% additional time per run. Year-end W9B tax reconciliation (W9B) requires an additional 2–3 days of concentrated effort by the Payroll team.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Officer pulls time & attendance data from biometric/RFID system",
+     "duration": "30 min/run",
+     "n": "1",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "HR Assistant verifies approved leaves, overtime, and schedule adjustments are posted",
+     "duration": "2 hours/run",
+     "n": "2",
+     "r": "HR Assistant"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Officer validates: basic salary + OT + night differential + holiday pay + allowances",
+     "duration": "1 hour/run",
+     "n": "3",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "—",
+     "activity": "System calculates deductions: SSS, PhilHealth, Pag-IBIG, withholding tax (TRAIN law), loans, advances",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Officer reviews computed payroll for anomalies (negative net pay, unusually high OT)",
+     "duration": "1 hour/run",
+     "n": "5",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Payroll Manager reviews and approves payroll register",
+     "duration": "30 min/run",
+     "n": "6",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "—",
+     "activity": "System generates bank file for payroll crediting (BDO, BPI, etc.)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/Treasury reviews bank file; transmits to bank",
+     "duration": "30 min/run",
+     "n": "8",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "System posts payroll journal entries to GL (salary expense, payable, deductions)",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Payslips generated; distributed via email or employee self-service portal",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Monthly: generate SSS PRN, PhilHealth contribution, Pag-IBIG contribution files for remittance",
+     "duration": "1 hour/month",
+     "n": "11",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Officer reconciles statutory contribution schedule (per-employee breakdown) to generated remittance file and bank payment confirmation; investigates and resolves discrepancies before remittance deadline; system flags employees with missing or incomplete statutory data",
+     "duration": "30 min/month",
+     "n": "11a",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Contractual / fixed-term workers: system tracks contract start/end dates and auto-alerts HR Assistant 30 days before expiry; payroll computes pro-rated 13th month pay and statutory benefits per contract duration; end-of-contract settlement computed similar to final pay (W10 step 12) but with different legal basis; if employee converts to regular status, HR Assistant updates employee type in system and payroll adjusts benefit computation accordingly",
+     "duration": "15 min/employee",
+     "n": "11b",
+     "r": "HR Assistant / Payroll Officer"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Final pay computation (upon employee separation): system calculates pro-rated 13th month pay, converted unused leave credits, less outstanding loans/advances and clearance deductions",
+     "duration": "30 min/employee",
+     "n": "12",
+     "r": "Payroll Officer"
+    },
+    {
+     "a": "—",
+     "activity": "System posts final pay as separate payroll run or adjustment; generates final payslip",
+     "duration": "Automated",
+     "n": "13",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W16",
+    "W43",
+    "W48",
+    "W71",
+    "W7C",
+    "W9A",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Semi-monthly payroll cycle",
+    "Owner": "Payroll Manager",
+    "Participants": "HR Admin, Legal, Employee, Third-Party Payee",
+    "Trigger": "HR receives a legal order or authorized request to deduct funds directly from an employee's net pay (e.g., child support, cooperative loan, union dues).",
+    "Volume": "50-100 employees affected"
+   },
+   "id": "W280",
+   "level": 2,
+   "name": "Court-Ordered Wage Garnishment & Third-Party Deductions",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"Payroll Admin configures a recurring deduction wage type in\" (replaces manual Step 2).",
+     "- System auto-log of \"logic applies prioritization rules\" (replaces manual Step 3).",
+     "- System auto-count of \"account.\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: must apply strict prioritization rules while ensuring net pay does not fall below minimum wage"
+    ],
+    "Pain Points / Risks": [
+     "- **Legal liability for non-compliance**: Failure to implement a court-ordered garnishment on time exposes BuildRight to contempt of court charges, fines, and potential liability for the full garnishment amount; manual tracking of court deadlines is error-prone across 50–100 affected employees",
+     "- **Complex deduction prioritization logic**: When an employee has multiple simultaneous deductions (statutory taxes, SSS/PhilHealth/Pag-IBIG loans, court garnishment, company loans), the system must apply strict prioritization rules while ensuring net pay does not fall below minimum wage; incorrect prioritization creates legal and employee relations issues",
+     "- **Garnishment order changes and terminations**: Court orders may be modified (increased, decreased, or terminated) with varying effective dates; failure to update deduction configurations promptly results in over- or under-deduction requiring manual correction and potential restitution",
+     "- **Employee privacy and morale**: Garnishment orders are sensitive legal matters; Payroll Officers with access to garnishment data must maintain strict confidentiality; employees facing wage garnishment may experience financial stress affecting performance and retention"
+    ],
+    "Staffing Implication": [
+     "- **Payroll Admin**: ~15 min per garnishment setup × 50–100 affected employees = ~12–25 hours/month for initial setups and modifications. Absorbed within existing payroll team.",
+     "- **Legal Counsel**: ~20 min per order verification. With 5–10 new orders/month, ~2–3 hours/month. Absorbed within Legal team.",
+     "- **HR Admin**: ~15 min per remittance batch, typically 2–4 batches per payroll run = ~2–4 hours/month. Absorbed within HR team.",
+     "- **No incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR Payroll Engine (Deduction Rules)",
+     "- General Ledger",
+     "- Accounts Payable"
+    ],
+    "Time Estimate": [
+     "- Garnishment order receipt and verification: 15 min/order",
+     "- Deduction wage type configuration: 20 min/order",
+     "- Payroll deduction processing: Automated per run",
+     "- Post-run verification and AP booking: 10 min/employee",
+     "- Remittance to court/union/cooperative: 15 min/batch",
+     "- **Total per new garnishment setup**: ~60 min; **Ongoing per payroll run**: ~10 min verification per affected employee"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "Legal/HR receives and verifies the garnishment order or loan agreement.",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Payroll Admin"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Payroll Admin configures a recurring deduction wage type in the employee's compensation profile.",
+     "duration": "20 min",
+     "n": "2",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CFO",
+     "activity": "System logic applies prioritization rules (e.g., statutory taxes first, court orders second, voluntary loans third) to ensure net pay does not fall below legal minimums.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll runs; funds are deducted and booked to a specific AP liability account.",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Payroll Admin"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Finance remits the consolidated deducted funds to the court, union, or cooperative.",
+     "duration": "15 min",
+     "n": "5",
+     "r": "HR Admin"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "~75–100 off-cycle payments/month",
+    "Owner": "Payroll Manager",
+    "Participants": "HR Business Partner (requester), Finance Manager (approver), Payroll Specialist (processor), Employee (payee)",
+    "Trigger": "Off-cycle payment request (DOLE order for back-pay, NLRC decision, retroactive wage adjustment, corrected payslip, emergency salary release, final pay outside regular payroll run)",
+    "Volume": "~15–20 per entity per month"
+   },
+   "id": "W641",
+   "level": 2,
+   "name": "Off-Cycle & Ad-Hoc Payment Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-validation of off-cycle request completeness",
+     "- auto-tax-computation engine for retroactive adjustments",
+     "- auto-YTD integration with regular payroll",
+     "- DOLE-deadline auto-tracking with escalation"
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: Payroll Manager validation gate; Finance Manager approval for payments >PHP 50,000; minimum-wage-protection system guardrail; DOLE deadline compliance tracking",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Wage floor violations**: Minimum wage protection violations when large deductions offset regular pay",
+     "- **Tax complexity**: Complex tax computation for retroactive adjustments spanning multiple tax brackets",
+     "- **Integration risk**: YTD accumulation errors if off-cycle payments not properly integrated into regular payroll; mitigated by the Payroll Manager validation gate and Finance Manager approval for payments >PHP 50,000 and minimum-wage-protection system guardrail and DOLE",
+     "- **Timeline compliance**: DOLE compliance timeline for back-pay orders (typically 5 working days from decision)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll module (off-cycle batch processing), tax engine (TRAIN law tables), statutory deduction calculator, bank file generator, employee self-service portal (payslip distribution)"
+    ],
+    "Time Estimate": [
+     "- Standard: 2–3 days from request to payment; Urgent: next business day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "HR Business Partner or Department Head submits off-cycle payment request via self-service portal with: employee ID, payment type (back-pay, wage adjustment, corrected payslip, emergency release, court-ordered), amount or basis of computation, supporting documentation (DOLE order, NLRC decision, management memo), and urgency classification (standard 3-day, urgent next-business-day)",
+     "duration": "15 min/request",
+     "n": "1",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Payroll Manager validates request: confirms employee status (active, on-leave, separated), verifies supporting documentation completeness, confirms correct payment type classification",
+     "duration": "30 min/request",
+     "n": "2",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "For amounts > PHP 50,000 or retroactive periods > 6 months: route to Finance Manager for approval before processing",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Specialist processes off-cycle payment: computes gross amount, applies statutory deductions (SSS, PhilHealth, Pag-IBIG, BIR withholding tax) per TRAIN law tables, nets to take-home pay",
+     "duration": "30 min/payment",
+     "n": "4",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "System validates minimum wage protection (net pay cannot fall below applicable regional minimum wage for the period); flags if violation detected",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Specialist generates bank file for off-cycle crediting or manual check preparation; routes for bank file approval",
+     "duration": "15 min/batch",
+     "n": "6",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Payroll Specialist",
+     "activity": "System auto-adjusts next regular payroll run to reflect off-cycle payment: updated YTD totals, adjusted tax withholding for remaining periods, corrected statutory deduction brackets",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Specialist generates corrected payslip (if applicable) or supplementary payslip with detailed computation; distributes to employee",
+     "duration": "10 min",
+     "n": "8",
+     "r": "Payroll Specialist"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "~100–130 separations/month (~15–20% annual turnover rate)",
+    "Owner": "Payroll Specialist",
+    "Participants": "HR Business Partner, Department Head (clearance sign-off), Finance Analyst, Employee",
+    "Trigger": "Employee separation (resignation, termination, retirement, end of contract) per W43",
+    "Volume": "~5–7 per business day across all entities"
+   },
+   "id": "W643",
+   "level": 2,
+   "name": "Final Pay Computation & Separation Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-final-pay computation from separation type, salary history, leave balance, and outstanding loans",
+     "- Auto-clearance-status tracking across departments",
+     "- Auto-DOLE-deadline tracking with escalation"
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: Payroll Manager computation review; DOLE 30-day final-pay compliance tracking; separation-pay formula validation per cause type; signed employee acknowledgment of final pay",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **DOLE compliance pressure**: 30-day DOLE timeline pressure when clearance delays occur",
+     "- **Tax computation complexity**: Complex tax computation for different separation types",
+     "- **Formula validation errors**: Separation pay computation errors for authorized causes (different formulas per cause)",
+     "- **Arbitration risk**: NLRC disputes when employee contests final pay; mitigated by the Payroll Manager computation review and DOLE 30-day final-pay compliance tracking and separation-pay formula validation per cause type and",
+     "- **Loan shortfall**: Outstanding loan offsets that reduce net pay significantly"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll module (final pay computation), tax engine (separation pay tax rules), loan management (W76 outstanding balance), leave management (unused leave balance), employee master (salary history, employment dates)"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours computation + 1–5 days clearance + payment processing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HR Manager",
+     "activity": "HR Business Partner initiates final pay computation trigger in system on separation effective date (or upon receipt of resignation letter for proactive processing); classifies separation type (resignation, termination for just cause, authorized cause separation, retirement, end of contract)",
+     "duration": "10 min",
+     "n": "1",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "Payroll Specialist",
+     "activity": "System auto-computes final pay components: (a) proportionate basic salary through last day, (b) proportionate 13th month pay per PD 851 (1/12 × monthly basic × months worked), (c) cash conversion of unused Service Incentive Leave (minimum 5 days per Labor Code; company policy may grant more), (d) proportionate Sil (if company grants beyond 5 days statutory minimum), (e) overtime/holiday/night differential unpaid in last period, (f) separation pay if applicable (authorized causes per Art. 298–299: redundancy = ½ month per year, retrenchment = 1 month per year, etc.), (g) retirement pay per RA 7641 if qualified (½ month per year of service)",
+     "duration": "Automated computation",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Specialist reviews system computation; validates each component against employee's records: attendance, leave balance, salary history, outstanding loans (W76), prior 13th month payments",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payroll Specialist computes statutory deductions: (a) withholding tax on final pay per BIR rules (different treatment for resignation vs. retirement vs. termination — retirement pay and separation pay below PHP 90,000 threshold are tax-exempt per TRAIN law Section 32(B)(6)(b)), (b) final SSS, PhilHealth, Pag-IBIG contributions for last period, (c) outstanding employee loan deductions, (d) salary advance or cash advance offsets, (e) company property non-return deductions (if authorized per policy)",
+     "duration": "20 min",
+     "n": "4",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "Payroll Manager approves final pay computation; validates net pay is non-negative (minimum wage protection does not apply to final pay but net should not be zero unless deductions exceed pay)",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance Analyst processes payment: generates bank transfer file for direct deposit; for employees without bank accounts, prepares manual check",
+     "duration": "15 min",
+     "n": "6",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "HR Business Partner coordinates clearance process: ensures all department clearances completed (IT equipment return per W152, company property return, PPE return per W172, confidential document return) before payment release",
+     "duration": "1–5 days clearance",
+     "n": "7",
+     "r": "HR Business Partner"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Payment released within DOLE Advisory 06-2020 timeline: 30 days from separation date for resignation; immediately for termination/retirement; or per specific DOLE/Labor Arbiter order",
+     "duration": "Per timeline",
+     "n": "8",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "Employee receives final pay with itemized computation document; HR Business Partner obtains signed acknowledgment",
+     "duration": "15 min",
+     "n": "9",
+     "r": "HR Business Partner"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W152",
+    "W172",
+    "W43",
+    "W76"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Monthly accrual booking; November review and reconciliation; December payment",
+    "Owner": "Payroll Specialist",
+    "Participants": "Payroll Manager, Finance Analyst, HR Business Partner",
+    "Trigger": "Monthly accrual cycle; December payment preparation",
+    "Volume": "6,762 employees across 5 entities"
+   },
+   "id": "W644",
+   "level": 2,
+   "name": "13th Month Pay Reconciliation & Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-13th-month-accrual from payroll register",
+     "- Consolidated multi-entity tracking",
+     "- Auto-tax-threshold monitoring with alerts",
+     "- Auto-DOLE-deadline tracking"
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: Payroll Manager monthly accrual review; Finance Manager GL reconciliation; DOLE December 24 payment-deadline compliance tracking; PHP 90,000 tax-exemption threshold monitoring",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Base calculation confusion**: Confusion between basic salary and total compensation in 13th month base calculation",
+     "- **Multi-entity complexity**: Multi-entity employees requiring consolidated 13th month tracking",
+     "- **December payment delays**: December 24 payment deadline falls during holiday bank processing delays",
+     "- **Tax exemption monitoring**: Tax exemption threshold requires careful monitoring to avoid under/over-withholding",
+     "- **Compliance penalty risk**: DOLE penalties for late 13th month payment; mitigated by the Payroll Manager monthly accrual review and Finance Manager GL reconciliation and DOLE December 24 payment-deadline compliance tracking and"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll module (13th month accrual and payment), GL (accrual journal entries), tax engine (PHP 90,000 threshold monitoring), employee master (salary history, employment dates)"
+    ],
+    "Time Estimate": [
+     "- Monthly: 3 hours; November reconciliation: 2 days; December payment: 2 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Specialist",
+     "activity": "Monthly: System auto-accrues 13th month pay per employee based on basic salary earned during the month (1/12 of total basic salary earned from January 1); excludes allowances, overtime pay, night differential, and non-taxable benefits per PD 851 and DOLE guidelines",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "Monthly: Payroll Specialist reviews accrual computation: validates base salary definition (basic salary only — excludes COLA, hazard pay, overtime, commissions unless mandated by CBA per W493); flags employees with mid-year salary changes for correct pro-ration",
+     "duration": "2 hours/month",
+     "n": "2",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Monthly: Finance Analyst posts accrual journal entry (DR 13th Month Pay Expense / CR 13th Month Pay Accrued Liability) per entity; verifies total accrual against payroll register",
+     "duration": "1 hour/month",
+     "n": "3",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "November: Payroll Specialist performs comprehensive reconciliation: total accrued 13th month per employee vs. YTD basic salary ÷ 12; identifies discrepancies from mid-year salary changes, leaves without pay, absences, and split-entity employment",
+     "duration": "1 day",
+     "n": "4",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "November: Payroll Specialist adjusts accruals for: (a) separating employees who already received proportionate 13th month in final pay (W643), (b) employees who received employer's elected half payment in May (if BuildRight practices May + December split), (c) employees with salary adjustments requiring retroactive accrual correction",
+     "duration": "0.5 day",
+     "n": "5",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "November: Payroll Specialist computes tax impact: 13th month pay is tax-exempt up to PHP 90,000 threshold per TRAIN law Section 32(B)(6)(e); excess amount subject to graduated withholding tax; generates report of employees exceeding threshold for Finance Manager review",
+     "duration": "0.5 day",
+     "n": "6",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "December 1–15: Payroll Manager prepares 13th month payment batch: confirms final amounts per employee, validates bank account details, generates bank file, routes for approval",
+     "duration": "1 day",
+     "n": "7",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "December 15–24: Finance Analyst executes payment via bank transfer; ensures all 6,762 employees receive payment by December 24 deadline per PD 851",
+     "duration": "1 day",
+     "n": "8",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "December 31: System reverses remaining accrual balance to actual payment; Finance Analyst reconciles GL accrual account to zero",
+     "duration": "0.5 day",
+     "n": "9",
+     "r": "Finance Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W493",
+    "W643"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~5–10 workplace injuries per month chain-wide",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager, Injured Employee, HR Business Partner, Safety Officer, SSS/EC Claims, DOLE",
+    "Trigger": "Employee work-related injury or illness",
+    "Volume": "~60–120 reported workplace injuries/year across 200 stores, 4 DCs, and HQ"
+   },
+   "id": "W779",
+   "level": 2,
+   "name": "Store-Level Employee Injury Incident Reporting & Workers' Compensation Claim Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow orchestration of \"first aid administered per W501\" (replaces manual Step 1).",
+     "- System auto-document of \"completes incident report\" (replaces manual Step 2).",
+     "- System auto-record of \"records, and receipts collected for SSS EC claim\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's operations involve physical risks: heavy lifting (cement bags, lumber), forklift operations in DCs, ladder use for high shelving, and equipment operation (cutting, mixing). When employees are injured on the job, DOLE requires incident reporting, and the employee is entitled to SSS Employees' Compensation (EC) benefits per PD 626. While W140 covers OHS incident management broadly and W501 covers first aid response, this workflow specifically addresses the employee injury administrative process — from incident documentation through workers' compensation claim filing, modified duty management, and return-to-work processing."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: corrective actions"
+    ],
+    "Pain Points / Risks": [
+     "- Underreporting — employees may not report minor injuries due to fear of disciplinary action or perceived weakness; safety culture training per W720 daily briefing is preventive",
+     "- SSS EC claim delays — Philippine SSS processing times for EC claims can be 3-6 months; employees may face financial hardship during recovery",
+     "- Modified duty availability — not all store roles can accommodate light duty restrictions; HR BP must work creatively with Store Manager on task reassignment",
+     "- DOLE investigation — serious incidents trigger DOLE investigation with potential fines and mandatory corrective actions; thorough documentation is legal defense",
+     "- Litigation risk — employees may file labor complaints per W79 grievance if they feel injury was caused by employer negligence (e.g., lack of PPE, faulty equipment); W655 certification tracking mitigates"
+    ],
+    "Staffing Implication": [
+     "Absorbed within existing Store Manager and HR BP roles. Per incident: ~12–24 hours of combined management time. Safety Officer: 4-8 hours per investigation. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- OHS incident management module — incident reporting and tracking per W140",
+     "- W501 first aid & medical emergency — immediate response integration",
+     "- W140 OHS incident management — incident investigation and corrective action",
+     "- W655 safety training & certification — training remediation trigger",
+     "- W579 daily equipment safety check — equipment-related incident investigation",
+     "- W172 PPE & uniform lifecycle — PPE adequacy review",
+     "- W561 attendance exception management — injury-related absence tracking",
+     "- W34 shift scheduling — modified duty assignment",
+     "- W10 payroll processing — salary continuation during recovery",
+     "- W251 statutory benefits — SSS EC claim tracking",
+     "- W642 HMO administration — medical treatment coordination",
+     "- W505 DOLE labor inspection — regulatory reporting integration"
+    ],
+    "Time Estimate": [
+     "Per incident: Immediate response (10-30 min) + documentation (30-60 min) + medical (2-4 hours) + DOLE reporting if serious (2-4 hours) + SSS EC filing (4-6 hours) + investigation (4-8 hours) = 12-24 hours total spread over weeks. Monthly analytics: 2 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Immediate incident response**: (a) first aid administered per W501, (b) if serious: emergency medical transport coordinated, (c) scene secured per W140, (d) Store Manager notified immediately",
+     "duration": "10-30 min",
+     "n": "1",
+     "r": "First Aider / Supervisor"
+    },
+    {
+     "a": "Safety Officer",
+     "activity": "**Incident documentation (within 4 hours)**: Store Manager completes incident report: (a) date, time, location of incident, (b) employee details and department, (c) description of what happened, (d) witnesses and statements, (e) injury description and body part affected, (f) immediate cause and contributing factors, (g) photos of scene and equipment involved, (h) first aid or medical treatment provided",
+     "duration": "30-60 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "HR BP",
+     "activity": "**Medical treatment and documentation**: Employee seeks medical attention: (a) if minor: company-designated clinic or HMO provider per W642, (b) if serious: nearest hospital emergency room, (c) all medical certificates, treatment records, and receipts collected for SSS EC claim, (d) Store Manager ensures \"off-duty\" status recorded in time & attendance per W561",
+     "duration": "2-4 hours",
+     "n": "3",
+     "r": "Employee / Store Manager"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**DOLE incident reporting**: For serious incidents (fatality, serious injury requiring > 7 days absence, or mass casualty): (a) HR BP submits DOLE report within 24 hours per DOLE Department Order 198, (b) report includes incident details, causes, and corrective actions taken, (c) DOLE may conduct investigation — coordinate per W505 labor inspection protocol",
+     "duration": "2-4 hours",
+     "n": "4",
+     "r": "HR BP"
+    },
+    {
+     "a": "—",
+     "activity": "**SSS EC claim filing (within 30 days)**: HR BP files SSS Employees' Compensation claim: (a) SSS EC claim form (B-300), (b) employer's incident report, (c) medical certificate from attending physician, (d) proof of SSS contributions, (e) salary payment records for disability benefit computation; SSS processes: (i) temporary total disability (TTD) — daily allowance, (ii) permanent partial/total disability — lump sum or pension, (iii) medical reimbursement",
+     "duration": "4-6 hours/claim",
+     "n": "5",
+     "r": "HR BP"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Modified duty management**: For employees cleared for light duty: (a) Safety Officer and HR BP review medical restrictions, (b) assign modified duties within restrictions (e.g., cash desk duty for employee with lifting restriction), (c) coordinate with W34 scheduling, (d) monitor recovery progress with medical clearance updates",
+     "duration": "1-2 hours/week during recovery",
+     "n": "6",
+     "r": "HR BP"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Return-to-work processing**: When employee receives full medical clearance: (a) HR BP processes return-to-work documentation, (b) fitness-for-work certification filed, (c) employee reinstated to full duties, (d) any workplace accommodation made permanent if needed per W497 accessibility standards, (e) incident closed in OHS system",
+     "duration": "1 hour",
+     "n": "7",
+     "r": "HR BP"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Incident investigation and corrective action**: Safety Officer investigates root cause: (a) 5-Why analysis, (b) equipment inspection per W579, (c) procedure review, (d) corrective action implementation (e.g., additional training per W655, equipment replacement, PPE upgrade per W172), (e) corrective action tracked to completion per W140",
+     "duration": "4-8 hours",
+     "n": "8",
+     "r": "Safety Officer"
+    },
+    {
+     "a": "COO",
+     "activity": "**Monthly injury analytics**: HR Manager reports: (a) injury frequency rate (target: < 2.0 per 200,000 hours worked), (b) lost-time injury rate, (c) injury type and cause distribution, (d) average days lost per injury, (e) claim settlement rate and amount, (f) corrective action completion rate",
+     "duration": "2 hours/month",
+     "n": "9",
+     "r": "HR Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W140",
+    "W172",
+    "W251",
+    "W34",
+    "W497",
+    "W501",
+    "W505",
+    "W561",
+    "W579",
+    "W642",
+    "W655",
+    "W720",
+    "W79"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Semi-monthly; 2 consolidation runs per month",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Manager, HR BP, Finance Manager, Tax Accountant",
+    "Trigger": "Semi-monthly payroll run completion across all 5 entities per W10",
+    "Volume": "5 entities × 2 runs = 10 payroll runs per consolidation cycle"
+   },
+   "id": "W816",
+   "level": 2,
+   "name": "Multi-Entity Payroll Consolidation & Cross-Entity Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generated and transmitted per entity\" (replaces manual Step 1).",
+     "- System auto-allocate of \"allocated to operating entities per W752\" (replaces manual Step 2).",
+     "- System auto-log of \"Review intercompany labor allocations\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot Corp operates through 5 legal entities — BuildRight Holdings Corp (parent), BuildRight Depot Inc (retail operations), BuildRight Logistics Inc (supply chain and DC operations), BuildRight Digital Commerce Inc (e-commerce and digital platforms), and BuildRight Property Management Inc (real estate and facilities) — each with separate employer registrations and independent payroll runs per W10. While W10 handles individual entity payroll processing including timekeeping integration, statutory deductions, and bank file generation, there is no existing workflow for reconciling and consolidating payroll data across all entities. Cross-entity payroll complexities include: employees with dual entity assignments (e.g., shared services staff in IT, Finance, and HR whose costs are allocated to operating entities), intercompany labor cost allocations requiring transfer pricing compliance per W235, consolidated statutory reporting requirements (SSS, PhilHealth, and Pag-IBIG filings can be per employer entity but must reconcile to consolidated totals), and consolidated payroll expense reporting for management reporting per W35. With 6,762 employees across 5 entities and a combined monthly payroll of approximately PHP 280-350 million, precise cross-entity reconciliation is essential for accurate financial reporting, statutory compliance, and intercompany balance settlement. The Philippine regulatory environment adds complexity — each entity has separate BIR registration (with different RDO codes), separate SSS/PhilHealth/Pag-IBIG employer numbers, and separate bank accounts for payroll disbursement."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- Cross-entity employee tracking errors — employees who transfer between entities mid-payroll period per W511 may be paid by the wrong entity or duplicated; real-time entity assignment synchronization between HR module and payroll is critical",
+     "- Allocation methodology disputes — entity controllers may challenge shared services allocation ratios, arguing their entity is over-allocated; clear transfer pricing documentation per W235 and quarterly review mitigates",
+     "- Mid-period employee transfers — employee transferring from Depot to Digital Commerce on the 10th creates split payroll: 10 days Depot, remaining days Digital Commerce; manual intervention often required",
+     "- Statutory contribution filing deadlines — each entity has separate filing deadlines and employer numbers; missing any entity's deadline results in penalties and surcharges; centralized tracking dashboard essential",
+     "- Consolidated reporting lag — waiting for all 5 entity payrolls to complete before consolidation can begin; if one entity has issues, entire consolidation is delayed; SLA enforcement per entity per W10 critical",
+     "- Intercompany balance settlement — intercompany payroll receivables/payables must be settled regularly; unresolved balances accumulate and complicate entity-level financial statements per W235",
+     "- BIR audit risk — BIR may examine consolidated employer-employee relationships during tax assessments; clear entity separation documentation and transfer pricing support essential"
+    ],
+    "Staffing Implication": [
+     "Absorbed by Payroll Manager and existing Finance team. Estimated Payroll Manager time: 10-14 hours/month (5-7 hours × 2 cycles). Tax Accountant: 4 hours/month. Finance Manager: 4 hours/month for review and quarterly methodology sessions. No incremental headcount — this is a governance and reconciliation function within existing roles.",
+     "---",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W10 payroll processing — entity-level payroll run completion triggers consolidation",
+     "- W752 IC management fee allocation — shared services labor cost allocation methodology and posting",
+     "- W235 transfer pricing — intercompany pricing compliance for labor allocations",
+     "- W638 journal entry review — consolidation adjustment posting and approval",
+     "- W35 management reporting — consolidated payroll expense reporting",
+     "- W590 tax provision — consolidated tax reconciliation",
+     "- W251 statutory benefits — SSS, PhilHealth, Pag-IBIG reconciliation by entity",
+     "- W90 tax filing — BIR withholding tax filing per entity",
+     "- W261 e-wallet settlement — payroll disbursement reconciliation",
+     "- W444 13th month reconciliation — 13th month pay also requires cross-entity reconciliation"
+    ],
+    "Time Estimate": [
+     "Per consolidation cycle (semi-monthly): Step 1 confirmation (30 min) + Step 2 report generation (automated, 15 min) + Step 3 allocation review (1-2 hours) + Step 4 statutory reconciliation (1-2 hours) + Step 5 discrepancy resolution (1-2 hours) + Step 6 adjustments (30-60 min) + Step 7 consolidated reporting (1 hour) + Step 8 tax reconciliation (1 hour) = 5-7 hours semi-monthly. Quarterly methodology review: 2 hours. Annual total: ~140–180 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Confirm all entity payroll runs completed**: Payroll Manager verifies: (a) all 5 entity payroll runs completed successfully per W10, (b) payroll registers approved and locked by each entity's authorized signatory, (c) all payroll entries posted to respective entity general ledgers, (d) no pending payroll corrections or void transactions, (e) bank disbursement files generated and transmitted per entity; any entity with incomplete payroll blocks consolidation start",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**System generates cross-entity payroll reconciliation report**: Automated report includes: (a) total gross payroll by entity with breakdown (basic salary, overtime, allowances, bonuses, commissions), (b) total deductions by entity (SSS ER/EE, PhilHealth ER/EE, Pag-IBIG ER/EE, BIR withholding tax, loans, other deductions), (c) net payroll by entity, (d) intercompany labor allocations summary — shared services costs allocated to operating entities per W752, (e) cross-entity employee list — employees paid by one entity but with costs allocated to another entity (e.g., IT staff employed by Holdings but serving Depot), (f) statutory contribution totals by entity vs. consolidated total, (g) intercompany payroll receivable/payable balances",
+     "duration": "Automated (15 min generation)",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Review intercompany labor allocations**: Payroll Manager and Finance Manager validate: (a) HQ shared services allocation (IT, Finance, HR, Legal) — costs distributed to Depot (60%), Logistics (20%), Digital Commerce (15%), Property Management (5%) per W752 allocation keys, (b) allocation methodology matches approved transfer pricing policy per W235 — arm's length basis using headcount + revenue weighting, (c) verify no shared services employee is duplicated (paid by Holdings AND allocated to operating entity — should be paid once and allocated), (d) check for new employees not yet included in allocation methodology, (e) validate allocation journal entries posted correctly to each entity GL",
+     "duration": "1-2 hours",
+     "n": "3",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Reconcile statutory contributions across entities**: Tax Accountant performs: (a) SSS — verify each entity's SSS ER and EE contributions reconcile to consolidated total; check against SSS online portal per entity, (b) PhilHealth — verify each entity's PhilHealth contributions (2026 rate: 5% of monthly basic salary, split 2.5% ER / 2.5% EE) reconcile to consolidated; verify against PhilHealth employer portal, (c) Pag-IBIG — verify each entity's Pag-IBIG contributions (PHP 100 EE + PHP 100 ER for employees earning >PHP 1,500/month) reconcile to consolidated, (d) BIR withholding tax — verify each entity's expanded withholding tax on compensation reconciles to consolidated; cross-check against BIR eFPS filing per entity per W90",
+     "duration": "1-2 hours",
+     "n": "4",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Identify and resolve discrepancies**: Common discrepancy types: (a) cross-entity employee paid by wrong entity — employee transferred mid-period per W511 but payroll not updated in time, resulting in dual payment or missed payment; requires reversal and rebooking, (b) allocation calculation errors — rounding differences, headcount changes not reflected in allocation keys, or manual override errors; requires correction to W752 allocation parameters, (c) statutory calculation differences — SSS/PhilHealth/Pag-IBIG contribution caps applied differently across entities due to configuration variance; requires system correction, (d) intercompany balance mismatches — shared services allocation posted in one entity but not the receiving entity; requires journal entry correction per W638",
+     "duration": "1-2 hours",
+     "n": "5",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Post consolidation adjustments**: For each identified discrepancy: (a) prepare journal entries per W638 journal entry review workflow, (b) intercompany corrections require dual-entry (debit in receiving entity, credit in sending entity), (c) adjustments must maintain balanced intercompany positions per W235, (d) post adjustments with full documentation supporting the correction, (e) re-run reconciliation report to verify zero remaining discrepancies or document accepted variances below materiality threshold (PHP 5,000 per entity pair)",
+     "duration": "30-60 min",
+     "n": "6",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Generate consolidated payroll expense report**: Payroll Manager produces consolidated report for management reporting per W35: (a) consolidated payroll expense by natural account (basic salary, overtime, allowances, statutory ER contributions, HMO, other benefits), (b) payroll expense by entity, (c) payroll expense by department/function, (d) intercompany allocation summary, (e) month-over-month and year-over-year comparison, (f) headcount reconciliation by entity (opening + hires - separations = closing per W645), (g) payroll-to-revenue ratio (target: <12% for retail operations)",
+     "duration": "1 hour",
+     "n": "7",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Monthly payroll tax reconciliation**: Tax Accountant reconciles: (a) BIR withholding tax on compensation per entity vs. consolidated per W590, (b) verify withholding tax deposits made per entity per W90 deadlines (10th of the following month), (c) reconcile taxable compensation per entity with BIR Alphalist of Employees (due January 31 following year), (d) verify SSS/PhilHealth/Pag-IBIG remittance per entity matches payroll register per W251, (e) flag any entity with late remittance for immediate action to avoid penalties and surcharges",
+     "duration": "1 hour",
+     "n": "8",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Quarterly methodology review with Finance Manager**: Validate: (a) cross-entity allocation methodology still appropriate — headcount and revenue weighting ratios, (b) transfer pricing documentation per W235 compliant with BIR requirements, (c) any new shared services functions requiring allocation methodology update, (d) benchmark allocation methodology against industry practices, (e) review intercompany payroll balance aging — ensure all intercompany balances settled within quarter, (f) update allocation parameters in system if methodology changes approved",
+     "duration": "2 hours/quarter",
+     "n": "9",
+     "r": "Payroll Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W235",
+    "W251",
+    "W261",
+    "W35",
+    "W444",
+    "W511",
+    "W590",
+    "W638",
+    "W645",
+    "W752",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Monthly remittance across 5 entities (15 separate filings/month: 5 entities × 3 agencies); quarterly reconciliation",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Manager, Payroll Analyst, HR Data Specialist, Finance Controller, SSS/PhilHealth/Pag-IBIG branch representatives",
+    "Trigger": "Monthly statutory benefits remittance deadline (SSS: last day of month; PhilHealth: every 10th; Pag-IBIG: every 10th of following month); or quarterly reconciliation cycle",
+    "Volume": "6,762 employees across 5 entities; ~PHP 100–120M/month in total statutory contributions (employee + employer share)"
+   },
+   "id": "W1306",
+   "level": 2,
+   "name": "Multi-Entity Statutory Benefits Consolidation, Remittance Reconciliation & Government Portal Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews calculated contributions\" (replaces manual Step 1).",
+     "- System auto-count of \"Monthly remittance filing & payment\" (replaces manual Step 2).",
+     "- System auto-record of \"records\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight employs 6,762 employees across 5 legal entities (BuildRight Holdings, BuildRight Depot, BuildRight Logistics, BuildRight Digital Commerce, BuildRight Property Management). Each entity is a separate employer registered with SSS (Social Security System), PhilHealth (Philippine Health Insurance Corporation), and Pag-IBIG (Home Development Mutual Fund). Monthly, each entity must remit statutory contributions: (a) **SSS**: employer share (7.07–9.53% of monthly salary credit depending on tier) + employee share (3.63–4.53%); remitted via PRN (Payment Reference Number) through partner banks or SSS online portal; (b) **PhilHealth**: employer share (2.5%) + employee share (2.5%) of monthly basic salary (capped at PHP 80,000); remitted via PhilHealth Electronic Premium Reporting System (EPRS); (c) **Pag-IBIG**: employer share (2%) + employee share (2%) of monthly basic salary (capped at PHP 5,000); remitted via Pag-IBIG online portal or partner banks. Each entity has its own employer SSS/PhilHealth/Pag-IBIG number, its own employee roster, and its own remittance schedule. The consolidated nature of BuildRight's payroll (processed centrally by the HR/Payroll team at HQ for all 5 entities) creates complexity: contributions must be calculated, reconciled, and remitted per entity with correct employer numbers and employee-level breakdowns. Errors in remittance result in penalties, employee benefit claim denials, and potential DOLE violations. This workflow manages the multi-entity statutory benefits consolidation and remittance process, complementing W10 (payroll processing) and W816 (multi-entity payroll consolidation)."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **15 separate monthly filings** — with 5 entities × 3 agencies = 15 filings per month, each with different deadlines, formats, and portal systems; a missed deadline means penalties and interest",
+     "- **Portal downtime** — SSS, PhilHealth, and Pag-IBIG online portals frequently experience downtime, especially near deadline dates when all Philippine employers are filing simultaneously; early filing (first week of the month) mitigates this risk",
+     "- **Employee number gaps** — new hires who do not have SSS/PhilHealth/Pag-IBIG numbers at hiring (common for first-time workers) cannot be included in remittance until numbers are issued; Payroll must track and retroactively contribute once numbers are available",
+     "- **Entity transfer complications** — when employees transfer between BuildRight entities (e.g., promoted from Depot to Holdings), their statutory contribution records must be updated with the new employer number; delays in updating cause remittance posting errors"
+    ],
+    "Staffing Implication": [
+     "- **Payroll Analyst**: ~10–15 hours/month on filing and reconciliation = ~140 hours/year. Absorbed by existing payroll team.",
+     "- **Payroll Manager**: ~4–6 hours/quarter on quarterly reconciliation + oversight. Absorbed.",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll module — statutory contribution calculation per employee per entity",
+     "- SSS/PhilHealth/Pag-IBIG online portal integration — file upload, PRN generation, payment confirmation",
+     "- Bank payment module — online banking integration for remittance payments per entity bank account",
+     "- GL reconciliation — statutory contribution liability accounts vs. actual remittances",
+     "- Employee master data — SSS/PhilHealth/Pag-IBIG number management, entity assignment",
+     "- HR onboarding (W518) — new employee statutory registration tracking"
+    ],
+    "Time Estimate": [
+     "- Monthly calculation: 2–3 hours",
+     "- Monthly filing: 4–6 hours",
+     "- Monthly reconciliation: 3–4 hours",
+     "- Quarterly reconciliation: 4–6 hours",
+     "- Employee claims: ~20 hours/year",
+     "- **Total annual: ~200–250 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "**Monthly contribution calculation**: (a) upon completion of semi-monthly payroll runs per entity (W10), system calculates statutory contributions per employee: (i) SSS: monthly salary credit determination (based on actual monthly compensation, mapped to SSS salary bracket), employer and employee share calculation; (ii) PhilHealth: monthly basic salary (capped at PHP 80,000), employer and employee share at 2.5% each; (iii) Pag-IBIG: monthly basic salary (capped at PHP 5,000 for mandatory contributions), employer and employee share at 2% each; (b) system generates contribution schedule per entity: (i) employee-level breakdown: employee ID, name, SSS/PhilHealth/Pag-IBIG number, monthly salary, employer share, employee share, total; (ii) entity-level summary: total employer contribution, total employee contribution (deducted from payroll), grand total remittance per agency; (c) Payroll Analyst reviews calculated contributions: (i) verify no employee has missing SSS/PhilHealth/Pag-IBIG number (new hires must be registered per W518), (ii) verify salary caps applied correctly, (iii) verify employee on leave without pay excluded from contribution for the period",
+     "duration": "2–3 hours/month",
+     "n": "1",
+     "r": "System / Payroll Analyst"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Monthly remittance filing & payment**: (a) Payroll Analyst generates remittance files per entity per agency: (i) SSS: generate R3 (Contributions Collection List) file in SSS format → upload to SSS online portal → obtain PRN → process payment via BDO/BPI online banking before month-end deadline; (ii) PhilHealth: generate ER2 (Premium Remittance) file in PhilHealth EPRS format → upload to PhilHealth portal → process payment before 10th of following month; (iii) Pag-IBIG: generate Member's Contribution Form (MCF) file in Pag-IBIG format → upload to Pag-IBIG online portal → process payment before 14th of following month; (b) for each entity: 3 separate filings × 5 entities = 15 filings/month; (c) payment released from each entity's designated bank account (not commingled — BuildRight Depot's SSS payment comes from Depot's bank account, not Holdings' account)",
+     "duration": "4–6 hours/month",
+     "n": "2",
+     "r": "Payroll Analyst"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Remittance reconciliation**: (a) after payment confirmation from bank: Payroll Analyst reconciles each remittance: (i) bank debit amount matches system-calculated remittance amount, (ii) SSS/PhilHealth/Pag-IBIG portal shows payment posted to correct employer number and correct billing period, (iii) employee-level contributions posted correctly to individual member records; (b) common discrepancies: (i) PRN expired (SSS PRNs are valid for the billing month only — late payment requires new PRN generation with penalties), (ii) employee SSS/PhilHealth/Pag-IBIG number mismatch (employee transferred between entities but membership record not updated), (iii) over/under payment due to payroll adjustment (late overtime inclusion, retroactive salary increase) — requires supplementary remittance; (c) resolve all discrepancies within 5 business days of remittance",
+     "duration": "3–4 hours/month",
+     "n": "3",
+     "r": "Payroll Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Quarterly reconciliation & government portal audit**: (a) quarterly, Payroll Manager reconciles cumulative statutory contributions: (i) total payroll deductions (employee share) per GL account vs. total remittances to each agency — any difference indicates unremitted deductions (serious DOLE violation) or over-remittance; (ii) employee count per entity per agency vs. active employee count per HR system — discrepancies indicate unregistered new hires or unreported separations; (iii) download employee contribution records from SSS/PhilHealth/Pag-IBIG portals and compare to internal records — verify all employee contributions posted correctly; (b) for any unreconciled items: investigate and resolve — common causes: late new-hire registration (SSS number application takes 2–4 weeks for new employees), returned payments (wrong employer number, wrong billing period)",
+     "duration": "4–6 hours/quarter",
+     "n": "4",
+     "r": "Payroll Manager / Payroll Analyst"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Employee benefit claim support**: (a) when an employee files for SSS sickness/maternity/disability/retirement benefit, PhilHealth hospitalization claim, or Pag-IBIG housing loan/calamity loan: Payroll Analyst provides supporting documentation: (i) certificate of employment with compensation history, (ii) contribution history printout from ERP, (iii) employer certification of contributions remitted; (b) for maternity benefit (105 days under RA 11210 / Expanded Maternity Leave): Payroll Analyst processes: (i) advance maternity payment to employee per W10 (off-cycle payment if needed per W641), (ii) SSS maternity reimbursement claim on behalf of employee, (iii) SSS reimbursement received and reconciled per entity",
+     "duration": "Per claim: 1–2 hours",
+     "n": "5",
+     "r": "Payroll Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W518",
+    "W641",
+    "W816"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Monthly accrual; annual computation and payment (paid by December 24 per Presidential Decree No. 851)",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Manager, HR Specialist, Controller, FP&A Analyst, DOLE Compliance Officer",
+    "Trigger": "Monthly accrual cycle (ongoing); year-end payment processing (November–December); or employee separation (W643) triggering pro-rated 13th month payout",
+    "Volume": "6,762 employees across 5 legal entities; ~1,200–1,600 separations/year requiring pro-rated computation"
+   },
+   "id": "W1416",
+   "level": 2,
+   "name": "Philippine 13th Month Pay Computation, Monthly Accrual Booking & Year-End Compliance Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews monthly accrual vs.\" (replaces manual Step 1).",
+     "- System auto-reconcile of \"Quarterly accrual reconciliation\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates mid-year 13th month projection\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine law (Presidential Decree No. 851) mandates that all employers pay a 13th month pay to rank-and-file employees, equivalent to 1/12 of the employee's total basic salary earned during the calendar year. This is a non-negotiable statutory obligation. For BuildRight Depot with 6,762 employees across 5 legal entities, the 13th month pay represents a significant financial obligation (~PHP 150–200M annually). Proper management requires: (a) monthly accrual booking to avoid year-end P&L shock, (b) accurate computation accounting for leaves without pay, salary changes, and mid-year hires, (c) pro-rated computation for separated employees (paid with final pay per W643), (d) tax treatment (13th month pay up to PHP 90,000 is tax-exempt per TRAIN law; excess is taxable), (e) DOLE compliance documentation. This workflow covers the monthly accrual, year-end computation, and compliance aspects of 13th month pay management."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: monthly accrual booking and mid-year projection for treasury planning per W37"
+    ],
+    "Pain Points / Risks": [
+     "- **Cash flow impact**: PHP 150–200M lump sum payment in December strains cash flow; mitigated by monthly accrual booking and mid-year projection for treasury planning per W37",
+     "- **Entity transfer complexity**: employees transferring between BuildRight entities during the year (e.g., promoted from Depot Inc. to Digital Commerce Inc.) require accrual transfer between entity GLs; if missed, the receiving entity under-accrues and the sending entity over-accrues",
+     "- **Tax threshold tracking**: the PHP 90,000 tax exemption threshold requires tracking across the full year; employees whose 13th month exceeds PHP 90,000 must have the excess taxed in December, which can cause net pay surprise",
+     "- **DOLE penalty risk**: failure to pay 13th month by December 24 or underpayment can result in DOLE fines and employee complaints; common audit finding in Philippine retail companies; mitigated by CTL-297 (controlled execution — Payroll & Compensation (PA-19.2))"
+    ],
+    "Staffing Implication": [
+     "- Payroll Manager: primary owner, ~5–7 hours/month averaged across the year. Absorbed within existing role.",
+     "- Controller: review and approval, ~2 hours/quarter + 4 hours at year-end. Absorbed.",
+     "- FP&A Analyst: mid-year projection, ~4–6 hours in June. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 13th month accrual engine: automatic monthly accrual per payroll run based on basic salary earned (W1416.1)",
+     "- Quarterly reconciliation module: GL accrual balance vs. payroll system individual accruals (W1416.2)",
+     "- Year-end computation worksheet: per-employee computation with leave adjustments, salary changes, pro-rating (W1416.4)",
+     "- Tax exemption threshold engine: PHP 90,000 exemption cap with excess added to December taxable income (W1416.4)",
+     "- DOLE compliance report generator: employee-level 13th month pay register (W1416.6)",
+     "- Integration with W10 (payroll processing — basic salary source), W643 (final pay — pro-rated 13th month), W37 (cash forecast — 13th month liability), W816 (multi-entity payroll consolidation)"
+    ],
+    "Time Estimate": [
+     "- Monthly accrual: automated per payroll run (~2 hours/month for review and verification)",
+     "- Quarterly reconciliation: 2–4 hours/quarter",
+     "- Mid-year projection: 4–6 hours",
+     "- Year-end computation: 1–2 days (8–16 hours)",
+     "- Payment processing: 4–6 hours",
+     "- Compliance documentation: 2–4 hours/year",
+     "- Total annual: ~60–80 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "**Monthly accrual booking**: Each payroll run (semi-monthly), Payroll Manager books 13th month accrual: (a) accrual = total basic salary for the pay period ÷ 12, (b) journal entry: Dr. 13th Month Pay Expense / Cr. 13th Month Pay Accrued Liability, (c) accrual posted per entity (5 entities × 2 payroll runs/month = 10 journal entries/month), (d) FP&A Analyst reviews monthly accrual vs. budget",
+     "duration": "Automated per payroll run",
+     "n": "1",
+     "r": "System / Payroll Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Quarterly accrual reconciliation**: Quarterly, Payroll Manager reconciles: (a) accumulated 13th month accrual balance per GL vs. sum of individual employee accruals from payroll system, (b) identify discrepancies: employees transferred between entities (accrual must transfer), employees on leave without pay (accrual should reduce), new hires (accrual should start from hire date), separated employees (accrual should have been paid with final pay), (c) post adjustments as needed",
+     "duration": "2–4 hours/quarter",
+     "n": "2",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Mid-year computation preview** (June): Payroll Manager generates mid-year 13th month projection: (a) per-employee projected 13th month pay based on current salary rate × 12 months (or pro-rated for partial year), (b) total projected liability per entity and consolidated, (c) compare to current accrual balance: identify any shortfall or over-accrual, (d) FP&A Analyst incorporates into mid-year cash flow forecast per W37 (treasury cash forecasting)",
+     "duration": "4–6 hours",
+     "n": "3",
+     "r": "Payroll Manager / FP&A Analyst"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Year-end computation** (November): Payroll Manager runs final 13th month computation: (a) per-employee computation: total basic salary earned Jan 1 – Dec 31 ÷ 12 = 13th month pay, (b) adjustments for: (i) leaves without pay (basic salary reduced by unpaid leave days), (ii) salary changes during the year (each salary period computed separately then summed), (iii) mid-year hires (pro-rated from hire date), (iv) employees who received 13th month advance or partial payment during the year, (c) tax computation: 13th month pay up to PHP 90,000 is tax-exempt; any amount above PHP 90,000 is added to December taxable income and taxed per graduated rates",
+     "duration": "1–2 days",
+     "n": "4",
+     "r": "Payroll Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Payment processing** (by December 24): (a) Payroll Manager submits 13th month payment batch to bank: typically paid with the December 15 or December 30 payroll run, (b) for each entity: generate payment file, Controller approves, Treasury releases payment per W34, (c) system posts: Dr. 13th Month Pay Accrued Liability / Cr. Cash (Bank), (d) any remaining accrual balance closed to expense (for employees who separated during the year but accrual was retained)",
+     "duration": "4–6 hours",
+     "n": "5",
+     "r": "Payroll Manager / Treasury"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "**DOLE compliance documentation**: (a) Payroll Manager maintains 13th month pay records per DOLE requirements: (i) employee name, (ii) basic salary per month, (iii) total basic salary earned, (iv) 13th month pay amount, (v) date paid, (b) records must be available for DOLE inspection per W54 (regulatory compliance), (c) employee acknowledgment of receipt filed per entity",
+     "duration": "2–4 hours/year",
+     "n": "6",
+     "r": "HR Specialist / Payroll Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W34",
+    "W37",
+    "W54",
+    "W643",
+    "W816"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-297"
+   ],
+   "fields": {
+    "Frequency": "Monthly filing and remittance (contributions deducted from payroll must be remitted to each agency by specified deadlines: SSS by last day of following month, PhilHealth by end of following month, Pag-IBIG by 10th of following month)",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Manager, Payroll Clerks, HR Business Partner, Finance Controller, SSS/PhilHealth/Pag-IBIG portal administrators",
+    "Trigger": "Semi-monthly payroll processing cycle (15th and 30th pay periods)",
+    "Volume": "~6,762 employees across 5 legal entities (200 stores + 4 DCs + HQ)"
+   },
+   "id": "W1527",
+   "level": 2,
+   "name": "Employee SSS, PhilHealth, Pag-IBIG Monthly Contribution Filing, Remittance & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates per employee based\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews reports for anomalies\" (replaces manual Step 2).",
+     "- System auto-report of \"New hire registration\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Philippine employers are mandated by law to contribute to three government social insurance programs for every covered employee: (a) SSS (Social Security System — RA 11199): retirement, disability, sickness, maternity, death benefits; employer share ~9.5% of monthly salary credit (MSC), employee share ~4.5%; (b) PhilHealth (Philippine Health Insurance Corporation — RA 11223): national health insurance; employer share ~2.5% of monthly basic salary, employee share ~2.5%; (c) Pag-IBIG Fund (Home Development Mutual Fund — RA 9679): housing loan, savings; employer share 2% of monthly compensation (for employees earning ≤ PHP 1,500/month) or 2% (for those earning > PHP 1,500), employee share 1% or 2%. With ~6,762 employees across 5 legal entities, monthly combined contributions (SSS ~14% of MSC + PhilHealth 5% + Pag-IBIG ~3–4%) reach ~PHP 25–30M. Late remittance incurs penalties (SSS: 2% per month; PhilHealth: 1% per month; Pag-IBIG: 1/10 of 1% per day). Non-remittance is a criminal offense under Philippine law. This workflow ensures timely, accurate deduction, remittance, and reconciliation across all three agencies and five entities."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).)",
+     "- operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Agency portal downtime**: SSS, PhilHealth, and Pag-IBIG online portals are notorious for downtime, especially during month-end peak filing periods; Payroll Clerks may be unable to submit reports on deadline day, risking penalties — requires early submission (5 business days before deadline) as a buffer",
+     "- **Rate and table changes**: government contribution rates and salary credit tables change periodically (SSS contribution rate increases are phased over multiple years); if the payroll system's rate tables are not updated promptly, all contributions compute incorrectly — retroactive corrections are administratively painful",
+     "- **Multi-entity complexity**: 5 legal entities = 5 sets of filings per agency per month = 15 monthly filings; if any entity misses a deadline, the penalty applies to that entity's total monthly contribution (not per employee), making the financial impact significant",
+     "- **Employee data accuracy**: incorrect SSS/PhilHealth/Pag-IBIG numbers (transposed digits, wrong name spelling) cause posting failures at the agency — the employee's contribution is not credited to their account, creating a service issue when the employee needs a loan or benefit claim"
+    ],
+    "Staffing Implication": [
+     "- Payroll Clerk: ~40–60 hours/month on statutory benefits processing and reconciliation; primary duty absorbed within payroll team",
+     "- Payroll Manager: ~15–20 hours/month on review, authorization, and exception handling; absorbed",
+     "- Finance Controller: ~5–10 hours/month on fund transfer approval; absorbed",
+     "- HR Business Partner: ~12–17 hours/month on new hire registration; absorbed within HR duties",
+     "- No incremental headcount; existing payroll team handles increased volume through system automation",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll statutory benefits module: auto-calculation of SSS/PhilHealth/Pag-IBIG employer and employee shares per current rates and tables (W1527.1)",
+     "- Agency report generators: SSS R-3, PhilHealth ERP file, Pag-IBIG MCR per entity (W1527.2)",
+     "- Agency portal integrations: SSS online, PhilHealth electronic submission, Pag-IBIG online payment (W1527.4)",
+     "- Reconciliation module: payroll deduction totals vs. agency remittance totals, per-employee matching (W1527.5)",
+     "- Employee contribution certificate generator: on-demand statement for loan applications (W1527.6)",
+     "- Integration with W644/1416 (13th Month Pay — also subject to SSS/PhilHealth/Pag-IBIG), W1306 (Multi-Entity Statutory Benefits Consolidation), W816 (Multi-Entity Payroll Consolidation)"
+    ],
+    "Time Estimate": [
+     "- Monthly report generation: ~15–20 hours",
+     "- New hire registration: ~15–20 min/hire × ~50 hires/month = ~12–17 hours",
+     "- Remittance processing: ~10–15 hours",
+     "- Reconciliation: ~10–20 hours",
+     "- Quarterly audit: ~4–6 hours",
+     "- **Annual total: ~600–900 hours (Payroll Clerk + Payroll Manager)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "**Payroll deduction computation** (semi-monthly): (a) during payroll processing per W644/1416: Payroll Clerk runs statutory benefits computation: (i) SSS: employee share (4.5% of MSC) and employer share (9.5% of MSC) based on SSS contribution table (tiered by monthly salary credit — 2026 rates); (ii) PhilHealth: employee share (2.5%) and employer share (2.5%) based on monthly basic salary (floor: PHP 10,000, ceiling: PHP 80,000); (iii) Pag-IBIG: employee share (1% or 2% based on monthly compensation) and employer share (2%); (b) system auto-calculates per employee based on: salary, employment status (regular, probationary, seasonal/project — seasonal workers also covered), entity assignment; (c) total deductions per employee reflected on payslip",
+     "duration": "Automated during payroll run",
+     "n": "1",
+     "r": "Payroll Clerk / System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Monthly contribution report generation**: (a) after both semi-monthly payrolls processed (end of month): system generates monthly contribution reports for each agency and each legal entity: (i) SSS Form R-3 (Contribution Collection List): employee names, SSS numbers, MSC, employee share, employer share, total per employee; (ii) PhilHealth ERP (Electronic Premium Remittance) file: employee PhilHealth numbers, monthly basic salary, employee share, employer share; (iii) Pag-IBIG MCR (Member's Contribution Remittance) form: employee Pag-IBIG numbers, monthly compensation, employee share, employer share; (b) Payroll Clerk reviews reports for anomalies: (i) new hires without SSS/PhilHealth/Pag-IBIG numbers, (ii) separated employees still appearing in report, (iii) unusually high or low contribution amounts",
+     "duration": "2–3 hours per agency per entity = ~15–20 hours total",
+     "n": "2",
+     "r": "Payroll Clerk / System"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**New hire registration** (if needed): (a) for employees without SSS/PhilHealth/Pag-IBIG numbers (typically new hires who are first-time workers): (i) HR Business Partner registers employee online via each agency's portal (SSS online registration, PhilHealth electronic registration, Pag-IBIG online membership); (ii) registration typically takes 3–5 business days for number generation; (b) Payroll Clerk flags unregistered employees in contribution report; contributions for unregistered employees are accumulated and remitted retroactively once numbers are issued",
+     "duration": "15–20 min per new hire",
+     "n": "3",
+     "r": "HR Business Partner / Payroll Clerk"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Remittance payment processing**: (a) Payroll Manager authorizes payment to each agency for each entity: (i) SSS: via SSS online payment facility or accredited bank (BDO, Metrobank, etc.); total remittance = employer share + employee share deductions across all employees in entity; (ii) PhilHealth: via PhilHealth electronic remittance or accredited bank; (iii) Pag-IBIG: via Pag-IBIG online payment or accredited collecting partner; (b) Finance Controller reviews and approves fund transfers from each entity's bank account; (c) payments made by deadline: SSS (last day of following month), PhilHealth (end of following month), Pag-IBIG (10th of following month)",
+     "duration": "2–3 hours per entity × 5 entities = ~10–15 hours",
+     "n": "4",
+     "r": "Payroll Manager / Finance Controller"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Reconciliation**: (a) Payroll Clerk reconciles: (i) total deductions in payroll system vs. total remitted to each agency (must match to the peso); (ii) per-employee contributions in payroll system vs. per-employee contributions in agency reports; (b) common discrepancies: (i) late new-hire registration causes retroactive adjustment, (ii) mid-month separation causes proration, (iii) salary adjustment effective mid-month causes split contribution; (c) Payroll Clerk resolves discrepancies and files adjusted report with agency if needed",
+     "duration": "2–4 hours per entity per month",
+     "n": "5",
+     "r": "Payroll Clerk"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Quarterly audit and employee statement**: (a) quarterly: Payroll Manager reviews cumulative contributions per employee across all 3 agencies: (i) YTD employee share vs. expected based on YTD salary, (ii) any employees with contribution gaps (unpaid leaves, LWOP exceeding 1 month); (b) generates individual employee contribution certificates on request (e.g., for SSS salary loan application, Pag-IBIG housing loan application); (c) annual: reconcile total contributions against each agency's annual statement of account",
+     "duration": "4–6 hours/quarter",
+     "n": "6",
+     "r": "Payroll Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1306",
+    "W644",
+    "W816"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-13",
+    "CTL-297",
+    "CTL-34"
+   ],
+   "fields": {
+    "Frequency": "~2–6 failure events chain-wide per year across the 6,762-employee estate (monthly run × 5 entities; most aborts caught at validation and re-run inside the window)",
+    "Owner": "Payroll Manager",
+    "Participants": "Payroll Specialist, HR Shared Services (employee comms per VS-103), Finance Controller (funding release), Treasury (funding/debit account status per VS-18), IT Service Desk & ERP payroll support (system restoration), disbursement bank / payroll funding partner, CHRO (communications), HR Benefits (SSS/PhilHealth/Pag-IBIG desk), Audit (post-mortem for material events)",
+    "Trigger": "A payroll run aborts or is compromised inside the payroll window: validation failure on the payroll register, bank-file (credit/debit-advice) rejection by the disbursement bank, funding shortblock, payroll-system/ERP outage at cut-off, or a disbursement-partner platform outage",
+    "Volume": "1 run × affected population (a validation abort typically hits 1–3 batches; a bank-file reject or provider outage hits up to all ~6,762 payslips for that entity-run) × statutory remittance deadlines (W1527/W1306) that keep running regardless"
+   },
+   "id": "W5540",
+   "level": 2,
+   "name": "Payroll Run Failure, Correction & Emergency Off-Cycle Payment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Payroll-run monitor classifies failures from validation/bank-reject codes and auto-selects the run-book branch with the countdown clock displayed (replaces manual Step 1 triage)",
+     "- Reject-report ingestion auto-maps error codes to corrective master-data actions and regenerates compliant files (replaces manual Step 3a file surgery)"
+    ],
+    "Background": [
+     "W10 owns the payroll processing run, W641 the *planned* off-cycle payment, and W816/W1306 the multi-entity consolidation and statutory remittances — but no workflow owned the *failed* run: the classification decision (re-run vs contingency), the bank-file rejection loop, the emergency-net-pay decision, or the employee-communication surge. The exposure is statutory, not merely operational: Labor Code Art. 103 requires wages paid on time, DOLE money claims follow delayed pay, and the remittance calendar (SSS/PhilHealth/Pag-IBIG via W1527, BIR withholding via W2764/W2765-class filings) does not pause because a bank file bounced. With ~6,762 employees across stores and DCs — many unbanked segments paid via cash-card partners — a payday failure also has an immediate floor-level human impact that needs scripted handling. This workflow is the failure canon; W641 remains the mechanic for any approved emergency advance it triggers."
+    ],
+    "Controls": [
+     "- CTL-297 (ensure controlled execution — Payroll & Compensation (PA-19.2).); CTL-13 (separate payroll computation from approval.); CTL-34 (ensure complete tax compliance.)",
+     "- operational: emergency advances ride W641 agreements with documented recovery deductions — never free-standing payouts",
+     "- operational: every failure event carries a timestamped event log and a 5-day post-mortem with control-hardening actions"
+    ],
+    "Pain Points / Risks": [
+     "- **Statutory-wage risk**: delayed pay triggers Labor Code Art. 103 exposure and DOLE money claims; mitigated by the classification clock (Step 1), the < 24 h emergency-advance branch (Step 4), and scripted communications",
+     "- **Double-payment risk**: emergency advance issued, then the original file also lands → employees overpaid; mitigated by the signed advance agreement with automatic recovery-deduction flag (Step 4) and the Step-6 reconciliation",
+     "- **Control erosion under pressure**: bypassing approval separation to re-run fast; mitigated by the explicit CTL-13 preservation requirement in Step 2",
+     "- **Remittance-cascade risk**: focus on net pay while SSS/PhilHealth/Pag-IBIG/BIR deadlines lapse; mitigated by the Step-6 statutory-calendar check owned alongside the pay fix",
+     "- **Reputational risk**: floor-level escalation when stores improvise answers; mitigated by the single-script HR Shared Services communication in Step 5"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within the existing payroll team, HR Shared Services and Treasury desks; surge effort is event-driven and covered by the run-book. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Payroll register validation-error queue with batch-level retry (links to W10 run controls)",
+     "- Bank-file (credit advice) generation, transmission log, and bank reject-report intake (reconciliation to control totals)",
+     "- Off-cycle payment rails (links to W641) with advance-agreement attachment and recovery-deduction flag",
+     "- ESS notification broadcast (banner + SMS/email gateway) and case-surge tagging for the payroll helpdesk (links to VS-103)",
+     "- Statutory remittance calendars & penalty tracker (links to W1527/W1306)",
+     "- Treasury cash/debit-account status view (links to W318/W556 settlement accounts)"
+    ],
+    "Time Estimate": [
+     "Per event: inside-window correction ≈ 2–6 staff-hours; contingency branch ≈ 20–60 staff-hours (Steps 3–6 across payroll, Treasury, HR Shared Services); full-outage with emergency advance ≈ 80–160 staff-hours. At ~2–6 events/yr ≈ 40–360 staff-hours/yr, absorbed within the existing payroll team and HR Shared Services — no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payroll Manager",
+     "activity": "**Failure classification & clock**: classify against the payday countdown — (a) validation abort ≥ 48 h before payday → correct & re-run (Step 2); (b) bank-file rejection / provider outage < 48 h → contingency branch (Steps 3–5); (c) funding block (Treasury/debit account issue) → Treasury joint branch (Step 3c); open the event log with timestamps (recovery-time accountability)",
+     "duration": "30–60 min",
+     "n": "1",
+     "r": "Payroll Specialist"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Correct & re-run (inside window)**: isolate failing records (negative net, invalid deduction, missing bank/enrollment per W10 validations), fix master-data or deduction errors, re-run only the failed batches with the normal approval chain intact (CTL-13: computation/approval separation preserved under time pressure); confirm register-to-bank-file control totals",
+     "duration": "2–6 hrs",
+     "n": "2",
+     "r": "Payroll Specialist / Payroll Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Funding & file verification (contingency branch)**: (a) bank-file reject → obtain the bank's reject/error report, regenerate the file per spec, resubmit and obtain acknowledged credit-advice; (b) provider platform outage → invoke the secondary disbursement channel per contract (backup partner or alternate file protocol); (c) funding block → Treasury confirms debit-account funding per the W318 settlement-account structure and releases per Finance Controller sign-off",
+     "duration": "2–12 hrs",
+     "n": "3",
+     "r": "Payroll Specialist / Treasury / Finance Controller"
+    },
+    {
+     "a": "CHRO + Finance Controller (joint)",
+     "activity": "**Emergency off-cycle payment decision (< 24 h to payday, credit not assured)**: CHRO + Finance Controller approve an emergency net-pay advance via the W641 off-cycle rails — scope: affected employees, amount (default 50% net, up to 100% for hardship cases), channel (card-partner push or store cash-card load for cash-paid segments under dual-custody cash controls per VS-81 store-cash rules); employees sign the W641 advance agreement (recovery via deduction from the late-arriving original credit)",
+     "duration": "4–8 hrs",
+     "n": "4",
+     "r": "Payroll Manager / CHRO / Finance Controller"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Employee communication & floor support**: HR Shared Services issues the ESS banner + SMS/email with facts, cause, and the assured new credit time; store/DC bulletins via the VS-63 store-communication channel; payroll helpdesk surge script (no-pay-confirmation handling); store managers briefed not to improvise promises",
+     "duration": "2–4 hrs",
+     "n": "5",
+     "r": "HR Shared Services / Store Managers"
+    },
+    {
+     "a": "Payroll Manager",
+     "activity": "**Statutory protection & reconciliation**: verify remittance calendar still met — SSS/PhilHealth/Pag-IBIG (W1527) and BIR withholding (W1306 chain) computed from the corrected register, paid on statutory deadlines with penalty exposure assessed if the failure touches them; when the original credit lands late, reconcile against any Step-4 advances (deduction per agreement), close the register-to-bank reconciliation, and document the event trail for audit",
+     "duration": "4–16 hrs",
+     "n": "6",
+     "r": "Payroll Specialist / HR Benefits"
+    },
+    {
+     "a": "CHRO",
+     "activity": "**Post-mortem & control hardening**: within 5 business days — root cause (data, file spec, funding, vendor, infrastructure), run-book update, added pre-run validations, provider SLA review or channel remediation; material events (full-run failure, > 24 h delay, statutory penalty) reported to the Audit Committee via the W81-class write-off/exception reporting path if losses resulted",
+     "duration": "1–2 days",
+     "n": "7",
+     "r": "Payroll Manager / Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W1306",
+    "W1527",
+    "W2764",
+    "W2765",
+    "W318",
+    "W556",
+    "W641",
+    "W81",
+    "W816"
+   ]
+  }
+ ]
+}

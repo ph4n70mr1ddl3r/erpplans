@@ -1,0 +1,2874 @@
+{
+ "process_area": {
+  "id": "PA-17.1",
+  "title": "GL & Financial Close"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-17-record-to-report/PA-17.1-gl-and-financial-close.md",
+ "value_stream": {
+  "directory": "VS-17-record-to-report",
+  "id": "VS-17",
+  "name": "Record-to-Report"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-05",
+    "CTL-12"
+   ],
+   "fields": {
+    "Frequency": "~3,500 AR invoices/month",
+    "Owner": "AR Supervisor",
+    "Participants": "AR Clerk, Sales Rep (trade accounts), AR Supervisor, Finance Manager",
+    "Trigger": "Sales invoice generated for trade/corporate account at POS or by Sales Rep",
+    "Volume": "~117 invoices/day; ~5,200 active AR accounts"
+   },
+   "id": "W8",
+   "level": 2,
+   "name": "Accounts Receivable — Trade & Corporate Accounts",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Customer purchase on trade/corporate account\" (replaces manual Step 1).",
+     "- System auto-post of \"posts AR invoice\" (replaces manual Step 2).",
+     "- System auto-validate of \"checks customer credit limit\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-05 (prevent unauthorized credit limit overrides.); CTL-12 (separate credit approval from sales execution.)",
+     "- operational: AR Supervisor review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Dormant account write-off timing delays**: inactive trade accounts with immaterial balances (< PHP 5,000) accumulate over years; the annual review may not clear these fast enough, inflating AR balances and distorting DSO calculations reported to management",
+     "- **Credit hold disputes during peak season**: blocking sales to overdue accounts during Christmas peak (October–December) creates intense pressure from Sales Reps and Store Managers for credit limit overrides; the override mechanism (step 3a) is vulnerable to overuse during peak, increasing credit exposure risk",
+     "- **Customer credit memo approval bottleneck**: credit memos requiring Finance Manager or CFO approval (> PHP 10,000 or > PHP 50,000) can sit in approval queues for days, frustrating customers who are owed credits and delaying account reconciliation",
+     "- **AR legal collection cost recovery uncertainty**: engaging external collection agencies (10–20% contingency fee) and filing legal cases (court fees, external counsel) for accounts > PHP 200,000 is costly; recovery rates in Philippine commercial collection average 30–50%, meaning legal costs may exceed net recovery on borderline accounts",
+     "- **Loyalty points liability on account closure**: when closing trade/corporate accounts (step 12), unredeemed loyalty points must be addressed; if the customer disputes forfeiture terms, account closure is delayed while loyalty program terms (W17) are reviewed and potentially escalated to Legal"
+    ],
+    "Staffing Implication": [
+     "- **3–4 AR Clerks**: 117 invoices/day is relatively low volume (retail is mostly cash/card). Main workload is collections on ~5,200 accounts. At any time, ~15% (780) may need follow-up. 3 clerks can manage with monthly statement runs and weekly aging reviews.",
+     "- **1 AR Supervisor**: Oversight and escalation handling.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AR invoice creation from POS/sales order (W8.1–2)",
+     "- Real-time credit limit check (W8.3)",
+     "- Credit hold override with tiered authorization, audit trail, and automatic expiry (W8.3a)",
+     "- Aging report generation (W8.5)",
+     "- Customer statement generation (W8.4)",
+     "- Customer credit memo processing: reason code and source reference, tiered approval, auto-application to open invoices, GL posting (Dr. Revenue/Expense / Cr. AR), credit balance management (W8.11)",
+     "- Dormant trade/corporate account management: system defines dormancy as zero transactions (sales or payments) for 6 consecutive months; monthly, system generates dormant account report listing all accounts meeting dormancy criteria; AR Clerk contacts dormant accounts via phone/email to confirm business status — (a) if customer confirms active but no current need: account remains active, no action; (b) if customer unresponsive after 2 contact attempts over 30 days: AR Supervisor places account on inactive status; system automatically reduces credit limit to PHP 0 (prevents new sales on account); account remains searchable for transaction history and reactivation; (c) if customer confirms business closure: AR Clerk processes formal account closure per W8 step 12 — verifies zero outstanding balance, settles open credit memos, manages loyalty points disposition, deactivates account, retains transaction history for 10-year BIR retention period, anonymizes PII after retention period per RA 10173 (cross-reference W53); for reactivation of inactive accounts: customer contacts Sales Rep or AR Clerk; AR Clerk reopens account with updated business documents per W24 (abbreviated credit assessment — if reactivation within 12 months, may reuse prior credit assessment with updated financials; if > 12 months, full W24 process required); AR Supervisor approves reactivation with new credit limit; annual: AR Supervisor reviews all dormant/inactive accounts and recommends write-off of any remaining immaterial balances (< PHP 5,000) with Finance Manager approval",
+     "- Payment application and matching (W8.9)",
+     "- AR sub-ledger to GL reconciliation (W8.10)"
+    ],
+    "Time Estimate": [
+     "- AR invoice posting and credit monitoring: ~30 min/day (automated + review)",
+     "- Monthly statement generation: ~4 hours/month (batch run + exception handling)",
+     "- Weekly aging review: ~1 hour/week (AR Clerk)",
+     "- Collection calls (30-day overdue): ~15 min/account × ~200 accounts = ~50 hours/month",
+     "- Collection escalation (60-day): ~15 min/account × ~80 accounts = ~20 hours/month",
+     "- Finance Manager escalation (90-day): ~30 min/account × ~30 accounts = ~15 hours/month",
+     "- Legal/bad debt cases: ~2–4 hours/case, ~5–10 cases/year = ~10–40 hours/year",
+     "- Monthly AR-to-GL reconciliation: ~2 hours/month",
+     "- Total AR effort: ~100–120 hours/month across 3–4 AR Clerks (~30–35 hours each/month)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Customer purchase on trade/corporate account; invoice created at POS or by Sales Rep",
+     "duration": "Part of sale",
+     "n": "1",
+     "r": "Cashier / Sales Rep"
+    },
+    {
+     "a": "—",
+     "activity": "System posts AR invoice; updates customer balance",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "System checks customer credit limit; blocks further sales if exceeded",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Credit hold override: if sales rep or Store Manager requests sale despite credit block, system prompts for authorizer and reason; override requires AR Supervisor approval for up to 110% of credit limit, Finance Manager approval for up to 130%; override logged with customer ID, authorizer, overridden amount, reason, and 24-hour validity; system counts overridden amount against credit exposure for monitoring",
+     "duration": "5 min/override",
+     "n": "3a",
+     "r": "Sales Rep / AR Supervisor / Finance Manager"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk sends monthly statement to each active account (1st of month)",
+     "duration": "4 hours/month (batch)",
+     "n": "4",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "AR Clerk reviews aging report weekly; flags accounts > 30 days past due",
+     "duration": "1 hour/week",
+     "n": "5",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "For 30-day overdue: AR Clerk contacts customer (phone/email) for follow-up",
+     "duration": "15 min/account",
+     "n": "6",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "For 60-day overdue: escalate to Sales Rep for relationship-based collection",
+     "duration": "15 min/account",
+     "n": "7",
+     "r": "Sales Rep"
+    },
+    {
+     "a": "CFO",
+     "activity": "For 90-day overdue: escalate to Finance Manager; consider credit hold",
+     "duration": "30 min/account",
+     "n": "8",
+     "r": "Finance Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**AR legal collection escalation**: for accounts > 120 days overdue with no payment response after standard collection tiers (W8.6–8) — (a) AR Supervisor sends formal demand letter (demand collection letter per Philippine legal requirements) via registered mail with return card; letter states outstanding amount, original invoice references, payment deadline (15 business days), and notice of potential legal action; (b) if customer responds and disputes: AR Clerk coordinates investigation with Sales Rep and Store Manager to validate or resolve dispute; disputed amounts suspended from collection while under investigation; (c) if no response after demand letter deadline: AR Supervisor escalates to Finance Manager for referral to external collection agency or Legal for filing of collection case; (d) external collection agency engaged per W62 (service contract); agency fee typically 10–20% of collected amount; system tracks collection agency referral with agency reference and status; (e) if legal action warranted (amount > PHP 200,000 and customer solvent): Legal files collection case with appropriate court; Legal manages case with external counsel; system tracks legal case reference and status; (f) **Bad debt write-off**: if all collection efforts exhausted (demand letter + collection agency + legal if applicable) or customer confirmed insolvent/bankrupt, AR Clerk submits bad debt write-off request — tiered approval per W8.8b below; system posts Dr. Bad Debt Expense / Cr. Allowance for Doubtful Accounts (or direct write-off Dr. Bad Debt Expense / Cr. AR per company policy); BIR documentation retained: demand letter, collection agency report, court filing (if applicable), write-off approval; (g) **Write-off recovery**: if customer subsequently pays on a previously written-off account (recovery of bad debt), AR Clerk processes recovery payment; system posts Dr. Cash / Cr. Bad Debt Recovery (income); write-off recovery tracked separately from regular AR collections for reporting",
+     "duration": "Varies",
+     "n": "8a",
+     "r": "AR Supervisor / Finance Manager / Legal / CFO"
+    },
+    {
+     "a": "Approver",
+     "activity": "**Bad debt write-off approval**: (a) ≤ PHP 50,000: Finance Manager, (b) PHP 50,001–200,000: Controller + Finance Manager, (c) PHP 200,001–1,000,000: CFO, (d) > PHP 1,000,000: CEO",
+     "duration": "15 min/write-off",
+     "n": "8b",
+     "r": "Approver"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "Customer payment received; AR Clerk applies payment to open invoices",
+     "duration": "5 min/payment",
+     "n": "9",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "Monthly reconciliation of AR sub-ledger to GL",
+     "duration": "2 hours/month",
+     "n": "10",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Customer credit memo: AR Clerk creates credit memo with reason code and source reference (pricing error, volume discount adjustment, short delivery, service failure, promotional adjustment); tiered approval (AR Supervisor ≤ PHP 10,000; Finance Manager ≤ PHP 50,000; CFO > PHP 50,000); system applies credit to oldest open invoice or creates credit balance; posts GL entry (Dr. Revenue or appropriate expense / Cr. Accounts Receivable); customer notified of credit",
+     "duration": "10 min/credit memo",
+     "n": "11",
+     "r": "AR Clerk / AR Supervisor"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Customer account closure**: customer requests trade/corporate account closure; AR Clerk verifies zero outstanding balance — if balance outstanding, arranges final payment or collection per W8.6–8; system settles any open credit memos (applies to outstanding invoices or processes refund); loyalty points: if customer has unredeemed points, system offers redemption before closure or forfeits per W17 terms; AR Clerk deactivates account in system; account status changed to \"Closed\"; system retains transaction history for 10-year BIR retention; PII anonymized after retention period per RA 10173 and W53 data retention policy; account closure logged with reason, date, and AR Clerk ID",
+     "duration": "15 min/closure",
+     "n": "12",
+     "r": "AR Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W17",
+    "W24",
+    "W53",
+    "W62"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-28"
+   ],
+   "fields": {
+    "Frequency": "~10–15 petty cash disbursements per store per month; ~2,000–3,000/month chain-wide",
+    "Owner": "Store Manager / DC Supervisor",
+    "Participants": "Employee (requestor), Store Manager, Petty Cash Custodian, AP Clerk",
+    "Trigger": "Small expense incurred at store or DC that cannot go through standard PO/AP process",
+    "Volume": "PHP 20,000 float per store; PHP 50,000 float per DC"
+   },
+   "id": "W25",
+   "level": 2,
+   "name": "Petty Cash Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"requests petty cash for small expense\" (replaces manual Step 1).",
+     "- System rule-based auto-approval of \"Store Manager approves request\" (replaces manual Step 2).",
+     "- System auto-log of \"Custodian records transaction in petty cash log\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-28 (control petty cash funds.)",
+     "- operational: Store Manager / DC Supervisor review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Petty cash fund loss at provincial stores**: stores in high-crime or typhoon-prone areas face physical cash loss risk; the PHP 20,000 float per store (PHP 4M total across 200 stores) is an attractive target for theft, and insurance coverage for cash on premises is often limited or requires expensive riders",
+     "- **Missing or inadequate receipts**: store employees frequently submit transport receipts (tricycles, jeepneys) or handwritten \"acknowledgment receipts\" that do not meet BIR requirements for deductible expenses; AP Clerks must flag and follow up, delaying replenishment and frustrating store operations",
+     "- **Replenishment processing bottleneck**: ~200–400 replenishment requests/month across 200 stores create significant AP Clerk workload; if replenishment processing falls behind, store petty cash funds are depleted and employees cannot make necessary small purchases, disrupting store operations",
+     "- **Custodian accountability gaps**: the Petty Cash Custodian role (typically Assistant Store Manager) has no formal compensation for the fiduciary responsibility; cash shortages discovered during monthly reconciliation (step 10) create uncomfortable dynamics between the Custodian and Store Manager"
+    ],
+    "Staffing Implication": [
+     "- **Petty Cash Custodian**: Typically the Assistant Store Manager or a designated cashier. Not a separate role.",
+     "- **AP impact**: ~2,000–3,000 replenishment requests/year. Most stores replenish once or twice monthly. Absorbed by existing AP clerks.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Petty cash voucher recording (W25.5)",
+     "- Replenishment request and approval workflow (W25.6–7)",
+     "- GL posting for petty cash expenses (W25.8)",
+     "- Petty cash reconciliation reporting (W25.10)",
+     "- Store disbursement request for mid-range expenses (PHP 5,000–50,000): for expenses too large for petty cash but not suited to formal PO (emergency equipment repair, small equipment purchase, local contractor services, urgent supplies) — Store Manager or Department Supervisor submits disbursement request in system with business justification, vendor quotation (if available), and cost center; approval per tier (Store Manager approves up to PHP 20,000; Regional Manager approves PHP 20,001–50,000); upon approval, Custodian pays vendor and obtains receipt; AP Clerk posts expense with receipt attachment to GL; disbursements tracked per store per month in expense summary report; distinct from petty cash (W25.1–4) in requiring formal system request and approval before payment, and from PO-based purchasing (W2) in bypassing the PO/GR/invoice cycle for immediacy (W25)"
+    ],
+    "Time Estimate": [
+     "- Per-disbursement: ~20 min (request 5 min + approval 5 min + disbursement 5 min + recording 5 min)",
+     "- Per-store monthly volume: ~10–15 disbursements = ~3–5 hours/month per store (Custodian time)",
+     "- Replenishment processing (AP Clerk): ~15 min per request × ~250/month = ~62.5 hours/month across 8–10 AP Clerks = ~6–8 hours each/month",
+     "- Monthly reconciliation (Custodian): ~15 min/store × 200 stores = ~50 hours total (spread across Custodians)",
+     "- Store disbursement requests (PHP 5K–50K): ~2–3 per store per month × 200 stores = ~400–600/month × 20 min = ~130–200 hours/month (requestors + approvers)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Employee requests petty cash for small expense (supplies, minor repairs, transport, miscellaneous)",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Employee"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager approves request (verifies business purpose)",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Petty Cash Custodian disburses cash; employee signs petty cash voucher",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Custodian"
+    },
+    {
+     "a": "—",
+     "activity": "Employee provides receipt and any change back to Custodian",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Employee"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Custodian records transaction in petty cash log (physical or system)",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Custodian"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "When fund runs low (~70% disbursed): Custodian prepares replenishment request with all vouchers",
+     "duration": "30 min",
+     "n": "6",
+     "r": "Custodian"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager reviews vouchers; approves replenishment",
+     "duration": "15 min",
+     "n": "7",
+     "r": "Store Manager"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP Clerk processes replenishment; creates petty cash voucher in system; posts expense to GL",
+     "duration": "15 min",
+     "n": "8",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury / bank transfers replenishment amount to store custodian",
+     "duration": "10 min",
+     "n": "9",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Monthly: Custodian reconciles petty cash (cash on hand + outstanding vouchers = fund amount)",
+     "duration": "15 min",
+     "n": "10",
+     "r": "Custodian"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Annual renewals; ~20–30 active policies across the group",
+    "Owner": "Treasury Analyst (policy administration); CFO (coverage decisions)",
+    "Participants": "Treasury Analyst, CFO, Facilities Coordinator, Fleet Manager, IT, Legal, external insurance broker",
+    "Trigger": "Annual insurance renewal cycle; or new insurance requirement (new store, new asset, regulatory change)",
+    "Volume": "Policy types: property (200 stores + 4 DCs), inventory (PHP 5.5–7.5B total), business interruption, general liability, vehicle fleet (~40 owned), workers' compensation, employer's liability, cargo/in-transit, cyber liability, directors & officers (D&O)"
+   },
+   "id": "W59",
+   "level": 2,
+   "name": "Insurance Policy Lifecycle Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow notification of \"System maintains insurance policy register\" (replaces manual Step 1).",
+     "- System workflow orchestration of \"coordinates with insurance broker to obtain renewal quotation and market…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Treasury Analyst (policy administration); CFO (coverage decisions) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Underinsurance risk during rapid expansion**: opening 10–15 new stores/year (W16) means property and inventory coverage must be updated frequently; if new store openings are not promptly reported to the insurance broker, newly opened stores may operate without adequate coverage; mitigated by the Treasury Analyst (policy administration) and CFO (coverage decisions) review and approval gate",
+     "- **Typhoon and flood claim concentration**: the Philippines experiences ~20 typhoons/year; a single major typhoon (e.g., signal no. 5) can damage multiple stores simultaneously, generating a concentrated claim that exceeds policy deductibles and triggers business interruption coverage disputes",
+     "- **Claims documentation inadequacy**: store-level staff often fail to document damage adequately (photos, inventories of damaged goods, repair estimates) at the time of the event; delayed or incomplete documentation weakens the insurance claim and may result in partial denial",
+     "- **Premium escalation from claims history**: as the property and inventory portfolio grows (200+ locations), even a moderate claims history drives premium increases of 10–20% annually; negotiating favorable renewal terms requires detailed claims analysis and broker advocacy"
+    ],
+    "Staffing Implication": [
+     "- **Treasury Analyst**: adds ~4–6 hours/year for policy administration + ~30 min/month for claims review. Absorbed within existing Treasury team (2–3 analysts).",
+     "- **Insurance broker**: external partner managing market comparison, policy placement, and claims advocacy.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance policy register with renewal calendar, coverage details, and document storage (W59.1)",
+     "- Automated renewal alerting at 90, 60, and 30 days (W59.2)",
+     "- Claims tracking with status lifecycle: Filed → Under Investigation → Approved → Settled / Denied; linked to triggering event (W3.6a, W49, W37) (W59.7)",
+     "- Premium payment processing and prepaid insurance amortization (W59.6)",
+     "- Claims vs. premium ratio reporting (W59.8)",
+     "- Integration with W3.6a (receiving damage), W25 (petty cash for minor incidents below deductible), W37 (theft write-off), W39 (asset disposal — insurance recovery on disposed assets), W47 (facility damage), W49 (disaster damage), W52 (vehicle insurance)"
+    ],
+    "Time Estimate": [
+     "- Policy register maintenance: ~4 hours/year (Treasury Analyst)",
+     "- Renewal coordination (per policy): ~1–2 hours × 20–30 policies = ~20–60 hours/year",
+     "- CFO annual coverage review: ~2–4 hours/year",
+     "- Claims processing (per event): varies from ~30 min (minor) to ~4–8 hours (major typhoon damage)",
+     "- Monthly claims activity review: ~30 min/month",
+     "- Annual broker review: ~2 hours/year",
+     "- Total insurance administration: ~60–100 hours/year (~5–8 hours/month), mostly during renewal season"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "System maintains insurance policy register: policy number, insurer, type, coverage amount, premium, deductible, renewal date, key terms and exclusions, broker contact",
+     "duration": "4 hours/year (maintenance)",
+     "n": "1",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "System alerts Treasury Analyst 90 days before each policy renewal date",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury Analyst coordinates with insurance broker to obtain renewal quotation and market comparison; broker provides at least 2 alternative quotes for material policies (annual premium > PHP 500K)",
+     "duration": "1–2 hours/policy",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO reviews coverage adequacy annually: (a) property coverage vs. current replacement cost of stores and DCs, (b) inventory coverage vs. current inventory value, (c) fleet coverage vs. current vehicle count, (d) business interruption coverage vs. current revenue run rate, (e) cyber liability adequacy given data volumes",
+     "duration": "2–4 hours/year",
+     "n": "4",
+     "r": "CFO"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO approves or adjusts coverage; authorizes Treasury Analyst to renew or switch insurer",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "CFO"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury Analyst processes premium payment per W7C (non-PO invoice) or against insurance broker PO; system posts premium to GL (Dr. Prepaid Insurance / Cr. Cash); monthly amortization per W9A step 8",
+     "duration": "15 min/policy",
+     "n": "6",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Claims: when an insured event occurs (W3.6a goods damage, W49 typhoon damage, W37 confirmed theft, W52 vehicle accident), the process owner files claim with supporting documentation; Treasury Analyst tracks claim status in system; upon settlement, Finance posts recovery (Dr. Cash / Cr. Insurance Recovery Income or Cr. relevant asset/expense account)",
+     "duration": "Per event",
+     "n": "7",
+     "r": "Process Owner / Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: Treasury Analyst reviews claims activity report: open claims, settlement status, claims vs. premiums ratio; flags policies where claims experience may affect renewal terms",
+     "duration": "30 min/month",
+     "n": "8",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CEO",
+     "activity": "Annual: CFO and external broker review claims history, coverage adequacy, and market conditions; adjust policy structure for upcoming year",
+     "duration": "2 hours/year",
+     "n": "9",
+     "r": "CFO + Broker"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W16",
+    "W25",
+    "W3",
+    "W37",
+    "W39",
+    "W47",
+    "W49",
+    "W52",
+    "W7C",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Weekly aging review (AP and AR); monthly formal reconciliation during close; quarterly deep review in management reporting (W35)",
+    "Owner": "Chief Accountant",
+    "Participants": "AP Clerk, AR Clerk, AP Supervisor, AR Supervisor, Chief Accountant, Controller",
+    "Trigger": "Month-end close (W9A step 16e) and weekly AP/AR aging review",
+    "Volume": "~100–200 open credit/debit notes at any time across AP and AR"
+   },
+   "id": "W70",
+   "level": 2,
+   "name": "Credit Note & Debit Note Aging Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"discount, complaint resolution, promotional adjustment\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews unapplied vendor credit memos weekly\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates to AR Supervisor for write-off as other income\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Chief Accountant review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Unapplied credit memos inflating AP/AR balances**: with ~100–200 open credit/debit notes at any time, unapplied credits distort both the AP and AR sub-ledger balances; if unapplied credits are not resolved before month-end, the GL control account reconciliation (W9A) produces reconciling items that delay close",
+     "- **Vendor credit memo receipt delays**: vendors (especially international suppliers) often issue credit memos weeks or months after the triggering event (RTV, rebate, price protection); during the delay, the AP sub-ledger shows a higher vendor balance than actually owed, potentially resulting in overpayment",
+     "- **Customer credit memo disputes stalling resolution**: when a customer disputes the amount or reason for a credit memo, the AR Clerk must coordinate with Sales Rep, Store Manager, and sometimes CS Manager; disputed credits remain unapplied indefinitely until resolved, aging through multiple reporting periods",
+     "- **Debit memo aging creating vendor relationship friction**: AP debit memos (vendor chargebacks) represent amounts BuildRight is deducting from vendor payments; if these are not resolved promptly, vendors view BuildRight as a slow-paying customer, potentially affecting vendor scorecard (W44) and negotiating leverage"
+    ],
+    "Staffing Implication": [
+     "- **AP Clerk**: adds ~30 min/week for AP credit memo review. Absorbed.",
+     "- **AR Clerk**: adds ~30 min/week for AR credit memo review. Absorbed.",
+     "- **Chief Accountant**: adds ~1 hour/month + 30 min/quarter for reconciliation. Absorbed within month-end close duties.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Credit/debit note aging report with AP and AR views; filterable by age, vendor/customer, source, and status (W70.1)",
+     "- Auto-application rules: system auto-applies credit memos to oldest open invoices for the same vendor/customer if configured; manual override available (W70.2–3)",
+     "- Sub-ledger to GL reconciliation: AP/AR credit memo sub-ledger totals reconcile to GL control accounts (W70.6)",
+     "- Write-off workflow for stale credits/debits: tiered approval (AR/AP Supervisor ≤ PHP 50K, Controller ≤ PHP 200K, CFO > PHP 200K); system posts write-off with GL entry (W70.2–5)",
+     "- Chronic vendor/customer analysis: identifies accounts with recurring unapplied credits over rolling 12-month period (W70.7)",
+     "- Integration with W7 (AP credit memos from vendor), W7.9b (vendor credit memo processing), W8 (AR credit memos), W8.11 (customer credit memo processing), W9A.16e (month-end credit note reconciliation), W35.19 (quarterly review)"
+    ],
+    "Time Estimate": [
+     "- Weekly AP credit memo review: ~30 min/week (AP Clerk)",
+     "- Weekly AR credit memo review: ~30 min/week (AR Clerk)",
+     "- Weekly AP debit memo review: ~15 min/week (AP Clerk)",
+     "- Weekly AR debit memo review: ~15 min/week (AR Clerk)",
+     "- Monthly reconciliation (month-end, step 6): ~1 hour/month (Chief Accountant)",
+     "- Quarterly deep review (step 7): ~30 min/quarter (Chief Accountant + Controller)",
+     "- Total credit/debit note management: ~5–6 hours/week + ~1.5 hours/month cyclical"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System generates credit/debit note aging report across AP and AR: note number, vendor/customer, amount, date created, source (RTV, rebate, price protection, pricing error, volume discount, complaint resolution, promotional adjustment), status (unapplied / partially applied), and age bucket (0–30, 31–60, 61–90, 90+ days)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**AP credit memos** (vendor credits): AP Clerk reviews unapplied vendor credit memos weekly; for each: (a) if vendor has open invoices, applies credit to oldest invoice — system reduces vendor balance; (b) if vendor has no open invoices, contacts vendor to request refund or confirms credit will be applied to next invoice; (c) if credit > 90 days and vendor is unresponsive, escalates to AP Supervisor for write-off decision",
+     "duration": "30 min/week",
+     "n": "2",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**AR credit memos** (customer credits): AR Clerk reviews unapplied customer credit memos weekly; for each: (a) if customer has open invoices, applies credit to oldest invoice; (b) if customer has no open invoices, contacts customer to arrange refund or confirm credit for next purchase; (c) if credit > 90 days and customer is unresponsive, escalates to AR Supervisor for write-off as other income",
+     "duration": "30 min/week",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**AP debit memos** (vendor chargebacks): AP Clerk reviews open debit memos — these represent amounts BuildRight is deducting from vendor payments (short shipments, damage claims, pricing disputes); confirms debit memos are resolved with next vendor payment; unresolved debits > 60 days escalated to Buyer for vendor negotiation",
+     "duration": "15 min/week",
+     "n": "4",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**AR debit memos** (customer chargebacks): AR Clerk reviews open AR debit memos — these represent amounts owed by customers beyond normal invoices (bounced checks, disputed deductions); follows up with customer per W8 collection tiers; unresolved debits > 90 days escalated to Finance Manager for bad debt provision",
+     "duration": "15 min/week",
+     "n": "5",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Month-end reconciliation** (W9A step 16e): Chief Accountant reviews total unapplied credit/debit note balances; confirms AP credit memo sub-ledger agrees with GL Accounts Payable; confirms AR credit memo sub-ledger agrees with GL Accounts Receivable; unresolved items > 90 days summarized for Controller",
+     "duration": "1 hour/month",
+     "n": "6",
+     "r": "Chief Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly deep review** (W35 step 19): Chief Accountant presents credit/debit note aging summary to Controller and CFO; highlights chronic vendors/customers with recurring unapplied credits; recommends process improvements (e.g., auto-application rules, vendor/customer communication templates); material write-offs approved per standard tiers",
+     "duration": "30 min/quarter",
+     "n": "7",
+     "r": "Chief Accountant / Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W35",
+    "W44",
+    "W7",
+    "W8",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Quarterly Board meetings; Annual Stockholders' Meeting",
+    "Owner": "Corporate Secretary",
+    "Participants": "Board of Directors, CEO, Legal Department, Finance",
+    "Trigger": "Statutory requirement or Board request",
+    "Volume": "5 legal entities"
+   },
+   "id": "W124",
+   "level": 2,
+   "name": "Corporate Secretarial & Entity Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepare agenda and board packs\" (replaces manual Step 1).",
+     "- System auto-record of \"record minutes\" (replaces manual Step 2).",
+     "- System auto-file of \"file General Information Sheet\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- GIS filing deadlines are strict (30 days post-meeting); missed filings incur SEC penalties and potential personal liability for the Corporate Secretary.",
+     "- Stock ledger accuracy is critical for ownership disputes and investor relations — any discrepancy in share counts or transfer records can trigger legal challenges.",
+     "- Board packs are often delayed by department heads submitting late reports, compressing the Corporate Secretary's preparation window.",
+     "- Compliance monitoring across 5 entities with different registration renewal dates and regulatory requirements creates calendar management complexity."
+    ],
+    "Staffing Implication": [
+     "Board meeting cycle requires ~1.5 weeks of concentrated effort quarterly, plus ~2–3 hours/month for ongoing compliance monitoring. The Corporate Secretary handles all activities with support from Legal Counsel for regulatory monitoring. No dedicated additional headcount required — the workload is absorbed by the standing Corporate Secretary role across 5 entities.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Corporate records document management system for Board minutes, resolutions, and stock ledger",
+     "- SEC filing calendar with automated reminders for GIS submission deadlines",
+     "- Entity master data module tracking 5 legal entities with registration details and compliance status"
+    ],
+    "Time Estimate": [
+     "Board meeting cycle: ~1.5 weeks (1 week preparation + 3 days minutes). GIS filing: 1 day per entity. Ongoing compliance monitoring: ~2–3 hours/month."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Chairman",
+     "activity": "**Meeting Prep**: Issue notices for Board/Stockholder meetings; prepare agenda and board packs",
+     "duration": "1 week",
+     "n": "1",
+     "r": "Corp Sec"
+    },
+    {
+     "a": "Chairman",
+     "activity": "**Minutes**: Attend meetings and record minutes; obtain signatures",
+     "duration": "3 days",
+     "n": "2",
+     "r": "Corp Sec"
+    },
+    {
+     "a": "—",
+     "activity": "**GIS Filing**: Prepare and file General Information Sheet (GIS) with SEC within 30 days of meeting",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Corp Sec"
+    },
+    {
+     "a": "—",
+     "activity": "**Stock Ledger**: Maintain Stock and Transfer Book; record any share issuances or transfers",
+     "duration": "Ongoing",
+     "n": "4",
+     "r": "Corp Sec"
+    },
+    {
+     "a": "Corp Sec",
+     "activity": "**Compliance**: Monitor compliance with Revised Corporation Code and SEC regulations",
+     "duration": "Ongoing",
+     "n": "5",
+     "r": "Legal Counsel"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~10–20 active cases at any time with material loss-contingency exposure (labor, consumer, commercial — the accrual-relevant subset of the ~30–80-case litigation docket per W3258)",
+    "Owner": "VP Legal / VP Legal & Compliance",
+    "Participants": "Legal Counsel, HR (for labor), Finance (for provisioning), External Counsel",
+    "Trigger": "Receipt of legal notice, summons, or complaint; or internal decision to initiate legal action",
+    "Volume": "Covers labor disputes, customer injury claims, and vendor disputes"
+   },
+   "id": "W125",
+   "level": 2,
+   "name": "Legal Case & Litigation Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan and attach all documents\" (replaces manual Step 1).",
+     "- System auto-assign of \"Assign internal/external counsel\" (replaces manual Step 2).",
+     "- System auto-count of \"accounting provision\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Labor cases in the Philippines have lengthy timelines (2–5 years for full resolution at NLRC/Court of Appeals), creating sustained legal cost exposure and management distraction.",
+     "- Evidence gathering from stores is unreliable — CCTV footage is overwritten on short retention cycles (typically 14–30 days), and store staff are not trained in evidence preservation protocols.",
+     "- Accounting provision estimates for pending litigation are inherently uncertain; under-provisioning creates P&L surprises at resolution, while over-provisioning distorts financial statements.",
+     "- External counsel costs are difficult to control — hourly billing without caps leads to budget overruns, especially on complex commercial disputes."
+    ],
+    "Staffing Implication": [
+     "New case intake and assessment: 3–4 days per case. Active case management requires ~2–4 hours/week across all 10–20 active cases. With ~10–20 cases running concurrently, 1 Legal Counsel FTE is fully utilized for litigation management, supported by 1 Legal Assistant for intake and document management. External counsel absorbs the bulk of hearing attendance and specialized legal work. No additional internal headcount required unless case volume exceeds 25 active matters.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Legal matter management / case tracking system with document attachment, deadline alerts, and status lifecycle (W125.1)",
+     "- Integration with Finance for accounting provision setup on probable-loss cases (W81 linkage) (W125.3)",
+     "- CCTV and incident report retrieval from store/DC systems for evidence gathering (W125.4)",
+     "- Calendar and deadline management for court dates, filing deadlines, and prescription periods"
+    ],
+    "Time Estimate": [
+     "New case intake and assessment: 3–4 days. Active case management: ongoing (2–4 hours/week across all active cases). Quarterly Board reporting: 4 hours/quarter. Case closure: 1 day per case."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "**Intake**: Receive and log new legal matter in Legal Tracker; scan and attach all documents",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Legal Assistant"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Assessment**: Assign internal/external counsel; determine case strategy and potential liability",
+     "duration": "2–3 days",
+     "n": "2",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Provisioning**: For cases with probable loss, notify Finance to set up accounting provision (W81 linkage)",
+     "duration": "1 day",
+     "n": "3",
+     "r": "VP Legal"
+    },
+    {
+     "a": "—",
+     "activity": "**Fieldwork**: Gather evidence (CCTV, logs, witness statements) from Store/DC/Dept",
+     "duration": "1 week",
+     "n": "4",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Execution**: File response/pleadings; attend hearings; manage mediation/settlement negotiations",
+     "duration": "Ongoing",
+     "n": "5",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Closure**: Record final judgment or settlement; trigger payment (if loss) or recovery (if win)",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Reporting**: Quarterly Board report on legal exposure and case status",
+     "duration": "4 hours",
+     "n": "7",
+     "r": "VP Legal"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3258",
+    "W81"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ongoing; Annual renewal reviews",
+    "Owner": "Legal Counsel",
+    "Participants": "Marketing, Merchandising (Private Label), IP Office (IPO); the dedicated IP value stream VS-100.2 (W3265–W3268) owns portfolio strategy, prosecution, and enforcement — this GL-close workflow operates the renewal/DAU docket and cost postings that touch the financial close",
+    "Trigger": "New private label brand launch (W1); or discovery of trademark infringement",
+    "Volume": "~50–100 active trademarks and designs"
+   },
+   "id": "W126",
+   "level": 2,
+   "name": "Intellectual Property (IP) Portfolio Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-search of \"Conduct trademark availability search\" runs for new brands/logos (replaces manual Step 1 searches).",
+     "- System auto-submit of \"Submit application to Intellectual Property Office\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitoring\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: DAU/renewal docket with lead-time reminders per the IPOPHL schedule; Legal Counsel sign-off on each filing"
+    ],
+    "Pain Points / Risks": [
+     "- IPO Philippines processing times are unpredictable (12–18 months for trademark registration), leaving new private label brands unprotected during the pendency period and vulnerable to copycat filings.",
+     "- Declaration of Actual Use (DAU) filings run on the IPOPHL schedule: the 3rd-year DAU within 3 years of the filing date (one-time 6-month extension available), the 5th-year DAU within 1 year of the 5th anniversary of registration, and the renewal DAU within 1 year before each 10-year renewal. Missing a DAU deadline results in the application/registration being refused or removed.",
+     "- Monitoring for trademark infringement across 200 store locations and online marketplaces is labor-intensive; unauthorized use often goes undetected for months, weakening enforcement claims.",
+     "- Budget allocation for IP enforcement (external counsel fees for Cease & Desist letters, litigation costs) competes with operational legal needs, leading to under-enforcement of marginal infringements."
+    ],
+    "Staffing Implication": [
+     "New trademark filing: 4–5 days per brand launch. Monthly monitoring: 2–4 hours. Annual portfolio maintenance: 4–6 hours for 50–100 marks. Enforcement actions: 1 week per incident (ad-hoc). All IP management activities are absorbed by the existing Legal Counsel role; the volume does not justify a dedicated IP specialist at this portfolio size. External IP counsel may be engaged for complex enforcement or litigation matters.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IP database / portfolio management tool with trademark registration details, renewal dates, and DAU filing deadlines (W126.5)",
+     "- Automated renewal and maintenance fee calendar with email alerts to Legal Counsel",
+     "- Brand monitoring service integration for detecting similar filings or unauthorized use (W126.3)"
+    ],
+    "Time Estimate": [
+     "New trademark filing: 4–5 days (3 days search + 1 day filing + follow-up). Monitoring: 2–4 hours/month for brand watch review. Enforcement (Cease & Desist): 1 week per incident. Annual maintenance: ~4–6 hours/year for portfolio of 50–100 marks."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "**Search**: Conduct trademark availability search for new brands/logos",
+     "duration": "3 days",
+     "n": "1",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "—",
+     "activity": "**Filing**: Submit application to Intellectual Property Office (IPO) of the Philippines",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "Legal Counsel",
+     "activity": "**Monitoring**: Monitor for similar filings or unauthorized use of BuildRight brands",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Marketing"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Enforcement**: Issue Cease & Desist notices to infringers; escalate to litigation (W125) if needed",
+     "duration": "1 week",
+     "n": "4",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "—",
+     "activity": "**Maintenance**: Pay maintenance fees and file Declaration of Actual Use (DAU) per IPO schedule",
+     "duration": "Per schedule",
+     "n": "5",
+     "r": "Legal Counsel"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1",
+    "W125",
+    "W3265",
+    "W3268"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Annual (Planning); Quarterly (Review)",
+    "Owner": "CEO / Chief of Staff",
+    "Participants": "Executive Team (C-Level), Board of Directors",
+    "Trigger": "Annual strategic planning cycle (Q3/Q4)",
+    "Volume": "Corporate-level + 14 Department-level OKRs"
+   },
+   "id": "W127",
+   "level": 2,
+   "name": "Annual Strategic Planning & OKRs",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan\" (replaces manual Step 1).",
+     "- System auto-reconcile of \"Reconcile OKRs with Annual Budget\" (replaces manual Step 4).",
+     "- System auto-review of \"review\" (replaces manual Step 6)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: CEO / Chief of Staff review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- OKR cascading from corporate to department level often produces misaligned or overly ambitious Key Results that are not achievable within budget constraints, creating unrealistic expectations.",
+     "- Quarterly reviews tend to become reporting exercises rather than genuine strategy adjustment discussions; underperforming KRs are often redefined rather than addressed with corrective action.",
+     "- Department-level OKRs may conflict across functions (e.g., Sales targets aggressive growth while Finance targets cost reduction), requiring executive mediation that is inconsistently applied.",
+     "- Budget alignment step (W127.4) frequently reveals that OKR ambitions exceed approved budget, forcing either OKR reduction or budget reallocation mid-cycle."
+    ],
+    "Staffing Implication": [
+     "Annual planning cycle consumes ~5 weeks of concentrated effort, primarily from the Strategy Team (2–3 FTEs) and Executive Team for the 2-day offsite. Quarterly reviews require 2–4 hours each from the full Executive Team. The Chief of Staff absorbs ongoing KR tracking coordination. No dedicated additional headcount required — the workload is episodic and absorbed by existing executive and strategy roles.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Strategic Planning / OKR tracking dashboard with objective-level and department-level key result progress visualization (W127.6)",
+     "- Budget integration module linking OKR initiatives to annual budget line items (W127.4)",
+     "- Town Hall communication module for organization-wide OKR publication"
+    ],
+    "Time Estimate": [
+     "Annual planning cycle: ~5 weeks (2 weeks environmental scan + 2 days strategy offsite + 1 week OKR cascading + 1 week budget alignment + 1 hour communication). Quarterly reviews: 2–4 hours per quarter. Ongoing KR tracking: automated via dashboard."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "**Environmental Scan**: Analyze market trends, macroeconomics, and SWOT",
+     "duration": "2 weeks",
+     "n": "1",
+     "r": "Strategy Team"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Strategy Offsite**: Define 3-year vision and Top 5 Objectives for the coming year",
+     "duration": "2 days",
+     "n": "2",
+     "r": "Executive Team"
+    },
+    {
+     "a": "CEO",
+     "activity": "**OKR Cascading**: Departments define Key Results (KRs) aligned to corporate Objectives",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Dept Heads"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Budget Alignment**: Reconcile OKRs with Annual Budget (W26)",
+     "duration": "1 week",
+     "n": "4",
+     "r": "CFO"
+    },
+    {
+     "a": "—",
+     "activity": "**Communication**: Publish OKRs to the organization via Town Hall",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "CEO"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Quarterly Review**: Track progress vs. KRs; adjust tactics if needed",
+     "duration": "Quarterly",
+     "n": "6",
+     "r": "Executive Team"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W26"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ongoing",
+    "Owner": "Project Management Office (PMO) Lead",
+    "Participants": "Project Manager, SteerCo (Sponsors), Dept Heads",
+    "Trigger": "Approved strategic initiative (e.g., ERP implementation, new DC)",
+    "Volume": "5–10 major capital/IT projects active"
+   },
+   "id": "W128",
+   "level": 2,
+   "name": "Enterprise Project Management (EPM) Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"Assign internal resources and onboard vendors\" (replaces manual Step 2).",
+     "- System auto-monitor of \"Execution & Monitoring\" (replaces manual Step 3).",
+     "- System rule-based auto-approval of \"Approve deviations in scope or budget\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Project Management Office (PMO) Lead review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Project scope creep is endemic — business stakeholders continuously add requirements during execution without formal change control, leading to timeline delays and budget overruns.",
+     "- Internal resources are pulled from operational duties for project work, creating a dual strain on department capacity (operational gaps + project delays when resources are pulled back to operations).",
+     "- UAT participation from department users is often treated as low priority, resulting in rushed testing that misses defects discovered only after go-live.",
+     "- Post-Implementation Reviews are frequently skipped or superficially executed due to pressure to move resources to the next project, losing valuable lessons-learned data."
+    ],
+    "Staffing Implication": [
+     "Each active project requires ~4–8 hours/week of dedicated project management effort. With 5–10 concurrent projects, the PMO Lead role is a full-time position (40–60 hours/week). Individual Project Managers are assigned per major initiative. Internal resources are seconded from departments on a part-time basis for project work, creating dual-reporting strain. The PMO function requires dedicated headcount — it cannot be absorbed by existing operational roles.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Enterprise Project Management tool with project charter templates, Gantt chart scheduling, milestone tracking, and resource allocation (W128.1–3)",
+     "- Change control workflow integration with capex approval (W21) for scope and budget deviations (W128.4)",
+     "- UAT tracking module linked to IT service management for go-live validation (W128.5)"
+    ],
+    "Time Estimate": [
+     "Project charter and mobilization: 2–4 weeks. Active project management: ongoing (~4–8 hours/week per active project for PM). Post-Implementation Review: 1 week. With 5–10 active projects, PMO Lead spends ~40–60 hours/week on project oversight."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Sponsor",
+     "activity": "Project Charter: Define scope, budget, timeline, and ROI",
+     "duration": "2 weeks",
+     "n": "1",
+     "r": "Project Manager"
+    },
+    {
+     "a": "Sponsor",
+     "activity": "Team Mobilization: Assign internal resources and onboard vendors",
+     "duration": "2 weeks",
+     "n": "2",
+     "r": "PMO Lead"
+    },
+    {
+     "a": "PMO Lead",
+     "activity": "Execution & Monitoring: Weekly status reports vs. milestones",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Project Manager"
+    },
+    {
+     "a": "Sponsor",
+     "activity": "Change Control: Approve deviations in scope or budget (W21)",
+     "duration": "Ad-hoc",
+     "n": "4",
+     "r": "SteerCo"
+    },
+    {
+     "a": "Sponsor",
+     "activity": "UAT & Go-Live: Final validation (W73 for IT)",
+     "duration": "1–4 weeks",
+     "n": "5",
+     "r": "Dept Users"
+    },
+    {
+     "a": "CEO",
+     "activity": "Post-Implementation Review (PIR): Capture lessons learned",
+     "duration": "1 week",
+     "n": "6",
+     "r": "PMO Lead"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W21",
+    "W73"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Monthly provision posting; quarterly fund remittance; annual actuarial valuation; retirement events as-needed (~50–80 retirements/year based on workforce demographics)",
+    "Owner": "CFO",
+    "Participants": "HR Manager, Controller, External Actuary, Trust Bank, Finance Clerk",
+    "Trigger": "Employee retirement; annual actuarial valuation; monthly fund contribution",
+    "Volume": "~6,762 employees across 5 entities; retirement trust fund balance estimated PHP 150–250M"
+   },
+   "id": "W175",
+   "level": 2,
+   "name": "Employee Gratuity & Retirement Fund Management (RA 7641)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates retirement expense provision based on salary and service years per…\" (replaces manual Step 1)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Actuarial volatility hitting P&L**: PAS 19 remeasurement gains/losses (from changes in discount rate, salary escalation assumptions, or employee demographics) flow through Other Comprehensive Income and can swing equity by tens of millions of pesos year-over-year; explaining actuarial volatility to the Board during quarterly reporting (W35) requires CFO preparation",
+     "- **Multi-entity retirement plan splitting**: 5 legal entities each require separate actuarial valuations and trust fund tracking; employee transfers between entities (e.g., Depot Inc. to Logistics Inc.) require liability transfers that are administratively complex and easy to misrecord",
+     "- **RA 7641 compliance risk**: if BuildRight's retirement plan terms are less generous than RA 7641 minimums (0.5 month salary per year of service), the plan is non-compliant and exposes the company to DOLE claims; annual legal review of plan terms versus statutory minimums is essential; mitigated by standard operating procedures and system-enforced validation rules",
+     "- **Trust fund underfunding**: quarterly cash contributions to the trust fund (step 2) may lag behind the growing defined benefit obligation, especially during rapid headcount growth from new store openings (W16); underfunding triggers additional disclosure requirements and increases actuarial expense"
+    ],
+    "Staffing Implication": [
+     "- **CFO**: annual actuarial valuation review and PAS 19 disclosure add ~4–6 hours/year; absorbed within existing CFO responsibilities during year-end close and annual report preparation",
+     "- **1 Controller**: monthly provision review and retirement liability GL reconciliation add ~1–2 hours/month; absorbed within month-end close duties",
+     "- **1 Finance Clerk**: retirement disbursement processing adds ~2 hours per event × ~50–80 events/year ≈ 100–160 hours/year; during peak retirement seasons, this may require temporary backfill or overtime",
+     "- **No incremental headcount**: retirement events are spread throughout the year; the Finance Clerk role is shared with other GL accounting duties",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Employee service-year tracking",
+     "- Automatic monthly provision (Accrual) posting",
+     "- Integration with Payroll (W10) for final pay computation",
+     "- Actuarial gain/loss adjustment entry (OCI)"
+    ],
+    "Time Estimate": [
+     "- Monthly provision posting: automated (system-calculated)",
+     "- Quarterly fund contribution processing: ~30 min/quarter (Treasury Manager)",
+     "- Annual actuarial valuation coordination: ~1 week (External Actuary) + ~4 hours CFO review",
+     "- Per-retirement event: ~2 hours (HR computation + Finance disbursement + system posting)",
+     "- Retirement events (~50–80/year): ~100–160 hours/year (~8–13 hours/month average)",
+     "- Total retirement management: ~10–15 hours/month (Finance) + ~1 week/year (actuarial)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "**Provisioning**: Monthly: Finance calculates retirement expense provision based on salary and service years per RA 7641",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Fund Contribution**: Quarterly: Treasury remits cash to the retirement trust fund managed by a Trust Bank",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Treasury Mgr"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Annual Valuation**: External Actuary performs PFRS-compliant valuation (PAS 19) of the defined benefit obligation",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Actuary"
+    },
+    {
+     "a": "—",
+     "activity": "**Retirement Trigger**: Employee reaches retirement age or qualifies for early retirement",
+     "duration": "—",
+     "n": "4",
+     "r": "HR Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Computation**: HR calculates retirement pay per law (at least 1/2 month salary per year of service)",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "HR Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Disbursement**: Trust Bank releases funds to the employee; Finance adjusts the retirement liability in ERP",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Finance Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W16",
+    "W35"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ongoing; Annual review of all policies",
+    "Owner": "VP for Legal & Compliance",
+    "Participants": "Subject Matter Experts (SMEs), Dept Heads, Internal Audit",
+    "Trigger": "Need for new process, regulatory change, or periodic review",
+    "Volume": "~200–300 SOPs and Policies group-wide"
+   },
+   "id": "W186",
+   "level": 2,
+   "name": "Internal SOP & Policy Governance Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"checks for regulatory alignment\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves the final version\" (replaces manual Step 4).",
+     "- System auto-notify of \"notify all staff\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: VP for Legal & Compliance review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- SOP drafting quality varies significantly across departments — SMEs are process experts but not technical writers, producing documents that are ambiguous, incomplete, or inconsistent with the corporate template.",
+     "- Cross-functional stakeholder review (W186.3) is a chronic bottleneck; reviewers provide feedback asynchronously over weeks, delaying publication and allowing operational changes to outpace documented procedures.",
+     "- Digital acknowledgement completion rates are tracked but not enforced — staff who fail to acknowledge updated SOPs within the deadline face no automated consequence, undermining compliance culture.",
+     "- Biennial review triggers (W186.8) are often missed because no automated reminder exists; many SOPs become outdated without formal review, creating a gap between documented and actual practice.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Document Management System (DMS) for SOP Version Control with check-in/check-out, version numbering, and change history (W186.1, 5, 8)",
+     "- Digital Acknowledgement / E-learning tracking platform for staff training completion records (W186.6)",
+     "- Compliance review workflow with approver routing for Legal and Executive sign-off (W186.2–4)",
+     "- Integration with Internal Audit scheduling for compliance verification during audits (W186.7)"
+    ],
+    "Time Estimate": [
+     "New SOP creation: ~4 weeks (1 week drafting + 3 days compliance review + 3 days stakeholder review + 2 days approval + 1 day publication + 1 week training = 19 workdays). SOP update: ~1 week. Annual review of all policies: ~40–60 hours/year for Compliance Manager. Enforcement audits: ongoing per Internal Audit schedule."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dept Head",
+     "activity": "SOP Draft: SME drafts process steps using standard corporate template",
+     "duration": "1 week",
+     "n": "1",
+     "r": "SME"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Compliance Review: Legal/Compliance checks for regulatory alignment",
+     "duration": "3 days",
+     "n": "2",
+     "r": "Compliance Mgr"
+    },
+    {
+     "a": "—",
+     "activity": "Stakeholder Review: Cross-functional review for handoff alignment",
+     "duration": "3 days",
+     "n": "3",
+     "r": "Dept Heads"
+    },
+    {
+     "a": "—",
+     "activity": "Approval: Executive Sponsor or VP Legal approves the final version",
+     "duration": "2 days",
+     "n": "4",
+     "r": "VP Legal"
+    },
+    {
+     "a": "—",
+     "activity": "Publication: Upload to Corporate Portal/Intranet; notify all staff",
+     "duration": "1 day",
+     "n": "5",
+     "r": "Admin"
+    },
+    {
+     "a": "—",
+     "activity": "Training: Relevant staff complete training and digital acknowledgement",
+     "duration": "1 week",
+     "n": "6",
+     "r": "HR / Dept Head"
+    },
+    {
+     "a": "—",
+     "activity": "Enforcement & Audit: Internal Audit checks compliance during audits",
+     "duration": "Ongoing",
+     "n": "7",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "—",
+     "activity": "Retirement/Update: Archive old versions; trigger update every 2 years",
+     "duration": "Periodic",
+     "n": "8",
+     "r": "Compliance Mgr"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-154"
+   ],
+   "fields": {
+    "Frequency": "High; ~40–60 contracts/month",
+    "Owner": "Legal Counsel",
+    "Participants": "Requesting Dept, Legal, External Party",
+    "Trigger": "Request for contract review from any department (Procurement, Property, Marketing)",
+    "Volume": "Lease agreements, vendor master contracts, service agreements"
+   },
+   "id": "W230",
+   "level": 2,
+   "name": "Legal Contract Review & Approval",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits draft contract or request via Legal Portal with business terms\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews\" (replaces manual Step 2).",
+     "- System auto-generate of \"Generate final execution version\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-154 (ensure legal matter & IP portfolio control — contract obligations tracked to fulfillment)",
+     "- operational: authority-matrix sign-off gate — CLM blocks contract execution absent the required VP/CEO approval"
+    ],
+    "Pain Points / Risks": [
+     "- High volume (~40–60 contracts/month) creates a legal review bottleneck; departments bypass Legal for \"standard\" contracts, exposing the company to unreviewed risk in vendor terms and liability clauses.",
+     "- Contract negotiation with external parties often extends beyond the 1–2 week target due to unresponsive counterparties, delaying vendor onboarding, lease commencement, or marketing campaign execution.",
+     "- Executed contracts are sometimes filed without proper indexing in the DMS, making retrieval difficult during disputes or audits — the reliance on manual scanning and tagging introduces human error.",
+     "- Signature authority matrix is not consistently enforced; contracts occasionally reach final execution without the required VP or CEO sign-off, creating governance gaps."
+    ],
+    "Staffing Implication": [
+     "At ~40–60 contracts/month, Legal Counsel spends ~20–30 hours/week on contract review alone — half to three-quarters of one FTE, a dedicated standing workload. The Legal Assistant contributes ~30 minutes per contract for archiving (20–30 hours/month). This volume justifies dedicated Legal Counsel headcount for contract review and cannot be sustainably absorbed alongside litigation and IP management duties without either hiring additional counsel or implementing a CLM system to reduce review time.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contract Lifecycle Management (CLM) / Legal Portal with contract request submission, review workflow, and digital approval routing (W230.1–4)",
+     "- Document Management System (DMS) for executed contract storage with version control and full-text search (W230.5)",
+     "- Signature authority matrix integration for routing contracts to correct approvers based on contract type and value"
+    ],
+    "Time Estimate": [
+     "Standard contract review: 3–5 days per contract. Negotiation cycle: 1–2 weeks. Archiving: 30 min per contract. With ~40–60 contracts/month, Legal Counsel spends ~20–30 hours/week on contract review."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Submission**: Dept submits draft contract or request via Legal Portal with business terms",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Dept Manager"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Review**: Legal reviews for risks, compliance, and alignment with company standards",
+     "duration": "3–5 days",
+     "n": "2",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "Dept Manager",
+     "activity": "**Negotiation**: Collaborative editing with external party to finalize terms",
+     "duration": "1–2 weeks",
+     "n": "3",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "CEO/CFO",
+     "activity": "**Finalization**: Generate final execution version; obtain internal signatures per Matrix",
+     "duration": "1 day",
+     "n": "4",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "—",
+     "activity": "**Archiving**: Scan and file executed contract in Document Management System (DMS)",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Legal Assistant"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Project-based (10-15 per year)",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Engineering/Project Manager (W225), AP Clerk (W7), Fixed Asset Accountant, Controller (approval for capitalization), IT Asset Manager (for IT equipment classification)",
+    "Trigger": "A new store construction project begins (W225), requiring cost accumulation over several months before go-live.",
+    "Volume": "Hundreds of AP invoices per project; typical new store build-out costs PHP 15–30M with 30–60 capitalized asset components (HVAC, racking, shelving, lighting, leasehold improvements, POS hardware, IT infrastructure, signage)"
+   },
+   "id": "W276",
+   "level": 2,
+   "name": "Asset Under Construction (AUC) & Mass Capitalization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"creates an Internal Order / WBS Element tagged as Asset Under Construction\" (replaces manual Step 1).",
+     "- System auto-post of \"posts all contractor invoices, materials, and direct labor against this AUC…\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant executes a mass settlement profile in the ERP.\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Costs stranded in AUC indefinitely**: if Engineering delays Store Operational Handover (W227) or AP posts invoices to the wrong WBS element, costs accumulate in AUC without generating depreciation expense; this understates operating expenses and overstates assets until the issue is discovered — often during year-end audit (W9B); Fixed Asset Accountant must run monthly AUC aging report and escalate projects > 90 days post-handover without capitalization",
+     "- **Allocation rule accuracy**: predefined allocation rules must be updated when store format changes (e.g., a new \"express\" format with different asset mix than standard stores); incorrect allocation rules distribute costs to wrong asset classes with wrong useful lives, distorting depreciation for years until corrected",
+     "- **Threshold ambiguity for expense vs. capitalize**: contractor invoices may include items that should be expensed (e.g., maintenance on adjacent property, pre-opening marketing) but get incorrectly posted to AUC; Controller must review AUC line items before mass settlement to reclassify non-capitalizable costs to the appropriate expense accounts",
+     "- **Multi-vendor coordination**: a single store build-out involves 10–20 contractors and suppliers posting invoices over 6+ months; if the Engineering/Project Manager does not flag change orders or scope variations, the final capitalized cost may exceed the approved capex (W21) without triggering re-approval"
+    ],
+    "Staffing Implication": [
+     "- **1 Fixed Asset Accountant**: AUC management and mass capitalization adds ~4–6 hours per store project × 10–15 projects/year = ~40–90 hours/year; with ~10 projects active simultaneously during peak expansion, the FA Accountant needs ~15–25 hours/month during construction season; absorbed within existing Finance team but is the FA Accountant's primary responsibility during Q4–Q1 expansion periods",
+     "- **1 Controller**: capitalization approval and AUC line-item review add ~2–3 hours per project; with 10–15 projects/year, this is ~20–45 hours/year; absorbed within existing Controller duties",
+     "- **AP Clerks (shared)**: posting contractor invoices to AUC WBS elements adds minimal incremental effort vs. standard W7 invoice processing (~10 min/invoice)",
+     "- **No incremental headcount**: the Fixed Asset Accountant absorbs AUC management as a core responsibility; however, if expansion accelerates beyond 20 new stores/year, a dedicated Project Accountant role should be considered",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Project System (WBS)**: Internal Order / WBS element creation for each new store project; cost accumulation by cost element (materials, labor, contractor fees, permits); integration with W225 (store construction project management) and W227 (operational handover confirmation)",
+     "- **Accounts Payable (W7)**: contractor invoices and material purchase orders posted directly to AUC WBS element rather than expense; 3-way match (PO → GR → Invoice) still applies but goods receipt is project-based rather than inventory-based",
+     "- **Fixed Assets module**: mass capitalization from AUC settlement; predefined allocation rules mapping WBS cost elements to fixed asset classes (e.g., cost element \"HVAC materials\" → asset class \"Building Improvements\"); individual asset records created with asset tag, location, useful life, and depreciation method per asset class",
+     "- **Integration with W21 (Capex)**: original capex request and approval tied to AUC WBS element; actual vs. budgeted capex cost report generated at capitalization; Controller validates that total capitalized cost does not exceed approved capex amount without additional approval",
+     "- **Integration with W39 (Disposal)**: if a store is closed (W45) before lease end, leasehold improvements capitalized through AUC may require accelerated depreciation or write-off"
+    ],
+    "Time Estimate": [
+     "4–6 hours per store capitalization (including AUC cleanup, allocation review, Controller validation, and asset register update)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "Finance creates an Internal Order / WBS Element tagged as Asset Under Construction (AUC).",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "AP posts all contractor invoices, materials, and direct labor against this AUC over 6 months.",
+     "duration": "10 min/invoice",
+     "n": "2",
+     "r": "AP Clerk"
+    },
+    {
+     "a": "VP Store Dev",
+     "activity": "Engineering confirms Store Operational Handover (W227).",
+     "duration": "Per W227",
+     "n": "3",
+     "r": "Engineering/PM"
+    },
+    {
+     "a": "Controller",
+     "activity": "Fixed Asset Accountant executes a mass settlement profile in the ERP.",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "The system zero-balances the AUC and distributes the millions in costs across dozens of distinct Capitalized Fixed Assets (HVAC, racking, leasehold improvements) based on predefined allocation rules.",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Depreciation begins automatically on the newly created assets.",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W21",
+    "W225",
+    "W227",
+    "W39",
+    "W45",
+    "W7",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~5–10 incidents reported monthly across 200 stores",
+    "Owner": "Legal Counsel (Claims/Litigation)",
+    "Participants": "Store Manager, Loss Prevention Officer, Customer Experience Team, VP Legal & Compliance, Insurance Provider, External Legal Counsel",
+    "Trigger": "Customer injury, slip/trip/fall, property damage, or product liability incident occurring on store/DC premises, or caused by a product sold by the company",
+    "Volume": "~60–120 cases per year"
+   },
+   "id": "W285",
+   "level": 2,
+   "name": "Public Liability & Customer Incident Claims Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs details of the incident\" (replaces manual Step 1).",
+     "- System auto-register of \"register.\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews incident report and evidence\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Legal Counsel (Claims/Litigation) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Delayed Incident Reporting**: Store Managers sometimes fail to log incidents immediately, leading to overwritten CCTV footage (typically 14–30 day retention cycles) and making liability verification difficult.",
+     "- **Social Media Escalation**: Slips, trips, or falls in-store can quickly escalate into brand-damaging social media posts (crisis communication risk per W134) if store staff fail to respond with empathy and quick resolution.",
+     "- **Incomplete Documentation**: Missing police/barangay blotter details (W471) or inadequate medical bills/receipts delaying insurance claim approval.",
+     "- **Fraudulent Claims**: Risk of fabricated or exaggerated injury claims to seek financial payouts, requiring rigorous evidence gathering and CCTV audits."
+    ],
+    "Staffing Implication": [
+     "Managing ~5–10 incidents per month requires ~30–100 hours of active legal and store management effort monthly. This is absorbed by the standing Store Managers (for intake), Legal Assistant (for insurance filing and waiver archiving), and Legal Counsel (for major settlement negotiation). No additional headcount is required, but the process demands cross-functional coordination.",
+     "---"
+    ],
+    "Staffing Implication (Governance Domain)": [
+     "The governance domain (W124–W128, W186, W230–W231, W285, W426) collectively requires: 1 Corporate Secretary, 1 VP Legal / VP Legal & Compliance, 1–2 Legal Counsel FTEs (split between litigation and contracts), 1 Legal Assistant, 1 PMO Lead, and 1 Compliance Manager. The Chief of Staff and Strategy Team absorb OKR and QBR coordination. With 200–300 SOPs and the annual COI disclosure cycle for ~6,762 employees, the Compliance Manager role is at full capacity. The highest staffing pressure is in Legal, where contract review volume combined with litigation case management may necessitate a second Legal Counsel hire as the company scales.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Incident Management Portal for incident logging, witness registry, and media upload (W285.1)",
+     "- CCTV system (W71) integration for footage bookmarking and archiving (W285.2)",
+     "- CLM / Legal Portal for drafting and approval of Release and Waiver agreements (W285.6)",
+     "- Insurance Module (W59 linkage) for tracking claim filing, adjuster reviews, and settlements (W285.4)",
+     "- ERP Finance / POS integration (W101 linkage) for settlement pay-out execution (W285.6a)"
+    ],
+    "System Touchpoints (Governance)": [
+     "- Corporate records document management (Board minutes, Resolutions)",
+     "- Legal matter management tracking (Litigation status, deadlines)",
+     "- Strategic Planning/OKR tracking dashboard",
+     "- Enterprise Project Management tool (Milestones, Gantt, Resource allocation)",
+     "- IP database link for renewal tracking",
+     "- Document Management System (DMS) for SOP Version Control (W186.5)",
+     "- Digital Acknowledgement / E-learning tracking (W186.6)",
+     "- Contract Lifecycle Management (CLM) / Legal Portal",
+     "- BI Dashboard (W113) for KPI tracking"
+    ],
+    "Time Estimate": [
+     "- Incident logging and evidence gathering: 1–2 hours per incident.",
+     "- Liability assessment and insurance filing: 2–3 hours.",
+     "- Settlement negotiations and waiver execution: 2–10 hours depending on complexity.",
+     "- Total active cycle per case: ~5–15 hours."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Incident Intake & Reporting**: Store Manager logs details of the incident (e.g. customer slip/fall, merchandise falling, property damage) in the Incident Portal within 2 hours of occurrence; uploads photos, witness contact info, and initial description.",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Evidence Preservation**: Loss Prevention Officer secures and archives CCTV footage (W71 integration) covering 1 hour before and after the incident; logs evidence in the security incident register.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "LP Officer"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Liability Assessment**: Legal Assistant reviews incident report and evidence; classifies the case under public liability or product liability; notifies VP Legal & Compliance.",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Legal Assistant"
+    },
+    {
+     "a": "—",
+     "activity": "**Insurance Claim Initiation**: Legal Assistant files a claim with the insurance provider via the Insurance Portal (W59 linkage), attaching the incident report, CCTV footage, and police/barangay blotters (W471 linkage).",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Legal Assistant"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Settlement Negotiation**: For minor claims, Store Manager or Customer Experience Lead conducts initial settlement talks (e.g. medical expense reimbursement, store credit) within approved thresholds. For major claims, Legal Counsel leads negotiations.",
+     "duration": "2–5 days",
+     "n": "5",
+     "r": "Store Mgr / Legal Counsel"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Resolution & Release**: Legal Counsel drafts the Release and Waiver agreement; routes for signature; initiates customer refund or settlement payment execution (W101 linkage). Unresolved claims escalate to active litigation (W125).",
+     "duration": "2 days",
+     "n": "6",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "—",
+     "activity": "**Preventive Review**: LP Officer and Facilities Coordinator review incident patterns to identify store hazard trends (e.g. poor lighting, wet floors during rotational brownouts per W470) and trigger store maintenance work orders (W47).",
+     "duration": "2 hours",
+     "n": "7",
+     "r": "LP Officer / Facilities Coord"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W101",
+    "W113",
+    "W124",
+    "W125",
+    "W128",
+    "W134",
+    "W186",
+    "W230",
+    "W231",
+    "W426",
+    "W47",
+    "W470",
+    "W471",
+    "W59",
+    "W71"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "Compliance Manager",
+    "Participants": "All Employees, All Vendors, VP Legal & Compliance, Internal Audit",
+    "Trigger": "Annual corporate governance calendar (typically Q1)",
+    "Volume": "~6,762 employees (all regular staff) + ~800–1,000 active vendors"
+   },
+   "id": "W426",
+   "level": 2,
+   "name": "Annual Conflict of Interest (COI) & Gift Policy Disclosure",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"log into the HR portal to complete the digital COI form —\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews disclosures\" (replaces manual Step 4).",
+     "- System auto-document of \"document the decision\" (replaces manual Step 5)."
+    ],
+    "Background": [
+     "As a large Philippine corporation with significant procurement spend and a mix of family/professional management, maintaining a transparent \"Conflict of Interest\" (COI) environment is critical. This workflow ensures that all employees (especially those in Procurement, Store Management, and Finance) and all active vendors disclose any familial, financial, or professional relationships that could influence business decisions."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Compliance Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Non-Disclosure of Family Ties**: In the Philippine context, \"Kamag-anak Inc.\" (hiring relatives) is culturally common; failure to disclose these relationships in Procurement or HR creates significant fraud risk",
+     "- **Low Completion Rates**: Without automated blocks (e.g., blocking system access until COI is completed), employees often ignore the disclosure requirement, leading to gaps in the compliance record",
+     "- **Vendor Pushback**: Small vendors may find the disclosure process cumbersome or intrusive, potentially opting out of the vendor pool"
+    ],
+    "Staffing Implication": [
+     "Annual cycle requires ~1–2 weeks of concentrated review for the Compliance Manager. The digital nature of the disclosure (via portals) minimizes administrative overhead. Total: ~40–60 hours/year, absorbed by the Compliance Manager role."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR Portal (COI Module): digital form for employee disclosures with automated tracking of completion rates (W426.2)",
+     "- Vendor Portal: digital integrity statement for vendor disclosures (W426.3)",
+     "- Compliance Dashboard: tracks disclosure status, flags positive disclosures, and stores mitigation plans (W426.4–5)",
+     "- Integration with W15 (Onboarding — initial disclosure) and W120 (Internal Audit)"
+    ],
+    "Time Estimate": [
+     "**Total**: Cycle launch — 1 day; Employee/Vendor submission — 2 weeks; Initial screening — 3 days; Validation & action — 1 week; **Total cycle: ~4 weeks per year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "**Cycle Launch**: Compliance Manager triggers the annual COI disclosure campaign via the HR portal and Vendor Portal",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Compliance Mgr"
+    },
+    {
+     "a": "—",
+     "activity": "**Employee Disclosure**: All regular employees log into the HR portal to complete the digital COI form — (a) confirm awareness of the COI/Gift Policy; (b) disclose any relatives working within BuildRight; (c) disclose any personal interest in vendors/competitors; (d) record \"Nil\" if no conflicts exist",
+     "duration": "15 min",
+     "n": "2",
+     "r": "All Employees"
+    },
+    {
+     "a": "—",
+     "activity": "**Vendor Disclosure**: Active vendors log into the Vendor Portal to complete the annual Vendor Integrity Statement — (a) disclose any relatives of BuildRight employees working for the vendor; (b) confirm compliance with the No-Gift Policy",
+     "duration": "20 min",
+     "n": "3",
+     "r": "All Vendors"
+    },
+    {
+     "a": "—",
+     "activity": "**Initial Screening**: Compliance Manager reviews disclosures; system flags \"Positive\" disclosures (where a relationship is declared) for manual review",
+     "duration": "3 days",
+     "n": "4",
+     "r": "Compliance Mgr"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Validation & Action**: For flagged cases, Compliance Manager validates with the relevant Dept Head — (a) determine if a conflict exists; (b) implement \"Conflict Mitigation Plan\" (e.g., recusal from specific tenders, transfer of reporting line); (c) document the decision",
+     "duration": "1 week",
+     "n": "5",
+     "r": "Compliance Mgr / Dept Head"
+    },
+    {
+     "a": "—",
+     "activity": "**Audit Trail**: Disclosures and mitigation plans are archived for Internal Audit review (W120)",
+     "duration": "1 day",
+     "n": "6",
+     "r": "Compliance Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W120",
+    "W15"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "~10–20 per month",
+    "Owner": "Credit Manager",
+    "Participants": "B2B Sales Rep, Credit Analyst, Legal, Tax Manager, Customer",
+    "Trigger": "B2B Sales Rep submits new customer application",
+    "Volume": "High-value accounts (PHP 1M+ potential annual spend)"
+   },
+   "id": "W460",
+   "level": 2,
+   "name": "Corporate & Trade Account Onboarding",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Document Collection\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks credit references, and performs a litigation search\" (replaces manual Step 2).",
+     "- System auto-calculate of \"calculates suggested credit limit based on FS ratios and trade references\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Credit Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Shell-entity risk**: onboarding a business with unverifiable SEC/DTI registration or fabricated trade references books credit exposure to an uncollectable account; mitigated by KYC due diligence with litigation search and trade-reference verification before Credit Manager approval (steps 2, 5)",
+     "- **EWT-exposure risk**: skipping the withholding-agent verification at onboarding under-withholds EWT on subsequent service invoices across 5 entities; mitigated by Tax Manager verification of BIR 2303 and withholding status before account activation (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer Master with Credit Limit and Terms",
+     "- Document Management (W255) for MSA and BIR 2303",
+     "- B2B Customer Portal for order placement and statement viewing"
+    ],
+    "Time Estimate": [
+     "2 hours per occurrence (per-step effort 30 min + 1 hour + 30 min); elapsed timeline 2-3 days + 1 day + 3-5 days — at ~10–20 per month ≈ 120–240 occurrences/year ≈ 240–480 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Document Collection**: Sales Rep collects SEC/DTI registration, BIR 2303, latest FS, and signed Credit Application Form",
+     "duration": "2-3 days",
+     "n": "1",
+     "r": "Sales Rep"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "**KYC & Due Diligence**: Credit Analyst verifies business existence, checks credit references, and performs a litigation search",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Credit Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Tax Verification**: Tax Manager verifies BIR registration and confirms \"Withholding Agent\" status for EWT compliance",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Credit Limit Scoring**: System calculates suggested credit limit based on FS ratios and trade references",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Approval**: Credit Manager reviews the pack; approves credit limit and payment terms (Net 30/60)",
+     "duration": "1 hour",
+     "n": "5",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Contract Execution**: Legal prepares the Master Sales Agreement (MSA); customer signs",
+     "duration": "3-5 days",
+     "n": "6",
+     "r": "Legal / Customer"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "**Account Activation**: AR Clerk creates Customer Master in ERP; attaches MSA and BIR documents; enables B2B Portal access",
+     "duration": "30 min",
+     "n": "7",
+     "r": "AR Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W255"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc (Emergency); Quarterly review",
+    "Owner": "COO / Crisis Management Team",
+    "Participants": "CIO, VP Supply Chain, VP Store Operations, CHRO, Legal",
+    "Trigger": "Natural disaster (Typhoon, Earthquake) or major system failure",
+    "Volume": "Regional (subset of stores) or National (entire group)"
+   },
+   "id": "W465",
+   "level": 2,
+   "name": "Network-Wide Disaster Recovery & BCP",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-detect of \"detection\" (replaces manual Step 1).",
+     "- System auto-report of \"report status via emergency satellite/LTE comms\" (replaces manual Step 2).",
+     "- System auto-capture of \"center fails, IT triggers cloud failover to ensure POS and ERP availability\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Communication Blackout**: Failure of local telco networks during typhoons prevents status reporting.",
+     "- **Logistics Chokepoints**: Rerouting stock is ineffective if major highways or ports are physically destroyed."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cloud DR Instance (POS/ERP)",
+     "- Supply Chain Control Tower (W250) for real-time shipment redirection",
+     "- HR Crisis Contact List (Automated SMS broadcast)"
+    ],
+    "Time Estimate": [
+     "~11–13 hours of crisis-management effort per activation (CMT convening 1 hour + damage assessment 2–4 hours + IT fallback 1 hour + supply-chain rerouting 4 hours + emergency inventory push 2 hours + internal/external communications 1 hour); ad-hoc at incident frequency with a quarterly BCP review cycle (cloud failover keeps POS running during assessment).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "**Crisis Activation**: Crisis Management Team (CMT) convenes within 1 hour of incident detection",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "CMT"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Damage Assessment**: Stores/DCs report status via emergency satellite/LTE comms; assess staff safety and inventory",
+     "duration": "2-4 hours",
+     "n": "2",
+     "r": "Store/DC Mgr"
+    },
+    {
+     "a": "CIO",
+     "activity": "**IT Fallback**: If HQ/DC1 data center fails, IT triggers cloud failover to ensure POS and ERP availability",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "IT Team"
+    },
+    {
+     "a": "COO",
+     "activity": "**Supply Chain Rerouting**: If DC3 (Laguna) is blocked, Supply Chain redirects shipments from DC1 (Davao) or DC2 (Cebu)",
+     "duration": "4 hours",
+     "n": "4",
+     "r": "VP Supply Chain"
+    },
+    {
+     "a": "VP Merch",
+     "activity": "**Emergency Inventory Push**: Auto-replenishment overridden; push emergency goods (tarps, generators, water) to affected zones",
+     "duration": "2 hours",
+     "n": "5",
+     "r": "System / Planner"
+    },
+    {
+     "a": "CMO",
+     "activity": "**Communication**: Internal (staff safety) and External (store status to customers/social media) messaging",
+     "duration": "1 hour",
+     "n": "6",
+     "r": "Marketing / HR"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W250"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Quarterly meetings; continuous policy oversight",
+    "Owner": "Chief Data Officer (or CIO acting as DGC Chair)",
+    "Participants": "CIO, CFO, VP Supply Chain, VP Merchandising, Master Data Manager, BI Manager, Data Privacy Officer",
+    "Trigger": "Scheduled quarterly DGC meeting, or ad-hoc escalation of data policy disputes",
+    "Volume": "4 scheduled meetings/year; 2-5 major policy reviews/year; ad-hoc escalations"
+   },
+   "id": "W474",
+   "level": 2,
+   "name": "Enterprise Data Governance Council Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"Enterprise Data Quality Scorecard, highlighting critical gaps, duplicate rates,…\" (replaces manual Step 1).",
+     "- System auto-review of \"Dispute Escalation Review\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves new or updated enterprise data policies, including data…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Chief Data Officer (or CIO acting as DGC Chair) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Lack of Executive Attendance**: Leading to unresolved data disputes.",
+     "- **Poor Operationalization**: Policies created by the Council are not enforced by the Data Stewards in the ERP."
+    ],
+    "Staffing Implication": [
+     "Executive time commitment of ~2–4 hours per quarter. Preparation time for Master Data/BI Managers (~4 hours/quarter)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Enterprise Data Catalog (for publishing approved definitions and policies)",
+     "- MDM Governance Dashboard (for KPI review)",
+     "- IT Service Management / Ticketing (for logging and tracking data disputes and escalations)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~4 hours per quarter for the core DGC meeting.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**Agenda Preparation & KPI Review**: Master Data Manager and BI Manager compile the Enterprise Data Quality Scorecard, highlighting critical gaps, duplicate rates, and compliance issues across all data domains.",
+     "duration": "4 hours/quarter",
+     "n": "1",
+     "r": "Master Data Manager"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Dispute Escalation Review**: If functional data stewards disagree on a global data definition (e.g., how \"Net Sales\" is calculated, or the hierarchy of a customer), the issue is escalated to the DGC. The Council reviews the business impact and arbitrates a final binding decision.",
+     "duration": "1 hour/issue",
+     "n": "2",
+     "r": "CIO / DGC Members"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Policy Ratification**: The Council reviews and approves new or updated enterprise data policies, including data retention/archiving rules, data classification standards (e.g., PII vs. public), and ethical AI data usage guidelines.",
+     "duration": "2 hours/quarter",
+     "n": "3",
+     "r": "DGC Members"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Data Stewardship Appointment**: The Council formally appoints or reviews the performance of Business Data Owners (e.g., VP Merchandising owning Item Data) and Data Stewards, ensuring they have adequate resources.",
+     "duration": "1 hour/annual",
+     "n": "4",
+     "r": "DGC Members"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Strategic Roadmap Alignment**: The Council reviews the enterprise data roadmap (e.g., transitioning to a new MDM platform, onboarding third-party data, implementing data catalogs) and secures executive sponsorship and budget.",
+     "duration": "2 hours/annual",
+     "n": "5",
+     "r": "CIO"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Annual (GIS, AFS); quarterly (MC 28 — material changes); event-driven (significant transactions)",
+    "Owner": "Corporate Secretary",
+    "Participants": "CFO, Controller, VP Legal, External Auditor, SEC",
+    "Trigger": "Annual / quarterly SEC filing calendar due dates",
+    "Volume": "5 legal entities × annual filings = 25+ annual submissions; quarterly MC 28 as needed"
+   },
+   "id": "W481",
+   "level": 2,
+   "name": "SEC Reportorial Requirements Compliance (GIS, AFS, MC 28)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-alert of \"alerts set 30 days, 14 days, and 3 days before each deadline\" (replaces manual Step 1).",
+     "- System auto-update of \"updated list of officers, directors, and corporate secretary\" (replaces manual Step 2).",
+     "- System auto-document of \"Document Preparation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "The Philippine Securities and Exchange Commission (SEC) requires all registered corporations to submit periodic reportorial requirements under the Revised Corporation Code (RA 11232) and SEC Memorandum Circulars. With 5 SEC-registered legal entities, BuildRight must manage a complex calendar of filings including: General Information Sheet (GIS) — annual report of officers, directors, and corporate structure; Audited Financial Statements (AFS) — annual PFRS-compliant financial statements with related-party disclosures per PAS 24; and MC 28 notifications — material changes in corporate structure, officers, or capital. W124 (Corporate Secretarial & Entity Management) covers corporate secretarial management broadly but does not detail the specific SEC filing calendar, document preparation, and submission lifecycle."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Corporate Secretary review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Multi-entity complexity**: 5 entities with different incorporation dates, different officer compositions, and different filing deadlines create a complex calendar; missing a single filing for any entity can result in SEC penalties, revocation of certificate of incorporation, or personal liability for responsible officers",
+     "- **AFS dependency on external audit**: The AFS filing deadline is 120 days from fiscal year-end, but external audit completion (W95/W351) for 5 consolidated entities with intercompany elimination can consume 60–90 days; any external audit delay compresses the AFS filing window to as little as 30 days",
+     "- **GIS beneficial-ownership disclosure accuracy**: With 5 legal entities and complex intercompany relationships (leasing, logistics, ecommerce, property management), the GIS beneficial-ownership and affiliate declarations must accurately disclose all affiliates, common directors, and beneficial owners — any omission risks SEC investigation",
+     "- **MC 28 timeliness**: Material changes (e.g., officer resignation, address change, capital restructuring) must be reported within 30 days; in a 200-store chain with frequent organizational changes, tracking all reportable events across 5 entities is challenging"
+    ],
+    "Staffing Implication": [
+     "- **Corporate Secretary**: Absorbs SEC reportorial compliance as a core function. ~80 hours/year. Feasible within existing role capacity.",
+     "- **CFO**: Reviews AFS filings. ~10 hours/year.",
+     "- **VP Legal**: Reviews GIS and MC 28 filings, incl. the beneficial-ownership/affiliate disclosures. ~15 hours/year.",
+     "- **Controller**: Provides financial data for AFS. ~8 hours/year. Absorbed within existing year-end close duties (W9B).",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SEC eFAST / SENS portal (external)",
+     "- ERP Financial Reporting module (AFS generation via W9B)",
+     "- Document Management System (W255) for archiving SEC submissions",
+     "- Corporate Entity Master (W124) for officer/director data",
+     "- Compliance Dashboard for filing status tracking",
+     "- Integration with W124 (corporate secretarial), W9B (year-end close), W95/W351 (external audit), W482 (ASHM — GIS filing trigger)"
+    ],
+    "Time Estimate": [
+     "- Annual AFS preparation and filing (5 entities): ~15 hours (excluding external audit time)",
+     "- Annual GIS preparation and filing (5 entities, including beneficial-ownership/affiliate disclosures): ~30 hours",
+     "- Quarterly MC 28 monitoring: ~4 hours/quarter",
+     "- Deficiency resolution: ~2–5 hours/event (estimated 2–3 events/year)",
+     "- **Total annual**: ~65–80 hours/year for Corporate Secretary"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "**Filing Calendar Maintenance**: Corporate Secretary maintains the SEC filing calendar for all 5 entities: (a) GIS — due within 30 days from annual stockholders' meeting (W482), including the beneficial-ownership/affiliate disclosures the SEC requires within the GIS; (b) AFS — due within 120 days from fiscal year-end (or SEC-extended deadline); (c) MC 28 — within 30 days of any material change (officer changes, address changes, capital changes); (d) calendar alerts set 30 days, 14 days, and 3 days before each deadline",
+     "duration": "4 hours/annual setup",
+     "n": "1",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "CFO / VP Legal",
+     "activity": "**Data Gathering**: For each filing, Corporate Secretary coordinates with relevant departments: (a) **GIS**: HR provides updated list of officers, directors, and corporate secretary, and VP Legal provides the beneficial-ownership and affiliate disclosures required within the GIS; (b) **AFS**: Controller provides audited financial statements (after W9B year-end close and external audit completion W95/W351); (c) **MC 28**: Corporate Secretary identifies material changes from board resolutions (W124) and corporate events",
+     "duration": "2–5 days/filing",
+     "n": "2",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Document Preparation**: Corporate Secretary prepares filing documents: (a) complete SEC-required forms per entity; (b) attach supporting documents (financial statements, board resolutions, secretary's certificate); (c) obtain required certifications (CPA certificate for AFS, notarization where required); (d) ensure consistency across all 5 entities' filings (e.g., common directors, intercompany disclosures in the AFS PAS 24 note and the GIS beneficial-ownership declaration)",
+     "duration": "2–4 days/filing",
+     "n": "3",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Internal Review & Approval**: CFO reviews AFS filing package; VP Legal reviews GIS and MC 28 filings; Controller verifies financial figures match audited statements; Corporate Secretary obtains board authorization where required",
+     "duration": "1–2 days/filing",
+     "n": "4",
+     "r": "CFO / VP Legal"
+    },
+    {
+     "a": "—",
+     "activity": "**SEC Submission**: Corporate Secretary submits filings via SEC Electronic Filing and Submission Tool (eFAST) or SEC Express Nationwide Submission (SENS): (a) upload completed forms and attachments; (b) pay filing fees per entity; (c) receive acknowledgment receipts and confirmation numbers",
+     "duration": "1–2 days/filing",
+     "n": "5",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "—",
+     "activity": "**Confirmation & Archiving**: Corporate Secretary downloads and archives SEC confirmation receipts; updates entity compliance files in document management system (W255); updates the entity master file with filing confirmation numbers and dates",
+     "duration": "2 hours/filing",
+     "n": "6",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Deficiency Resolution**: If SEC issues a Notice of Deficiency or Request for Additional Information: (a) Corporate Secretary coordinates with relevant departments to prepare response; (b) submits clarification or additional documents within SEC-prescribed timeframe (typically 10–15 working days)",
+     "duration": "1–5 days/response",
+     "n": "7",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Compliance Dashboard Update**: Corporate Secretary updates the Corporate Compliance Dashboard: (a) mark each entity's filing status as Filed, Pending, or Overdue; (b) archive all confirmation receipts; (c) generate annual compliance status report for Board review (W124)",
+     "duration": "2 hours/quarter",
+     "n": "8",
+     "r": "Corporate Secretary"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W124",
+    "W255",
+    "W351",
+    "W482",
+    "W95",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Annual (1 per entity); may hold joint meeting for parent + subsidiaries where permissible",
+    "Owner": "Corporate Secretary",
+    "Participants": "CEO, CFO, Board of Directors, Shareholders, External Auditor, VP Legal",
+    "Trigger": "Annual corporate calendar; typically held within 4–6 months after fiscal year-end, per Revised Corporation Code",
+    "Volume": "5 entities; typically consolidated into 1–2 meeting dates"
+   },
+   "id": "W482",
+   "level": 2,
+   "name": "Annual Stockholders' Meeting (ASHM) Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow orchestration of \"coordinate meeting dates to maximize director attendance across entities\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares and sends meeting notices to all stockholders\" (replaces manual Step 2).",
+     "- System auto-log of \"logistics\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "Under the Revised Corporation Code (RA 11232), all Philippine stock corporations must hold an annual stockholders' meeting. For BuildRight's 5 legal entities, the ASHM covers: (a) approval of the preceding year's audited financial statements; (b) election of directors (if applicable per entity's term schedule); (c) appointment or re-appointment of the external auditor; (d) declaration of dividends (if any, per W327); (e) ratification of acts of the board and management; (f) amendments to the articles of incorporation or by-laws (if any). The ASHM is the governance trigger for the GIS filing (W481) which must be submitted to SEC within 30 days after the meeting."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Corporate Secretary review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Multi-entity scheduling complexity**: Coordinating 5 ASHMs (or consolidated meetings) within the SEC-mandated window while waiting for external audit completion creates a compressed timeline; any delay in the external audit pushes all subsequent steps",
+     "- **Quorum risk**: For privately-held family corporations, achieving quorum depends on the availability of key family shareholders; if the controlling shareholder is unavailable, the meeting may need to be adjourned and re-scheduled; mitigated by the Corporate Secretary review and approval gate",
+     "- **Stockholder disputes**: For a family-owned corporation, disputes over financial performance, dividend policy, or management decisions can create contentious meetings requiring legal counsel presence and extended deliberation",
+     "- **Proxy management**: Collecting, validating, and tabulating proxies for 5 entities is administratively intensive; errors in proxy validation can invalidate meeting actions"
+    ],
+    "Staffing Implication": [
+     "- **Corporate Secretary**: ~80–100 hours/year for full ASHM cycle across 5 entities. Core function of the role.",
+     "- **CFO/Controller**: ~40 hours/year for financial presentation preparation. Absorbed within existing reporting duties (W35).",
+     "- **VP Legal**: ~10–15 hours/year for legal review. Absorbed within existing legal duties."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Corporate Entity Master (W124) for stockholder registry, director profiles, and corporate records",
+     "- ERP Financial Reporting module for financial statement generation (W9B)",
+     "- Document Management System (W255) for meeting minutes, proxy forms, and certified documents",
+     "- Communication platform for meeting notices and proxy collection",
+     "- Integration with W124 (corporate secretarial), W481 (SEC filings), W327 (dividend payment), W351 (external audit), W9B (year-end close)"
+    ],
+    "Time Estimate": [
+     "- Planning and notice preparation: ~1 week across 5 entities",
+     "- Financial presentation preparation: ~5 days (CFO/Controller)",
+     "- Meeting execution: ~2–4 hours per entity (1–2 days total for 5 entities)",
+     "- Minutes and post-meeting filings: ~1 week",
+     "- **Total annual cycle**: ~3–4 weeks elapsed for Corporate Secretary; ~1–2 weeks for CFO/Controller"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "**Meeting Planning**: Corporate Secretary sets ASHM date(s) for all 5 entities, considering: (a) fiscal year-end close completion (W9B); (b) external audit completion (W95/W351); (c) SEC AFS filing deadline (120 days from year-end); (d) GIS filing deadline (30 days from ASHM); (e) director availability; (f) venue booking (or virtual meeting platform setup); coordinate meeting dates to maximize director attendance across entities",
+     "duration": "1 week",
+     "n": "1",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Notice & Agenda Preparation**: Corporate Secretary prepares and sends meeting notices to all stockholders: (a) written notice at least 21 days before meeting (per BuildRight by-laws); (b) include agenda, audited financial statements, director profiles (if election year), and proxy forms; (c) publish notice in newspaper of general circulation if required by by-laws; (d) prepare board books with supporting materials",
+     "duration": "3–5 days",
+     "n": "2",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Financial Statement Presentation Package**: CFO and Controller prepare the financial presentation for stockholders: (a) consolidated financial highlights (revenue, EBITDA, net income); (b) segment performance by entity; (c) key financial ratios and KPIs; (d) capital expenditure summary (W21); (e) dividend proposal (if applicable, per W327)",
+     "duration": "3–5 days",
+     "n": "3",
+     "r": "CFO"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Pre-Meeting Coordination**: Corporate Secretary coordinates logistics: (a) confirm quorum requirements per entity's by-laws; (b) collect and validate proxy forms; (c) coordinate with External Auditor for auditor representation; (d) prepare voting sheets and election materials (if election year); (e) brief CEO and CFO on anticipated stockholder questions; (f) prepare draft meeting minutes template",
+     "duration": "2–3 days",
+     "n": "4",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "Board Chair",
+     "activity": "**Meeting Execution**: Corporate Secretary convenes and manages the meeting: (a) call to order; establish quorum; (b) approve minutes of previous ASHM; (c) CEO presents operational highlights; (d) CFO presents financial results; (e) External Auditor presents audit opinion; (f) stockholder Q&A; (g) voting on agenda items (financial statement approval, director election, auditor appointment, dividend declaration); (h) adjournment",
+     "duration": "2–4 hours/entity",
+     "n": "5",
+     "r": "Corporate Secretary / CEO"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "**Minutes Preparation & Certification**: Corporate Secretary prepares meeting minutes: (a) draft minutes within 5 working days; (b) circulate to attending directors for review; (c) finalize and certify; (d) archive certified minutes in document management system (W255)",
+     "duration": "3–5 days",
+     "n": "6",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "—",
+     "activity": "**Post-Meeting SEC Filings**: Corporate Secretary triggers SEC reportorial filings: (a) GIS filing within 30 days of ASHM (W481); (b) MC 28 filing if directors or officers changed at the meeting (W481); (c) SEC Form ADT (Address/ directors/ TIN) if any director changes",
+     "duration": "Per W481",
+     "n": "7",
+     "r": "Corporate Secretary"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Action Item Follow-Up**: Corporate Secretary tracks post-ASHM action items: (a) dividend payment processing (if declared, per W327); (b) board committee reconstitution (if directors changed); (c) external auditor engagement letter (if appointed or re-appointed); (d) update corporate records and entity master file (W124)",
+     "duration": "1–2 weeks",
+     "n": "8",
+     "r": "Corporate Secretary"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W124",
+    "W21",
+    "W255",
+    "W327",
+    "W35",
+    "W351",
+    "W481",
+    "W95",
+    "W9B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "As needed; estimated ~12–18 formal claims/month (≈150–210/year per the Volume) across 200 stores, 4 DCs, fleet",
+    "Owner": "Insurance & Risk Manager",
+    "Participants": "Store/DC Manager, Insurance & Risk Manager, insurance adjuster, legal counsel, Treasury Analyst, affected department head",
+    "Trigger": "Insurable incident occurs: property damage, theft, vehicle accident, cargo damage, customer injury, business interruption",
+    "Volume": "~500–700 incidents/year; ~30% become formal insurance claims"
+   },
+   "id": "W610",
+   "level": 2,
+   "name": "Insurance Claims Processing & Recovery Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"record linked to location master and policy registry\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews incident report\" (replaces manual Step 2).",
+     "- System auto-count of \"For incidents below deductible or non-covered\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: annual coverage adequacy review in Step 10; operational: proactive adjuster follow-up and escalation to broker for delayed claims > 90 days; operational: incident report template in mobile app and Store Manager training"
+    ],
+    "Pain Points / Risks": [
+     "- **Underinsurance**: store assets or inventory may exceed policy coverage limits, especially for newer stores with higher inventory investment; mitigated by annual coverage adequacy review in Step 10",
+     "- **Slow settlement**: Philippine insurance claims can take 3-12 months for complex cases; mitigated by proactive adjuster follow-up and escalation to broker for delayed claims > 90 days",
+     "- **Documentation gaps**: incomplete incident documentation at store level reduces claim success rate; mitigated by incident report template in mobile app and Store Manager training",
+     "- **Claim fraud suspicion**: insurers may dispute legitimate claims; mitigated by thorough documentation, CCTV evidence (per W207), and independent adjuster engagement"
+    ],
+    "Staffing Implication": [
+     "- **Insurance & Risk Manager**: ~15–30 hours/month on claims processing + ~8 hours/year on policy review. This is a dedicated role within Finance/Compliance team.",
+     "- **Store/DC Managers**: ~30 min per incident for documentation. Absorbed within existing role.",
+     "- **Treasury Analyst**: ~15 min per settlement posting. Absorbed within existing role."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Insurance module: policy registry, claim case management, settlement tracking",
+     "- ERP Finance module: GL posting for losses and recoveries, deductible expense allocation",
+     "- ERP Fixed Asset module: asset damage/loss recording (per W39)",
+     "- Document management: claim documentation storage and retrieval (per W255)",
+     "- BI dashboard: claims analytics, recovery rate, trend analysis"
+    ],
+    "Time Estimate": [
+     "Incident intake and triage ~45 min per incident (documentation 30 min + coverage review 15 min) × ~500–700 incidents/year ≈ 375–525 hours/year; formal claims (~30% of incidents ≈ 150–210/year) add ~3.25–5.25 hours each (claim preparation 1 hour + filing 15 min + adjuster-inspection coordination 2–4 hours + settlement negotiation 1–2 hours + recovery posting 15 min) ≈ 490–1,100 hours/year; monthly claims dashboard 2 hours ≈ 24 hours/year; annual policy renewal review 8 hours — total ≈ 900–1,660 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Insurance & Risk Manager",
+     "activity": "Incident occurs: location Manager documents incident with date, time, location, description, photos, estimated damage value, and witness statements; system creates insurance incident record linked to location master and policy registry (per W59)",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Location Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Insurance & Risk Manager reviews incident report; determines if incident falls within policy coverage; verifies deductible amount and coverage limits; classifies claim type: property, liability, cargo, vehicle, business interruption",
+     "duration": "15 min",
+     "n": "2",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "For incidents below deductible or non-covered: Insurance & Risk Manager advises location Manager to process as operational loss; GL posting to appropriate expense account; no formal claim filed",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "—",
+     "activity": "For covered incidents above deductible: Insurance & Risk Manager prepares claim documentation package: incident report, photos, police report (if theft/vandalism per W471), repair estimates, replacement quotes, loss of revenue calculation (for business interruption)",
+     "duration": "60 min",
+     "n": "4",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Claim filed with insurance provider via broker portal or direct submission; system tracks claim number, submission date, estimated recovery amount, and expected settlement timeline",
+     "duration": "15 min",
+     "n": "5",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Insurance adjuster inspection scheduled and conducted; Insurance & Risk Manager coordinates site access, documentation, and witness availability; adjuster provides assessment report",
+     "duration": "2-4 hours",
+     "n": "6",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Claim settlement negotiation: Insurance & Risk Manager reviews adjuster assessment vs. actual loss; negotiates settlement amount; involves legal counsel for disputed claims > PHP 500K",
+     "duration": "1-2 hours",
+     "n": "7",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "Settlement received: Treasury posts recovery to insurance recovery GL account; system reconciles claim record; GL posting: DR Cash / CR Insurance Recovery (gain) or DR Insurance Recovery / CR Asset/Expense (reimbursement)",
+     "duration": "15 min",
+     "n": "8",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: Insurance & Risk Manager generates claims dashboard — open claims by type, aging, recovery rate, claim frequency trend by location; identifies locations with above-average claim frequency for risk mitigation review",
+     "duration": "2 hours",
+     "n": "9",
+     "r": "Insurance & Risk Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Annual: Insurance & Risk Manager conducts policy renewal review with claim history analysis; presents claim frequency, severity, and recovery data to CFO; recommends policy adjustments, coverage changes, or new coverage requirements",
+     "duration": "8 hours",
+     "n": "10",
+     "r": "Insurance & Risk Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W207",
+    "W255",
+    "W39",
+    "W471",
+    "W59"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Estimated 20–30 safety incident triages per year; 3–5 escalate to formal recall assessment",
+    "Owner": "Quality & Compliance Manager",
+    "Participants": "Merchandising Manager, Procurement Manager, Legal Counsel, LP Director, VP Store Operations, External Regulatory Consultant",
+    "Trigger": "Customer complaint involving injury or safety hazard, vendor recall notification, DTI/FDA safety advisory, or media report of product safety issue",
+    "Volume": "Each triage involves 1–5 reported incidents; recall assessment may cover 1–50 SKUs across 200 stores"
+   },
+   "id": "W873",
+   "level": 2,
+   "name": "Product Safety Incident Triage & Recall Risk Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Log safety incident — capture\" (replaces manual Step 1).",
+     "- System auto-escalate of \"escalate to COO within 1 hour\" (replaces manual Step 2).",
+     "- System auto-report of \"Gather product and incident evidence — collect\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Batch/lot traceability may be incomplete — not all vendors provide lot-level data",
+     "- Customer identification depends on loyalty membership — cash customers without receipts are unreachable",
+     "- Time pressure for Critical recalls — every hour of delay increases customer exposure risk",
+     "- Media attention escalates quickly — social media amplifies product safety incidents",
+     "- Financial impact can be significant — recall costs include inventory loss, logistics, customer refunds, and brand damage",
+     "- International vendors may resist recall acknowledgment — jurisdictional complexity"
+    ],
+    "Staffing Implication": [
+     "- Quality & Compliance Manager: recall assessment is a core responsibility",
+     "- Recall Assessment Committee: assembled per event (5–7 members)",
+     "- Legal Counsel: available within 2 hours for Critical events",
+     "- External regulatory consultant: on retainer for DTI/FDA liaison"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **CRM/Customer Service** — incident logging, customer complaint tracking",
+     "- **Inventory Module** — batch/lot traceability, store-level inventory lookup, product hold",
+     "- **POS System** — SKU blocking, sale prevention for recalled items",
+     "- **Ecommerce Platform** — product removal, customer notification",
+     "- **ERP LP Module** — incident evidence management",
+     "- **BI Dashboard** — product distribution analysis, customer purchase history"
+    ],
+    "Time Estimate": [
+     "- Per triage (no recall): 4–6 person-hours",
+     "- Per recall assessment: 20–40 person-hours over 1–3 days",
+     "- **Annual estimate: 25 triages × 5 hours + 4 recalls × 30 hours = 245 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "Log safety incident — capture: product details (SKU, batch/lot, manufacturer), incident description, customer injury/impact, date and store location, and source of report (customer, vendor, regulator, media)",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Customer Service / Store Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "Conduct immediate risk triage — classify severity: (a) Critical — serious injury or death risk, immediate action required, (b) High — injury risk with product in widespread distribution, (c) Medium — quality issue without safety risk, (d) Low — cosmetic or minor defect. For Critical: escalate to COO within 1 hour",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "LP Director",
+     "activity": "Gather product and incident evidence — collect: (a) affected product sample from store/DC, (b) batch/lot traceability data from inventory system, (c) customer photos/medical report (if injury), (d) vendor communication regarding defect, (e) regulatory advisory (if applicable)",
+     "duration": "4 hours",
+     "n": "3",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "Convene Recall Assessment Committee — for Critical/High classifications: assemble Quality, Legal, Merchandising, Procurement, and Store Operations; present incident evidence; determine: (a) voluntary recall warranted, (b) mandatory recall (DTI-directed), (c) product hold pending investigation, (d) no action (document and monitor)",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "Merchandising Manager",
+     "activity": "Define recall scope — if recall warranted: (a) identify all affected SKUs and batch/lot numbers, (b) determine affected stores/DCs with current inventory, (c) identify all customers who purchased affected product (POS/loyalty data), (d) estimate inventory in customer hands, (e) define remedy (refund, replacement, repair)",
+     "duration": "4–8 hours",
+     "n": "5",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "Issue internal product hold — immediately block affected SKUs at POS (cannot be sold), ecommerce (remove from catalog), and warehouse (quarantine); notify all Store Managers via urgent communication",
+     "duration": "1 hour",
+     "n": "6",
+     "r": "IT Operations / Merchandising"
+    },
+    {
+     "a": "COO",
+     "activity": "Prepare recall decision document — document risk assessment findings, recall scope, recommended action, financial impact estimate, and regulatory reporting requirements; obtain COO and Legal sign-off",
+     "duration": "2 hours",
+     "n": "7",
+     "r": "Quality Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "3–5 recall notification campaigns per year",
+    "Owner": "Corporate Communications / Quality Manager",
+    "Participants": "Marketing Manager, CRM Manager, Store Manager, Legal Counsel, Customer Service Team, External PR Agency",
+    "Trigger": "Recall decision approved (W873); regulatory authority mandates public notification",
+    "Volume": "Each campaign may need to reach 100–50,000 customers depending on product distribution"
+   },
+   "id": "W874",
+   "level": 2,
+   "name": "Product Recall Customer Notification Campaign Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Identify affected customers — extract purchase history from POS/loyalty\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews all messaging\" (replaces manual Step 2).",
+     "- System auto-send of \"send SMS/email to identified customers\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: recalls can be PHP 200,000–500,000 per publication"
+    ],
+    "Pain Points / Risks": [
+     "- Customer notification reach is limited — only ~40% of transactions are linked to identifiable customers (loyalty or card)",
+     "- SMS blast may be filtered as spam — delivery rate target: 85%",
+     "- Customer frustration if recalled product is a critical construction material — may need urgent replacement coordination",
+     "- Social media backlash if recall is perceived as too slow or insufficient",
+     "- Multi-language notifications may be needed — English and Filipino minimum; regional languages for major markets",
+     "- Newspaper ad cost for mandatory recalls can be PHP 200,000–500,000 per publication"
+    ],
+    "Staffing Implication": [
+     "- Corporate Communications Manager: lead for all notification campaigns",
+     "- CRM Manager: customer data extraction and notification execution",
+     "- Customer Service: additional staffing during active recalls (+2 agents)",
+     "- External PR Agency: for high-profile recall media management"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **CRM/Loyalty System** — customer purchase history extraction, notification list generation",
+     "- **Communication Platform** — SMS blast, email campaign, social media posting",
+     "- **POS System** — return processing for recalled items (no-receipt return with recall code)",
+     "- **Customer Service Platform** — recall hotline, ticket categorization, FAQ management",
+     "- **ERP Document Management** — notification templates, recall signage assets",
+     "- **Social Media Management** — post scheduling, sentiment monitoring, response management"
+    ],
+    "Time Estimate": [
+     "- Per campaign: 15–30 person-hours over 1–4 weeks",
+     "- **Annual estimate: 4 campaigns × 22 hours = 88 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "Identify affected customers — extract purchase history from POS/loyalty database: (a) loyalty members who purchased affected SKU within recall period, (b) customers who used registered credit card, (c) B2B/trade account customers, (d) ecommerce customers; generate notification list with contact details",
+     "duration": "2–4 hours",
+     "n": "1",
+     "r": "CRM Manager"
+    },
+    {
+     "a": "Legal Counsel",
+     "activity": "Draft customer notification — prepare multi-channel messaging: (a) SMS (concise: product, risk, action), (b) email (detailed: product description, batch/lot, risk explanation, remedy instructions, contact number), (c) in-store signage (poster at entrance and affected department), (d) social media post (public advisory), (e) newspaper ad (for mandatory recalls); Legal reviews all messaging",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "Corporate Communications"
+    },
+    {
+     "a": "COO",
+     "activity": "Execute notification campaign — send SMS/email to identified customers; deploy in-store signage to all stores with affected inventory; post social media advisory; schedule newspaper ad if required",
+     "duration": "2 hours (digital); 1–2 days (physical)",
+     "n": "3",
+     "r": "Corporate Communications"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Activate customer service response — brief Customer Service team on recall details, remedy options (refund, replacement, disposal instruction), and escalation path; establish dedicated recall hotline; prepare FAQ document",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "Customer Service Manager"
+    },
+    {
+     "a": "Corporate Communications",
+     "activity": "Monitor customer response — track: (a) notification delivery rate (SMS/email), (b) customer contact volume (calls, emails, store visits), (c) product return rate, (d) customer sentiment (social media); report daily to Quality Manager",
+     "duration": "30 min daily during active recall",
+     "n": "5",
+     "r": "CRM Manager"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Weekly recall status communication — issue weekly update to customers (if recall duration > 2 weeks): return statistics, safety reminder, and extended remedy deadline; coordinate with DTI if mandatory recall",
+     "duration": "1 hour weekly",
+     "n": "6",
+     "r": "Corporate Communications"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W873"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "3–5 recall events per year requiring inventory quarantine",
+    "Owner": "Inventory Manager / Warehouse Manager",
+    "Participants": "Store Manager, DC Manager, Quality Manager, Procurement Manager, Finance Controller, LP Officer",
+    "Trigger": "Recall decision approved (W873); product hold issued",
+    "Volume": "Each recall may involve 1–50 SKUs across 200 stores + 4 DCs; inventory at risk: PHP 100,000–10,000,000 per event"
+   },
+   "id": "W875",
+   "level": 2,
+   "name": "Product Recall Inventory Quarantine, Hold & Disposition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Activate inventory quarantine — system-wide hold on affected SKUs\" (replaces manual Step 1).",
+     "- System auto-record of \"Store-level physical quarantine — Store Manager isolates all affected\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify batch/lot numbers against recall scope\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Physical quarantine compliance at 200 stores is difficult to verify — some recalled items may remain on shelf",
+     "- Hazmat destruction requires DENR-licensed contractor — limited availability in provincial areas",
+     "- Return-to-vendor logistics cost may exceed inventory value for low-cost items — write-off more economical",
+     "- Batch/lot tracking gaps mean some affected inventory may not be identified — over-quarantine wastes good stock",
+     "- In-transit inventory requires carrier intercept — additional cost and complexity",
+     "- POS blocking must be instantaneous — any gap allows potential sale of recalled product"
+    ],
+    "Staffing Implication": [
+     "- Inventory Manager: quarantine management (4–8 hours per recall)",
+     "- Store Managers: 2–4 hours per store per recall (200 stores × 3 hours = 600 hours per recall)",
+     "- DC Managers: 4–8 hours per DC per recall",
+     "- LP Officers: verification of store quarantine compliance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Inventory Module** — product hold/quarantine, batch/lot tracking, quantity adjustment",
+     "- **POS System** — sale blocking for recalled SKUs",
+     "- **WMS** — quarantine zone management, location update, pick prevention",
+     "- **Ecommerce Platform** — catalog removal, inventory sync hold",
+     "- **Finance Module** — inventory write-off, vendor credit memo, disposal cost recording",
+     "- **ERP LP Module** — quarantine documentation, destruction witness logging"
+    ],
+    "Time Estimate": [
+     "- Per recall: 700–800 person-hours chain-wide (mostly store-level physical quarantine)",
+     "- **Annual estimate: 4 recalls × 750 hours = 3,000 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "Activate inventory quarantine — system-wide hold on affected SKUs: (a) POS blocked from sale (error message: \"Item recalled — do not sell\"), (b) ecommerce removed from catalog, (c) WMS quarantine flag on DC inventory, (d) in-transit shipments intercepted and redirected",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Inventory Manager"
+    },
+    {
+     "a": "LP Officer",
+     "activity": "Store-level physical quarantine — Store Manager isolates all affected inventory: (a) remove from sales floor and backroom, (b) tag with \"RECALL — DO NOT SELL\" label, (c) move to designated quarantine area, (d) count and record quantities, (e) photograph for documentation",
+     "duration": "2–4 hours per store",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Warehouse Manager",
+     "activity": "DC-level quarantine — DC Manager segregates affected inventory: (a) quarantine zone in warehouse, (b) update WMS location to \"RECALL HOLD\", (c) verify batch/lot numbers against recall scope, (d) count and record; prevent any outbound picks",
+     "duration": "4–8 hours per DC",
+     "n": "3",
+     "r": "DC Manager"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "Determine disposition — based on recall type: (a) Return to Vendor — vendor accepts return and credits BuildRight, (b) Destroy On-Site — certified destruction with documentation (for hazardous or contaminated products), (c) Destroy via Licensed Facility — for regulated products requiring certified destruction, (d) Corrective Action — manufacturer provides repair kit or replacement stock",
+     "duration": "4 hours",
+     "n": "4",
+     "r": "Quality Manager"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Execute disposition — (a) Return: coordinate reverse logistics, ship to vendor-designated location, obtain receipt, (b) Destroy: engage licensed waste disposal contractor (for hazmat), conduct destruction with witness, certificate of destruction, (c) Corrective: receive manufacturer repair/replacement, inspect, and release to saleable inventory",
+     "duration": "1–2 weeks (elapsed)",
+     "n": "5",
+     "r": "Inventory Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Financial impact recording — write off destroyed inventory, record vendor credit memo for returns, post transportation and disposal costs, and update insurance claim if applicable",
+     "duration": "2–4 hours",
+     "n": "6",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Release quarantine — after disposition complete, update inventory system: remove hold for non-affected batches, adjust on-hand quantities, and release any substituted stock",
+     "duration": "1 hour",
+     "n": "7",
+     "r": "Inventory Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W873"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "3–5 vendor recovery processes per year",
+    "Owner": "Procurement Manager / Finance Controller",
+    "Participants": "Quality Manager, Finance Controller, Legal Counsel, Vendor Account Manager, Insurance Coordinator",
+    "Trigger": "Recall disposition complete (W875); financial impact quantified",
+    "Volume": "Average recovery claim: PHP 200,000–5,000,000 depending on product and recall scope"
+   },
+   "id": "W877",
+   "level": 2,
+   "name": "Product Recall Vendor Recovery & Cost Reimbursement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Compile recall cost documentation — aggregate all costs\" (replaces manual Step 1).",
+     "- System auto-review of \"Determine vendor liability — review\" (replaces manual Step 2).",
+     "- System auto-document of \"documentation, and requested reimbursement timeline\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Procurement Manager / Finance Controller review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Vendor may be financially unable to reimburse — especially small/provincial vendors",
+     "- Contract indemnity clauses may have caps or exclusions that limit recovery",
+     "- Force majeure claims (natural disaster affecting vendor manufacturing) are difficult to dispute",
+     "- Recovery timeline (30–90 days) impacts cash flow — immediate write-off with later recovery creates accounting complexity",
+     "- International vendors may have different legal jurisdictions — enforcement is challenging",
+     "- Partial recovery is common — 60–80% recovery rate is typical for legitimate claims"
+    ],
+    "Staffing Implication": [
+     "- Procurement Manager: lead negotiator for vendor recovery",
+     "- Finance Controller: cost documentation and recovery accounting",
+     "- Legal Counsel: contract interpretation and dispute support"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Finance Module** — recall cost center, vendor credit memo, recovery accounting",
+     "- **ERP Procurement Module** — vendor contract reference, communication history",
+     "- **Document Management** — demand letter, vendor response, settlement agreement",
+     "- **Legal Matter Management** — contract review, dispute tracking",
+     "- **Insurance Module** — product liability claim initiation (if applicable)"
+    ],
+    "Time Estimate": [
+     "- Per recovery: 15–35 person-hours over 4–12 weeks",
+     "- **Annual estimate: 4 recoveries × 25 hours = 100 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Procurement Manager",
+     "activity": "Compile recall cost documentation — aggregate all costs: (a) inventory value at cost (destroyed or returned), (b) reverse logistics (return shipping, disposal), (c) customer refund cost, (d) customer service incremental cost, (e) regulatory compliance cost, (f) brand/marketing remediation cost, (g) business interruption (if product was top seller)",
+     "duration": "4–8 hours",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "Procurement Manager",
+     "activity": "Determine vendor liability — review: (a) vendor contract warranty/indemnity clause, (b) product defect root cause (manufacturing vs. BuildRight handling), (c) vendor insurance coverage, (d) force majeure exclusions; Legal Counsel advises on contractual position",
+     "duration": "2–4 hours",
+     "n": "2",
+     "r": "Legal Counsel"
+    },
+    {
+     "a": "Legal Counsel",
+     "activity": "Issue vendor recovery demand — send formal demand letter to vendor: cost breakdown, contractual basis for recovery, supporting documentation, and requested reimbursement timeline (30 days)",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Negotiate settlement — vendor may: (a) accept full reimbursement via credit memo, (b) accept partial (dispute certain cost categories), (c) reject (claim force majeure or BuildRight fault); negotiate to resolution; for disputed claims > PHP 1 million, engage Legal for mediation",
+     "duration": "4–20 hours (over 2–8 weeks)",
+     "n": "4",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Process vendor credit memo — upon agreement, record vendor credit in AP module; offset against future invoices or request direct payment; post recovery to recall cost center",
+     "duration": "2 hours",
+     "n": "5",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "Insurance Coordinator",
+     "activity": "Insurance recovery coordination — if vendor recovery insufficient, coordinate with Insurance Coordinator for product liability or recall insurance claim (per W864); document unrecovered balance",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "Finance Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W864",
+    "W875"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-289"
+   ],
+   "fields": {
+    "Frequency": "Ongoing for capitalization (200+ store build-outs, equipment purchases); monthly depreciation run per entity; quarterly intercompany asset transfer reconciliation",
+    "Owner": "Fixed Asset Accountant",
+    "Participants": "Fixed Asset Accountant, Controller, DC Supervisor, IT Manager, VP Store Operations, Consolidation Accountant",
+    "Trigger": "Asset purchase order completed (goods receipt + invoice per W7); or construction-in-progress project completed (new store/DC per W1427); or intercompany asset transfer (e.g., IT equipment transferred between entities); or month-end depreciation run",
+    "Volume": "~10–15 new store build-outs/year (PHP 15–30M each per W276 = PHP 150–450M capex); ~600 POS terminal assets; ~4 DC equipment sets; ~3,000 IT assets; ~40 owned vehicles (rest 3PL-contracted); total fixed asset register: ~5,000–10,000 assets across 5 entities"
+   },
+   "id": "W1431",
+   "level": 2,
+   "name": "Multi-Entity Fixed Asset Capitalization, Intercompany Asset Transfer & Depreciation Consolidation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"record\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews all CIP costs\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify no assets with zero net book value still depreciating, verify new assets…\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 5-entity structure creates fixed asset management complexity: (a) each entity capitalizes its own assets (BuildRight Depot Inc. owns POS terminals and store fixtures; BuildRight Logistics Inc. owns DC equipment and forklifts; BuildRight Property Management Inc. owns buildings and leases them to Depot Inc.; BuildRight Digital Commerce Inc. owns ecommerce platform infrastructure; BuildRight Holdings Inc. owns corporate HQ assets), (b) assets sometimes transfer between entities (e.g., IT server originally purchased by Holdings Inc. is transferred to Digital Commerce Inc. — the fixed asset must be derecognized in Holdings and recognized in Digital Commerce at net book value, with an intercompany settlement), (c) depreciation must be computed per entity per Philippine tax rules (useful lives per BIR: buildings 20 years, machinery 10 years, computers 5 years, vehicles 5 years), (d) in consolidation, intercompany asset transfers must eliminate (no group-level gain/loss on IC transfers), (e) the total fixed asset portfolio of ~5,000–10,000 assets across 5 entities requires disciplined master data management. This workflow manages multi-entity fixed asset capitalization, intercompany transfers, depreciation, and consolidation."
+    ],
+    "Controls": [
+     "- CTL-289 (ensure controlled execution — GL & Financial Close (PA-17.1).)",
+     "- operational: Fixed Asset Accountant review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **CIP complexity for store build-outs**: a single new store project may involve 50+ vendors, 200+ invoices, and 10+ asset categories; segregating capitalizable vs. expensible costs requires judgment and can be audited by BIR",
+     "- **Intercompany transfer frequency**: with 5 entities, assets may transfer more frequently than expected (IT equipment reallocation, vehicle reassignment between entities); unrecorded transfers distort each entity's financial statements and may create IC reconciliation discrepancies per W14",
+     "- **BIR useful life compliance**: Philippine tax rules prescribe specific useful lives for depreciation; using shorter lives (to accelerate depreciation for tax purposes) requires BIR approval; using longer lives (to reduce annual depreciation expense) is permissible but reduces tax shield",
+     "- **Asset tracking at 200 stores**: verifying existence of 5,000–10,000 assets across 200 stores, 4 DCs, and HQ is logistically challenging; assets may be moved between locations (e.g., POS terminal moved from one store to another during renovation) without updating the asset register"
+    ],
+    "Staffing Implication": [
+     "- Fixed Asset Accountant: ~20–35 hours/month averaged. This is a dedicated role within the Finance team. Absorbed within existing finance headcount per model company profile.",
+     "- Controller: ~2–3 hours/month for review and approval. Absorbed.",
+     "- Store Managers: ~2–4 hours/year for asset verification per store. Absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fixed asset master data module: asset register with entity, location, classification, cost, depreciation schedule per W1431.1",
+     "- CIP tracking: project cost accumulation with milestone-based reclassification to fixed assets per W1431.2",
+     "- Monthly depreciation engine: automated straight-line depreciation per BIR schedules with pro-rating per W1431.3",
+     "- Intercompany asset transfer workflow: derecognition, re-recognition, and IC settlement per W1431.4",
+     "- Annual physical verification tool: asset barcode/RFID scanning for existence verification per W1431.5",
+     "- Integration with W7 (AP — asset invoice source), W14 (IC transactions — IC asset transfer settlement), W1427 (store expansion — CIP source), W650 (DC equipment maintenance — asset condition), W52 (fleet management — vehicle assets)"
+    ],
+    "Time Estimate": [
+     "- Asset capitalization: 15–30 min/asset × ~200 new assets/year = ~50–100 hours/year",
+     "- CIP-to-asset conversion: 4–8 hours/project × 12 projects/year = ~48–96 hours/year",
+     "- Monthly depreciation: 2–4 hours/month = ~24–48 hours/year",
+     "- IC asset transfers: 1–2 hours/transfer × ~20 transfers/year = ~20–40 hours/year",
+     "- Annual physical verification: 2–3 weeks/year = ~80–120 hours/year",
+     "- Total annual: ~220–400 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "**Asset capitalization**: When an asset is acquired or constructed: (a) Fixed Asset Accountant reviews AP invoice and goods receipt per W7: (i) verify the item meets capitalization threshold per BuildRight policy (typically PHP 10,000 minimum per item, lower for IT assets at PHP 5,000), (ii) classify asset: land, building, machinery, furniture/fixtures, IT equipment, vehicle, (iii) assign useful life per BIR-prescribed rates, (iv) assign to correct entity and location (store, DC, HQ), (b) system creates fixed asset master record: (i) asset number, description, serial number, (ii) cost, accumulated depreciation, net book value, (iii) entity, location, department, custodian, (iv) useful life, depreciation method (straight-line per Philippine standard), (v) capitalization date (date placed in service), (c) journal entry: Dr. Fixed Asset / Cr. AP or Cash or CIP (construction-in-progress)",
+     "duration": "15–30 min/asset",
+     "n": "1",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Construction-in-progress (CIP) to fixed asset**: For large capital projects (new store build-outs per W1427): (a) during construction: costs accumulated in CIP account (Dr. CIP / Cr. AP/Cash), (b) upon project completion and certificate of occupancy: (i) Fixed Asset Accountant reviews all CIP costs: construction, fixtures, POS equipment, IT infrastructure, signage — verify all costs are capitalizable (exclude expensed items like pre-opening marketing, training costs), (ii) reclassify from CIP to appropriate fixed asset categories: building/leasehold improvements, fixtures, equipment, (iii) depreciation begins from the date the asset is placed in service (store opening date)",
+     "duration": "4–8 hours/project",
+     "n": "2",
+     "r": "Fixed Asset Accountant / VP Store Operations"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Monthly depreciation run**: (a) system runs monthly depreciation per entity: (i) straight-line depreciation per BIR useful life schedules, (ii) for newly capitalized assets: first month depreciation may be pro-rated based on days in service, (iii) for disposed assets: depreciation stops at disposal date, (b) journal entries per entity: Dr. Depreciation Expense / Cr. Accumulated Depreciation, (c) Fixed Asset Accountant reviews depreciation schedule: verify no assets with zero net book value still depreciating, verify new assets are depreciating correctly, (d) 5 entities × 1 depreciation run/month = 5 monthly depreciation journals",
+     "duration": "2–4 hours/month",
+     "n": "3",
+     "r": "System / Fixed Asset Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Intercompany asset transfer**: When an asset transfers between entities (e.g., vehicle transferred from Holdings Inc. to Logistics Inc.): (a) Fixed Asset Accountant derecognizes asset in transferring entity: Dr. Accumulated Depreciation / Dr. IC Receivable (NBV) / Cr. Fixed Asset (cost), (b) recognizes asset in receiving entity: Dr. Fixed Asset (NBV) / Cr. IC Payable (NBV), (c) useful life reassessment: remaining useful life based on condition and remaining economic life, (d) IC settlement per W14, (e) in consolidation: IC receivable/payable eliminates; asset continues at original cost and accumulated depreciation (no step-up in basis)",
+     "duration": "1–2 hours/transfer",
+     "n": "4",
+     "r": "Fixed Asset Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Annual fixed asset physical verification**: (a) annually, Fixed Asset Accountant coordinates with Store Managers and DC Supervisors: (i) verify existence of high-value assets (POS terminals, forklifts, IT equipment) per location, (b) identify: (i) missing assets (possible theft or unrecorded disposal), (ii) assets at unexpected locations (unrecorded transfers), (iii) fully depreciated assets still in use (should remain on books) or disposed but not derecognized, (c) post adjustments: record disposals, transfers, write-offs",
+     "duration": "2–3 weeks/year",
+     "n": "5",
+     "r": "Fixed Asset Accountant / Store Manager / DC Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W1427",
+    "W276",
+    "W52",
+    "W650",
+    "W7"
+   ]
+  }
+ ]
+}

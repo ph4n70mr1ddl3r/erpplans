@@ -1,0 +1,1707 @@
+{
+ "process_area": {
+  "id": "PA-27.3",
+  "title": "Cybersecurity & Privacy"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-27-it-operations-security/PA-27.3-cybersecurity-and-privacy.md",
+ "value_stream": {
+  "directory": "VS-27-it-operations-security",
+  "id": "VS-27",
+  "name": "IT Operations & Security"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-27"
+   ],
+   "fields": {
+    "Frequency": "Rare; estimated 0–2 incidents/year requiring formal breach response",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, CIO, IT Security, Legal, affected department head, NPC (National Privacy Commission), affected data subjects",
+    "Trigger": "Suspected or confirmed breach of personal data (customer, employee, or vendor data) as defined by RA 10173 (Data Privacy Act of 2012)",
+    "Volume": "Variable — from a single record exposed to bulk data extraction"
+   },
+   "id": "W53",
+   "level": 2,
+   "name": "Data Privacy Breach Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"Breach discovered or suspected\" (replaces manual Step 1).",
+     "- System auto-record of \"records, what data types\" (replaces manual Step 2).",
+     "- System rule-based authorization of \"unauthorized access, preserve forensic evidence\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Under RA 10173 and its Implementing Rules and Regulations (IRR), BuildRight Depot (as a PIC — Personal Information Controller) must: (a) notify the National Privacy Commission within 72 hours of discovering a breach involving sensitive personal information affecting 100+ data subjects, (b) notify affected data subjects within a reasonable time, (c) document all breaches regardless of size. BuildRight holds personal data for ~600,000 loyalty members, ~5,200 trade accounts, ~200 corporate accounts, ~6,762 employees, and ~1,000 vendors."
+    ],
+    "Controls": [
+     "- CTL-27 (safeguard customer data.)",
+     "- operational: Data Protection Officer (DPO) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **72-hour NPC notification deadline**: Tight timeline for breach assessment, scope determination, and formal notification; if breach is discovered on a Friday or during a holiday, DPO and Legal must be available on short notice",
+     "- **Data subject notification at scale**: If a breach affects 100,000+ loyalty members, bulk email/SMS notification requires coordination with marketing systems and may trigger customer panic or media attention before BuildRight is ready with public messaging",
+     "- **Erasure vs. BIR retention conflict**: Right to be forgotten under RA 10173 conflicts with BIR's 10-year record retention requirement; anonymization approach must be legally defensible and technically robust to prevent re-identification",
+     "- **Third-party vendor breaches**: If a SaaS provider (e.g., ecommerce platform, payroll processor) experiences a breach affecting BuildRight data, response depends on vendor cooperation and contractual notification SLAs that may not align with NPC's 72-hour requirement"
+    ],
+    "Staffing Implication": [
+     "- **1 Data Protection Officer (DPO)**: required by RA 10173 for organizations processing personal data of 1,000+ individuals. BuildRight holds data for 600K+ customers and 6,762 employees. The DPO role is a dedicated position within the Legal & Compliance team (the 14-person roster per profile §3.3 already includes the DPO, regulatory, and AML/MLRO functions).",
+     "- No other incremental headcount. Breach response is a cross-functional effort by existing IT, Legal, and management.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Breach register in system: incident ID, discovery date/time, classification, scope, root cause, notifications, resolution status (W53.10)",
+     "- Data access audit trail: system maintains immutable log of all access to personal data (customer records, employee records) with user ID, timestamp, and action; forensic extraction capability for breach investigation (W53.7)",
+     "- Data subject notification workflow: system generates notification list of affected data subjects from breach scope analysis; bulk email/SMS capability for notification delivery (W53.6)",
+     "- Role-based access enforcement: system enforces minimum-necessary access to personal data; access revocation capability for containment (W53.3)",
+     "- Data encryption at rest and in transit: customer and employee data encrypted in database and during transmission; encryption key management with emergency rotation capability (W53.3)",
+     "- Data Subject Access Request (DSAR) full lifecycle per RA 10173: (a) **access**: DPO acknowledges DSAR within 72 hours; system generates data package containing all personal data held for the requesting data subject (loyalty profile, transaction history, AR account data, complaint history) in machine-readable format (JSON or CSV) within 30 days; DPO reviews package for third-party data exclusion before release; (b) **rectification**: data subject requests correction of inaccurate personal data; DPO or AR Clerk updates record in system with change log; (c) **erasure / right to be forgotten**: upon verified request, DPO initiates erasure workflow — system anonymizes personal data in active records (replace name, email, phone with \"ANONYMIZED-[hash]\") while preserving transaction records for BIR 10-year retention requirement (transaction amounts, dates, VAT, and payment methods retained; personal identifiers removed); system flags anonymized records to prevent re-identification; for loyalty accounts with unredeemed points, DPO offers final redemption before erasure; erasure logged with request date, data subject verification method, scope of erasure, and DPO approval; (d) **data portability**: system exports data subject's personal data in structured, machine-readable format (JSON) via DPO-approved download link with 72-hour expiry; (e) **consent withdrawal**: data subject withdraws consent for marketing communications; system updates consent flag in customer master; suppresses customer from all marketing lists, email campaigns, and SMS notifications within 24 hours; transactional communications (order confirmations, warranty notifications) continue as service necessity; (f) DPO reports DSAR metrics quarterly: volume by type, average resolution time, backlog",
+     "- Integration with W41 (complaint intake as DSAR channel), W17 (loyalty data — loyalty account erasure), W24 (customer accounts — account closure with erasure), W8 (AR account closure — W8 step 12 references PII anonymization), W15/W43 (employee lifecycle — employee data erasure after 10-year retention), W383 (General IT Security Incident Response)"
+    ],
+    "Time Estimate": [
+     "- Breach assessment and containment: 1–2 hours (steps 1–3)",
+     "- NPC notification preparation: 2–4 hours (step 5); data subject notification: 2–4 hours (step 6)",
+     "- Forensic investigation: 1–5 days (step 7)",
+     "- Full incident documentation and lessons learned: 4 hours (steps 10–11)",
+     "- DSAR fulfillment: 2–5 days per request (data extraction, review, and delivery)",
+     "- Quarterly breach register review: 30 min/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "Breach discovered or suspected: IT Security alerts (automated monitoring), employee report, third-party notification, or customer complaint about unauthorized access",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "IT Security / Any employee"
+    },
+    {
+     "a": "CEO",
+     "activity": "CIO and DPO assess breach severity: (a) scope — how many records, what data types (name, contact, financial, government ID), (b) vector — how the breach occurred (external attack, insider, misconfiguration, lost device, vendor breach), (c) containment status — is the breach ongoing or contained",
+     "duration": "1–2 hours",
+     "n": "2",
+     "r": "CIO + DPO"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Containment**: IT Security takes immediate action to stop the breach: isolate affected systems, revoke compromised credentials, block unauthorized access, preserve forensic evidence",
+     "duration": "As needed",
+     "n": "3",
+     "r": "IT Security"
+    },
+    {
+     "a": "CEO",
+     "activity": "DPO classifies the breach per NPC guidelines: (a) **Notifiable breach** — involves sensitive personal info, affects 100+ data subjects, or involves significant harm; (b) **Non-notifiable breach** — limited scope, no sensitive data, quickly contained",
+     "duration": "30 min",
+     "n": "4",
+     "r": "DPO"
+    },
+    {
+     "a": "CEO",
+     "activity": "If notifiable: DPO prepares NPC notification within 72 hours: nature of breach, data subjects affected, data types exposed, measures taken, remedial actions planned; submits via NPC online portal or prescribed form",
+     "duration": "2–4 hours",
+     "n": "5",
+     "r": "DPO"
+    },
+    {
+     "a": "CMO",
+     "activity": "DPO prepares data subject notification: clear description of breach in plain language, data exposed, potential harm, mitigation steps data subjects should take, BuildRight contact for inquiries; notification via email, SMS, or website notice depending on breach scope",
+     "duration": "2–4 hours",
+     "n": "6",
+     "r": "DPO + Legal"
+    },
+    {
+     "a": "CEO",
+     "activity": "CIO directs forensic investigation: determine root cause, full scope, and whether any data was exfiltrated; engage external forensic firm if needed; preserve all logs and evidence",
+     "duration": "1–5 days",
+     "n": "7",
+     "r": "CIO"
+    },
+    {
+     "a": "CEO",
+     "activity": "Legal assesses regulatory and litigation risk: review NPC requirements, evaluate liability exposure, prepare responses to potential regulatory inquiry or customer claims",
+     "duration": "As needed",
+     "n": "8",
+     "r": "Legal"
+    },
+    {
+     "a": "CEO",
+     "activity": "Affected department head implements immediate operational safeguards: e.g., if payment data breached — reset payment credentials, work with payment gateways; if employee data breached — offer credit monitoring",
+     "duration": "As needed",
+     "n": "9",
+     "r": "Dept. Head"
+    },
+    {
+     "a": "CEO",
+     "activity": "DPO documents full incident in breach register: timeline, root cause, scope, notifications sent, remedial actions, resolution date; breach register retained for 5 years per NPC requirements",
+     "duration": "2 hours",
+     "n": "10",
+     "r": "DPO"
+    },
+    {
+     "a": "CEO",
+     "activity": "Post-incident: CIO and DPO conduct lessons-learned review; update security controls, access policies, and data handling procedures; implement preventive measures; schedule follow-up assessment in 30 days",
+     "duration": "2 hours",
+     "n": "11",
+     "r": "CIO + DPO"
+    },
+    {
+     "a": "CEO",
+     "activity": "Quarterly: DPO reviews breach register with CEO and Internal Audit; analyzes trends; reports aggregate breach statistics in annual privacy impact assessment",
+     "duration": "30 min/quarter",
+     "n": "12",
+     "r": "DPO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W15",
+    "W17",
+    "W24",
+    "W383",
+    "W41",
+    "W43",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring; weekly scanning; monthly patching",
+    "Owner": "IT Security Manager",
+    "Participants": "Security Analyst, Infrastructure Team, Application Developers, Internal Audit",
+    "Trigger": "Scheduled vulnerability scan; threat intelligence alert; major patch release (Patch Tuesday); or security incident",
+    "Volume": "~1,500 endpoints; 100+ servers; 600 POS terminals; 50+ integrations"
+   },
+   "id": "W367",
+   "level": 2,
+   "name": "Cybersecurity Operations & Vulnerability Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scanning\" (replaces manual Step 1).",
+     "- System auto-review of \"Review scan results\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify post-patch health\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: IT Security Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Patch-window-lag risk**: critical CVEs are exploited in the wild before the monthly patch cycle catches up; mitigated by daily monitoring, weekly scanning, and prioritized Critical/High patching with coordinated testing (steps 1–2)",
+     "- **Lateral-movement risk**: EDR alerts triaged late let an intruder pivot from one endpoint to the estate; mitigated by EDR dashboard monitoring with immediate suspicious-device isolation (step 4)"
+    ],
+    "Staffing Implication": [
+     "- **1 Security Manager + 1 Security Analyst**: (within planned IT team of ~50).",
+     "- **No incremental headcount.**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vulnerability Scanner (Nessus, Qualys, or similar) (W367.1)",
+     "- Endpoint Detection & Response (EDR) Dashboard (W367.4)",
+     "- Automated Patch Management System (WSUS, SCCM, etc.) (W367.3)",
+     "- Security Information & Event Management (SIEM) for log correlation",
+     "- Integration with W132 (software changes), W152 (access management), W53 (breach response)"
+    ],
+    "Time Estimate": [
+     "Patch cycle 6 hours/week (prioritization 2 hours + deployment 4 hours) ≈ 312 hours/year across ~1,500 endpoints, 100+ servers, and 600 POS terminals; EDR monitoring daily within the security shift; quarterly phishing simulation 4 hours ≈ 16 hours/year; quarterly firewall/WAF rule review (vulnerability scanning itself automated weekly).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Vulnerability Scanning**: Automated tools scan network, servers, and applications for known vulnerabilities (CVEs); generate prioritized risk report",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "System / Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Patch Prioritization**: Review scan results; prioritize \"Critical\" and \"High\" vulnerabilities; coordinate with App/Infra teams for testing",
+     "duration": "2 hours/week",
+     "n": "2",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Patch Deployment**: Deploy security patches to OS, middleware, and applications during maintenance windows; verify post-patch health",
+     "duration": "4 hours/week",
+     "n": "3",
+     "r": "Infrastructure Team"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Endpoint Protection (EDR) Monitoring**: Monitor EDR dashboard for malware, unauthorized access, or lateral movement; triage and isolate suspicious devices",
+     "duration": "Daily",
+     "n": "4",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Phishing Simulation**: Conduct quarterly phishing tests for all 6,762 employees; assign remedial training to users who fail",
+     "duration": "4 hours/quarter",
+     "n": "5",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Firewall & WAF Review**: Periodic review of firewall rules and Web Application Firewall (WAF) policies to ensure \"least privilege\" access",
+     "duration": "Quarterly",
+     "n": "6",
+     "r": "Security Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W132",
+    "W152",
+    "W53"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Ongoing; daily enrollment/monitoring",
+    "Owner": "Mobility Lead",
+    "Participants": "IT Helpdesk, Store Operations, DC Managers",
+    "Trigger": "New RF device/mPOS rollout; device failure; or lost/stolen report",
+    "Volume": "~500 RF devices; ~200 mPOS units; ~100 corporate mobile phones"
+   },
+   "id": "W371",
+   "level": 2,
+   "name": "Mobile Device Management (MDM) Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"profiles, app restrictions, and Wi-Fi certs\" (replaces manual Step 1).",
+     "- System auto-update of \"updates to WMS/POS apps\" (replaces manual Step 2).",
+     "- System auto-report of \"report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Lost-device data risk**: a lost RF gun or mPOS unit exposes cached business data until recovered; mitigated by the 30-minute remote wipe/lock SLA on loss report (step 3)",
+     "- **Version-drift risk**: stores running different WMS/POS app versions generate unexplainable field incidents; mitigated by remote app distribution enforcing version consistency across 200+ locations (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- MDM Console (Intune, Workspace ONE, SOTI, etc.)",
+     "- IT Asset Register (W131)",
+     "- WMS / POS Application Registry"
+    ],
+    "Time Estimate": [
+     "Enrollment 15 min/device at realized device flow across ~800 managed devices (500 RF, 200 mPOS, 100 corporate phones); app release pushes 1 hour/release; lost/stolen wipe-and-lock 5 min/event within 30 minutes; device health monitoring 2 hours/week ≈ 104 hours/year (zero-touch deployment and telemetry automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Mobility Lead",
+     "activity": "**Enrollment**: Zero-touch deployment of new devices into MDM; apply security profiles, app restrictions, and Wi-Fi certs",
+     "duration": "15 min/device",
+     "n": "1",
+     "r": "IT Helpdesk"
+    },
+    {
+     "a": "CIO",
+     "activity": "**App Distribution**: Remote push of updates to WMS/POS apps; manage version consistency across 200+ locations",
+     "duration": "1 hour/release",
+     "n": "2",
+     "r": "Mobility Lead"
+    },
+    {
+     "a": "Mobility Lead",
+     "activity": "**Lost/Stolen Protocol**: Remote wipe/lock of compromised devices within 30 minutes of report",
+     "duration": "5 min/event",
+     "n": "3",
+     "r": "IT Helpdesk"
+    },
+    {
+     "a": "Mobility Lead",
+     "activity": "**Health Monitoring**: Monitor battery health and hardware telemetry; proactive replacement of failing units",
+     "duration": "2 hours/week",
+     "n": "4",
+     "r": "IT Helpdesk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W131"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Daily (provisioning); Monthly (review)",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Infrastructure, System Admins, Security Analyst, Internal Audit",
+    "Trigger": "Request for administrative or elevated access; monthly review cycle for high-risk accounts",
+    "Volume": "~50–70 privileged accounts (Cloud Admins, DBAs, ERP Admins, Network Admins)"
+   },
+   "id": "W375",
+   "level": 2,
+   "name": "Privileged Access Management (PAM) Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"requests temporary or permanent privileged access\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks for SOD conflicts\" (replaces manual Step 2).",
+     "- System auto-log of \"logs all actions taken during privileged session\" (Step 4, already system-executed)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: IT Security Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Standing-privilege risk**: permanent admin accounts accumulate across the ~50–70 privileged population; mitigated by Just-in-Time, time-boxed grants with MFA challenge (step 3)",
+     "- **Unreviewed-privilege risk**: role changes leave prior admin rights attached to the person; mitigated by monthly high-risk-account review and manual de-provisioning on role change (step 5)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PAM Tool (CyberArk, Azure PIM, HashiCorp Vault)",
+     "- Multi-Factor Authentication (MFA) provider",
+     "- SIEM for log correlation and alerting",
+     "- Integration with W152 (employee lifecycle) and W338 (SOD review)"
+    ],
+    "Time Estimate": [
+     "Access requests 25 min each (request 10 min + security approval 15 min) at realized privileged-access volume across ~50–70 accounts (JIT provisioning, session recording, and expiry automated); monthly privileged-access review 4 hours ≈ 48 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Access Request**: IT staff requests temporary or permanent privileged access (e.g., Domain Admin, Cloud Global Admin) with justification",
+     "duration": "10 min",
+     "n": "1",
+     "r": "IT Staff"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Security Approval**: Security Manager verifies need-to-know and least-privilege; checks for SOD conflicts (W338)",
+     "duration": "15 min",
+     "n": "2",
+     "r": "IT Security Mgr"
+    },
+    {
+     "a": "—",
+     "activity": "**JIT Provisioning**: System grants Just-in-Time (JIT) access for a limited window (e.g., 4 hours); requires MFA challenge",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Security Analyst",
+     "activity": "**Session Monitoring**: System logs all actions taken during privileged session (keystrokes, commands); high-risk actions alert Security Analyst",
+     "duration": "Continuous",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Access Revocation**: Access automatically expires at end of window; permanent accounts require manual de-provisioning upon role change (W152)",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System / IT Helpdesk"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Monthly Privileged Review**: Security Analyst reviews all accounts with administrative rights; verifies users still require access; revokes unused permissions",
+     "duration": "4 hours/month",
+     "n": "6",
+     "r": "Security Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W152",
+    "W338"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Ongoing; Monthly inventory check",
+    "Owner": "IT Infrastructure Lead",
+    "Participants": "Network Engineer, Security Analyst, DevOps, Finance (for payment)",
+    "Trigger": "New application rollout; or 60 days prior to certificate/domain expiration",
+    "Volume": "~30+ public domains; ~100+ SSL certificates (wildcard and single-domain)"
+   },
+   "id": "W377",
+   "level": 2,
+   "name": "Domain, SSL & Digital Certificate Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan of all public-facing endpoints to identify certificate expiration dates…\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify with App Owners if still needed\" (replaces manual Step 2).",
+     "- System auto-generate of \"Generate CSR\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: IT Infrastructure Lead review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Expiry-outage risk**: an un-renewed certificate takes down ecommerce checkout or API authentication; mitigated by monthly scans of all public endpoints with 60-day renewal authorization (steps 1–2)",
+     "- **Shadow-endpoint risk**: certificates provisioned outside IT expire unknown to the register; mitigated by scanning public-facing endpoints rather than relying on manual inventory (step 1)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Domain Registrar (GoDaddy, Route53)",
+     "- Certificate Authority (DigiCert, Let's Encrypt)",
+     "- API Gateway (W257) / Load Balancer management console",
+     "- Integration with W131 (IT asset tracking) and W136 (indirect procurement)"
+    ],
+    "Time Estimate": [
+     "Monthly inventory scan 1 hour ≈ 12 hours/year; each certificate renewal ~3.5–4.5 hours (renewal authorization 30 min + CSR 1 hour + implementation 1–2 hours + verification 30 min + domain renewal 30 min) × ~8–10 renewals/month typical for 100+ certificates ≈ 340–540 hours/year (expiry monitoring automated at 90/30/7 days).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Infra Lead",
+     "activity": "**Inventory Review**: Monthly scan of all public-facing endpoints to identify certificate expiration dates and domain renewal windows",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Network Engineer"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Renewal Authorization**: For domains/certs expiring in 60 days, verify with App Owners if still needed; obtain CIO approval for renewal",
+     "duration": "30 min",
+     "n": "2",
+     "r": "IT Infra Lead"
+    },
+    {
+     "a": "IT Infra Lead",
+     "activity": "**Certificate Request (CSR)**: Generate CSR; submit to Certificate Authority (CA); complete domain validation (DNS or file-based)",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Network Engineer"
+    },
+    {
+     "a": "IT Infra Lead",
+     "activity": "**Implementation**: Install new certificate on Load Balancers (WAF/ALB), Web Servers, or API Gateways (W257)",
+     "duration": "1–2 hours",
+     "n": "4",
+     "r": "DevOps / Network Eng"
+    },
+    {
+     "a": "IT Infra Lead",
+     "activity": "**Verification**: Confirm site/API accessibility and certificate chain validity; update expiry date in IT Asset Register (W131)",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "Finance Mgr",
+     "activity": "**Domain Renewal**: Process domain renewal payment via corporate credit card or PO (W136); update WHOIS contact info if needed",
+     "duration": "30 min",
+     "n": "6",
+     "r": "IT Infra Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W131",
+    "W136",
+    "W257"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "As-needed; estimated 5–10 incidents/month requiring investigation",
+    "Owner": "IT Security Manager",
+    "Participants": "Security Analyst, IT Infrastructure, Legal (if breach), affected Business Owners",
+    "Trigger": "Security alert from SIEM, EDR detection, unauthorized access report, or suspected malware infection",
+    "Volume": "Covers ~1,500 endpoints, ~600 POS terminals, and cloud infrastructure"
+   },
+   "id": "W383",
+   "level": 2,
+   "name": "IT Security Incident Response (General)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Triage & Classification\" (replaces manual Step 1).",
+     "- System auto-count of \"accounts, or isolate infected host from network\" (replaces manual Step 2).",
+     "- System auto-log of \"logs, memory, and disk to determine root cause, extent of lateral movement, and…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: IT Security Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Containment-delay risk**: classification debate delays isolation while malware spreads; mitigated by the severity-classified playbook executing containment (IP blocks, account disables, host isolation) immediately after triage (steps 1–2)",
+     "- **Breach-notification risk**: PII exposure identified late blows the NPC 72-hour notification window under RA 10173; mitigated by the investigation step explicitly determining whether PII was touched to trigger the breach workflow (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SIEM / Log Management for event correlation and forensic investigation (W383.1, 3)",
+     "- EDR Dashboard for endpoint isolation and malware remediation (W383.2, 4)",
+     "- Incident ticketing system (W48) with security classification and evidence attachment (W383.6)",
+     "- Integration with W53 (Data Privacy Breach Response), W55 (Disaster Recovery), W380 (Alert & Event Management), W381 (Knowledge Management)"
+    ],
+    "Time Estimate": [
+     "10.5–17.5 hours per occurrence (per-step effort 30 min + 1 hour + 4–8 hours + 2–4 hours + 1–2 hours + 2 hours) — at As-needed; estimated 5–10 incidents/month requiring investigation ≈ 60–120 occurrences/year ≈ 630–2,100 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Triage & Classification**: Verify alert; classify by severity (Low, Medium, High, Critical) and type (Malware, Unauthorized Access, Denial of Service, etc.)",
+     "duration": "30 min",
+     "n": "1",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Containment**: Execute immediate isolation steps: block IP addresses, disable compromised accounts, or isolate infected host from network",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "IT Security Mgr"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Investigation & Analysis**: Analyze logs, memory, and disk to determine root cause, extent of lateral movement, and whether PII was touched (trigger W53 if yes)",
+     "duration": "4–8 hours",
+     "n": "3",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Eradication**: Remove the threat: delete malware, close vulnerability, or rebuild compromised system from clean image",
+     "duration": "2–4 hours",
+     "n": "4",
+     "r": "Infrastructure Team"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Recovery**: Restore services; monitor for recurrence; verify system integrity before full business resumption",
+     "duration": "1–2 hours",
+     "n": "5",
+     "r": "Infrastructure Team"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Post-Incident Review**: Document timeline, impact, and lessons learned; update security controls and W381 Knowledge Base",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "IT Security Mgr"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W380",
+    "W381",
+    "W48",
+    "W53",
+    "W55"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Annual (with quarterly roadmap updates)",
+    "Owner": "CIO",
+    "Participants": "CEO, CFO, COO, Department Heads, IT Leads",
+    "Trigger": "Annual corporate strategic planning cycle (typically Q3/Q4)",
+    "Volume": "Covers all IT domains, digital transformation, and major CAPEX/OPEX"
+   },
+   "id": "W386",
+   "level": 2,
+   "name": "IT Strategy & Annual Roadmap Development",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"Scan & Gap Analysis\" (replaces manual Step 1).",
+     "- System auto-track of \"track project progress\" (replaces manual Step 6)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: CIO review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Misalignment risk**: the roadmap reflects technology preference rather than business goals (store expansion, ecommerce targets); mitigated by the environmental scan and Dept-Head stakeholder interviews before prioritization (steps 1–2)",
+     "- **Unfunded-roadmap risk**: approved projects stall mid-year for lack of grounded CAPEX/OPEX; mitigated by budget development including hardware refresh and software maintenance ahead of Board approval (steps 4–5)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT Project Intake Portal (W374) for initial demand capture",
+     "- Enterprise Project Management (W128) for tracking execution",
+     "- ERP Budgeting (W26) for financial alignment",
+     "- Integration with W21 (CAPEX), W131 (Hardware Refresh), W113 (BI Roadmap)"
+    ],
+    "Time Estimate": [
+     "5.1 weeks elapsed per occurrence (1 week + 2 weeks + 1 week + 1 week + 1 day); cadence-carried steps as authored (Ongoing) — at Annual (with quarterly roadmap updates) ≈ 1 occurrence/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "**Environmental Scan & Gap Analysis**: Review business goals (e.g., store expansion, ecommerce targets), technology trends, and current system performance/gaps",
+     "duration": "1 week",
+     "n": "1",
+     "r": "CIO / IT Leads"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Stakeholder Interviews**: Meet with Dept Heads to understand unmet needs and upcoming business initiatives",
+     "duration": "2 weeks",
+     "n": "2",
+     "r": "IT Project Mgr"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Roadmap Prioritization**: Score potential projects based on ROI, strategic alignment, risk, and technical feasibility; align with IT Steering Committee",
+     "duration": "1 week",
+     "n": "3",
+     "r": "IT Leads"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Budget Development**: Estimate CAPEX (W21) and OPEX for the roadmap; include hardware refresh (W131) and software maintenance",
+     "duration": "1 week",
+     "n": "4",
+     "r": "CIO / Finance"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Board Approval**: Present IT Strategy and Budget to CEO/Board for formal approval",
+     "duration": "1 day",
+     "n": "5",
+     "r": "CIO"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Execution & Monitoring**: Publish roadmap; track project progress (W128) and update roadmap quarterly based on business shifts",
+     "duration": "Ongoing",
+     "n": "6",
+     "r": "IT Project Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W128",
+    "W131",
+    "W21",
+    "W26",
+    "W374"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Vendor Manager, Finance (AP), Department Managers",
+    "Trigger": "Periodic scan of firewall/CASB logs, or review of employee expense reports/AP invoices",
+    "Volume": "Potentially dozens of unsanctioned SaaS/Cloud applications"
+   },
+   "id": "W388",
+   "level": 2,
+   "name": "Shadow IT Discovery & Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs\" (replaces manual Step 1).",
+     "- System auto-capture of \"enterprise tool\" (replaces manual Step 3).",
+     "- System auto-update of \"Update Acceptable Use Policy\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Unknown-data-exposure risk**: unsanctioned SaaS holds company or customer data with no DPA and no RA 10173 coverage; mitigated by CASB/firewall and AP/expense scanning with a sanction (DPA + SSO) or block decision (steps 1, 3–4)",
+     "- **Whack-a-mole risk**: blocking a shadow app without serving the underlying need spawns a replacement next month; mitigated by consolidation into existing enterprise tools and Acceptable Use Policy reinforcement (steps 3, 5)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CASB (Cloud Access Security Broker) / Next-Gen Firewall logs",
+     "- ERP AP & Expense modules (W7, W74)",
+     "- Software License Management (W370)",
+     "- Integration with W53 (Data Privacy) and W372 (User Training)"
+    ],
+    "Time Estimate": [
+     "5 hours per occurrence (per-step effort 4 hours + 1 hour); plus unit-priced steps at their own unit (2 hours/app); cadence-carried steps as authored (Ongoing, Quarterly) — at Monthly ≈ 12 occurrences/year ≈ 60 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Detection**: Analyze network logs (CASB/Firewall) and financial records (AP/Expenses) for payments to unknown software/cloud vendors",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Risk Assessment**: Evaluate discovered applications for data privacy (RA 10173), security, and cost risks",
+     "duration": "2 hours/app",
+     "n": "2",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Decision**: (a) **Sanction**: Bring into official governance (W370); (b) **Discontinue**: Block at firewall and notify user; (c) **Consolidate**: Migrate data to an existing enterprise tool",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "IT Security Mgr"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Remediation**: For sanctioned apps, ensure DPA (Data Processing Agreement) is signed and SSO is integrated if possible",
+     "duration": "Ongoing",
+     "n": "4",
+     "r": "IT Vendor Mgr"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**Policy Reinforcement**: Update Acceptable Use Policy (W372) based on discovery trends",
+     "duration": "Quarterly",
+     "n": "5",
+     "r": "IT Security Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W370",
+    "W372",
+    "W53",
+    "W7",
+    "W74"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "As-needed (per project)",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "Project Manager, IT Security, Legal, Business Owner",
+    "Trigger": "New system project (W374), major software change (W132), or data processing change",
+    "Volume": "~5–10 major assessments per year"
+   },
+   "id": "W389",
+   "level": 2,
+   "name": "Data Privacy Impact Assessment (DPIA) Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitoring\" (replaces manual Step 1).",
+     "- System auto-document of \"Document how personal data is collected, used, stored, and shared within the…\" (replaces manual Step 2).",
+     "- System auto-identify of \"Identify threats to data subject rights and potential harms\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: Data Protection Officer (DPO) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Retro-DPIA risk**: the assessment happens after go-live, when the privacy risk is already realized; mitigated by DPO sign-off as a hard go-live gate (step 5)",
+     "- **Proportionality risk**: low-risk projects buried in heavyweight assessment breed bypass behavior; mitigated by the threshold assessment determining whether full DPIA is required (step 1)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Data Flow Diagramming tools",
+     "- Project Management System (W128)",
+     "- Breach Register (W53) for historical risk input",
+     "- Integration with W53 (Data Privacy Breach Response) and W132 (Change Management)"
+    ],
+    "Time Estimate": [
+     "11 hours per occurrence (per-step effort 1 hour + 4 hours + 2 hours + 2 hours + 2 hours) — cadence: As-needed (per project); annual effort is event-driven (annualize at realized volume).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "**Threshold Assessment**: Determine if a project involves high-risk processing (sensitive personal info, automated profiling, large-scale monitoring)",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Project Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Data Flow Mapping**: Document how personal data is collected, used, stored, and shared within the new system",
+     "duration": "4 hours",
+     "n": "2",
+     "r": "Project Manager"
+    },
+    {
+     "a": "DPO",
+     "activity": "**Risk Identification**: Identify threats to data subject rights and potential harms (breach, discrimination, etc.)",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "DPO",
+     "activity": "**Mitigation Planning**: Define technical and organizational measures to reduce privacy risks (encryption, masking, access limits)",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "IT Security"
+    },
+    {
+     "a": "CEO",
+     "activity": "**DPO Sign-off**: DPO reviews assessment and mitigations; signs off before project go-live",
+     "duration": "2 hours",
+     "n": "5",
+     "r": "DPO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W128",
+    "W132",
+    "W374",
+    "W53"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "CIO",
+    "Participants": "Business Department Heads, IT Infrastructure Lead, DPO",
+    "Trigger": "Annual review cycle or significant change in business operations/org structure",
+    "Volume": "Covers all critical business processes and supporting IT services"
+   },
+   "id": "W390",
+   "level": 2,
+   "name": "IT Service Continuity & Business Impact Analysis (BIA) Refresh",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics, Finance, etc.\" (replaces manual Step 1).",
+     "- System auto-schedule of \"DR Plan Update\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Stale-RTO risk**: DR failover is rehearsed against recovery targets that no longer match business tolerance; mitigated by annual MTPD/impact re-analysis with RTO/RPO reset and DR plan alignment (steps 2, 5)",
+     "- **Mapping-gap risk**: a critical business process supported by an unmapped IT service is left out of DR scope; mitigated by explicit business-process-to-IT-service mapping (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BIA Questionnaires / Software",
+     "- IT Service Catalog (W379)",
+     "- DR Runbooks (W55)",
+     "- Integration with W55 (IT Disaster Recovery) and W382 (Backup & Recovery)"
+    ],
+    "Time Estimate": [
+     "16 hours per occurrence (per-step effort 2 hours + 4 hours + 4 hours + 2 hours + 4 hours) — at Annual ≈ 1 occurrence/year ≈ 16 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Business Process Identification**: List all core business processes (Sales, Logistics, Finance, etc.)",
+     "duration": "2 hours",
+     "n": "1",
+     "r": "Dept Heads"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Impact Analysis**: Determine MTPD (Maximum Tolerable Period of Disruption) and financial/operational impact of downtime for each",
+     "duration": "4 hours",
+     "n": "2",
+     "r": "Dept Heads"
+    },
+    {
+     "a": "CIO",
+     "activity": "**IT Service Mapping**: Map each business process to its supporting IT services/systems",
+     "duration": "4 hours",
+     "n": "3",
+     "r": "IT Infra Lead"
+    },
+    {
+     "a": "CEO",
+     "activity": "**RTO/RPO Definition**: Set Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO) based on impact analysis",
+     "duration": "2 hours",
+     "n": "4",
+     "r": "CIO"
+    },
+    {
+     "a": "CIO",
+     "activity": "**DR Plan Update**: Ensure DR failover procedures (W55) and backup schedules (W382) align with the refreshed RTO/RPO",
+     "duration": "4 hours",
+     "n": "5",
+     "r": "IT Infra Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W379",
+    "W382",
+    "W55"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Annual planning; Quarterly progress review",
+    "Owner": "CIO",
+    "Participants": "IT Leads, HR Training Team",
+    "Trigger": "Annual performance review; or new technology adoption",
+    "Volume": "~30 IT staff"
+   },
+   "id": "W394",
+   "level": 2,
+   "name": "IT Technical Skills, Training & Certification Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-identify of \"Identify\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks and required certifications\" (replaces manual Step 3).",
+     "- System auto-update of \"Update skills matrix quarterly to reflect new certifications and proficiencies\" (replaces manual Step 6)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Key-person risk**: skills held by only one person halt operations during absence or turnover; mitigated by SPOF identification and internal knowledge-transfer sessions (steps 2, 5)",
+     "- **Skills-obsolescence risk**: roadmap technologies (W386) arrive before the ~30-person team can operate them; mitigated by skills-vs.-roadmap assessment feeding training tracks and certifications (steps 1, 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT Skills Matrix (Document/LMS)",
+     "- Integration with W386 (IT Strategy) and W372 (User Training)"
+    ],
+    "Time Estimate": [
+     "Annual cycle ~9.5 days (skills assessment 2 days + gap identification 4 hours + training roadmap 1 week) ≈ 76 hours/year for the ~30-person IT team; monthly knowledge-transfer sessions 1 hour ≈ 12 hours/year; quarterly skills-matrix update 2 hours ≈ 8 hours/year; certification support ongoing.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**Skills Assessment**: Map current IT team skills against required competencies for the IT Roadmap (W386)",
+     "duration": "2 days",
+     "n": "1",
+     "r": "IT Leads"
+    },
+    {
+     "a": "—",
+     "activity": "**Gap Identification**: Identify \"Single Points of Failure\" (skills held by only one person) and technical gaps",
+     "duration": "4 hours",
+     "n": "2",
+     "r": "CIO"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Training Roadmap**: Define training tracks and required certifications (e.g., AWS, SAP, CISA, PMP)",
+     "duration": "1 week",
+     "n": "3",
+     "r": "IT Leads"
+    },
+    {
+     "a": "—",
+     "activity": "**Certification Support**: Provide budget and time for IT staff to complete exams and training",
+     "duration": "Ongoing",
+     "n": "4",
+     "r": "CIO"
+    },
+    {
+     "a": "IT Leads",
+     "activity": "**Knowledge Transfer**: Conduct internal \"Brown Bag\" sessions to share skills across the team",
+     "duration": "1 hour/month",
+     "n": "5",
+     "r": "IT Staff"
+    },
+    {
+     "a": "HR Head",
+     "activity": "**Progress Tracking**: Update skills matrix quarterly to reflect new certifications and proficiencies",
+     "duration": "2 hours",
+     "n": "6",
+     "r": "CIO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W372",
+    "W386"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Weekly hunting; Continuous intel monitoring",
+    "Owner": "IT Security Manager",
+    "Participants": "Security Analyst, Network Engineer",
+    "Trigger": "New threat intelligence report; or scheduled hunting cycle",
+    "Volume": "Analysis of ~100+ Indicators of Compromise (IoC)"
+   },
+   "id": "W397",
+   "level": 2,
+   "name": "Cyber Threat Intelligence & Proactive Threat Hunting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitoring\" (replaces manual Step 1).",
+     "- System auto-match of \"matching\" (replaces manual Step 2).",
+     "- System auto-capture of \"Manually search logs for advanced persistent threats\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: IT Security Manager review and approval gate",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Intel-without-action risk**: feeds are collected but never matched against the estate; mitigated by automated IoC ingestion into SIEM/EDR with alert-driven follow-up (steps 1–2)",
+     "- **APT-blindness risk**: patient intruders living below detection thresholds evade automated tooling; mitigated by scheduled hypothesis-driven hunting and threat modeling against BuildRight's architecture (steps 3–4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Threat Intelligence Platform (TIP)",
+     "- SIEM / EDR Logs",
+     "- Integration with W366 (Network), W367 (Cybersecurity Ops), and W383 (Incident Response)"
+    ],
+    "Time Estimate": [
+     "Daily intel aggregation and IoC ingestion ~1 hour/day ≈ 365 hours/year; proactive threat hunting 4 hours/week ≈ 208 hours/year against ~100+ IoCs; monthly threat modeling 4 hours ≈ 48 hours/year; actionable intel triggers W383 incident response immediately.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Intel Collection**: Aggregate threat feeds from industry sources (ISAC, CISA, Vendors) and dark web monitoring",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "Security Analyst",
+     "activity": "**IoC Ingestion**: Import Indicators of Compromise (IPs, Hashes, Domains) into SIEM/EDR for automated matching",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Proactive Hunting**: Manually search logs for advanced persistent threats (APTs) that bypass automated tools",
+     "duration": "4 hours/week",
+     "n": "3",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Threat Modeling**: Review internal architecture against new attack techniques; identify weak points",
+     "duration": "4 hours/month",
+     "n": "4",
+     "r": "IT Security Mgr"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Actionable Intel**: If new threat is found, trigger W383 (Incident Response) or update firewall/WAF rules (W366)",
+     "duration": "Immediate",
+     "n": "5",
+     "r": "Security Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W366",
+    "W367",
+    "W383"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Annual on-site QSA audit; quarterly network vulnerability scans; continuous compliance monitoring",
+    "Owner": "IT Security Manager",
+    "Participants": "IT Security Manager, CIO, POS System Vendor, Network Infrastructure Team, Payment Gateway Provider, QSA (Qualified Security Assessor), VP Legal",
+    "Trigger": "Annual PCI-DSS compliance cycle; or triggered by significant change to payment processing environment (new POS system, new payment gateway, new network topology)",
+    "Volume": "600 POS terminals across 200 stores processing ~36% card transactions (~1M card transactions/month)"
+   },
+   "id": "W1205",
+   "level": 2,
+   "name": "PCI-DSS Compliance for POS Payment Card Data & Annual QSA Audit Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters, traverses, and exits the environment\" (replaces manual Step 1).",
+     "- System auto-document of \"documents compliance evidence for each requirement\" (replaces manual Step 2).",
+     "- System auto-log of \"logging and monitoring\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot processes approximately 1 million credit/debit card transactions per month across 600 POS terminals. As a merchant handling card-present transactions, BuildRight must comply with the Payment Card Industry Data Security Standard (PCI-DSS) v4.0. Non-compliance risks include: fines from card brands (Visa/Mastercard) of USD 5,000–100,000/month, loss of card processing capability (business-threatening), and reputational damage from data breaches. This workflow manages the ongoing PCI-DSS compliance program including the annual Qualified Security Assessor (QSA) audit."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: standardized POS image deployment, remote configuration management, and automated compliance checking; operational: POS software that encrypts all cached card data and auto-purges after sync"
+    ],
+    "Pain Points / Risks": [
+     "- **600 POS terminal management**: maintaining consistent security configuration across 600 terminals in 200 stores is operationally challenging; mitigated by standardized POS image deployment, remote configuration management, and automated compliance checking",
+     "- **POS offline mode security**: offline POS capability (required per POS requirements) means terminals cache data locally during network outages; cached data must be encrypted and purged after sync; mitigated by POS software that encrypts all cached card data and auto-purges after sync",
+     "- **QSA audit cost**: annual QSA audit for a 600-terminal environment costs USD 30,000–60,000; mitigated by maintaining strong year-round compliance to minimize finding remediation costs and audit duration",
+     "- **Third-party payment gateway risk**: if payment gateway provider experiences a breach, BuildRight's compliance status may be affected; mitigated by requiring PCI-DSS compliance certification from payment gateway provider in service agreement"
+    ],
+    "Staffing Implication": [
+     "- **IT Security Manager**: ~10–15 hours/week on PCI-DSS compliance activities year-round, spiking to ~30–40 hours during QSA audit period. Absorbed within existing role.",
+     "- **Network Infrastructure Team**: ~4–8 hours/quarter on vulnerability remediation. Absorbed within existing team.",
+     "- **CIO**: ~2 hours/quarter on compliance status review. Absorbed within existing role.",
+     "- **External QSA**: engaged annually for on-site audit (3–5 days).",
+     "- **No permanent incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PCI-DSS compliance tracking GRC module with 12 requirement categories (W1205.2)",
+     "- Network vulnerability scan integration with ASV (W1205.4)",
+     "- POS terminal asset inventory with physical security status tracking (W1205.5)",
+     "- Incident response procedure documentation and testing module (W1205.5)",
+     "- Compliance dashboard with audit timeline and finding status (W1205.7)"
+    ],
+    "Time Estimate": [
+     "Annual cycle: scope definition 4 hours + Self-Assessment Questionnaire 8–16 hours + gap remediation 20–40 hours + QSA on-site audit support 40 hours IT-side (3–5 days QSA elapsed) + finding remediation 10–20 hours ≈ 82–120 hours/year; quarterly ASV vulnerability scans 4 hours + compliance reporting 2 hours ≈ 24 hours/year (continuous compliance monitoring automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**PCI-DSS scope definition**: IT Security Manager defines PCI-DSS scope annually: (a) Cardholder Data Environment (CDE) includes: all 600 POS terminals, POS network segments, payment gateway integration servers, and any systems that store, process, or transmit cardholder data, (b) identifies segmentation boundaries between CDE and general corporate network, (c) documents data flow diagram showing how card data enters, traverses, and exits the environment",
+     "duration": "4 hours",
+     "n": "1",
+     "r": "IT Security Manager"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Self-Assessment Questionnaire (SAQ)**: For locations not requiring on-site assessment: IT Security Manager completes PCI-DSS SAQ (SAQ D for BuildRight as a large merchant with 600 terminals): (a) 12 requirement categories covering network security, access control, encryption, vulnerability management, and security policies, (b) documents compliance evidence for each requirement, (c) identifies any gaps for remediation",
+     "duration": "8–16 hours",
+     "n": "2",
+     "r": "IT Security Manager"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Gap remediation**: For any PCI-DSS gaps identified in Step 2 or previous audit: (a) IT Security Manager creates remediation plan with timeline and responsible team, (b) common gaps in retail environments: (i) POS terminal physical security, (ii) network segmentation weakness, (iii) weak passwords on POS systems, (iv) missing logging and monitoring, (v) insufficient penetration testing frequency, (c) implements fixes with Network Infrastructure Team and POS Vendor; documents remediation evidence",
+     "duration": "Varies (20–40 hours typical)",
+     "n": "3",
+     "r": "IT Security Manager / Network Team"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Quarterly vulnerability scans**: Approved Scanning Vendor (ASV) conducts quarterly external vulnerability scans of CDE-facing systems: (a) scans internet-facing payment gateway integration endpoints, (b) identifies vulnerabilities (CVE-based), (c) classifies severity, (d) IT Security Manager remediates critical/high vulnerabilities within 30 days; evidence submitted to ASV for re-scan and passing report",
+     "duration": "4 hours/quarter",
+     "n": "4",
+     "r": "IT Security Manager / ASV"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Annual QSA on-site audit**: QSA conducts annual on-site audit (typically 3–5 days): (a) interviews IT Security Manager, network team, POS team, and store operations, (b) inspects POS terminals at sampled stores (typically 5–10 stores), (c) reviews network diagrams, firewall rules, access logs, and encryption configurations, (d) observes POS terminal physical security, (e) tests incident response procedures, (f) produces Report on Compliance (ROC) with findings",
+     "duration": "40 hours (IT team) + 3–5 days QSA",
+     "n": "5",
+     "r": "QSA / IT Security Manager"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Audit finding remediation**: For any findings from QSA audit: (a) IT Security Manager creates remediation plan with evidence collection timeline, (b) implements fixes and documents evidence, (c) submits evidence to QSA for follow-up validation, (d) obtains formal Attestation of Compliance (AOC) from QSA upon successful remediation, (e) submits AOC to acquiring bank and card brands",
+     "duration": "10–20 hours",
+     "n": "6",
+     "r": "IT Security Manager"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Compliance monitoring and reporting**: IT Security Manager provides quarterly PCI-DSS compliance status to CIO: (a) scan results summary, (b) open remediation items and status, (c) upcoming audit schedule, (d) compliance costs (QSA fees, ASV fees, remediation costs), (e) risk assessment of any deferred remediation items; annual summary to CFO for budget planning",
+     "duration": "2 hours/quarter",
+     "n": "7",
+     "r": "IT Security Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Annual risk assessment & management review; annual surveillance audit on a 3-year recertification cycle; continuous policy upkeep",
+    "Owner": "IT Compliance Lead (accountable: CIO)",
+    "Participants": "IT Security Manager, Data Protection Officer, Internal Audit, Head of Engineering, IT Infrastructure Manager, HR/L&D (W372 awareness program), TPRM Program Manager (W4730)",
+    "Trigger": "Annual ISMS risk-assessment & management-review cycle; ISO/IEC 27001 surveillance or recertification audit; new NPC advisory or material scope change (new built product, VS-190 OT interface); or a material security-policy review falling due",
+    "Volume": "ISMS scope: HQ + 4 DCs + 200 stores (~2,500 endpoints, ~6,762 identities) plus VS-190 OT interfaces; ~93 Annex A controls in the SoA; ~15–25 policy documents"
+   },
+   "id": "W5522",
+   "level": 2,
+   "name": "ISMS Program, Security Certification & Security-Policy Lifecycle (ISO/IEC 27001)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- GRC workflow auto-routes policy reviews and CAPA deadlines with escalation timers (replaces manual Steps 3–4 chasing).",
+     "- Control-evidence requests auto-assembled from W387 CSA artifacts for the surveillance audit (replaces manual Step 5 evidence collection)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: the policy set carries CIO approval and current annual review dates",
+     "- operational: nonconformities tracked to CAPA closure before the surveillance audit"
+    ],
+    "Pain Points / Risks": [
+     "- **Paper-ISMS risk**: policies drift from practiced reality and fail surveillance audits; mitigated by the internal-audit program (Step 4) and the W387 CSA evidence loop",
+     "- **Scope-gap risk**: new platforms (built products, OT interfaces) ship outside the ISMS scope statement; mitigated by the scope-change trigger and the VS-113/VS-190 architecture gates",
+     "- **Certification-lapse risk**: surveillance findings accumulate into the recertification year; mitigated by CAPA tracking with closure deadlines (Steps 4–5)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within the existing IT compliance/security function (IT operating model §5/§9); certification-body fees sit in the VS-135 technology budget; no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- GRC register (SoA, risk register, CAPA, policy library versioned per VS-88 document control)",
+     "- W387 CSA evidence store; W3256 asset risk register; W4730 TPRM attestations",
+     "- Certification-body audit workspace; board/CIO security-GRC reporting pack"
+    ],
+    "Time Estimate": [
+     "SoA upkeep ≈ 16 hours/year; risk assessment ≈ 40 hours/year; policy lifecycle ≈ 24 hours/year; internal audit ≈ 40 hours/year; certification management ≈ 32 hours/year; management review ≈ 8 hours/year. Total **≈ 160 hours/year** (≈0.08 FTE), absorbed within the IT compliance function."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**Scope & SoA upkeep**: Maintain the ISMS scope statement (enterprise IT; interfaces to the VS-190 OT scope and the VS-113 built products) and the Statement of Applicability across Annex A controls",
+     "duration": "16 hours/year",
+     "n": "1",
+     "r": "IT Compliance Lead"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Annual risk-assessment cycle**: Refresh the threat/risk register with control owners; raise treatment plans; route risk acceptances (links to W3256 asset risk register, W3590 architecture risk)",
+     "duration": "40 hours/year",
+     "n": "2",
+     "r": "IT Compliance Lead / IT Security Mgr"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Security-policy hierarchy lifecycle**: Author, review and approve the policy set (CIO approval; annual review dates; version control per VS-88)",
+     "duration": "24 hours/year",
+     "n": "3",
+     "r": "IT Compliance Lead"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Internal audit program**: Plan and support the annual internal ISMS audit; track nonconformities to CAPA closure (links to W387 CSA evidence and the independent VS-21 audit)",
+     "duration": "40 hours/year",
+     "n": "4",
+     "r": "IT Compliance Lead / Internal Audit"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Certification & surveillance management**: Coordinate stage-1/stage-2/surveillance audits with the certification body; remediate findings",
+     "duration": "32 hours/year",
+     "n": "5",
+     "r": "IT Compliance Lead"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Management review & reporting**: Run the annual management review; report security-GRC metrics to the CIO/Board (ethics escalations link to W119)",
+     "duration": "8 hours/year",
+     "n": "6",
+     "r": "IT Compliance Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W119",
+    "W3256",
+    "W3590",
+    "W372",
+    "W387",
+    "W4730"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Continuous ASM scanning; annual full-scope pentest & purple-team exercise; per-launch targeted test",
+    "Owner": "IT Security Manager",
+    "Participants": "External pentest vendor (vetted per W4730), Application Manager, Head of Engineering, Network Engineers, Internal Audit, PCI QSA coordinator (W1205)",
+    "Trigger": "Annual pentest-cycle planning; launch of a new internet-facing service or a major ERP/API release; critical exploited-in-the-wild CVE; or a high-severity external attack-surface finding",
+    "Volume": "~10–15 external-facing assets under ASM; annual pentest covers the ERP, API gateway (W257/W733), ecommerce & mobile app (W395); ~60–100 findings/remediations/year"
+   },
+   "id": "W5523",
+   "level": 2,
+   "name": "Enterprise Pentest, Red/Purple-Team & Attack-Surface Management Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ASM findings auto-deduplicated against W367 vulnerability data and ticketed with severity (replaces manual Step 2 triage).",
+     "- Remediation SLA timers auto-escalate overdue findings to owners and the CIO dashboard (replaces manual Step 4 chasing)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: pentest vendors vetted via the W4730 TPRM attestation",
+     "- operational: findings tracked to verified retest under severity SLAs"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope-stale risk**: the pentest re-tests last year's estate while new services go untested; mitigated by the ASM-driven asset inventory and per-launch targeted tests (Steps 2–3)",
+     "- **Findings-stall risk**: critical findings age past their exploitability window; mitigated by severity SLAs and retest verification (Step 4)",
+     "- **Checklist-pentest risk**: annual point-in-time testing misses live adversary behavior; mitigated by the annual purple-team exercise validating SOC detections (Step 5)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within the existing IT security team; testing spend governed by VS-135/W4111 procurement; no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ASM scanner & external asset inventory; pentest vendor platform/report repository",
+     "- W367 vulnerability-scanner data; W397 CTI/detection inventory; W383 IR runbooks",
+     "- Remediation tracker with severity SLAs; W1205 PCI evidence pack; W4730 vendor-vetting records"
+    ],
+    "Time Estimate": [
+     "Vendor engagement ≈ 24 hours/year; ASM triage 1 hour × 52 weeks ≈ 52 hours/year; pentest cycle ≈ 36 hours/year; remediation tracking ≈ 40 hours/year; purple team ≈ 24 hours/year; reporting ≈ 8 hours/year. Total **≈ 184 hours/year** (≈0.09 FTE), absorbed within the security function; vendor fees sit in the VS-135 technology budget."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**Annual scope & vendor engagement**: Prioritize the internet-facing estate (ecommerce, mobile-app APIs per W395/VS-75, vendor portals, API gateway W257/W733, ERP internet surface); engage the accredited pentest vendor vetted per W4730",
+     "duration": "24 hours/year",
+     "n": "1",
+     "r": "IT Security Mgr"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Continuous external attack-surface scanning**: ASM tooling over the public asset inventory; new-asset detection on launch (the OT analog is the W5421 connected-device gate)",
+     "duration": "1 hour/week triage",
+     "n": "2",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Pentest execution & triage**: Coordinate testing windows; validate findings; deduplicate against W367 vulnerability data",
+     "duration": "36 hours/year cycle",
+     "n": "3",
+     "r": "IT Security Mgr / App Manager"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Remediation tracking & retest**: Assign findings to owners; severity SLAs (Critical 7 days / High 30 days); verify via retest",
+     "duration": "40 hours/year",
+     "n": "4",
+     "r": "Security Analyst / App Manager"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Annual purple-team exercise**: Scoped adversary emulation validating SOC detections (W367/W397) and IR runbooks (W383)",
+     "duration": "24 hours/year",
+     "n": "5",
+     "r": "IT Security Mgr / external vendor"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Reporting**: CIO/Board metrics (findings MTTR, repeat-finding rate, ASM trend); pentest-evidence feed to the W1205 PCI QSA",
+     "duration": "8 hours/year",
+     "n": "6",
+     "r": "IT Security Mgr"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1205",
+    "W257",
+    "W367",
+    "W383",
+    "W395",
+    "W397",
+    "W4111",
+    "W4730",
+    "W5421",
+    "W733"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Continuous alerting; daily triage; monthly policy tuning; ~12 case investigations/year",
+    "Owner": "IT Security Manager",
+    "Participants": "Security Analyst, Data Protection Officer, HR, Legal, Loss Prevention Manager (VS-23), IT Infrastructure Manager (endpoint agents per W367 EDR)",
+    "Trigger": "DLP policy-hit alert (endpoint/email/cloud); flagged separation of a privileged user (W152 T-0); insider-risk referral from VS-23/VS-159/HR; or the monthly policy-tuning review",
+    "Volume": "~2,500 endpoints; ~6,762 identities; ~40–60 triaged hits/month after tuning; ~10 flagged departure windows/year"
+   },
+   "id": "W5524",
+   "level": 2,
+   "name": "Enterprise DLP & Insider-Risk Monitoring (Endpoint/Email/Cloud)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Endpoint/email/cloud DLP hits auto-enriched with identity, device-compliance and departure status from W152/W367 before triage (replaces manual Step 2 lookups).",
+     "- Separation feed (W152) auto-flags departure-window cases to the monitoring queue (replaces manual Step 3 identification)."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: the monitoring basis reviewed with the DPO under RA 10173 proportionality",
+     "- operational: case evidence managed under the VS-88 legal-hold chain-of-custody"
+    ],
+    "Pain Points / Risks": [
+     "- **Overwatch risk**: employee monitoring over-collects and breaches RA 10173 proportionality; mitigated by the DPO review of monitoring basis, notice and retention (Step 5)",
+     "- **Alert-flood risk**: untuned rules bury real exfiltration in false positives; mitigated by monthly tuning correlated with EDR telemetry (Step 1)",
+     "- **Evidence risk**: case evidence handled outside chain-of-custody is inadmissible in labor proceedings; mitigated by VS-88 legal-hold handling (Step 4)"
+    ],
+    "Staffing Implication": [
+     "- Absorbed within the existing Security Analyst roster (W367/W397 operators); no incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Endpoint DLP agents co-managed with W367 EDR; email DLP (Defender for Office 365); cloud DLP (SaaS/SharePoint)",
+     "- Case-management workspace with chain-of-custody (VS-88 legal hold); W152 separation feed; W709 data-classification catalog",
+     "- Insider-risk KPI dashboard to the CIO; VS-23/VS-159 investigation-program interfaces"
+    ],
+    "Time Estimate": [
+     "Policy tuning 2 hours × 12 ≈ 24 hours/year; triage 30 min × 250 workdays = 7,500 min ≈ 125 hours/year; departure-window prep 1 hour × ~10 ≈ 10 hours/year; investigations 6 hours × ~12 ≈ 72 hours/year; privacy assurance ≈ 4 hours/year; reporting ≈ 4 hours/year. Total **≈ 239 hours/year** (≈0.11 FTE), absorbed within the security analysis function."
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Security Mgr",
+     "activity": "**DLP policy lifecycle & tuning**: Maintain endpoint/email/cloud rules aligned to the data-classification standard (W709 governance council); monthly false-positive review correlated with W367 EDR telemetry",
+     "duration": "2 hours/month",
+     "n": "1",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Alert triage & disposition**: Review tuned hits (~40–60/month) enriched with identity, device-compliance and departure status; disposition or escalate",
+     "duration": "30 min/day",
+     "n": "2",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Departure-window monitoring**: Heightened monitoring for flagged separations in privileged roles (per W375/W152 T-0 revocation)",
+     "duration": "1 hour/flagged case × ~10/year",
+     "n": "3",
+     "r": "Security Analyst"
+    },
+    {
+     "a": "IT Security Mgr",
+     "activity": "**Case investigation & adjudication**: Confirmed-hit investigation with HR/Legal/Loss Prevention (VS-23); evidence handled under the VS-88 legal-hold chain-of-custody",
+     "duration": "6 hours/case × ~12/year",
+     "n": "4",
+     "r": "Security Analyst / HR / Legal"
+    },
+    {
+     "a": "DPO",
+     "activity": "**Privacy assurance**: Review the employee-monitoring basis with the DPO — RA 10173 proportionality, notice and retention",
+     "duration": "4 hours/year",
+     "n": "5",
+     "r": "DPO / IT Security Mgr"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Metrics & reporting**: Insider-risk KPIs to the CIO; case-outcome feed to the VS-159/VS-23 investigation programs",
+     "duration": "4 hours/year",
+     "n": "6",
+     "r": "IT Security Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W152",
+    "W367",
+    "W375",
+    "W397",
+    "W709"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-324"
+   ],
+   "fields": {
+    "Frequency": "Rare, high-impact: no chain-wide destructive event in BuildRight's history; the class is exercised annually through the W1330 scenario rotation's ransomware-on-ERP inject and refreshed per W390's BIA cycle — readiness is exercised, not event-driven volume",
+    "Owner": "CIO",
+    "Participants": "IT Security Manager (W383 command), IT Infrastructure Lead (W55/W382), platform & ERP teams, VP Store Operations & Regional Managers (manual trading mode), Legal Counsel (VS-100 — extortion demand monopoly), Data Protection Officer (VS-91, W53 clock), Corporate Communications (W134/W855), Treasury (payment rails), Insurance Coordinator (VS-26 cyber policy), external IR/forensics retainer, PNP Anti-Cybercrime Group & CERT-PH, card brands/acquirer (POS-data cases), Board Audit & Risk Committee (VS-36), Internal Audit (VS-21)",
+    "Trigger": "Confirmed or strongly suspected enterprise-scale destructive cyber attack — simultaneous encryption, disabling, or data destruction across multiple production systems (ERP core, POS/SCO estate, ecommerce platform, WMS, or the corporate network) — with or without an extortion demand received",
+    "Volume": "1 event × the blast radius (up to ~600 POS terminals + ~1,500 endpoints + the cloud estate per W383's own census) × the trading surface (up to ~205 sites switched to manual trading mode) × the recovery stack (immutable backups W382, W55 failover, ring-by-ring rebuild)"
+   },
+   "id": "W5558",
+   "level": 2,
+   "name": "Ransomware & Destructive Cyber-Attack Enterprise Response Protocol",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SIEM correlation rule that auto-declares the enterprise-crisis threshold (N systems encrypting/locking within a window) and pages the bridge — replaces the manual declaration debate",
+     "- One-click enterprise segment: EDR mass-isolation + POS offline-mode push + ecommerce kill-switch in a single privileged action (replaces Step 1/4 manual toggles)",
+     "- Automated restore-point integrity attestation from the immutable vault before each rebuild ring (replaces manual Step 6 verification)",
+     "- Incident-bridge auto-logging with insurer/notification-clock tickers (replaces manual Step 7 tracking)"
+    ],
+    "Background": [
+     "'Ransomware'/'extortion demand'/'data-destruction' appear in the corpus only as pain points and drill injects — PA-27.2's DR risk names the trap (\"a ransomware attack may compromise both primary and DR environments if replication is synchronous; incident response must include isolating the DR environment before failover\"), W1330 injects the scenario, W5529 drills the OT variant, and zero dedicated workflow headers own the event. W383 owns host-level incident response (5–10 investigations/month), W55 owns DR failover, W53 the RA 10173 breach notification, W1205 the PCI layer — nobody owns the enterprise class: the extortion decision (a no-payment default that only Board + counsel can depart from), the isolate-DR-before-failover sequencing rule, chain-wide manual trading mode, the privileged forensics engagement, the staged clean rebuild, or the cyber-insurance and listed-company disclosure clocks. This workflow is that single canon; the OT variant rides W5529 and the data-privacy core rides W53's NPC 72-hour clock."
+    ],
+    "Controls": [
+     "- CTL-324 (ensure controlled execution — Cybersecurity & Privacy (PA-27.3).)",
+     "- operational: no extortion contact outside Legal; dual authorization (W320 rails) on any ransom consideration; DR isolated before failover, evidenced in the runbook; NPC/card-brand notification clocks evaluated within 24 hours of declaration"
+    ],
+    "Pain Points / Risks": [
+     "- **Failover-reinfection risk**: declaring failover onto a synchronously-replicated DR environment encrypts the recovery stack with production; mitigated by Step 1's isolate-DR-before-failover rule (the PA-27.2 risk register's own guidance, promoted from pain point to hard sequencing law)",
+     "- **Negotiation-legalization risk**: an IT staffer answering, negotiating, or paying an extortion demand creates evidence, sanctions, and escalation traps; mitigated by Step 3's Legal-monopoly demand handling with Board-gated decisions",
+     "- **Trading-improvisation risk**: stores individually deciding to close or hand-write tender rules under system loss; mitigated by Step 4's single manual-trading-mode directive under the E-02 closure custody",
+     "- **Notification-window risk**: PII or card-data determination arriving late blows the NPC 72-hour and card-brand windows; mitigated by Step 5's retainer-within-12-hours clock under counsel privilege",
+     "- **Evidence-destruction risk**: rebuilding before imaging destroys the forensic record that insurance, law enforcement, and litigation all need; mitigated by Step 1's preservation-first holds and the privileged evidence chain",
+     "- **Recurrence-blindness risk**: restoring the same flat network that enabled lateral movement; mitigated by Step 8's control retrofit gate before the incident closes"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by the IT Security bench, IT Infrastructure, and the CIO Office crisis roles with the external IR retainer; no incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- EDR/SIEM enterprise isolation playbooks with forensic export (extends W383's tooling to the chain-wide kill-switch)",
+     "- Immutable/air-gapped backup vault with restore-point integrity attestation (links to W382)",
+     "- POS offline-mode flags and floor-limit parameter push (links to W535)",
+     "- ERP maintenance/freeze mode and release-calendar hold (links to W5521)",
+     "- PAM credential reset and session revocation (links to W375); certificate lifecycle (W377)",
+     "- Ecommerce kill-switch and incident banner (links to the W659/W75 estate)",
+     "- Incident bridge log, evidence chain, and cyber-insurance claim records (links to VS-26)"
+    ],
+    "Time Estimate": [
+     "Declaration and first 24 hours ≈ 40–60 staff-hours across the crisis bridge; forensic scoping 2–5 days retainer-led; rebuild 1–4 weeks depending on ring integrity; full-event effort ≈ 300–600 staff-hours over a 2–6-week horizon. The class is rare (zero historical events — readiness rides the W1330/W390 exercise cadence), so no annual volume is claimed."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**Enterprise declaration & isolation**: IT Security declares the enterprise cyber-crisis on multi-system confirmation (perfection of scope is not required to declare); execute segmentation kill-switches on affected segments; **isolate the DR environment before any failover** (synchronous replication extends the blast radius — W55's own risk register); preserve volatile evidence per W383.3",
+     "duration": "1–3 hours",
+     "n": "1",
+     "r": "IT Security Mgr / Infrastructure"
+    },
+    {
+     "a": "CEO",
+     "activity": "**Crisis command & communications lockdown**: CIO chairs the cyber crisis bridge (the security-class analog of the W848 CMT); external comms embargo with a single spokesperson per W134/W855 — no technical detail leaves the bridge; all extortion correspondence routed to Legal, never answered by IT staff",
+     "duration": "First 24 hours",
+     "n": "2",
+     "r": "CIO / Corporate Communications"
+    },
+    {
+     "a": "CEO (Board-informed)",
+     "activity": "**Extortion-demand handling**: Legal owns the demand: the default position is no payment; any consideration runs only through Board + external counsel with sanctions/victim-funds screening before decision; law-enforcement referral to PNP ACG (RA 10175) and CERT-PH within 24 hours; demand artifacts (wallet addresses, samples, leak-site URLs) preserved and shared through W397 CTI channels; any payment decision requires CFO + CEO dual authorization riding W320's payment controls",
+     "duration": "24–72 hours",
+     "n": "3",
+     "r": "Legal / External Counsel"
+    },
+    {
+     "a": "COO",
+     "activity": "**Chain-wide manual trading mode**: stores on offline POS floor-limit discipline per the W535/W5G rails with cash-tender emphasis; ecommerce intake suspended or degraded per the W659 incident rails; DCs on the W580-class paper operations; closure decisions ride the E-02 closure custody (W2510 decides, W850 executes), never store improvisation",
+     "duration": "First 24 hours",
+     "n": "4",
+     "r": "VP Store Operations / Regional Managers"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Scoping, PII & payment-data determination**: external IR retainer engaged within 12 hours under the privileged direction of counsel; determine exfiltration vs encryption-only; PII touched → W53's NPC 72-hour clock; POS card data → W1205's PCI forensic investigator engagement and acquirer notification",
+     "duration": "2–5 days",
+     "n": "5",
+     "r": "External Retainer / IT Security Mgr"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Clean rebuild & staged restoration**: rebuild from immutable/air-gapped backup copies per W382; enterprise credential, secret, and certificate resets (W375/W377); the W5521 change freeze holds throughout; restore in W390's BIA dependency order with integrity verification before each ring reopens to traffic",
+     "duration": "1–4 weeks",
+     "n": "6",
+     "r": "IT Infrastructure Lead / Platform Teams"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Financial, insurance & disclosure chain**: cyber-policy notice filed within the policy window (VS-26); business-interruption and response-cost capture; statutory filings protected via the W5546-class filing contingency where portals or signing rails are unavailable; listed-company disclosure assessment per W5017/W5019 with Legal & IR",
+     "duration": "Parallel, ongoing",
+     "n": "7",
+     "r": "Insurance Coordinator / Legal / IR"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Post-incident & retrofit**: full timeline per W383.6 extended to a Board-level review; control retrofit and ISMS documentation update (W5522); lessons fed to W397 CTI; a tabletop re-run within 90 days",
+     "duration": "2–4 weeks post-recovery",
+     "n": "8",
+     "r": "IT Security Mgr"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1205",
+    "W1330",
+    "W134",
+    "W2510",
+    "W320",
+    "W375",
+    "W377",
+    "W382",
+    "W383",
+    "W390",
+    "W397",
+    "W5017",
+    "W5019",
+    "W53",
+    "W535",
+    "W55",
+    "W5521",
+    "W5522",
+    "W5529",
+    "W5546",
+    "W580",
+    "W5G",
+    "W659",
+    "W75",
+    "W848",
+    "W850",
+    "W855"
+   ]
+  }
+ ]
+}

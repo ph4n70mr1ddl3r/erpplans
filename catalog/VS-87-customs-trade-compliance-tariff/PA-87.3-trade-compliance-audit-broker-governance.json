@@ -1,0 +1,612 @@
+{
+ "process_area": {
+  "id": "PA-87.3",
+  "title": "Trade Compliance Audit, Broker Governance & ADC"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-87-customs-trade-compliance-tariff/PA-87.3-trade-compliance-audit-broker-governance.md",
+ "value_stream": {
+  "directory": "VS-87-customs-trade-compliance-tariff",
+  "id": "VS-87",
+  "name": "Customs Trade Compliance & Tariff Optimization"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Per import shipment (~20–30/month)",
+    "Owner": "Import Coordinator",
+    "Participants": "Finance (Tax), Customs Broker",
+    "Trigger": "Release of import shipment from Bureau of Customs (BOC)",
+    "Volume": "Significant tax payments (VAT, Duties, Excise)"
+   },
+   "id": "W239",
+   "level": 2,
+   "name": "Customs Duty & Tax Reconciliation (BOC)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"Collect Official Receipts\" (replaces manual Step 2).",
+     "- System auto-record of \"recorded for BIR credit\" (replaces manual Step 4).",
+     "- System auto-flag for investigation of \"Investigate significant variances in tariff classification or valuation\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- BOC tariff classification disputes — reclassification can add 5-15% duty differential; appeals process takes 6-12 months",
+     "- BIR VAT input credit rejected if BCOR/SSDT documentation is incomplete or mismatched",
+     "- Foreign exchange rate fluctuations between BOC assessment date and actual payment date causing landed cost variances",
+     "- Customs Broker errors in HS code classification leading to penalties or delayed cargo release",
+     "- Port congestion and demurrage fees compounding costs (W249)",
+     "- BOC valuation challenges on transfer-priced goods between BuildRight entities"
+    ],
+    "Staffing Implication": [
+     "20-30 import shipments/month × ~2 days of reconciliation per shipment = ~40–60 person-days/month. 1 Import Coordinator full-time + 1 Tax Manager part-time (~20% of capacity). Finance support for payment processing absorbed by existing AP team."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOC e2m Customs system integration for assessment download",
+     "- Landed cost calculation engine (W2B) for estimated vs. actual comparison",
+     "- VAT Input/Output reconciliation module (W90)",
+     "- AP module for duty payment processing (W7)",
+     "- Bank payment portal (IPAY/Pass5) for BOC settlement",
+     "- Import PO tracking (W2B) for shipment linkage"
+    ],
+    "Time Estimate": [
+     "**Total**: 2-3 business days per import shipment (1 day payment + 2 days receipt/reconciliation; variance analysis adds 2 hours if triggered)",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Payment**: Pay duties and taxes via bank (IPAY/Pass5 system) based on BOC assessment",
+     "duration": "1 day",
+     "n": "1",
+     "r": "Finance"
+    },
+    {
+     "a": "—",
+     "activity": "**Receipt Aggregation**: Collect Official Receipts (BCOR) and Statement of Settlement of Duties and Taxes (SSDT)",
+     "duration": "2 days",
+     "n": "2",
+     "r": "Import Coord"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Reconciliation**: Compare BOC assessed values vs. ERP estimated landed cost (W2B.12)",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Finance"
+    },
+    {
+     "a": "—",
+     "activity": "**VAT Input Capture**: Ensure 12% Import VAT is correctly recorded for BIR credit (W90)",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Variance Analysis**: Investigate significant variances in tariff classification or valuation",
+     "duration": "2 hours",
+     "n": "5",
+     "r": "Import Coord"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W249",
+    "W2B",
+    "W7",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Trade Compliance Manager",
+    "Participants": "Trade Compliance, Procurement, Logistics",
+    "Trigger": "Broker onboarding or renewal",
+    "Volume": "~3–5 customs brokers"
+   },
+   "id": "W2961",
+   "level": 2,
+   "name": "Customs Broker Selection, Accreditation & Performance Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics contracts broker\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews errors, delays, and complaints\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: SLA and quarterly review"
+    ],
+    "Pain Points / Risks": [
+     "- **Service risk**: Poor broker performance delays clearance and incurs demurrage; mitigated by SLA and quarterly review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Broker accreditation register; SLA tracker; performance scorecard"
+    ],
+    "Time Estimate": [
+     "- 1–2 days/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Procurement vets customs broker: BOC AMO broker accreditation (CMO 04-2014, 3-year validity; PRC license per RA 9280), PRC license, experience, references, insurance",
+     "duration": "Per onboarding",
+     "n": "1",
+     "r": "Procurement"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance/Logistics contracts broker; defines SLA (clearance time, error rate, availability) and KPIs",
+     "duration": "Per contract",
+     "n": "2",
+     "r": "Trade Compliance / Logistics"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance monitors broker performance quarterly; reviews errors, delays, and complaints; manages renewal/termination",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + annual readiness",
+    "Owner": "Trade Compliance Manager",
+    "Participants": "Trade Compliance, Finance, Legal, External Advisor",
+    "Trigger": "BOC Notice of Audit (NOA) or readiness review",
+    "Volume": "Multi-year audit scope"
+   },
+   "id": "W2962",
+   "level": 2,
+   "name": "BOC Post-Entry Audit (PEA) Readiness & Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-import of \"import entries, classifications, valuations, COs, payments\" (replaces manual Step 1).",
+     "- System auto-document of \"Trade Compliance/Legal responds to BOC NOA\" (replaces manual Step 2).",
+     "- System auto-update of \"Finance settles any assessed deficiency + surcharge/interest\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: audit readiness and proactive remediation"
+    ],
+    "Pain Points / Risks": [
+     "- **Financial risk**: Assessment with surcharge + interest; mitigated by audit readiness and proactive remediation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Audit repository; protest tracker; deficiency settlement"
+    ],
+    "Time Estimate": [
+     "- Weeks to months per audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance maintains audit-ready repository: import entries, classifications, valuations, COs, payments for the 3-year post-entry-audit look-back (records retained 5 years per CMTA)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Trade Compliance/Legal responds to BOC NOA; provides documents; negotiates findings; files protest where warranted",
+     "duration": "Per audit",
+     "n": "2",
+     "r": "Trade Compliance / Legal"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance settles any assessed deficiency + surcharge/interest; books liability; updates controls",
+     "duration": "Per audit",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~10–30 events/year",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance, Customs Broker, Legal, DC Operations",
+    "Trigger": "BOC alert order or hold on shipment",
+    "Volume": "Subset of imports"
+   },
+   "id": "W2963",
+   "level": 2,
+   "name": "BOC Alert Order, Hold & Detention Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-alert of \"Customs Broker/Trade Compliance receives alert/hold notice\" (replaces manual Step 1).",
+     "- System auto-document of \"documentation/evidence to lift hold\" (replaces manual Step 2).",
+     "- System auto-log of \"Logistics manages demurrage exposure during hold\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: rapid BOC coordination"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost/disruption risk**: Prolonged hold incurs demurrage and stockout; mitigated by rapid BOC coordination"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Hold/alert case tracker; demurrage clock"
+    ],
+    "Time Estimate": [
+     "- 4–8 hours per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Customs Broker/Trade Compliance receives alert/hold notice; coordinates with BOC to understand grounds",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Customs Broker / Trade Compliance"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance provides documentation/evidence to lift hold; addresses mis-classification, valuation, or compliance concern",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "DC Operations/Logistics manages demurrage exposure during hold; Trade Compliance pursues recovery from responsible party",
+     "duration": "Per event",
+     "n": "3",
+     "r": "DC Operations / Trade Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance, Procurement, Category Manager",
+    "Trigger": "ADC/CVD imposition on sourced goods",
+    "Volume": "Affected SKUs (e.g., ceramic tiles, steel)"
+   },
+   "id": "W2964",
+   "level": 2,
+   "name": "Anti-Dumping & Countervailing Duty (ADC/CVD) Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Trade Compliance monitors DTI/BOC ADC/CVD orders on imported goods\" (replaces manual Step 1).",
+     "- System auto-document of \"documents calculation and basis\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: monitoring and sourcing alternatives"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost risk**: Unmanaged ADC/CVD inflates landed cost; mitigated by monitoring and sourcing alternatives"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ADC/CVD monitoring; import-entry duty application"
+    ],
+    "Time Estimate": [
+     "- Per-import verification"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance monitors DTI/BOC ADC/CVD orders on imported goods (e.g., ceramic tiles from specific countries)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Procurement/Category Manager adjusts sourcing from affected countries; identifies alternative origin to avoid duty",
+     "duration": "Per order",
+     "n": "2",
+     "r": "Procurement / Category Manager"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance applies ADC/CVD at import entry for affected shipments; documents calculation and basis",
+     "duration": "Per import",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + annual",
+    "Owner": "Compliance Officer",
+    "Participants": "Compliance, Trade Compliance, DPO, Legal",
+    "Trigger": "Data sharing with BOC/customs broker or annual review",
+    "Volume": "All import transactions"
+   },
+   "id": "W2965",
+   "level": 2,
+   "name": "Data Privacy Act (RA 10173) Compliance for Customs Data Sharing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"Compliance/DPO ensures customs data sharing\" (replaces manual Step 1).",
+     "- System auto-report of \"reports any data incident\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: agreement and basis documentation"
+    ],
+    "Pain Points / Risks": [
+     "- **Privacy risk**: Unauthorized customs data sharing; mitigated by agreement and basis documentation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consent/basis management; data-sharing agreement repository; incident reporting"
+    ],
+    "Time Estimate": [
+     "- Per-data-flow; annual review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Compliance Officer",
+     "activity": "Compliance/DPO ensures customs data sharing (with BOC, broker, freight forwarder) complies with Data Privacy Act; captures consent/basis",
+     "duration": "Per data flow",
+     "n": "1",
+     "r": "Compliance / DPO"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Legal structures data-sharing agreements with brokers/forwarders; includes confidentiality and security clauses",
+     "duration": "Per agreement",
+     "n": "2",
+     "r": "Legal"
+    },
+    {
+     "a": "Compliance Officer",
+     "activity": "Trade Compliance/DPO supports NPC inquiry on customs data; reports any data incident",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Trade Compliance / DPO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + annual",
+    "Owner": "Trade Compliance Manager",
+    "Participants": "Trade Compliance, Internal Audit",
+    "Trigger": "Quarterly review + annual CSA",
+    "Volume": "Enterprise import operations"
+   },
+   "id": "W2966",
+   "level": 2,
+   "name": "Trade Compliance Risk Register & Control Self-Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-register of \"Trade Compliance maintains trade-compliance risk register\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates control design and operating effectiveness\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews trade-compliance controls\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: risk register and CSA"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Untracked exposure; mitigated by risk register and CSA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Risk register; CSA tracker; audit evidence"
+    ],
+    "Time Estimate": [
+     "- 2–3 days/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance maintains trade-compliance risk register: classification, valuation, origin, broker, BOC relationship exposures",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance performs control self-assessment; validates control design and operating effectiveness",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Audit Committee",
+     "activity": "Internal Audit reviews trade-compliance controls; reports findings to Audit Committee",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Trade Compliance, Finance",
+    "Trigger": "Monthly close cycle — BIR-to-BOC reconciliation (import VAT, duties, BOC Official Receipts/SSDT credit documents on imports)",
+    "Volume": "All import entries"
+   },
+   "id": "W2967",
+   "level": 2,
+   "name": "BIR-to-BOC Reconciliation (Import VAT, Duties, BCOR/SSDT on Imports)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant reconciles import VAT and duty per BOC entries to AP and GL each month\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates duty/VAT per import entry matches classification and valuation in…\" (replaces manual Step 2).",
+     "- System auto-report of \"reports variance trend\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: monthly reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation risk**: Unreconciled import taxes distort financials; mitigated by monthly reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOC-to-GL reconciliation; import-entry archive; variance tracker"
+    ],
+    "Time Estimate": [
+     "- 1–2 days/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant reconciles import VAT and duty per BOC entries to AP and GL each month",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance validates duty/VAT per import entry matches classification and valuation in master",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance resolves discrepancies (currency, timing, classification); books adjustments; reports variance trend",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-492"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Trade Compliance Manager",
+    "Participants": "Trade Compliance, Finance, Procurement",
+    "Trigger": "Quarterly management review",
+    "Volume": "All imports"
+   },
+   "id": "W2968",
+   "level": 2,
+   "name": "Trade Compliance KPI, Duty Cost & Savings Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"Trade Compliance compiles KPIs\" (replaces manual Step 1).",
+     "- System auto-report of \"reports duty-cost trend\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance & ADC (PA-87.3).)",
+     "- operational: quarterly KPI reporting"
+    ],
+    "Pain Points / Risks": [
+     "- **Strategic risk**: Unmeasured duty cost; mitigated by quarterly KPI reporting"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Trade-compliance KPI dashboard; savings analytics"
+    ],
+    "Time Estimate": [
+     "- 2–3 days/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance compiles KPIs: clearance time, duty cost %, FTA preference utilization, broker performance, audit status",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance quantifies duty savings vs. baseline; benchmarks landed cost by origin; reports duty-cost trend",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Trade Compliance reports program effectiveness to Executive Committee; recommends sourcing/compliance enhancements",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

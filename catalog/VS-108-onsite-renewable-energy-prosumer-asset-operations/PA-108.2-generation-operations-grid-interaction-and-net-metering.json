@@ -1,0 +1,570 @@
+{
+ "process_area": {
+  "id": "PA-108.2",
+  "title": "Generation Operations, Grid Interaction & Net-Metering"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-108-onsite-renewable-energy-prosumer-asset-operations/PA-108.2-generation-operations-grid-interaction-and-net-metering.md",
+ "value_stream": {
+  "directory": "VS-108-onsite-renewable-energy-prosumer-asset-operations",
+  "id": "VS-108",
+  "name": "On-Site Renewable Energy & Prosumer Asset Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-135"
+   ],
+   "fields": {
+    "Frequency": "Continuous + daily",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, Facilities (links to VS-20.3), O&M Vendor, BI (links to VS-28.1)",
+    "Trigger": "Continuous (SCADA); daily operations",
+    "Volume": "~80 commissioned solar sites today, growing toward the ~205-rooftop potential (per the README)"
+   },
+   "id": "W3457",
+   "level": 2,
+   "name": "Daily Generation Monitoring, SCADA & Performance Surveillance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-monitor of \"monitor generation via SCADA/monitoring platform\" (replaces manual Step 1).",
+     "- System auto-dispatch of \"Energy Manager detect and triage under-performance/anomalies\" (replaces manual Step 2).",
+     "- System auto-match of \"Energy Manager publish the daily/weekly generation and performance report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-135 (ensure renewable asset registration & net-metering settlement.)",
+     "- operational: SCADA and anomaly detection; operational: smart alerting and prioritization"
+    ],
+    "Pain Points / Risks": [
+     "- **Monitoring-blindspot risk**: Undetected under-performance erodes savings; mitigated by SCADA and anomaly detection",
+     "- **Alert-fatigue risk**: Too many alarms cause ignoring; mitigated by smart alerting and prioritization"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCADA/monitoring platform; BI (links to VS-28.1); energy/asset management; facility (links to VS-20.3)"
+    ],
+    "Time Estimate": [
+     "- Continuous + daily"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Facilities monitor generation via SCADA/monitoring platform: real-time kW/kWh, performance ratio, inverter status, alarms, and per-string performance across all sites; aggregate to portfolio view in BI (links to VS-28.1)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Energy Manager / Facilities"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager detect and triage under-performance/anomalies (soiling, shading, string/inverter fault, degradation) vs expected yield (W3456); prioritize by impact and dispatch O&M (W3459) or warranty (W3460)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Energy Manager"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Energy Manager publish the daily/weekly generation and performance report (actual vs expected, availability, faults), feed consumption-vs-generation matching (W3458) and net-metering settlement (W3463), and report portfolio performance to governance (W3471)",
+     "duration": "Weekly",
+     "n": "3",
+     "r": "Energy Manager / BI"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3456",
+    "W3458",
+    "W3459",
+    "W3460",
+    "W3463",
+    "W3471"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-554"
+   ],
+   "fields": {
+    "Frequency": "Continuous + periodic optimization",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, Facilities (links to VS-20.3/VS-07), Store Ops (links to VS-07), Finance (links to VS-17)",
+    "Trigger": "Generation/consumption analytics (W3457); tariff review",
+    "Volume": "All sites"
+   },
+   "id": "W3458",
+   "level": 2,
+   "name": "Self-Consumption Optimization & Load Matching",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"profile site load vs generation\" (replaces manual Step 1).",
+     "- System auto-generate of \"optimize self-consumption\" (replaces manual Step 2).",
+     "- System auto-review of \"measure savings achieved\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-554 (ensure controlled execution — Generation Operations, Grid Interaction & Net-Metering (PA-108.2).)",
+     "- operational: load-shifting and BESS; operational: coordination and guardrails"
+    ],
+    "Pain Points / Risks": [
+     "- **Low-self-consumption risk**: Exporting cheap and importing expensive erodes savings; mitigated by load-shifting and BESS",
+     "- **Disruption risk**: Load-shifting harms store operations/comfort; mitigated by coordination and guardrails"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCADA/BMS (links to VS-20.3); energy analytics (links to VS-28.1); store/DC ops (links to VS-07/VS-04); finance/savings (links to VS-17)"
+    ],
+    "Time Estimate": [
+     "- Continuous + periodic"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Analytics profile site load vs generation: consumption pattern (store/DC load, HVAC, lighting, refrigeration links to VS-20.3), generation curve, self-consumption ratio, and export volume; identify load-shifting and sizing opportunities",
+     "duration": "Periodic",
+     "n": "1",
+     "r": "Energy Manager / Analytics"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Facilities optimize self-consumption (highest-value use of generated kWh): load-shifting (HVAC, water heating, charging) to solar hours, BESS charge/discharge scheduling (W3460), and avoidance of peak/grid import where tariffs penalize it; coordinate with store/DC ops (links to VS-07/VS-04)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Energy Manager / Facilities"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Energy Manager/Finance measure savings achieved (self-consumed kWh × avoided tariff + export kWh × export rate per W3463), validate against the business case (W3451), and tune the optimization as tariffs/load change; report to the performance review (W3471)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Energy Manager / Finance"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3451",
+    "W3457",
+    "W3460",
+    "W3463",
+    "W3471"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-554"
+   ],
+   "fields": {
+    "Frequency": "Scheduled PM + reactive",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, Facilities (links to VS-20.3), O&M Vendor, HSE (links to VS-24)",
+    "Trigger": "Performance alert (W3457); scheduled PM; soiling/degradation",
+    "Volume": "All sites; PM quarterly/semi-annual"
+   },
+   "id": "W3459",
+   "level": 2,
+   "name": "Asset Operations & Maintenance (O&M), Cleaning & Troubleshooting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-schedule of \"checks, thermography, inverter service, BESS maintenance\" field work (replaces manual Step 2 planning).",
+     "- System auto-document of \"O&M Vendor/Facilities execute scheduled PM and reactive troubleshooting\" (replaces manual Step 2).",
+     "- System auto-review of \"Energy Manager verify O&M completion and performance recovery, capture\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-554 (ensure controlled execution — Generation Operations, Grid Interaction & Net-Metering (PA-108.2).)",
+     "- operational: cleaning PM and soiling analytics; operational: SLA and scorecard (links to VS-67)"
+    ],
+    "Pain Points / Risks": [
+     "- **Soiling/under-performance risk**: Uncleaned modules under-perform; mitigated by cleaning PM and soiling analytics",
+     "- **O&M-vendor-SLA risk**: Poor vendor response extends downtime; mitigated by SLA and scorecard (links to VS-67)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Asset/PM register (links to VS-35/W400); facility PM (links to VS-20.3/W240); HSE (links to VS-24); service-provider (links to VS-34.2)"
+    ],
+    "Time Estimate": [
+     "- Scheduled + reactive"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Facilities maintain the O&M plan: scheduled preventive maintenance (module cleaning, torque checks, thermography, inverter service, BESS maintenance), spare-parts inventory, and the O&M vendor SLA (links to VS-34.2 service-provider management); align to facility PM (links to VS-20.3/W240)",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Energy Manager / Facilities"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "O&M Vendor/Facilities execute scheduled PM and reactive troubleshooting (dispatched from W3457 alerts): cleaning, component repair/replacement, electrical/mechanical checks, and HSE compliance (links to VS-24 working-at-height, electrical safety); document work",
+     "duration": "Per PM/event",
+     "n": "2",
+     "r": "O&M / Facilities / HSE"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager verify O&M completion and performance recovery, capture maintenance history in the asset register (links to VS-35/W400), track O&M cost vs budget, and feed reliability data to the performance review (W3471) and asset-renewal planning (links to VS-35)",
+     "duration": "Per PM/event",
+     "n": "3",
+     "r": "Energy Manager / Facilities"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W240",
+    "W3457",
+    "W3471",
+    "W400"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-554"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, O&M, Vendor (manufacturer), Procurement (links to VS-03.3), Finance (links to VS-15)",
+    "Trigger": "Inverter/BESS fault alarm (W3457); component failure",
+    "Volume": "~1–5% inverter/year failure rate typical"
+   },
+   "id": "W3460",
+   "level": 2,
+   "name": "Inverter / BESS Fault Management & Vendor Warranty Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs and on-site inspection\" (replaces manual Step 1).",
+     "- System auto-validate of \"validate performance recovery, capture the fault/resolution in the asset history\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-554 (ensure controlled execution — Generation Operations, Grid Interaction & Net-Metering (PA-108.2).)",
+     "- operational: spare pool and SLA; operational: serial/warranty tracking and claims"
+    ],
+    "Pain Points / Risks": [
+     "- **Extended-downtime risk**: Long RMA lead time loses generation; mitigated by spare pool and SLA",
+     "- **Warranty-leakage risk**: Out-of-warranty spend not recovered; mitigated by serial/warranty tracking and claims"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCADA/monitoring; asset/warranty register (links to VS-35/W399); vendor/procurement (links to VS-03.3); AP/warranty recovery (links to VS-15/W244)"
+    ],
+    "Time Estimate": [
+     "- Per event; days-to-weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/O&M diagnose the inverter/BESS fault from SCADA logs and on-site inspection: error code, root cause (hardware, firmware, grid event), warranty status (W3453 serials), and impact; document the case",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Energy Manager / O&M"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Procurement engage the manufacturer/vendor for warranty repair/replacement or out-of-warranty fix: RMA, lead time, cost, and authorization; manage a spare-inverter pool to minimize downtime",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Energy Manager / Procurement / Vendor"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager restore the asset, validate performance recovery, capture the fault/resolution in the asset history (links to VS-35), and feed recurring failures to procurement/quality (links to VS-31/VS-67) and reliability analytics (W3471); recover warranty cost (links to VS-15/W244)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Energy Manager / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W244",
+    "W3453",
+    "W3457",
+    "W3471",
+    "W399"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-554"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, Facilities (links to VS-20.3), Store/DC Ops (links to VS-07/VS-04), HSE (links to VS-24)",
+    "Trigger": "Grid outage/brownout (links to VS-07/W470); islanding capability",
+    "Volume": "Sites with islanding/BESS capability"
+   },
+   "id": "W3461",
+   "level": 2,
+   "name": "Grid Outage / Brownout Resilience & Islanding Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logic, and compliance with DU/ERC anti-islanding rules\" (replaces manual Step 1).",
+     "- System workflow orchestration of \"coordinate with store/DC ops\" (replaces manual Step 2).",
+     "- System auto-validate of \"validate post-outage grid reconnection and system recovery, capture resilience…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-554 (ensure controlled execution — Generation Operations, Grid Interaction & Net-Metering (PA-108.2).)",
+     "- operational: certified grid-forming setup and DU sign-off (W3462); operational: critical-load sizing"
+    ],
+    "Pain Points / Risks": [
+     "- **Anti-islanding-compliance risk**: Unauthorized islanding endangers DU workers; mitigated by certified grid-forming setup and DU sign-off (W3462)",
+     "- **Resilience-overbuild risk**: Over-investing in islanding beyond critical-load need; mitigated by critical-load sizing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCADA/islanding control; BCP (links to VS-26); store/DC ops (links to VS-07/VS-04/W470); HSE (links to VS-24)"
+    ],
+    "Time Estimate": [
+     "- Per site + event-driven"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Facilities design islanding/resilience capability where justified: grid-forming inverter + BESS, critical-load prioritization (POS links to VS-08, lighting, refrigeration, safety), transfer/islanding logic, and compliance with DU/ERC anti-islanding rules (links to W3462)",
+     "duration": "Per site",
+     "n": "1",
+     "r": "Energy Manager / Facilities / EPC"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "During a grid outage, the system islands (if equipped) or the site falls back to generator/UPS (links to VS-07/W470); Facilities/Ops manage the switchover, confirm critical loads sustained, and coordinate with store/DC ops (links to VS-07/VS-04) and HSE (links to VS-24)",
+     "duration": "Event-driven",
+     "n": "2",
+     "r": "Facilities / Store Ops / HSE"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Energy Manager/Facilities validate post-outage grid reconnection and system recovery, capture resilience performance (uptime sustained, kWh served), and report resilience value vs the business case (W3451) and BCP (links to VS-26); tune islanding logic",
+     "duration": "Event-driven",
+     "n": "3",
+     "r": "Energy Manager / Facilities"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3451",
+    "W3462",
+    "W470"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-135"
+   ],
+   "fields": {
+    "Frequency": "Per site + on regulation change",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, Compliance/Regulatory (links to VS-22), Legal (links to VS-100.3), DU, ERC",
+    "Trigger": "Pre-energization (W3454); regulatory change",
+    "Volume": "All exporting/prosumer sites"
+   },
+   "id": "W3462",
+   "level": 2,
+   "name": "ERC / DU Interconnection, Net-Metering Registration & Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submit application, specs, single-line diagram, structural/electrical…\" (replaces manual Step 1).",
+     "- System auto-import of \"import/export meter installation\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspections, meter calibration, rule changes\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-135 (ensure renewable asset registration & net-metering settlement.)",
+     "- operational: early application and DU relationship; operational: regulatory monitoring (links to VS-22)"
+    ],
+    "Pain Points / Risks": [
+     "- **Registration-delay risk**: Late DU/ERC approval delays energization and savings; mitigated by early application and DU relationship",
+     "- **Rule-change risk**: Net-metering/export-pricing changes alter economics; mitigated by regulatory monitoring (links to VS-22.3) and scenario planning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Regulatory/permit (links to VS-22.1/W54); legal (links to VS-100.3); meter/SCADA; multi-region compliance (links to VS-76)"
+    ],
+    "Time Estimate": [
+     "- Per site; 4–12 weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Compliance register the renewable system with the DU and ERC for net-metering (RE Act / net-metering rules): submit application, specs, single-line diagram, structural/electrical certification, and fees; secure the Certificate of Completion and net-metering agreement",
+     "duration": "Per site",
+     "n": "1",
+     "r": "Energy Manager / Compliance / DU"
+    },
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Legal execute the net-metering/interconnection agreement with the DU: import/export meter installation (bi-directional), export pricing/terms, compliance with DU/ERC technical standards, and anti-islanding; ensure multi-site consistency across DUs/regions (links to VS-76)",
+     "duration": "Per site",
+     "n": "2",
+     "r": "Energy Manager / Legal / DU"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Compliance/Energy Manager monitor ongoing regulatory compliance: DU inspections, meter calibration, rule changes (net-metering caps, export pricing, RE Act amendments links to VS-22.3), and reporting; manage renewals and disputes (links to VS-100)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Compliance / Energy Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3454",
+    "W54"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-135"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, Finance/AP (links to VS-15/VS-17), Facilities, DU",
+    "Trigger": "Monthly DU billing cycle; generation/consumption data (W3457)",
+    "Volume": "All net-metered sites"
+   },
+   "id": "W3463",
+   "level": 2,
+   "name": "Net-Metering Settlement, Export Billing & Import/Export Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validate meter readings and rate application\" (replaces manual Step 1).",
+     "- System auto-allocate of \"allocate cost to the correct entity/site\" (replaces manual Step 2).",
+     "- System auto-review of \"Energy Manager/Finance compute the net savings\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-135 (ensure renewable asset registration & net-metering settlement.)",
+     "- operational: reconciliation and dispute (links to VS-90); operational: self-consumption optimization (W3458)"
+    ],
+    "Pain Points / Risks": [
+     "- **Billing-error risk**: DU mis-billing (wrong rate, meter error) over-charges; mitigated by reconciliation and dispute (links to VS-90)",
+     "- **Export-rate-volatility risk**: Changing export pricing alters net-metering value; mitigated by self-consumption optimization (W3458)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCADA/meter; AP/GL (links to VS-15.1/VS-17.1); DU billing; cost allocation (links to VS-72)"
+    ],
+    "Time Estimate": [
+     "- Monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager",
+     "activity": "Energy Manager/Finance reconcile the monthly DU bill against SCADA/meter data: import kWh (billed at retail tariff), export kWh (credited at export rate), net position, demand charges, and other charges; validate meter readings and rate application",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Energy Manager / Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance/AP process the net-metered electricity bill (links to VS-15.1/W7), post the electricity expense (reduced by self-generation) and export credit to GL (links to VS-17.1), and resolve billing disputes with the DU (links to VS-90/W244); allocate cost to the correct entity/site (links to VS-72)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Finance / AP"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Energy Manager/Finance compute the net savings (avoided import + export credit − charges vs baseline grid-only) per site and portfolio, validate against the business case (W3451) and optimization (W3458), and report to the performance review (W3471)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Energy Manager / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W244",
+    "W3451",
+    "W3457",
+    "W3458",
+    "W3471",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-135"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Energy Manager",
+    "Participants": "Energy Manager, HSE (links to VS-24), Facilities (links to VS-20.3), Insurance (links to VS-26), Legal (links to VS-100)",
+    "Trigger": "Safety incident; structural/equipment damage; extreme weather (links to VS-69)",
+    "Volume": "Event-driven"
+   },
+   "id": "W3464",
+   "level": 2,
+   "name": "Renewable Asset Safety, Structural & Insurance Incident Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"report per HSE\" (replaces manual Step 1).",
+     "- System auto-document of \"document, and remediate\" (replaces manual Step 2).",
+     "- System auto-record of \"update the asset record\" from generation telemetry (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-135 (ensure renewable asset registration & net-metering settlement.)",
+     "- operational: protection, inspection, and HSE protocol; operational: structural design, insurance, and preparedness"
+    ],
+    "Pain Points / Risks": [
+     "- **Fire/electrical-safety risk**: PV faults can cause fire/shock; mitigated by protection, inspection, and HSE protocol",
+     "- **Storm-damage risk**: Typhoons (links to VS-69) damage arrays; mitigated by structural design, insurance, and preparedness"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE/incident (links to VS-24/W330); insurance claims (links to VS-26.3/W59); asset register (links to VS-35); risk (links to VS-21.2)"
+    ],
+    "Time Estimate": [
+     "- Event-driven"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Energy Manager / Safety Mgr",
+     "activity": "On incident (module damage, fire, structural, electrical, fall, storm damage links to VS-69), Facilities/HSE secure the site, isolate the affected array, ensure personnel/public safety, and report per HSE (links to VS-24) and incident protocol (links to W330/W471)",
+     "duration": "Event-driven",
+     "n": "1",
+     "r": "Facilities / HSE"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Energy Manager/HSE investigate root cause (equipment defect, installation, weather, maintenance), document, and remediate (repair/replacement via O&M W3459 or warranty W3460); implement corrective action and feed to HSE/quality learning (links to VS-24/VS-31)",
+     "duration": "Event-driven",
+     "n": "2",
+     "r": "Energy Manager / HSE"
+    },
+    {
+     "a": "CFO",
+     "activity": "Energy Manager/Insurance file the insurance claim for covered damage (links to VS-26.3/W59 policy lifecycle/claims), recover cost, and update the asset record (links to VS-35); report material incidents to executives (links to VS-33.2) and audit/risk (links to VS-21.2)",
+     "duration": "Event-driven",
+     "n": "3",
+     "r": "Energy Manager / Insurance / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W330",
+    "W3459",
+    "W3460",
+    "W471",
+    "W59"
+   ]
+  }
+ ]
+}

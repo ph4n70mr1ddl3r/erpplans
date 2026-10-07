@@ -1,0 +1,568 @@
+{
+ "process_area": {
+  "id": "PA-53.2",
+  "title": "Warranty Claim Processing & Resolution"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-53-warranty-guarantee-management/PA-53.2-warranty-claim-processing.md",
+ "value_stream": {
+  "directory": "VS-53-warranty-guarantee-management",
+  "id": "VS-53",
+  "name": "Warranty & Guarantee Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-37",
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "~2,000–3,000 claims/month across 200 stores (one register with W1630; ~10–15 per store/month)",
+    "Owner": "Customer Service Rep",
+    "Participants": "CSR, Store Manager, Customer",
+    "Trigger": "Customer brings defective product with proof of purchase to store",
+    "Volume": "~8K–10K/month; peaks Jan–Feb, Jun–Jul"
+   },
+   "id": "W2126",
+   "level": 2,
+   "name": "In-Store Warranty Claim Initiation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Claim auto-classified (standard/borderline/out-of-warranty); serial auto-verified; vendor-auto-notified"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: Store Manager sign-off on borderline claims"
+    ],
+    "Pain Points / Risks": [
+     "- **Fraudulent-claim risk**: a customer claims warranty on a non-warranty item or a non-purchased item; mitigated by the serial-number match and the purchase verification (CTL-37)",
+     "- **Resolution-delay-dissatisfaction risk**: the customer expects immediate resolution but the claim requires vendor/service-center involvement (7–14 days); mitigated by the clear timeline-setting and the loaner-option for critical items"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRM warranty (links to VS-13 / W17, VS-53 / W2118) — the warranty verification and claim record",
+     "- POS/inventory (links to VS-08 / W5B, VS-05 / W92 inventory adjustment) — the inventory adjustment on replacement",
+     "- Vendor notification (links to VS-53 / W2128 vendor escalation) — the vendor-claim push"
+    ],
+    "Time Estimate": [
+     "~25 min/claim × ~9,000/month = **~3,750 hours/month CSR** (distributed across store CSR teams)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "CSR verifies warranty in CRM; inspects product; photographs defect; checks serial number match",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "CSR",
+     "activity": "System classifies claim: standard (auto-approve), borderline (route to Supervisor), out-of-warranty (offer paid repair)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Customer",
+     "activity": "CSR offers resolution: immediate replacement, store credit, service center repair, or DC/vendor replacement (7–14 days)",
+     "duration": "5–10 min",
+     "n": "3",
+     "r": "CSR"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Customer selects resolution; system processes inventory adjustment, creates claim record, notifies vendor",
+     "duration": "5 min",
+     "n": "4",
+     "r": "CSR / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1630",
+    "W17",
+    "W2118",
+    "W2128",
+    "W5B",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "~2,000–3,000 online claims/month",
+    "Owner": "Customer Service Agent (Remote)",
+    "Participants": "Customer, CSA, CS Supervisor, Receiving Clerk",
+    "Trigger": "Customer submits claim via web portal or mobile app",
+    "Volume": "~2K–3K/month (~25% of total)"
+   },
+   "id": "W2127",
+   "level": 2,
+   "name": "Online Warranty Claim Submission",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Claim auto-routed to CSA worklist; return-QR auto-generated on approval; pickup auto-scheduled"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: CS Supervisor sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Photo-insufficiency risk**: the customer's photos don't clearly show the defect, delaying the claim; mitigated by the photo-guide (what to photograph) and the CSA's request-for-more-info",
+     "- **Drop-off-friction risk**: the customer must physically bring the item to a store, which for bulky items is a burden; mitigated by the pickup-scheduling option for bulky items"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Online portal/app (links to VS-53 / W2124, VS-75 app, VS-10) — the claim-submission surface",
+     "- CRM (links to VS-13 / W17) — the claim record and return authorization",
+     "- Returns/receiving (links to VS-32 / W12, VS-04 / W3) — the item receipt at store"
+    ],
+    "Time Estimate": [
+     "~15 min/claim (CSA) + ~7 min (customer) × ~2,500/month ≈ ~37,500 CSA + ~17,500 customer min ≈ **~915 hours/month CSA + customer time (≈ 625 CSA + ~290 customer)**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CSA",
+     "activity": "Customer describes defect, uploads photos/video, selects resolution and preferred store for drop-off",
+     "duration": "5–10 min",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "CS Supervisor",
+     "activity": "CSA reviews within 24 hours; validates photos match coverage; approves or requests more info; generates return authorization QR code",
+     "duration": "10–15 min",
+     "n": "2",
+     "r": "CSA"
+    },
+    {
+     "a": "CSA",
+     "activity": "Customer drops item at store (scans QR) or schedules pickup for bulky items; store receives and triggers resolution",
+     "duration": "14-day window",
+     "n": "3",
+     "r": "Customer / Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12",
+    "W17",
+    "W2124",
+    "W3"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "~1,500–2,000 vendor escalations/month",
+    "Owner": "Vendor Warranty Coordinator",
+    "Participants": "Coordinator, Category Manager, Vendor",
+    "Trigger": "Claim requires manufacturer involvement (high-value >PHP 10K, complex product)",
+    "Volume": "~1.5K–2K/month (~20% of claims)"
+   },
+   "id": "W2128",
+   "level": 2,
+   "name": "Vendor Warranty Claim Escalation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Claim auto-flagged for vendor escalation; vendor-SLA auto-tracked with escalation; vendor-scorecard auto-fed"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: Category Manager sign-off on vendor-SLA breaches"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor-SLA-breach risk**: the vendor doesn't resolve within 14 days, leaving the customer waiting; mitigated by the SLA-tracking and the Category Manager escalation",
+     "- **Vendor-deny-unjustified risk**: the vendor denies a valid claim to avoid cost; mitigated by the evidence-package (photos, serial, purchase proof) and the escalation to Category Manager"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor portal (links to VS-28 / W593, VS-67 / W2458 vendor scorecard) — the vendor-claim submission and tracking",
+     "- CRM (links to VS-13 / W17) — the claim record",
+     "- Vendor scorecard (links to VS-67 / W2126) — the vendor warranty-claim performance feed"
+    ],
+    "Time Estimate": [
+     "~45 min/case × ~1,750/month = **~1,300 hours/month Vendor Warranty Coordinator** (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "System auto-flags for vendor involvement; Coordinator packages claim with photos, purchase proof, serial number",
+     "duration": "30 min",
+     "n": "1",
+     "r": "System / Coordinator"
+    },
+    {
+     "a": "Vendor",
+     "activity": "Coordinator submits via vendor portal or email; tracks acknowledgment within 48 hours; manages vendor resolution (approve/return/deny)",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Coordinator"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Coordinator tracks 14-day vendor SLA; escalates to Category Manager if breached; monthly vendor warranty scorecard",
+     "duration": "15 min/case",
+     "n": "3",
+     "r": "Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W17",
+    "W2126",
+    "W2458",
+    "W593"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "~3,000–4,000 repair claims/month",
+    "Owner": "Service Center Coordinator",
+    "Participants": "Coordinator, Service Center, CS Supervisor",
+    "Trigger": "Claim requires repair at authorized service center",
+    "Volume": "~3K–4K/month; 7–14 day turnaround"
+   },
+   "id": "W2129",
+   "level": 2,
+   "name": "Service Center Repair Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Service-center auto-assigned (nearest); work-order auto-generated; SLA auto-tracked; failure-mode auto-logged"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: CS Supervisor repair-completion sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Repair-delay risk**: the 7–14 day turnaround extends (parts backorder), leaving the customer without the product; mitigated by the SLA-tracking and the loaner/replacement option for extended delays",
+     "- **Non-covered-discovery risk**: the service center discovers the repair isn't warranty-covered (customer-caused damage), requiring a customer-paid quote after the item is already in the shop; mitigated by the pre-diagnosis at claim initiation (W2126) catching obvious non-covered cases early"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Service-center work-order (links to VS-12 / W440 power-tool service, VS-09 / W138 service sale) — the repair coordination",
+     "- Inventory/transfer (links to VS-05 / W22 transfers) — the item transfer store→service-center→store",
+     "- Quality/failure-mode (links to VS-31 / W110 supplier quality) — the failure-mode data for quality analysis"
+    ],
+    "Time Estimate": [
+     "~45 min/case (coordinator) + 7–14 day repair (service center) × ~3,500/month = **~2,600 hours/month Coordinator** (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Service Center",
+     "activity": "System assigns to nearest authorized service center; generates work order; arranges item transfer from store",
+     "duration": "30 min",
+     "n": "1",
+     "r": "System / Coordinator"
+    },
+    {
+     "a": "Coordinator",
+     "activity": "Service center diagnoses: warranty-covered repair → proceed; non-covered → quote customer; beyond repair → replacement authorized",
+     "duration": "7–14 days",
+     "n": "2",
+     "r": "Service Center"
+    },
+    {
+     "a": "CS Supervisor",
+     "activity": "Repair complete; item returned to store; customer notified for pickup; failure mode data logged for quality analysis",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Service Center / Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W110",
+    "W138",
+    "W2126",
+    "W22",
+    "W440"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "~5,000–6,000 replacement orders/month",
+    "Owner": "Customer Service Supervisor",
+    "Participants": "CS Supervisor, CSR, DC, Receiving Clerk",
+    "Trigger": "Approved claim resolved via product replacement",
+    "Volume": "~5K–6K/month (~60% of resolutions)"
+   },
+   "id": "W2130",
+   "level": 2,
+   "name": "Warranty Replacement Fulfillment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Replacement availability auto-checked across sources; reservation auto-made; warranty auto-transferred on pickup"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: CS Supervisor sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Replacement-out-of-stock risk**: the replacement item is out of stock (especially for discontinued products), leaving the customer without resolution; mitigated by the substitute-option or the refund-fallback (W2131)",
+     "- **Warranty-transfer-failure risk**: the warranty registration isn't transferred to the replacement item, so the replacement has no warranty; mitigated by the atomic replacement-and-warranty-transfer transaction"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory/ATP (links to VS-05 / W105 multi-channel allocation, VS-60 / W2290 reservation) — the replacement availability",
+     "- Claim system (links to VS-53 / W2126) — the claim closure",
+     "- Warranty transfer (links to VS-53 / W2118) — the warranty registration transfer to the replacement"
+    ],
+    "Time Estimate": [
+     "~5 min/pickup (clerk) + availability-check automated × ~5,500/month = **~460 hours/month** distributed (CSR + Receiving + DC)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CS Supervisor",
+     "activity": "System checks replacement availability: in-store (immediate), nearby store (1–2 days), DC (3–5 days), vendor PO (7–21 days)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CS Supervisor",
+     "activity": "For in-stock: inventory reserved, customer picks up. For DC-sourced: included in next shipment, tracking SMS sent",
+     "duration": "Immediate to 21 days",
+     "n": "2",
+     "r": "CSR / DC"
+    },
+    {
+     "a": "CS Supervisor",
+     "activity": "Upon pickup: scans replacement against claim; closes claim; transfers warranty registration to replacement item",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W105",
+    "W2118",
+    "W2126",
+    "W2131",
+    "W2290"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "~800–1,200 refund claims/month",
+    "Owner": "Customer Service Supervisor",
+    "Participants": "CSR, Store Manager, Finance, CS Supervisor",
+    "Trigger": "Claim resolved via refund (product unrepairable or customer preference)",
+    "Volume": "~800–1.2K/month (~10% of resolutions)"
+   },
+   "id": "W2131",
+   "level": 2,
+   "name": "Warranty Refund Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Refund-eligibility auto-determined; proration auto-calculated; refund auto-processed to original method"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: Store Manager sign-off >PHP 5K"
+    ],
+    "Pain Points / Risks": [
+     "- **Refund-to-wrong-method risk**: the refund goes to a different payment method than the original (fraud vector); mitigated by the refund-to-original-payment-only policy (CTL pattern)",
+     "- **Proration-dispute risk**: the customer disputes the prorated amount (expected full refund); mitigated by the clear proration-policy documented at warranty activation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Refund (links to VS-16 / W101 customer refund, VS-17 / W9) — the refund processing",
+     "- Claim system (links to VS-53 / W2126) — the claim closure",
+     "- Finance (links to VS-17 / W9, W70 credit/debit note) — the refund-to-original-payment"
+    ],
+    "Time Estimate": [
+     "~25 min/case × ~1,000/month = **~420 hours/month** CSR + Store Manager + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "CSR verifies refund eligibility; determines amount: full refund (<30 days), prorated (based on remaining period), or store credit at 110%",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "CS Supervisor",
+     "activity": "Store Manager approves refunds >PHP 5,000; Finance processes via original payment method; system closes claim",
+     "duration": "15–20 min",
+     "n": "2",
+     "r": "Store Manager / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101",
+    "W2126",
+    "W70",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389",
+    "CTL-48"
+   ],
+   "fields": {
+    "Frequency": "~300–500 disputes/month (~3–5%)",
+    "Owner": "Customer Service Director",
+    "Participants": "CSR, CS Director, VP Merchandising, Legal",
+    "Trigger": "Customer disputes denied warranty claim",
+    "Volume": "~300–500/month; high-value items"
+   },
+   "id": "W2132",
+   "level": 2,
+   "name": "Warranty Claim Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Dispute auto-routed with SLA; trend auto-analyzed; systemic-issue auto-flagged"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: CS Director sign-off; Legal review on high-value disputes"
+    ],
+    "Pain Points / Risks": [
+     "- **DTI-escalation risk**: an unresolved dispute escalates to the DTI (consumer protection), creating a regulatory complaint (W2682); mitigated by the 5-business-day resolution SLA and the goodwill-gesture option",
+     "- **Systemic-issue-neglect risk**: disputes recur on the same issue (a vendor consistently denies valid claims) without systemic action; mitigated by the monthly trend review and the corrective action"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRM dispute (links to VS-13 / W41 complaint, W469 DTI escalation) — the dispute record",
+     "- Warranty terms (links to VS-53 / W2122) — the terms under dispute",
+     "- Vendor dispute (links to VS-67 / W2128, CTL-48) — the vendor-side escalation"
+    ],
+    "Time Estimate": [
+     "~45 min/dispute × ~400/month = **~300 hours/month** distributed (CSR + CS Director)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Customer escalates; CSR logs dispute with additional evidence; CS Director reviews documentation, warranty terms, claim history",
+     "duration": "30–60 min",
+     "n": "1",
+     "r": "CSR / CS Director"
+    },
+    {
+     "a": "Legal",
+     "activity": "Director decides within 5 business days: overturn, uphold (with goodwill gesture), or escalate to Category Manager for vendor dispute",
+     "duration": "30 min",
+     "n": "2",
+     "r": "CS Director"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Monthly: Director reviews dispute trends; identifies systemic issues by vendor, category; implements corrective action",
+     "duration": "2–3 hours",
+     "n": "3",
+     "r": "CS Director"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2122",
+    "W2128",
+    "W2682",
+    "W41",
+    "W469"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-389"
+   ],
+   "fields": {
+    "Frequency": "Monthly comprehensive; weekly operational",
+    "Owner": "Analytics Manager",
+    "Participants": "Category Manager",
+    "Trigger": "Monthly analytics cycle",
+    "Volume": "Monthly: ~10,000 claims analyzed"
+   },
+   "id": "W2133",
+   "level": 2,
+   "name": "Warranty Claim Analytics & Trends",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Analytics auto-generated; rate-increase auto-flagged; vendor/store auto-flagged at threshold"
+    ],
+    "Controls": [
+     "- CTL-389 (ensure controlled execution — Warranty Claim Processing & Resolution (PA-53.2).)",
+     "- operational: Category Manager sign-off on quality alerts"
+    ],
+    "Pain Points / Risks": [
+     "- **Quality-issue-late-detection risk**: a defective-batch claim-rate spike isn't detected until month-end, allowing more defective units to sell; mitigated by the weekly operational metrics (not just monthly)",
+     "- **Vendor-scorecard-lag risk**: the vendor-claim performance feeds the scorecard monthly, but the vendor negotiation is quarterly, so a claim-rate spike isn't acted on for months; mitigated by the >5%-trigger immediate vendor review (not waiting for the quarterly cycle)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113, VS-67 / W2458 vendor scorecard) — the claim analytics",
+     "- Quality (links to VS-31 / W110 supplier quality) — the quality-alert target",
+     "- CRM (links to VS-13 / W17, VS-53 / W2126) — the claim dataset"
+    ],
+    "Time Estimate": [
+     "~5 hours/month = **~60 hours/year** Analytics Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Analytics Manager",
+     "activity": "System generates analytics: claim volume by category/vendor/store, claim rate by SKU, resolution time, cost, top 20 claim SKUs, repeat claim rate",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Analytics Manager identifies trends: rate increase >2x triggers quality alert; vendor >5% triggers vendor review; store >2x average triggers investigation",
+     "duration": "4–6 hours",
+     "n": "2",
+     "r": "Analytics Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W110",
+    "W113",
+    "W17",
+    "W2126",
+    "W2458"
+   ]
+  }
+ ]
+}

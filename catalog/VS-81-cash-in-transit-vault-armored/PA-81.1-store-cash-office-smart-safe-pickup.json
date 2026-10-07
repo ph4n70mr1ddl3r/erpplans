@@ -1,0 +1,518 @@
+{
+ "process_area": {
+  "id": "PA-81.1",
+  "title": "Store Cash Office, Smart Safe & Pickup Planning"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-81-cash-in-transit-vault-armored/PA-81.1-store-cash-office-smart-safe-pickup.md",
+ "value_stream": {
+  "directory": "VS-81-cash-in-transit-vault-armored",
+  "id": "VS-81",
+  "name": "Cash-in-Transit, Vault & Armored Car Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-183"
+   ],
+   "fields": {
+    "Frequency": "Daily per store",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, Store Manager, Assistant Store Manager",
+    "Trigger": "End-of-day cash office close per store",
+    "Volume": "200 stores; ~PHP 2.1B monthly cash sales (~PHP 10.6M/store/month, per the VS-18.1 canon)"
+   },
+   "id": "W2801",
+   "level": 2,
+   "name": "Store Cash Office End-of-Day Skim, Denomination & Bundle Preparation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counts cash drawer per terminal\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares deposit bag with manifest\" (replaces manual Step 2).",
+     "- System auto-log of \"logs sealed-bag ID into smart safe or CIT deposit log\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-183 (ensure CIT custody-chain & cash-in-transit integrity.)",
+     "- operational: dual-control witnessing and CCTV"
+    ],
+    "Pain Points / Risks": [
+     "- **Control risk**: Single-person handling enables theft; mitigated by dual-control witnessing and CCTV"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS Z-report; cash-office workstation; deposit manifest; smart safe"
+    ],
+    "Time Estimate": [
+     "- ~100–145 min per store per day (3 terminals × 20–30 min + pickup prep + log)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier counts cash drawer per terminal; reconciles to POS Z-report; investigates over/short variance > PHP 500",
+     "duration": "20–30 min/terminal",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cashier sorts and denominates currency by note value; straps bundles per BSP denomination standard (100 pcs/bundle); prepares deposit bag with manifest",
+     "duration": "30–45 min",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager witnesses sealing and signs deposit manifest under dual-control; logs sealed-bag ID into smart safe or CIT deposit log",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Store Manager / Cashier"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-183"
+   ],
+   "fields": {
+    "Frequency": "1–3× per day per store",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, Store Manager, CIT Operations",
+    "Trigger": "Cash bundle ready for deposit",
+    "Volume": "~200 smart safes network-wide"
+   },
+   "id": "W2802",
+   "level": 2,
+   "name": "Smart Safe Cash Drop, Validation & CIT-Ready Flagging",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates denomination/counterfeit via note reader\" (replaces manual Step 1).",
+     "- System auto-schedule of \"Smart safe transmits real-time deposit data to CIT Operations\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews daily smart-safe report\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-183 (ensure CIT custody-chain & cash-in-transit integrity.)",
+     "- operational: note-reader validation and daily reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation risk**: Counterfeit/jammed notes mis-credit; mitigated by note-reader validation and daily reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Smart safe note validation; CIT dashboard; ERP deposit account; POS reconciliation"
+    ],
+    "Time Estimate": [
+     "- 5 min per drop; 15 min daily reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier drops strapped bundle into smart safe; safe validates denomination/counterfeit via note reader; credits amount to store deposit account in ERP",
+     "duration": "5 min/drop",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "CIT Operations Manager",
+     "activity": "Smart safe transmits real-time deposit data to CIT Operations dashboard; flags \"CIT-ready\" once threshold (e.g., PHP 200K) reached or scheduled pickup",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CIT Operations"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager reviews daily smart-safe report; reconciles to POS cash sales; investigates discrepancies; confirms pickup readiness",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-472"
+   ],
+   "fields": {
+    "Frequency": "1–2× per day per terminal during peak",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, Assistant Store Manager",
+    "Trigger": "Cash drawer exceeds threshold (e.g., PHP 30K)",
+    "Volume": "600 terminals"
+   },
+   "id": "W2803",
+   "level": 2,
+   "name": "Mid-Day Cash Skim & Cash Drawer Threshold Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counts excess cash\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates skim amount and drawer balance\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitors per-terminal cash levels via dashboard\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-472 (ensure controlled execution — Store Cash Office, Smart Safe & Pickup Planning (PA-81.1).)",
+     "- operational: threshold-driven skimming"
+    ],
+    "Pain Points / Risks": [
+     "- **Security risk**: Excess cash in drawer raises robbery risk; mitigated by threshold-driven skimming"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS drawer-level monitoring; smart safe drop log; float management"
+    ],
+    "Time Estimate": [
+     "- 15–20 min per skim"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Assistant Store Manager",
+     "activity": "Cashier performs mid-day skim when drawer exceeds threshold; counts excess cash; moves to smart safe/drop safe under dual-control",
+     "duration": "15–20 min",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Assistant Store Manager validates skim amount and drawer balance; updates drawer float; returns working change",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Assistant Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager monitors per-terminal cash levels via dashboard; rebalances drawer floats across terminals to optimize checkout flow",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-472"
+   ],
+   "fields": {
+    "Frequency": "2–4× per week per store",
+    "Owner": "CIT Operations Manager",
+    "Participants": "CIT Operations, Store Manager, CIT Vendor",
+    "Trigger": "Standing schedule + ad-hoc store request",
+    "Volume": "~200 stores × ~3 pickups/week ≈ 600 pickups/week"
+   },
+   "id": "W2804",
+   "level": 2,
+   "name": "CIT Pickup Schedule Planning & Store Request Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"routes by geography\" (replaces manual Step 1).",
+     "- System auto-request of \"requests ad-hoc pickup via app when cash exceeds security threshold or for…\" (replaces manual Step 2).",
+     "- System auto-generate of \"CIT Operations dispatches confirmation and ETA to store\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-472 (ensure controlled execution — Store Cash Office, Smart Safe & Pickup Planning (PA-81.1).)",
+     "- operational: randomized timing and route variation"
+    ],
+    "Pain Points / Risks": [
+     "- **Security risk**: Predictable pickup timing invites heist; mitigated by randomized timing and route variation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CIT route optimization; pickup request app; guard verification manifest"
+    ],
+    "Time Estimate": [
+     "- 30 min planning/week; 15 min per pickup handover"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIT Operations Manager",
+     "activity": "CIT Operations maintains standing pickup schedule per store (frequency based on cash volume tier); optimizes armored car routes by geography",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "CIT Operations"
+    },
+    {
+     "a": "CIT Operations Manager",
+     "activity": "Store Manager requests ad-hoc pickup via app when cash exceeds security threshold or for special events (paydays, holidays); confirms pickup window",
+     "duration": "Per request",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "CIT Operations Manager",
+     "activity": "CIT Operations dispatches confirmation and ETA to store; store prepares deposit; verifies armored guard identity and route manifest at handover",
+     "duration": "Per pickup",
+     "n": "3",
+     "r": "CIT Operations / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-472"
+   ],
+   "fields": {
+    "Frequency": "Weekly per store",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, CIT Operations, Bank",
+    "Trigger": "Weekly change-need review or low-denomination alert",
+    "Volume": "200 stores"
+   },
+   "id": "W2805",
+   "level": 2,
+   "name": "Change Order (Coin/Small Bill) Forecast & Request Workflow",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-forecast of \"forecasts weekly denomination demand\" (replaces manual Step 1).",
+     "- System auto-reconcile of \"reconciles to store change float\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates delivered change count under dual-control\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-472 (ensure controlled execution — Store Cash Office, Smart Safe & Pickup Planning (PA-81.1).)",
+     "- operational: weekly forecast and buffer stock"
+    ],
+    "Pain Points / Risks": [
+     "- **Operational risk**: Coin shortage disrupts checkout; mitigated by weekly forecast and buffer stock"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Change-need forecast; CIT change-order module; change-fund GL"
+    ],
+    "Time Estimate": [
+     "- 30 min per store per week"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier forecasts weekly denomination demand (coins, PHP 20/50/100 notes) based on transaction pattern and seasonality (paydays increase small-note demand)",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "CIT Operations Manager",
+     "activity": "CIT Operations coordinates change order with bank; delivers coins/small bills during next pickup; reconciles to store change float",
+     "duration": "Weekly",
+     "n": "2",
+     "r": "CIT Operations"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager validates delivered change count under dual-control; updates change fund; investigates discrepancies",
+     "duration": "Per delivery",
+     "n": "3",
+     "r": "Store Manager / Cashier"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-183"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~20–50 notes/year",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, Store Manager, LP, BSP",
+    "Trigger": "Suspect note detected at POS or smart safe",
+    "Volume": "~30 suspect events/year"
+   },
+   "id": "W2806",
+   "level": 2,
+   "name": "Counterfeit Detection, Note Authentication & Suspect Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan on drop\" (replaces manual Step 1).",
+     "- System auto-log of \"Cashier/Store Manager sequesters suspect note\" (replaces manual Step 2).",
+     "- System auto-count of \"counterfeit, write-off absorbed by store LP budget\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-183 (ensure CIT custody-chain & cash-in-transit integrity.)",
+     "- operational: detector use and protocol training"
+    ],
+    "Pain Points / Risks": [
+     "- **Loss risk**: Counterfeit accepted becomes store loss; mitigated by detector use and protocol training"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Counterfeit detector; smart safe scan; LP incident tracker; BSP reporting"
+    ],
+    "Time Estimate": [
+     "- 15–30 min per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier authenticates notes via UV/magnetic detector and tactile check; smart safe performs automated counterfeit scan on drop",
+     "duration": "Per large note",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cashier/Store Manager sequesters suspect note; records serial, customer info, time; does not return to customer per BSP protocol; logs incident",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP reports suspect note to BSP bank for verification; tracks outcome; if confirmed counterfeit, write-off absorbed by store LP budget",
+     "duration": "Per event",
+     "n": "3",
+     "r": "LP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-472"
+   ],
+   "fields": {
+    "Frequency": "Daily + monthly audit",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager, LP, Internal Audit",
+    "Trigger": "Continuous; reviewed at cash-office close",
+    "Volume": "200 cash offices"
+   },
+   "id": "W2807",
+   "level": 2,
+   "name": "Cash Office Security, Dual-Control & CCTV Correlation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Store Manager enforces dual-control\" (replaces manual Step 1).",
+     "- System auto-count of \"counter, deposit prep\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews cash-office dual-control evidence quarterly\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-472 (ensure controlled execution — Store Cash Office, Smart Safe & Pickup Planning (PA-81.1).)",
+     "- operational: quarterly audit and CCTV correlation"
+    ],
+    "Pain Points / Risks": [
+     "- **Fraud risk**: Lapsed dual-control enables skimming; mitigated by quarterly audit and CCTV correlation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Access control log; CCTV-LP integration; audit evidence repository"
+    ],
+    "Time Estimate": [
+     "- Continuous; 1–2 days/quarter audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager enforces dual-control (two-person) for safe access, deposit sealing, and high-value transactions; maintains access log",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Store Manager"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP ensures cash office CCTV coverage (safe, counter, deposit prep); synchronizes timestamps with POS and smart-safe events",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "LP"
+    },
+    {
+     "a": "Audit Committee",
+     "activity": "Internal Audit reviews cash-office dual-control evidence quarterly; spot-audits CCTV-vs-deposit correlation; reports control exceptions",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-472"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; rare",
+    "Owner": "Store Cashier Lead",
+    "Participants": "Cashier, Store Manager, Bank",
+    "Trigger": "Foreign or mutilated note tendered (near tourist/border stores)",
+    "Volume": "~5–10 events/month (select stores)"
+   },
+   "id": "W2808",
+   "level": 2,
+   "name": "Foreign Currency & Mutilated/Soiled Note Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs for deposit annotation\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks BSP clean-note-policy compliance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-472 (ensure controlled execution — Store Cash Office, Smart Safe & Pickup Planning (PA-81.1).)",
+     "- operational: segregation protocol"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Reissuing soiled notes violates BSP clean-note policy; mitigated by segregation protocol"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Note-segregation log; bank exchange record; BSP clean-note compliance"
+    ],
+    "Time Estimate": [
+     "- 10–20 min per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier follows policy on foreign-currency acceptance (generally declined except select border/tourist stores with FX arrangement); refers customer to bank",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cashier handles mutilated/soiled notes per BSP standard (do not reissue; segregate for bank exchange); logs for deposit annotation",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager returns mutilated notes to bank via CIT; obtains exchange credit; tracks BSP clean-note-policy compliance",
+     "duration": "Per deposit",
+     "n": "3",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

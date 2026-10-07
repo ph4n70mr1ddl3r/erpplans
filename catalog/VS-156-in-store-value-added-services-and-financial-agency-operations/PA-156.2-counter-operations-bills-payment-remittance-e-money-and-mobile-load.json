@@ -1,0 +1,583 @@
+{
+ "process_area": {
+  "id": "PA-156.2",
+  "title": "Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-156-in-store-value-added-services-and-financial-agency-operations/PA-156.2-counter-operations-bills-payment-remittance-e-money-and-mobile-load.md",
+ "value_stream": {
+  "directory": "VS-156-in-store-value-added-services-and-financial-agency-operations",
+  "id": "VS-156",
+  "name": "In-Store Value-Added Services & Financial Agency Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-699"
+   ],
+   "fields": {
+    "Frequency": "Per transaction (high frequency at target stores)",
+    "Owner": "Counter Staff / Store Ops (VS-07)",
+    "Participants": "Cash Mgmt (VS-08.2), Aggregator (W4602), Compliance (VS-22)",
+    "Trigger": "Customer bills-payment request",
+    "Volume": "Bills-payment transactions across counters"
+   },
+   "id": "W4609",
+   "level": 2,
+   "name": "Bills-Payment Counter Transaction Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Aggregator-integrated validation; BIR-receipt automation; cash-transaction reconciliation"
+    ],
+    "Controls": [
+     "- CTL-699 (ensure controlled execution — Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load (PA-156.2).)",
+     "- CTL-699: transaction validated before posting; BIR-receipt issued (VS-79); cash reconciled daily (SoD)"
+    ],
+    "Cross-references": [
+     "- links to W4602 (aggregator), W4608 (systems), VS-08.2 (cash), VS-79/W4620 (BIR), VS-142 (cash handling), W4613 (reconciliation), W4615 (exceptions)"
+    ],
+    "Pain Points / Risks": [
+     "- **Posting-error risk**: Wrong biller/amount posted → customer loss; mitigated by validation & confirmation",
+     "- **Cash-shortage risk**: Cash ≠ transactions (VS-142/VS-23); mitigated by end-of-day reconciliation & SoD"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- VAS terminal/aggregator (W4602/W4608); cash mgmt (VS-08.2); BIR receipt (VS-79/W4620); GL (VS-17)"
+    ],
+    "Time Estimate": [
+     "- ~2–5 min per transaction"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Counter Lead",
+     "activity": "Counter Staff process the bills-payment (select biller, enter account/reference/amount, validate per aggregator W4602), collect cash, and confirm posting",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Counter Staff"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Counter Staff issue the official receipt/transaction record (BIR-compliant cash receipt VS-79/W4620), and capture the transaction to the VAS system (W4608)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "Counter Staff / Cash Mgmt"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Counter Staff handle any posting exception/error (W4615), and reconcile cash to transactions at end-of-day (W4613)",
+     "duration": "Per transaction/daily",
+     "n": "3",
+     "r": "Counter Staff / Cash Mgmt"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4602",
+    "W4608",
+    "W4613",
+    "W4615",
+    "W4620"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699"
+   ],
+   "fields": {
+    "Frequency": "Per transaction",
+    "Owner": "Counter Staff / Store Ops (VS-07) / AML (VS-86)",
+    "Participants": "Principal (W4603), Cash Mgmt (VS-08.2), Compliance (VS-22)",
+    "Trigger": "Customer remittance send/receive request",
+    "Volume": "Remittance transactions across counters"
+   },
+   "id": "W4610",
+   "level": 2,
+   "name": "Domestic Remittance Send/Receive Transaction Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Principal-integrated remittance; KYC/threshold automation; AML-suspicious-transaction flagging"
+    ],
+    "Controls": [
+     "- CTL-699 (ensure controlled execution — Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load (PA-156.2).)",
+     "- CTL-699: sender/receiver KYC (W4614); AML thresholds/reporting as agent (VS-86/W4619); cash reconciled (SoD)"
+    ],
+    "Cross-references": [
+     "- links to W4603 (principal), W4608 (systems), VS-86/W4619 (AML), VS-08.2 (cash), VS-79/W4620 (receipt), W4613 (reconciliation), W4614 (KYC)"
+    ],
+    "Pain Points / Risks": [
+     "- **AML-exposure risk**: Remittance misuse (layering/smurfing); mitigated by agent KYC + AML reporting (VS-86/W4619)",
+     "- **Mis-disbursement risk**: Paying wrong receiver → loss; mitigated by receiver KYC/ID verification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Principal integration (W4603/W4608); AML (VS-86/W4619); cash mgmt (VS-08.2); receipt (VS-79/W4620); GL (VS-17)"
+    ],
+    "Time Estimate": [
+     "- ~5–10 min per transaction (KYC-driven)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Counter Lead",
+     "activity": "Counter Staff process the remittance (sender/receiver KYC W4614, amount, destination), apply AML/threshold checks as agent (VS-86/W4619), and confirm via principal (W4603)",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Counter Staff / AML"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Counter Staff collect/disperse cash (send = collect; receive = disperse), issue receipt/reference, and capture to VAS system (W4608)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "Counter Staff / Cash Mgmt"
+    },
+    {
+     "a": "Store Manager / Compliance",
+     "activity": "Counter Staff/AML handle threshold/AML exceptions (W4615/W4619), report suspicious transactions (VS-86), and reconcile cash (W4613)",
+     "duration": "Per transaction/daily",
+     "n": "3",
+     "r": "Counter Staff / AML / Cash Mgmt"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4603",
+    "W4608",
+    "W4613",
+    "W4614",
+    "W4615",
+    "W4619",
+    "W4620"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699"
+   ],
+   "fields": {
+    "Frequency": "Per transaction",
+    "Owner": "Counter Staff / Store Ops (VS-07)",
+    "Participants": "E-money principal (W4603), Cash Mgmt (VS-08.2), AML (VS-86)",
+    "Trigger": "Customer cash-in/out request",
+    "Volume": "E-money cash-in/out transactions across counters"
+   },
+   "id": "W4611",
+   "level": 2,
+   "name": "E-Money Cash-In/Cash-Out Transaction Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Principal-integrated cash-in/out; OTP/verification; AML-threshold automation"
+    ],
+    "Controls": [
+     "- CTL-699 (ensure controlled execution — Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load (PA-156.2).)",
+     "- CTL-699: customer verified (OTP/ID); AML thresholds/reporting as agent (VS-86/W4619); cash reconciled (SoD)"
+    ],
+    "Cross-references": [
+     "- links to W4603 (principal), W4608 (systems), VS-86/W4619 (AML), VS-125 (fraud), VS-08.2 (cash), W4613 (reconciliation), W4614 (KYC)"
+    ],
+    "Pain Points / Risks": [
+     "- **Account-takeover risk**: Fraudster cashes out a hijacked account (VS-125); mitigated by OTP/verification",
+     "- **Float/AML risk**: Cash-in/out used for layering; mitigated by AML thresholds/reporting (VS-86/W4619)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- E-money principal (W4603/W4608); AML (VS-86/W4619); cash mgmt (VS-08.2); receipt (VS-79/W4620); GL (VS-17)"
+    ],
+    "Time Estimate": [
+     "- ~3–8 min per transaction"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Counter Lead",
+     "activity": "Counter Staff process cash-in (customer cash → e-money account credit) or cash-out (e-money debit → customer cash), with customer verification/mobile OTP, via principal (W4603)",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Counter Staff"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Counter Staff apply AML/threshold checks as agent (VS-86/W4619), collect/disperse cash, issue receipt, and capture to VAS system (W4608)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "Counter Staff / AML / Cash Mgmt"
+    },
+    {
+     "a": "Store Manager / Compliance",
+     "activity": "Counter Staff/AML handle threshold exceptions (W4615/W4619), report suspicious activity (VS-86), and reconcile cash (W4613)",
+     "duration": "Per transaction/daily",
+     "n": "3",
+     "r": "Counter Staff / AML / Cash Mgmt"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4603",
+    "W4608",
+    "W4613",
+    "W4614",
+    "W4615",
+    "W4619",
+    "W4620"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699"
+   ],
+   "fields": {
+    "Frequency": "Per transaction (high frequency)",
+    "Owner": "Counter Staff / Store Ops (VS-07)",
+    "Participants": "Telco partner (W4604), Cash Mgmt (VS-08.2), Finance (VS-17)",
+    "Trigger": "Customer mobile load/top-up request",
+    "Volume": "Load transactions across counters"
+   },
+   "id": "W4612",
+   "level": 2,
+   "name": "Mobile Load/Top-Up Transaction Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Platform-integrated load; confirm-before-collect; commission auto-accrual"
+    ],
+    "Controls": [
+     "- CTL-699 (ensure controlled execution — Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load (PA-156.2).)",
+     "- CTL-699: load confirmed before cash collected; receipt issued (VS-79); commission reconciled (W4617); cash reconciled (SoD)"
+    ],
+    "Cross-references": [
+     "- links to W4604 (telco), W4608 (systems), VS-08.2 (cash), VS-17 (finance), W4617 (commission/settlement), W4615 (exceptions)"
+    ],
+    "Pain Points / Risks": [
+     "- **Platform-failure risk**: Load not delivered but cash taken → customer dispute; mitigated by confirm-before-collect & exception handling (W4615)",
+     "- **Commission-reconciliation risk**: Load/commission mismatch; mitigated by reconciliation (W4617)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telco platform (W4604/W4608); cash mgmt (VS-08.2); finance/commission (VS-17/W4617); receipt (VS-79/W4620)"
+    ],
+    "Time Estimate": [
+     "- ~1–3 min per transaction"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Counter Lead",
+     "activity": "Counter Staff process the load/top-up (mobile number, amount, telco), confirm via platform (W4604/W4608), and collect cash",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Counter Staff"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Counter Staff issue receipt, capture the transaction (commission accrual W4617), and handle any platform failure/exception (W4615)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "Counter Staff / Finance"
+    },
+    {
+     "a": "Store Manager / CFO",
+     "activity": "Counter Staff/Cash Mgmt reconcile load cash at end-of-day (W4613), and Finance settles commission with telco (W4617)",
+     "duration": "Per transaction/daily",
+     "n": "3",
+     "r": "Counter Staff / Cash Mgmt / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4604",
+    "W4608",
+    "W4613",
+    "W4615",
+    "W4617",
+    "W4620"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699",
+    "CTL-93"
+   ],
+   "fields": {
+    "Frequency": "Daily per store",
+    "Owner": "Cash Mgmt (VS-08.2) / Store Ops (VS-07)",
+    "Participants": "Treasury (VS-18), Finance (VS-17), Audit (VS-21), CIT (VS-81)",
+    "Trigger": "Daily close; cash cycle",
+    "Volume": "VAS cash handling across counters"
+   },
+   "id": "W4613",
+   "level": 2,
+   "name": "VAS Cash Handling, Custody & End-of-Day Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cash-transaction reconciliation app; variance-alerting; segregated-cash tracking"
+    ],
+    "Controls": [
+     "- CTL-93 (ensure VAS agency cash & BSP compliance.)",
+     "- CTL-699: SoD (collect/reconcile/post/bank segregated); daily reconciliation; VAS cash segregated; tamper-evident custody (VS-142)"
+    ],
+    "Cross-references": [
+     "- links to VS-08.2 (cash), VS-18/VS-81 (treasury/CIT), VS-17/VS-21 (finance/audit), VS-142/VS-23 (cash/shrink standard), W4617 (settlement)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cash-shrinkage risk**: VAS cash skim/shortage (VS-23/VS-142); mitigated by SoD, reconciliation, tamper-evident custody",
+     "- **Commingling risk**: VAS cash mixed with retail cash → reconciliation confusion; mitigated by segregation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cash mgmt (VS-08.2); treasury (VS-18); CIT (VS-81); finance/GL (VS-17); audit (VS-21); COD/cash standard (VS-142)"
+    ],
+    "Time Estimate": [
+     "- ~30 min/day per store reconciliation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Counter Staff/Cash Mgmt handle VAS cash with SoD (collect ≠ reconcile ≠ post ≠ bank), tamper-evident custody, and daily remittance limit, per VS-142/W4607 standards",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Counter Staff / Cash Mgmt"
+    },
+    {
+     "a": "Store Manager / Finance",
+     "activity": "Cash Mgmt reconcile VAS cash to transactions (bills/remittance/e-money/load) end-of-day, investigate variances, and segregate VAS cash from retail cash (VS-08.2)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Cash Mgmt / Store Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury/CIT bank the VAS cash (VS-18/VS-81), settle to principals (W4617), and report cash integrity to finance/audit (VS-17/VS-21)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Treasury / CIT / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4607",
+    "W4617"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699",
+    "CTL-93"
+   ],
+   "fields": {
+    "Frequency": "Per applicable transaction",
+    "Owner": "Counter Staff / AML (VS-86) / Compliance (VS-22)",
+    "Participants": "Principals (W4603), Privacy (VS-91), Audit (VS-21)",
+    "Trigger": "KYC-required transaction (remittance/e-money/threshold)",
+    "Volume": "KYC verifications across VAS transactions"
+   },
+   "id": "W4614",
+   "level": 2,
+   "name": "VAS Customer Identity (KYC) & Transaction Verification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ID-verification tool; suspicious-pattern screening; secure KYC-data capture"
+    ],
+    "Controls": [
+     "- CTL-93 (ensure VAS agency cash & BSP compliance.)",
+     "- CTL-699: valid-ID KYC for applicable transactions (VS-86); consent obtained (VS-91); data secured/retained per policy (VS-88); suspicious activity reported"
+    ],
+    "Cross-references": [
+     "- links to VS-86/W4619 (AML), VS-91/VS-88 (privacy/retention), W4603 (principal), VS-21 (audit), W4610/W4611 (transactions)"
+    ],
+    "Pain Points / Risks": [
+     "- **Inadequate-KYC risk**: Weak ID verification → AML/fraud exposure (VS-86/VS-125); mitigated by mandatory valid-ID & verification",
+     "- **Privacy-misuse risk**: KYC data over-collected/misused; mitigated by purpose-limit & secure handling (VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AML/KYC (VS-86/W4619); privacy (VS-91); records/retention (VS-88); principal integration (W4603); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~3–8 min per KYC transaction"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Counter Lead",
+     "activity": "Counter Staff collect & verify customer ID per principal/BSP KYC requirements (valid ID, name, address) for remittance/e-money/threshold transactions, with consent (VS-91)",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Counter Staff / AML"
+    },
+    {
+     "a": "Compliance / AML Lead",
+     "activity": "Counter Staff/AML verify transaction legitimacy (matching name/ID, threshold checks, suspicious-pattern), and escalate red flags (VS-86/W4619)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "Counter Staff / AML"
+    },
+    {
+     "a": "DPO / VP Legal",
+     "activity": "Privacy/Audit ensure KYC data is captured securely, purpose-limited, retained per policy (VS-88/VS-91), and not misused",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Privacy / Audit / Counter Staff"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4603",
+    "W4610",
+    "W4611",
+    "W4619"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699"
+   ],
+   "fields": {
+    "Frequency": "Per exception",
+    "Owner": "Counter Staff / Store Ops (VS-07) / Principals",
+    "Participants": "Customer Support (VS-13), Finance (VS-17), Compliance (VS-22), Fraud (VS-125)",
+    "Trigger": "Posting failure; reversal request; dispute",
+    "Volume": "Exceptions across VAS transactions"
+   },
+   "id": "W4615",
+   "level": 2,
+   "name": "VAS Exception, Error & Reversal Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Exception/reversal workflow with SoD; error-pattern analytics; dispute-case management"
+    ],
+    "Controls": [
+     "- CTL-699 (ensure controlled execution — Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load (PA-156.2).)",
+     "- CTL-699: exceptions handled per principal process; reversals SoD-controlled & documented; disputes managed (VS-13/VS-22); recurring causes reduced"
+    ],
+    "Cross-references": [
+     "- links to W4603/W4604 (principals), VS-17 (finance), VS-13/VS-22 (support/compliance), VS-125 (fraud), W4622 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Reversal-fraud risk**: Fake reversal requests (VS-125); mitigated by SoD, verification & documentation",
+     "- **Customer-harm risk**: Unresolved error → complaint/loss; mitigated by SLA & escalation (VS-13)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Principal integration (W4603/W4604); finance/GL (VS-17); customer support (VS-13); fraud (VS-125); analytics (W4622)"
+    ],
+    "Time Estimate": [
+     "- Per exception hours–days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / Counter Lead",
+     "activity": "Counter Staff/Principals handle posting errors/failures (biller rejection, platform timeout, wrong amount) per principal process, with customer communication",
+     "duration": "Per exception",
+     "n": "1",
+     "r": "Counter Staff / Principals"
+    },
+    {
+     "a": "Store Manager / Finance",
+     "activity": "Counter Staff/Finance process reversals/refunds (refund to customer, reversal to principal), with SoD & documentation (avoid reversal-fraud VS-125)",
+     "duration": "Per exception",
+     "n": "2",
+     "r": "Counter Staff / Finance"
+    },
+    {
+     "a": "COO / VP Legal",
+     "activity": "Customer Support/Compliance manage disputes/complaints (VS-13/VS-22), capture exception analytics (W4622), and reduce recurring error causes",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Customer Support / Compliance / Data"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4603",
+    "W4604",
+    "W4622"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-699"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Customer Support (VS-13) / Store Ops (VS-07) / Compliance (VS-22)",
+    "Participants": "Principals (W4602–W4604), Legal (VS-100.3), Marketing (VS-14)",
+    "Trigger": "Customer query/complaint; disclosure requirement",
+    "Volume": "VAS customer service across counters"
+   },
+   "id": "W4616",
+   "level": 2,
+   "name": "VAS Customer Service, Complaints & Disclosure",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Fee/disclosure display; complaint-case management; complaint-trend analytics"
+    ],
+    "Controls": [
+     "- CTL-699 (ensure controlled execution — Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load (PA-156.2).)",
+     "- CTL-699: fees/commission disclosed (BSP VS-22); agent-not-principal made clear; complaints managed per SLA (VS-13)"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (CX), VS-22 (compliance), VS-100.3 (legal), W4602–W4604 (principals), W4615 (exceptions), W4620 (reporting)"
+    ],
+    "Pain Points / Risks": [
+     "- **Disclosure-failure risk**: Undisclosed fees/commission → consumer-protection exposure (VS-22); mitigated by clear disclosure",
+     "- **Complaint-escalation risk**: Unresolved → reputation/regulator; mitigated by SLA & fair handling (VS-13)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer support (VS-13); compliance (VS-22); principals (W4602–W4604); legal (VS-100.3); marketing (VS-14)"
+    ],
+    "Time Estimate": [
+     "- Ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager / CX Lead",
+     "activity": "Counter Staff/Customer Support provide VAS customer service (transaction status, fees, receipt), with clear fee/commission disclosure (BSP consumer protection VS-22)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Counter Staff / Customer Support"
+    },
+    {
+     "a": "CX Lead / VP Legal",
+     "activity": "Customer Support/Compliance manage complaints (failed posting, dispute, fee), routing principal-specific to principals, and resolving per SLA (VS-13)",
+     "duration": "Per complaint",
+     "n": "2",
+     "r": "Customer Support / Compliance / Principals"
+    },
+    {
+     "a": "VP Legal / COO",
+     "activity": "Compliance/Legal ensure disclosure compliance (fees, agent-not-principal, consumer rights RA 7394/BSP), manage escalations, and report complaint trends (VS-22)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Compliance / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4602",
+    "W4604",
+    "W4615",
+    "W4620"
+   ]
+  }
+ ]
+}

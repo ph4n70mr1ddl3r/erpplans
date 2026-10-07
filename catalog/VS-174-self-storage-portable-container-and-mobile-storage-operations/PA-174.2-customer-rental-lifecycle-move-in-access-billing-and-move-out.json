@@ -1,0 +1,593 @@
+{
+ "process_area": {
+  "id": "PA-174.2",
+  "title": "Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-174-self-storage-portable-container-and-mobile-storage-operations/PA-174.2-customer-rental-lifecycle-move-in-access-billing-and-move-out.md",
+ "value_stream": {
+  "directory": "VS-174-self-storage-portable-container-and-mobile-storage-operations",
+  "id": "VS-174",
+  "name": "Self-Storage, Portable Container & Mobile-Storage Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-753"
+   ],
+   "fields": {
+    "Frequency": "Continuous; demand-driven",
+    "Owner": "Property Manager (Storage) / Store Services Lead",
+    "Participants": "Customer Service (VS-13), Marketing (VS-14), CRM/Loyalty (VS-13), Property Manager, Yield Mgmt (W5039)",
+    "Trigger": "Customer inquiry (online/phone/store); lead generation",
+    "Volume": "~3,000–6,000 inquiries/month at maturity × conversion ~25–40%"
+   },
+   "id": "W5041",
+   "level": 2,
+   "name": "Customer Storage Inquiry, Reservation & Unit Assignment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Online size-estimator & self-service reservation; availability auto-lock; lead→lease conversion scoring"
+    ],
+    "Controls": [
+     "- CTL-753 (ensure controlled execution — Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out (PA-174.2).)",
+     "- CTL-753: deposit collected before hold; availability lock prevents double-booking; rate quote RA 7394-compliant (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (CRM/CX), VS-10/VS-75 (self-service), VS-16 (O2C), VS-118 (price integrity); W5035 (pricing), W5039 (availability), W5042 (move-in), W5054 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-sized-unit risk**: Wrong size estimate → move-in churn or upgrade friction; mitigated by size-estimator tool",
+     "- **Availability-mismatch risk**: Reserved unit double-booked → customer complaint; mitigated by real-time availability lock",
+     "- **Lead-leakage risk**: Unconverted inquiries; mitigated by CRM follow-up + conversion analytics (W5054)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Storage PMS availability/reservation; CRM/lead (VS-13); rate/quoting (W5035); O2C/deposit (VS-16); web/app self-service (VS-10/VS-75)"
+    ],
+    "Time Estimate": [
+     "- ~10–20 min per inquiry; ~3,000–6,000/month"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Manager",
+     "activity": "Capture the inquiry & assess need: storage size estimate (by room count / item list), term, site preference, climate/vehicle/container need, and capture the lead in CRM (VS-13)",
+     "duration": "Per inquiry",
+     "n": "1",
+     "r": "Customer Service / Property Mgr"
+    },
+    {
+     "a": "Property Manager",
+     "activity": "Reserve the unit & confirm availability: check live availability (vs W5039 occupancy), hold the unit, quote the street rate + fees (W5035), and collect the reservation deposit",
+     "duration": "Per inquiry",
+     "n": "2",
+     "r": "Property Mgr / O2C"
+    },
+    {
+     "a": "Property Manager",
+     "activity": "Convert to lease handoff: send the quote/lease-preview, schedule move-in (W5042), and feed conversion analytics (W5054) and retention (VS-13)",
+     "duration": "Per inquiry",
+     "n": "3",
+     "r": "Customer Service / Property Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5035",
+    "W5039",
+    "W5042",
+    "W5054"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~1,000–2,000 move-ins/month at maturity",
+    "Owner": "Property Manager (Storage) / Store Services Lead",
+    "Participants": "Legal (lease — VS-100/W5038), O2C (VS-16), Insurance (VS-26), IT/Security (access — VS-27/VS-23), Compliance (VS-91)",
+    "Trigger": "Reservation confirmed (W5041); scheduled move-in date",
+    "Volume": "1 move-in per new tenant"
+   },
+   "id": "W5042",
+   "level": 2,
+   "name": "Customer Move-In, Lease Execution, Access Credential & Insurance Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- E-signature + access-provisioning auto-flow; insurance/waiver gating; move-in inspection photo-capture mobile app"
+    ],
+    "Controls": [
+     "- CTL-753 (ensure controlled execution — Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out (PA-174.2).)",
+     "- CTL-753: lease executed & deposit collected before access; insurance/waiver mandatory; access per-tenant; RA 10173 consent captured (VS-91)"
+    ],
+    "Cross-references": [
+     "- links to VS-100 (legal), VS-16 (O2C), VS-26 (insurance), VS-91 (privacy), VS-27/VS-23 (access); W5038 (lease), W5043 (access), W5044 (billing), W5051 (prohibited goods)"
+    ],
+    "Pain Points / Risks": [
+     "- **Uninsured-tenant risk**: Tenant storing goods without insurance/waiver → BuildRight liability on loss; mitigated by mandatory insurance/waiver gate",
+     "- **Access-credential-misuse risk**: Shared/leaked gate codes → unauthorised access; mitigated by per-tenant credentials + audit (W5043)",
+     "- **Privacy risk**: Tenant ID/data captured without RA 10173 consent; mitigated by consent gate (VS-91)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Storage PMS lease/tenant master; e-signature; access-control provisioning (VS-27/VS-23/W5043); insurance (VS-26); O2C/deposit (VS-16); privacy/consent (VS-91); image repository (links VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~20–30 min per move-in"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Manager",
+     "activity": "Execute the lease & collect setup: e-sign the master lease (W5038), capture tenant ID & data-privacy consent (RA 10173 — VS-91), collect security deposit + first period, and enroll auto-pay (W5044)",
+     "duration": "Per move-in",
+     "n": "1",
+     "r": "Property Mgr / O2C / Compliance"
+    },
+    {
+     "a": "Property Manager",
+     "activity": "Issue access credentials & insurance: provision the access-credential (gate code/unit lock PIN/RFID — W5043), confirm tenant insurance or sell the damage waiver (W5038), and brief the tenant on rules/prohibited goods (W5051)",
+     "duration": "Per move-in",
+     "n": "2",
+     "r": "IT/Security / Insurance / Property Mgr"
+    },
+    {
+     "a": "Property Manager",
+     "activity": "Record move-in & activate: log the move-in inspection (empty-unit condition photos), activate billing, and feed occupancy (W5039) and analytics (W5054)",
+     "duration": "Per move-in",
+     "n": "3",
+     "r": "Property Mgr / O2C"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5038",
+    "W5039",
+    "W5041",
+    "W5043",
+    "W5044",
+    "W5051",
+    "W5054"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753",
+    "CTL-99"
+   ],
+   "fields": {
+    "Frequency": "Continuous (24/7 access windows common)",
+    "Owner": "Property Manager (Storage) / Security & LP (VS-23/VS-159)",
+    "Participants": "Security/LP (VS-23/VS-159), IT (VS-27), Facilities (VS-138), HSE (VS-24)",
+    "Trigger": "Every tenant/visitor site entry; continuous security monitoring",
+    "Volume": "~10–100 access events/day per site × ~50 sites"
+   },
+   "id": "W5043",
+   "level": 2,
+   "name": "Storage Facility Daily Access Control, Security Monitoring & Audit Trail",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ANPR/credential→lease auto-match; door-alarm→CCTV auto-tag; anomaly-detection analytics on access logs"
+    ],
+    "Controls": [
+     "- CTL-99 (ensure storage lien & prohibited-goods control.)",
+     "- CTL-753: access per active lease only (reconciled); CCTV/alarm evidence retained (VS-88); incident escalation to LP (VS-23)"
+    ],
+    "Cross-references": [
+     "- links to VS-23/VS-159 (security/LP), VS-27 (access IT), VS-24 (HSE), VS-88 (retention); W5042 (credentials), W5044 (delinquency), W5050 (security ops)"
+    ],
+    "Pain Points / Risks": [
+     "- **Theft risk**: Unauthorised access to units → tenant loss & claims; mitigated by per-tenant credentials + CCTV + door alarms",
+     "- **Audit-gap risk**: Access logs not reconciled to lease status → ex-tenant access; mitigated by daily reconciliation",
+     "- **Safety risk**: Lone-tenant/after-hours incidents; mitigated by lighting, CCTV, emergency call-points (VS-24)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Access-control/gate system (VS-27); CCTV/VMS (VS-23/VS-159); unit-door alarm; storage PMS access-log; LP case management (VS-23); evidence retention (VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~continuous; ~30–60 min/site/day log review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Manager",
+     "activity": "Control access: validate each entry via gate access-control (credential/plate reader), log unit-door open/close, and flag anomalies (after-hours, wrong-unit access, loitering)",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Security / Property Mgr"
+    },
+    {
+     "a": "Property Manager / LP Manager",
+     "activity": "Monitor CCTV & alarms: live/scheduled CCTV review (VS-23), unit-door-alarm response, and incident escalation to LP (VS-23) or corporate security (VS-159) and police if needed",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Security / LP"
+    },
+    {
+     "a": "Property Manager",
+     "activity": "Maintain the audit trail: reconcile access logs to active leases (flag access by delinquent/moved-out tenants — links W5044/W5047), and retain CCTV/log evidence (retention VS-88/W5050)",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Security / Property Mgr / Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5042",
+    "W5044",
+    "W5047",
+    "W5050"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753"
+   ],
+   "fields": {
+    "Frequency": "Monthly billing + continuous delinquency follow-up",
+    "Owner": "O2C / Property Manager (Storage)",
+    "Participants": "O2C (VS-16), Treasury (VS-18), Property Manager, Legal (lien — VS-100/W5047), Customer Service (VS-13)",
+    "Trigger": "Monthly billing cycle; missed payment; delinquency timeline",
+    "Volume": "~thousands of active tenants × monthly; ~5–15% delinquency at any time"
+   },
+   "id": "W5044",
+   "level": 2,
+   "name": "Storage Tenant Billing, Auto-Pay, Late-Fee & Delinquency Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-pay + failed-payment retry; dunning sequence automation; access-suspension auto-trigger at threshold"
+    ],
+    "Controls": [
+     "- CTL-753 (ensure controlled execution — Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out (PA-174.2).)",
+     "- CTL-753: late fees per lease; access-suspension tied to verified delinquency; bad-debt provision (VS-17); lien only after legal notice (W5047)"
+    ],
+    "Cross-references": [
+     "- links to VS-16 (O2C), VS-80 (payments), VS-18 (treasury), VS-17/VS-17.4 (R2R/FP&A); W5038 (lease), W5039 (rates), W5043 (access), W5047 (lien)"
+    ],
+    "Pain Points / Risks": [
+     "- **Bad-debt risk**: Tenant abandonment + lost lien window → uncollectible rent; mitigated by timely dunning + lien (W5047)",
+     "- **Access-overlock risk**: Locking out a paying tenant in error → complaint/liability; mitigated by access-suspension control tied to verified delinquency",
+     "- **Revenue-leakage risk**: In-place-rate not stepping up; auto-pay failures unnoticed; mitigated by rate-engine (W5039) + failed-payment alerts"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Storage PMS billing module; O2C/AR (VS-16); payment ops/acquirer (VS-80); treasury/cash (VS-18); FP&A/bad-debt (VS-17.4); dunning automation"
+    ],
+    "Time Estimate": [
+     "- ~monthly billing run; ~continuous delinquency follow-up (~10–20 min/delinquent case)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "O2C Manager",
+     "activity": "Bill & collect: generate monthly rent invoices, process auto-pay (card/direct-debit/e-wallet — VS-80), apply street-vs-in-place rates (W5039), and reconcile cash (VS-16)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "O2C / Property Mgr"
+    },
+    {
+     "a": "O2C Manager / Property Manager",
+     "activity": "Manage late/delinquent: apply late fees per lease (W5038), send dunning notices (5/15/30-day), suspend gate access at threshold, and pre-qualify for lien (W5047)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "O2C / Property Mgr / Legal"
+    },
+    {
+     "a": "O2C Manager",
+     "activity": "Report delinquency & reserve: aged-delinquency reporting, bad-debt provision (VS-17), and hand-off to lien/disposition (W5047) or write-off with FP&A (VS-17.4)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "O2C / FP&A"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5038",
+    "W5039",
+    "W5043",
+    "W5047"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~200–800 container moves/month at maturity",
+    "Owner": "Fleet/Logistics (VS-06) / Property Manager (Storage)",
+    "Participants": "Logistics (VS-06), 3PL (VS-56), Driver, Customer Service (VS-13), Insurance (VS-26), Property Manager",
+    "Trigger": "Container rental order (W5041); customer relocation/return request",
+    "Volume": "~1 move per container order (deliver + eventual pickup)"
+   },
+   "id": "W5045",
+   "level": 2,
+   "name": "Portable/Mobile Container Delivery, Placement, Relocation & Pickup Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Route/dispatch optimization (VS-06); GPS container tracking; placement-photo mobile capture → asset record"
+    ],
+    "Controls": [
+     "- CTL-753 (ensure controlled execution — Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out (PA-174.2).)",
+     "- CTL-753: placement assessed before delivery; container GPS-tracked; customer acceptance captured; insurance VS-26-confirmed"
+    ],
+    "Cross-references": [
+     "- links to VS-06 (fleet), VS-56 (3PL), VS-111 (asset pattern), VS-26 (insurance), VS-16 (O2C); W5036 (fleet), W5042 (lease), W5046 (inspection), W5053 (container maintenance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Placement-liability risk**: Damage to customer property during placement (driveway/utility); mitigated by placement assessment + driver protocol + insurance (VS-26)",
+     "- **Container-loss risk**: Container abandoned/not recovered at pickup; mitigated by deposit + GPS/telematics (W5053)",
+     "- **Access/permit risk**: HOA/LGU/road placement restrictions; mitigated by pre-delivery access check"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fleet/dispatch (VS-06); 3PL mgmt (VS-56); container-asset tracking (VS-111/VS-06); storage PMS rental; image repository (VS-88); O2C/billing (VS-16)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 hours per container delivery/pickup (incl. travel)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "Schedule & dispatch: confirm delivery address/placement (driveway/jobsite access, permits), dispatch tilt-bed/flatbed (own fleet VS-06 or 3PL VS-56), and brief the driver on safety/placement",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Logistics / Property Mgr"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Deliver/place: place the container level & secure, lock-box the unit, capture placement photos & customer acceptance, and activate the rental lease/billing (W5042/W5044)",
+     "duration": "Per order",
+     "n": "2",
+     "r": "Driver / Property Mgr"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "Relocate/pickup: on customer request execute relocation or end-of-term pickup, inspect/damage-assess (W5046), and return the container to depot (W5053)",
+     "duration": "Per order",
+     "n": "3",
+     "r": "Logistics / Property Mgr"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5036",
+    "W5041",
+    "W5042",
+    "W5044",
+    "W5046",
+    "W5053"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753",
+    "CTL-99"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~800–1,500 move-outs/month at maturity",
+    "Owner": "Property Manager (Storage) / O2C (VS-16)",
+    "Participants": "O2C (VS-16), Property Manager, Facilities (VS-138), Customer Service (VS-13)",
+    "Trigger": "Tenant move-out notice; end of lease; container return (W5045)",
+    "Volume": "1 per vacating tenant/container"
+   },
+   "id": "W5046",
+   "level": 2,
+   "name": "Customer Move-Out, Unit Inspection, Damage Assessment & Final Settlement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Move-in/move-out photo-comparison; damage-quote template; automated deposit settlement"
+    ],
+    "Controls": [
+     "- CTL-99 (ensure storage lien & prohibited-goods control.)",
+     "- CTL-753: deposit settlement per lease (W5038); damage evidenced by photos (VS-88); refund within statutory/lease window"
+    ],
+    "Cross-references": [
+     "- links to VS-16 (O2C), VS-138 (facilities), VS-88 (records), VS-13 (CX); W5042 (move-in), W5043 (access), W5044 (billing), W5047 (lien), W5054 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Deposit-dispute risk**: Disagreement on damage charges → complaint/legal; mitigated by move-in/move-out photo evidence (VS-88)",
+     "- **Missed-damage risk**: Damage not caught at move-out → repair cost absorbed; mitigated by inspection checklist + photos",
+     "- **Churn-insight risk**: Move-out reasons not captured → retention blind-spot; mitigated by exit-reason capture (W5054)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Storage PMS move-out; O2C/refund (VS-16); image repository (VS-88); facilities/maintenance (VS-138); analytics (VS-28)"
+    ],
+    "Time Estimate": [
+     "- ~30–45 min per move-out (inspection + settlement)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Manager",
+     "activity": "Schedule & vacate: confirm move-out date, terminate access (W5043), and confirm the unit is fully emptied/clean (or flag for lien if abandoned — W5047)",
+     "duration": "Per move-out",
+     "n": "1",
+     "r": "Property Mgr"
+    },
+    {
+     "a": "Property Manager",
+     "activity": "Inspect & damage-assess: compare move-in vs move-out condition (photos), assess damage (door/wall/lock/floor), and quote repair/cleaning charges against the deposit",
+     "duration": "Per move-out",
+     "n": "2",
+     "r": "Property Mgr / Facilities"
+    },
+    {
+     "a": "O2C Manager / Property Manager",
+     "activity": "Settle & refund: apply deposit less damages (per lease W5038), process refund (VS-16/O2C), issue final statement, and update occupancy (W5039) + churn analytics (W5054)",
+     "duration": "Per move-out",
+     "n": "3",
+     "r": "O2C / Property Mgr"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5038",
+    "W5039",
+    "W5042",
+    "W5043",
+    "W5044",
+    "W5045",
+    "W5047",
+    "W5054"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753",
+    "CTL-99"
+   ],
+   "fields": {
+    "Frequency": "~2–8% of move-outs (abandoned); ~hundreds/year at maturity",
+    "Owner": "Property Manager (Storage) / Legal (VS-100)",
+    "Participants": "Legal (VS-100), O2C (VS-16), Compliance (VS-22), Security (VS-23), Facilities (VS-138), Privacy (VS-91)",
+    "Trigger": "Tenant delinquency past lien threshold (W5044); abandonment confirmed",
+    "Volume": "1 lien/disposition per abandoned unit"
+   },
+   "id": "W5047",
+   "level": 2,
+   "name": "Abandoned-Unit Contents Disposition, Lien Sale & Regulatory Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Lien-threshold auto-detection → notice generation; lien-sale documentation templates"
+    ],
+    "Controls": [
+     "- CTL-99 (ensure storage lien & prohibited-goods control.)",
+     "- CTL-753: lien perfected per Civil Code before disposition (Legal); sale documented & evidenced; surplus/escheat handled; personal data secure-shredded (VS-91)"
+    ],
+    "Cross-references": [
+     "- links to VS-100 (legal), VS-16 (O2C), VS-22 (compliance), VS-88 (records), VS-91 (privacy); W5038 (lease/lien terms), W5043 (access/overlock), W5044 (delinquency)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unlawful-disposition risk**: Disposing/selling contents without perfected lien → conversion/trespass-to-goods liability; mitigated by Legal-governed lien notice & sale",
+     "- **Privacy/data risk**: Personal documents found in disposed contents (RA 10173); mitigated by secure-shred protocol (links VS-88)",
+     "- **Surplus/escheat risk**: Unclaimed sale surplus not handled per unclaimed-property law; mitigated by escheat accounting"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Storage PMS lien/disposition module; O2C/recovery (VS-16); legal/case (VS-100); compliance (VS-22); evidence retention (VS-88); privacy (VS-91)"
+    ],
+    "Time Estimate": [
+     "- ~2–6 weeks per case (notice period + sale)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Property Manager / VP Legal & Compliance",
+     "activity": "Establish abandonment & perfect the lien: verify delinquency past the lease threshold (W5038/W5044), serve the statutory/contractual lien notice (Civil Code), and overlock the unit (W5043)",
+     "duration": "Per case",
+     "n": "1",
+     "r": "Property Mgr / Legal"
+    },
+    {
+     "a": "Property Manager / VP Legal & Compliance",
+     "activity": "Conduct the lien sale/disposition: auction/sell/dispose contents per lease & law, document the sale (bid records, proceeds), and apply proceeds against the owed balance",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Property Mgr / Legal / O2C"
+    },
+    {
+     "a": "O2C Manager / VP Legal & Compliance",
+     "activity": "Settle, document & retain: refund any surplus to the tenant (or escheat unclaimed per unclaimed-property rules), document the chain-of-custody/evidence, and retain records (VS-88)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "O2C / Legal / Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5038",
+    "W5043",
+    "W5044"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-753"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Property Manager (Storage) / Customer Service (VS-13)",
+    "Participants": "Customer Service (VS-13), Property Manager, O2C (VS-16), Facilities (VS-138), Security (VS-23)",
+    "Trigger": "Tenant inquiry/complaint (billing, access, move-out, other); VOC",
+    "Volume": "~thousands of interactions/month at maturity"
+   },
+   "id": "W5048",
+   "level": 2,
+   "name": "Storage Customer Service, Complaint & Inquiry Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Chatbot/self-service for common inquiries (VS-13); ticket auto-routing; VOC→program analytics"
+    ],
+    "Controls": [
+     "- CTL-753 (ensure controlled execution — Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out (PA-174.2).)",
+     "- CTL-753: SLA + escalation (VS-13); refunds O2C-controlled (VS-16); systemic issues fed to program review (W5056)"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (CX/contact center), VS-146 (CX assurance), VS-16 (O2C), VS-138 (facilities), VS-23 (security); W5044 (billing), W5054/W5056 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-breach risk**: Slow resolution → tenant churn & complaint escalation (DTI/RA 7394); mitigated by SLA + escalation (VS-13)",
+     "- **Repeat-issue risk**: Systemic defects unresolved → recurring complaints; mitigated by VOC→program feedback (W5056)",
+     "- **Mis-resolution risk**: Refund/credit errors; mitigated by O2C controls (VS-16)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Omnichannel CX/ticketing (VS-13.1); storage PMS tenant record; O2C (VS-16); facilities (VS-138); VOC analytics (VS-28); CX assurance (VS-146)"
+    ],
+    "Time Estimate": [
+     "- ~10–30 min/case; ~continuous"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Manager",
+     "activity": "Intake & triage: capture inquiry/complaint (omnichannel VS-13.1), classify (billing/access/damage/other), route to owner, and acknowledge within SLA (VS-13)",
+     "duration": "Per case",
+     "n": "1",
+     "r": "Customer Service / Property Mgr"
+    },
+    {
+     "a": "Customer Service Manager / Property Manager",
+     "activity": "Resolve: address the issue (refund/repair/access-fix), coordinate with O2C/Facilities/Security as needed, and confirm resolution with the tenant",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Customer Service / Property Mgr / SME"
+    },
+    {
+     "a": "Customer Service Manager",
+     "activity": "Close & learn: record resolution/VOC (VS-13), feed CX analytics & mystery-shopping (VS-146), and flag systemic issues for the program (W5054/W5056)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Customer Service / Analytics"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5044",
+    "W5054",
+    "W5056"
+   ]
+  }
+ ]
+}

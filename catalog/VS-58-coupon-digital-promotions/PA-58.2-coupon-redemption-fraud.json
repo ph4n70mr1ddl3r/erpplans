@@ -1,0 +1,463 @@
+{
+ "process_area": {
+  "id": "PA-58.2",
+  "title": "Coupon Redemption & Fraud Prevention"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-58-coupon-digital-promotions/PA-58.2-coupon-redemption-fraud.md",
+ "value_stream": {
+  "directory": "VS-58-coupon-digital-promotions",
+  "id": "VS-58",
+  "name": "Coupon & Digital Promotions Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-196",
+    "CTL-404"
+   ],
+   "fields": {
+    "Frequency": "~50K–80K/month during campaigns",
+    "Owner": "Cashier",
+    "Participants": "Store Manager",
+    "Trigger": "Customer presents coupon at POS",
+    "Volume": "~50K–80K/month; ~2% of transactions (of 2.8M/month)"
+   },
+   "id": "W2246",
+   "level": 2,
+   "name": "In-Store Coupon Redemption",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Redemption fully automated (scan → validate → apply → log); manager-override on verified-valid"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- operational: redemption/liability integrity; CTL-196 (coupon & promo-code abuse prevention — fraud patterns monitored per W2249); operational: Store Manager daily-close review"
+    ],
+    "Pain Points / Risks": [
+     "- **Invalid-coupon-friction risk**: a valid coupon is rejected (system error, eligibility mis-check), frustrating the customer; mitigated by the manager-override on verified-valid coupons",
+     "- **Redemption-logging-failure risk**: the redemption isn't logged, so the vendor reconciliation and liability are wrong; mitigated by the atomic redemption-and-log transaction"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / coupon (links to VS-08 / W5B, W539 coupon processing) — the redemption validation and discount application",
+     "- Coupon platform (links to VS-58 / W2238) — the coupon master for validation",
+     "- Liability (links to VS-58 / W2241) — the liability reduction on redemption"
+    ],
+    "Time Estimate": [
+     "~45 sec/redemption × ~65,000/month ≈ ~2,925,000 sec ≈ **~810 hours/month Cashier** (absorbed into checkout)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier scans the coupon barcode or enters the code; system validates (active, eligible SKU, min-spend met, not-expired, per-customer-limit); applies the discount; logs the redemption for vendor reconciliation and liability reduction",
+     "duration": "30 sec–1 min",
+     "n": "1",
+     "r": "Cashier / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2238",
+    "W2241",
+    "W2249",
+    "W539",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-196",
+    "CTL-404"
+   ],
+   "fields": {
+    "Frequency": "~8K–12K/month",
+    "Owner": "Ecommerce System",
+    "Participants": "Ecom Ops Manager",
+    "Trigger": "Customer enters promo code at checkout",
+    "Volume": "~8K–12K/month"
+   },
+   "id": "W2247",
+   "level": 2,
+   "name": "Online Coupon & Promo Code Redemption",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Redemption fully automated; liability real-time across channels"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- operational: omnichannel liability integrity; CTL-196 (coupon & promo-code abuse prevention — ecommerce redemption fraud monitored alongside VS-125); operational: Ecom Ops Manager monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Code-sharing-fraud risk**: a single promo code is shared on a deals site, used by thousands beyond the intended audience; mitigated by the per-customer-limit and the unique-code design",
+     "- **Omnichannel-liability-desync risk**: the online redemption doesn't sync to the in-store liability immediately, causing a double-count; mitigated by the single authoritative liability (the W2158 pattern)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce / coupon (links to VS-10 / W11, VS-58 / W2238, W539) — the online redemption",
+     "- Omnichannel liability (links to VS-58 / W2241, VS-54 / W2158 reconciliation) — the real-time liability update",
+     "- Fraud filter (links to VS-125 / W266) — the code-abuse detection"
+    ],
+    "Time Estimate": [
+     "Automated; Ecom Ops ~2 hours/week = **~100 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecom Ops Manager",
+     "activity": "Customer enters the promo code at ecommerce checkout; system validates and applies; logs the redemption; updates the omnichannel liability in real-time",
+     "duration": "Automated",
+     "n": "1",
+     "r": "Ecommerce System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W11",
+    "W2158",
+    "W2238",
+    "W2241",
+    "W266",
+    "W539"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-404"
+   ],
+   "fields": {
+    "Frequency": "~5–10% of coupon transactions",
+    "Owner": "Cashier / POS System",
+    "Participants": "Store Manager",
+    "Trigger": "Customer presents multiple coupons",
+    "Volume": "~5–10%"
+   },
+   "id": "W2248",
+   "level": 2,
+   "name": "Multi-Coupon Stacking Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Stacking auto-evaluated; margin-floor auto-enforced; reason auto-displayed"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- CTL-404 (stacking/margin guard — links to VS-57); operational: Store Manager override sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-stack-margin-erosion risk**: allowed stacking creates a below-cost transaction; mitigated by the margin-floor guard",
+     "- **Stacking-dispute risk**: the customer disputes the blocked stack; mitigated by the clear reason-display and the manager-override"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / stacking (links to VS-08 / W5B, W539, VS-29 / W300 promo-rule) — the stacking logic",
+     "- Margin guard (links to VS-57 / W2230) — the margin-floor check",
+     "- Coupon platform (links to VS-58 / W2238) — the coupon rules"
+    ],
+    "Time Estimate": [
+     "~1.5 min/transaction × ~4,000/month = **~100 hours/month Cashier** (absorbed into checkout)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "System evaluates stacking per the rules (stackable types, max-stack-count, margin-floor); applies the allowed stack; blocks the disallowed with a clear reason; manager-override on exception",
+     "duration": "1–2 min",
+     "n": "1",
+     "r": "Cashier / POS System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2230",
+    "W2238",
+    "W300",
+    "W539",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-404",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "Real-time + weekly review",
+    "Owner": "Loss Prevention Analyst",
+    "Participants": "LP Analyst, Loss Prevention Mgr",
+    "Trigger": "Real-time monitoring",
+    "Volume": "~100–200 flagged/month"
+   },
+   "id": "W2249",
+   "level": 2,
+   "name": "Coupon Redemption Fraud Detection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Fraud-rules auto-applied real-time; false-positive-rate auto-monitored"
+    ],
+    "Controls": [
+     "- CTL-404 (coupon-fraud — links to VS-125); CTL-44 (redemption integrity); operational: Loss Prevention Manager weekly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Counterfeit-barcode risk**: a fraudster forges a coupon barcode; mitigated by the unique-code-validation and the counterfeit-pattern detection",
+     "- **False-positive-customer-harm risk**: legitimate redemptions are flagged, frustrating good customers; mitigated by the false-positive review SLA and the rule-tuning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fraud monitoring (links to VS-125 / W266 ecommerce fraud, VS-23 / W248 LP) — the fraud-rule engine",
+     "- Coupon platform (links to VS-58 / W2238) — the redemption data",
+     "- LP (links to VS-23) — the LP oversight"
+    ],
+    "Time Estimate": [
+     "~5 hours/week LP Analyst = **~250 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Loss Prevention Mgr",
+     "activity": "System applies real-time fraud rules: velocity (rapid redemption from one account/IP), unique-code reuse, counterfeit barcode, ineligible-SKU override; LP Analyst reviews flagged queue weekly; tunes rules",
+     "duration": "Real-time + 4–6 hours/week",
+     "n": "1",
+     "r": "System / LP Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2238",
+    "W248",
+    "W266"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-179",
+    "CTL-404"
+   ],
+   "fields": {
+    "Frequency": "~2K–3K/month",
+    "Owner": "Customer Service Rep",
+    "Participants": "CSA, Finance, CS Supervisor",
+    "Trigger": "Customer returns item bought with coupon",
+    "Volume": "~2K–3K/month"
+   },
+   "id": "W2250",
+   "level": 2,
+   "name": "Coupon Return & Reversal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Return-and-coupon-reversal auto-processed; post-coupon-price refund auto-enforced"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- operational: coupon-reversal integrity; CTL-179 (refunds/credits issued to original tender with exception approval); operational: CS Supervisor sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Refund-abuse risk**: a customer buys with a coupon, returns, and gets a full-price refund (pocketing the coupon value); mitigated by the post-coupon-price refund policy (system-enforced)",
+     "- **Coupon-reversal-failure risk**: the coupon isn't restored on return, so the customer loses it; mitigated by the atomic return-and-coupon-reversal transaction"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Returns (links to VS-32 / W12 returns, VS-16 / W101 refund) — the return processing",
+     "- Coupon/liability (links to VS-58 / W2241, W2246) — the coupon-reversal and liability-adjustment",
+     "- Vendor reimbursement (links to VS-58 / W2242, W2253) — the vendor-funding adjustment"
+    ],
+    "Time Estimate": [
+     "~7 min/case × ~2,500/month = **~290 hours/month CSR** (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CS Supervisor",
+     "activity": "System processes the return: refunds the post-coupon price (not the full price), reverses the coupon redemption (restores the coupon if still valid, or reduces the liability if expired), adjusts the vendor reimbursement if vendor-funded",
+     "duration": "5–10 min",
+     "n": "1",
+     "r": "CSA / System / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W101",
+    "W12",
+    "W2241",
+    "W2242",
+    "W2246",
+    "W2253"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-404"
+   ],
+   "fields": {
+    "Frequency": "~500–1K/month",
+    "Owner": "Store Manager",
+    "Participants": "Regional Ops Manager",
+    "Trigger": "Customer presents recently expired coupon",
+    "Volume": "~500–1K/month"
+   },
+   "id": "W2251",
+   "level": 2,
+   "name": "Expired Coupon Exception Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Grace-window auto-applied (within 7 days = auto-honor; beyond = manager-decision)"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- CTL-404 (coupon-expiry authorization); operational: Store Manager sign-off on beyond-grace honors"
+    ],
+    "Pain Points / Risks": [
+     "- **Goodwill-abuse risk**: customers learn that expired coupons are always honored, eroding the expiry discipline; mitigated by the defined grace-window (not open-ended)",
+     "- **Inconsistent-honoring risk**: one store honors, another declines, creating a fairness perception issue; mitigated by the standardized grace-window policy"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Coupon platform (links to VS-58 / W2238) — the expiry validation",
+     "- POS (links to VS-08 / W5B) — the manager-override application",
+     "- Goodwill policy (links to VS-13 / W65 CSAT) — the customer-experience lens"
+    ],
+    "Time Estimate": [
+     "~4 min/case × ~750/month = **~50 hours/month Store Manager** (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Regional Ops Mgr",
+     "activity": "Cashier flags the expired coupon; Store Manager decides: honor as goodwill (within a defined grace window, e.g., 7 days post-expiry), or decline; system applies if honored",
+     "duration": "3–5 min",
+     "n": "1",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2238",
+    "W5B",
+    "W65"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-196",
+    "CTL-404"
+   ],
+   "fields": {
+    "Frequency": "Per campaign",
+    "Owner": "IT Integration Lead",
+    "Participants": "CIO",
+    "Trigger": "Customer claims digital coupon",
+    "Volume": "~500K–1M claims/year"
+   },
+   "id": "W2252",
+   "level": 2,
+   "name": "Digital Coupon Device & Account Binding",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Claim-and-bind fully automated; device-binding auto-enforced"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- CTL-404 (coupon-binding integrity); CTL-196 (multi-account abuse prevention — links to VS-125); operational: IT Integration Lead monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Multi-account-abuse risk**: a customer creates multiple accounts to claim multiple per-customer coupons; mitigated by the device-binding (one coupon per device) and the multi-account detection",
+     "- **Binding-failure risk**: the coupon is claimed but not bound, so it doesn't appear at redemption; mitigated by the binding-confirmation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Loyalty/app (links to VS-13 / W17, VS-75 app, VS-126 CDP) — the account binding",
+     "- Coupon platform (links to VS-58 / W2238) — the claim and binding",
+     "- POS/ecom (links to VS-08 / W5B, VS-10) — the bound-coupon redemption"
+    ],
+    "Time Estimate": [
+     "~4 hours/campaign × 18 + ongoing monitoring = **~80 hours/year** IT Integration Lead."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "Customer claims a digital coupon to their loyalty account/app; system binds the coupon to the account (per-customer-limit enforcement); coupon available for redemption at POS (loyalty lookup) or online (account login)",
+     "duration": "Per campaign + ongoing",
+     "n": "1",
+     "r": "IT Integration Lead / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W17",
+    "W2238",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-404",
+    "CTL-48"
+   ],
+   "fields": {
+    "Frequency": "Monthly; ~10–15 vendor campaigns",
+    "Owner": "Finance Analyst",
+    "Participants": "Finance Manager",
+    "Trigger": "Monthly vendor settlement",
+    "Volume": "~10–15 reconciliations/month"
+   },
+   "id": "W2253",
+   "level": 2,
+   "name": "Coupon Vendor Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Reimbursement auto-calculated from the redemption log; vendor-claim auto-generated"
+    ],
+    "Controls": [
+     "- CTL-404 (ensure controlled execution — Coupon Redemption & Fraud Prevention (PA-58.2).)",
+     "- operational: co-op/reimbursement accuracy; count integrity; operational: Finance Manager monthly sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Count-dispute risk**: the vendor disputes the redemption count; mitigated by the per-redemption evidence (the W2246 log)",
+     "- **Reimbursement-delay risk**: the vendor delays the credit, tying up BuildRight's cash; mitigated by the reimbursement-aging tracker and the CTL-48 dispute workflow"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor reimbursement (links to VS-58 / W2242 vendor-funded, VS-39 / W27 co-op) — the reimbursement calculation",
+     "- AP (links to VS-15 / W7) — the vendor credit recording",
+     "- Coupon platform (links to VS-58 / W2246 redemption) — the redemption-count evidence"
+    ],
+    "Time Estimate": [
+     "~2.5 days/month = **~300 hours/year** Finance Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Finance Analyst reconciles the vendor-funded coupon redemptions: BuildRight's redemption count vs. the vendor's record; calculates the reimbursement; submits the claim; vendor validates and credits",
+     "duration": "2–3 days/month",
+     "n": "1",
+     "r": "Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2242",
+    "W2246",
+    "W27",
+    "W7"
+   ]
+  }
+ ]
+}

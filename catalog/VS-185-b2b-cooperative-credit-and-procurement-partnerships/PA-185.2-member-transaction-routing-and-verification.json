@@ -1,0 +1,583 @@
+{
+ "process_area": {
+  "id": "PA-185.2",
+  "title": "Member Transaction Routing & Verification"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-185-b2b-cooperative-credit-and-procurement-partnerships/PA-185.2-member-transaction-routing-and-verification.md",
+ "value_stream": {
+  "directory": "VS-185-b2b-cooperative-credit-and-procurement-partnerships",
+  "id": "VS-185",
+  "name": "B2B Cooperative Credit & Procurement Partnerships"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-20"
+   ],
+   "fields": {
+    "Frequency": "Daily per member transaction",
+    "Owner": "Front-End Store Manager / POS Cashier",
+    "Participants": "Cooperative Member, Co-op Verification Hotline Agent",
+    "Trigger": "Cooperative member wishes to purchase goods using co-op credit line",
+    "Volume": "~12,000-15,000 purchases annually"
+   },
+   "id": "W5305",
+   "level": 2,
+   "name": "Cooperative Member Digital POS Account Association & Verification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Real-time API query to cooperative member databases returning member photo."
+    ],
+    "Controls": [
+     "- CTL-20: Ensure POS cash/credit accountability; Cashier ID matching protocols."
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-107 (key account)"
+    ],
+    "Pain Points / Risks": [
+     "- **Identity theft purchase risk**: Non-members use cooperative credentials to make purchases, causing chargeback disputes; mitigated by requiring dual identification checks matching ID photo."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS Checkout terminal (VS-08), B2B CRM module."
+    ],
+    "Time Estimate": [
+     "- ~3-5 min at checkout"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Front-End Store Manager / POS Cashier",
+     "activity": "Present member credentials at checkout counter.",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Cooperative Member"
+    },
+    {
+     "a": "Front-End Store Manager / POS Cashier",
+     "activity": "Scan member digital barcode on POS terminal.",
+     "duration": "1 min",
+     "n": "2",
+     "r": "POS Cashier"
+    },
+    {
+     "a": "Front-End Store Manager / POS Cashier",
+     "activity": "Query central co-op registry database to verify member eligibility.",
+     "duration": "30 sec",
+     "n": "3",
+     "r": "Front-End Store Manager / POS Cashier"
+    },
+    {
+     "a": "Front-End Store Manager / POS Cashier",
+     "activity": "If digital lookup fails, check membership status manually.",
+     "duration": "3 minutes",
+     "n": "4",
+     "r": "POS Cashier"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-786"
+   ],
+   "fields": {
+    "Frequency": "Daily per high-value member transaction",
+    "Owner": "Customer Service Lead",
+    "Participants": "Co-op Secretary, Cooperative Member",
+    "Trigger": "Validated member request for high-value materials (> PHP 50,000) using co-op line",
+    "Volume": "~3,000-4,000 transactions annually"
+   },
+   "id": "W5306",
+   "level": 2,
+   "name": "Cooperative Member Authorization and Purchase Order Match",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- OCR scanner parsing PO details and matching against basket contents."
+    ],
+    "Controls": [
+     "- CTL-786: ensure controlled execution — Member Transaction Routing & Verification (PA-185.2). — legal authorization controls; Customer Service Lead PO validation."
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-88 (document control)"
+    ],
+    "Pain Points / Risks": [
+     "- **Scope deviation risk**: Members purchase unauthorized retail items (appliances, consumer goods) on corporate construction POs; mitigated by blocking POS items not matching PO product classes."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS terminal (VS-08), Document management portal (VS-88)."
+    ],
+    "Time Estimate": [
+     "- ~10-12 min"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Service Lead",
+     "activity": "Collect cooperative-issued Purchase Order (PO) or Authorization Letter from member.",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Customer Service Lead"
+    },
+    {
+     "a": "Customer Service Lead",
+     "activity": "Match PO specifications (material list, budget limit, jobsite address) with POS basket items.",
+     "duration": "5 min",
+     "n": "2",
+     "r": "Customer Service Lead"
+    },
+    {
+     "a": "Customer Service Lead",
+     "activity": "Check PO authorization codes and signatories against co-op profile on system.",
+     "duration": "3 min",
+     "n": "3",
+     "r": "Customer Service Lead"
+    },
+    {
+     "a": "Customer Service Lead",
+     "activity": "Scan and attach the PO document to the POS invoice transaction in ERP.",
+     "duration": "2 min",
+     "n": "4",
+     "r": "Customer Service Lead"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-786"
+   ],
+   "fields": {
+    "Frequency": "Per co-op account checkout",
+    "Owner": "POS System Controller",
+    "Participants": "POS Cashier, Credit Analyst",
+    "Trigger": "POS cashier initiates credit payment method on co-op account (W5305)",
+    "Volume": "~12,000-15,000 checks annually"
+   },
+   "id": "W5307",
+   "level": 2,
+   "name": "Real-time Credit Line Availability Check at Checkout",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Real-time credit inquiry interface integrated within cash register UI."
+    ],
+    "Controls": [
+     "- CTL-786 (ensure controlled execution — Member Transaction Routing & Verification (PA-185.2).)",
+     "- operational: finance risk controls; Credit limits enforced at system database levels."
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-68 (credit risk)"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-limit credit risk**: POS terminal completes transactions while co-op account is in credit block status due to network delays; mitigated by offline POS credit blocking policies."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS Checkout terminal (VS-08), ERP Credit module (VS-68)."
+    ],
+    "Time Estimate": [
+     "- ~1 min"
+    ]
+   },
+   "steps": [
+    {
+     "a": "POS System Controller",
+     "activity": "POS system calculates basket total (net of co-op B2B discounts and VAT exemptions).",
+     "duration": "10 sec",
+     "n": "1",
+     "r": "POS System Controller"
+    },
+    {
+     "a": "POS System Controller",
+     "activity": "System queries parent co-op credit ledger balance in central ERP database.",
+     "duration": "10 sec",
+     "n": "2",
+     "r": "POS System Controller"
+    },
+    {
+     "a": "POS System Controller",
+     "activity": "If requested transaction exceeds remaining available credit, block checkout and issue credit limit alert.",
+     "duration": "10 sec",
+     "n": "3",
+     "r": "POS System Controller"
+    },
+    {
+     "a": "POS System Controller",
+     "activity": "If limit is sufficient, hold transaction amount and proceed to invoice lock.",
+     "duration": "10 sec",
+     "n": "4",
+     "r": "POS System Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5305"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-20"
+   ],
+   "fields": {
+    "Frequency": "Weekly per regional store",
+    "Owner": "B2B Sourcing Manager",
+    "Participants": "Cooperative Members, Store Manager",
+    "Trigger": "Group order placement from multiple co-op members at B2B desk",
+    "Volume": "~800-1,000 group orders annually"
+   },
+   "id": "W5308",
+   "level": 2,
+   "name": "Multi-Member Group Purchase Discount Routing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- ERP bulk split-billing tool automatically generating multiple credit invoices."
+    ],
+    "Controls": [
+     "- CTL-20: POS cash/credit accountability; pricing matrix updates verified by Category Managers."
+    ],
+    "Cross-references": [
+     "- links to VS-118 (pricing integrity), VS-11 (trade sales)"
+    ],
+    "Pain Points / Risks": [
+     "- **Discount calculation error risk**: Applying incorrect B2B price tiers to retail member accounts; mitigated by locking bulk discount authorizations to Store Manager approval."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRM, POS pricing engine (VS-118)."
+    ],
+    "Time Estimate": [
+     "- ~1 working day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "B2B Sourcing Manager",
+     "activity": "Receive bulk material order sheets from group of co-op members.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "B2B Sourcing Manager"
+    },
+    {
+     "a": "B2B Sourcing Manager",
+     "activity": "Route order through bulk wholesale pricing calculator in ERP.",
+     "duration": "30 min",
+     "n": "2",
+     "r": "B2B Sourcing Manager"
+    },
+    {
+     "a": "B2B Sourcing Manager",
+     "activity": "Split billing proportions to individual member profiles if requested.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "B2B Sourcing Manager"
+    },
+    {
+     "a": "B2B Sourcing Manager",
+     "activity": "Send quote to co-op office for central billing approval.",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "B2B Sourcing Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-30"
+   ],
+   "fields": {
+    "Frequency": "Daily per transaction block",
+    "Owner": "Accounts Receivable Supervisor",
+    "Participants": "Cooperative Finance Officer, Chief Accountant",
+    "Trigger": "Completed co-op member checkout (W5307)",
+    "Volume": "~12,000-15,000 invoices annually"
+   },
+   "id": "W5309",
+   "level": 2,
+   "name": "Credit Billing to Central Cooperative Account and Invoice Dispatch",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Automated daily invoice compilation and EDI dispatch."
+    ],
+    "Controls": [
+     "- CTL-30: Month-end control standards; Accounts Receivable reconciliations verified by Chief Accountant."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (O2C), VS-79 (BIR reporting)"
+    ],
+    "Pain Points / Risks": [
+     "- **Billing invoice delivery risk**: Invoices not received by co-ops due to incorrect email records, delaying payments; mitigated by tracking email delivery status and verifying receipt via EDI."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Accounts Receivable module (VS-16), BIR CAS portal (VS-79)."
+    ],
+    "Time Estimate": [
+     "- ~1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounts Receivable Supervisor",
+     "activity": "Compile daily POS transactions billed to cooperative central account.",
+     "duration": "2 hours",
+     "n": "1",
+     "r": "Accounts Receivable Supervisor"
+    },
+    {
+     "a": "Accounts Receivable Supervisor",
+     "activity": "Format electronic invoice document containing item details, member IDs, PO attachments, and billing totals.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Accounts Receivable Supervisor"
+    },
+    {
+     "a": "Accounts Receivable Supervisor",
+     "activity": "Transmit consolidated credit invoices to cooperative accounts payable office via email and EDI.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Accounts Receivable Supervisor"
+    },
+    {
+     "a": "Accounts Receivable Supervisor",
+     "activity": "Post transactions to Accounts Receivable sub-ledger in central ERP.",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "Accounts Receivable Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5307"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-30"
+   ],
+   "fields": {
+    "Frequency": "Monthly per active cooperative account",
+    "Owner": "Cash Application Clerk",
+    "Participants": "Accounts Receivable Supervisor, Cooperative Finance Officer",
+    "Trigger": "Payment received from cooperative (bank transfer or check deposit)",
+    "Volume": "~240-360 payments annually"
+   },
+   "id": "W5310",
+   "level": 2,
+   "name": "Cooperative Account Payment Posting and Cash Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Bank statement auto-matching algorithms parsing co-op deposit reference numbers."
+    ],
+    "Controls": [
+     "- CTL-30: Month-end control standards; CFO cash ledger audits."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (O2C), VS-18 (treasury)"
+    ],
+    "Pain Points / Risks": [
+     "- **Payment misapplication risk**: Cash receipts applied to wrong cooperative accounts or wrong invoices, distorting customer statements; mitigated by requiring daily reconciliation of receipts to bank statements."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Accounts Receivable module (VS-16), Cash Book (VS-18)."
+    ],
+    "Time Estimate": [
+     "- ~1 day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Cash Application Clerk",
+     "activity": "Match bank transfer references or check deposit details with open invoices in cooperative sub-ledger.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Cash Application Clerk"
+    },
+    {
+     "a": "Cash Application Clerk",
+     "activity": "Input payment details in cash journal; apply receipts to specific invoices.",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Cash Application Clerk"
+    },
+    {
+     "a": "Cash Application Clerk",
+     "activity": "Investigate any payment variances with cooperative finance officer.",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Cash Application Clerk"
+    },
+    {
+     "a": "Cash Application Clerk",
+     "activity": "Clear invoices in sub-ledger; update co-op available credit limits.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "Cash Application Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-786"
+   ],
+   "fields": {
+    "Frequency": "Daily review cycle",
+    "Owner": "B2B Credit Director",
+    "Participants": "Accounts Receivable Supervisor, POS Cashier",
+    "Trigger": "Cooperative account balance exceeds credit limit (W5307) or payment is overdue (> 45 days)",
+    "Volume": "~10-15 credit hold events annually"
+   },
+   "id": "W5311",
+   "level": 2,
+   "name": "Cooperative Credit Hold Flagging and Delinquency Lockout",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto-lockout systems triggered when invoices pass overdue threshold dates."
+    ],
+    "Controls": [
+     "- CTL-786 (ensure controlled execution — Member Transaction Routing & Verification (PA-185.2).)",
+     "- operational: finance risk controls; B2B Credit Director hold release approval."
+    ],
+    "Cross-references": [
+     "- links to VS-68 (credit risk), VS-08 (POS)"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit loss risk**: Delinquent accounts allowed to continue purchasing due to delayed system lockout; mitigated by automated database-level POS lockout triggers."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Credit Risk system (VS-68), POS checkout terminal (VS-08)."
+    ],
+    "Time Estimate": [
+     "- ~2 hours"
+    ]
+   },
+   "steps": [
+    {
+     "a": "B2B Credit Director",
+     "activity": "Identify delinquent or over-limit cooperative accounts in system reports.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Accounts Receivable Supervisor"
+    },
+    {
+     "a": "B2B Credit Director",
+     "activity": "Activate credit hold flag in parent ERP account profile.",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Accounts Receivable Supervisor"
+    },
+    {
+     "a": "B2B Credit Director",
+     "activity": "Trigger automated system lockout of co-op codes across all store POS registers.",
+     "duration": "10 sec",
+     "n": "3",
+     "r": "POS System Controller"
+    },
+    {
+     "a": "B2B Credit Director",
+     "activity": "Send formal delinquency notice detailing unpaid balances to co-op directors.",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "B2B Credit Director"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5307"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-20"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc per billing dispute",
+    "Owner": "Customer Relations Officer",
+    "Participants": "Cooperative Member, Accounts Receivable Clerk, Store Manager",
+    "Trigger": "Cooperative flags transaction as unauthorized or disputes billing",
+    "Volume": "~30-40 disputes annually"
+   },
+   "id": "W5312",
+   "level": 2,
+   "name": "Dispute Resolution for Member Unauthorized Purchases",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Online dispute registry for tracking audit trail and resolution history."
+    ],
+    "Controls": [
+     "- CTL-20: POS cash/credit accountability; credit memo approval matrix."
+    ],
+    "Cross-references": [
+     "- links to VS-16 (O2C), VS-08 (POS)"
+    ],
+    "Pain Points / Risks": [
+     "- **Bad-debt leakage risk**: Writing off disputed sales without proper verification of cashier compliance with ID check policies; mitigated by reviewing POS signature card matches."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Accounts Receivable module (VS-16), POS Logs (VS-08)."
+    ],
+    "Time Estimate": [
+     "- ~3-5 working days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer Relations Officer",
+     "activity": "Receive dispute details: invoice number, disputed items, transaction date, co-op member name.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Customer Relations Officer"
+    },
+    {
+     "a": "Customer Relations Officer",
+     "activity": "Retrieve transaction records: POS video logs, signature cards, scanned government IDs, PO attachments.",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "Accounts Receivable Clerk"
+    },
+    {
+     "a": "Customer Relations Officer",
+     "activity": "Conduct review meeting with store manager and co-op officers to present evidence.",
+     "duration": "2 hours",
+     "n": "3",
+     "r": "Customer Relations Officer"
+    },
+    {
+     "a": "Customer Relations Officer",
+     "activity": "If unauthorized purchase is confirmed due to cashier error, issue credit memo and update internal controls.",
+     "duration": "1 hour",
+     "n": "4",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

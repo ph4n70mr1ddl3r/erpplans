@@ -1,0 +1,573 @@
+{
+ "process_area": {
+  "id": "PA-149.2",
+  "title": "SCO & Scan-&-Go Daily Operations & Customer Experience"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/PA-149.2-sco-and-scan-go-daily-operations-and-customer-experience.md",
+ "value_stream": {
+  "directory": "VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations",
+  "id": "VS-149",
+  "name": "Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-678"
+   ],
+   "fields": {
+    "Frequency": "Daily per store",
+    "Owner": "Frontend Supervisor (VS-08) / Store Ops (VS-07)",
+    "Participants": "Store Ops (VS-07), Frontend (VS-08), Cashiers/Attendants, IFM (VS-138), IT (VS-27)",
+    "Trigger": "Store open/close; shift",
+    "Volume": "200 stores × 2 (open/close)/day"
+   },
+   "id": "W4441",
+   "level": 2,
+   "name": "SCO & Scan-&-Go Lane Daily Open/Close & Staffing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Terminal-health/calibration auto-check on boot; cash-recycler load/reconcile workflow; attendant-ratio/peak scheduler"
+    ],
+    "Controls": [
+     "- CTL-678 (ensure controlled execution — SCO & Scan-&-Go Daily Operations & Customer Experience (PA-149.2).)",
+     "- CTL-678: terminal health & calibration checked at open; cash-recycler loaded/reconciled; attendant ratio met; exceptions handed off"
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-115 (calibration), VS-07 (store), W4445 (cash), W4448 (peak), W4450 (exception)"
+    ],
+    "Pain Points / Risks": [
+     "- **Calibration-drift risk**: un-calibrated scale at open → false interventions/scan-avoidance; mitigated by open calibration check (VS-115)",
+     "- **Under-staffing risk**: attendant ratio too thin → intervention queue/friction; mitigated by ratio standard & peak staffing (W4448)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCO terminal (VS-08); calibration (VS-115); cash-recycler (W4445); POS-ERP (VS-08); exception (W4450); IT (VS-27)"
+    ],
+    "Time Estimate": [
+     "- ~40–60 min open+close/day × 200 stores; staffing built into frontend model"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Frontend open the SCO pod — terminal boot/health check, scale/calibration check (VS-115), cash-recycler load/float (W4445), signage, and attendant station setup",
+     "duration": "~20–30 min/open",
+     "n": "1",
+     "r": "Frontend Supervisor / Attendant"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Frontend staff the pod — attendant ratio (1:4–6 SCO), intervention-ready, monitoring; open/close scan-&-go & unattended formats per W4439",
+     "duration": "Per shift",
+     "n": "2",
+     "r": "Frontend Supervisor"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Frontend close the pod — cash-recycler pull/reconcile (W4445), transaction settlement, terminal close, and exception handoff (W4450)",
+     "duration": "~20–30 min/close",
+     "n": "3",
+     "r": "Frontend Supervisor / Attendant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4439",
+    "W4445",
+    "W4448",
+    "W4450"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678"
+   ],
+   "fields": {
+    "Frequency": "Continuous (a share of 2.8M monthly transactions)",
+    "Owner": "SCO Attendant / Frontend (VS-08)",
+    "Participants": "Attendants, Frontend (VS-08), Cashiers, Store Ops (VS-07), Loyalty (VS-13)",
+    "Trigger": "Customer at SCO",
+    "Volume": "SCO share grows with rollout (target 20–40% of baskets)"
+   },
+   "id": "W4442",
+   "level": 2,
+   "name": "Customer SCO Transaction Processing & Assistance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Real-time price/promo/loyalty; auto-e-invoice; intervention-queue dashboard; proactive-assist prompts"
+    ],
+    "Controls": [
+     "- CTL-678 (ensure controlled execution — SCO & Scan-&-Go Daily Operations & Customer Experience (PA-149.2).)",
+     "- CTL-678: tender/price/promo/loyalty correct; BIR-compliant receipt/e-invoice; inventory synced; exceptions managed"
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-80 (payment), VS-13 (loyalty), VS-79 (BIR/e-invoice), W4443 (intervention), W4450 (exception)"
+    ],
+    "Pain Points / Risks": [
+     "- **Intervention-queue risk**: flags pile up → customer friction; mitigated by proactive assistance & ratio (W4448)",
+     "- **Receipt/e-invoice risk**: BIR non-compliant SCO receipt; mitigated by CAS-registered SCO & e-invoicing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCO/POS-ERP (VS-08); payment (VS-80); loyalty (VS-13); e-invoice (VS-79); inventory sync; intervention (W4443); exception (W4450)"
+    ],
+    "Time Estimate": [
+     "- ~per-transaction minutes (faster than staffed for small baskets)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Frontend Supervisor",
+     "activity": "Customer scans/bags/pays at SCO; attendant monitors pod, proactively assists first-timers/seniors/PWD, and intervenes on flags (W4443)",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "SCO Attendant"
+    },
+    {
+     "a": "Frontend Supervisor",
+     "activity": "SCO processes tender (cash/card/e-wallet/loyalty), applies price/promo/loyalty real-time, issues BIR-compliant receipt/e-invoice (VS-79), and syncs inventory (VS-08)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "SCO Terminal / POS-ERP"
+    },
+    {
+     "a": "Frontend Supervisor",
+     "activity": "Attendant handles exceptions (price dispute, system error, intervention), keeps the pod flowing, and escalates complex cases (W4450)",
+     "duration": "Per exception",
+     "n": "3",
+     "r": "Attendant / Frontend"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4443",
+    "W4448",
+    "W4450"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678",
+    "CTL-92"
+   ],
+   "fields": {
+    "Frequency": "Continuous (per flagged item)",
+    "Owner": "SCO Attendant / Frontend (VS-08) / Compliance (VS-22)",
+    "Participants": "Attendants, Frontend (VS-08), Compliance (VS-22), DG (VS-114), LP (VS-23), HSE (VS-24)",
+    "Trigger": "SCO flag (age/hazmat/controlled/weight/price-override); customer request",
+    "Volume": "Intervention events = flag-rate × SCO volume"
+   },
+   "id": "W4443",
+   "level": 2,
+   "name": "SCO Intervention, Age-Verification & Override Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Flag-to-attendant dispatch; ID-verification capture; override-auth workflow with SoD; override-pattern analytics"
+    ],
+    "Controls": [
+     "- CTL-92 (ensure self-checkout loss & compliance control.)",
+     "- CTL-678: flags actioned per policy; override within authority matrix & logged; age verified; patterns audited (W4449/W4450)"
+    ],
+    "Cross-references": [
+     "- links to VS-08 (POS), VS-114 (DG), VS-115 (calibration), VS-23 (LP), VS-21 (audit), W4438 (intervention design), W4450 (exception)"
+    ],
+    "Pain Points / Risks": [
+     "- **Override-abuse risk**: attendant/manager overrides used to fraud/discount; mitigated by authority matrix (SoD) & override logging (W4450)",
+     "- **Age-verification-failure risk**: minor served; mitigated by ID-check protocol & audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- SCO item-control (VS-08/W4438); DG (VS-114); calibration (VS-115); LP/exception (VS-23/W4450); override-auth (SoD); audit (VS-21)"
+    ],
+    "Time Estimate": [
+     "- ~1–3 min per intervention"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Frontend Supervisor / Store Manager",
+     "activity": "Attendant respond to flag — age-restricted (ID-verify per W4438), DG/hazmat (block/authorize per W4438), catch-weight (weigh/measure VS-115), weight-mismatch (re-scan/inspect), price-override (manager auth per SoD)",
+     "duration": "Per flag",
+     "n": "1",
+     "r": "Attendant"
+    },
+    {
+     "a": "Frontend Supervisor",
+     "activity": "Attendant/Manager authorize override within authority matrix (W4453), log the override (exception W4450), and apply the price/quantity change",
+     "duration": "Per override",
+     "n": "2",
+     "r": "Attendant / Manager"
+    },
+    {
+     "a": "Compliance Lead / LP Lead",
+     "activity": "Compliance/LP audit intervention/override patterns for abuse (links W4449/W4450) and tune the flag set (W4438)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Compliance / LP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4438",
+    "W4449",
+    "W4450",
+    "W4453"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678",
+    "CTL-92"
+   ],
+   "fields": {
+    "Frequency": "Continuous (per scan-&-go session)",
+    "Owner": "App/Ecommerce (VS-75/VS-10) / Frontend (VS-08)",
+    "Participants": "App (VS-75), Frontend (VS-08), IT (VS-27), LP (VS-23), Loyalty (VS-13), Payment (VS-80)",
+    "Trigger": "Customer scan-&-go session (W4436)",
+    "Volume": "Scan-&-go sessions (share of ecommerce/app traffic VS-75)"
+   },
+   "id": "W4444",
+   "level": 2,
+   "name": "Scan-&-Go Mobile App Session & Checkout Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Risk-based exit-audit engine; scan-vs-paid reconciliation; in-app payment; session-abandonment analytics"
+    ],
+    "Controls": [
+     "- CTL-92 (ensure self-checkout loss & compliance control.)",
+     "- CTL-678: price/promo/tax real-time; exit-verification risk-based; receipt/e-invoice BIR-compliant; inventory synced; exceptions routed"
+    ],
+    "Cross-references": [
+     "- links to VS-75 (app), VS-10 (ecommerce), VS-08 (POS), VS-80 (payment), VS-23 (LP/exit), W4436 (scan-&-go design), W4450 (exception)"
+    ],
+    "Pain Points / Risks": [
+     "- **Scan-vs-pay-mismatch risk**: customer pays for fewer items than leaves; mitigated by risk-based exit-verify (W4436/W4437)",
+     "- **Session-abandonment risk**: app friction → abandonment; mitigated by UX optimization (W4447)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- App (VS-75); POS-ERP (VS-08); payment (VS-80); loyalty (VS-13); LP/exit-verify (VS-23); e-invoice (VS-79); BI (VS-28)"
+    ],
+    "Time Estimate": [
+     "- Per-session minutes; exit-verify risk-based"
+    ]
+   },
+   "steps": [
+    {
+     "a": "App Lead",
+     "activity": "Customer scans items via app/handheld (W4436), sees running total (price/promo/tax real-time), and pays in-app (VS-80) or at exit-kiosk",
+     "duration": "Per session",
+     "n": "1",
+     "r": "App / Customer"
+    },
+    {
+     "a": "Frontend Supervisor / LP Lead",
+     "activity": "Frontend/LP run the exit-verification (risk-based audit per W4436), reconcile scanned-basket vs paid, and clear/flag for review",
+     "duration": "Per session (risk-based)",
+     "n": "2",
+     "r": "Frontend / LP"
+    },
+    {
+     "a": "App Lead",
+     "activity": "App/Frontend close the session, issue BIR receipt/e-invoice (VS-79), sync inventory (VS-08), and route exceptions (W4450)",
+     "duration": "Per session",
+     "n": "3",
+     "r": "App / Frontend"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4436",
+    "W4437",
+    "W4447",
+    "W4450"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678"
+   ],
+   "fields": {
+    "Frequency": "Continuous + daily cycle",
+    "Owner": "Frontend / Cash Office (VS-08.2) / CIT (VS-81)",
+    "Participants": "Frontend (VS-08), Cash Office, CIT (VS-81), Treasury (VS-18), LP (VS-23), IFM (VS-138)",
+    "Trigger": "SCO cash tender; daily open/close; cash-recycler cycle",
+    "Volume": "SCO cash across 200 stores (cash share ~42% of transactions)"
+   },
+   "id": "W4445",
+   "level": 2,
+   "name": "SCO Cash Management, Cash-Recycler & Tender Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cash-recycler reconciliation; smart-safe/CIT integration (VS-81); variance auto-alert; recycler-fault monitoring"
+    ],
+    "Controls": [
+     "- CTL-678 (ensure controlled execution — SCO & Scan-&-Go Daily Operations & Customer Experience (PA-149.2).)",
+     "- CTL-678: cash-recycler float/reconcile daily; reconciled to system tenders; variances investigated (W4452); CIT/sweep managed"
+    ],
+    "Cross-references": [
+     "- links to VS-08.2 (cash office), VS-81 (CIT), VS-18 (treasury), VS-23 (LP), VS-138 (IFM), W4441 (open/close), W4452 (variance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cash-variance risk**: SCO cash mismatch → leakage; mitigated by daily reconciliation & variance investigation (W4452)",
+     "- **Recycler-fault risk**: fault stops cash tender; mitigated by uptime management (W4446) & IFM servicing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cash-recycler; cash office (VS-08.2); CIT/smart-safe (VS-81); treasury (VS-18); POS-ERP (VS-08); LP (VS-23); IFM (VS-138)"
+    ],
+    "Time Estimate": [
+     "- ~30–60 min/day cash handling per store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Frontend Supervisor / Store Manager",
+     "activity": "Frontend/Cash Office manage the SCO cash-recycler — load float at open, accept cash tenders, dispense change, and pull/reconcile at close (W4441)",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Frontend / Cash Office"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Cash Office reconcile SCO cash to system tenders daily, investigate variances (W4452), and manage cash-recycler faults (W4446)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Cash Office / Frontend"
+    },
+    {
+     "a": "Treasurer / IFM Lead",
+     "activity": "CIT/Treasury manage SCO cash pickup (smart-safe, armored VS-81), sweep to bank (VS-18), and the cash-recycler maintenance/servicing (IFM)",
+     "duration": "Per schedule",
+     "n": "3",
+     "r": "CIT / Treasury / IFM"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4441",
+    "W4446",
+    "W4452"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678"
+   ],
+   "fields": {
+    "Frequency": "Per incident (~continuous across 200 stores)",
+    "Owner": "IT Service Desk (VS-27.1) / Frontend (VS-08) / IFM (VS-138)",
+    "Participants": "IT Service Desk (VS-27.1), Frontend (VS-08), IFM (VS-138), Vendor (VS-34), Store Ops (VS-07)",
+    "Trigger": "SCO terminal/scale/recycler/camera fault; software error",
+    "Volume": "Fault events across SCO fleet"
+   },
+   "id": "W4446",
+   "level": 2,
+   "name": "SCO Hardware/Software Incident, Fault & Uptime Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Remote diagnostics/auto-reset; fault-to-vendor routing; uptime/MTTR/MTBF dashboard; spares/servicing auto-trigger"
+    ],
+    "Controls": [
+     "- CTL-678 (ensure controlled execution — SCO & Scan-&-Go Daily Operations & Customer Experience (PA-149.2).)",
+     "- CTL-678: fault logged & unit out-of-service; SLA resolution with health/calibration check; uptime tracked; recurring faults fed to design"
+    ],
+    "Cross-references": [
+     "- links to VS-27.1 (service desk), VS-08 (POS), VS-115 (calibration), VS-138 (IFM), VS-34 (vendor), W4441 (open/close), W4455 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Downtime risk**: SCO out of service → queue/capex-idle; mitigated by uptime SLA & spares",
+     "- **Recurring-fault risk**: same fault repeated → poor availability; mitigated by MTBF tracking & vendor/design feedback"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT service desk (VS-27.1); SCO/POS-ERP (VS-08); calibration (VS-115); IFM CMMS (VS-138); vendor (VS-34); BI (VS-28)"
+    ],
+    "Time Estimate": [
+     "- Per-incident resolution within SLA"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Frontend/Store log the fault (terminal/scale/recycler/camera/software) via service desk (VS-27.1), take the unit out of service, and re-route customers",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Frontend / Store Ops"
+    },
+    {
+     "a": "IT Service Lead / IFM Lead",
+     "activity": "IT/Vendor/IFM triage & resolve — software reset/patch, hardware swap, calibration (VS-115), recycler service — within SLA (uptime target)",
+     "duration": "Per SLA",
+     "n": "2",
+     "r": "IT / Vendor / IFM"
+    },
+    {
+     "a": "IT Service Lead",
+     "activity": "IT/Frontend restore to service with health/calibration check, track uptime/MTTR/MTBF (W4455), and feed recurring faults to vendor/design (W4434)",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "IT / Frontend"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4434",
+    "W4441",
+    "W4455"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678"
+   ],
+   "fields": {
+    "Frequency": "Continuous + on adoption data",
+    "Owner": "CX (VS-13) / Frontend (VS-08) / Visual Merch (VS-55)",
+    "Participants": "CX (VS-13), Frontend (VS-08), Visual Merch (VS-55), Store Ops (VS-07), Enablement (VS-124), App (VS-75)",
+    "Trigger": "SCO operation; adoption review; CX feedback",
+    "Volume": "All 200 stores SCO customers"
+   },
+   "id": "W4447",
+   "level": 2,
+   "name": "Customer SCO Education, Signage & Friction Reduction",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Adoption/funnel analytics; friction-point detection; UX A/B testing; VOC integration"
+    ],
+    "Controls": [
+     "- CTL-678 (ensure controlled execution — SCO & Scan-&-Go Daily Operations & Customer Experience (PA-149.2).)",
+     "- CTL-678: education/signage multilingual & PWD-friendly; first-timer assistance; friction iterated on data; adoption measured (W4455)"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (CX), VS-55 (visual merch), VS-75 (app), VS-124 (enablement), VS-146 (service quality), W4454 (accessibility), W4455 (adoption)"
+    ],
+    "Pain Points / Risks": [
+     "- **Friction risk**: confusing SCO → abandonment/complaints; mitigated by UX iteration & assistance",
+     "- **Exclusion risk**: seniors/PWD can't use SCO; mitigated by assistance & accessibility (W4454)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CX (VS-13); visual merch/signage (VS-55); app (VS-75); enablement (VS-124); VOC/service-quality (VS-13/VS-146); BI (VS-28)"
+    ],
+    "Time Estimate": [
+     "- Continuous (folded into frontend/CX); periodic design iteration"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CX Lead / VP Visual Merch",
+     "activity": "CX/Visual Merch design SCO education & signage — on-screen prompts, floor signage, how-to, first-timer assistance, multilingual (Filipino/English), PWD-friendly (W4454)",
+     "duration": "Per design + on data",
+     "n": "1",
+     "r": "CX / Visual Merch / Frontend"
+    },
+    {
+     "a": "Frontend Supervisor",
+     "activity": "Frontend/Attendants proactively assist first-timers/seniors/PWD, capture friction feedback, and feed into design (W4434/W4435) and CX (VS-13)",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Frontend / Attendants / CX"
+    },
+    {
+     "a": "CX Lead / App Lead",
+     "activity": "CX/App iterate UX (scan-&-go app, SCO screen) on adoption/funnel data (W4455), VOC (VS-13), and service-quality (VS-146) findings",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "CX / App / BI"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4434",
+    "W4435",
+    "W4454",
+    "W4455"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-678"
+   ],
+   "fields": {
+    "Frequency": "Per peak + continuous monitoring",
+    "Owner": "Frontend Supervisor / Store Ops (VS-07) / WFM (VS-19.3)",
+    "Participants": "Frontend (VS-08), Store Ops (VS-07), WFM (VS-19.3), LP (VS-23), Customer Safety (VS-147)",
+    "Trigger": "Peak (payday/weekend/sale event VS-14); queue buildup",
+    "Volume": "~peaks × 200 stores (payday, weekend, sale events, ber-months)"
+   },
+   "id": "W4448",
+   "level": 2,
+   "name": "SCO Peak/Queue Management & Host Allocation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Footfall/queue predictive staffing; dynamic SCO open-ratio; wait-time analytics; line-busting dispatch"
+    ],
+    "Controls": [
+     "- CTL-678 (ensure controlled execution — SCO & Scan-&-Go Daily Operations & Customer Experience (PA-149.2).)",
+     "- CTL-678: peak forecast & staffing; dynamic open-ratio; intervention queue managed; crowd-safety coordinated (VS-147); post-peak review"
+    ],
+    "Cross-references": [
+     "- links to VS-19.3 (WFM), VS-08 (POS), VS-28 (footfall/queue), VS-147/W4399 (safety/crowd), W4435 (layout), W4455 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Queue/friction risk**: insufficient open SCO → queue → abandonment; mitigated by peak forecasting & dynamic open-ratio",
+     "- **Crowd-safety risk**: queue into aisles → safety (VS-147/W4399); mitigated by queue management & safety coordination"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WFM/scheduling (VS-19.3); POS (VS-08); footfall/queue analytics (VS-28); customer safety (VS-147); BI (VS-28)"
+    ],
+    "Time Estimate": [
+     "- Peak hours; staffing built into WFM"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Frontend/WFM forecast peak demand, set SCO-pod open ratio & attendant staffing, and align to crowd/crowd-safety (VS-147/W4399)",
+     "duration": "Per peak",
+     "n": "1",
+     "r": "Frontend / WFM / Store Ops"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Frontend manage queue in real-time — open/close SCO, allocate attendant, mobile/line-busting if available, manage intervention queue, and balance vs staffed POS",
+     "duration": "Per peak",
+     "n": "2",
+     "r": "Frontend Supervisor / Attendants"
+    },
+    {
+     "a": "Store Manager / WFM Lead",
+     "activity": "Frontend/WFM review wait-time/throughput post-peak (W4455), tune staffing/open-ratio, and feed learning to layout (W4435)/WFM (VS-19.3)",
+     "duration": "Post-peak",
+     "n": "3",
+     "r": "Frontend / WFM / BI"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4399",
+    "W4435",
+    "W4455"
+   ]
+  }
+ ]
+}

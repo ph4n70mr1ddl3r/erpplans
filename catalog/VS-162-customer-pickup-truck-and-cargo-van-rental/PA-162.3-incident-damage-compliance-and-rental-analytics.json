@@ -1,0 +1,628 @@
+{
+ "process_area": {
+  "id": "PA-162.3",
+  "title": "Incident, Damage, Compliance & Rental Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-162-customer-pickup-truck-and-cargo-van-rental/PA-162.3-incident-damage-compliance-and-rental-analytics.md",
+ "value_stream": {
+  "directory": "VS-162-customer-pickup-truck-and-cargo-van-rental",
+  "id": "VS-162",
+  "name": "Customer Pickup Truck & Cargo Van Rental (Self-Haul) Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Per event",
+    "Owner": "Rental Program Manager / LP & Safety (VS-23/VS-24)",
+    "Participants": "Customer, Police, Insurance (VS-26), Maintenance (W4750), Legal (VS-100)",
+    "Trigger": "Telematics crash/harsh-event alert (W4749); customer call-in of accident/damage/breakdown; police/third-party report",
+    "Volume": "~accident/damage events benchmarked ~1–3% of rentals"
+   },
+   "id": "W4761",
+   "level": 2,
+   "name": "Rental Vehicle Accident, Damage & Roadside Event Response",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- - System auto-alert of telematics crash detection with location routed to dispatcher and Insurance",
+     "- System auto-capture of mobile damage-estimate photos at scene",
+     "- System auto-assign of substitute vehicle from available fleet"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: serious events escalated to Safety/Legal/Insurance immediately; scene evidence (telematics + photos + police report) captured before vehicle moves"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (safety), VS-26 (insurance), VS-23 (LP), VS-100/VS-88 (legal/records), W4749 (telematics), W4750 (substitute vehicle), W4762 (claim)"
+    ],
+    "Pain Points / Risks": [
+     "- **Injury-liability risk**: An accident causing bodily injury → catastrophic liability; mitigated by immediate emergency/Safety/Legal/Insurance escalation and the umbrella cover (W4748)",
+     "- **Evidence-loss risk**: Missing scene evidence → failed insurance/subrogation recovery (W4762); mitigated by the telematics snapshot + photo protocol",
+     "- **Customer-stranding risk**: A stranded customer with no substitute vehicle → service failure; mitigated by substitute-vehicle provisioning"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics event alert (W4749); insurance claim (VS-26); maintenance/workshop (W4750/VS-31); safety incident (VS-24); legal/records (VS-100/VS-88)"
+    ],
+    "Time Estimate": [
+     "- ~per event 2–8 hrs active response + documentation; ~recovery absorbed in W4762"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Program Manager / Safety Officer",
+     "activity": "Triage the event on telematics + customer call: severity, location, injuries, third-party involvement, vehicle drivability; if injury/serious → emergency services + notify Safety/LP (VS-24) + Legal (VS-100) + Insurance (VS-26) immediately; capture the customer's statement and photos at scene",
+     "duration": "Per event (urgent)",
+     "n": "1",
+     "r": "Rental Program / LP / Safety"
+    },
+    {
+     "a": "Rental Program Manager",
+     "activity": "Coordinate roadside response: recovery/tow to nearest approved workshop (VS-31/W4750), substitute vehicle for the stranded customer (W4750) if the rental continues, and liaison with police for the incident report (required for insurance W4762 and any third-party claim)",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Rental Program / Fleet"
+    },
+    {
+     "a": "Rental Program Manager / Legal",
+     "activity": "Document the event end-to-end (telematics snapshot, photos, police report, statements, workshop damage estimate) into the claim file (W4762); preserve evidence per Legal/records (VS-88/VS-100); if the customer was at-fault and LDW declined, trigger deductible recovery (W4756/W4762); if a third party was at-fault, prepare subrogation (W4762)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Rental Program / LP / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4748",
+    "W4749",
+    "W4750",
+    "W4756",
+    "W4762"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Per claim",
+    "Owner": "Risk & Insurance (VS-26) / Rental Program",
+    "Participants": "Insurer/broker, Finance (VS-17), Legal (VS-100), Customer, Workshop (VS-31)",
+    "Trigger": "Damage event (W4761); return-damage charge (W4759); total loss",
+    "Volume": "~10–35 claims/month, per the W4761 event rate (~1–3% of ~800–1,200 rentals/month)"
+   },
+   "id": "W4762",
+   "level": 2,
+   "name": "Damage Recovery, Insurance Claim, Deductible Settlement & Subrogation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Claim file auto-assembly from telematics/agreement/workshop; deductible auto-capture-from-deposit; loss-ratio dashboard feeding W4748 re-pricing"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: deductible collected per LDW election; insurer claim filed with full evidence; subrogation pursued for at-fault third parties; finance-recon"
+    ],
+    "Cross-references": [
+     "- links to VS-26 (insurance/claims), VS-100 (legal/subrogation), VS-31 (workshop), VS-17 (GL), W4748 (LDW/deductible), W4756 (deposit), W4759 (return damage), W4761 (event), W4752 (total loss)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unrecovered-deductible risk**: Customer disputes or insufficient deposit → fleet absorbs; mitigated by the deposit level = deductible (W4748/W4756) and clear terms",
+     "- **Subrogation-failure risk**: At-fault third party not pursued → loss; mitigated by the Legal subrogation step",
+     "- **Claim-leakage risk**: Overstated estimates or duplicate recovery; mitigated by workshop estimate validation and finance recon"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Insurance claims (VS-26 PA-26.3 W862/W1565); rental billing/deposit (W4756/W4760); GL (VS-17); legal (VS-100); workshop (VS-31)"
+    ],
+    "Time Estimate": [
+     "- ~per claim 1–6 weeks to settle depending on complexity"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Risk & Insurance Lead",
+     "activity": "Open the claim with the insurer (CTPL for third-party bodily/property; comprehensive for own-damage/theft per W4748); submit the evidence file (W4761), workshop estimate (VS-31), and the agreement/LDW election (W4755/W4757); track to settlement",
+     "duration": "Per claim",
+     "n": "1",
+     "r": "Risk & Insurance / Workshop"
+    },
+    {
+     "a": "Risk & Insurance Lead / Finance",
+     "activity": "Settle the customer-deductible: if LDW taken and terms met → no customer charge; if LDW declined/at-fault → capture the deductible from the deposit (W4756/W4759) or invoice the customer; reconcile deductible vs repair cost vs insurer settlement; if total-loss, retire the vehicle (W4752) and settle actual-cash-value",
+     "duration": "Per claim",
+     "n": "2",
+     "r": "Risk & Insurance / Finance"
+    },
+    {
+     "a": "Risk & Insurance Lead / Legal",
+     "activity": "Where a third party is at-fault, pursue subrogation/recovery via Legal (VS-100) against the third party/their insurer; manage unrecovered balances; feed claim outcomes to the loss-experience re-pricing (W4748) and analytics (W4768)",
+     "duration": "Per claim",
+     "n": "3",
+     "r": "Risk & Insurance / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1565",
+    "W4748",
+    "W4752",
+    "W4755",
+    "W4756",
+    "W4757",
+    "W4759",
+    "W4760",
+    "W4761",
+    "W4768",
+    "W862"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Per event (rare)",
+    "Owner": "LP Director (VS-23) / Rental Program",
+    "Participants": "LP (VS-23), Legal (VS-100), Police, Insurance (VS-26), Telematics (W4749)",
+    "Trigger": "Vehicle past scheduled return with no check-in; geofence breach alert (W4749); do-not-rent/fraud signal (VS-125)",
+    "Volume": "~non-return/theft events benchmarked <0.5% of rentals"
+   },
+   "id": "W4763",
+   "level": 2,
+   "name": "Vehicle Non-Return, Theft & Fraud Recovery (Geofence-Breach Response)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Telematics auto-non-return-alert + GPS recovery workflow; do-not-rent auto-screen (W4754); fraud-pattern detection (VS-125)"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: non-return escalated within grace period; police-led recovery; offender watch-listed; insurance/legal recovery pursued"
+    ],
+    "Cross-references": [
+     "- links to VS-23 (LP), VS-125 (fraud), VS-159 (security/law-enforcement pattern), VS-26 (theft insurance), VS-100 (legal), W4749 (telematics/GPS), W4754 (do-not-rent), W4756 (deposit), W4752 (write-off)"
+    ],
+    "Pain Points / Risks": [
+     "- **Asset-loss risk**: A vehicle not recovered → ~PHP 1.5–3M asset write-off per pickup/van; mitigated by telematics + police recovery + insurance theft cover",
+     "- **Fraud-pattern risk**: Organized rental-fraud rings; mitigated by do-not-rent screen (W4754) + VS-125 fraud intelligence sharing",
+     "- **Recovery-safety risk**: Confronting a thief; mitigated by police-led recovery (never self-help)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics GPS recovery (W4749); LP/investigation (VS-23); police coordination (VS-159 pattern); insurance theft claim (VS-26/W4748); legal (VS-100); do-not-rent list (W4754)"
+    ],
+    "Time Estimate": [
+     "- ~per event hours-to-days for recovery; ~legal recovery weeks-months"
+    ]
+   },
+   "steps": [
+    {
+     "a": "LP Director",
+     "activity": "Detect non-return/geofence-breach from telematics (W4749) at the grace-period expiry; attempt customer contact (per agreement W4755); if no response or confirmed unauthorized use → escalate to LP (VS-23), begin recovery, and notify Insurance (theft claim W4748) and Legal (VS-100)",
+     "duration": "Per event (urgent)",
+     "n": "1",
+     "r": "LP / Rental Program"
+    },
+    {
+     "a": "LP Director / Legal",
+     "activity": "Use telematics GPS to locate and recover the vehicle with police assistance (VS-23 coordinates law-enforcement per VS-159 W4694 pattern); file a police report (theft/estafa under the Revised Penal Code / RA 10951); recover via the deposit (W4756) and pursue the customer legally for unpaid rental, damage, and costs",
+     "duration": "Per event",
+     "n": "2",
+     "r": "LP / Legal / Police"
+    },
+    {
+     "a": "LP Director / Legal",
+     "activity": "Add the offender to the do-not-rent watch-list (W4754); recover via insurance if unrecovered (theft claim W4748/W4762); retire the vehicle from the register if not recovered (W4752); feed the event to fraud analytics (VS-125) and the do-not-rent screen",
+     "duration": "Per event",
+     "n": "3",
+     "r": "LP / Legal / Insurance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4694",
+    "W4748",
+    "W4749",
+    "W4752",
+    "W4754",
+    "W4755",
+    "W4756",
+    "W4762"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Per notice",
+    "Owner": "Rental Program / Legal-Compliance (VS-100/VS-22)",
+    "Participants": "LTO/MMDA/toll operator, Customer, Finance (W4760), Legal (VS-100)",
+    "Trigger": "Citation/toll notice received by BuildRight (registered owner) for a vehicle during a customer's rental",
+    "Volume": "~notices benchmarked ~1–5% of rentals (speeding, no-contact-apprehension, parking, toll)"
+   },
+   "id": "W4764",
+   "level": 2,
+   "name": "Traffic Violation, Citation & Toll Violation Handling (Customer Recharge)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Notice→rental-record auto-match (telematics date/time + plate + agreement); auto-recharge to deposit/billing; toll/NCAP batch reconciliation; repeat-offender auto-watchlist"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: notices matched to rental within SLA; uncontested paid timely (owner-liability); customer recharged per agreement; repeat offenders watchlisted"
+    ],
+    "Cross-references": [
+     "- links to VS-22 (compliance), VS-100 (legal), VS-79 (BIR rental revenue), W4747 (owner-liability), W4749 (telematics matching), W4754 (do-not-rent), W4755/W4756/W4760 (recharge)"
+    ],
+    "Pain Points / Risks": [
+     "- **Owner-liability risk**: As registered owner, BuildRight is liable for unpaid citations → default judgment/registration hold (W4747); mitigated by timely payment + customer recharge",
+     "- **Unrecovered-recharge risk**: Customer disputes/absconds → BuildRight absorbs the fine; mitigated by deposit-capture and agreement terms",
+     "- **False-apprehension risk**: Paying a notice the customer didn't incur, or recharging the wrong customer; mitigated by telematics verification before recharge"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental/telematics matching (W4749/W4755); billing/deposit (W4756/W4760); toll/NCAP operator integration; legal/compliance (VS-100/VS-22)"
+    ],
+    "Time Estimate": [
+     "- ~per notice 15–45 min; ~uncontested penalties paid within the LGU/LTO SLA"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Program Manager / Legal",
+     "activity": "Receive the citation/toll notice addressed to BuildRight (registered owner); match the notice date/time + plate to the rental record (telematics W4749 + agreement W4755) to identify the customer who was driving; verify via telematics that the vehicle was on-rent to that customer at the time",
+     "duration": "Per notice",
+     "n": "1",
+     "r": "Rental Program / Compliance"
+    },
+    {
+     "a": "Rental Program Manager / Legal",
+     "activity": "Recharge the penalty + an administrative fee to the customer per the agreement (W4755): capture from the deposit (W4756) or invoice/bill the customer (W4760); contest the notice if telematics proves the vehicle was elsewhere (false-apprehension defense); pay the uncontested penalty timely to avoid BuildRight liability (registered-owner default)",
+     "duration": "Per notice",
+     "n": "2",
+     "r": "Rental Program / Finance / Legal"
+    },
+    {
+     "a": "Rental Program Manager",
+     "activity": "Manage the no-contact-apprehension program (MMDA/LTO NCAP) and toll (RFID) reconciliation; report repeat-offender customers to the do-not-rent list (W4754); track notice volume as a driver-behavior KPI (links W4768)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Rental Program / Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4747",
+    "W4749",
+    "W4754",
+    "W4755",
+    "W4756",
+    "W4760",
+    "W4768"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Per case",
+    "Owner": "Rental Program Manager / CX (VS-13)",
+    "Participants": "Customer, Finance (VS-80/VS-17), Legal (VS-100), LP (VS-23)",
+    "Trigger": "Customer disputes a rental charge (W4760), damage/deductible (W4759/W4762), fuel/cleaning/late fee, or files a complaint/chargeback (VS-80/VS-13/W469)",
+    "Volume": "~disputes benchmarked ~1–3% of rentals"
+   },
+   "id": "W4765",
+   "level": 2,
+   "name": "Customer Dispute, Complaint & Chargeback Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Evidence-pack auto-assembly; chargeback-representment workflow (links VS-80); root-cause tagging → VS-133"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: disputes resolved with evidence; chargebacks represented within window; DTI escalations handled per W469; outcomes feed improvement"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (CX/complaint), VS-80 (chargeback W537/W267), W469 (DTI escalation), VS-100 (legal), VS-133 (improvement), W4755/W4758/W4759/W4760 (evidence sources), W4768 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Lost-chargeback risk**: Weak evidence → lost representment + revenue loss; mitigated by the telematics+photoset+agreement evidence pack",
+     "- **Reputational risk**: A viral rental-dispute complaint; mitigated by first-contact resolution + DTI-compliant handling (W469)",
+     "- **Recurring-root-cause risk**: Same dispute repeating (e.g., unclear fuel policy); mitigated by feeding to VS-133 improvement"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Rental/billing records; telematics/photoset evidence (W4749/W4758/W4759); chargeback system (VS-80); CX/complaint (VS-13); DTI escalation (VS-22/W469); legal (VS-100)"
+    ],
+    "Time Estimate": [
+     "- ~per case 20 min–2 hrs; ~chargeback within scheme window"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Program Manager",
+     "activity": "Triage the dispute: rental charge, damage/deductible (W4759/W4762), fuel/cleaning/late, LDW, or service; pull the evidence (telematics W4749, photosets W4758/W4759, agreement W4755, billing W4760); attempt first-contact resolution where the evidence supports the customer",
+     "duration": "Per case",
+     "n": "1",
+     "r": "Rental Counter / Rental Program / LP"
+    },
+    {
+     "a": "Rental Program Manager / Finance",
+     "activity": "For chargebacks (VS-80/card-scheme) or formal complaints (VS-13/W469 DTI): assemble the representment evidence pack (signed agreement + telematics + photoset + billing) and submit within the scheme's window (links VS-80 W537/W267 chargeback representment pattern); coordinate with Legal (VS-100) for escalated claims",
+     "duration": "Per case",
+     "n": "2",
+     "r": "Finance / Rental Program / Legal"
+    },
+    {
+     "a": "Rental Program Manager",
+     "activity": "Resolve and close: refund/credit where due, uphold where justified, record the outcome and root cause; feed repeat issues to process/quality improvement (VS-133) and to analytics (W4768); manage DTI Consumer Act (RA 7394) escalations (W469)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Rental Program / Finance / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W267",
+    "W469",
+    "W4749",
+    "W4755",
+    "W4758",
+    "W4759",
+    "W4760",
+    "W4762",
+    "W4768",
+    "W537"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Annual + on change",
+    "Owner": "Rental Program / Compliance (VS-22) / Legal (VS-100)",
+    "Participants": "Compliance (VS-22), Legal (VS-100), LTO/LTFRB, Insurance (VS-26)",
+    "Trigger": "Annual compliance review; regulatory change; audit (VS-21/VS-22); incident (W4761)",
+    "Volume": "1 compliance program across the rental fleet/operations"
+   },
+   "id": "W4766",
+   "level": 2,
+   "name": "Rental Regulatory Compliance — LTO/LTFRB, DOLE Driver Fitness, Consumer Act",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Compliance-obligation calendar; regulator-interaction log; agreement/pricing transparency audit checklist"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: rental classified correctly (self-drive, not for-hire freight); agreement/pricing/LDW/consent Legally reviewed annually; assured by Internal Audit"
+    ],
+    "Cross-references": [
+     "- links to VS-22 (compliance), VS-100 (legal), VS-21 (audit), VS-79 (BIR), W469 (DTI), VS-88 (records), W4747/W4748/W4755/W4757 (regulated artifacts)"
+    ],
+    "Pain Points / Risks": [
+     "- **Liability-structure risk**: Misclassifying the rental (e.g., as for-hire freight) → wrong regulatory regime + LTFRB exposure; mitigated by the legal classification",
+     "- **Consumer-Act risk**: Unclear pricing/terms → DTI complaint (W469) + penalty; mitigated by transparent disclosure",
+     "- **Officer-liability risk**: Registered-owner defaults (unpaid citations/unregistered release) → officer personal liability; mitigated by the release gate (W4758/W4759) and timely citation handling (W4764)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance/legal (VS-22/VS-100); records (VS-88); audit (VS-21); BIR (VS-79); DTI escalation (W469)"
+    ],
+    "Time Estimate": [
+     "- ~annual review 1–2 weeks; ~continuous absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Program Manager / Legal",
+     "activity": "Maintain the regulatory map for self-haul vehicle rental: LTO motor-vehicle registration (W4747) + CTPL mandate (RA 4136, W4748); the BuildRight-vs-customer liability structure under the Civil Code + Land Transportation rules; Consumer Act (RA 7394) on rental-disclosure, pricing transparency, and unfair-contract terms (links W469); BIR VAT/e-invoicing on rental revenue (VS-79 W4760); and the distinction from LTFRB cargo-freight licensing (VS-06) — a customer self-drive rental is not a for-hire/freight operation",
+     "duration": "Annual + on change",
+     "n": "1",
+     "r": "Compliance / Legal"
+    },
+    {
+     "a": "Rental Program Manager / Legal",
+     "activity": "Ensure the rental agreement (W4755), pricing disclosure (W4745/W4760), LDW language (W4757), and telematics consent (W4755/W4767) comply with consumer-protection and contract standards; review annually with Legal; assure via Internal Audit (VS-21 W344 trade-promo/spend or W339 regulatory audit pattern)",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Compliance / Legal / Internal Audit"
+    },
+    {
+     "a": "Rental Program Manager / Legal",
+     "activity": "Manage regulator interactions (LTO registration audits, DTI consumer complaints W469, BIR rental-revenue scrutiny VS-79), incident regulatory reporting (W4761), and officer personal-liability awareness (registered-owner liability); maintain the records (VS-88)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Compliance / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W339",
+    "W344",
+    "W469",
+    "W4745",
+    "W4747",
+    "W4748",
+    "W4755",
+    "W4757",
+    "W4758",
+    "W4759",
+    "W4760",
+    "W4761",
+    "W4764",
+    "W4767"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Continuous + per DSAR + annual review",
+    "Owner": "Rental Program (joint with DPO VS-91)",
+    "Participants": "DPO (VS-91), Privacy (VS-91.2), Cyber (VS-27.3), Legal (VS-100.3)",
+    "Trigger": "Rental launch (privacy-by-design); DSAR/erasure request; periodic privacy review (VS-91)",
+    "Volume": "Every rental (~800–1,200/month) collects license image + selfie + telematics + billing PII; ~10–20 DSARs/year"
+   },
+   "id": "W4767",
+   "level": 2,
+   "name": "Rental Data Privacy — License/Image/Telematics Data Governance & DSAR",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Consent registry auto-update; DSAR workflow (links VS-91.2 W271); retention-auto-purge; breach playbook (VS-91)"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: data minimized & classified; telematics consent at rental (W4755); secured (VS-27.3); retention per VS-88 then purge; DSAR handled per VS-91.2"
+    ],
+    "Cross-references": [
+     "- links to VS-91/VS-91.2 (privacy/DPIA/DSAR W271/W3052), VS-27.3 (cyber), VS-88 (records), VS-100.3 (legal), W4754 (license data), W4749 (telematics), W4755 (consent)"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-collection risk**: Collecting more PII/telematics than needed → RA 10173 exposure; mitigated by data minimization",
+     "- **DSAR-conflict risk**: Erasure request vs BIR 10-yr retention → legal tension; mitigated by documented retention overrides",
+     "- **Telematics-breach risk**: Compromised driving data → privacy harm; mitigated by VS-27.3 security + DPIA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Privacy/consent registry (VS-91.2); DPIA (VS-91.2 W3052); cyber (VS-27.3); records/retention (VS-88); DSAR workflow (VS-91.2 W271)"
+    ],
+    "Time Estimate": [
+     "- ~DPIA 2–4 weeks at launch; ~DSAR per SLA; ~annual review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO / Rental Program Manager",
+     "activity": "Govern the personal data the rental program collects: driver-license image + ID selfie (W4754), telematics driving data (W4749), billing/payment data (W4760), and dispute/citation data (W4764/W4765) — classify per VS-91, minimize collection, secure storage (VS-27.3), retention aligned to BIR/legal need (10-yr VS-88 per TRAIN/NIRC Sec. 235) and then purge",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Rental Program / Privacy / Cyber"
+    },
+    {
+     "a": "DPO",
+     "activity": "Handle Data Subject Access Requests (DSAR) per RA 10173 (VS-91.2 W271): access, correction, erasure (where legally permissible — note BIR retention conflicts), and objection; manage telematics-consent withdrawal and the do-not-rent list data minimization; coordinate with the DPO",
+     "duration": "Per DSAR",
+     "n": "2",
+     "r": "Privacy / Rental Program"
+    },
+    {
+     "a": "DPO / Rental Program Manager",
+     "activity": "Run the breach-response path if rental PII/telematics is compromised (VS-91 breach notification, NPC 72-hour); DPIA for high-risk processing (telematics + biometric selfie); annual privacy review with the DPO and Cyber (VS-27.3)",
+     "duration": "On event + annual",
+     "n": "3",
+     "r": "Privacy / Cyber / DPO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W271",
+    "W3052",
+    "W4749",
+    "W4754",
+    "W4755",
+    "W4760",
+    "W4764",
+    "W4765"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-718"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly + annual",
+    "Owner": "Rental Program Manager / Analytics (VS-28)",
+    "Participants": "Finance (VS-17.4), Store Ops (VS-07), Merchandising (attach), Fleet (VS-06)",
+    "Trigger": "Monthly/quarterly performance review; annual capex & pricing case (W4745); continuous monitoring",
+    "Volume": "1 group analytics view across 200 stores"
+   },
+   "id": "W4768",
+   "level": 2,
+   "name": "Rental Revenue, Utilization, Attach-Uplift & Fleet-Performance Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Rental-P&L auto-dashboard; attach-uplift measurement (POS bulky-line × rental-availability); loss/utilization benchmarking; auto-feed to W4745/W4751/W4752"
+    ],
+    "Controls": [
+     "- CTL-718 (ensure controlled execution — Incident, Damage, Compliance & Rental Analytics (PA-162.3).)",
+     "- CTL-718: rental P&L + attach-uplift + utilization + loss-rate reported monthly; outcomes feed sizing/pricing/rebalancing/replacement"
+    ],
+    "Cross-references": [
+     "- links to VS-28 (analytics), VS-17.4 (FP&A), VS-133 (improvement), W4745/W4751/W4752 (sizing/rebalancing/replacement), W4749/W4757/W4761–W4765 (performance inputs)"
+    ],
+    "Pain Points / Risks": [
+     "- **Strategic-invisibility risk**: If attach-uplift isn't measured, the program looks like a cost center and gets cut; mitigated by the attach-uplift KPI",
+     "- **Loss-ratio-creep risk**: Rising claims/citations eroding margin; mitigated by loss-rate monitoring and re-pricing (W4748)",
+     "- **Utilization-blindspot risk**: Idle vehicles at some stores while others turn customers away; mitigated by the rebalancing KPI (W4751)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (VS-28); rental platform data (new); telematics (W4749); finance FP&A (VS-17.4); merchandising/POS attach data (VS-08/VS-01); LP/claims (VS-23/VS-26)"
+    ],
+    "Time Estimate": [
+     "- ~monthly 2–3 days; ~quarterly leadership review absorbed"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Rental Program Manager / Finance",
+     "activity": "Track the rental P&L and unit economics: rental revenue, fuel recovery, LDW income, attach-uplift (incremental large-item basket completed because a vehicle was available), direct costs (depreciation, insurance, maintenance, fuel, telematics, staffing), claim losses (W4762), and net contribution per vehicle/store/region",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Analytics / Finance / Rental Program"
+    },
+    {
+     "a": "Rental Program Manager",
+     "activity": "Track fleet performance: utilization rate, turn-down (lost-rental) rate, downtime (W4750), incident/loss rate (W4761/W4762), non-return rate (W4763), citation rate (W4764), dispute/chargeback rate (W4765), and LDW take-rate/loss-ratio (W4757/W4748); benchmark across stores and identify outliers",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Analytics / Rental Program / LP"
+    },
+    {
+     "a": "COO",
+     "activity": "Report to leadership quarterly with the attach-uplift/ROI story (the strategic reason the fleet exists), feed the annual fleet-sizing & pricing case (W4745) and rebalancing (W4751) and replacement cycle (W4752); drive continuous improvement (VS-133) on loss/utilization drivers",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Analytics / Rental Program"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W4745",
+    "W4748",
+    "W4749",
+    "W4750",
+    "W4751",
+    "W4752",
+    "W4757",
+    "W4761",
+    "W4762",
+    "W4763",
+    "W4764",
+    "W4765"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,576 @@
+{
+ "process_area": {
+  "id": "PA-72.1",
+  "title": "Shared Services Cost Pool Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-72-cross-entity-shared-services/PA-72.1-shared-services-cost-pool-management.md",
+ "value_stream": {
+  "directory": "VS-72-cross-entity-shared-services",
+  "id": "VS-72",
+  "name": "Cross-Entity Shared Services & Chargeback"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-213",
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Annual; event-driven for new services",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, Entity CFOs, COO",
+    "Trigger": "Annual classification cycle or new shared service establishment",
+    "Volume": "5 legal entities; ~15 shared service categories"
+   },
+   "id": "W2574",
+   "level": 2,
+   "name": "Shared Services Cost Pool Identification & Classification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Allocation rules configurable per cost pool with versioned methodology; test-run auto-compared to prior-period for reasonableness before go-live"
+    ],
+    "Controls": [
+     "- CTL-213 (ensure shared-services chargeback integrity.)",
+     "- CTL-445 (transfer-pricing arm's-length — links to VS-17 / W235 transfer-pricing tax compliance); operational: CFO + external-advisor sign-off on the methodology"
+    ],
+    "Pain Points / Risks": [
+     "- **Arm's-length-challenge risk**: the allocation methodology (e.g., headcount for HR) doesn't reflect actual benefit received, exposing BuildRight to a BIR transfer-pricing adjustment; mitigated by the external-TP-advisor sign-off and the benchmarking study in W2594",
+     "- **Allocation-key-drift risk**: an allocation key set when Depot Inc. had 90% of headcount becomes unfair as Digital Commerce grows, but is never refreshed; mitigated by the annual classification review trigger"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost-center / allocation engine (links to VS-29 / W288 financial master data, VS-17 / W14 intercompany) — the allocation-rule configuration and the monthly run",
+     "- Transfer-pricing documentation (links to VS-72 / W2594 TP documentation & BIR compliance) — the methodology record for the BIR TP file",
+     "- GL (links to VS-17 / W9 financial close) — the per-entity posting destination"
+    ],
+    "Time Estimate": [
+     "~2.5 weeks Finance Controller + ~1 week methodology + ~4 days config × annual cycle = **~180–220 hours/year** Finance Controller + Transfer Pricing Advisor."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller identifies shared service cost pools: IT infrastructure and applications, HR services (payroll, recruitment), finance shared services (AP, AR, GL), procurement operations, real estate and facilities management, logistics planning; classifies each as direct-chargeable or allocated",
+     "duration": "1–2 weeks",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "For each cost pool: defines allocation methodology (headcount for HR, transaction volume for AP/AR, revenue for IT, square footage for facilities, FTE for procurement); documents methodology in transfer pricing policy; obtains CFO and external advisor sign-off for arm's-length compliance",
+     "duration": "1 week",
+     "n": "2",
+     "r": "Finance Controller / Transfer Pricing Advisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "System configures cost pool allocation rules: sets allocation keys per entity, establishes monthly run schedule, defines GL posting rules per entity; Finance Controller validates with test run; documents for audit trail",
+     "duration": "3–5 days",
+     "n": "3",
+     "r": "Finance Controller / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W235",
+    "W2594",
+    "W288",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-213"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Finance Analyst",
+    "Participants": "Finance Analyst, Cost Center Managers, Finance Controller",
+    "Trigger": "Monthly close cycle",
+    "Volume": "~15 cost pools across 5 entities"
+   },
+   "id": "W2575",
+   "level": 2,
+   "name": "Monthly Shared Services Cost Pool Compilation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-pool extract auto-generated from the GL; allocation run auto-posted on Controller sign-off"
+    ],
+    "Controls": [
+     "- CTL-213: duplicate-allocation guard & chargeback cost-accuracy — links to VS-17; operational: Finance Controller sign-off on the allocation run"
+    ],
+    "Pain Points / Risks": [
+     "- **Misposted-cost risk**: a cost lands in the shared pool that should be entity-direct (an entity-specific IT project), inflating the pool and mis-allocating; mitigated by the direct-chargeable separation in step 2 and the cost-center-manager review",
+     "- **Timing-mismatch risk**: the allocation run posts before all month-end costs are final, requiring reversal/re-post; mitigated by the allocation run sequenced after the W9A close cutoff"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost-center compilation (links to VS-17 / W9A month-end close, W14 intercompany) — the monthly cost-pool extract and allocation run",
+     "- Accruals (links to VS-17 / W9A) — the unbilled-service accrual",
+     "- IC reconciliation (links to VS-72 / W2583 monthly IC invoice) — the allocation report reconciling to the IC billing"
+    ],
+    "Time Estimate": [
+     "~3 days Analyst compilation + ~1 day adjustments + ~1 day Controller review = **~5 days/month ≈ ~600 hours/year** Finance Analyst + Controller."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Finance Analyst compiles monthly shared services costs: extracts actual costs from each shared service cost center (IT: PHP ~5M/month, HR: PHP ~2M/month, Finance: PHP ~3M/month, Procurement: PHP ~1.5M/month, Facilities: PHP ~8M/month); validates against budget and prior month",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Analyst processes cost adjustments: accrues for unbilled services, corrects misposted costs, allocates shared costs that are directly chargeable (e.g., IT project specific to one entity); prepares allocation summary for controller review",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller reviews and approves compiled cost pool; signs off on allocation run; system posts allocation entries to each entity's GL; generates allocation report for intercompany reconciliation",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Finance Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W2583",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-213",
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "IT Finance Analyst",
+    "Participants": "IT Finance Analyst, CIO, Entity CFOs",
+    "Trigger": "Monthly IT cost allocation cycle",
+    "Volume": "IT budget ~PHP 60M/year across 5 entities"
+   },
+   "id": "W2576",
+   "level": 2,
+   "name": "IT Shared Services Chargeback Calculation & Allocation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- User/ticket counts auto-pulled from the IT systems; chargeback auto-calculated and posted on CIO sign-off"
+    ],
+    "Controls": [
+     "- CTL-213 (ensure shared-services chargeback integrity.)",
+     "- CTL-445 (IT-asset/license accuracy — links to VS-99); operational: CIO monthly IT-governance sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Shadow-IT risk**: an entity incurs IT cost outside the shared pool (a SaaS subscription bought directly), understating its IT chargeback; mitigated by the VS-99 software-asset-management control surfacing unmanaged subscriptions",
+     "- **User-count-staleness risk**: the allocation uses a stale user count (post-reorg headcount change), mis-allocating; mitigated by the user-count refreshed monthly from the HRIS (W292 employee master)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- IT cost-center / chargeback (links to VS-27 / W373 IT FinOps & cloud cost management, VS-135 TBM) — the IT cost compilation and allocation",
+     "- IC AP/AR (links to VS-17 / W14, VS-72 / W2583) — the chargeback posting",
+     "- User/ticket master (links to VS-27 / W371 mobile device, W48 helpdesk) — the allocation-key data (user count, ticket count)"
+    ],
+    "Time Estimate": [
+     "~4 days/month IT Finance Analyst + CIO review absorbed = **~380–450 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "IT Finance Analyst compiles IT shared costs: infrastructure (servers, network, cloud), applications (ERP licenses, POS system), helpdesk (staff costs), security (cybersecurity tools), project costs (new implementations); separates direct-chargeable projects from shared pool",
+     "duration": "2 days",
+     "n": "1",
+     "r": "IT Finance Analyst"
+    },
+    {
+     "a": "CIO / Finance Controller",
+     "activity": "Analyst calculates entity allocation: infrastructure by user count (Depot Inc. ~5,000 users = 75%, Logistics ~600 = 9%, Digital ~50 = 1%, Property ~100 = 1.5%, Holdings ~315 = 5%), applications by transaction volume, helpdesk by ticket count, security equally; validates allocation reasonableness vs. entity revenue contribution",
+     "duration": "1 day",
+     "n": "2",
+     "r": "IT Finance Analyst"
+    },
+    {
+     "a": "CIO",
+     "activity": "System generates IT chargeback entries per entity; posts to IC AP/AR accounts; produces entity-level IT cost report for management review; CIO reviews entity IT spending vs. budget in monthly IT governance meeting",
+     "duration": "1 day",
+     "n": "3",
+     "r": "System / IT Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W2583",
+    "W292",
+    "W371",
+    "W373",
+    "W48"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "HR Finance Analyst",
+    "Participants": "HR Finance Analyst, CHRO, Entity CFOs",
+    "Trigger": "Monthly HR cost allocation cycle",
+    "Volume": "HR budget ~PHP 24M/year shared services"
+   },
+   "id": "W2577",
+   "level": 2,
+   "name": "HR Shared Services Cost Allocation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Headcount/hires/training-hours auto-pulled from HRIS; chargeback auto-posted on CHRO sign-off"
+    ],
+    "Controls": [
+     "- CTL-445 (ensure controlled execution — Shared Services Cost Pool Management (PA-72.1).)",
+     "- CTL-445 (payroll/HR-cost accuracy — links to VS-19 / W10, W337 payroll audit); operational: CHRO quarterly HR-metrics sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Entity-specific-vs-shared misclassification risk**: an entity-specific training program is booked to the shared pool, spreading its cost to entities that didn't benefit; mitigated by the entity-specific separation in step 1",
+     "- **Cost-per-employee-distortion risk**: a startup entity (Digital Commerce, ~50 staff) shows a high cost-per-employee because fixed HRIS costs spread over a small base; mitigated by the CHRO review contextualizing the metric and the startup-phase allocation adjustment"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HR cost-center / chargeback (links to VS-19 / W10 payroll, VS-17 / W14 intercompany) — the HR cost compilation and allocation",
+     "- HRIS (links to VS-19 / W292 employee master) — the headcount/hires/training-hours allocation keys",
+     "- IC AP/AR (links to VS-72 / W2583) — the chargeback posting"
+    ],
+    "Time Estimate": [
+     "~3 days/month HR Finance Analyst + CHRO review absorbed = **~290–340 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "HR Finance Analyst compiles shared HR costs: payroll processing (semi-monthly runs for 6,762 employees across 5 entities), recruitment shared services, training and development, benefits administration, HRIS system costs; separates entity-specific costs (entity-specific hiring, entity-specific training)",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "HR Finance Analyst"
+    },
+    {
+     "a": "CHRO / Finance Controller",
+     "activity": "Allocates shared HR costs: payroll processing by headcount per entity, recruitment by number of hires per entity, training by training hours consumed per entity, benefits administration by enrollment count per entity, HRIS by headcount; Depot Inc. bears ~86% (store + HQ headcount)",
+     "duration": "1 day",
+     "n": "2",
+     "r": "HR Finance Analyst"
+    },
+    {
+     "a": "CHRO",
+     "activity": "System posts HR chargeback entries; generates entity HR cost reports; CHRO reviews HR cost per employee by entity in quarterly HR metrics review",
+     "duration": "1 day",
+     "n": "3",
+     "r": "System / HR Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W10",
+    "W14",
+    "W2583",
+    "W292",
+    "W337"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; 2–3 per year",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, VP of affected function, CFO",
+    "Trigger": "New shared service identified or entity structure change",
+    "Volume": "5 entities"
+   },
+   "id": "W2578",
+   "level": 2,
+   "name": "New Shared Service Establishment & Cost Pool Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-pool config template (reused from W2574 established pools); parallel-run auto-reconciled to the validation baseline"
+    ],
+    "Controls": [
+     "- CTL-445 (ensure controlled execution — Shared Services Cost Pool Management (PA-72.1).)",
+     "- CTL-445 (transfer-pricing arm's-length — links to W235); operational: CEO sign-off on the new-service agreement; CFO sign-off on the go-live after parallel-run validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Methodology-dispute risk**: the affected entities dispute the proposed allocation methodology, delaying establishment; mitigated by the external-advisor arm's-length confirmation in step 2",
+     "- **First-run-error risk**: the new allocation's first live run mis-posts (wrong key, wrong entity mapping); mitigated by the parallel-posting validation in step 3 before the run goes live"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cost-center / allocation config (links to VS-29 / W288, VS-17 / W14) — the new cost-pool setup",
+     "- Transfer-pricing documentation (links to VS-72 / W2594) — the new-service methodology added to the TP file",
+     "- ERP config / change management (links to VS-27 / W132) — the new cost center and posting rules released via change management"
+    ],
+    "Time Estimate": [
+     "~4 weeks per new-service establishment × ~2.5/year = **~400–500 hours/year** Finance Controller + affected function."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller evaluates new shared service request: cost pool definition, affected entities, allocation methodology proposal, transfer pricing implications; prepares business case with 3-year cost projection",
+     "duration": "1–2 weeks",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO and affected entity heads review proposal; negotiate allocation methodology; agree on initial budget and annual review mechanism; external advisor confirms arm's-length compliance",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "CFO / Entity CFOs / Transfer Pricing Advisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller configures new cost pool in ERP: creates shared service cost center, defines allocation keys, sets up IC posting rules, establishes monthly reporting; trains cost center managers on timekeeping and cost attribution; first allocation run with parallel posting for validation",
+     "duration": "1–2 weeks",
+     "n": "3",
+     "r": "Finance Controller / IT"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W132",
+    "W14",
+    "W235",
+    "W2574",
+    "W2594",
+    "W288"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-213",
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Annual budget; monthly review",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, CFO, Cost Center Managers",
+    "Trigger": "Annual budget cycle; monthly variance review",
+    "Volume": "~15 cost pools"
+   },
+   "id": "W2579",
+   "level": 2,
+   "name": "Shared Service Cost Budget & Variance Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Variance auto-flagged >5% with category auto-suggested; rate-change-impact auto-modeled before approval"
+    ],
+    "Controls": [
+     "- CTL-213 (ensure shared-services chargeback integrity.)",
+     "- CTL-445 (budget-vs-actual accuracy — links to VS-17 / W26); operational: CFO quarterly variance-review sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Variance-fatigue risk**: every month has variances and the >5% investigation becomes routine rubber-stamping; mitigated by the variance categorized (volume-driven vs. efficiency-driven) and the quarterly trend review focusing on systemic issues",
+     "- **Rate-volatility risk**: allocation rates change monthly chasing variance, destabilizing entity P&L comparability; mitigated by the rate-change only for *permanent* cost shifts (documented), not transient ones"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Budgeting (links to VS-17 / W26 budget, VS-101 merchandise financial planning) — the annual budget and monthly phasing",
+     "- Variance analytics (links to VS-27 / W113, VS-17 / W9A) — the actual-vs-budget comparison",
+     "- Allocation-rate adjustment (links to VS-72 / W2574) — the rate change when permanent cost shifts occur"
+    ],
+    "Time Estimate": [
+     "~2.5 weeks annual budget + ~1.5 days/month variance + ~1 day/quarter trend = **~250–300 hours/year** Finance Controller + Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller establishes annual shared services budget per cost pool: top-down from enterprise budget, bottom-up from cost center manager inputs; sets monthly phasing; obtains CFO approval",
+     "duration": "2–3 weeks (during budget cycle)",
+     "n": "1",
+     "r": "Finance Controller / Cost Center Managers"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Monthly: Finance Analyst compares actual shared services costs vs. budget; investigates variances >5%; identifies cost overruns (especially IT projects and facilities maintenance); prepares variance commentary for CFO review",
+     "duration": "1–2 days/month",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly: Finance Controller presents shared services cost trend to CFO and COO; proposes corrective actions for over-budget categories; adjusts allocation rates if significant permanent cost changes; updates annual forecast",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "Finance Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2574",
+    "W26",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Annual internal; annual external",
+    "Owner": "Internal Auditor",
+    "Participants": "Internal Auditor, Finance Controller, External Auditors",
+    "Trigger": "Internal audit cycle or external audit request",
+    "Volume": "~15 cost pools"
+   },
+   "id": "W2580",
+   "level": 2,
+   "name": "Shared Services Cost Pool Audit & Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-test of \"tests allocation calculation accuracy\" (replaces manual Step 1).",
+     "- System auto-flag of \"verify transfer pricing documentation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-445 (ensure controlled execution — Shared Services Cost Pool Management (PA-72.1).)",
+     "- operational: auditor independent of the Controller (segregation of duties); Head of Internal Audit sign-off on the findings; CFO sign-off on remediation"
+    ],
+    "Pain Points / Risks": [
+     "- **TP-documentation-gap risk**: the audit finds the TP documentation doesn't match the actual allocation methodology (documentation stale); mitigated by the annual TP-refresh in W2594 synchronized with the allocation review",
+     "- **Management-judgment-challenge risk**: the external auditor challenges the reasonableness of an allocation key (e.g., \"headcount doesn't reflect HR benefit\"); mitigated by the benchmarking study and the documented rationale"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Audit module (links to VS-21 / W120 audit planning, W349 corporate tax & statutory reporting audit) — the audit findings register",
+     "- Transfer-pricing documentation (links to VS-72 / W2594) — the TP file audited",
+     "- Cost-center / allocation (links to VS-72 / W2574–W2577) — the allocation engine audited for accuracy"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks internal audit + ~3 weeks remediation + ~1.5 weeks external audit = **~350–450 hours/year** Internal Audit + Finance Controller."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Internal Audit",
+     "activity": "Internal Auditor reviews shared services allocation methodology: verifies arm's-length pricing, tests allocation calculation accuracy, reviews cost pool classification (direct vs. allocated), assesses completeness of cost capture; produces audit findings report",
+     "duration": "1–2 weeks",
+     "n": "1",
+     "r": "Internal Auditor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance Controller addresses audit findings: corrects methodology issues, adjusts misallocated costs, strengthens documentation for transfer pricing file; implements controls recommended by auditor",
+     "duration": "2–4 weeks",
+     "n": "2",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "External auditors review shared services allocation as part of intercompany transactions audit: verify transfer pricing documentation, confirm allocation mathematical accuracy, assess management judgment reasonableness; Finance Controller provides supporting documentation",
+     "duration": "During annual audit (1–2 weeks)",
+     "n": "3",
+     "r": "Finance Controller / External Auditors"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W120",
+    "W2574",
+    "W2577",
+    "W2594",
+    "W349"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-44",
+    "CTL-445"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; 5–10 per year",
+    "Owner": "Finance Controller",
+    "Participants": "Finance Controller, Legal, Entity CFOs",
+    "Trigger": "Service provided to external party by shared service function",
+    "Volume": "5 entities"
+   },
+   "id": "W2581",
+   "level": 2,
+   "name": "Shared Service Provider Recharge to External Third Parties",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Recharge invoice auto-generated per the agreement; VAT/WHT auto-determined from the service type"
+    ],
+    "Controls": [
+     "- CTL-445 (tax compliance — links to VS-79 / W90); CTL-44 (duplicate-invoice guard); operational: CEO sign-off on the agreement"
+    ],
+    "Pain Points / Risks": [
+     "- **Margin-below-arm's-length risk**: the recharge margin (5–10%) is below what an independent party would charge, creating a transfer-pricing concern even on an external transaction (related-party JV); mitigated by the benchmarking and the external-advisor review",
+     "- **Tax-non-compliance risk**: the recharge revenue isn't correctly VAT-rated or WHT-processed, creating a BIR exposure; mitigated by the tax-compliance step in step 3 and the VS-79 oversight"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Billing / AR (links to VS-16 / W8 AR, VS-15 / W7) — the recharge invoicing",
+     "- Tax (links to VS-79 / W90 VAT & withholding on the recharge revenue) — the tax compliance",
+     "- Contract repository (links to VS-100 / W230) — the service agreement"
+    ],
+    "Time Estimate": [
+     "~2.5 days/opportunity + ~1.5 weeks agreement + monthly billing absorbed × ~7/year = **~180–250 hours/year** Finance Controller + Legal."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Finance Controller identifies external recharge opportunity: shared service provider (e.g., BuildRight Logistics) provides warehousing to external party, or IT provides system access to joint venture partner; calculates recharge cost including direct cost + reasonable margin (5–10%)",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "CEO",
+     "activity": "Legal prepares service agreement: scope, pricing, payment terms, data privacy provisions (RA 10173), liability limitations; CFO approves pricing; entity head signs agreement",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Legal / Finance Controller"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance generates monthly recharge invoice; posts revenue to shared service entity; ensures VAT and withholding tax compliance on recharge revenue; tracks accounts receivable from external party",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Finance / Billing"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W230",
+    "W7",
+    "W8",
+    "W90"
+   ]
+  }
+ ]
+}

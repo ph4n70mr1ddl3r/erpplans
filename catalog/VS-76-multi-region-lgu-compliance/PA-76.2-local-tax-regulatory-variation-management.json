@@ -1,0 +1,580 @@
+{
+ "process_area": {
+  "id": "PA-76.2",
+  "title": "Local Tax & Regulatory Variation Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-76-multi-region-lgu-compliance/PA-76.2-local-tax-regulatory-variation-management.md",
+ "value_stream": {
+  "directory": "VS-76-multi-region-lgu-compliance",
+  "id": "VS-76",
+  "name": "Philippine Multi-Region LGU & Local Regulatory Compliance"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-44",
+    "CTL-458"
+   ],
+   "fields": {
+    "Frequency": "Quarterly (or per LGU schedule)",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Finance Analyst, Store Managers, LGU Treasury",
+    "Trigger": "Quarterly payment cycle",
+    "Volume": "~205 locations across ~150 LGUs (per W54)"
+   },
+   "id": "W2678",
+   "level": 2,
+   "name": "Local Business Tax Computation & Payment Across LGUs",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- LBT liability auto-computed from the GL gross-receipts extract × the LGU rate master; per-LGU return template auto-populated for Store-Manager submission"
+    ],
+    "Controls": [
+     "- CTL-458 (tax-payment accuracy and timeliness — the 2%/month surcharge on late LBT is the penalty control); CTL-44 (duplicate-payment guard on the quarterly installments)"
+    ],
+    "Pain Points / Risks": [
+     "- **Tax-base-mapping risk**: the LBT base (gross receipts) is defined per LGU and may include/exclude items differently from BuildRight's revenue recognition (VAT treatment, intercompany, consignment sell-through); mitigated by the documented per-LGU gross-receipts reconciliation issued to Store Managers before submission",
+     "- **Multi-LGU-format risk**: ~150 LGUs (per W54) each with a different return template and submission quirk (some require in-person, some online); mitigated by the per-LGU submission checklist maintained in the VS-166 license-portfolio and a rolling calendar of LGU-specific deadlines"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax master (links to VS-29 / W293 tax & regulatory master, VS-79 / W90 indirect-tax) — LGU LBT rates and bases per location",
+     "- GL / AP (links to VS-17 / W7C recurring-invoice, VS-15 P2P) — LBT payment posted against the location's LBT accrual",
+     "- Store-P&L (links to VS-17 / W26 budget) — LBT as a store-level local-tax line"
+    ],
+    "Time Estimate": [
+     "~4 days/quarter × 4 + ~7 days/quarter Store-Manager submission × ~205 locations (distributed ~10 min each) = **~700–900 hours/year** Tax Accountant + Store Managers, concentrated at quarter-end."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant compiles the local business tax (LBT) liability per location per RA 7160: gross receipts per store per LGU (from the W2676 reconciled figure), the applicable rate per the LGU tax ordinance (0.5–2% varying by business activity and LGU), tax-base adjustments (exempt sales, intercompany elimination), quarterly installment computation",
+     "duration": "3–5 days per quarter",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Accountant prepares the LGU-format return per LGU (each LGU's return template differs); Store Manager submits to the LGU Treasury; pays via cashier or LGU-accredited bank; obtains the official receipt and uploads it",
+     "duration": "5–10 days per quarter",
+     "n": "2",
+     "r": "Tax Accountant / Store Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance reconciles actual vs. budgeted LBT, variance by LGU; identifies rate increases or newly-enacted fees (links to W2680); Tax Manager incorporates the variance into the quarterly forecast and the next W2676 accrual true-up",
+     "duration": "Per quarter",
+     "n": "3",
+     "r": "Finance / Tax Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W26",
+    "W2676",
+    "W2680",
+    "W293",
+    "W54",
+    "W7C",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-458"
+   ],
+   "fields": {
+    "Frequency": "Annual assessment; quarterly payments",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Property Manager, LGU Assessor",
+    "Trigger": "Annual assessment cycle",
+    "Volume": "209 properties"
+   },
+   "id": "W2679",
+   "level": 2,
+   "name": "Real Property Tax Assessment & Payment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Assessment-vs-prior-year delta auto-flagged for review; early-payment-discount opportunity auto-surfaced at the start of each LGU's discount window"
+    ],
+    "Controls": [
+     "- CTL-458 (ensure controlled execution — Local Tax & Regulatory Variation Management (PA-76.2).)",
+     "- CTL-458 (fixed-asset/property-record accuracy — links to VS-35 / W184 fixed-asset audit); operational: Tax Manager sign-off on any protest filed (legal-materiality control)"
+    ],
+    "Pain Points / Risks": [
+     "- **Over-assessment risk**: LGU assessors re-value aggressively after a renovation or area-gentrification, inflating RPT on a property whose market value hasn't moved commensurately; mitigated by the 60-day protest window in step 2 and the comparables evidence base",
+     "- **Lien risk**: 2+ years of delinquent RPT allows the LGU to auction the property (a catastrophic loss for an owned store site); mitigated by the W2677 expiry-alert pattern applied to RPT due dates and the early-payment discipline in step 3"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fixed-asset / property master (links to VS-35 / W399 fixed-asset master, VS-97 real estate) — owned-property register with assessed values",
+     "- Tax master (links to VS-29 / W293, VS-79 / W90) — RPT rates per LGU and use class",
+     "- GL / AP (links to VS-17 / W7C) — RPT accrual and payment"
+    ],
+    "Time Estimate": [
+     "~1.5 months Tax Accountant annual review (distributed) + ~1 day/quarter payment processing × 209 properties + protest work ad-hoc = **~400–600 hours/year** Tax Accountant + Property Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant reviews the real property tax (RPT) assessment per location: assessed value, the LGU tax rate (1–3% depending on province/city/municipality and use class), the Special Education Fund add-on (additional 1% per RA 7160), exemptions (where the property qualifies); compares vs. prior year to catch unexpected re-assessments/increases",
+     "duration": "1–2 months after assessment",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "For disputes (over-assessment): Property Manager files a protest with the Local Board of Assessment Appeals within 60 days of receipt; provides evidence of overvaluation (recent market comparables, condition evidence); Tax Accountant pays the undisputed amount to avoid penalty while the protest is pending",
+     "duration": "Within 60 days",
+     "n": "2",
+     "r": "Property Manager / Tax Accountant / Legal"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant schedules the quarterly RPT payments and captures the early-payment discount (LGUs offer 10–20% for advance annual payment per RA 7160); ensures timely payment to avoid the 2%/month surcharge and the 2-year lien-risk on delinquent property",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W184",
+    "W2677",
+    "W293",
+    "W399",
+    "W7C",
+    "W90"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-235"
+   ],
+   "fields": {
+    "Frequency": "Continuous monitoring; ~20–30 changes/year",
+    "Owner": "Legal Compliance Officer",
+    "Participants": "Legal Compliance Officer, Legal, Tax Manager, VP Legal",
+    "Trigger": "LGU ordinance or regulatory change",
+    "Volume": "~150 LGUs (per W54)"
+   },
+   "id": "W2680",
+   "level": 2,
+   "name": "LGU Regulatory Change Monitoring & Impact Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Regulatory-feed auto-ingest with keyword classification (plastic, tax, signage, hours) routing to the right department's impact-assessment queue"
+    ],
+    "Controls": [
+     "- CTL-235 (ensure multi-LGU license compliance.)",
+     "- Operational: VP Legal quarterly review of the change log + implementation status (audit trail for the Board Audit Committee)"
+    ],
+    "Pain Points / Risks": [
+     "- **Missed-change risk**: an LGU amends an ordinance and BuildRight doesn't learn of it until an inspection or penalty; mitigated by the multi-source monitoring in step 1 (not relying on a single channel) and the retail-association membership that surfaces sector-relevant changes",
+     "- **Implementation-gap risk**: the change is detected and assessed but not implemented at the store level (the memo is issued, no one acts); mitigated by the compliance-monitoring in step 3 and the W2677 dashboard surfacing un-acted changes"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Regulatory-intelligence feed (links to VS-166 license-portfolio, VS-22 / W22.3 regulatory-change-management) — the canonical monitoring source and impact-assessment record",
+     "- Document/policy repository (links to VS-88) — versioned impact memos and the updated internal SOPs",
+     "- Communication/distribution (links to VS-07 / W571 HQ→store communication) — change notices pushed to affected stores"
+    ],
+    "Time Estimate": [
+     "~6 hours/week monitoring + ~6 hours/change × 25 changes/year + implementation tracking absorbed = **~500–700 hours/year** Legal Compliance Officer + affected departments."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "Legal Compliance Officer monitors regulatory changes across the ~150 LGUs (per W54) where BuildRight operates: new ordinances (single-use-plastic bans, store-hour limits, signage rules), tax-rate changes (links to W2676/W2678), zoning amendments, environmental regulations; sources: LGU websites, Sangguniang session minutes, retail-association bulletins, VS-166 regulatory-intelligence feed",
+     "duration": "Continuous (~6 hours/week)",
+     "n": "1",
+     "r": "Legal Compliance Officer"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Officer assesses each change's impact on BuildRight: new costs, required operational changes, compliance deadlines, the affected stores; prepares an impact memo for VP Legal and the affected departments (Tax, HR, Facilities, Store Ops)",
+     "duration": "Per change event (~4–8 hours)",
+     "n": "2",
+     "r": "Legal Compliance Officer / Legal"
+    },
+    {
+     "a": "COO / VP Legal",
+     "activity": "Affected departments implement the changes; Officer monitors compliance across stores; documents the change-and-response for inspection readiness (links to VS-22 / W95 external-audit coordination)",
+     "duration": "Per change timeline",
+     "n": "3",
+     "r": "All Affected / Legal Compliance Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W22",
+    "W2676",
+    "W2677",
+    "W2678",
+    "W54",
+    "W571",
+    "W95"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-458"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc inspections; annual review",
+    "Owner": "HR Compliance Manager",
+    "Participants": "HR Compliance Mgr, Regional HR, Store Managers, DOLE",
+    "Trigger": "DOLE inspection or regional regulation change",
+    "Volume": "~205 locations across 6 regions"
+   },
+   "id": "W2681",
+   "level": 2,
+   "name": "DOLE Regional Labor Standard Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Regional-rate master auto-applied to payroll by the employee's location; DOLE-evidence-pack auto-assembled from HRIS on inspection notice"
+    ],
+    "Controls": [
+     "- CTL-458 (ensure controlled execution — Local Tax & Regulatory Variation Management (PA-76.2).)",
+     "- CTL-458 (payroll-statutory accuracy — links to VS-19 / W10, W337 payroll & statutory compliance audit); operational: HR Compliance Manager pre-inspection self-audit sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Rate-misapplication risk**: an employee transferred across regions (NCR→Visayas) stays on the wrong regional wage rate, creating an underpayment liability; mitigated by the location-master region tag driving the payroll rate and a transfer-triggered rate review",
+     "- **Documentation-gap risk**: a DOLE inspection cites a missing posting or an incomplete payroll register even when underlying compliance is solid; mitigated by the pre-inspection self-audit checklist in step 3 and the centralized HRIS as the single evidence source"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HRIS / payroll (links to VS-19 / W10 payroll, VS-29 / W292 employee master) — the source of all DOLE-evidence records",
+     "- OSH/safety module (links to VS-24 / W140 OHS, W141 workplace-safety inspection) — safety-committee minutes and OSH-compliance records",
+     "- Location master (VS-29 / W254) — each location tagged with its DOLE region for rate lookup"
+    ],
+    "Time Estimate": [
+     "~4 hours/week monitoring + ~2 hours/location annual review × ~205 locations + inspection prep ad-hoc = **~600–800 hours/year** HR Compliance Manager + Regional HR."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CHRO",
+     "activity": "HR Compliance Manager monitors the regional labor-standard variations: minimum wage rates per Regional Tripartite Wages and Productivity Board (NCR ~PHP 610/day; BARMM ~PHP 361/day — large spread), 13th-month pay (prorated, per PD 851), holiday pay, overtime, night-shift differential, 5/6-day-workweek rules per DOLE advisory",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "HR Compliance Mgr"
+    },
+    {
+     "a": "CHRO",
+     "activity": "Regional HR ensures compliance per the applicable regional rate: DOLE-required workplace postings, written contracts, the correct wage per the regional rate, mandatory-benefits enrollment (SSS, PhilHealth, Pag-IBIG per the relevant laws)",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Regional HR / Store Manager"
+    },
+    {
+     "a": "CHRO",
+     "activity": "HR Compliance Manager prepares the documentation package for DOLE inspections (under RA 11058 OSH law and DO 183-18 for general labor standards): employment records, payroll registers, benefits enrollment proof, working-hours/attendance logs, leave records, safety-committee minutes",
+     "duration": "Ongoing + pre-inspection",
+     "n": "3",
+     "r": "HR Compliance Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W140",
+    "W141",
+    "W254",
+    "W292",
+    "W337"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-37"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ad-hoc for complaints",
+    "Owner": "Legal Compliance Officer",
+    "Participants": "Legal Compliance Officer, Store Manager, Customer Service, DTI",
+    "Trigger": "DTI complaint or compliance review",
+    "Volume": "200 stores + ecommerce"
+   },
+   "id": "W2682",
+   "level": 2,
+   "name": "Consumer Protection Compliance (RA 7394)",
+   "parent": null,
+   "req_refs": [
+    "POS-075"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Complaint-trend dashboard auto-generated by store/category/type; DTI-mediation deadline tracker with alerts"
+    ],
+    "Controls": [
+     "- CTL-37: warranty claim validity — DTI often surfaces warranty disputes; operational: Legal Compliance Officer sign-off on any DTI-mediated settlement"
+    ],
+    "Pain Points / Risks": [
+     "- **Viral-complaint risk**: a single DTI complaint that escalates to social media damages the brand disproportionately to the underlying issue; mitigated by the 15-day resolution target and Customer Service authority to resolve at the lowest possible level (links to POS-075 on-the-spot resolution)",
+     "- **Systemic-pricing-error risk**: a price-tag error that affects many customers generates many DTI complaints at once; mitigated by the VS-118 pricing-integrity monitoring that catches the error before customers do"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRM / complaint module (links to VS-13 / W41 complaint management, W469 DTI-customer-complaint-escalation) — the canonical complaint record and DTI-mediation trail",
+     "- Price-tag/labeling (links to VS-08 / W181 price-tag printing, VS-118 pricing integrity) — the price-tag accuracy that pre-empts DTI price complaints",
+     "- Advertising/promotion review (links to VS-14 marketing, VS-22 / W22.1) — the \"Per DTI Permit No.\" compliance on every promo"
+    ],
+    "Time Estimate": [
+     "~4 hours/week compliance monitoring + ~4 hours/complaint × ~100 complaints/year + quarterly analysis = **~500–700 hours/year** Legal Compliance Officer + Customer Service."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "Legal Compliance Officer ensures ongoing compliance with the Consumer Act (RA 7394): accurate price tags (links to VS-08 / W69 price-compliance audit), clearly-posted return policy, no deceptive practices, honest advertising (the \"Per DTI Permit No.\" requirement on promos per W868), proper product labeling",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "Legal Compliance Officer / Store Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "Customer Service handles DTI-filed complaints: investigates, proposes a resolution (refund, replacement), represents BuildRight at DTI mediation; tracks the resolution-rate target (within 15 days per DTI's standard expectation)",
+     "duration": "Per complaint",
+     "n": "2",
+     "r": "Customer Service / Legal Compliance Officer"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Officer analyzes complaint trends: by store, category, complaint type; identifies high-complaint stores for improvement; reports quarterly to VP Legal and links repeat issues to the VS-23 loss-prevention or VS-118 pricing-integrity workflows where relevant",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Legal Compliance Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W181",
+    "W22",
+    "W41",
+    "W469",
+    "W69",
+    "W868"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-159"
+   ],
+   "fields": {
+    "Frequency": "Continuous; periodic training",
+    "Owner": "VP Legal",
+    "Participants": "VP Legal, Compliance Team, Category Manager, Procurement",
+    "Trigger": "New business practice or regulatory inquiry",
+    "Volume": "5 legal entities"
+   },
+   "id": "W2683",
+   "level": 2,
+   "name": "Philippine Competition Law Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Vendor-agreement clause scanner (flags RPM, exclusivity, MFN clauses for Legal review); training-completion tracker with auto-reminders"
+    ],
+    "Controls": [
+     "- CTL-159: rebate-agreement review — rebate terms can have anti-competitive effect; operational: CEO sign-off on any practice flagged as dominant-position-sensitive"
+    ],
+    "Pain Points / Risks": [
+     "- **Inadvertent-coordination risk**: a Category Manager discusses pricing with a competitor at an industry event, creating per-se illegal conduct without intent; mitigated by the annual training in step 2 and a written \"contact-with-competitors\" protocol",
+     "- **Dominance-threshold risk**: in a narrow local market (a provincial town where BuildRight is the only big-box), conduct that's benign elsewhere can be abuse-of-dominance; mitigated by the market-concentration review in step 1 flagging such local dominance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Contract repository (links to VS-100 / W230 legal contract review) — vendor agreements reviewed for anti-competitive clauses",
+     "- LMS (links to VS-19.4 learning & development) — annual competition-law training tracked per Category Manager / Procurement staff",
+     "- VS-129 (the dedicated competition-compliance value stream) — W2683 is the LGU/RA-10667-flavored view; VS-129 owns the deeper program"
+    ],
+    "Time Estimate": [
+     "~4 hours/week review + annual training delivery absorbed into L&D + PCC monitoring ~2 hours/week = **~400–500 hours/year** VP Legal + Legal team."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CEO",
+     "activity": "VP Legal ensures compliance with the Philippine Competition Act (RA 10667): reviews vendor agreements for anti-competitive clauses (resale-price-maintenance, exclusive-dealing), reviews BuildRight's pricing practices, evaluates market concentration in categories where BuildRight may hold a dominant position",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "VP Legal / Legal"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Legal trains Category Managers and Procurement annually: no price-fixing discussions with competitors, no market-allocation agreements, no abuse-of-dominant-position conduct, proper conduct at industry-association meetings (a high-risk venue for inadvertent coordination); refresher delivered via the LMS",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Legal"
+    },
+    {
+     "a": "CEO",
+     "activity": "VP Legal monitors Philippine Competition Commission (PCC) enforcement actions and guidance; reviews BuildRight practices against current PCC guidance; maintains the compliance documentation (links to VS-129 competition & antitrust compliance, the dedicated VS for this domain)",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "VP Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W230"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-458"
+   ],
+   "fields": {
+    "Frequency": "Annual; event-driven during typhoon season",
+    "Owner": "Safety Officer",
+    "Participants": "Safety Officer, Legal Compliance Officer, Store Manager, LGU DRRMO",
+    "Trigger": "LGU emergency preparedness requirement",
+    "Volume": "~205 locations"
+   },
+   "id": "W2684",
+   "level": 2,
+   "name": "LGU Disaster & Emergency Response Regulatory Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Risk-tier map (typhoon/flood/earthquake exposure per location) auto-applied to set location-specific preparedness requirements; drill-schedule auto-generated per LGU requirement"
+    ],
+    "Controls": [
+     "- CTL-458 (ensure controlled execution — Local Tax & Regulatory Variation Management (PA-76.2).)",
+     "- CTL-458 (emergency-preparedness — links to VS-26 / W158 BCP drill & DR testing); operational: Safety Officer annual sign-off on each location's plan-filing + drill completion"
+    ],
+    "Pain Points / Risks": [
+     "- **Plan-on-paper risk**: the emergency action plan is filed but the store team doesn't know it (drills not actually conducted, just documented); mitigated by the LGU drill-participation requirement in step 2 and the VS-24 fire-drill execution records",
+     "- **High-risk-location-underpreparation risk**: a Visayas typhoon-path store has the same baseline plan as a low-risk Luzon store; mitigated by the risk-tiered enhancement in step 3 (Go Bag inventory levels, drill frequency, structural reinforcement tied to typhoon exposure)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE/safety module (links to VS-24 / W140 OHS, W141 safety inspection, W330 emergency-response) — emergency-action plans and drill records",
+     "- Typhoon/disaster response (links to VS-69 typhoon & disaster response, the dedicated VS) — the operational counterpart to this regulatory-compliance view",
+     "- Regulatory license/permit repository (VS-166) — DRRM plan-filing records and drill certificates"
+    ],
+    "Time Estimate": [
+     "~3–4 hours/location annual review × ~205 locations + drill participation ~2 hours/location/event + Officer tracking absorbed = **~700–900 hours/year** Safety Officers + Store Managers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "Safety Officer ensures each location meets the LGU disaster-preparedness requirements under RA 10121 (DRRM Act): an emergency action plan registered with the LGU Disaster Risk Reduction and Management Office (DRRMO), a designated evacuation area, Go Bag supplies, a trained disaster-response team per store",
+     "duration": "Annual review",
+     "n": "1",
+     "r": "Safety Officer"
+    },
+    {
+     "a": "Regional Manager",
+     "activity": "Store Manager participates in LGU-conducted disaster drills (earthquake, fire, typhoon); coordinates with the DRRMO on evacuation procedures; aligns the store plan with the barangay disaster plan (links to W2673 community relations)",
+     "duration": "Per drill schedule",
+     "n": "2",
+     "r": "Store Manager / Safety Officer"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Legal Compliance Officer tracks DRRM compliance per LGU: updated plans filed, drill-participation certificates, equipment-inspection records; identifies high-risk LGUs (typhoon-prone Visayas, flood-prone Metro Manila) for enhanced requirements",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Legal Compliance Officer / Safety Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W140",
+    "W141",
+    "W158",
+    "W2673",
+    "W330"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-458"
+   ],
+   "fields": {
+    "Frequency": "Per new location; updates per system change",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, IT, Legal Compliance Officer, BIR RDO",
+    "Trigger": "New store opening or re-registration",
+    "Volume": "~205 locations across ~30 RDOs"
+   },
+   "id": "W2685",
+   "level": 2,
+   "name": "BIR CAS Registration Per Location",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- RDO-assignment auto-derived from the location master; CAS-certificate-expiry/re-validation tracker in the W2677 dashboard"
+    ],
+    "Controls": [
+     "- CTL-458 (ensure controlled execution — Local Tax & Regulatory Variation Management (PA-76.2).)",
+     "- operational: the CAS certificate as a permit-validity control — no CAS, no active-invoicing status; operational: CFO sign-off on the per-location CAS registration before opening"
+    ],
+    "Pain Points / Risks": [
+     "- **Trade-without-CAS risk**: a new store opens before the CAS certificate issues, issuing invoices the BIR won't recognize (a penalizable violation and a VAT-input problem for customers); mitigated by the CAS registration being a hard gate in the VS-37 opening critical path, sequenced 60+ days out",
+     "- **Upgrade-notification-lapse risk**: an ERP upgrade changes the invoice format and isn't reported to the RDO, invalidating the CAS registration retroactively; mitigated by the IT-change-management → Tax-Manager notification link in step 3 (any invoicing-affecting change flagged for BIR notification)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / e-invoicing (links to VS-08 / W473 BIR EIS e-invoicing compliance, POS-013) — the invoicing system the CAS registration authorizes",
+     "- Tax master (links to VS-29 / W293, VS-79 / W90) — RDO assignment per location; CAS certificate reference",
+     "- IT change management (links to VS-27 / W132) — ERP upgrades that affect invoicing trigger the BIR-notification step"
+    ],
+    "Time Estimate": [
+     "~20–30 hours per new-location CAS registration × ~12 openings/year + ongoing RDO maintenance ~2 hours/month = **~300–400 hours/year** Tax Manager + IT."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Tax Manager ensures the Computerized Accounting System (CAS) registration for each location: registers the ERP with the BIR Revenue District Office (RDO) having jurisdiction over the location; submits the system documentation per BIR Revenue Memorandum; obtains the BIR CAS Certificate (a precondition for issuing BIR-compliant invoices from that location)",
+     "duration": "Per new location",
+     "n": "1",
+     "r": "Tax Manager / IT"
+    },
+    {
+     "a": "CIO",
+     "activity": "IT provides the documentation: system flowchart, data-security description, 10-year record-retention capability (per TRAIN law NIRC Sec. 235), audit-trail features, sample invoices/receipts with all BIR-required information (TIN, serial number, \"VAT Registered\" marker, QR code per the e-invoicing requirement)",
+     "duration": "Per registration/update",
+     "n": "2",
+     "r": "IT / Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager maintains the CAS records: RDO assignments per location, the CAS certificate renewal/re-validation dates, system-change notifications to BIR (any ERP upgrade affecting invoicing must be reported to the relevant RDOs)",
+     "duration": "Ongoing",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W132",
+    "W2677",
+    "W293",
+    "W473",
+    "W90"
+   ]
+  }
+ ]
+}

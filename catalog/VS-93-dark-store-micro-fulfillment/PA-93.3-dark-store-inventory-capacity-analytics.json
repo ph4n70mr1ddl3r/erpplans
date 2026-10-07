@@ -1,0 +1,530 @@
+{
+ "process_area": {
+  "id": "PA-93.3",
+  "title": "Dark Store Inventory, Capacity & Performance Analytics"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-93-dark-store-micro-fulfillment/PA-93.3-dark-store-inventory-capacity-analytics.md",
+ "value_stream": {
+  "directory": "VS-93-dark-store-micro-fulfillment",
+  "id": "VS-93",
+  "name": "Dark Store & Micro-Fulfillment Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Daily/weekly",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, Inventory Planning, DC Ops (links to VS-04), Category (links to VS-01)",
+    "Trigger": "Weekly cycle + daily min/max triggers",
+    "Volume": "~2,000–8,000 active SKUs per dark store (curated for catchment)"
+   },
+   "id": "W3105",
+   "level": 2,
+   "name": "Dark Store Inventory Positioning, Safety Stock & Replenishment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates replenishment transfer requests to feeder DC when min breached\" (replaces manual Step 2).",
+     "- System auto-review of \"Dark Store Ops Mgr reviews slow-movers\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: velocity-based safety stock and same-day DC replenishment"
+    ],
+    "Pain Points / Risks": [
+     "- **Stockout risk**: Dark store stockouts cause substitute/short-ship and lost sale; mitigated by velocity-based safety stock and same-day DC replenishment"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory/safety stock engine (links to VS-05); inter-site transfer (links to VS-04/VS-05); cycle count"
+    ],
+    "Time Estimate": [
+     "- ~4–6 hr/week per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Inventory Planning sets per-SKU safety stock and reorder point for the dark store based on catchment velocity, lead time from feeder DC (links to VS-04), and target service level (98%+); distinguishes A/B/C velocity",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "Inventory Planner"
+    },
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "System auto-generates replenishment transfer requests to feeder DC when min breached; DC schedules transfer (links to VS-05/VS-04); inbound received and putaway to forward pick faces",
+     "duration": "Daily",
+     "n": "2",
+     "r": "WMS / DC Ops"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr reviews slow-movers (links to VS-05 aging) and obsolete candidates; returns to DC or removes from dark-store range (links to W3110); confirms physical-to-book accuracy via cycle count",
+     "duration": "Weekly",
+     "n": "3",
+     "r": "Dark Store Operations Manager / Inventory"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3110"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, Industrial Engineer, Pickers",
+    "Trigger": "Monthly slotting review; seasonal/sale velocity shift",
+    "Volume": "All pick faces"
+   },
+   "id": "W3106",
+   "level": 2,
+   "name": "Dark Store Slotting, Velocity Analysis & Re-Slotting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"execute re-slot during low-volume window\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: overnight execution and phased moves"
+    ],
+    "Pain Points / Risks": [
+     "- **Re-slot disruption risk**: Re-slot during peak hurts throughput; mitigated by overnight execution and phased moves"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS slotting module; velocity analytics (links to PA-93.3/VS-28)"
+    ],
+    "Time Estimate": [
+     "- 1 day/month per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Industrial Engineer computes SKU velocity (lines/day, picks/day) and current slot location; identifies A-velocity SKUs in non-golden-zone slots and C-velocity SKUs consuming golden-zone space",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Industrial Engineer"
+    },
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Engineer proposes re-slot plan: A-velocity → eye-level/golden zone nearest pack stations; C-velocity → reserve/upper; bundle/kit components co-located; automation (MFC) bins re-balanced",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Industrial Engineer"
+    },
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Picker execute re-slot during low-volume window (overnight/early AM); WMS updates bin assignments; productivity uplift measured post-implementation vs. baseline lines/picker-hour (links to W3107)",
+     "duration": "Per re-slot event",
+     "n": "3",
+     "r": "Picker / WMS"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3107"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Daily + weekly deep-dive",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, Network Planning, Finance, HR, BI (links to VS-28)",
+    "Trigger": "Daily/weekly KPI cycle",
+    "Volume": "Per dark store and network-wide"
+   },
+   "id": "W3107",
+   "level": 2,
+   "name": "Dark Store Throughput, Utilization & Labor Productivity Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-dispatch of \"dispatch on-time %, automation utilization %, labor utilization vs.\" (replaces manual Step 1).",
+     "- System auto-flag for investigation of \"investigates root causes\" (replaces manual Step 2).",
+     "- System auto-validate of \"validate against labor-cost-per-order target\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: accuracy-weighted incentive and quality audit (links to W3099)"
+    ],
+    "Pain Points / Risks": [
+     "- **Gaming risk**: Pickers inflate scans or skip quality for productivity bonus; mitigated by accuracy-weighted incentive and quality audit (links to W3099)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI dashboards (links to VS-28); WMS/LMS productivity data; HR T&A (links to VS-19)"
+    ],
+    "Time Estimate": [
+     "- 2–4 hr/week per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "BI (links to VS-28) computes dark-store throughput KPIs: orders/hour, lines/picker-hour, orders/pack-station-hour, dispatch on-time %, automation utilization %, labor utilization vs. plan",
+     "duration": "Daily",
+     "n": "1",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr benchmarks dark stores vs. each other and vs. external benchmark; identifies laggards; investigates root causes (staffing, layout, automation downtime, demand mix)",
+     "duration": "Weekly",
+     "n": "2",
+     "r": "Dark Store Operations Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "HR/Finance model productivity-linked incentive, shift design, and overtime to lift utilization; validate against labor-cost-per-order target",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "HR / Finance"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3099"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, Ecommerce Ops (links to VS-60), CS (links to VS-13), BI",
+    "Trigger": "Daily SLA cycle; SLA breach",
+    "Volume": "All orders"
+   },
+   "id": "W3108",
+   "level": 2,
+   "name": "Dark Store Order Cycle Time, Cut-Off Adherence & SLA Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-dispatch of \"dispatch → delivery/handover\" (replaces manual Step 1).",
+     "- System auto-report of \"reports cut-off adherence\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: segmenting internal vs"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden SLA miss**: Last-mile carrier delay wrongly attributed to dark store; mitigated by segmenting internal vs. external SLA"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- OMS/WMS event stream (links to VS-60); CS ticketing (links to VS-13); BI (links to VS-28)"
+    ],
+    "Time Estimate": [
+     "- 1–2 hr/day per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "System tracks end-to-end order cycle time: order received → wave release → pick complete → pack complete → dispatch → delivery/handover; segments by promise tier (same-day, next-day, BOPIS)",
+     "duration": "Daily",
+     "n": "1",
+     "r": "WMS / BI"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr reports cut-off adherence (orders accepted before cut-off delivered same-day %), promise-breach rate, and breach root-cause (pick delay, pack delay, dispatch delay, carrier delay)",
+     "duration": "Daily",
+     "n": "2",
+     "r": "Dark Store Operations Manager"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "Ecommerce Ops/CS (links to VS-13/VS-60) consolidate customer-facing SLA report; feed into dark-store scorecard and capex/expansion trigger (links to W3095)",
+     "duration": "Weekly",
+     "n": "3",
+     "r": "Ecommerce Ops / CS"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3095"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-77"
+   ],
+   "fields": {
+    "Frequency": "Daily + weekly",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Quality, Finance, CS (links to VS-13), Loss Prevention (links to VS-23)",
+    "Trigger": "Daily/weekly quality + finance cycle",
+    "Volume": "All orders + audit samples"
+   },
+   "id": "W3109",
+   "level": 2,
+   "name": "Dark Store Pick/Pack Accuracy, Damages & Cost-per-Order",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles pick accuracy\" (replaces manual Step 1).",
+     "- System auto-scan of \"scanner calibration, fraud-control\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-77 (ensure dark-store order accuracy & dispatch control.)",
+     "- operational: automation bolt-on (links to W3095) and productivity program"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-per-order drift**: Labor inflation and consumable cost erode economics; mitigated by automation bolt-on (links to W3095) and productivity program"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Quality/AQL data; finance cost model (links to VS-17); LP shrink (links to VS-23)"
+    ],
+    "Time Estimate": [
+     "- 3–5 hr/week per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Quality compiles pick accuracy (mis-picks per 10,000), pack accuracy (wrong-item/quantity per 10,000), damage-in-transit %, and customer-reported error rate; correlates to picker/packer IDs",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "Quality"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance computes fully-loaded cost-per-order: labor + consumables + automation depreciation + real estate + utilities + last-mile cost + returns cost; benchmarks vs. ship-from-store (links to VS-10) and DC (links to VS-04) baselines",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr/LP (links to VS-23) investigate accuracy outliers and shrink; implement corrective action (training, re-slot, scanner calibration, fraud-control) and track to closure",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Dark Store Ops Mgr / LP"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3095"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, Category Mgmt (links to VS-01), Ecommerce (links to VS-10), BI",
+    "Trigger": "Monthly ranging review; new-product introduction; slow-mover purge",
+    "Volume": "All active dark-store SKUs"
+   },
+   "id": "W3110",
+   "level": 2,
+   "name": "Dark Store Demand Sensing & Dynamic SKU Ranging",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validate vs.\" (replaces manual Step 2).",
+     "- System auto-update of \"update ecommerce availability flag\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: one-in-one-out rule and monthly purge"
+    ],
+    "Pain Points / Risks": [
+     "- **Range bloat**: Adding SKUs without retiring slow-movers hurts productivity; mitigated by one-in-one-out rule and monthly purge"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Demand sensing (links to VS-28/VS-02); ranging master (links to VS-01); ecommerce availability (links to VS-10)"
+    ],
+    "Time Estimate": [
+     "- 4–6 hr/month per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "BI/Category (links to VS-28/VS-01) sense demand signals: trending SKUs (search/add-to-cart without order), local events (construction projects, typhoon rebuild — links to VS-69), seasonality, and competitor gaps",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "BI Analyst / Category"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category (links to VS-01) proposes range adds (high-signal new SKUs) and range drops (slow-movers with < N lines/month); validate vs. dark-store pick-face capacity and feeder-DC availability",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr executes range change: inbound new SKUs from DC, slot to golden zone (links to W3106), update ecommerce availability flag (links to VS-10); remove slow-movers via W3105",
+     "duration": "Per change",
+     "n": "3",
+     "r": "Dark Store Operations Manager / Inventory"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3105",
+    "W3106"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Monthly + event-driven",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, CS (links to VS-13), CX/Insights (links to VS-44), BI",
+    "Trigger": "Monthly CX cycle; CS complaint spike",
+    "Volume": "All dark-store-served customers"
+   },
+   "id": "W3111",
+   "level": 2,
+   "name": "Dark Store Service Level & Customer Experience Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-measure of \"measure dark-store-served customer satisfaction\" (replaces manual Step 1).",
+     "- System auto-track of \"tracked to closure\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: segmented scorecard"
+    ],
+    "Pain Points / Risks": [
+     "- **Attribution error**: CX issues from last-mile carrier wrongly credited to dark store; mitigated by segmented scorecard"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CS/CX platforms (links to VS-13/VS-44); BI dashboards (links to VS-28); OMS routing (links to VS-60)"
+    ],
+    "Time Estimate": [
+     "- 3–5 hr/month per dark store"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "CX/CS (links to VS-44/VS-13) measure dark-store-served customer satisfaction: on-time delivery %, order accuracy %, CSAT/NPS, complaint themes (late, wrong item, damaged, missing), refund rate",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "CX Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr prioritizes top complaint themes; root-causes to specific dark store / picker / packer / carrier; corrective action tracked to closure",
+     "duration": "Per theme",
+     "n": "2",
+     "r": "Dark Store Operations Manager"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "Ecommerce/CX publish dark-store CX scorecard vs. ship-from-store (links to VS-10); informs OMS routing preference (links to VS-60) and capex/expansion (links to W3095)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "CX / Ecommerce Ops"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3095"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-510"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + annual",
+    "Owner": "Dark Store Operations Manager",
+    "Participants": "Dark Store Ops Mgr, Sustainability Lead (links to VS-25), Facilities, Procurement (links to VS-34)",
+    "Trigger": "Annual sustainability review; ESG reporting cycle (links to VS-25)",
+    "Volume": "Per dark store and network"
+   },
+   "id": "W3112",
+   "level": 2,
+   "name": "Dark Store Sustainability, Energy & Waste Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"footprint\" (replaces manual Step 1).",
+     "- System auto-route of \"Dark Store Ops Mgr/Procurement execute reduction initiatives\" (replaces manual Step 2).",
+     "- System auto-report of \"reports dark-store emissions and waste into Scope 1/2/3 inventory\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity & Performance Analytics (PA-93.3).)",
+     "- operational: recyclable-first procurement and waste tracking (links to VS-73)"
+    ],
+    "Pain Points / Risks": [
+     "- **Packaging-waste regulation risk**: Philippine plastic/extended-producer-responsibility law evolving; mitigated by recyclable-first procurement and waste tracking (links to VS-73)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Energy metering (links to VS-25 W692); packaging materials master; ESG scorecard (links to VS-25); carrier CO₂ (links to VS-56)"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks/year + ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dark Store Operations Manager",
+     "activity": "Sustainability Lead (links to VS-25) measures dark-store footprint: energy (kWh/order — automation, lighting, HVAC), packaging waste (carton, void-fill, tape per order), and last-mile CO₂; benchmarks vs. ship-from-store",
+     "duration": "Quarterly",
+     "n": "1",
+     "r": "Sustainability Lead"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Dark Store Ops Mgr/Procurement execute reduction initiatives: right-box cartonization (reduces void-fill), recyclable/compostable packaging, motion-sensor LED, automation energy saver, route consolidation (links to VS-06/VS-56)",
+     "duration": "Per initiative",
+     "n": "2",
+     "r": "Dark Store Ops Mgr / Procurement"
+    },
+    {
+     "a": "Sustainability/ESG Manager",
+     "activity": "Sustainability Lead reports dark-store emissions and waste into Scope 1/2/3 inventory (links to VS-25 W192); supports retailer ESG disclosure and any packaging-extended-producer-responsibility (EPR) obligation",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Sustainability Lead"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W192",
+    "W692"
+   ]
+  }
+ ]
+}

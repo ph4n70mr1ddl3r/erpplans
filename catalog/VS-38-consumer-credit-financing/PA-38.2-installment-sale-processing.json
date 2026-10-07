@@ -1,0 +1,584 @@
+{
+ "process_area": {
+  "id": "PA-38.2",
+  "title": "Installment Sale Processing & Monitoring"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-38-consumer-credit-financing/PA-38.2-installment-sale-processing.md",
+ "value_stream": {
+  "directory": "VS-38-consumer-credit-financing",
+  "id": "VS-38",
+  "name": "Consumer Credit & Financing"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "~90,000–120,000 installment transactions/month (~3–5% of POS, per the canon; consumer card/BNPL stream — settled by the financing partner T+1–T+3, never collected by BuildRight; the in-house trade stream collected by BuildRight is the separate ~200–300-collections/month basis of W1773)",
+    "Owner": "Fixed Asset Accountant → Revenue Accountant",
+    "Participants": "Revenue Accountant, Cashier (in-store), System (ecommerce)",
+    "Trigger": "Consumer installment transaction completed at POS or ecommerce",
+    "Volume": "~3–5% of all sales transactions"
+   },
+   "id": "W1771",
+   "level": 2,
+   "name": "Installment Sale Transaction Recording & Revenue Recognition",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records installment sale transaction\" (replaces manual Step 1).",
+     "- System auto-count of \"discount revenue to present value\" (replaces manual Step 2).",
+     "- System auto-flag for investigation of \"investigated within 24 hours\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Recognition-timing error**: revenue deferred over the installment term instead of at sale; mitigated by PFRS 15 point-of-sale recognition rules enforced in posting logic (step 2)",
+     "- **Settlement-mismatch blindness**: POS transactions and partner settlements drift apart unnoticed; mitigated by daily reconciliation with discrepancy investigation (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS installment sale recording — revenue at full selling price at point of sale (step 1)",
+     "- PFRS 15 revenue recognition — control transfer at POS (delivery for ecommerce), gross revenue, MDR as expense (step 2)",
+     "- Daily POS vs. partner-settlement reconciliation (step 3)"
+    ],
+    "Time Estimate": [
+     "Daily POS-vs-expected-settlement reconciliation 30 min ≈ 183 hours/year at the ~90,000–120,000 installment transactions/month canon (per W1771); monthly PFRS 15 revenue-recognition review within close (transaction posting and revenue recognition automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "POS records installment sale transaction: (a) revenue recognized at full selling price at point of sale (BuildRight sells to customer; financing partner pays BuildRight), (b) VAT output recorded at 12% on selling price, (c) cost of goods sold recorded (standard margin), (d) MDR (merchant discount rate) recorded as selling expense, (e) for third-party financing: BuildRight receives full amount from partner (net of MDR) within T+1 to T+3, (f) for in-house trade account installments: AR recognized per W1772",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Revenue recognition per PFRS 15: (a) control transfers to customer at point of sale (or delivery for ecommerce), (b) revenue = gross transaction amount, (c) MDR = transaction cost (selling expense), (d) no financing component in revenue (third-party financing), (e) for in-house deferred payment: assess if significant financing component exists (if payment term > 12 months, may need to discount revenue to present value)",
+     "duration": "Monthly review",
+     "n": "2",
+     "r": "Revenue Accountant"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Daily reconciliation: installment transactions in POS vs. settlement expected from financing partners; discrepancies investigated within 24 hours",
+     "duration": "30 min/day",
+     "n": "3",
+     "r": "Revenue Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1772",
+    "W1773"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "~200–300 in-house installment arrangements active at any time",
+    "Owner": "Credit Manager",
+    "Participants": "Credit Manager, Sales Team, Customer, Accounting Manager",
+    "Trigger": "Trade or corporate account customer requests installment payment terms for project purchase",
+    "Volume": "~50–100 new arrangements/month"
+   },
+   "id": "W1772",
+   "level": 2,
+   "name": "In-House Installment Receivable Management (Trade Accounts)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"requests installment terms for large project\" (replaces manual Step 1).",
+     "- System auto-validate of \"Installment agreement executed\" (replaces manual Step 3).",
+     "- System auto-track of \"tracked in AR aging with separate classification from standard trade AR\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: Credit Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Unsecured-exposure risk**: the customer's PDCs bounce and the receivable is effectively unsecured; mitigated by credit evaluation plus monitoring under W1773/W1774 (steps 2–3)",
+     "- **Misclassification risk**: in-house installments hide inside standard trade AR, masking risk; mitigated by the separate AR classification (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Installment request intake for trade/B2B customers (step 1)",
+     "- Credit evaluation — W16.1 score, payment history, project viability (step 2)",
+     "- Agreement execution with payment schedule and post-dated checks (step 3)",
+     "- Separate in-house installment AR classification (step 4)"
+    ],
+    "Time Estimate": [
+     "~2–4 hours of Credit Manager effort per arrangement (credit evaluation over a 1–2-day elapsed window + agreement execution over 1 day) × ~50–100 new in-house arrangements/month ≈ 1,200–4,800 hours/year; receivable tracking continuous within AR aging (~200–300 active arrangements).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "Trade/B2B customer requests installment terms for large project: (a) contractor building a residential project: PHP 200K materials, requests 3-month payment, (b) developer outfitting 50 units: PHP 5M, requests 6-month payment, (c) government project: PHP 10M, requests payment upon project milestone",
+     "duration": "During sales",
+     "n": "1",
+     "r": "Sales Team"
+    },
+    {
+     "a": "CFO (large amounts)",
+     "activity": "Credit Manager evaluates request: (a) customer credit score and payment history per W16.1, (b) project viability assessment, (c) determines terms: down payment % (typically 20–30%), installment period (3–12 months), interest rate (if applicable per credit policy), (d) for amounts > PHP 500K: CFO approval required",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Installment agreement executed: (a) signed agreement with payment schedule, (b) post-dated checks (PDCs) collected from customer per Philippine practice, (c) AR invoice created in system with installment schedule, (d) system auto-generates AR entries as each installment due date arrives",
+     "duration": "1 day",
+     "n": "3",
+     "r": "Credit Manager / Customer"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "In-house installment receivable tracked in AR aging with separate classification from standard trade AR; collection monitored per W1773–1774",
+     "duration": "Continuous",
+     "n": "4",
+     "r": "AR Accountant"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W16",
+    "W1773",
+    "W1774"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "~200–300 collections/month",
+    "Owner": "AR Collector",
+    "Participants": "AR Collector, Customer, Treasury",
+    "Trigger": "Installment due date (monthly for in-house installments)",
+    "Volume": "~PHP 50–100M in monthly in-house installment collections (the ~200–300 active trade arrangements of W1772, avg. arrangement PHP 1M–3M amortizing over 3–12 months; consumer card/BNPL installments are partner-settled per W1771 and are not collected by BuildRight)"
+   },
+   "id": "W1773",
+   "level": 2,
+   "name": "Installment Payment Collection & Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates installment due reminders\" (replaces manual Step 1).",
+     "- System auto-update of \"updates AR balance and generates receipt\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews installment portfolio\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: AR Collector review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **PDC-bounce risk**: post-dated checks dishonor on deposit; mitigated by the W1381 bounced-check recovery discipline and immediate re-scheduling demand (step 2)",
+     "- **Late-payment drift**: small delays normalize into delinquency; mitigated by adherence-rate monitoring with early-tier action (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Due-date reminder engine — 5-day SMS/email reminders (step 1)",
+     "- PDC deposit and auto-application to AR on clearing; online payment capture (step 2)",
+     "- Monthly portfolio review — adherence rate, upcoming large payments (step 3)"
+    ],
+    "Time Estimate": [
+     "PDC deposits and auto-application largely automated across ~200–300 monthly collections (~PHP 50–100M/month); exception handling at realized volume (dishonored checks per W1381); monthly portfolio adherence review 1 day ≈ 12 days/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Manager",
+     "activity": "System generates installment due reminders: (a) 5 days before due date: SMS/email reminder to customer, (b) due date: payment expected (PDC deposited or customer pays online), (c) 1 day past due: follow-up call from AR Collector",
+     "duration": "Automated + manual",
+     "n": "1",
+     "r": "System / AR Collector"
+    },
+    {
+     "a": "AR Collector",
+     "activity": "Payment received: (a) PDC deposited on due date; cleared in bank → system auto-applies to AR, (b) online payment (bank transfer, GCash) → Treasury applies to AR, (c) walk-in payment at store → cashier processes → system applies to AR, (d) system updates AR balance and generates receipt",
+     "duration": "Per payment",
+     "n": "2",
+     "r": "Treasury / Cashier / System"
+    },
+    {
+     "a": "Credit Manager",
+     "activity": "Monthly: AR Collector reviews installment portfolio: (a) payment adherence rate (% of installments paid on time), (b) upcoming large payments (flag for proactive follow-up), (c) customers with history of late payments (tighten terms on future purchases)",
+     "duration": "1 day/month",
+     "n": "3",
+     "r": "AR Collector"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1381",
+    "W1771",
+    "W1772"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "~20–50 delinquent accounts/month",
+    "Owner": "Credit Manager",
+    "Participants": "Credit Manager, AR Collector, Legal Counsel, Customer",
+    "Trigger": "Installment payment > 30 days past due",
+    "Volume": "Target: < 5% delinquency rate"
+   },
+   "id": "W1774",
+   "level": 2,
+   "name": "Installment Delinquency Tracking & Collection Action",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Delinquency tiers and actions\" (replaces manual Step 1).",
+     "- System auto-document of \"document restructured terms\" (replaces manual Step 2).",
+     "- System auto-record of \"recorded\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: Credit Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Escalation-delay risk**: accounts age while collection stays \"friendly\"; mitigated by enforced tier timelines (step 1)",
+     "- **Premature-write-off risk**: recoverable accounts written off for convenience; mitigated by CFO approval gated on documented collection exhaustion (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tiered delinquency actions — 1–30 days reminders; 31–60 demand; 60–90 legal (step 1)",
+     "- Restructuring options for good-history customers — extension, reduced amounts (step 2)",
+     "- Write-off approval — CFO authorization after exhaustion of efforts (step 3)"
+    ],
+    "Time Estimate": [
+     "Tiered collection handling ~20–60 min per delinquent account (reminder calls/SMS at 1–30 days, restructuring for good-history customers, write-off processing beyond 180 days per W556) × ~20–50 delinquent accounts/month ≈ 80–500 hours/year against the < 5% delinquency target.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Delinquency tiers and actions: (a) 1–30 days past due: reminder calls and SMS; friendly follow-up; understand reason for delay (common: customer waiting for own project payment), (b) 31–60 days: formal demand letter; hold on new orders; Credit Manager calls customer; negotiate restructuring if customer has genuine difficulty, (c) 61–90 days: legal demand letter; restrict account; engage collection agency or Legal Counsel for legal action, (d) > 90 days: write-off consideration per policy; legal action; report to credit bureaus (if BuildRight participates)",
+     "duration": "Per account",
+     "n": "1",
+     "r": "AR Collector / Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Restructuring: for customers with good history but temporary difficulty: (a) extend payment period, (b) reduce monthly amount, (c) waive late fees (if prompt payment resumes), (d) document restructured terms",
+     "duration": "Per account",
+     "n": "2",
+     "r": "Credit Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Write-off: accounts > 180 days delinquent and all collection efforts exhausted: (a) Credit Manager recommends write-off, (b) CFO approves (< PHP 500K) or CEO approves (> PHP 500K), (c) bad debt expense recorded, (d) account sent to external collection agency on contingency basis",
+     "duration": "Per account",
+     "n": "3",
+     "r": "Credit Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W556"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "~2–3% of installment transactions (~200–350 returns/month)",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager, Cashier, Credit Manager, Financing Partner, Customer",
+    "Trigger": "Customer returns merchandise purchased on installment; or cancels order before delivery",
+    "Volume": "~2–3% of installment transactions"
+   },
+   "id": "W1775",
+   "level": 2,
+   "name": "Installment Sale Returns & Cancellation Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"requests return of item purchased on installment\" (replaces manual Step 1).",
+     "- System auto-send of \"sends refund instruction to financing partner\" (replaces manual Step 2).",
+     "- System auto-review of \"For in-house installment\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: Store Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Refund-loop-breakage risk**: BuildRight refunds but the customer still owes the financing partner; mitigated by partner refund-instruction SLAs (step 2)",
+     "- **Credit-error risk**: credit notes issued for the wrong amount or against the wrong agreement; mitigated by Credit Manager review before posting (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Return policy application — 7-day non-defective window on installment purchases (step 1)",
+     "- Third-party refund instruction to the financing partner (step 2)",
+     "- In-house credit note reducing AR balance (step 3)",
+     "- Inventory disposition per W1626 with COGS reversal (step 4)"
+    ],
+    "Time Estimate": [
+     "40 min per occurrence (per-step effort 10 min + 10 min + 15 min + 5 min) — at ~100–200 installment returns/year ≈ 100–200 occurrences/year ≈ 66.7–133 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer requests return of item purchased on installment: (a) standard return policy applies (7-day return for non-defective items; longer for defective), (b) Store Manager verifies return eligibility per W1622",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "For third-party financed purchases: (a) return processed in POS; system sends refund instruction to financing partner, (b) financing partner reverses installment plan (or adjusts remaining balance), (c) MDR charged on original transaction may not be refundable — absorbed as cost, (d) if customer has already made installment payments: financing partner handles refund to customer",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "For in-house installment (trade accounts): (a) Credit Manager reviews return; if legitimate: credit note issued to reduce AR balance, (b) if return is partial: AR reduced by returned amount; remaining installments continue, (c) if return is full and customer made payments: credit note for payments received; any balance refunded",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Credit Manager / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Inventory returned to stock per W1626 (disposition); cost of goods sold reversed",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Receiving Clerk / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1622",
+    "W1626"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "~6–10 promotional periods/year",
+    "Owner": "FP&A",
+    "Participants": "FP&A, Accounting Manager, VP Merchandising, Category Managers",
+    "Trigger": "0% interest promotion active; BuildRight subsidizes interest cost to financing partner",
+    "Volume": "~PHP 5–15M in annual installment subsidies"
+   },
+   "id": "W1776",
+   "level": 2,
+   "name": "Promotional Installment Subsidy Accounting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records each 0% installment transaction at full selling price\" (replaces manual Step 1).",
+     "- System auto-generate of \"generated by promotion vs.\" (replaces manual Step 2).",
+     "- System auto-review of \"review\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: FP&A review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden-subsidy-overspend risk**: subsidy cost exceeds the margin on promotional lift; mitigated by monthly subsidy-vs-incremental-sales tracking (step 2)",
+     "- **Subsidy-leakage risk**: partner subsidy charges never reconciled to transactions; mitigated by the post-promotion reconciliation (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 0% transaction recording at full price with partner subsidy charge capture (step 1)",
+     "- Monthly subsidy tracking by promotion and category vs. incremental sales (step 2)",
+     "- Post-promotion reconciliation of partner subsidy charges to system records (step 3)"
+    ],
+    "Time Estimate": [
+     "During each promotional period: monthly subsidy tracking 1 day ≈ 6–10 days/year across ~6–10 promo periods; post-promotion reconciliation of partner subsidy charges 1 week per cycle at partial occupancy; in-transaction 0%-installment recording automated.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Accounting Manager",
+     "activity": "During promotional period: (a) system records each 0% installment transaction at full selling price, (b) financing partner charges BuildRight a subsidy fee (higher MDR or explicit subsidy amount) to compensate for interest they forego, (c) subsidy cost recorded as promotional selling expense (allocated to the promoting category)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: FP&A tracks promotional subsidy cost: (a) total subsidy amount by promotion and category, (b) incremental sales generated by promotion vs. non-promotional period, (c) subsidy cost as % of incremental gross margin, (d) ROI: incremental margin ÷ subsidy cost (target: > 3x)",
+     "duration": "1 day/month during promos",
+     "n": "2",
+     "r": "FP&A"
+    },
+    {
+     "a": "CFO",
+     "activity": "Post-promotion: Accounting Manager reconciles subsidy charges from financing partner against system records; discrepancies resolved; final promotional P&L prepared for category review",
+     "duration": "1 week post-promo",
+     "n": "3",
+     "r": "Accounting Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-208"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Tax Accountant",
+    "Participants": "Tax Accountant, Revenue Accountant, CFO",
+    "Trigger": "Monthly tax filing",
+    "Volume": "Part of regular tax filing"
+   },
+   "id": "W1777",
+   "level": 2,
+   "name": "Installment Sale Tax Compliance (VAT, WHT)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"VAT on installment sales\" (replaces manual Step 1).",
+     "- System auto-issue of \"issues VAT invoice for MDR charged\" (replaces manual Step 2).",
+     "- System auto-report of \"reported in monthly VAT return\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-208 (ensure consumer-financing settlement & compliance.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **VAT-timing error**: output VAT spread over the installment term instead of recognized at sale; mitigated by point-of-sale VAT posting rules (step 1)",
+     "- **Missed-input-VAT risk**: recoverable input VAT on MDR never claimed; mitigated by VAT-inclusive MDR treatment in the monthly filing (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- VAT on installment sales — output VAT at point of sale on full selling price × 12% (step 1)",
+     "- MDR input VAT claim — 12% VAT component of MDR fees (step 2)",
+     "- In-house interest income VAT treatment (step 3)"
+    ],
+    "Time Estimate": [
+     "VAT on installment sales, MDR input-VAT recovery, and in-house interest-income treatments ride the monthly tax provision and filing cycle per W590 — no incremental standalone effort (computations system-supported).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "VAT on installment sales: (a) output VAT recognized at point of sale (full selling price × 12%), not over the installment period — per Philippine VAT rules (gross receipt is taxable upon sale, not upon collection), (b) for third-party financed sales: BuildRight receives net amount (gross minus MDR) but remits VAT on gross selling price, (c) input VAT on cost of goods sold claimed normally",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "MDR VAT treatment: (a) MDR paid to financing partner includes 12% VAT, (b) BuildRight can claim input VAT on MDR as the service was used in the course of business, (c) financing partner issues VAT invoice for MDR charged",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "In-house installment interest income (if applicable): (a) interest earned on in-house installment plans forms part of the gross selling price and is subject to VAT (12%), (b) interest income reported in monthly VAT return (BIR Form 2550M)",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W590"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-356"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Credit Manager",
+    "Participants": "Credit Manager, FP&A, CFO",
+    "Trigger": "Monthly management reporting",
+    "Volume": "1 report covering all in-house installment receivables"
+   },
+   "id": "W1778",
+   "level": 2,
+   "name": "Installment Portfolio Reporting & Aging Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Monthly installment portfolio report\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews portfolio health\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-356 (ensure controlled execution — Installment Sale Processing & Monitoring (PA-38.2).)",
+     "- operational: Credit Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Deterioration-blindness risk**: delinquency worsens gradually between reviews; mitigated by monthly aging trend against the 95%-current target (steps 1–2)",
+     "- **Re-aging-concealment risk**: restructured accounts look cured; mitigated by tracking restructures separately from genuine cures (step 1)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Monthly installment portfolio report — outstanding, aging tiers, delinquency rate (step 1)",
+     "- CFO health review — > 95% current target with tightening triggers (step 2)",
+     "- Quarterly Board summary within the financial review (step 3)"
+    ],
+    "Time Estimate": [
+     "recurring effort 30 min/month ≈ 6 hours/year; cadence-carried steps as authored (1 day/month, Quarterly).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Monthly installment portfolio report: (a) total installment receivable outstanding, (b) aging: current, 1–30 days, 31–60 days, 61–90 days, > 90 days, (c) aging as % of total portfolio, (d) provision for bad debts: current provision rate × aging buckets (e.g., 1% current, 5% for 31–60, 25% for 61–90, 50% for > 90), (e) top 20 largest installment accounts with status, (f) write-offs for the month, (g) new installment arrangements for the month",
+     "duration": "1 day/month",
+     "n": "1",
+     "r": "Credit Manager / AR Collector"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO reviews portfolio health: (a) target: > 95% of portfolio current (not past due), (b) if delinquency rate increasing: tighten credit approval criteria, (c) if portfolio growing rapidly: assess concentration risk (single customer or project > 10% of portfolio)",
+     "duration": "30 min/month",
+     "n": "2",
+     "r": "CFO"
+    },
+    {
+     "a": "Board",
+     "activity": "Quarterly: CFO presents installment portfolio summary to Board as part of financial review",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  }
+ ]
+}

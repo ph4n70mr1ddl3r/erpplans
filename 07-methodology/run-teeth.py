@@ -9,7 +9,9 @@ per wave and discarded — which meant every validator refactor (most recently t
 silently disarmed between waves would go unseen until the next review happened to
 probe that exact class. This harness makes the suite permanent: one command that
 re-fires every historical fault class against the current validator and fails
-loudly if any of them slips through.
+loudly if any of them slips through. When a new generated-tree guard or checker
+joins the validator, add its fault class here as a new tooth (the catalog-
+projection staleness class joined as tooth 13 with the 2026-09-10 catalog pass).
 
 Protocol (inherited from the fourteenth-wave lesson):
   * copy-based — the live working tree is NEVER touched. The repo is copied once
@@ -206,6 +208,15 @@ TEETH = [
         _one(README, "Cross-reference validation (76 checks)",
              "Cross-reference validation (77 checks)"),
         ["Quoted validator check counts disagree"],
+    ),
+    (
+        "catalog-json-stale",
+        "catalog/ JSON hand-edited (or markdown edited without catalog regeneration) — Check 71's --check mirror class",
+        ["catalog/VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.json"],
+        _one("catalog/VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.json",
+             '"Owner": "Category Manager (Outdoor & Garden)"', '"Owner": "STALE EDIT"'),
+        ["stale (differs from regeneration)",
+         "catalog/VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.json"],
     ),
 ]
 

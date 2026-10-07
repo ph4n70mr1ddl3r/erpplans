@@ -1,0 +1,543 @@
+{
+ "process_area": {
+  "id": "PA-95.3",
+  "title": "Marketplace Settlement, Seller Performance & Governance"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-95-marketplace-operator-third-party-seller/PA-95.3-marketplace-settlement-performance-governance.md",
+ "value_stream": {
+  "directory": "VS-95-marketplace-operator-third-party-seller",
+  "id": "VS-95",
+  "name": "Marketplace Operator & Third-Party Seller Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-516"
+   ],
+   "fields": {
+    "Frequency": "Per payout cycle",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Finance, AP/Treasury (links to VS-15/VS-18), Seller",
+    "Trigger": "Payout cycle (e.g., bi-weekly/monthly); order completion",
+    "Volume": "All sellers with completed orders"
+   },
+   "id": "W3153",
+   "level": 2,
+   "name": "Marketplace Commission, Fee Deduction & Seller Payout",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records\" (replaces manual Step 2).",
+     "- System auto-post of \"posts settlement entries\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance & Governance (PA-95.3).)",
+     "- operational: automated reconciliation and dispute window"
+    ],
+    "Pain Points / Risks": [
+     "- **Payout-error risk**: Incorrect settlement damages seller trust; mitigated by automated reconciliation and dispute window"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Settlement engine; AP/payout (links to VS-15/VS-18); tax (links to VS-79); records (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- 2–3 days per payout cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "System computes per-seller settlement: gross GMV (links to VS-10) − commission % (W3141) − fees (listing, fulfillment, advertising — W3141/W3152) − returns/refunds (W3151) − withholding tax (W3157) − holdback reserve; produce seller statement",
+     "duration": "Per cycle",
+     "n": "1",
+     "r": "System / Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance/AP (links to VS-15) review settlement; reconcile to order/returns records; resolve disputes; Treasury (links to VS-18) disburse net payout to seller's verified bank account",
+     "duration": "Per cycle",
+     "n": "2",
+     "r": "Finance Analyst / Treasury"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "System posts settlement entries: marketplace revenue (commission/fees), VAT output (W3157), AP to seller, withholdings remitted to BIR (links to VS-79); archive statement per records (links to VS-88)",
+     "duration": "Per cycle",
+     "n": "3",
+     "r": "System / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3141",
+    "W3151",
+    "W3152",
+    "W3157"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-516"
+   ],
+   "fields": {
+    "Frequency": "Daily KPI + monthly tier review",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Seller Operations, BI (links to VS-28), Finance",
+    "Trigger": "Daily/weekly/monthly scorecard cycle; tier review",
+    "Volume": "All active sellers"
+   },
+   "id": "W3154",
+   "level": 2,
+   "name": "Seller Performance Scorecard & Tier Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"tracking rate, return rate, customer-satisfaction\" (replaces manual Step 1).",
+     "- System auto-assign of \"assign performance tier\" (replaces manual Step 2).",
+     "- System auto-log of \"catalog/buy-box, hold payout reserve\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance & Governance (PA-95.3).)",
+     "- operational: verified-purchase reviews and audit"
+    ],
+    "Pain Points / Risks": [
+     "- **Gaming risk**: Sellers manipulate metrics (e.g., pressure customers for positive reviews); mitigated by verified-purchase reviews and audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seller scorecard (links to VS-28); commission/benefits (links to W3141/W3143); offboarding (links to W3144)"
+    ],
+    "Time Estimate": [
+     "- Continuous; monthly tier review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "BI (links to VS-28) compute per-seller KPIs: order defect rate, cancellation rate, late-ship rate, valid tracking rate, return rate, customer-satisfaction (CSAT/NPS), dispute rate, listing-quality; benchmark vs. peers",
+     "duration": "Daily/weekly",
+     "n": "1",
+     "r": "BI Analyst"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "Marketplace Mgr assign performance tier (Excellent / Good / Warning / At-Risk / Suspended) per thresholds; trigger benefits (W3143) or remediation/penalty path; communicate to seller",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Marketplace Mgr"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "For At-Risk/Suspended: Seller Operations implement Performance Improvement Plan, restrict catalog/buy-box, hold payout reserve; escalate to offboarding (W3144) if uncorrected",
+     "duration": "Per case",
+     "n": "3",
+     "r": "Seller Operations"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3141",
+    "W3143",
+    "W3144"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-516"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, CS (links to VS-13), Seller, Quality, Finance",
+    "Trigger": "Customer complaint about 3P order; seller-buyer dispute",
+    "Volume": "Subset of marketplace orders"
+   },
+   "id": "W3155",
+   "level": 2,
+   "name": "Seller Quality, Complaint & Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counterfeit\" (replaces manual Step 1).",
+     "- System auto-document of \"Marketplace Mgr mediate dispute between buyer and seller\" (replaces manual Step 2).",
+     "- System auto-track of \"track complaint themes and per-seller dispute rate to scorecard\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance & Governance (PA-95.3).)",
+     "- operational: documented dispute policy and transparent evidence-based decisions"
+    ],
+    "Pain Points / Risks": [
+     "- **Bias-perception risk**: Marketplace seen as favoring seller over buyer (or vice versa); mitigated by documented dispute policy and transparent evidence-based decisions"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CS ticketing (links to VS-13); dispute module; refund (links to VS-80); settlement (links to W3153)"
+    ],
+    "Time Estimate": [
+     "- 1–7 days per dispute"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "CS (links to VS-13) capture complaint: not-as-described, defective, counterfeit (escalate W3156), wrong item, late delivery; route to seller with SLA for response",
+     "duration": "Per complaint (<24 hr response)",
+     "n": "1",
+     "r": "CS / Seller"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "Marketplace Mgr mediate dispute between buyer and seller; evaluate evidence (photos, listing, comms); decide remedy (refund, replacement, partial credit, deny); document decision",
+     "duration": "Per dispute",
+     "n": "2",
+     "r": "Marketplace Mgr / CS"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance execute remedy (refund — links to VS-80, settlement debit — W3153); track complaint themes and per-seller dispute rate to scorecard (W3154); drive systemic fixes",
+     "duration": "Per dispute",
+     "n": "3",
+     "r": "Finance / Marketplace Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3153",
+    "W3154",
+    "W3156"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-86"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, Brand Protection (links to VS-71), Legal, LP (links to VS-23), Seller Operations",
+    "Trigger": "Brand-owner complaint (links to VS-71); customer counterfeit report; automated detection",
+    "Volume": "Subset of sellers"
+   },
+   "id": "W3156",
+   "level": 2,
+   "name": "Seller Fraud, Counterfeit & Policy Violation Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review manipulation, payment fraud\" (replaces manual Step 1).",
+     "- System auto-document of \"Marketplace Mgr/Legal investigate\" (replaces manual Step 2).",
+     "- System auto-record of \"records\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-86 (ensure marketplace seller & tax compliance.)",
+     "- operational: KYB (W3138), monitoring, and decisive action"
+    ],
+    "Pain Points / Risks": [
+     "- **Counterfeit-reputation risk**: Counterfeits damage BuildRight brand and customer trust; mitigated by KYB (W3138), monitoring, and decisive action"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Anti-counterfeit (links to VS-71); fraud (links to VS-23); payout hold (links to W3153); records (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- Per incident; 1–5 days"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Manager",
+     "activity": "Brand Protection/LP detect violation: counterfeit (links to VS-71), unauthorized seller, IP infringement, prohibited items (hazmat — links to VS-24, recalled — links to VS-89), review manipulation, payment fraud (links to W3147)",
+     "duration": "Per incident",
+     "n": "1",
+     "r": "Brand Protection / LP"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Marketplace Mgr/Legal investigate: evidence (test buy, document review), seller response opportunity, decide action (listing removal, account restriction, suspension, termination — W3144, legal referral)",
+     "duration": "Per incident",
+     "n": "2",
+     "r": "Marketplace Mgr / Legal"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "Execute action: remove listings, withhold payout (links to W3153), refund affected buyers (links to VS-80), report to authorities (DTI/NPC/IP owner) where required, retain records (links to VS-88); feed into seller scoring (W3154)",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "Marketplace Mgr / Finance / Legal"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3138",
+    "W3144",
+    "W3147",
+    "W3153",
+    "W3154"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-86"
+   ],
+   "fields": {
+    "Frequency": "Per transaction + monthly filing",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Mgr, Finance, Marketplace Mgr, Seller, Legal",
+    "Trigger": "Order transaction; payout cycle; BIR filing",
+    "Volume": "All marketplace transactions"
+   },
+   "id": "W3157",
+   "level": 2,
+   "name": "Marketplace Tax (VAT / Percentage Tax) & BIR Compliance per Seller",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"CREATE/train law and BIR marketplace rules\" (replaces manual Step 1).",
+     "- System auto-generate of \"generate BIR-compliant invoices\" (replaces manual Step 2).",
+     "- System continuous audit of \"Tax Mgr remit BuildRight VAT/EWT\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-86 (ensure marketplace seller & tax compliance.)",
+     "- operational: structured tax design and ongoing review"
+    ],
+    "Pain Points / Risks": [
+     "- **Tax-mis-classification risk**: Wrong VAT treatment triggers BIR assessment; mitigated by structured tax design and ongoing review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tax engine (links to VS-79); BIR eFPS/e-invoicing (links to VS-79); settlement (links to W3153)"
+    ],
+    "Time Estimate": [
+     "- Setup 1–2 weeks; ongoing monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Mgr structure marketplace taxation: distinguish BuildRight-as-marketplace-operator revenue (commission/fees — VATable) from seller revenue (sale of goods — VAT/percentage tax per seller's BIR status); apply withholding obligations per CREATE/train law and BIR marketplace rules",
+     "duration": "Setup + ongoing",
+     "n": "1",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "System compute per-transaction: VAT on BuildRight commission; pass-through of seller VAT/percentage tax to buyer where applicable; creditable withholding tax (EWT/CWT) on seller payout per BIR rules; generate BIR-compliant invoices (links to VS-79)",
+     "duration": "Per transaction",
+     "n": "2",
+     "r": "System / Finance"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Mgr remit BuildRight VAT/EWT (links to VS-79); issue Form 2307 to sellers for withheld tax; sellers remit own output VAT/income tax; facilitate BIR audit response (links to VS-21)",
+     "duration": "Monthly/quarterly",
+     "n": "3",
+     "r": "Tax Manager / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W3153"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-516"
+   ],
+   "fields": {
+    "Frequency": "Continuous + annual review",
+    "Owner": "Marketplace Manager",
+    "Participants": "Marketplace Mgr, CS (links to VS-13), Legal, Finance, Marketing (links to VS-14)",
+    "Trigger": "Marketplace launch; trust incident; program review",
+    "Volume": "All marketplace buyers"
+   },
+   "id": "W3158",
+   "level": 2,
+   "name": "Marketplace Consumer Protection & Trust Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counterfeit guarantee, holdback fund for unfulfilled orders\" (replaces manual Step 1).",
+     "- System auto-communication of \"communicate guarantee to buyers\" (replaces manual Step 2).",
+     "- System auto-report of \"report claims cost and trust-score uplift\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance & Governance (PA-95.3).)",
+     "- operational: claim review, evidence, and abuse monitoring (links to VS-23)"
+    ],
+    "Pain Points / Risks": [
+     "- **Claim-abuse risk**: Fraudulent buyer claims drain fund; mitigated by claim review, evidence, and abuse monitoring (links to VS-23)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CS/trust module (links to VS-13); reserve (links to VS-17); marketing (links to VS-14)"
+    ],
+    "Time Estimate": [
+     "- Continuous; annual policy review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Marketplace Mgr/Legal define buyer-protection policy: A-to-Z-style guarantee (refund if seller fails to deliver/resolve), money-back window, item-not-as-described remedy, counterfeit guarantee, holdback fund for unfulfilled orders (links to W3144)",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Marketplace Mgr / Legal"
+    },
+    {
+     "a": "Marketplace Manager",
+     "activity": "CS (links to VS-13) operate trust program: clear claim path, fast adjudication, proactive outreach on systemic issues; Marketing (links to VS-14) communicate guarantee to buyers",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "CS / Marketing"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance fund buyer-protection reserve from marketplace fees; report claims cost and trust-score uplift; calibrate policy to balance buyer trust and seller fairness",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3144"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-86"
+   ],
+   "fields": {
+    "Frequency": "Continuous + annual",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "DPO, Marketplace Mgr, Legal, IT Security (links to VS-27), Seller",
+    "Trigger": "Marketplace launch; DPA obligations; privacy incident",
+    "Volume": "All marketplace participants"
+   },
+   "id": "W3159",
+   "level": 2,
+   "name": "Marketplace Data Privacy, Seller Data Governance & DPA Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"DPO map marketplace data flows\" (replaces manual Step 1).",
+     "- System auto-notify of \"notify affected customers, investigate, remediate, and apply seller sanctions…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-86 (ensure marketplace seller & tax compliance.)",
+     "- operational: minimal-disclosure design, processor agreement, and audit"
+    ],
+    "Pain Points / Risks": [
+     "- **PII-leak risk**: Seller mishandles customer PII; mitigated by minimal-disclosure design, processor agreement, and audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Privacy/ROPA (links to VS-91); data masking; incident response (links to VS-91 PA-91.3); IT security (links to VS-27)"
+    ],
+    "Time Estimate": [
+     "- Initial 2–3 weeks; ongoing"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DPO",
+     "activity": "DPO map marketplace data flows: customer PII shared with seller (name, address, phone) for fulfillment — Data Privacy Act (DPA) processor/controller arrangement; seller-as-processor agreement; document ROPA (links to VS-91)",
+     "duration": "Initial + annual",
+     "n": "1",
+     "r": "DPO / Legal"
+    },
+    {
+     "a": "DPO",
+     "activity": "DPO implement seller data governance: minimal PII disclosure (e.g., masked phone, address only), retention limits, security requirements for seller handling of PII (links to VS-27), privacy-by-design in portal/API",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "DPO / IT Security"
+    },
+    {
+     "a": "DPO",
+     "activity": "On breach (seller or platform): execute 72-hour NPC notification (links to VS-91 PA-91.3), notify affected customers, investigate, remediate, and apply seller sanctions if seller-attributable",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "DPO / Marketplace Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-516"
+   ],
+   "fields": {
+    "Frequency": "Monthly + quarterly",
+    "Owner": "Marketplace Director",
+    "Participants": "Marketplace Director, Finance, BI (links to VS-28), Ecommerce (links to VS-10), Category (links to VS-01)",
+    "Trigger": "Monthly/quarterly P&L cycle; strategy review",
+    "Volume": "Marketplace-wide"
+   },
+   "id": "W3160",
+   "level": 2,
+   "name": "Marketplace P&L, Take-Rate & Growth Analytics",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"technology amortization, buyer-protection reserve, contribution margin\" (replaces manual Step 1).",
+     "- System auto-count of \"count/active, SKUs, category mix, buyer conversion, basket size,…\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews P&L and growth\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance & Governance (PA-95.3).)",
+     "- operational: milestone-gated investment and clear take-rate target"
+    ],
+    "Pain Points / Risks": [
+     "- **Unit-economics risk**: Sub-scale marketplace burns cash; mitigated by milestone-gated investment and clear take-rate target"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI dashboards (links to VS-28); financial cost model (links to VS-17); retail-media (links to VS-48)"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per monthly cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Marketplace Director",
+     "activity": "BI/Finance (links to VS-28) compute marketplace P&L: GMV, take-rate (commission+fees ÷ GMV), net revenue, returns/chargebacks, ops cost (CS, fraud, payouts), technology amortization, buyer-protection reserve, contribution margin",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "BI Analyst / Finance"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "Marketplace Director analyze growth: GMV trend, seller count/active, SKUs, category mix, buyer conversion, basket size, repeat-purchase, share of ecommerce (vs. 1P); benchmark vs. external marketplaces (links to VS-65)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "Marketplace Director / BI"
+    },
+    {
+     "a": "CEO",
+     "activity": "Steering committee reviews P&L and growth; reallocates investment (seller acquisition, technology, retail-media — links to VS-48), adjusts commission (W3141), refines strategy (W3137); report to Board (links to VS-36)",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "GM, Digital Commerce Inc. / CFO"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W3137",
+    "W3141"
+   ]
+  }
+ ]
+}

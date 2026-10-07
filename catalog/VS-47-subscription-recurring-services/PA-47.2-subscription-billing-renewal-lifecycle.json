@@ -1,0 +1,564 @@
+{
+ "process_area": {
+  "id": "PA-47.2",
+  "title": "Subscription Billing, Renewal & Lifecycle"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-47-subscription-recurring-services/PA-47.2-subscription-billing-renewal-lifecycle.md",
+ "value_stream": {
+  "directory": "VS-47-subscription-recurring-services",
+  "id": "VS-47",
+  "name": "Subscription & Recurring Home Services"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-192"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, System, Customer",
+    "Trigger": "Monthly billing cycle for monthly-payment subscribers",
+    "Volume": "~2,000–5,000 monthly subscribers (projected Year 1)"
+   },
+   "id": "W1982",
+   "level": 2,
+   "name": "Subscription Monthly Billing & Payment Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts receivable, credit deferred revenue\" (replaces manual Step 1).",
+     "- System auto-post of \"post cash receipt — debit cash, credit AR\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles subscription billing vs. payments received\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-192 (ensure subscription billing & dunning integrity.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Payment failure rate**: Philippine credit card auto-charge failure rates can be 5–10% (expired cards, insufficient funds); robust dunning process needed"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated monthly subscription billing (W1982.1)",
+     "- Payment gateway integration for auto-charge (W1982.2)",
+     "- Integration with W267 (digital payment reconciliation) for payment matching"
+    ],
+    "Time Estimate": [
+     "- Automated billing; 2–3 hours/month reconciliation",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Clerk",
+     "activity": "System generates monthly subscription charges: (a) for monthly-payment subscribers: auto-charge credit card or e-wallet on file, (b) billing date: 1st of month (or enrollment anniversary date), (c) amount: monthly subscription fee (annual fee ÷ 12), (d) GL posting: debit accounts receivable, credit deferred revenue",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AR Clerk",
+     "activity": "Payment processing: (a) credit card: auto-charge via payment gateway, (b) GCash/Maya: auto-debit via partner API, (c) success: post cash receipt — debit cash, credit AR, (d) failure: trigger dunning per W1986",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Monthly reconciliation: (a) AR Clerk reconciles subscription billing vs. payments received, (b) failed payments: total failed charges and follow-up actions, (c) deferred revenue: new enrollments added, revenue recognized from completed visits, net deferred revenue balance",
+     "duration": "2–3 hours/month",
+     "n": "3",
+     "r": "AR Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1986",
+    "W267"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-192"
+   ],
+   "fields": {
+    "Frequency": "~5,000–10,000 renewals/year (projected)",
+    "Owner": "Trade Account Manager",
+    "Participants": "Trade Account Manager, Sales Associate, Customer",
+    "Trigger": "Subscription approaching renewal date (30 days before)",
+    "Volume": "Target renewal rate: ≥ 70%"
+   },
+   "id": "W1983",
+   "level": 2,
+   "name": "Subscription Annual Renewal & Upsell Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-send of \"sends renewal notice 30 days before expiry\" (replaces manual Step 1).",
+     "- System auto-remind of \"reminder with incentive\" (replaces manual Step 2).",
+     "- System auto-count of \"discount on renewal for upgrade\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-192 (ensure subscription billing & dunning integrity.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Renewal rate**: 70% target is ambitious for Philippine market where subscription fatigue is growing; continuous service quality essential for retention"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated renewal notification sequence (W1983.2)",
+     "- Renewal payment processing (W1983.1)",
+     "- Integration with W17 (loyalty) for bonus points incentive"
+    ],
+    "Time Estimate": [
+     "- Automated; upsell ~5 min per renewal",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Account Manager",
+     "activity": "System sends renewal notice 30 days before expiry: (a) email + SMS to subscriber, (b) include: service summary (visits completed, remaining), renewal price, renewal options (same tier, upgrade, downgrade), easy-renew link for online payment",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Trade Account Manager",
+     "activity": "Follow-up sequence: (a) 30 days before: renewal notice, (b) 14 days before: second reminder with incentive (bonus loyalty points for early renewal), (c) 7 days before: final reminder, (d) expiry date: \"Your subscription has expired — renew now to avoid service interruption\"",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Upsell during renewal: (a) if customer on basic tier: offer upgrade to standard (additional 15% discount on renewal for upgrade), (b) if customer has single service: offer bundle with second service at 20% discount, (c) Sales Associate in-store can also process renewal with upsell at POS",
+     "duration": "Per renewal",
+     "n": "3",
+     "r": "Trade Account Manager / Sales Associate"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W17"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-192"
+   ],
+   "fields": {
+    "Frequency": "~30–50 cancellations/month (projected)",
+    "Owner": "Customer Service Rep",
+    "Participants": "Customer Service Rep, AR Clerk, Accounting Manager",
+    "Trigger": "Customer requests subscription cancellation",
+    "Volume": "Target churn rate: < 30% annually"
+   },
+   "id": "W1984",
+   "level": 2,
+   "name": "Subscription Cancellation & Pro-Rata Refund Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"Customer requests cancellation\" (replaces manual Step 1).",
+     "- System auto-count of \"Pro-rata refund calculation\" (replaces manual Step 2).",
+     "- System auto-track of \"track retention attempt outcome\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-192 (ensure subscription billing & dunning integrity.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Refund disputes**: Customers may dispute refund calculation (especially a-la-carte rate vs. subscription rate for completed visits); clear subscription terms and transparent calculation essential"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cancellation request with reason capture (W1984.1)",
+     "- Pro-rata refund auto-calculation (W1984.2)",
+     "- Integration with W101 (customer refund) for refund processing"
+    ],
+    "Time Estimate": [
+     "- 15–30 min per cancellation",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Store Operations",
+     "activity": "Customer requests cancellation: (a) channel: in-store, phone, email, online, (b) Customer Service Rep verifies identity and subscription details, (c) cancellation reason captured (mandatory): (i) service quality, (ii) price, (iii) no longer needed, (iv) moving, (v) competitor switch, (vi) other",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Pro-rata refund calculation: (a) annual subscription: refund = (remaining unused months ÷ 12) × annual fee, less: (i) visits already completed at a-la-carte rate (if a-la-carte rate > subscription pro-rata rate), (ii) cancellation fee per subscription agreement (if applicable), (iii) promotional discount clawback (if customer received enrollment discount), (b) monthly subscription: cancel next billing cycle; no mid-month refund",
+     "duration": "5–10 min",
+     "n": "2",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Refund processing: (a) AR Clerk processes refund per W101 (customer refund & credit processing), (b) refund method: same as original payment (credit card → credit card refund; GCash → GCash refund; cash at POS → cash refund), (c) reverse deferred revenue for unused portion, (d) cancellation confirmation sent to customer via email",
+     "duration": "10–15 min",
+     "n": "3",
+     "r": "AR Clerk"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Retention attempt: (a) before processing cancellation, Customer Service Rep offers retention options: (i) service credit for next visit, (ii) temporary pause instead of cancellation, (iii) downgrade to lower tier, (b) track retention attempt outcome",
+     "duration": "5–10 min",
+     "n": "4",
+     "r": "Customer Service Rep"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-383"
+   ],
+   "fields": {
+    "Frequency": "~50–100 tier changes/month",
+    "Owner": "Customer Service Rep",
+    "Participants": "Customer Service Rep, AR Clerk, Customer",
+    "Trigger": "Customer requests upgrade; system suggests upgrade based on usage",
+    "Volume": "~20–30% of subscribers on premium tier (target)"
+   },
+   "id": "W1985",
+   "level": 2,
+   "name": "Subscription Upgrade & Tier Change Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"Customer requests upgrade\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates price adjustment\" (replaces manual Step 2).",
+     "- System auto-validate of \"checklist provided to partner\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-383 (ensure controlled execution — Subscription Billing, Renewal & Lifecycle (PA-47.2).)",
+     "- operational: must handle edge cases"
+    ],
+    "Pain Points / Risks": [
+     "- **Prorated pricing complexity**: Upgrade fee calculation must account for services already rendered at lower tier; system must handle edge cases"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Subscription tier change with pro-rata pricing (W1985.2)",
+     "- Integration with W282 (subscription billing) for billing adjustment"
+    ],
+    "Time Estimate": [
+     "- 10 min per upgrade",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer requests upgrade: (a) from basic to standard or premium, (b) or from single service to bundle, (c) process via customer service, in-store POS, or online self-service",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "AR Clerk",
+     "activity": "System calculates price adjustment: (a) upgrade fee = (new tier annual price − remaining credit from current tier), (b) prorated: based on months remaining in current subscription, (c) collect upgrade fee as additional payment, (d) adjust deferred revenue: increase by upgrade fee amount",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Service partner notified of tier change: (a) higher tier includes more comprehensive service, (b) updated service checklist provided to partner, (c) next visit uses new tier scope",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W282"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-192"
+   ],
+   "fields": {
+    "Frequency": "~200–500 failed payments/month (5–10% failure rate projected)",
+    "Owner": "AR Clerk",
+    "Participants": "AR Clerk, Customer Service Rep, Customer",
+    "Trigger": "Monthly auto-charge payment failure",
+    "Volume": "~2,000–5,000 monthly-billed subscribers"
+   },
+   "id": "W1986",
+   "level": 2,
+   "name": "Subscription Payment Failure & Dunning Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"System detects payment failure\" (replaces manual Step 1).",
+     "- System auto-update of \"update your payment method.\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-192 (ensure subscription billing & dunning integrity.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Service interruption**: Suspending service visits due to payment failure may lead to customer churn; balance firm collection with retention"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated dunning notification sequence (W1986.2)",
+     "- Payment method update self-service (W1986.3)",
+     "- Integration with W108 (collection escalation) for escalation path"
+    ],
+    "Time Estimate": [
+     "- Automated dunning; 10–15 min per manual call",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "AR Clerk",
+     "activity": "System detects payment failure: (a) credit card declined, (b) e-wallet insufficient balance, (c) bank account issue, (d) system tags subscription as \"payment due\"",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "AR Clerk",
+     "activity": "Dunning sequence: (a) Day 1: SMS notification — \"Your payment didn't go through. Please update your payment method.\", (b) Day 3: email with payment update link, (c) Day 7: customer service call, (d) Day 14: second call + final notice, (e) Day 30: subscription suspended (service visits paused)",
+     "duration": "Automated + manual calls",
+     "n": "2",
+     "r": "System / Customer Service Rep"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Payment recovery: (a) customer updates payment method (online or in-store), (b) system retries charge, (c) if successful: reactivate subscription, clear overdue status, (d) if customer unresponsive after 60 days: auto-cancel subscription per W1984 (no refund — subscription was partially used)",
+     "duration": "Per case",
+     "n": "3",
+     "r": "AR Clerk / System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W108",
+    "W1984"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-383"
+   ],
+   "fields": {
+    "Frequency": "~20–50 pause requests/month",
+    "Owner": "Customer Service Rep",
+    "Participants": "Customer Service Rep, AR Clerk, Customer",
+    "Trigger": "Customer requests temporary pause (moving, travel, financial difficulty)",
+    "Volume": "~5–10% of subscribers may pause per year"
+   },
+   "id": "W1987",
+   "level": 2,
+   "name": "Subscription Pause & Reactivation Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"Customer requests pause\" (replaces manual Step 1).",
+     "- System auto-record of \"System processes pause\" (replaces manual Step 2).",
+     "- System auto-send of \"sends reactivation reminder 7 days before pause end date\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-383 (ensure controlled execution — Subscription Billing, Renewal & Lifecycle (PA-47.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Pause abuse**: Customers may repeatedly pause to avoid payment; limit to 1 pause per subscription year"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Subscription pause with billing suspension (W1987.2)",
+     "- Automated reactivation notification (W1987.3)",
+     "- Integration with W282 (subscription billing) for billing pause"
+    ],
+    "Time Estimate": [
+     "- 10 min per pause request",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer requests pause: (a) reason: travel, renovation, temporary move, financial difficulty, (b) pause duration: 1–6 months maximum, (c) Customer Service Rep verifies subscription is in good standing",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "AR Clerk",
+     "activity": "System processes pause: (a) pause start date and end date recorded, (b) monthly billing suspended during pause period, (c) annual subscription: pause extends subscription expiry by pause duration, (d) service visits cancelled during pause, (e) customer notified of pause confirmation with reactivation date",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "AR Clerk",
+     "activity": "Reactivation: (a) system sends reactivation reminder 7 days before pause end date, (b) customer confirms reactivation (or requests extension), (c) billing resumes, (d) next service visit scheduled, (e) if customer does not respond: auto-reactivate after 14 days grace period",
+     "duration": "Automated + 10 min manual",
+     "n": "3",
+     "r": "System / Customer Service Rep"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W282"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-383"
+   ],
+   "fields": {
+    "Frequency": "~20–50 gift/transfer requests/month",
+    "Owner": "Customer Service Rep",
+    "Participants": "Customer Service Rep, AR Clerk, Customer",
+    "Trigger": "Customer purchases subscription as gift; customer moves and transfers service",
+    "Volume": "Gift purchases: ~5% of enrollment; Transfers: ~2%"
+   },
+   "id": "W1988",
+   "level": 2,
+   "name": "Subscription Gift & Transfer Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"Gift subscription purchase\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates new address against service territory\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-383 (ensure controlled execution — Subscription Billing, Renewal & Lifecycle (PA-47.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Recipient non-activation**: Gift recipient may not activate subscription; gift purchaser may request refund if unused after 90 days"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Gift subscription enrollment with recipient activation (W1988.1)",
+     "- Address transfer with territory validation (W1988.2)",
+     "- Integration with W1979 (territory mapping) for coverage check"
+    ],
+    "Time Estimate": [
+     "- 10–15 min per request",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Gift subscription purchase: (a) customer purchases subscription at POS or online as gift, (b) recipient details collected: name, address, phone, email, (c) gift notification sent to recipient with activation instructions, (d) recipient activates by confirming address and scheduling first visit",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Customer Service Rep / System"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "Subscription transfer (customer moving): (a) customer requests transfer to new address, (b) system validates new address against service territory, (c) if covered: update service address and assign new service partner, (d) if not covered: offer cancellation with pro-rata refund or pause until coverage expands",
+     "duration": "10–15 min",
+     "n": "2",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Financial processing: (a) no fee for gift activation or address transfer, (b) service territory change may affect partner cost: internal cost reallocation, no customer price change",
+     "duration": "Automated",
+     "n": "3",
+     "r": "AR Clerk"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1979"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-383"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "CMO",
+    "Participants": "CMO, System, Customer Service Rep",
+    "Trigger": "Various subscription lifecycle events",
+    "Volume": "~5,000–10,000 subscribers receiving communications"
+   },
+   "id": "W1989",
+   "level": 2,
+   "name": "Subscription Customer Communication & Notification Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-send of \"sends automated communications at lifecycle events\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews communication effectiveness\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-383 (ensure controlled execution — Subscription Billing, Renewal & Lifecycle (PA-47.2).)",
+     "- operational: CMO review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Communication fatigue**: Too many messages lead to opt-outs; limit to essential lifecycle communications + 1 promotional message per month"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Automated communication engine with lifecycle triggers (W1989.1)",
+     "- Communication template management (W1989.2)",
+     "- Integration with W258 (omni-channel ticketing) for customer service escalation"
+    ],
+    "Time Estimate": [
+     "- Automated; 1 day/quarter for review",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CMO",
+     "activity": "System sends automated communications at lifecycle events: (a) enrollment confirmation with welcome guide, (b) service visit reminder: 48 hours and 2 hours before scheduled visit, (c) service completion confirmation with satisfaction survey, (d) renewal notice: 30/14/7 days before expiry, (e) payment confirmation (or failure notice), (f) subscription anniversary: thank you + loyalty points bonus",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "COO",
+     "activity": "CMO designs communication templates: (a) consistent BuildRight branding, (b) SMS: concise (160 char), actionable, (c) email: branded template with service details and self-service links, (d) app push notification: quick-action buttons, (e) all communications comply with RA 10173 (consent-based)",
+     "duration": "Per template design",
+     "n": "2",
+     "r": "CMO"
+    },
+    {
+     "a": "COO",
+     "activity": "Quarterly: CMO reviews communication effectiveness: (a) open rate, click rate, action rate per communication type, (b) A/B test subject lines and timing, (c) adjust communication frequency: reduce if opt-out rate > 2%/month",
+     "duration": "1 day/quarter",
+     "n": "3",
+     "r": "CMO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W258"
+   ]
+  }
+ ]
+}

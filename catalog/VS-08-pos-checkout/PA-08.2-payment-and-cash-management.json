@@ -1,0 +1,1338 @@
+{
+ "process_area": {
+  "id": "PA-08.2",
+  "title": "Payment & Cash Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md",
+ "value_stream": {
+  "directory": "VS-08-pos-checkout",
+  "id": "VS-08",
+  "name": "POS & Checkout"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "Daily per POS terminal with shift-based staffing",
+    "Owner": "Outgoing Cashier / Incoming Cashier",
+    "Participants": "Outgoing Cashier, Incoming Cashier, Store Manager (variance escalation)",
+    "Trigger": "Shift change (typically mid-day, ~2:00 PM at stores with 2 shifts)",
+    "Volume": "~1 double-shifted terminal × 200 stores = ~200 mid-shift handovers/day; the remaining 2 terminals per store operate single-shift and only require EOD per W5F"
+   },
+   "id": "W517",
+   "level": 2,
+   "name": "POS Cashier Shift Handover & Drawer Accountability",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"System generates X-report\" (replaces manual Step 2).",
+     "- System auto-count of \"counts physical cash in drawer\" (replaces manual Step 3).",
+     "- System auto-document of \"documents variance reason in system\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: staggering handover across terminals (not all at once); operational: should enforce logout/login cycle at shift change"
+    ],
+    "Pain Points / Risks": [
+     "- **Handover queue delays** — customers waiting in line during handover (peak 2 PM shift change coincides with afternoon rush); mitigated by staggering handover across terminals (not all at once)",
+     "- **Cash count disputes** — outgoing and incoming cashiers disagreeing on drawer count, especially when tamper-evident bag is not used and drawer is transferred open; system-enforced count-before-swap mitigates",
+     "- **Float availability** — insufficient pre-prepared sealed drawers in safe (Store Manager needs 3 sealed drawers ready for shift change); if float preparation is skipped, handover takes longer while drawer is counted and re-floated",
+     "- **Variance pattern undetected** — recurring small variances (< PHP 200) at handover that don't trigger alerts but accumulate over weeks; Store Manager should review weekly variance trends per cashier",
+     "- **Cashier login sharing** — incoming cashier using outgoing cashier's login if handover screen is skipped; system should enforce logout/login cycle at shift change"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — handover is a standard cashier and Store Manager responsibility absorbed within shift structure.",
+     "- Store Manager must prepare 3 sealed float drawers before shift change (part of mid-day routine, ~15 min).",
+     "- Across ~200 mid-shift handovers/day, total chain-wide handover labor is ~65–85 hours/day (plus EOD closes per W5F), fully absorbed by existing cashier and Store Manager FTEs.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- X-report generation per terminal per shift (W517.2) — distinct from EOD Z-report (W5F.2)",
+     "- System block on handover if pending transactions exist (W517.1, W521)",
+     "- Drawer count entry with denomination breakdown and variance flagging (W517.3–5)",
+     "- Handover event logging with outgoing/incoming cashier IDs, terminal, X-report, variance (W517.9)",
+     "- Automatic W272 escalation for variances > PHP 200 at handover (W517.4)",
+     "- Integration with W5A (opening — initial float), W5F (closing — EOD Z-report), W272 (cashier over/short), W278 (mid-day cash skimming), W212 (Smart Safe — sealed drawer storage)"
+    ],
+    "Time Estimate": [
+     "~20–25 min per handover (1 min finalize + automated X-report + 5 min count + 5 min record + 5 min drawer swap + 3 min login/confirm). Variance investigation adds 10 min. Across ~200 mid-shift handovers/day chain-wide, total labor is ~65–85 hours/day (plus EOD closes per W5F)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Outgoing Cashier completes or suspends any in-progress transaction per W521; system enforces no pending transactions before handover can proceed",
+     "duration": "1 min",
+     "n": "1",
+     "r": "Outgoing Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System generates X-report (mid-day sales summary by tender type for this terminal since opening or last handover) — distinct from Z-report which is end-of-day",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Outgoing Cashier counts physical cash in drawer; compares to X-report expected cash",
+     "duration": "5 min",
+     "n": "3",
+     "r": "Outgoing Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If cash variance > PHP 200: Outgoing Cashier documents variance reason in system; system alerts Store Manager; Store Manager investigates per W272 (cashier over/short dispute resolution)",
+     "duration": "10 min if variance",
+     "n": "4",
+     "r": "Outgoing Cashier / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Outgoing Cashier records drawer count in system: cash by denomination, total cash, credit/debit card slips count, e-wallet transaction count, total tender amount per X-report, variance (if any)",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Outgoing Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Outgoing Cashier removes cash drawer (till); places in tamper-evident bag with handwritten or printed count slip; secures in backroom safe",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Outgoing Cashier"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager or Lead Cashier issues sealed replacement drawer with standard float (PHP 5,000 per W5A.4) from safe to Incoming Cashier",
+     "duration": "2 min",
+     "n": "7",
+     "r": "Store Manager / Lead Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Incoming Cashier logs into POS terminal; system displays handover screen showing X-report totals from Outgoing Cashier; Incoming Cashier confirms receipt of sealed drawer and acknowledges handover in system",
+     "duration": "3 min",
+     "n": "8",
+     "r": "Incoming Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System records handover event: outgoing cashier ID, incoming cashier ID, terminal ID, X-report totals, drawer count, variance (if any), handover timestamp; links to W272 if variance escalated",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "If no replacement cashier available (sick call, no-show): Store Manager assigns float cashier from available staff; if no staff available, Store Manager operates terminal directly or closes terminal for shift (reducing store checkout capacity)",
+     "duration": "5 min",
+     "n": "10",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W212",
+    "W272",
+    "W278",
+    "W521",
+    "W5A",
+    "W5F"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "Daily — per shift per terminal (3 terminals × 200 stores EOD + ~1 double-shifted terminal × 200 stores = ~800 batch closes/day)",
+    "Owner": "Store Manager (settlement review); IT Operations (terminal troubleshooting)",
+    "Participants": "Cashier (batch close), Store Manager (exception review), IT Helpdesk (terminal issues), Bank Acquirer (settlement processing)",
+    "Trigger": "End of cashier shift (batch close) or end-of-day store close (W5F); also triggered by card reader error or settlement exception",
+    "Volume": "~1.0M card transactions/month (36% of 2.8M POS transactions); ~5,000 card transactions/store/month (~167/day/store)"
+   },
+   "id": "W537",
+   "level": 2,
+   "name": "POS Card Terminal & Acquirer Settlement Operations",
+   "parent": null,
+   "req_refs": [
+    "FIN-037"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Card authorization at POS\" (replaces manual Step 1).",
+     "- System auto-scan of \"scans e-wallet QR on PIN pad for amounts below contactless limit\" (replaces manual Step 2).",
+     "- System auto-generate of \"printed and retained\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Approximately 36% of BuildRight's POS transactions are paid via credit or debit card (EMV chip, contactless/NFC, or manual key-entry). Each POS terminal has an integrated PIN pad that communicates with the bank acquirer for authorization. At end-of-shift and end-of-day, card transactions must be batch-closed and settled with the acquirer. This workflow covers the daily card terminal operations lifecycle: authorization processing, batch close, settlement reconciliation, exception handling, and PIN pad troubleshooting."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: automatic retry and terminal memory buffer; operational: retry and terminal memory buffer; operational: next-day settlement file matching per W99"
+    ],
+    "Pain Points / Risks": [
+     "- **Batch close failure during shift handover** — delays cashier checkout, creates queue; mitigated by automatic retry and terminal memory buffer",
+     "- **Settlement discrepancy** — acquirer MDR fee timing differences cause reconciliation variances; mitigated by next-day settlement file matching per W99",
+     "- **PCI-DSS compliance across 600 terminals** — firmware updates and compliance certification must be centrally managed; mitigated by quarterly audit and automated firmware push",
+     "- **Card decline customer friction** — ~2–3% decline rate in Philippines causes queue delays; mitigated by express redirect to next terminal",
+     "- **EMV fallback to manual entry** — increased fraud risk and higher MDR; restricted to manager authorization only; mitigated by CTL-264 (controlled execution — Payment & Cash Management (PA-08.2))"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount — card terminal operations absorbed by existing cashiers and Store Manager",
+     "- IT Operations: ~2 hours/quarter for PIN pad firmware audit (absorbed in existing W265 maintenance schedule)",
+     "- Finance: settlement reconciliation absorbed in existing W99 daily reconciliation process",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Integrated card payment gateway on each POS PIN pad (W537.1–2)",
+     "- Card batch close integration with acquirer settlement platform (W537.3–4)",
+     "- Settlement file matching with ERP payment reconciliation (W537.7, W99)",
+     "- IT asset management for PIN pad firmware and compliance tracking (W537.8, W265)",
+     "- Integration with W5B (card tender during checkout), W5F (EOD close), W517 (shift-end batch close), W99 (settlement reconciliation), W265 (hardware maintenance), W48 (helpdesk), W5E (system-down fallback)"
+    ],
+    "Time Estimate": [
+     "- Per-transaction card processing: 5–15 sec (no incremental time vs. cash; absorbed in checkout)",
+     "- Shift-end batch close: 2–5 min/terminal × 3 terminals = 6–15 min per shift per store",
+     "- Daily batch verification: 5 min per store",
+     "- Settlement exception: 10–30 min per occurrence (estimated 2–3 per store per month)",
+     "- **Total per store per day**: ~20–30 min absorbed in existing shift handover and EOD procedures"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Card authorization at POS**: during checkout (W5B.7), customer presents card; cashier or customer taps/inserts/swipes on PIN pad; POS system sends authorization request to acquirer via integrated payment gateway; system receives approval/decline with authorization code; transaction completed with card tender line on receipt",
+     "duration": "5–15 sec per transaction",
+     "n": "1",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Contactless / QR payment**: customer taps contactless card or scans e-wallet QR on PIN pad for amounts below contactless limit (PHP 2,000); system processes without PIN; amounts above limit require PIN entry; e-wallet payments (GCash, Maya) processed via same PIN pad terminal using QR display",
+     "duration": "3–10 sec",
+     "n": "2",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Shift-end card batch close**: at shift handover (W517), cashier or Store Manager initiates card batch close on each terminal; system transmits all authorized card transactions since last batch close to acquirer for settlement; acquirer confirms batch total (count + amount); batch close receipt printed and retained",
+     "duration": "2–5 min per terminal",
+     "n": "3",
+     "r": "Cashier / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Batch total verification**: Store Manager compares card batch total on close receipt to POS card tender total from X-report (mid-shift) or Z-report (end-of-day); verifies transaction count and total amount match; flags variance > PHP 100 for investigation",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Settlement exception handling**: if batch close fails (communication error, acquirer timeout, total mismatch), system queues batch for retry; Store Manager contacts acquirer support if retry fails after 3 attempts; unsettled transactions held in terminal memory and retransmitted on next successful connection; exception logged per W48 (helpdesk ticket if IT assistance needed)",
+     "duration": "10–30 min per exception",
+     "n": "5",
+     "r": "Store Manager / IT Helpdesk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**PIN pad error troubleshooting**: if PIN pad malfunctions during transaction (offline, printer error, communication failure), cashier follows troubleshooting protocol: (a) restart PIN pad, (b) test with service card, (c) if persistent, log IT ticket per W265; cashier redirects card customers to adjacent terminal; if all terminals down, cash-only mode per W5E",
+     "duration": "5–15 min",
+     "n": "6",
+     "r": "Cashier / IT Helpdesk"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Daily settlement reconciliation**: next-business-day, Finance receives settlement file from acquirer per W99 (payment settlement reconciliation); settlement file matched to POS batch totals; discrepancies (MDR fees, chargebacks, rejected transactions) flagged for investigation per FIN-037",
+     "duration": "Per W99",
+     "n": "7",
+     "r": "Finance / System"
+    },
+    {
+     "a": "IT Manager",
+     "activity": "**Quarterly terminal inventory & firmware audit** (per the Duration and staffing basis): IT Operations verifies all 600 PIN pads are online, running current firmware, and PCI-DSS compliant; firmware updates pushed during off-hours; non-compliant terminals flagged for replacement per W265",
+     "duration": "Quarterly",
+     "n": "8",
+     "r": "IT Operations"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W265",
+    "W48",
+    "W517",
+    "W5B",
+    "W5E",
+    "W5F",
+    "W99"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "Daily — 2 shifts × 200 stores = 400 cash office processing cycles/day",
+    "Owner": "Store Manager (cash office operations); Finance (bank deposit verification)",
+    "Participants": "Cash Office Clerk / designated Store Manager on-duty, Cashier (drawer handover), CIT Guard (cash pickup per W212), Bank (deposit processing)",
+    "Trigger": "End of cashier shift (W517) or end-of-day store close (W5F) when cash drawers are submitted to cash office",
+    "Volume": "~PHP 2.1B in monthly cash sales (42% of PHP 5.04B); ~PHP 350,000/day/average store in cash"
+   },
+   "id": "W541",
+   "level": 2,
+   "name": "POS Cash Office Operations & Bank Deposit Preparation",
+   "parent": null,
+   "req_refs": [
+    "FIN-025"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records receipt time and cashier name\" (replaces manual Step 1).",
+     "- System auto-count of \"count and verification\" (replaces manual Step 2).",
+     "- System auto-document of \"documentation\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "While W5F covers end-of-day store close procedures and W517 covers cashier shift handover, neither details the cash office back-office operations that occur after cashiers submit their drawers. The cash office is the secure back-room area where drawer counts are verified, variances documented, bank deposits prepared, and cash secured. For BuildRight with ~PHP 350,000/day in cash per store, the cash office process is critical for cash security, accurate financial reporting, and loss prevention. Stores with Smart Safe (W212) have partially automated this process, but all stores require a structured cash office workflow."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: denomination-level count recording and dual-verification for variances > PHP 200; operational: CIT service for high-volume stores, varying bank run times for others; operational: staggered shift handover schedule and Smart Safe automation (W212)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cash counting error** — manual counting of ~PHP 350,000/store/day is error-prone; mitigated by denomination-level count recording and dual-verification for variances > PHP 200",
+     "- **Robbery risk during bank run** — stores without CIT service are vulnerable during cash transport; mitigated by CIT service for high-volume stores, varying bank run times for others",
+     "- **Cash office bottleneck during peak** — multiple cashiers submitting drawers simultaneously at shift change; mitigated by staggered shift handover schedule and Smart Safe automation (W212)",
+     "- **Counterfeit detection** — manual counterfeit detection unreliable for high-volume cash; mitigated by UV counterfeit detection pens in cash office and Smart Safe counterfeit detection sensors",
+     "- **Cash float planning** — insufficient float for next day disrupts store opening; mitigated by minimum float threshold alerts and automatic CIT cash delivery scheduling"
+    ],
+    "Staffing Implication": [
+     "- **Cash Office Clerk**: 1 per store (part-time, 4–6 hours/day covering both shifts); currently implied by existing roles but not explicitly staffed; role may be combined with back-office/admin responsibilities",
+     "- For Smart Safe stores (W212): Cash Office Clerk time reduced by ~30–40% (automated counting)",
+     "- CIT guard cost: per FIN-025 contract; varies by location",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS system expected drawer amounts per cashier per shift (W541.2, from W5B transaction data)",
+     "- Cash office variance flagging and escalation to W272 (cashier over/short) (W541.3)",
+     "- Card and e-wallet tender verification per W537 and W261 (W541.4)",
+     "- Smart Safe integration for automated cash counting (W212) (W541.5)",
+     "- Cash office close report generation and transmission via W533 (W541.7)",
+     "- CIT custody transfer documentation integration with FIN-025 (W541.8)",
+     "- Integration with W5A (opening float — next-day float source), W5F (EOD close — triggers cash office), W517 (shift handover — drawer submission), W212 (Smart Safe — automated counting), W272 (over/short — variance investigation), W278 (mid-day skim — mid-day deposit), FIN-025 (CIT — armored car), W89 (bank reconciliation — deposit matching), W48 (helpdesk — safe/office issues)"
+    ],
+    "Time Estimate": [
+     "- Drawer receipt and count: 7–11 min per cashier (× up to 3 cashiers per shift per store = 21–33 min/shift)",
+     "- Variance documentation: 3–5 min per variance (~20% of drawers = 1–2 variances/shift)",
+     "- Bank deposit preparation: 10–15 min",
+     "- Cash securing: 5 min",
+     "- Report review and sign: 5 min",
+     "- CIT pickup: 10–15 min",
+     "- **Total per store per day**: ~90–120 min (split between 2 shifts = 45–60 min/shift)",
+     "- **Total chain-wide per day**: ~300–400 hours"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Drawer receipt from cashier**: at shift end (W517.7) or EOD (W5F.2), cashier brings sealed cash drawer or tamper-evident cash bag to cash office; Cash Office Clerk verifies tamper-evident seal is intact; records receipt time and cashier name",
+     "duration": "2–3 min per drawer",
+     "n": "1",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Drawer count and verification**: Cash Office Clerk opens drawer/bag in cash office (secure room with CCTV); counts bills by denomination; counts coins by denomination; records actual cash amount per cashier; system compares actual count to POS system expected amount (opening float + cash sales − cash refunds − cash payouts − voids)",
+     "duration": "5–8 min per drawer",
+     "n": "2",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Variance documentation**: if variance between actual and expected > PHP 50 (configurable threshold): (a) system flags variance for investigation per W272 (cashier over/short), (b) Cash Office Clerk documents variance with cashier name, amount, date, shift, (c) Store Manager notified, (d) cashier notified and signs variance acknowledgment; variance < PHP 50 recorded but not escalated",
+     "duration": "3–5 min per variance",
+     "n": "3",
+     "r": "Cash Office Clerk / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Non-cash tender verification**: for stores without Smart Safe, Cash Office Clerk also verifies non-cash tender totals: (a) card batch totals vs. POS card tender report (per W537), (b) e-wallet settlement totals vs. POS e-wallet tender report, (c) trade account charges vs. POS trade account report; discrepancies flagged per W537 or W261",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Bank deposit preparation**: Cash Office Clerk prepares bank deposit: (a) selects bills and coins for deposit (keeping working float for next day), (b) fills bank deposit slip with cash breakdown by denomination, (c) includes any check payments received, (d) seals deposit in tamper-evident bank bag with deposit slip, (e) records deposit amount in cash office log; for Smart Safe stores (W212): Smart Safe counts and verifies cash automatically; Cash Office Clerk confirms Smart Safe count and initiates deposit report",
+     "duration": "10–15 min",
+     "n": "5",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Cash securing**: remaining working float (next day's opening float per W5A) placed in store safe; bank deposit bag secured in safe pending CIT pickup (W212) or manager bank run; cash office log updated with safe contents (working float + deposit bag); safe locked and time-lock set",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Cash office close report**: system generates cash office close report: (a) per-cashier actual vs. expected with variances, (b) total cash received, (c) bank deposit amount, (d) working float retained, (e) non-cash tender summary, (f) net cash position; Store Manager reviews and digitally signs; report transmitted to Finance via event stream (W533)",
+     "duration": "5 min",
+     "n": "7",
+     "r": "System / Cash Office Clerk"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**CIT pickup or bank deposit execution**: for stores with CIT service (W212, FIN-025): CIT guard arrives per schedule; two-person custody transfer (Cash Office Clerk + CIT guard); both sign custody transfer log; CIT guard transports deposit to bank; for stores without CIT: Store Manager or designated supervisor makes bank run before close; bank deposit receipt obtained and filed",
+     "duration": "10–15 min",
+     "n": "8",
+     "r": "Cash Office Clerk / CIT Guard"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W212",
+    "W261",
+    "W272",
+    "W278",
+    "W48",
+    "W517",
+    "W533",
+    "W537",
+    "W5A",
+    "W5B",
+    "W5F",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "~42,000 consignment POS transactions/month (~1.5% of POS transactions)",
+    "Owner": "Merchandising Manager (consignment terms); Store Manager (POS processing compliance)",
+    "Participants": "Cashier (scanning), System (ownership transfer detection), Finance (vendor settlement), Vendor (consignment partner)",
+    "Trigger": "Customer purchases a consignment item at POS; consignment sell-through period settlement",
+    "Volume": "~PHP 378M/month in consignment sales (~7.5% of in-store revenue)"
+   },
+   "id": "W543",
+   "level": 2,
+   "name": "POS Consignment Sell-Through Transaction Processing & Vendor Settlement Trigger",
+   "parent": null,
+   "req_refs": [
+    "FIN-018",
+    "INV-009",
+    "INV-017",
+    "POS-047"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan at checkout\" (replaces manual Step 1).",
+     "- System auto-post of \"posted using consignment cost\" (replaces manual Step 2).",
+     "- System auto-flag of \"flags for vendor RTV per consignment terms rather than standard RTV\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight carries consignment inventory from select vendors (large appliance brands, seasonal garden items, specialty tools). Per INV-009/INV-017, consignment items are vendor-owned until sold, at which point ownership transfers to BuildRight and immediately to the customer (sell-through). At POS, the system must distinguish consignment items from owned inventory, apply appropriate pricing, trigger ownership transfer, and accumulate sell-through data for vendor settlement (FIN-018). No existing workflow covers the POS terminal-level processing of consignment transactions."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: item master governance (W252) with consignment flag validation at SKU creation; operational: real-time consignment inventory deduction and vendor recall processing per W29; operational: transaction-level sell-through data (W543.3) as evidence"
+    ],
+    "Pain Points / Risks": [
+     "- **Consignment inventory inaccuracy** — if consignment flag is incorrect in item master, ownership transfer posts to wrong GL; mitigated by item master governance (W252) with consignment flag validation at SKU creation",
+     "- **Consignment stockout not visible to cashier** — consignment ATP shown same as owned stock; if vendor recalls consignment stock, POS may sell unavailable items; mitigated by real-time consignment inventory deduction and vendor recall processing per W29",
+     "- **Settlement dispute** — vendor may dispute sell-through quantities; mitigated by transaction-level sell-through data (W543.3) as evidence",
+     "- **Consignment vs. owned confusion at return** — cashier may not distinguish consignment returns; mitigated by system-enforced return routing based on item master flag"
+    ],
+    "Staffing Implication": [
+     "- No incremental headcount at store level — consignment processing is transparent to cashier",
+     "- Finance: monthly consignment settlement processing absorbed into existing FIN-018 workflow",
+     "- Merchandising: consignment terms management absorbed into existing vendor management",
+     "---",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item master consignment flag (MDM) detection at POS scan (W543.1)",
+     "- Ownership transfer event with consignment-specific GL posting (W543.2, W533)",
+     "- Consignment sell-through accumulation table (W543.3)",
+     "- Consignment return reversal to vendor-owned stock (W543.4, W12)",
+     "- Price push integration with consignment GL override (W543.5, POS-047)",
+     "- Monthly settlement integration with FIN-018 (W543.6)",
+     "- Integration with W5B (checkout — consignment scan), W12 (returns — consignment return), W533 (event streaming — ownership transfer event), INV-009/INV-017 (consignment inventory), FIN-018 (consignment settlement), W252 (item master — consignment flag), W289 (pricing master — consignment pricing), W525 (nightly reconciliation — consignment inventory reconciliation)"
+    ],
+    "Time Estimate": [
+     "- Consignment scan at POS: no incremental time vs. standard scan",
+     "- Ownership transfer: automated (no cashier action)",
+     "- Consignment return: no incremental time vs. standard return (system auto-detects)",
+     "- Monthly settlement data preparation: automated per FIN-018",
+     "- **Total incremental POS time**: zero — consignment processing is entirely system-driven at POS level"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Consignment item scan at checkout**: cashier scans consignment item barcode; POS system identifies item as consignment from item master flag (MDM — consignment indicator); system displays consignment indicator on cashier screen (discrete — not shown to customer); standard pricing and promotions applied per normal POS rules (W5B)",
+     "duration": "No incremental time vs. standard scan",
+     "n": "1",
+     "r": "Cashier / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Consignment ownership transfer**: at transaction completion (payment tender accepted), system executes ownership transfer for each consignment line item: (a) vendor-owned consignment inventory reduced by quantity sold, (b) standard owned inventory not affected (no owned stock existed), (c) ownership transfer event published via W533 with consignment flag, (d) COGS entry posted using consignment cost (not standard cost), (e) revenue posted per normal sales transaction",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Consignment sell-through data accumulation**: system accumulates daily consignment sell-through data per vendor: (a) item-level sales quantities and values, (b) date and store of sale, (c) transaction reference numbers; data published to vendor settlement accumulation table for FIN-018 processing",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Consignment return processing**: when a consignment item is returned (W12), system reverses ownership transfer: (a) inventory returned to vendor-owned consignment stock (not BuildRight owned stock), (b) COGS reversed, (c) revenue reversed per standard return processing, (d) sell-through accumulation adjusted; if item is defective, system flags for vendor RTV per consignment terms rather than standard RTV",
+     "duration": "Per W12",
+     "n": "4",
+     "r": "System / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "**Consignment pricing exception**: if vendor requests a temporary price change on consignment items (promotional pricing, markdown), pricing update flows through standard price push mechanism (POS-047) with consignment-specific GL posting (vendor-funded discount); Store Manager does not need to distinguish at POS — system handles automatically",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Monthly vendor settlement trigger**: at month-end, Finance runs consignment settlement per FIN-018; POS sell-through data accumulated in W543.3 provides the settlement basis; settlement report shared with vendor for reconciliation; AP voucher created for vendor payment (consignment cost × quantity sold − vendor-funded discounts − defectives)",
+     "duration": "Per FIN-018",
+     "n": "6",
+     "r": "Finance / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12",
+    "W252",
+    "W289",
+    "W29",
+    "W525",
+    "W533",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "Daily per store (200 stores) + consolidated HQ review",
+    "Owner": "Cash Office Clerk (store-level); Treasury Analyst (HQ reconciliation)",
+    "Participants": "Cash Office Clerk, Store Manager (exception escalation), Treasury Analyst, Finance Analyst",
+    "Trigger": "End-of-day store closing; daily e-wallet settlement window",
+    "Volume": "~420,000 e-wallet transactions/month (~15% of 2.8M total POS transactions); ~PHP 756M/month in e-wallet tender (~15% of PHP 5.04B in-store revenue)"
+   },
+   "id": "W1268",
+   "level": 2,
+   "name": "E-Wallet (GCash/Maya) Daily Settlement & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"count and amount\" (replaces manual Step 1).",
+     "- System auto-review of \"Cash Office Clerk verifies e-wallet totals\" (replaces manual Step 2).",
+     "- System auto-log of \"logs batch submission confirmation with reference number\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "E-wallet payments (GCash, Maya) represent ~15% of BuildRight Depot's POS transactions — approximately 14,000 transactions per day across 200 stores (420,000/month), with an estimated PHP 756M in monthly e-wallet tender. Unlike card payments that settle through traditional bank acquirers (covered by W537), e-wallet payments settle through Philippine digital payment providers with different mechanics: QR code-based or NFC-initiated transactions, next-day (T+1) settlement to designated bank accounts, per-transaction merchant discount rates (MDR) of 1.5–2.0%, and separate reconciliation portals. GCash and Maya each provide merchant dashboards and daily settlement reports. With 600 POS terminals processing e-wallet payments, a dedicated settlement and reconciliation workflow is essential to ensure all e-wallet tenders are captured, settled, and reconciled daily. W537 covers card terminal settlement; this workflow covers the parallel e-wallet settlement process."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: dual-provider strategy (if GCash is down, Maya may still work) and encouraging card/cash as backup"
+    ],
+    "Pain Points / Risks": [
+     "- **E-wallet provider downtime** — GCash and Maya experience periodic outages during peak periods (payday weekends, sale events); during outages, customers cannot pay by e-wallet, shifting volume to cash (increasing cash handling risk) or causing abandoned transactions; mitigated by dual-provider strategy (if GCash is down, Maya may still work) and encouraging card/cash as backup",
+     "- **QR code scanning failures** — poor lighting, damaged QR stickers on PIN pads, or older phone cameras cause scan failures; cashier must manually enter merchant ID, adding 30–60 seconds per transaction; across ~14,000 daily e-wallet transactions (420,000/month), even a 2% scan failure rate = ~280 manual entries/day",
+     "- **MDR cost pressure** — at 1.5–2.0% MDR on PHP 756M/month e-wallet revenue, annual MDR cost is ~PHP 136–182M; as e-wallet adoption grows toward 25–30%, MDR becomes a significant P&L line item requiring negotiation with providers for volume-based rate reductions",
+     "- **Settlement timing mismatch** — e-wallet settlements arrive T+1 while card settlements arrive T+2 and cash is same-day; treasury must manage three different settlement timing streams for accurate daily cash positioning (W30)",
+     "- **Chargeback risk**: e-wallet chargeback processes are less mature than card chargebacks; customer disputes may be resolved in customer's favor with limited BuildRight recourse; maintaining transaction-level evidence (CCTV, signed receipts) is essential; mitigated by the dual-provider strategy (if GCash is down, Maya may still work) and encouraging card/cash as backup"
+    ],
+    "Staffing Implication": [
+     "- **Cash Office Clerks**: ~10 min/day additional e-wallet verification. Absorbed within existing W541 daily routine. No incremental headcount.",
+     "- **Treasury Analyst**: ~8–10 hours/week on e-wallet reconciliation and exception management. Absorbed within existing treasury team if e-wallet volume stays below 20% of transactions; if e-wallet exceeds 25%, consider dedicated Digital Payments Analyst role.",
+     "- **Finance Analyst**: ~1 hour/month for MDR reconciliation. Absorbed.",
+     "- **No incremental headcount at current volume.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS e-wallet tender report generation per terminal and per store (W1268.1)",
+     "- E-wallet provider API integration: GCash merchant API, Maya Business API for batch settlement submission and confirmation retrieval (W1268.3–4)",
+     "- Automated store-level reconciliation engine matching POS tenders to provider settlements (W1268.5)",
+     "- Consolidated HQ e-wallet settlement dashboard (W1268.6)",
+     "- Exception tracking and resolution workflow with provider ticket integration (W1268.7)",
+     "- MDR fee journal entry automation with monthly reconciliation (W1268.8)",
+     "- Integration with W537 (card terminal settlement — parallel process), W541 (cash office operations — e-wallet report included in daily cash office procedure), W574 (store closing — e-wallet report generation trigger), W30 (daily treasury cash position — e-wallet settlements included), W233 (cash flow forecasting — e-wallet settlement timing modeled)"
+    ],
+    "Time Estimate": [
+     "- Store-level daily verification: ~10 min/store × 200 stores = ~33 hours/day across all stores (absorbed by Cash Office Clerks as part of W541 daily routine)",
+     "- HQ daily reconciliation: ~45 min/day (Treasury Analyst)",
+     "- Exception resolution: ~30 min/day average (Treasury Analyst)",
+     "- Weekly trend review: ~1 hour/week",
+     "- Monthly MDR reconciliation: ~1 hour/month",
+     "- **Total incremental HQ effort**: ~8–10 hours/week"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**End-of-day e-wallet report generation**: at store closing per W574, system generates e-wallet tender summary per terminal and per store: (a) total GCash transactions — count and amount, (b) total Maya transactions — count and amount, (c) per-terminal breakdown, (d) any failed/declined e-wallet transactions during the day, (e) total e-wallet refunds processed",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Cash Office Clerk verifies e-wallet totals**: Cash Office Clerk compares system e-wallet report (step 1) against POS e-wallet tender totals from Z-report (W574); flags discrepancies > PHP 500 for Store Manager review",
+     "duration": "10 min/store",
+     "n": "2",
+     "r": "Cash Office Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**System submits e-wallet batch settlement file**: POS system transmits end-of-day batch settlement request to each e-wallet provider: (a) GCash — batch sent to GCash merchant API with store ID, terminal IDs, transaction list, and total amount, (b) Maya — batch sent to Maya Business dashboard API with same data; system logs batch submission confirmation with reference number",
+     "duration": "Automated (runs at 11:00 PM nightly)",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Treasury Analyst",
+     "activity": "**E-wallet provider settlement confirmation**: by T+1 (next business day morning), e-wallet providers process the batch and: (a) credit BuildRight's designated bank account with gross e-wallet collections minus MDR, (b) generate settlement report accessible via provider portal or API — showing: gross amount, MDR deducted, net settled amount, transaction count, any exceptions (duplicate charges, chargebacks), (c) system retrieves settlement confirmation via API or manual portal download",
+     "duration": "15 min/day (HQ)",
+     "n": "4",
+     "r": "System / Treasury Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Automated reconciliation — store level**: system matches: (a) POS e-wallet tender per store (step 1) vs. e-wallet provider settlement per store (step 4); (b) flags unmatched transactions (POS shows sale but no settlement confirmation, or settlement shows transaction not in POS); (c) calculates MDR per transaction and total MDR per store per provider",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Automated reconciliation — HQ consolidation**: Treasury Analyst reviews consolidated e-wallet settlement dashboard: (a) total e-wallet collections per provider across all 200 stores, (b) total MDR fees deducted, (c) net settled amount vs. expected, (d) unmatched transactions by store, (e) exception summary (failed settlements, chargebacks, refunds)",
+     "duration": "30 min/day",
+     "n": "6",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Exception resolution**: for each unmatched or disputed transaction: (a) Treasury Analyst investigates with e-wallet provider support (GCash/Maya merchant hotline or portal ticket); (b) common exceptions: (i) customer-initiated chargeback — verify with POS transaction log and CCTV timestamp, (ii) duplicate charge — refund via provider portal, (iii) settlement delay — track and follow up in 48 hours, (iv) QR scan failure where customer paid but POS didn't record — reconcile manually with provider transaction reference; (c) unresolved exceptions > PHP 5,000 escalated to Treasury Manager",
+     "duration": "30 min/day (as needed)",
+     "n": "7",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Controller",
+     "activity": "**MDR fee accounting**: system posts daily journal entries per store: (a) debit: bank account (net settlement received), (b) debit: MDR expense (merchant discount rate —GCash 1.5%, Maya 2.0% per contract), (c) credit: accounts receivable — e-wallet (gross e-wallet sales); monthly: Finance Analyst reconciles total MDR expense vs. provider MDR statements; MDR variance > 0.1% of e-wallet revenue investigated",
+     "duration": "Automated + 1 hour/month",
+     "n": "8",
+     "r": "System / Finance Analyst"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Weekly e-wallet trend review**: Treasury Analyst reviews weekly e-wallet metrics: (a) e-wallet share of total tender (target: ~15%), (b) average transaction value by e-wallet vs. cash vs. card, (c) e-wallet settlement exception rate (target: < 0.5%), (d) MDR cost trend, (e) provider uptime/downtime incidents; findings shared with Store Operations and IT for terminal health monitoring",
+     "duration": "1 hour/week",
+     "n": "9",
+     "r": "Treasury Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W233",
+    "W30",
+    "W537",
+    "W541",
+    "W574"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-184"
+   ],
+   "fields": {
+    "Frequency": "Daily reconciliation across 200 stores; ~420,000 e-wallet transactions/month (15% of total transactions)",
+    "Owner": "Treasury Analyst",
+    "Participants": "Treasury Analyst, Store Cashier, POS System Administrator, E-Wallet Provider (GCash/Maya) Operations",
+    "Trigger": "Daily settlement reconciliation cycle; or e-wallet provider settlement delay > T+2",
+    "Volume": "~2,100 e-wallet transactions per store per month; ~14,000/day chain-wide; average PHP 1,800/transaction (in line with the PHP 1,800 ATV, per W1268)"
+   },
+   "id": "W1301",
+   "level": 2,
+   "name": "E-Wallet (GCash/Maya) Settlement Reconciliation & Discrepancy Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates daily e-wallet transaction summary\" (replaces manual Step 1).",
+     "- System auto-file of \"Settlement file matching\" (replaces manual Step 2).",
+     "- System auto-validate of \"check for voids/refunds processed in POS after settlement cutoff — these will…\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "E-wallet payments (GCash, Maya) represent ~15% of BuildRight's POS transactions — approximately 420,000 transactions per month totaling ~PHP 756M in monthly e-wallet settlement volume (~15% of PHP 5.04B in-store revenue, per W1268). E-wallet transactions flow as follows: (a) customer initiates payment via QR code scan or NFC tap at POS terminal; (b) e-wallet provider authorizes and captures payment; (c) POS records payment as e-wallet tender type; (d) e-wallet provider settles to BuildRight's bank account on T+1 (next business day) for GCash and T+1 to T+2 for Maya; (e) settlement is a batch lump sum covering all transactions from a given day — not per-transaction settlement. Reconciliation challenges arise because: (i) settlement amount may not match the sum of POS-recorded e-wallet transactions due to refunds, voids, connectivity failures, or provider processing delays; (ii) some transactions may appear in POS but not in the provider's settlement (provider-side failure); (iii) some transactions may appear in settlement but not in POS (duplicate settlement or timing difference); (iv) provider fees (1.5–2.0% of transaction value, or monthly flat fee for enterprise merchants) are deducted from settlement or invoiced separately. Without systematic daily reconciliation, e-wallet discrepancies accumulate into material unreconciled differences that are difficult to resolve after 30 days."
+    ],
+    "Controls": [
+     "- CTL-184 (ensure POS settlement & tender reconciliation completeness.)",
+     "- operational: Treasury Analyst review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Connectivity dependency** — e-wallet transactions require live internet connectivity; during network outages (common in provincial Philippine locations), e-wallet payments cannot be processed, forcing customers to use alternative payment methods or abandon the sale",
+     "- **Settlement timing differences** — GCash settles T+1 but Maya may settle T+2; weekend and holiday settlements delay further; tracking expected settlement dates per provider is essential for accurate daily reconciliation",
+     "- **Refund complexity** — e-wallet refunds must be processed through the provider's refund API; in-store cash refunds for e-wallet payments create reconciliation discrepancies (cash out but no settlement adjustment)",
+     "- **Transaction volume growth** — e-wallet adoption in the Philippines is growing rapidly (from 15% to potentially 25% within 2 years); reconciliation workload will scale proportionally"
+    ],
+    "Staffing Implication": [
+     "- **Treasury Analyst**: ~30–45 min/day on standard reconciliation + 1–2 hours/day on discrepancies + 2–3 hours/month on fee reconciliation = ~400 hours/year",
+     "- **POS System Administrator**: ~2 hours/week on store e-wallet support",
+     "- **No incremental headcount at current volume; if e-wallet share exceeds 25%, a dedicated E-Payment Reconciliation Analyst (~0.5 FTE) may be needed**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS e-wallet integration module — real-time transaction recording with authorization reference",
+     "- GCash/Maya merchant portal API — settlement file download, transaction lookup",
+     "- Treasury reconciliation module — automated matching of POS transactions to settlement batches",
+     "- GL posting module — fee expense and settlement journal entries",
+     "- Store communication module — issue reporting from store to treasury",
+     "- BI dashboard — e-wallet transaction volume trend, settlement variance tracking, fee analysis"
+    ],
+    "Time Estimate": [
+     "- Daily reconciliation: 30–45 min (clean days); 1.5–2.5 hours (discrepancy days)",
+     "- Average daily: ~1 hour × 260 business days = ~260 hours/year",
+     "- Monthly fee reconciliation: ~30 hours/year",
+     "- Store support: ~100 hours/year",
+     "- **Total annual: ~390 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Analyst",
+     "activity": "**Daily POS e-wallet transaction extraction**: (a) system extracts all POS transactions with e-wallet tender type for the previous business day: transaction ID, store, terminal, timestamp, amount, e-wallet provider (GCash or Maya), authorization reference; (b) total POS e-wallet sales computed per provider per store per day; (c) system generates daily e-wallet transaction summary: total GCash transactions × amount, total Maya transactions × amount, grand total per store",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Treasury Analyst",
+     "activity": "**Settlement file matching**: (a) Treasury Analyst downloads daily settlement files from GCash Merchant Portal and Maya Business Dashboard; (b) settlement file contains: batch settlement amount, settlement date, number of transactions covered, gross transaction amount, fees deducted, net settlement amount; (c) system matches settlement batch to POS daily summary: (i) POS total gross e-wallet sales vs. settlement gross amount — expect match within PHP 100 tolerance (normal variance from voids processed after batch cutoff); (ii) if variance > PHP 100: system flags for investigation",
+     "duration": "30–45 min/day",
+     "n": "2",
+     "r": "Treasury Analyst / System"
+    },
+    {
+     "a": "Treasury Analyst",
+     "activity": "**Discrepancy investigation & resolution**: For flagged discrepancies: (a) Treasury Analyst compares transaction-level data: (i) POS transaction list vs. settlement transaction list (by authorization reference) — identify missing or extra transactions; (ii) check for voids/refunds processed in POS after settlement cutoff — these will appear in next day's settlement; (iii) check for connectivity failures — transactions where customer's e-wallet authorized but POS did not receive confirmation (result: customer was charged but BuildRight POS shows no payment — requires manual verification and journal entry); (iv) check for duplicate settlements — provider error settling same batch twice; (b) for unreconciled items: create investigation ticket with e-wallet provider's merchant support with POS transaction details and settlement batch reference; (c) provider investigates and issues adjustment in next settlement or manual refund; (d) target resolution: all discrepancies resolved within 5 business days",
+     "duration": "1–2 hours/day (on discrepancy days)",
+     "n": "3",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Monthly e-wallet fee reconciliation**: (a) at month-end, Treasury Analyst reconciles e-wallet provider fees: (i) total fees deducted from settlements per provider vs. contracted fee rate × transaction volume, (ii) verify enterprise monthly flat fee billing vs. per-transaction fee calculation — whichever is more favorable per contract, (iii) identify any unauthorized fee rate changes by provider; (b) dispute any fee overcharges with provider; (c) post fee expense to GL: debit E-Wallet Processing Fees, credit Cash/Bank",
+     "duration": "2–3 hours/month",
+     "n": "4",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Analyst",
+     "activity": "**Store-level e-wallet operational support**: When stores report e-wallet issues: (a) QR code not scanning: POS System Administrator checks terminal configuration and QR code display; (b) e-wallet payment failing: check if store's internet connection is stable (e-wallet requires online connectivity unlike offline-capable POS); (c) customer claims payment was deducted but POS shows unpaid: Treasury Analyst checks provider portal for the authorization reference — if confirmed: process manual payment confirmation at POS and note for next day reconciliation; (d) weekly: POS System Administrator reviews e-wallet transaction failure rate per store — stores with > 5% failure rate receive troubleshooting visit",
+     "duration": "Per incident + 2 hours/week",
+     "n": "5",
+     "r": "Treasury Analyst / POS System Administrator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1268"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-184"
+   ],
+   "fields": {
+    "Frequency": "Daily per store (200 stores × 365 days = 73,000 deposits/year)",
+    "Owner": "Store Manager",
+    "Participants": "Cashier (cash count), Store Manager (deposit preparation), Armored Car Service, Treasury Analyst (bank credit reconciliation)",
+    "Trigger": "Store end-of-day cash count and Z-report completion (W574)",
+    "Volume": "Average cash sales ~42% of PHP 25M/store/month = ~PHP 10.5M cash/store/month; daily cash deposit ~PHP 350,000/store/day"
+   },
+   "id": "W1354",
+   "level": 2,
+   "name": "Store Daily Cash Deposit Preparation, Armored Car Pickup & Bank Credit Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records count vs.\" (replaces manual Step 1).",
+     "- System auto-count of \"Store Manager verifies cash count\" (replaces manual Step 2).",
+     "- System auto-generate of \"Store Manager prepares bank deposit slip\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Cash remains the dominant payment method at BuildRight Depot (~42% of transactions). Each of the 200 stores generates significant daily cash volume (~PHP 350,000) that must be counted, prepared for deposit, picked up by armored car service, and reconciled against bank credits. The Philippine retail environment presents unique challenges: variable armored car pickup schedules (especially for provincial stores), multi-bank deposit relationships (BDO, BPI, Metrobank, Chinabank across different store regions), and the need for tight cash-to-bank traceability to support daily cash positioning (W88)."
+    ],
+    "Controls": [
+     "- CTL-184 (ensure POS settlement & tender reconciliation completeness.)",
+     "- operational: Store Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- Provincial stores with every-other-day armored car pickup accumulate 2 days of cash (~PHP 700,000) on-site, exceeding the PHP 20,000 store petty cash float (profile §10.4) and creating security risk until pickup",
+     "- Bank credit delays: some provincial bank branches process armored car deposits next-business-day, creating a 1-day lag between ERP cash recording and bank availability; this affects daily cash positioning accuracy (W88)",
+     "- Cash count variances: at 200 stores processing ~73,000 deposits/year, even a 0.1% variance rate generates ~73 variance investigations/year, consuming Store Manager and Treasury Analyst time"
+    ],
+    "Staffing Implication": [
+     "- Store-level: absorbed by existing Cashier + Store Manager closing routine (W574)",
+     "- Treasury: 1 Treasury Analyst dedicates 2–3 hours/day to deposit reconciliation; absorbed within existing treasury team",
+     "- No incremental headcount required",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS Z-report integration with store deposit module",
+     "- Tamper-evident deposit bag barcode tracking (scan at handover and bank processing)",
+     "- Armored car service electronic confirmation feed",
+     "- Bank statement auto-import (BDO, BPI, Metrobank, Chinabank) for deposit matching",
+     "- Treasury reconciliation dashboard with store-level drill-down",
+     "- Exception alerting for unmatched deposits > 24 hours"
+    ],
+    "Time Estimate": [
+     "- Cash count and deposit preparation: ~45 min/store/day × 200 stores = ~150 staff-hours/day (absorbed by Cashier + Store Manager during closing routine)",
+     "- Armored car handover: 10 min/store/day × 200 stores = ~33 staff-hours/day",
+     "- Treasury reconciliation: 2–3 hours/day for Treasury Analyst matching 200 deposits against bank statements",
+     "- Store Manager weekly review: 15 min × 200 stores = ~50 hours/week total",
+     "- Total: ~185–195 staff-hours/day across all participants; mostly absorbed in existing closing and treasury duties"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier completes end-of-day Z-report; counts physical cash per terminal (3 terminals); records count vs. system expected; reports variance to Store Manager",
+     "duration": "20 min",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager verifies cash count; investigates any variance > PHP 500 per terminal (per W958); resolves or escalates",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Store Manager prepares bank deposit slip: separates notes by denomination; seals cash in tamper-evident deposit bag with pre-printed barcode; retains duplicate deposit slip",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Armored car guard arrives at scheduled pickup time (varies by store location; provincial stores may have every-other-day pickup); guard and Store Manager sign handover log; guard scans deposit bag barcode",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Armored Car Guard / Store Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Armored car service delivers cash to bank branch; bank processes deposit and credits store bank account; armored car service transmits electronic pickup confirmation to BuildRight treasury",
+     "duration": "Same day or next day",
+     "n": "5",
+     "r": "Bank / Armored Car Service"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Treasury Analyst matches daily store deposit records (from ERP Z-report) against bank credit confirmations; flags unmatched deposits for investigation",
+     "duration": "2–3 hours/day",
+     "n": "6",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "Store Manager reviews weekly cash reconciliation report showing deposits vs. bank credits; confirms or disputes any unmatched items",
+     "duration": "15 min/week",
+     "n": "7",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W574",
+    "W88",
+    "W958"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-184"
+   ],
+   "fields": {
+    "Frequency": "Daily per store (200 stores); consolidated at HQ by next business day",
+    "Owner": "AR Supervisor (HQ); Store Manager (store-level)",
+    "Participants": "Store Manager, Cashier, AR Supervisor, Treasury Analyst, Card Acquirer Operations, E-Wallet Provider Operations",
+    "Trigger": "Store end-of-day (EOD) close; daily settlement files from payment processors, card acquirers, and e-wallet providers",
+    "Volume": "~2.8M POS transactions/month = ~93,000/day across 200 stores; split across cash (42%), card (36%), e-wallet (15%), corporate/charge (5%), returns/exchanges (~2% per profile §5)"
+   },
+   "id": "W1425",
+   "level": 2,
+   "name": "Multi-Tender POS Transaction Daily Reconciliation, Settlement Matching & Variance Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Store-level EOD cash reconciliation\" (replaces manual Step 1).",
+     "- System auto-file of \"Card settlement reconciliation\" (replaces manual Step 2).",
+     "- System auto-scan of \"scan succeeded at POS but payment failed on e-wallet side — rare but happens…\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's POS processes ~93,000 transactions daily across 200 stores, with payments split across 5 tender types: cash (42%), credit/debit card (36%), e-wallet — GCash/Maya (15%), corporate/charge account (5%), and returns/exchanges (~2% per profile §5). Multi-tender transactions (where a single transaction uses multiple payment methods, e.g., cash + e-wallet for a PHP 10,000 purchase) add reconciliation complexity: (a) the POS records each tender component separately, (b) each payment channel settles on a different timeline: cash is immediate (in-store), card settles T+1 to T+2, e-wallet settles T+1, corporate accounts are invoiced (Net 30), (c) settlement amounts from payment processors must match POS records — any mismatch requires investigation, (d) at 2.8M transactions/month, even a 0.1% mismatch rate = 2,800 exceptions requiring manual investigation. This workflow manages the daily reconciliation of multi-tender POS transactions across all payment channels."
+    ],
+    "Controls": [
+     "- CTL-184 (ensure POS settlement & tender reconciliation completeness.)",
+     "- operational: AR Supervisor (HQ); Store Manager (store-level) review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Volume of exceptions**: at 93,000 transactions/day across 5 tender types, even automated matching at 99.5% accuracy leaves ~465 unmatched transactions/day requiring manual investigation — this is a significant hidden labor cost",
+     "- **Connectivity-driven mismatches**: Philippine internet connectivity varies by region; stores in provincial areas may experience POS-to-acquirer communication failures during peak hours, creating unmatched card/e-wallet transactions that must be manually resolved",
+     "- **Multi-tender split complexity**: when a single transaction is split across multiple tenders (e.g., PHP 5,000 cash + PHP 3,000 GCash + PHP 2,000 card), a failure in one tender channel can leave the transaction partially settled, requiring manual split and re-allocation",
+     "- **E-wallet settlement delays**: GCash and Maya batch settlements may be delayed during peak periods (payday weekends, holidays), creating apparent shortfalls in daily reconciliation that resolve the next day"
+    ],
+    "Staffing Implication": [
+     "- AR Supervisor: ~2–3 hours/day on card and e-wallet reconciliation. Absorbed within existing role.",
+     "- Treasury Analyst: ~1–2 hours/day on consolidated settlement report. Absorbed.",
+     "- Store Manager: 15–20 min/day on cash reconciliation. Absorbed in W541 daily duties.",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS-to-settlement matching engine: automated matching of POS records against card acquirer, e-wallet, and bank settlement files (W1425.2–3)",
+     "- Daily settlement consolidation dashboard: store-level and chain-wide settlement status by tender type (W1425.5)",
+     "- Variance escalation engine: automated alerts for threshold breaches by store and tender type (W1425.5)",
+     "- Integration with W541 (cash office — cash reconciliation), W537 (card terminal settlement — card reconciliation), W1268/W1301 (e-wallet settlement — e-wallet reconciliation), W1276 (multi-tender POS processing — transaction-level detail), W525 (POS sync — data source), W272 (cashier over/short — variance tracking)"
+    ],
+    "Time Estimate": [
+     "- Store-level cash reconciliation: 15–20 min/store/day = ~50–67 hours/day chain-wide (absorbed in W541)",
+     "- Card reconciliation: 1–2 hours/day (HQ)",
+     "- E-wallet reconciliation: 1–2 hours/day (HQ)",
+     "- Corporate/charge reconciliation: 30 min/day (HQ)",
+     "- Consolidated report: 1–2 hours/day (HQ)",
+     "- Total HQ effort: 4–6.5 hours/day = ~1,200–1,700 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Store-level EOD cash reconciliation** (at store close): per W541 (cash office operations): (a) count physical cash in each drawer vs. POS Z-report cash total, (b) verify cash drawer count: starting float + cash sales − cash refunds − cash drops = ending cash, (c) record variance (over/short) per W272, (d) prepare bank deposit per W541",
+     "duration": "15–20 min/store/day",
+     "n": "1",
+     "r": "Cashier / Store Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Card settlement reconciliation** (T+1): (a) system matches POS card transaction records against card acquirer settlement file (received T+1 morning): (i) match by terminal ID, transaction reference, and amount, (ii) identify unmatched: POS shows card transaction but no acquirer settlement (possible terminal communication failure — transaction approved locally but not captured by acquirer), (iii) identify variances: settlement amount ≠ POS amount (possible partial refund not processed, currency rounding), (b) AR Supervisor investigates exceptions > PHP 500 per transaction",
+     "duration": "1–2 hours/day (HQ)",
+     "n": "2",
+     "r": "System / AR Supervisor"
+    },
+    {
+     "a": "Controller",
+     "activity": "**E-wallet settlement reconciliation** (T+1): (a) system matches POS e-wallet transaction records against GCash/Maya settlement files per W1268: (i) match by QR code transaction reference and amount, (ii) identify unmatched transactions: POS shows e-wallet payment but no settlement (customer QR scan succeeded at POS but payment failed on e-wallet side — rare but happens with poor connectivity), (iii) identify timing differences: e-wallet settlements batched at end of day — some transactions may settle T+2, (b) AR Supervisor follows up on unmatched transactions > PHP 500",
+     "duration": "1–2 hours/day (HQ)",
+     "n": "3",
+     "r": "System / AR Supervisor"
+    },
+    {
+     "a": "AR Supervisor",
+     "activity": "**Corporate/charge account reconciliation** (T+0 to T+1): (a) POS corporate/charge transactions automatically create AR invoices per W16 (order-to-cash): (i) match customer account number to POS transaction, (ii) verify credit limit compliance per W24, (iii) post AR invoice: Dr. Accounts Receivable / Cr. Revenue, (b) reconciliation: total corporate/charge per POS Z-report vs. total AR invoices posted — must match exactly",
+     "duration": "30 min/day (HQ)",
+     "n": "4",
+     "r": "System / AR Clerk"
+    },
+    {
+     "a": "Controller",
+     "activity": "**HQ consolidated daily settlement report**: (a) Treasury Analyst prepares daily settlement summary: (i) total POS revenue (all tenders) from 200 stores, (ii) total cash collected (deposited at bank per W541), (iii) total card settlements received, (iv) total e-wallet settlements received, (v) total corporate/charge invoiced, (vi) total loyalty points redeemed (points liability increase), (vii) total revenue per GL = sum of all settlement channels, (b) identify and escalate: (i) stores with cash variance > PHP 1,000 for 2+ consecutive days (LP investigation per W562), (ii) card settlement discrepancies > PHP 10,000 total per store (possible terminal fraud), (iii) e-wallet unreconciled transactions > 5 per store per day (connectivity issue)",
+     "duration": "1–2 hours/day",
+     "n": "5",
+     "r": "Treasury Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1268",
+    "W1276",
+    "W1301",
+    "W16",
+    "W24",
+    "W272",
+    "W525",
+    "W537",
+    "W541",
+    "W562"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "~2–3 replenishment requests per store per month; monthly expense report per store; quarterly physical audit of all 200 stores",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager (custodian), Assistant Store Manager (alternate custodian), Cashier, Regional Operations Manager, AP Accountant, Internal Auditor",
+    "Trigger": "Petty cash float drops below 30% of authorized limit; end-of-month expense reporting cycle; quarterly petty cash audit; or unplanned emergency expense",
+    "Volume": "~400–600 replenishment transactions/month across 200 stores (PHP 20,000 float/store); ~PHP 5.6M–8.4M/month in petty cash expenses chain-wide (2–3 replenishments/store × ~PHP 14K+ restore)"
+   },
+   "id": "W1467",
+   "level": 2,
+   "name": "Store Petty Cash Replenishment, Expense Tracking, Float Audit & Custody Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records\" (replaces manual Step 1).",
+     "- System auto-review of \"Expense tracking & categorization\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant reviews\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Each BuildRight Depot store maintains a PHP 20,000 petty cash float for small, urgent expenses that cannot wait for standard procurement per W7: emergency maintenance supplies, small tools replacement, customer goodwill gestures, delivery driver meals, office supplies, and minor facility repairs. With 200 stores, petty cash represents ~PHP 4M in floating cash across the chain and ~PHP 48–72M in annual expenses passing through petty cash. Without rigorous custody management, petty cash is vulnerable to: (a) unauthorized personal use by store staff, (b) missing receipts creating unreconciled balances, (c) float erosion from poor tracking, and (d) inadequate replenishment causing operational disruption. This workflow manages the full petty cash lifecycle from disbursement through replenishment, reporting, and audit."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: dual-custodian (Store Manager + ASM) model with safe storage; operational: auto-trigger at 30% threshold"
+    ],
+    "Pain Points / Risks": [
+     "- **Missing receipts** — store staff may make cash purchases in emergencies (e.g., plumbing repair at 8 PM) without obtaining proper receipts; unreceipted disbursements create audit findings and potential fraud cover",
+     "- **Float insufficiency during emergencies** — PHP 20,000 float may not cover unexpected major repair (e.g., aircon replacement for server room at PHP 15,000); emergency procurement per W7 bypass is needed",
+     "- **Custody risk**: petty cash box accessible to multiple staff during shift changes creates custody ambiguity; mitigated by dual-custodian (Store Manager + ASM) model with safe storage",
+     "- **Replenishment delays** — AP processing backlog can delay replenishment, leaving stores without petty cash for days; mitigated by auto-trigger at 30% threshold"
+    ],
+    "Staffing Implication": [
+     "- **Store Manager**: ~30 min/week on petty cash management. Absorbed.",
+     "- **AP Accountant**: ~2 hours/month on petty cash replenishment review across 200 stores. Absorbed.",
+     "- **Internal Auditor**: ~20 hours/quarter on surprise audits. Absorbed.",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Petty cash ledger module — per-store running balance with disbursement and replenishment tracking (W1467.2)",
+     "- Replenishment request workflow — automated trigger at 30% threshold with AP approval routing (W1467.3)",
+     "- Receipt attachment — digital receipt capture via store operations app with OCR for amount verification (W1467.3)",
+     "- Expense categorization and budget tracking per store (W1467.2)",
+     "- Monthly expense report auto-generation with GL reconciliation (W1467.5)",
+     "- Quarterly audit scheduling and findings tracking (W1467.6)",
+     "- Integration with W541 (cash office), W1354 (deposit), W842 (cash handling exceptions), W92 (expense GL)"
+    ],
+    "Time Estimate": [
+     "- Per disbursement: 5 min × ~10/store/month = ~50 min/store/month",
+     "- Weekly tracking: 15 min/store/week = ~60 min/store/month",
+     "- Monthly report: 30 min/store/month",
+     "- Quarterly audit: ~20 hours total",
+     "- **Annual chain-wide: ~5,600 hours (store-level; 140 min/store/month × 12 × 200) + ~24 hours (AP) + ~80 hours (audit)**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Regional Operations Manager",
+     "activity": "**Disbursement**: (a) Store Manager (or Assistant Store Manager as alternate custodian) approves petty cash expenditure: (i) verify expense is within authorized petty cash policy (items < PHP 2,000 per transaction; exclusions: payroll advances, personal loans, alcohol, tobacco), (ii) verify supporting receipt or invoice is provided; (b) Cashier processes disbursement from petty cash box; (c) system records: date, amount, payee, expense category, purpose, receipt reference; (d) for expenses > PHP 1,000: Store Manager documents justification in system",
+     "duration": "5 min/transaction",
+     "n": "1",
+     "r": "Store Manager / Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "**Expense tracking & categorization**: (a) system maintains running petty cash ledger per store: opening balance, disbursements (by category), running balance, replenishment received; (b) expense categories: maintenance supplies, office supplies, customer goodwill, transport/delivery, meals, emergency tools, other; (c) Store Manager reviews weekly: total disbursements vs. budget allocation, unusual spending patterns, receipts outstanding",
+     "duration": "15 min/week",
+     "n": "2",
+     "r": "System / Store Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Replenishment request**: When petty cash balance drops below 30% of authorized float (PHP 6,000): (a) system auto-generates replenishment request to AP; (b) Store Manager reviews outstanding disbursements, attaches all receipts, and submits replenishment request with: (i) total disbursements since last replenishment, (ii) receipts totaling disbursements, (iii) remaining float balance, (iv) requested replenishment amount = disbursements (to restore full float); (c) AP Accountant reviews: (i) receipts match disbursements, (ii) expenses within policy, (iii) no duplicate claims; (d) AP approves replenishment and initiates bank transfer or cash pickup per W541 deposit process",
+     "duration": "15 min/request",
+     "n": "3",
+     "r": "Store Manager / AP Accountant"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Replenishment receipt**: (a) Cashier receives replenishment cash (from armored car pickup per W1354 or bank withdrawal); (b) Cashier counts and verifies replenishment amount matches approved request; (c) system records replenishment and updates petty cash balance to full float",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Cashier"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Monthly expense report**: (a) Store Manager generates monthly petty cash expense report: total disbursements by category, receipt compliance rate, replenishment frequency, variance from budget; (b) Regional Operations Manager reviews store-level petty cash reports for policy compliance and spending anomalies; (c) AP Accountant reconciles petty cash expenses against GL store operating expense accounts",
+     "duration": "30 min/store/month",
+     "n": "5",
+     "r": "Store Manager / AP Accountant"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Quarterly physical audit**: Internal Auditor conducts surprise petty cash audit at sampled stores (~20 stores/quarter): (a) physical count of petty cash box — cash on hand + unreceipted vouchers must equal authorized float; (b) verify custody: petty cash box secured in safe, only authorized custodians have access; (c) review last 3 months of disbursements for policy compliance; (d) report findings to Controller; (e) any shortage > PHP 500 investigated per LP exception process per W842",
+     "duration": "1 hour/store",
+     "n": "6",
+     "r": "Internal Auditor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1354",
+    "W541",
+    "W7",
+    "W842",
+    "W92"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "Daily sweeping for 5 entities across 4 banking partners; monthly intercompany netting and settlement",
+    "Owner": "Treasury Manager",
+    "Participants": "Treasury Analyst, Controller, Bank Relationship Manager, IT (system integration), Entity Finance Leads",
+    "Trigger": "Daily — end-of-business cash positioning; or triggered by zero-balance sweep schedule; or monthly intercompany settlement cycle",
+    "Volume": "~200 store bank accounts + 4 DC accounts + 5 entity main accounts = ~209 accounts; ~PHP 5B/month in total cash flows"
+   },
+   "id": "W1468",
+   "level": 2,
+   "name": "Multi-Entity Cash Concentration, Zero-Balance Sweeping & Intercompany Settlement Automation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts via bank API/EBBS integration\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews sweep results next morning and investigates any exceptions\" (replaces manual Step 2).",
+     "- System auto-record of \"records intercompany loan\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight operates 5 legal entities across 4 banking partners (BDO, BPI, Metrobank, Chinabank), each maintaining separate bank accounts for operations. The 200 stores and 4 DCs each deposit daily cash receipts into local bank accounts. Without cash concentration, funds are fragmented across ~209 accounts, earning low interest in checking accounts while operating entities may need to borrow. The Treasury function must: (a) sweep excess cash from operating accounts to a central concentration account daily, (b) fund operating accounts as needed to cover disbursements, (c) settle intercompany balances between the 5 entities (e.g., BuildRight Depot Inc. owes BuildRight Logistics Inc. for warehousing services), and (d) ensure transfer pricing compliance for intercompany transactions per W87. This workflow manages the daily cash concentration, sweeping, and intercompany settlement process across the BuildRight group."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: Treasury Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Bank API reliability** — Philippine banking APIs may experience downtime, delaying sweep execution and cash positioning; manual fallback required",
+     "- **Multi-bank complexity** — 4 banking partners each with different API standards, fee structures, and sweep capabilities; standardization is difficult",
+     "- **Intercompany timing differences** — when one entity records an intercompany transaction in a different period than the counterparty, consolidation requires manual elimination entries per W87",
+     "- **Transfer pricing scrutiny** — BSP and BIR may scrutinize intercompany lending rates; rates must be demonstrably arm's-length (benchmark against market rates)",
+     "- **Store account minimum balance adequacy** — PHP 50,000 minimum may be insufficient during high-volume periods (payroll week, vendor payment week); insufficient balances cause payment failures"
+    ],
+    "Staffing Implication": [
+     "- **Treasury Analyst**: daily cash positioning and reconciliation — ~5 hours/day; absorbed",
+     "- **Treasury Manager**: weekly entity concentration and quarterly bank reviews — ~6 hours/week; absorbed",
+     "- **Controller**: monthly intercompany netting — 1 day/month; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Bank API/EBBS integration — real-time balance retrieval and automated sweep initiation (W1468.1–2)",
+     "- Cash positioning module — consolidated view across all entities, banks, and accounts (W1468.1)",
+     "- Zero-balance sweep engine — configurable sweep rules per account with target balance and concentration hierarchy (W1468.2)",
+     "- Intercompany accounting module per W87 — loan recording, interest calculation, netting settlement (W1468.3–4)",
+     "- Bank reconciliation module — automated matching of bank statements to ERP entries (W1468.5)",
+     "- Integration with W87 (intercompany), W1354 (store deposits), W318 (investments), W319 (debt facilities), W541 (cash office)"
+    ],
+    "Time Estimate": [
+     "- Daily positioning: 45 min + 15 min sweep review = 1 hour/day = ~260 hours/year",
+     "- Weekly entity concentration: 2 hours/week = ~104 hours/year",
+     "- Monthly netting: 1 day/month = ~12 days/year",
+     "- Weekly reconciliation: 4 hours/week = ~208 hours/year",
+     "- Quarterly bank reviews: 8 hours/quarter = ~32 hours/year",
+     "- **Annual estimate: ~750–800 hours**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury Manager",
+     "activity": "**Daily cash position consolidation** (morning): Treasury Analyst retrieves previous day's bank balances across all ~209 accounts via bank API/EBBS integration: (a) store deposit accounts — cash receipts from W1354 deposits; (b) DC operating accounts; (c) entity main accounts; (d) USD accounts for import payments; (e) investment accounts per W318; Treasury Analyst produces consolidated cash position report by entity and by bank",
+     "duration": "45 min",
+     "n": "1",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Zero-balance sweep execution**: For each operating account (stores, DCs), system executes automated end-of-day sweep: (a) accounts with balance > target operating balance: excess swept to entity concentration account at same bank; (b) accounts with balance < target: funded from entity concentration account to maintain minimum operating balance; (c) sweep parameters: store accounts maintain PHP 50,000 minimum; DC accounts maintain PHP 200,000 minimum; entity concentration accounts maintain PHP 5M minimum; (d) Treasury Analyst reviews sweep results next morning and investigates any exceptions (failed sweeps, insufficient concentration balance)",
+     "duration": "Automated + 15 min review",
+     "n": "2",
+     "r": "System / Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Entity-level cash concentration**: (a) Treasury Manager reviews entity-level cash positions weekly: which entities have surplus cash, which have deficits; (b) surplus entities lend to deficit entities via intercompany current accounts per W87 transfer pricing; (c) system records intercompany loan: principal, interest rate (arm's-length per BSP guidelines), term, and settlement date; (d) monthly: intercompany interest calculated and recorded per W87 consolidation",
+     "duration": "2 hours/week",
+     "n": "3",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Monthly intercompany netting & settlement**: (a) Controller compiles monthly intercompany balances: (i) Depot Inc. → Logistics Inc. (warehousing fees), (ii) Depot Inc. → Digital Commerce Inc. (ecommerce fulfillment fees), (iii) Depot Inc. → Property Management Inc. (lease payments), (iv) Holdings Inc. → all entities (management fees); (b) Treasury Manager runs multi-lateral netting: offset payables and receivables between entities to minimize actual cash movements; (c) net settlements executed via bank transfer between entity accounts; (d) system posts intercompany settlement entries with supporting documentation per W87",
+     "duration": "1 day/month",
+     "n": "4",
+     "r": "Controller / Treasury Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Bank account reconciliation**: (a) Treasury Analyst reconciles all bank statements against ERP cash ledger weekly: (i) deposits per W1354 matched to bank credits, (ii) sweeps matched to bank debit/credit entries, (iii) intercompany settlements matched to bank transfers, (iv) bank fees and charges identified and recorded; (b) unreconciled items investigated and resolved within 5 business days",
+     "duration": "4 hours/week",
+     "n": "5",
+     "r": "Treasury Analyst"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Quarterly bank relationship review**: Treasury Manager meets with each banking partner quarterly: (a) review account structures, sweep arrangements, and service fees; (b) negotiate improved sweep terms, higher deposit rates for concentration accounts; (c) evaluate banking technology (API reliability, EBBS features); (d) assess credit facilities per W319",
+     "duration": "2 hours/bank/quarter",
+     "n": "6",
+     "r": "Treasury Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1354",
+    "W318",
+    "W319",
+    "W541",
+    "W87"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-264"
+   ],
+   "fields": {
+    "Frequency": "Rare but a standing industry threat: ~1–3 device-compromise discoveries chain-wide per year across the ~3,200-unit PIN-pad estate; organized skimming crews rotate through retail lanes, so the discovery cadence is unpredictable",
+    "Owner": "Store Manager (site response); IT Operations (payment-device estate, forensics & fleet sweep)",
+    "Participants": "Cashier / Front-End Supervisor (first observers), Loss Prevention (CCTV preservation & suspect-window analysis), Payment Operations Manager (acquirer & card-brand liaison, W1205 PCI forensic engagement), Security Guard (lane closure & device custody), VS-125 (compromised-card fraud watch), VS-91 (personal-data assessment where cardholder data was captured), Store Communications (VS-63)",
+    "Trigger": "Discovery of a card-skimming overlay/shimmer/pinhole device on a PIN pad or payment terminal, a device with broken or absent tamper-evident seals or swapped hardware, a terminal missing from its assigned lane, or an acquirer/card-brand/PCI forensic alert naming compromised devices at BuildRight sites",
+    "Volume": "1 discovery × the terminal-fleet inspection sweep (200 stores × ~16 payment devices = ~3,200 units) × the card-present transactions at the affected lane(s) feeding the compromised-card assessment"
+   },
+   "id": "W5566",
+   "level": 2,
+   "name": "Payment-Terminal Tampering & Card-Skimmer Response (PIN-Pad Compromise Event)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Terminal seal/serial baseline as a mobile check-in app with photo capture, auto-flagging anomalies into the sweep queue (replaces manual Step 4 tally)",
+     "- Lane-quarantine flag propagating automatically to POS lane assignment and the W537 daily-check state",
+     "- Settlement-log query templates auto-bounding the affected transaction population by lane and date window",
+     "- Acquirer case portal integration tracking the compromise notification and PFI status against the 24-hour clock"
+    ],
+    "Background": [
+     "The corpus owns the terminal's steady state and its availability: W537 runs the daily card-terminal operations lifecycle and settlement, W5547/W5564 own the outage rails, W1205 runs the PCI-DSS compliance program and annual QSA audit, and VS-125.2 watches card-present fraud at the transaction level — but nobody owned the device-compromise event itself: the physical-evidence rule (the device and its overlay are forensic evidence under chain of custody, never pried off or re-seated by store staff), the lane-quarantine and terminal-fleet sweep, the acquirer/card-brand notification duty that protects interchange rights, the compromised-card population assessment that decides customer and issuer messaging, or the tamper-evident-seal program retrofit that turns one discovery into a standing detection control. Skimming is the classic layered attack — the overlay captures the PAN while the pinhole captures the PIN — and the PCI DSS physical-inspection expectations (W1205's Requirement 9 class) only work at event time if someone owns the response."
+    ],
+    "Controls": [
+     "- CTL-264 (ensure controlled execution — Payment & Cash Management (PA-08.2).)",
+     "- operational: payment devices are inspected against the seal/serial baseline daily (W537) and quarantined-in-place on suspicion; device-compromise notifications to the acquirer within 24 hours of discovery; fleet-sweep completion is evidenced per store before the event closes"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence-destruction risk**: staff prying off an overlay or re-seating the terminal destroys forensics and can void interchange protections; mitigated by Step 1's freeze-in-place rule and security custody",
+     "- **Under-scope risk**: treating a discovery as one bad device when the crew hit several lanes or stores; mitigated by Step 4's chain-wide sweep and Step 5's transaction-population analysis",
+     "- **Notification-gap risk**: late acquirer/card-brand notification shifts fraud liability to BuildRight; mitigated by Step 3's 24-hour clock riding the W1205 program",
+     "- **PIN-panel complacency risk**: daily checks that look only at functionality miss physical tamper; mitigated by Step 7's seal/skimmer visual in the W537 checklist",
+     "- **Panic-messaging risk**: speculative public statements before the data assessment; mitigated by Step 6's confirmed-data gate and scripted responses"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by store crews, IT Operations, Loss Prevention and Payment Operations; no incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Terminal asset register with seal state, serial baseline and photo log per inspection sweep",
+     "- POS lane-status flags (quarantined lane, device out of service) mirrored to the W537 daily check",
+     "- CCTV preservation-hold workflow (W838) scoped to the lane and approach coverage",
+     "- Acquirer/card-brand case file for the compromise notification and PFI engagement (links to W1205)",
+     "- Settlement-log query set (W537/W1425) bounding the affected card-present transaction population",
+     "- VS-91 breach-assessment intake where cardholder data capture is confirmed (links to W53)"
+    ],
+    "Time Estimate": [
+     "Per single-device discovery ≈ 4–8 staff-hours for the site response (freeze, custody, documentation) plus ~15–30 minutes per store for the fleet-sweep inspection (≈ 50–100 staff-hours chain-wide for the sweep) plus 8–16 hours of payment-operations, forensic and assessment work; at the 1–3-discoveries-per-year cadence this stays absorbed within store crews, IT Operations and the payment-operations desk."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Discovery & freeze**: suspected device (bulky overlay, loose fascia, damaged seal, unknown pigtail) → do not remove or power-cycle beyond isolating the lane; photograph in place; close the lane; the device stays under security custody until IT Security/forensics release it",
+     "duration": "Immediate",
+     "n": "1",
+     "r": "Cashier / Front-End Supervisor"
+    },
+    {
+     "a": "IT Operations",
+     "activity": "**Preserve & escalate**: CCTV hold on the lane and approach paths per W838 covering at least 72 hours before discovery; note the last known-clean inspection from the W537 daily checks; escalate to IT Operations and Payment Operations Manager same hour",
+     "duration": "Same hour",
+     "n": "2",
+     "r": "Store Manager / LP"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Notify acquirer & card brands**: device-compromise notification through the acquirer per the scheme's PFI-trigger rules; engage the PCI forensic investigator through the W1205 program where card data capture is confirmed",
+     "duration": "24 hours",
+     "n": "3",
+     "r": "Payment Operations Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Fleet sweep**: chain-wide physical inspection directive — every terminal checked against seal/serial baseline, photographed, logged; stores confirm within the directive window; anomalies quarantine per Step 1",
+     "duration": "48–72 hours",
+     "n": "4",
+     "r": "IT Operations / Store Managers"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Compromised-card assessment**: affected lane(s), dates and transaction populations compiled from W537 settlement logs and W1425 reconciliation; feeds issuer compromise alerts via the acquirer and the VS-125 fraud watch for presentment abuse",
+     "duration": "3–7 days",
+     "n": "5",
+     "r": "Payment Operations Manager / VS-125"
+    },
+    {
+     "a": "Data Protection Officer",
+     "activity": "**Privacy & customer messaging**: where captured cardholder data is confirmed, route the VS-91 assessment (PAN + PIN is personal data under RA 10173; the W53 clock applies from confirmation); scripts for customer inquiries ready at the affected store",
+     "duration": "Per W53",
+     "n": "6",
+     "r": "VS-91 / DPO"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Retrofit & after-action**: tamper-evident seals and serial-baseline registry standing on the fleet; W537 daily checklist gains the seal/skimmer visual; LP briefing on the suspect pattern; inspection-sweep findings feed the W1205 evidence pack",
+     "duration": "2–4 weeks",
+     "n": "7",
+     "r": "IT Operations / LP"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1205",
+    "W1425",
+    "W53",
+    "W537",
+    "W5547",
+    "W5564",
+    "W838"
+   ]
+  }
+ ]
+}

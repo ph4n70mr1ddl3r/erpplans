@@ -1,0 +1,889 @@
+{
+ "process_area": {
+  "id": "PA-28.2",
+  "title": "Data Engineering & Quality"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-28-data-analytics-bi/PA-28.2-data-engineering-and-quality.md",
+ "value_stream": {
+  "directory": "VS-28-data-analytics-bi",
+  "id": "VS-28",
+  "name": "Data, Analytics & BI"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-222"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring of ~50–80 ETL jobs; ~3–5 job failures per week requiring intervention",
+    "Owner": "BI Operations Analyst / Data Engineer",
+    "Participants": "BI Manager, IT Database Administrator, Source System Owner",
+    "Trigger": "Scheduled — continuous monitoring of all ETL jobs; alert-driven for failures",
+    "Volume": "~20,000 ETL job executions per month across all pipelines"
+   },
+   "id": "W881",
+   "level": 2,
+   "name": "Data Warehouse ETL Job Monitoring & Exception Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Review overnight ETL batch\" (replaces manual Step 1).",
+     "- System auto-log of \"log for root cause\" (replaces manual Step 2).",
+     "- System auto-record of \"records, correct in staging, and re-process\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-222 (ensure BI data governance & reporting integrity.)",
+     "- operational: BI Operations Analyst / Data Engineer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- ETL failure cascade — one failed job can block multiple downstream jobs; recovery time compounds",
+     "- Growing data volume (1,000 GB over 10-year BIR retention) increases processing time — capacity planning required",
+     "- Source system schema changes (ERP upgrades, POS updates) can break ETL without warning — change management coordination essential",
+     "- Data quality issues in source systems propagate to warehouse — \"garbage in, garbage out\"",
+     "- Weekend and holiday monitoring requires on-call coverage — staffing cost for 365-day operation"
+    ],
+    "Staffing Implication": [
+     "- 1 Data Engineer (primary ETL monitoring and remediation)",
+     "- 1 BI Operations Analyst (overnight batch verification)",
+     "- IT DBA: database infrastructure support (shared resource)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **ETL Tool** — job monitoring dashboard, error logging, re-run capability",
+     "- **Data Warehouse** — data validation, row count verification",
+     "- **Source Systems** — POS, WMS, Finance, HR, CRM, ecommerce data availability",
+     "- **Monitoring Platform** — automated alerts, SLA tracking, performance dashboards",
+     "- **ITSM** — incident logging for infrastructure-related failures"
+    ],
+    "Time Estimate": [
+     "- Daily monitoring: 1 hour",
+     "- Weekly review: 2 hours",
+     "- Monthly optimization: 4 hours",
+     "- Incident remediation: ~4 hours/week",
+     "- **Annual estimate: 365 + 104 + 48 + 208 = 725 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Manager",
+     "activity": "Review overnight ETL batch status (06:00 AM) — check all critical jobs completed: (a) POS sales extract, (b) Inventory snapshot, (c) Finance posting extract, (d) HR payroll extract, (e) ecommerce order extract, (f) WMS movement extract; verify row counts within expected ranges",
+     "duration": "20 min",
+     "n": "1",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Investigate failed jobs — for each failure: (a) review error log for root cause (source system unavailable, data quality violation, timeout, connectivity issue), (b) determine impact (which reports/dashboards affected), (c) decide on remediation approach (re-run, manual fix, escalate)",
+     "duration": "30–60 min per failure",
+     "n": "2",
+     "r": "Data Engineer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Execute remediation — (a) re-run failed job after resolving root cause, (b) for data quality failures: quarantine bad records, correct in staging, and re-process, (c) for source system issues: coordinate with IT to resolve, (d) for timeout: optimize query or increase timeout threshold",
+     "duration": "30–120 min",
+     "n": "3",
+     "r": "Data Engineer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Validate remediated data — after re-run, verify: (a) row counts match source system, (b) data quality checks pass, (c) downstream reports reflect updated data; notify affected report consumers if data was stale",
+     "duration": "15–30 min",
+     "n": "4",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Monitor intraday ETL jobs — real-time and near-real-time feeds (POS streaming, ecommerce orders, inventory updates) require continuous monitoring; check latency against SLA (POS: < 30 sec, ecommerce: < 5 min)",
+     "duration": "Continuous (during business hours)",
+     "n": "5",
+     "r": "BI Operations Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Weekly ETL health review — analyze job performance trends: (a) average execution time vs. baseline, (b) failure rate by job type, (c) data volume growth and capacity impact, (d) upcoming schema changes in source systems that may affect ETL",
+     "duration": "2 hours weekly",
+     "n": "6",
+     "r": "Data Engineer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Monthly ETL optimization — identify and implement improvements: (a) optimize slow-running queries, (b) consolidate redundant jobs, (c) implement incremental loading for large tables, (d) archive historical data to reduce processing time",
+     "duration": "4 hours monthly",
+     "n": "7",
+     "r": "Data Engineer"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-222"
+   ],
+   "fields": {
+    "Frequency": "~30–40 access requests per month; quarterly governance review",
+    "Owner": "BI Manager / Data Governance Officer",
+    "Participants": "BI Developer, Business User, Department Manager, IT Security, Data Governance Committee",
+    "Trigger": "User request for BI platform access; new department onboarding; or scheduled governance review",
+    "Volume": "~300–400 active BI platform users across organization"
+   },
+   "id": "W882",
+   "level": 2,
+   "name": "Self-Service BI Governance, Access Provisioning & Training",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits BI access request\" (replaces manual Step 1).",
+     "- System auto-create of \"create and share reports, export data\" (replaces manual Step 2).",
+     "- System auto-assign of \"assign user to role-based group\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-222 (ensure BI data governance & reporting integrity.)",
+     "- operational: BI Manager / Data Governance Officer review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Row-level security complexity — 200 stores × 5 regions × multiple departments = complex security matrix",
+     "- Users requesting broader access than role requires — manager approval is often rubber-stamped",
+     "- Self-service analysis can produce incorrect metrics if user doesn't understand data model — training essential",
+     "- Data export risk — bulk export of customer or financial data creates security and privacy exposure (RA 10173)",
+     "- Quarterly access review is time-consuming — automation of deprovisioning for terminated employees needed"
+    ],
+    "Staffing Implication": [
+     "- BI Manager: governance oversight (20% of time)",
+     "- BI Developer: access provisioning and training (15% of time)",
+     "- Data Governance Committee: quarterly review (4 hours/quarter × 5 members)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **BI Platform** — role management, data security, usage analytics",
+     "- **HR System** — employee status verification, organizational hierarchy",
+     "- **IT Identity Management** — SSO integration, access provisioning",
+     "- **Data Governance Platform** — policy management, audit logging",
+     "- **LMS** — training delivery, completion tracking, quiz administration"
+    ],
+    "Time Estimate": [
+     "- Per access request: ~40 min (steps 1–3: 10 + 15 + 15 min)",
+     "- Per training session: 2 hours (groups of 5–8)",
+     "- Quarterly review: 4 hours",
+     "- **Annual estimate: 480 requests × 40 min + 40 training sessions × 2 hours + 16 hours governance = 416 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "BI Manager",
+     "activity": "Receive access request — user submits BI access request: (a) role/department, (b) data domains needed (sales, inventory, finance, HR, etc.), (c) intended use (dashboard viewing, self-service analysis, data export), (d) manager approval",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Business User"
+    },
+    {
+     "a": "Data Governance Officer",
+     "activity": "Classify access level — based on role and data sensitivity: (a) Viewer — access to published dashboards only, (b) Explorer — self-service analysis within authorized data domains, (c) Analyst — create and share reports, export data, (d) Developer — full model access (BI team only); apply row-level security (e.g., Store Manager sees only own store)",
+     "duration": "15 min",
+     "n": "2",
+     "r": "BI Manager"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Provision access and data security — configure BI platform: (a) assign user to role-based group, (b) apply data security filters (store, region, department), (c) enable authorized data domains, (d) set export restrictions based on data classification",
+     "duration": "15 min",
+     "n": "3",
+     "r": "BI Developer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Conduct user onboarding training — for Explorer/Analyst roles: 2-hour training covering (a) BI platform navigation, (b) data model overview, (c) creating basic visualizations, (d) applying filters and drill-down, (e) sharing and collaboration features, (f) data governance policies; quiz with 80% pass requirement",
+     "duration": "2 hours per session (group)",
+     "n": "4",
+     "r": "BI Developer"
+    },
+    {
+     "a": "Data Governance Officer",
+     "activity": "Quarterly access review — audit all user access: (a) remove access for terminated/transferred employees, (b) review Analyst-level access for appropriateness, (c) verify data security filters match current organizational structure, (d) check for shared credentials",
+     "duration": "4 hours quarterly",
+     "n": "5",
+     "r": "BI Manager"
+    },
+    {
+     "a": "Data Governance Officer",
+     "activity": "Enforce data governance policies — monitor: (a) data export volume (flag bulk exports), (b) dashboard sharing outside authorized groups, (c) query patterns indicating unauthorized data exploration, (d) login anomalies; report violations to Data Governance Committee",
+     "duration": "2 hours monthly",
+     "n": "6",
+     "r": "BI Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-326"
+   ],
+   "fields": {
+    "Frequency": "Daily automated checks; ~5–10 data quality issues requiring investigation per week",
+    "Owner": "Data Quality Analyst / BI Manager",
+    "Participants": "Data Steward (business), Data Engineer, Source System Owner, Data Governance Officer",
+    "Trigger": "Scheduled — daily data quality checks; or triggered by data quality exception from ETL (W881) or user report",
+    "Volume": "~50–80 data quality rules monitored daily across 8 data domains"
+   },
+   "id": "W884",
+   "level": 2,
+   "name": "Data Quality Monitoring, Exception Triage & Remediation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks — automated rules validate\" (replaces manual Step 1).",
+     "- System auto-review of \"Review data quality dashboard — check overall DQ score by domain\" (replaces manual Step 2).",
+     "- System auto-report of \"Triage exceptions — for each DQ issue\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-326 (ensure controlled execution — Data Engineering & Quality (PA-28.2).)",
+     "- operational: owners may not prioritize data quality fixes — competing priorities"
+    ],
+    "Pain Points / Risks": [
+     "- Data quality is only as good as the rules defined — undetected data issues may exist",
+     "- Source system owners may not prioritize data quality fixes — competing priorities",
+     "- Manual data entry at store level (200 locations) is a persistent DQ risk",
+     "- Data quality remediation at origin requires business process change — slow to implement",
+     "- DQ score can mask individual record-level issues — aggregate scores may look healthy while specific records are wrong",
+     "- Data Privacy Act (RA 10173) requires accurate customer data — DQ compliance has legal implications"
+    ],
+    "Staffing Implication": [
+     "- 1 Data Quality Analyst (daily DQ monitoring and triage)",
+     "- Data Stewards: business-side DQ remediation (part-time, 1 per major domain)",
+     "- Data Governance Committee: monthly oversight (5 members × 2 hours)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- **Data Quality Platform** — rule engine, DQ scoring, exception dashboard",
+     "- **Data Warehouse** — data validation targets",
+     "- **ETL Tool** — transformation error logging",
+     "- **Source Systems** — root cause investigation",
+     "- **ITSM** — incident routing, SLA tracking",
+     "- **BI Dashboard** — DQ trend reporting"
+    ],
+    "Time Estimate": [
+     "- Daily monitoring: 1 hour",
+     "- Weekly exception handling: 5 hours",
+     "- Monthly analysis: 4 hours",
+     "- **Annual estimate: 365 + 260 + 48 = 673 person-hours/year**",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Data Quality Analyst",
+     "activity": "Execute daily data quality checks — automated rules validate: (a) completeness (missing values, null counts), (b) accuracy (range validation, referential integrity), (c) consistency (cross-system reconciliation), (d) timeliness (data freshness vs. SLA), (e) uniqueness (duplicate detection), (f) conformity (format validation, code table compliance)",
+     "duration": "15 min (automated)",
+     "n": "1",
+     "r": "Data Quality System (automated)"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Review data quality dashboard — check overall DQ score by domain: (a) Sales Data (> 98% target), (b) Inventory Data (> 97%), (c) Customer Data (> 95%), (d) Financial Data (> 99%), (e) Product Data (> 96%), (f) Vendor Data (> 95%), (g) HR Data (> 98%), (h) ecommerce Data (> 95%); investigate domains below threshold",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Data Quality Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Triage exceptions — for each DQ issue: (a) assess severity (critical: impacts financial reporting, high: impacts operational decisions, medium: impacts analytics, low: cosmetic), (b) identify affected data domain and downstream consumers, (c) determine root cause category (source system error, ETL transformation issue, data entry error, integration failure)",
+     "duration": "15–30 min per issue",
+     "n": "3",
+     "r": "Data Quality Analyst"
+    },
+    {
+     "a": "Data Governance Officer",
+     "activity": "Route to appropriate resolver — (a) source system error → Source System Owner (IT or business), (b) ETL issue → Data Engineer, (c) data entry error → Data Steward (business), (d) integration failure → IT Integration Team; assign remediation SLA (Critical: 4 hours, High: 24 hours, Medium: 5 days, Low: next sprint)",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Data Quality Analyst"
+    },
+    {
+     "a": "Data Quality Analyst",
+     "activity": "Execute data remediation — resolver implements fix: (a) correct source data at origin, (b) re-process ETL with corrected transformation, (c) fix data entry in source system, (d) apply one-time data correction in warehouse (with documentation); validate fix",
+     "duration": "Variable (30 min – 4 hours)",
+     "n": "5",
+     "r": "Resolver (role varies)"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "Verify remediation and update DQ score — re-run DQ rules for affected domain; confirm score returns to target; document root cause, remediation, and preventive measure in DQ incident log",
+     "duration": "15 min",
+     "n": "6",
+     "r": "Data Quality Analyst"
+    },
+    {
+     "a": "Data Governance Officer",
+     "activity": "Monthly DQ trend analysis — report to Data Governance Committee: (a) DQ score trends by domain, (b) top recurring issues, (c) root cause distribution, (d) remediation SLA compliance, (e) recommendations for systemic improvements",
+     "duration": "4 hours monthly",
+     "n": "7",
+     "r": "Data Quality Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W881"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-326"
+   ],
+   "fields": {
+    "Frequency": "Monthly Council meetings; weekly steward working sessions; continuous governance operations",
+    "Owner": "Data Governance Lead / CIO",
+    "Participants": "Data Governance Council (CIO, CFO, COO, VP Merchandising, CHRO, Legal), Data Stewards (1 per functional domain), Data Architect, BI Manager",
+    "Trigger": "Monthly Data Governance Council meeting; or data quality incident escalation; or new data domain onboarding (e.g., new ERP module go-live)",
+    "Volume": "35,000 active SKUs, 200 stores, 5 legal entities, ~800 vendors, ~6,762 employees — all generating data across 30+ ERP modules"
+   },
+   "id": "W1177",
+   "level": 2,
+   "name": "Enterprise Data Governance Council, Standards & Stewardship Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Data Governance Council meeting\" (replaces manual Step 1).",
+     "- System auto-capture of \"center accuracy, intercompany elimination data per W87\" (replaces manual Step 2).",
+     "- System auto-measure of \"measure, weight, dimensions, cost, price — all required\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's unified cloud ERP system generates data across 30+ modules serving 200 stores, 4 DCs, and 5 legal entities. Enterprise data governance ensures that data is accurate, consistent, timely, and secure across the organization. Without governance: (a) duplicate customer records inflate CRM counts, (b) inconsistent product attributes create pricing errors across channels, (c) financial reporting discrepancies delay month-end close per W86, and (d) regulatory reporting (BIR, SEC, DOLE) risks inaccuracies that result in penalties. This workflow establishes a formal Data Governance Council with executive sponsorship, domain-level Data Stewards, and a standards framework covering data quality, master data management, data lineage, and data privacy per W647."
+    ],
+    "Controls": [
+     "- CTL-326 (ensure controlled execution — Data Engineering & Quality (PA-28.2).)"
+    ],
+    "Pain Points / Risks": [
+     "- **Executive engagement**: Data governance is perceived as bureaucratic; maintaining CIO and CFO engagement requires connecting governance to business outcomes (revenue leakage from bad data, regulatory penalty risk)",
+     "- **Steward time commitment**: Data Stewards are functional experts with existing full-time roles; stewardship duties (4–6 hours/week) compete with primary responsibilities",
+     "- **Change resistance**: data entry standards add steps for store staff (e.g., mandatory customer phone number at POS); compliance drops without enforcement",
+     "- **System fragmentation**: despite unified ERP, some data lives in shadow systems (vendor spreadsheets, store-specific workarounds); bringing shadow data into governance scope is slow",
+     "- **Scale**: 200 stores × 29 employees = 5,800 potential data entry points; achieving > 95% data quality across all sources requires continuous monitoring"
+    ],
+    "Staffing Implication": [
+     "- **Data Governance Lead**: 1 FTE dedicated to governance program management",
+     "- **Data Stewards**: 7 functional stewards (part-time, absorbed by existing roles at ~10% each)",
+     "- **Data Architect**: 4 hours/month on lineage and catalog; absorbed by existing role",
+     "- **Total governance effort: ~600–800 hours/month across all participants**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Data quality monitoring engine integrated with ERP data validation",
+     "- Data catalog and lineage documentation platform",
+     "- Data governance dashboard with quality scores by domain",
+     "- ERP role-based access controls per W647",
+     "- Data retention policy automation",
+     "- Integration with W884 data quality monitoring, W29 master data management, W882 self-service BI"
+    ],
+    "Time Estimate": [
+     "- Monthly Council: 2 hours",
+     "- Weekly stewardship: 4–6 hours × 7 stewards = 28–42 hours/week",
+     "- Standards maintenance: 4 hours/month",
+     "- Quality monitoring: 2 hours/week",
+     "- Lineage/catalog: 4 hours/month",
+     "- Quarterly audit: 8 hours/quarter",
+     "- **Annual estimate: ~1,600–2,200 hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**Data Governance Council meeting** (monthly): Council reviews: (a) data quality scorecard — key metrics by domain (customer data accuracy, product data completeness, financial data timeliness); (b) critical data incidents from past month; (c) remediation progress on open issues; (d) new data domain requests (e.g., ecommerce platform data integration per W706); (e) data privacy compliance update per W647; (f) policy changes for approval; (g) stewardship program progress",
+     "duration": "2 hours",
+     "n": "1",
+     "r": "Data Governance Lead"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Data domain stewardship** (ongoing): Domain Data Stewards (1 each for: Product, Customer, Vendor, Finance, HR, Supply Chain, Store Operations) manage: (a) **Product Steward**: SKU data quality, attribute completeness, category hierarchy accuracy, pricing consistency across channels per W678; (b) **Customer Steward**: duplicate detection and merging, loyalty account integrity per W551, credit data accuracy per W783; (c) **Vendor Steward**: vendor master accuracy, bank account verification, compliance document currency per W870; (d) **Finance Steward**: GL account structure, cost center accuracy, intercompany elimination data per W87; (e) **HR Steward**: employee master accuracy, payroll data integrity, org hierarchy; (f) **Supply Chain Steward**: inventory accuracy across DC/store/ecom, ATP data reliability; (g) **Store Ops Steward**: store master data, POS configuration accuracy, facility data",
+     "duration": "4–6 hours/week each",
+     "n": "2",
+     "r": "Data Stewards"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Data standards enforcement**: Data Governance Lead publishes and maintains standards: (a) naming conventions (customer name format: Last, First Middle; vendor legal name per SEC registration); (b) mandatory fields per entity (SKU: description, category, unit of measure, weight, dimensions, cost, price — all required); (c) data format standards (dates: YYYY-MM-DD; currency: PHP with 2 decimal places; phone: +63 format); (d) data entry validation rules enforced in ERP; (e) exception handling process for data that doesn't fit standard formats",
+     "duration": "4 hours/month",
+     "n": "3",
+     "r": "Data Governance Lead"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Data quality monitoring**: System monitors data quality across domains: (a) completeness: % of mandatory fields populated; (b) accuracy: % of records matching validation rules; (c) timeliness: % of records updated within SLA; (d) consistency: % of records matching across systems (e.g., customer record identical in POS, CRM, and ERP); (e) uniqueness: duplicate record detection; (f) quality score per domain published on governance dashboard; (g) domains scoring < 90% trigger steward investigation",
+     "duration": "2 hours/week",
+     "n": "4",
+     "r": "System / Data Stewards"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Data lineage & catalog management**: Data Architect maintains enterprise data catalog: (a) document all data entities, their source systems, transformation rules, and consumption points; (b) map data lineage: source → ETL → warehouse → dashboard/report; (c) identify data dependencies and impact of source changes; (d) publish data dictionary accessible to all BI users per W882 self-service governance; (e) update catalog when new modules, integrations, or reports are deployed",
+     "duration": "4 hours/month",
+     "n": "5",
+     "r": "Data Architect"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Policy compliance audit**: Quarterly, Data Governance Lead audits compliance with: (a) data retention policy (financial: 10 years per BIR; employee: per DOLE requirements; customer: per RA 10173 privacy law); (b) data access controls per W647 privacy compliance; (c) data sharing agreements with third parties (vendors per W705, delivery partners per W1163, payment gateways); (d) results reported to Council with remediation actions",
+     "duration": "8 hours/quarter",
+     "n": "6",
+     "r": "Data Governance Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1163",
+    "W29",
+    "W551",
+    "W647",
+    "W678",
+    "W705",
+    "W706",
+    "W783",
+    "W86",
+    "W87",
+    "W870",
+    "W882",
+    "W884"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-326"
+   ],
+   "fields": {
+    "Frequency": "Daily automated validation; weekly manual anomaly review",
+    "Owner": "Data Quality Analyst",
+    "Participants": "Data Quality Analyst, BI Manager, Store Operations (for corrections), IT (for system fixes)",
+    "Trigger": "Scheduled — daily (post-ETL validation); ad-hoc triggered by BI report discrepancy or analytics model error",
+    "Volume": "~2.8M POS transactions/month across 200 stores; daily validation of ~90,000–100,000 transactions"
+   },
+   "id": "W1390",
+   "level": 2,
+   "name": "Store POS Transaction Data Quality Validation, Anomaly Detection & Correction Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"discounts applied per approved promo codes\" (replaces manual Step 1).",
+     "- System auto-detect of \"Anomaly detection engine\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews validation results and anomaly flags\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's 200 stores generate ~2.8M POS transactions monthly, feeding the data warehouse that powers sales reporting, inventory management, financial close, loyalty analytics, and demand forecasting. Data quality issues at the POS level — missing customer IDs, incorrect store codes, duplicate transactions, negative quantity sales without corresponding returns, orphaned line items — cascade through the entire analytics pipeline. A single store uploading corrupted transaction data can distort regional sales reports, demand forecasts, and financial close figures. This workflow establishes systematic data quality validation at the POS transaction layer, the most critical data source in the BuildRight ecosystem."
+    ],
+    "Controls": [
+     "- CTL-326 (ensure controlled execution — Data Engineering & Quality (PA-28.2).)",
+     "- operational: every pipeline error corrected via documented change approval with before/after data-quality evidence and audit trail"
+    ],
+    "Pain Points / Risks": [
+     "- **Correction vs. source truth dilemma**: correcting data in the warehouse without fixing the source system means the same error will recur; but fixing source systems (POS software, store processes) requires IT development resources and store retraining that may take weeks or months",
+     "- **Anomaly detection false positives**: the ML model may flag legitimate business events (e.g., a contractor buying PHP 500K of materials for a project) as anomalies; excessive false positives erode analyst trust in the system",
+     "- **Resource bottleneck for critical exceptions**: when a critical data quality issue blocks morning report distribution (W879), the Data Quality Analyst must resolve within 1–2 hours — creating a single point of failure if the analyst is unavailable",
+     "- **Store data submission latency**: provincial stores with intermittent internet may delay transaction uploads; data quality validation on incomplete daily data produces misleading exception reports"
+    ],
+    "Staffing Implication": [
+     "1 dedicated Data Quality Analyst. Absorbed within BI team headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Data quality validation engine: configurable rule library (~50 rules) with severity classification and automated exception generation (W1390.1)",
+     "- Anomaly detection ML model: statistical and pattern-based anomaly detection trained on historical POS data (W1390.2)",
+     "- Exception triage dashboard: daily worklist for Data Quality Analyst with severity, root cause category, and resolution tracking (W1390.3)",
+     "- Data lineage tracing: source-to-warehouse data flow visualization for root cause investigation (W1390.4)",
+     "- Correction workflow: documented correction with approval, audit trail, and downstream refresh trigger (W1390.5)",
+     "- Weekly data quality scorecard: automated generation with trend analysis (W1390.6)",
+     "- Integration with W881 (ETL monitoring — data quality is downstream validation), W879 (daily report distribution — quality-checked data), W884 (data quality monitoring — broader DQ framework), W1214 (store scorecard — validated POS data)"
+    ],
+    "Time Estimate": [
+     "Daily triage: 30–60 min. Exception investigation and correction: 2–4 hours/day. Weekly scorecard: 1 hour/week. Total: ~15–25 hours/week."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Automated daily validation** (post-ETL, 7:00 AM): data quality engine runs ~50 validation rules against previous day's POS transactions: (a) **Completeness**: every transaction has store code, terminal ID, timestamp, cashier ID, total amount; every line item has SKU, quantity, unit price; (b) **Validity**: store code matches location master; SKU matches product master; payment method code is valid; (c) **Consistency**: transaction total = sum of line items; tax amount consistent with 12% VAT; discounts applied per approved promo codes; (d) **Uniqueness**: no duplicate transaction IDs across all stores; (e) **Timeliness**: all stores have submitted data within SLA (upload within 2 hours of store close); (f) **Business rules**: no negative revenue without corresponding return/refund transaction; no loyalty points earned on voided transactions; no employee purchases with irregular discount patterns",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Anomaly detection engine** (daily): machine learning model flags statistical anomalies: (a) store daily revenue > 3 standard deviations from rolling 30-day average; (b) transaction count per terminal > 2× average for day-of-week; (c) unusual SKU mix (high-value items concentrated in single transactions); (d) excessive void rate per cashier (> 10% of transactions); (e) average transaction value spikes > 50% from 30-day average",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**Exception triage** (8:00 AM): Data Quality Analyst reviews validation results and anomaly flags: (a) categorize exceptions by severity — Critical (affects financial reporting), High (affects operational reporting), Medium (affects analytics), Low (cosmetic); (b) Critical: investigate immediately before morning report distribution (W879); (c) High: investigate within 24 hours; (d) Medium/Low: queue for weekly batch review",
+     "duration": "30–60 min/day",
+     "n": "3",
+     "r": "Data Quality Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**Root cause investigation**: for each exception, Data Quality Analyst traces data lineage: (a) is the issue at source (POS entry error, hardware malfunction) or at ETL (data transformation error, mapping failure)? (b) is it isolated to one store or systemic? (c) is it a recurring pattern or one-time event?",
+     "duration": "15–30 min/exception",
+     "n": "4",
+     "r": "Data Quality Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**Correction processing**: (a) **Source correction**: if POS data entry error, coordinate with Store Manager for transaction correction in POS system; correction flows through next ETL cycle; (b) **Data warehouse correction**: if ETL transformation error, Data Quality Analyst applies correction in staging layer with documented justification; corrected data refreshes downstream reports; (c) **System fix**: if root cause is POS software bug or ETL mapping error, submit IT ticket for system fix; track until resolved",
+     "duration": "15–60 min/correction",
+     "n": "5",
+     "r": "Data Quality Analyst / IT"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**Weekly data quality scorecard**: Data Quality Analyst generates weekly scorecard: (a) overall data quality score (% of transactions passing all validation rules), (b) exception volume by category and severity, (c) mean time to resolution, (d) recurring issues by store or category, (e) trend vs. prior weeks; BI Manager reviews and escalates systemic issues to IT or Store Operations",
+     "duration": "1 hour/week",
+     "n": "6",
+     "r": "Data Quality Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1214",
+    "W879",
+    "W881",
+    "W884"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-326"
+   ],
+   "fields": {
+    "Frequency": "Weekly automated scan; ~20–30 potential duplicates flagged per week across all master data domains",
+    "Owner": "Data Steward (within Master Data Management team)",
+    "Participants": "Data Steward, Data Governance Lead, Customer Service (for customer merges), Merchandising (for product merges), Procurement (for vendor merges)",
+    "Trigger": "Scheduled — weekly duplicate detection scan; ad-hoc triggered by customer complaint (multiple accounts), vendor payment confusion (duplicate vendor), or product data inconsistency (duplicate SKUs)",
+    "Volume": "~1,200–1,500 potential duplicates reviewed/year; ~800–1,000 confirmed merges/year"
+   },
+   "id": "W1391",
+   "level": 2,
+   "name": "Master Data Duplicate Detection, Merge Processing & Golden Record Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"Weekly duplicate detection scan\" (replaces manual Step 1).",
+     "- System auto-record of \"records in detail — all fields, transaction history, related records\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates data integrity\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's master data — customers (~5,400 trade/corporate + ~600K loyalty members), products (~35,000 active SKUs), vendors (~1,000 active), stores (200 locations + 4 DCs), and employees (~5,800) — is maintained across multiple systems (POS, ERP, CRM, ecommerce, loyalty). Duplicate records arise from multiple entry points (store POS enrollment, ecommerce self-registration, trade account applications at different stores, vendor onboarding by different buyers). Duplicate customer records fragment purchase history, distort loyalty analytics, and create AR reconciliation issues when the same trade account has two customer codes. Duplicate SKUs cause inventory fragmentation, replenishment errors, and pricing inconsistencies. This workflow manages systematic duplicate detection and merge processing to maintain \"golden record\" integrity."
+    ],
+    "Controls": [
+     "- CTL-326 (ensure controlled execution — Data Engineering & Quality (PA-28.2).)",
+     "- operational: performance"
+    ],
+    "Pain Points / Risks": [
+     "- **False merge risk**: merging two records that are not actually duplicates (e.g., two different contractors with the same name in the same city) creates data corruption — financial transactions are mixed, AR balances are wrong, loyalty points are misattributed; rollback is possible but complex; mitigated by CTL-326 (controlled execution — Data Engineering & Quality (PA-28.2))",
+     "- **Merge processing performance**: re-linking thousands of transactions from a superseded customer record to a golden record can take significant database processing time; during the merge, affected records may be locked, impacting system performance",
+     "- **Entry point resistance to real-time dedup**: adding a duplicate check to POS enrollment adds 5–10 seconds to the customer sign-up process; store staff may skip the check during busy periods, undermining prevention",
+     "- **External system sync delays**: if a customer record is merged in the ERP but the ecommerce platform or CRM has not yet synced, the superseded record may still be active in those systems, creating data inconsistency for hours or days"
+    ],
+    "Staffing Implication": [
+     "1 dedicated Data Steward within the Master Data Management team. Absorbed within existing MDM headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fuzzy-matching duplicate detection engine: configurable matching rules per master data domain with similarity thresholds (W1391.1)",
+     "- Duplicate review worklist: side-by-side record comparison with transaction history and linked records (W1391.2)",
+     "- Merge processing engine: automated transaction re-linking, balance consolidation, and golden record creation with rollback capability (W1391.3)",
+     "- Domain-specific merge rules: configurable consolidation logic per master data type (W1391.4)",
+     "- Real-time duplicate prevention: fuzzy-match check at point of entry (POS, ecommerce, ERP) before new record creation (W1391.6)",
+     "- Integration with W1177 (data governance standards), W29.1–29.3 (master data management), W17 (loyalty — customer dedup), W884 (data quality monitoring)"
+    ],
+    "Time Estimate": [
+     "Weekly scan review: 4–6 hours/week (20–30 pairs × 10–20 min). Merge processing: 15–30 min/merge × 15–20 merges/week = ~5–8 hours/week. Monthly prevention review: 2 hours/month. Total: ~12–18 hours/week."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Weekly duplicate detection scan**: system runs fuzzy-matching algorithms across each master data domain: (a) **Customers**: match on name + phone, name + email, name + address, TIN (for trade accounts); threshold: > 85% similarity score flagged as potential duplicate; (b) **Products**: match on SKU description, vendor item code, barcode/EAN; threshold: > 90% similarity; (c) **Vendors**: match on vendor name + TIN, vendor name + bank account; threshold: > 85% similarity; (d) generate potential duplicate queue sorted by match confidence and business impact",
+     "duration": "Automated (weekly)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Manual review**: Data Steward reviews each potential duplicate pair: (a) examine both records in detail — all fields, transaction history, related records (orders, invoices, payments); (b) confirm or reject duplicate status; (c) for ambiguous cases (e.g., two \"Juan Cruz\" records with similar addresses — could be father and son, or true duplicate), check supplementary sources (phone call to customer, trade reference check, SEC/DTI records for business accounts)",
+     "duration": "10–20 min/pair",
+     "n": "2",
+     "r": "Data Steward"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Merge processing** (for confirmed duplicates): (a) Data Steward identifies the \"golden record\" (more complete data, longer history, active status); (b) system re-links all transactions, invoices, payments, and loyalty activity from the secondary record to the golden record; (c) secondary record status changed to \"Merged — Superseded by [golden record ID]\"; (d) system validates data integrity: all financial balances (AR, loyalty points) consolidated correctly; no orphaned transactions; (e) Data Steward approves merge after validation",
+     "duration": "15–30 min/merge",
+     "n": "3",
+     "r": "Data Steward"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Domain-specific merge rules**: (a) **Customer merges**: consolidate loyalty points (sum), AR balance (sum), purchase history (union); update CRM profile with most recent contact information; notify customer if address/phone changes; (b) **Product merges**: consolidate inventory quantities, sales history, and replenishment parameters; deprecate secondary SKU; update all open POs and transfer orders; update planogram assignments; (c) **Vendor merges**: consolidate spend history, open POs, and contract records; deprecate secondary vendor code; notify vendor of consolidated vendor code",
+     "duration": "15–30 min/merge",
+     "n": "4",
+     "r": "Data Steward / Domain Owner"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Post-merge monitoring**: for 30 days after merge, Data Steward monitors for: (a) failed transactions referencing merged (superseded) record; (b) data integrity issues (duplicate re-creation by new entries); (c) user complaints about merged records; resolve any issues",
+     "duration": "30 min/week",
+     "n": "5",
+     "r": "Data Steward"
+    },
+    {
+     "a": "MDM Manager",
+     "activity": "**Monthly duplicate prevention review**: Data Governance Lead reviews duplicate creation patterns — (a) which entry points generate the most duplicates? (POS enrollment, ecommerce registration, trade account applications); (b) implement preventive measures: real-time duplicate detection at entry, mandatory TIN validation for trade accounts, POS enrollment deduplication check (fuzzy match before creating new record); (c) measure duplicate rate trend month-over-month",
+     "duration": "2 hours/month",
+     "n": "6",
+     "r": "Data Governance Lead"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1177",
+    "W17",
+    "W29",
+    "W884"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-326"
+   ],
+   "fields": {
+    "Frequency": "Quarterly DR test; continuous monitoring; ad-hoc for actual incidents",
+    "Owner": "Data Engineer",
+    "Participants": "BI Manager, IT Database Administrator, IT Infrastructure, Cloud Provider, Data Quality Analyst",
+    "Trigger": "Quarterly DR test schedule; or actual data pipeline failure (DC outage, cloud provider incident); or major system upgrade requiring DR validation",
+    "Volume": "~50–80 ETL pipelines (per W881); ~20,000 job executions/month; ~1,000 GB data warehouse"
+   },
+   "id": "W1481",
+   "level": 2,
+   "name": "Data Pipeline Disaster Recovery, Failover Testing & RTO/RPO Validation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"documents current DR architecture\" (replaces manual Step 1).",
+     "- System auto-validate of \"verify data completeness, run critical reports against DR environment, measure…\" (replaces manual Step 2).",
+     "- System auto-report of \"reports that produced incorrect results\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's data warehouse and ETL pipelines are mission-critical: they feed the dashboards that Store Managers use daily (W67), the financial reports that Finance depends on for month-end close (W86), the demand forecasts that drive procurement (W31), and the POS analytics that power loss prevention (W837). A catastrophic data pipeline failure — caused by cloud infrastructure outage, data center incident, cyberattack (ransomware), or software bug — could blind BuildRight's decision-making for days. Per W26 business continuity planning, BuildRight must have a tested disaster recovery plan for its data infrastructure with defined Recovery Time Objective (RTO) and Recovery Point Objective (RPO). This workflow manages the DR planning, failover testing, and validation of RTO/RPO targets for BuildRight's data pipeline infrastructure."
+    ],
+    "Controls": [
+     "- CTL-326 (ensure controlled execution — Data Engineering & Quality (PA-28.2).)",
+     "- operational: testing during low-activity hours (Sunday morning); operational: tabletop exercises (Q1, Q3) that keep procedures fresh without full failover risk"
+    ],
+    "Pain Points / Risks": [
+     "- **Live failover risk**: executing a live DR test (Q2, Q4) carries a small risk of disrupting production if failback does not execute cleanly; mitigated by testing during low-activity hours (Sunday morning)",
+     "- **Cost of DR infrastructure** — maintaining a full secondary database environment doubles cloud infrastructure cost; BuildRight must balance DR capability against IT budget constraints per W27",
+     "- **RPO gap for real-time systems** — POS event streaming has < 30 second latency target per model company profile; achieving RPO < 1 hour for POS data requires synchronous replication which impacts write performance",
+     "- **Team preparedness degradation** — between quarterly DR tests, team members may forget procedures; mitigated by tabletop exercises (Q1, Q3) that keep procedures fresh without full failover risk"
+    ],
+    "Staffing Implication": [
+     "- **Data Engineer**: ~4 hours/quarter on DR tests + 4 hours/month on backup validation = ~64 hours/year; absorbed",
+     "- **BI Manager**: ~4 hours/quarter on DR test oversight; absorbed",
+     "- **IT DBA**: ~2 hours/month on backup support; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- DR architecture documentation — cloud configuration, replication strategy, backup schedule (W1481.1)",
+     "- DR test execution framework — tabletop and live failover test procedures with checklists (W1481.2)",
+     "- RTO/RPO measurement — automated timing from failover initiation to recovery confirmation (W1481.3)",
+     "- Backup monitoring — automated backup completion, integrity, and retention tracking (W1481.4)",
+     "- Incident recovery playbook — step-by-step recovery procedures for common failure scenarios (W1481.5)",
+     "- Integration with W881 (ETL monitoring), W26 (BCP planning), W647 (data privacy), W86 (financial close)"
+    ],
+    "Time Estimate": [
+     "- DR architecture maintenance: 4 hours/quarter",
+     "- Quarterly DR test: 1 day (8 hours)",
+     "- Post-test analysis: 4 hours/quarter",
+     "- Monthly backup validation: 4 hours/month",
+     "- **Annual estimate: ~140–160 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "**DR architecture & RTO/RPO definition**: (a) Data Engineer documents current DR architecture: (i) cloud region and availability zone configuration, (ii) database replication strategy (synchronous vs. asynchronous), (iii) ETL pipeline redundancy, (iv) backup frequency and retention; (b) BI Manager defines RTO/RPO targets by data domain: (i) **POS sales data**: RPO < 1 hour, RTO < 4 hours (daily operations depend on this), (ii) **Financial data**: RPO < 15 min, RTO < 2 hours (month-end close critical), (iii) **Inventory data**: RPO < 1 hour, RTO < 4 hours (replenishment depends on this), (iv) **HR/payroll data**: RPO < 1 hour, RTO < 8 hours (semi-monthly payroll cycles), (v) **Historical/analytics data**: RPO < 24 hours, RTO < 24 hours (can tolerate longer recovery)",
+     "duration": "Initial: 2–3 days; maintenance: 4 hours/quarter",
+     "n": "1",
+     "r": "Data Engineer / BI Manager"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**Quarterly DR test execution**: (a) Data Engineer schedules quarterly DR test (coordinated with IT Infrastructure per W26 BCP testing): (i) **Tabletop exercise** (Q1, Q3): walk-through of DR procedures with all stakeholders — simulate primary database failure, document step-by-step recovery process, identify gaps; (ii) **Live failover test** (Q2, Q4): execute actual failover to DR environment: redirect ETL pipelines to secondary database, verify data completeness, run critical reports against DR environment, measure actual RTO achieved, failback to primary; (b) Data Quality Analyst validates data in DR environment: (i) row counts match primary, (ii) most recent data available within RPO target, (iii) critical reports produce correct results",
+     "duration": "1 day/quarter",
+     "n": "2",
+     "r": "Data Engineer / Data Quality Analyst"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**RTO/RPO validation & gap analysis**: (a) after each DR test: Data Engineer documents results: (i) actual RTO achieved vs. target, (ii) actual RPO achieved vs. target, (iii) any data loss during failover, (iv) any ETL pipelines that failed in DR environment, (v) any reports that produced incorrect results; (b) if RTO/RPO not met: root cause analysis and remediation plan — (i) is the architecture adequate? (need faster replication, additional resources?), (ii) is the procedure adequate? (manual steps too slow?), (iii) is the team trained? (confusion during failover?)",
+     "duration": "4 hours/test",
+     "n": "3",
+     "r": "Data Engineer"
+    },
+    {
+     "a": "BI Manager",
+     "activity": "**Backup validation**: (a) monthly: Data Engineer verifies backup integrity: (i) automated backup completion check (all databases backed up per schedule), (ii) random backup restore test (restore one table from backup, verify data matches production), (iii) backup storage capacity check (1,000 GB growing at ~10–15% annually — is storage scaling?), (iv) backup encryption verification (data at rest encrypted per W647 privacy compliance); (b) backup retention validation: (i) 10-year retention for financial data per BIR requirements, (ii) 3-year retention for operational data, (iii) purge expired backups",
+     "duration": "4 hours/month",
+     "n": "4",
+     "r": "Data Engineer / IT DBA"
+    },
+    {
+     "a": "CIO",
+     "activity": "**Actual incident recovery**: When a real data pipeline failure occurs: (a) Data Engineer activates DR procedure: (i) assess failure scope (single pipeline, full database, cloud region), (ii) determine if failover to DR is required or if repair in primary is faster, (iii) execute recovery per documented procedure; (b) during recovery: communicate status to stakeholders (BI Manager → affected business users); (c) post-recovery: document incident, actual RTO achieved, root cause, and preventive measures — feed into next quarterly DR test",
+     "duration": "Per incident",
+     "n": "5",
+     "r": "Data Engineer / BI Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W26",
+    "W27",
+    "W31",
+    "W647",
+    "W67",
+    "W837",
+    "W86",
+    "W881"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-326"
+   ],
+   "fields": {
+    "Frequency": "~100–200 master data changes/month (price changes, vendor updates, store configuration changes, customer merges per W1391)",
+    "Owner": "Data Governance Lead",
+    "Participants": "Data Steward, Data Engineer, Category Manager, Finance, IT, Store Operations",
+    "Trigger": "Proposed change to master data record (SKU, customer, vendor, GL account, store location); or emergency master data correction",
+    "Volume": "35,000 active SKUs, ~5,400 trade/corporate customers, ~1,000 vendors, 205 locations, ~500–800 GL accounts per entity"
+   },
+   "id": "W1482",
+   "level": 2,
+   "name": "Master Data Change Impact Analysis, Propagation Tracking & Downstream Notification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"record needs to change\" (replaces manual Step 1).",
+     "- System auto-file of \"files, tax reports\" (replaces manual Step 2).",
+     "- System auto-document of \"documentation within 24 hours\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Master data changes in BuildRight's ERP cascade across 30+ downstream systems: POS, ecommerce, marketplace integrations, WMS, CRM, loyalty engine, BI dashboards, tax reporting, and bank payment files. A seemingly simple change — renaming a product category, changing a vendor bank account, reclassifying a GL account, or merging a duplicate customer record per W1391 — can have far-reaching downstream impacts: (a) a product category rename may break ecommerce navigation and marketplace listing categorization, (b) a vendor bank account change may route payments to the wrong account if not propagated to AP per W7, (c) a GL account reclassification may cause financial reporting errors in the current period per W86, and (d) a customer merge may fail in the CRM or ecommerce system, causing order processing failures. This workflow ensures that all master data changes are assessed for downstream impact before execution, changes are tracked through propagation to all consuming systems, and affected stakeholders are notified."
+    ],
+    "Controls": [
+     "- CTL-326 (ensure controlled execution — Data Engineering & Quality (PA-28.2).)",
+     "- operational: Data Governance Lead review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Propagation delay across systems** — master data changes in ERP may take 24–48 hours to reach all downstream systems (especially marketplace integrations per W1464); during this window, systems are inconsistent",
+     "- **Untracked shadow systems** — if any department maintains data in spreadsheets or local databases outside ERP, master data changes won't reach these shadow systems, causing data drift",
+     "- **Change request volume** — with 100–200 changes/month and growing SKU base, Data Stewards may become bottlenecks; automation of Low-complexity changes is essential",
+     "- **Emergency change risk**: emergency changes executed without full impact analysis carry higher risk of downstream failures; post-change validation is critical; mitigated by the Data Governance Lead review and approval gate"
+    ],
+    "Staffing Implication": [
+     "- **Data Stewards**: ~15–30 min/change × ~150 changes/month = ~40–75 hours/month across 7 stewards; absorbed",
+     "- **Data Engineer**: ~2 hours/week on propagation monitoring; absorbed",
+     "- **Data Governance Lead**: ~4 hours/month on approval and oversight; absorbed",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Master data change request module — structured change request with impact analysis workflow (W1482.1–3)",
+     "- Automated impact analysis engine — downstream consumer identification and complexity assessment (W1482.2)",
+     "- Change propagation tracker — per-system status tracking with failure alerting (W1482.4)",
+     "- Automated notification engine — stakeholder notification based on change type and affected systems (W1482.5)",
+     "- Post-change validation checklist — downstream spot-check procedure (W1482.6)",
+     "- Integration with W29 (master data management), W1391 (duplicate merge), W881 (ETL), W884 (data quality), W1177 (data governance)"
+    ],
+    "Time Estimate": [
+     "- Per change: 15–30 min impact analysis + 5–30 min approval + 15 min validation = ~35–75 min",
+     "- Monthly: ~100–200 changes × 50 min average = ~100–150 hours/month",
+     "- **Annual estimate: ~1,200–1,800 hours**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Data Steward",
+     "activity": "**Change request submission**: (a) requestor (Category Manager, Finance, Store Operations, etc.) submits master data change request in the Data Governance module: (i) what record needs to change (entity type + ID), (ii) current value → proposed new value, (iii) reason for change, (iv) urgency (standard = 5 business days, emergency = 24 hours); (b) system routes request to the appropriate Data Steward based on master data domain (Product, Customer, Vendor, Finance, HR, Supply Chain, Store Ops)",
+     "duration": "10 min/request",
+     "n": "1",
+     "r": "Requestor / System"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Impact analysis**: (a) Data Steward performs automated impact analysis: (i) system identifies all downstream consumers of the affected record: ERP modules, POS, ecommerce, WMS, CRM, loyalty, marketplace integrations, BI reports, bank files, tax reports; (ii) system identifies all active transactions referencing the record: open POs, pending invoices, active orders, transfer orders; (iii) system estimates change propagation complexity: Low (simple field update, auto-propagated), Medium (requires downstream system configuration update), High (requires manual intervention in multiple systems); (b) Data Steward assesses risk: (i) what breaks if the change is executed incorrectly? (ii) what is the rollback plan? (iii) should the change be staged (execute in phases) or immediate?",
+     "duration": "15–30 min/change",
+     "n": "2",
+     "r": "Data Steward / System"
+    },
+    {
+     "a": "Domain Owner (if High)",
+     "activity": "**Change approval**: (a) for Low-complexity changes: Data Steward approves and executes; (b) for Medium-complexity changes: Data Governance Lead approves; (c) for High-complexity changes: approval from affected domain owners (e.g., GL change requires Controller approval, store configuration change requires COO approval); (d) for emergency changes: Data Steward executes immediately with verbal approval from Data Governance Lead, followed by written documentation within 24 hours",
+     "duration": "5–30 min",
+     "n": "3",
+     "r": "Data Steward / Data Governance Lead"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Change execution & propagation tracking**: (a) Data Steward executes the change in the master data record; (b) system automatically propagates the change to all identified downstream systems; (c) system tracks propagation status per downstream system: Pending → Propagated → Verified; (d) Data Engineer monitors propagation for completeness: (i) ecommerce catalog updated? (ii) POS price/product lookup updated? (iii) marketplace listings updated per W1464? (iv) BI reports reflecting new data? (v) AP vendor bank details updated?; (e) any propagation failures: Data Engineer troubleshoots and re-triggers",
+     "duration": "Variable",
+     "n": "4",
+     "r": "Data Steward / Data Engineer / System"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Downstream notification**: (a) system auto-notifies affected stakeholders of the completed change: (i) product data changes → Category Manager, Ecommerce Manager, Content Manager; (ii) customer data changes → CSR, Sales, AR; (iii) vendor data changes → Procurement, AP; (iv) financial data changes → Controller, AR, AP, Treasury; (v) store configuration changes → Store Manager, Regional Ops Manager; (b) notification includes: what changed, old value → new value, effective date, any action required by the stakeholder",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Data Governance Lead",
+     "activity": "**Post-change validation**: (a) 24 hours after change: Data Steward validates downstream impact: (i) spot-check 3–5 downstream systems for correct data propagation, (ii) check customer/employee complaints related to the change, (iii) verify no downstream system errors in IT monitoring; (b) if issues detected: initiate remediation and update change procedure to prevent recurrence",
+     "duration": "15 min/change",
+     "n": "6",
+     "r": "Data Steward"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1177",
+    "W1391",
+    "W1464",
+    "W29",
+    "W7",
+    "W86",
+    "W881",
+    "W884"
+   ]
+  }
+ ]
+}

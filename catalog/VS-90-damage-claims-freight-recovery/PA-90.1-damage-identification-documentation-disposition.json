@@ -1,0 +1,520 @@
+{
+ "process_area": {
+  "id": "PA-90.1",
+  "title": "Damage Identification, Documentation & Disposition"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-90-damage-claims-freight-recovery/PA-90.1-damage-identification-documentation-disposition.md",
+ "value_stream": {
+  "directory": "VS-90-damage-claims-freight-recovery",
+  "id": "VS-90",
+  "name": "Damage, Claims & Freight Recovery Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-499"
+   ],
+   "fields": {
+    "Frequency": "Continuous (~5–8% of receipts have some discrepancy)",
+    "Owner": "DC Receiving Supervisor",
+    "Participants": "DC Receiving, QC, Inventory Control, Vendor Mgmt",
+    "Trigger": "DC/store receiving discrepancy vs. ASN/PO",
+    "Volume": "~72,000 inbound receipts/year"
+   },
+   "id": "W3017",
+   "level": 2,
+   "name": "Inbound Receiving Damage & Shortage Identification & Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspects inbound delivery against PO/ASN\" (replaces manual Step 1).",
+     "- System auto-document of \"Receiving Clerk/QC documents damage\" (replaces manual Step 2).",
+     "- System auto-route of \"route discrepancy to claim\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-499 (ensure controlled execution — Damage Identification, Documentation & Disposition (PA-90.1).)",
+     "- operational: mandatory photo + discrepancy capture at goods receipt"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence risk**: Damage not documented at receipt forfeits claim rights; mitigated by mandatory photo + discrepancy capture at goods receipt"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Goods receipt exception (links to VS-04); damage quarantine bin; discrepancy/claim case"
+    ],
+    "Time Estimate": [
+     "- 5–15 min per discrepancy"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "Receiving Clerk inspects inbound delivery against PO/ASN; identifies visible damage, water damage, crushed packaging, or quantity shortage at goods receipt (links to VS-04)",
+     "duration": "Per receipt",
+     "n": "1",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "DC Receiving Supervisor",
+     "activity": "Receiving Clerk/QC documents damage: photos, quantities damaged vs. received, carrier/seal condition, and discrepancy code in ERP goods-receipt exception",
+     "duration": "Per discrepancy",
+     "n": "2",
+     "r": "Receiving Clerk / QC"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "Inventory Control/Vendor Mgmt route discrepancy to claim (PA-90.2) or RTV (links to VS-32); place damaged units in damage quarantine pending disposition",
+     "duration": "Per discrepancy",
+     "n": "3",
+     "r": "Inventory Control / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-499"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Ops, QC, Inventory Control, LP",
+    "Trigger": "Damage found at DC putaway, picking, or in-transit audit",
+    "Volume": "Across 4 DCs handling ~72,000 receipts + outbound"
+   },
+   "id": "W3018",
+   "level": 2,
+   "name": "In-Transit & DC Damage Identification, Quarantine & Classification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"log to damage case\" (replaces manual Step 1).",
+     "- System auto-assign of \"assigns liability indicator for claim routing\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates to VS-23 where fraud suspected\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-499 (ensure controlled execution — Damage Identification, Documentation & Disposition (PA-90.1).)",
+     "- operational: cause classification and LP review"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-attribution risk**: DC handling damage wrongly charged to vendor/carrier; mitigated by cause classification and LP review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Damage case; cycle count variance (links to VS-05); LP case linkage (links to VS-23)"
+    ],
+    "Time Estimate": [
+     "- Per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "DC staff identify in-house damage (putaway/pick handling, racking, contamination, pest, water) during cycle counts or pick; log to damage case",
+     "duration": "Per event",
+     "n": "1",
+     "r": "DC Staff / QC"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "QC classifies damage cause: carrier-induced, vendor packaging, DC handling, environmental, or indeterminate; assigns liability indicator for claim routing",
+     "duration": "Per event",
+     "n": "2",
+     "r": "QC"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP investigates patterns suggesting theft/concealment disguised as damage; secures evidence; escalates to VS-23 where fraud suspected",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Loss Prevention"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-75"
+   ],
+   "fields": {
+    "Frequency": "Continuous across 200 stores",
+    "Owner": "Store Manager",
+    "Participants": "Store Mgr, Receiving Clerk, Stock Associate, Customer Service",
+    "Trigger": "Store receives damaged goods or in-store damage occurs",
+    "Volume": "200 stores; ~5,000 replenishment orders/month chain-wide + DSD"
+   },
+   "id": "W3019",
+   "level": 2,
+   "name": "Store-Level Damaged-on-Arrival (DOA) & In-Store Damage Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs damage case with photos\" (replaces manual Step 1).",
+     "- System auto-route of \"routes to claim, RTV, or write-off per disposition matrix\" (replaces manual Step 2).",
+     "- System workflow orchestration of \"coordinates goodwill/replacement where applicable\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-75 (detect and recover freight & receiving damage.)",
+     "- operational: mandatory damage-case logging; operational: damage-case logging"
+    ],
+    "Pain Points / Risks": [
+     "- **Under-reporting risk**: In-store damage written off silently without recovery attempt; mitigated by mandatory damage-case logging"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store damage case; goods receipt exception (links to VS-07); disposition matrix"
+    ],
+    "Time Estimate": [
+     "- 5–10 min per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Receiving Clerk/Stock Associate identifies DOA at store receiving or in-store damage (customer handling, drop, spill, weather in lumber yard); logs damage case with photos",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Receiving Clerk / Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Mgr classifies cause (carrier transit, DC pick error, in-store handling, customer-caused); routes to claim, RTV, or write-off per disposition matrix",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Store Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Customer Service handles customer-caused damage (broken in-aisle) per store policy; coordinates goodwill/replacement where applicable (links to W3035)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Customer Service"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3035"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-499"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control, DC/Store Staff, QC, Vendor Mgmt",
+    "Trigger": "Damage event identified",
+    "Volume": "Enterprise-wide damage events"
+   },
+   "id": "W3020",
+   "level": 2,
+   "name": "Damage Documentation, Photographic Evidence & ERP Capture",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"capture standardized evidence\" (replaces manual Step 1).",
+     "- System auto-record of \"records damage event in ERP damage-case module\" (replaces manual Step 2).",
+     "- System auto-validate of \"validate evidence sufficiency for claim filing\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-499 (ensure controlled execution — Damage Identification, Documentation & Disposition (PA-90.1).)",
+     "- operational: standardized photo checklist and pre-claim validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence-quality risk**: Insufficient photos lead to claim denial; mitigated by standardized photo checklist and pre-claim validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Damage-case module with evidence attachments; image/document repository (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- 5–10 min per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "DC/Store staff capture standardized evidence: photos (packaging, product, seal, carrier markings), quantities, SKU/lot, PO/ASN, carrier/waybill, witness",
+     "duration": "Per event",
+     "n": "1",
+     "r": "DC / Store Staff"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control records damage event in ERP damage-case module: linked PO/GR, value at cost, liability indicator, evidence attachments",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Inventory Control"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "QC/Vendor Mgmt validate evidence sufficiency for claim filing (PA-90.2); flag incomplete evidence for remediation before claim submission",
+     "duration": "Per event",
+     "n": "3",
+     "r": "QC / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-499"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control, Merchandising, Vendor Mgmt, Finance",
+    "Trigger": "Damage documented and classified",
+    "Volume": "All damage events"
+   },
+   "id": "W3021",
+   "level": 2,
+   "name": "Damage Disposition Decision (Scrap / Return-to-Vendor / Salvage / Recondition)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Vendor Mgmt confirms vendor RTV authorization or salvage/liquidator acceptance\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates disposition value recovery vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-499 (ensure controlled execution — Damage Identification, Documentation & Disposition (PA-90.1).)",
+     "- operational: disposition matrix and recovery-value check"
+    ],
+    "Pain Points / Risks": [
+     "- **Value-loss risk**: Suboptimal disposition (scrap when salvage viable); mitigated by disposition matrix and recovery-value check"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Disposition matrix; RTV/salvage order (links to VS-32); markdown pricing (links to VS-01)"
+    ],
+    "Time Estimate": [
+     "- Per event; faster for low-value, slower for high-value"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control/Merchandising decide disposition per matrix: scrap/destroy, return-to-vendor (RTV), sell-as-is at markdown, salvage to liquidator, or recondition/repair",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Inventory Control / Merchandising"
+    },
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Vendor Mgmt confirms vendor RTV authorization or salvage/liquidator acceptance; arranges reverse logistics (links to VS-32)",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Vendor Mgmt"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance validates disposition value recovery vs. scrap write-off; approves markdown/salvage pricing; ensures GL treatment correct (W3022)",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3022"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-499"
+   ],
+   "fields": {
+    "Frequency": "Continuous + month-end",
+    "Owner": "Finance Manager",
+    "Participants": "Finance, Inventory Control, DC/Store Mgr, Internal Audit",
+    "Trigger": "Damage dispositioned for scrap/write-off",
+    "Volume": "Enterprise damage write-offs (target <1.5% shrinkage)"
+   },
+   "id": "W3022",
+   "level": 2,
+   "name": "Damaged Inventory Quarantine, Write-Off & GL Posting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Finance posts inventory write-off to correct GL account\" (replaces manual Step 2).",
+     "- System continuous audit of \"Audit samples write-offs for control compliance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-499 (ensure controlled execution — Damage Identification, Documentation & Disposition (PA-90.1).)",
+     "- operational: approval matrix and Internal Audit sampling"
+    ],
+    "Pain Points / Risks": [
+     "- **Control risk**: Write-off used to mask theft; mitigated by approval matrix and Internal Audit sampling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory write-off/quarantine; GL posting; audit trail (links to VS-21)"
+    ],
+    "Time Estimate": [
+     "- Per event; batch at month-end"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control moves dispositioned stock to write-off status; secures in quarantine pending destruction/RTV; prevents re-sale",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Inventory Control"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance posts inventory write-off to correct GL account (damage/loss vs. COGS adjustment); captures cost, liability indicator, and pending-recovery flag",
+     "duration": "Per event/batch",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "Internal Audit Manager",
+     "activity": "Internal Audit samples write-offs for control compliance; verifies approvals and recovery follow-through; investigates anomalies (links to VS-21)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Internal Audit"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-499"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "HSE Manager",
+    "Participants": "EHS, Quality, DC/Store Ops, Licensed Hazmat Vendor",
+    "Trigger": "Damaged hazardous/regulated goods (paint, solvents, chemicals, batteries, asbestos-adjacent)",
+    "Volume": "Subset of damage; hazardous categories ~8% of SKUs"
+   },
+   "id": "W3023",
+   "level": 2,
+   "name": "Hazardous / Regulated Damaged Goods Handling & Disposal",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-post of \"posts cost to damage case recovery\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-499 (ensure controlled execution — Damage Identification, Documentation & Disposition (PA-90.1).)",
+     "- operational: licensed vendor and manifest retention"
+    ],
+    "Pain Points / Risks": [
+     "- **Environmental/compliance risk**: Improper hazmat disposal triggers DENR penalties; mitigated by licensed vendor and manifest retention"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Hazmat storage/quarantine; SDS access (links to W1019); disposal manifest/retention (links to VS-88)"
+    ],
+    "Time Estimate": [
+     "- Per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HSE Manager",
+     "activity": "DC/Store staff isolate damaged hazardous goods in compliant hazmat storage; reference SDS (links to W1019); prevent spill/contamination exposure",
+     "duration": "Per event (<immediate)",
+     "n": "1",
+     "r": "DC / Store Staff"
+    },
+    {
+     "a": "HSE Manager",
+     "activity": "EHS/Quality determine disposal method compliant with DENR/EHS rules and local ordinances; engage licensed hazmat disposal vendor",
+     "duration": "Per event",
+     "n": "2",
+     "r": "EHS / Quality"
+    },
+    {
+     "a": "HSE Manager",
+     "activity": "Hazmat Vendor disposes with manifest/certificate; EHS retains manifest per VS-24/VS-88 retention; Finance posts cost to damage case recovery",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Hazmat Vendor / EHS / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1019"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-75"
+   ],
+   "fields": {
+    "Frequency": "Weekly + monthly",
+    "Owner": "Supply Chain Analytics Manager",
+    "Participants": "Supply Chain Analytics, DC Ops, Store Ops, Vendor Mgmt, Merchandising",
+    "Trigger": "Weekly/monthly review",
+    "Volume": "Enterprise damage data"
+   },
+   "id": "W3024",
+   "level": 2,
+   "name": "Damage Trend Analysis & Root Cause Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review top damage drivers\" (replaces manual Step 2).",
+     "- System auto-track of \"track reduction vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-75 (detect and recover freight & receiving damage.)",
+     "- operational: trend visibility and scorecard consequences"
+    ],
+    "Pain Points / Risks": [
+     "- **Persistence risk**: Recurring damage not addressed; mitigated by trend visibility and scorecard consequences"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Damage analytics/dashboard (links to VS-28); vendor scorecard feed (links to VS-67)"
+    ],
+    "Time Estimate": [
+     "- Weekly/monthly"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Chain Analytics Manager",
+     "activity": "Supply Chain Analytics produces damage trend dashboard: damage rate by vendor, carrier, lane, SKU category, DC, store, cause, and value",
+     "duration": "Weekly",
+     "n": "1",
+     "r": "Supply Chain Analytics"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "DC/Store Ops/Vendor Mgmt review top damage drivers; initiate corrective actions (packaging change, lane/lane carrier switch, handling training, racking fix)",
+     "duration": "Monthly",
+     "n": "2",
+     "r": "DC Ops / Store Ops / Vendor Mgmt"
+    },
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Merchandising/Vendor Mgmt feed damage trends into vendor scorecard and corrective action (links to VS-67); track reduction vs. targets",
+     "duration": "Monthly",
+     "n": "3",
+     "r": "Merchandising / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  }
+ ]
+}

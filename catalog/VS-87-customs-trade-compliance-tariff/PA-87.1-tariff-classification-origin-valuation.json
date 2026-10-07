@@ -1,0 +1,515 @@
+{
+ "process_area": {
+  "id": "PA-87.1",
+  "title": "Tariff Classification, Origin & Valuation"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-87-customs-trade-compliance-tariff/PA-87.1-tariff-classification-origin-valuation.md",
+ "value_stream": {
+  "directory": "VS-87-customs-trade-compliance-tariff",
+  "id": "VS-87",
+  "name": "Customs Trade Compliance & Tariff Optimization"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-238"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + periodic review",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance, Procurement, Master Data",
+    "Trigger": "New imported SKU or classification review",
+    "Volume": "~40% of 35,000 SKUs imported; ~14,000 SKUs"
+   },
+   "id": "W2945",
+   "level": 2,
+   "name": "HS Tariff Classification & AHTN Code Assignment per Imported SKU",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"assigns AHTN/HS code per SKU based on material, function, composition\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates classification on sample basis\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-238 (ensure customs classification & valuation compliance.)",
+     "- operational: GRI-based classification and validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Wrong HS code causes duty error and BOC penalty; mitigated by GRI-based classification and validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item master HS code/duty; classification rationale repository"
+    ],
+    "Time Estimate": [
+     "- 15–30 min per SKU"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance assigns AHTN/HS code per SKU based on material, function, composition (General Rules of Interpretation); documents rationale",
+     "duration": "Per SKU",
+     "n": "1",
+     "r": "Trade Compliance Specialist"
+    },
+    {
+     "a": "Trade Compliance Specialist",
+     "activity": "Master Data configures HS code and duty rate in item master; links to origin and FTA preference eligibility",
+     "duration": "Per SKU",
+     "n": "2",
+     "r": "Master Data"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance validates classification on sample basis; corrects mis-classification that over/under-pays duty",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-238"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Trade Compliance Manager",
+    "Participants": "Trade Compliance Mgr, Legal, BOC",
+    "Trigger": "Ambiguous or high-value classification",
+    "Volume": "~5–20 applications/year"
+   },
+   "id": "W2946",
+   "level": 2,
+   "name": "Tariff Commission Advance Ruling on Tariff Classification Application",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"Application for Advance Ruling on Tariff Classification\" forms (replaces manual Step 1 assembly).",
+     "- System auto-submit of \"submits to BOC\" (replaces manual Step 2).",
+     "- System auto-update of \"updates HS code per ruling once issued\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-238 (ensure customs classification & valuation compliance.)",
+     "- operational: CRA for high-value items"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Self-classification on ambiguous items risks BOC challenge; mitigated by CRA for high-value items"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- CRA application tracker; item master; ruling archive"
+    ],
+    "Time Estimate": [
+     "- Weeks to months per application"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance prepares the Application for Advance Ruling on Tariff Classification (TC Form 1, per TCC 001-17/CMTA Sec. 1100): product spec, sample, proposed classification, rationale",
+     "duration": "Per application",
+     "n": "1",
+     "r": "Trade Compliance Specialist"
+    },
+    {
+     "a": "VP Legal & Compliance",
+     "activity": "Trade Compliance Officer submits to BOC; responds to queries; tracks ruling issuance",
+     "duration": "Per application",
+     "n": "2",
+     "r": "Trade Compliance Manager"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Master Data updates HS code per ruling once issued; applies prospectively; archives ruling for audit defense",
+     "duration": "Per ruling",
+     "n": "3",
+     "r": "Master Data"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-238"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance Manager, Treasury, Trade Compliance",
+    "Trigger": "Each import entry",
+    "Volume": "~400–600 TEUs/month"
+   },
+   "id": "W2947",
+   "level": 2,
+   "name": "Customs Valuation (Transaction Value) & Adjustments Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates exchange rate application\" (replaces manual Step 2).",
+     "- System auto-document of \"documents alternative valuation if transaction value inapplicable\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-238 (ensure customs classification & valuation compliance.)",
+     "- operational: transaction-value method and documentation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Under-valuation triggers BOC fraud case; mitigated by transaction-value method and documentation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import entry valuation engine; currency conversion; documentation archive"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per entry"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance computes transaction value per WTO Valuation Agreement: invoice price + freight + insurance (CIF) + dutiable additions",
+     "duration": "Per entry",
+     "n": "1",
+     "r": "Trade Compliance Specialist"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Treasury captures currency conversion at BOC-prescribed rate on date of filing; validates exchange rate application",
+     "duration": "Per entry",
+     "n": "2",
+     "r": "Treasury"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance validates valuation method; documents alternative valuation if transaction value inapplicable",
+     "duration": "Per entry",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-238"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance, Procurement, Finance",
+    "Trigger": "Import with assists, royalties, or selling commissions",
+    "Volume": "Subset of imports (private label, licensed brands)"
+   },
+   "id": "W2948",
+   "level": 2,
+   "name": "Assists, Royalties & Additions to Customs Value Capture",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Trade Compliance computes additions to customs value\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates royalty/assist accounting\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-238 (ensure customs classification & valuation compliance.)",
+     "- operational: identification checklist"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Omitted dutiable additions under-value goods; mitigated by identification checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Import entry additions; transfer pricing alignment; documentation"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per import"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Procurement identifies dutiable additions: assists (tools/molds provided free), royalties, license fees, selling commissions",
+     "duration": "Per import",
+     "n": "1",
+     "r": "Procurement"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance computes additions to customs value; includes in import entry; captures supporting documentation",
+     "duration": "Per import",
+     "n": "2",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Finance validates royalty/assist accounting; ensures intercompany additions align with transfer pricing (W235)",
+     "duration": "Per import",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W235"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-238"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance, Procurement, Vendor",
+    "Trigger": "Import from FTA partner country",
+    "Volume": "~60–70% of imports from ASEAN/China/ROK/Japan/Australia"
+   },
+   "id": "W2949",
+   "level": 2,
+   "name": "Rules of Origin Determination (AFTA/RCEP/ATIGA)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates authenticity and accuracy\" (replaces manual Step 2).",
+     "- System auto-import of \"Trade Compliance claims preferential duty rate at import entry\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-238 (ensure customs classification & valuation compliance.)",
+     "- operational: validation and PSR documentation"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Invalid CO triggers retroactive duty + penalty; mitigated by validation and PSR documentation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FTA preference master; CO validation; import entry preferential rate"
+    ],
+    "Time Estimate": [
+     "- 30–60 min per shipment"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance determines FTA preference eligibility per product-specific origin rules (CTC, RVC, or PSR) for AFTA/ATIGA/RCEP",
+     "duration": "Per SKU",
+     "n": "1",
+     "r": "Trade Compliance Specialist"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Vendor provides Certificate of Origin (Form D for AFTA, RCEP CO, etc.); Trade Compliance validates authenticity and accuracy",
+     "duration": "Per shipment",
+     "n": "2",
+     "r": "Vendor / Trade Compliance"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance claims preferential duty rate at import entry; archives CO and supporting computation",
+     "duration": "Per shipment",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-490"
+   ],
+   "fields": {
+    "Frequency": "Per import",
+    "Owner": "Trade Compliance Specialist",
+    "Participants": "Trade Compliance, Quality, Merchandising",
+    "Trigger": "Import of consumer goods",
+    "Volume": "All imported consumer SKUs"
+   },
+   "id": "W2950",
+   "level": 2,
+   "name": "Country of Origin Marking & Labeling Compliance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-verify of \"Made in [Country]\" marking per DTI-BPS rules (replaces manual Step 1 checks).",
+     "- System auto-inspect of \"inspects marking at goods receipt\" (replaces manual Step 2)."
+    ],
+    "Controls": [
+     "- CTL-490 (ensure controlled execution — Tariff Classification, Origin & Valuation (PA-87.1).)",
+     "- operational: pre-import verification"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Non-compliant marking incurs BOC/DTI penalty and product seizure; mitigated by pre-import verification"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Labeling compliance checklist; goods-receipt inspection"
+    ],
+    "Time Estimate": [
+     "- Per-import verification"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance verifies \"Made in [Country]\" marking per DTI-BPS and BOC requirements on imported goods",
+     "duration": "Per import",
+     "n": "1",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality inspects marking at goods receipt; flags non-compliant marking for re-labeling or RTV",
+     "duration": "Per receipt",
+     "n": "2",
+     "r": "Quality"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Merchandising ensures packaging/labeling meets consumer protection labeling (Filipino/English language, content disclosure)",
+     "duration": "Per SKU",
+     "n": "3",
+     "r": "Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-490"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Master Data Specialist",
+    "Participants": "Master Data, Trade Compliance, IT",
+    "Trigger": "Classification update or new SKU",
+    "Volume": "~14,000 imported SKUs"
+   },
+   "id": "W2951",
+   "level": 2,
+   "name": "Tariff Classification Master Maintenance & Item Master Integration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-import of \"import entry system\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles to active imports and BOC entries\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-490 (ensure controlled execution — Tariff Classification, Origin & Valuation (PA-87.1).)",
+     "- operational: versioning and quarterly audit"
+    ],
+    "Pain Points / Risks": [
+     "- **Data-quality risk**: Stale master causes duty error; mitigated by versioning and quarterly audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tariff classification master; import-entry integration; audit report"
+    ],
+    "Time Estimate": [
+     "- Continuous; 1–2 days/quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Master Data maintains tariff classification master: HS code, description, duty rate, FTA preference, origin",
+     "duration": "Per change",
+     "n": "1",
+     "r": "Master Data"
+    },
+    {
+     "a": "Master Data Specialist",
+     "activity": "IT integrates tariff master with import entry system; ensures duty auto-computation; versions changes",
+     "duration": "Per change",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance audits master integrity quarterly; reconciles to active imports and BOC entries",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Trade Compliance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-238"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Internal Audit",
+    "Participants": "Internal Audit, Trade Compliance, External Advisor",
+    "Trigger": "Annual audit or discrepancy detection",
+    "Volume": "Sample of imported SKUs"
+   },
+   "id": "W2952",
+   "level": 2,
+   "name": "Classification Audit, Discrepancy & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews classification rationale vs.\" (replaces manual Step 1).",
+     "- System auto-file of \"files voluntary disclosure with BOC where underpaid\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates classification of high-value/complex SKUs\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-238 (ensure customs classification & valuation compliance.)",
+     "- operational: annual audit and voluntary disclosure"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Undetected mis-classification accumulates liability; mitigated by annual audit and voluntary disclosure"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Audit evidence repository; voluntary-disclosure tracker"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks annual audit"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Audit Committee",
+     "activity": "Internal Audit samples imported SKUs; reviews classification rationale vs. GRI and BOC practice",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Internal Audit"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "Trade Compliance remediates mis-classifications; files voluntary disclosure with BOC where underpaid (mitigates penalty)",
+     "duration": "Per finding",
+     "n": "2",
+     "r": "Trade Compliance"
+    },
+    {
+     "a": "Trade Compliance Manager",
+     "activity": "External Advisor validates classification of high-value/complex SKUs; provides opinion for audit defense",
+     "duration": "Per case",
+     "n": "3",
+     "r": "External Advisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

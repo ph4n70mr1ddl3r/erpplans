@@ -1,0 +1,518 @@
+{
+ "process_area": {
+  "id": "PA-80.1",
+  "title": "Acquirer, PSP & Payment Partner Lifecycle Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-80-payment-operations-acquirer-settlement/PA-80.1-acquirer-psp-and-partner-lifecycle.md",
+ "value_stream": {
+  "directory": "VS-80-payment-operations-acquirer-settlement",
+  "id": "VS-80",
+  "name": "Payment Operations, Acquirer & Settlement Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-215"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~10–15 new stores/year + periodic",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, IT, Store Ops, Finance",
+    "Trigger": "New store opening, new tender type, or acquirer expansion",
+    "Volume": "200 stores × ~4 acquirer relationships (BDO, BPI, Metrobank, Chinabank)"
+   },
+   "id": "W2777",
+   "level": 2,
+   "name": "Acquirer & Card Scheme Registration, MID/MCC Setup",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits merchant application to acquiring bank per entity/location\" (replaces manual Step 1).",
+     "- System auto-file of \"IT configures terminal profiles\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates test transactions\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-215 (ensure card/e-wallet settlement & chargeback control.)",
+     "- operational: 8-week pre-opening checklist"
+    ],
+    "Pain Points / Risks": [
+     "- **Onboarding risk**: Incomplete KYC/permit docs delay store opening; mitigated by 8-week pre-opening checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS terminal management system; acquirer onboarding portal; merchant master"
+    ],
+    "Time Estimate": [
+     "- 4–6 weeks per store payment setup"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager submits merchant application to acquiring bank per entity/location; provides SEC docs, BIR 2303, mayor's permit, store photos; specifies MID and MCC",
+     "duration": "2–4 weeks/round",
+     "n": "1",
+     "r": "Payment Ops Manager"
+    },
+    {
+     "a": "Payment Ops Manager",
+     "activity": "IT configures terminal profiles (Visa/Mastercard/JCB/UnionPay/BancNet accept marks), MID/TID, and settlement routing in POS terminal management system",
+     "duration": "1–2 days/store",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager validates test transactions (live + reversal) end-to-end before go-live; archives acquirer confirmation and fee schedule",
+     "duration": "1 day/store",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-469"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + annual review",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, Ecommerce, IT, Finance",
+    "Trigger": "New e-wallet partner or store enablement",
+    "Volume": "200 stores × 2 e-wallets; ~15% of POS tender"
+   },
+   "id": "W2778",
+   "level": 2,
+   "name": "E-Wallet (GCash/Maya) Merchant Onboarding & QR/Intent Integration",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"accounts with GCash/Maya per entity\" (replaces manual Step 1).",
+     "- System auto-validate of \"IT integrates e-wallet API with POS\" (replaces manual Step 2).",
+     "- System auto-file of \"Finance validates daily settlement files\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-469 (ensure controlled execution — Acquirer, PSP & Payment Partner Lifecycle Management (PA-80.1).)",
+     "- operational: fallback to manual QR + status reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Operational risk**: QR/payment-intent API downtime causes checkout failure; mitigated by fallback to manual QR + status reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- E-wallet merchant portal; POS QR/intent integration; daily settlement file ingestion"
+    ],
+    "Time Estimate": [
+     "- 3–5 weeks per partner onboarding"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager registers merchant accounts with GCash/Maya per entity; configures dynamic QR, merchant-intent API, and cash-in/cash-out capability",
+     "duration": "2–3 weeks",
+     "n": "1",
+     "r": "Payment Ops Manager"
+    },
+    {
+     "a": "Payment Ops Manager",
+     "activity": "IT integrates e-wallet API with POS (QR generation, payment notification callback, status polling) and ecommerce checkout; certifies sandbox testing",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "IT / Ecommerce"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance validates daily settlement files (DCS) vs. POS capture; reconciles e-wallet fee deductions (1.5–2%) and rebates; archives partner agreements",
+     "duration": "Per settlement",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-469"
+   ],
+   "fields": {
+    "Frequency": "Annual key rotation; event-driven",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, IT Security, Ecommerce, Treasury",
+    "Trigger": "Gateway onboarding, key expiry, or security event",
+    "Volume": "~3 gateway relationships"
+   },
+   "id": "W2779",
+   "level": 2,
+   "name": "Payment Gateway (PayMongo/Dragonpay) Configuration & Key Rotation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"Ecommerce integrates gateway into checkout\" (replaces manual Step 2).",
+     "- System auto-post of \"Payment Ops Manager rotates keys annually and post-incident\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-469 (ensure controlled execution — Acquirer, PSP & Payment Partner Lifecycle Management (PA-80.1).)",
+     "- operational: vault-managed keys and quarterly access review"
+    ],
+    "Pain Points / Risks": [
+     "- **Security risk**: Key compromise enables fraudulent refunds/charges; mitigated by vault-managed keys and quarterly access review"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Secrets vault; gateway merchant console; PCI-DSS scope tracker"
+    ],
+    "Time Estimate": [
+     "- 2–4 hours per rotation; 1–2 weeks per gateway integration"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Ops Manager",
+     "activity": "IT Security provisions API keys, webhook secrets, and merchant credentials in secrets vault; configures 3-D Secure (3DS) for card-not-present; scopes tokens per channel",
+     "duration": "Per event",
+     "n": "1",
+     "r": "IT Security"
+    },
+    {
+     "a": "Payment Ops Manager",
+     "activity": "Ecommerce integrates gateway into checkout (redirect, direct, or hosted fields); configures payment method routing and fallback; tests in sandbox",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Ecommerce / IT"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager rotates keys annually and post-incident; coordinates zero-downtime cutover; archives key inventory and PCI-DSS scope attestation",
+     "duration": "Per rotation",
+     "n": "3",
+     "r": "Payment Ops Manager / IT Security"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-469"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, Category Manager, IT, Finance",
+    "Trigger": "BNPL provider agreement or expansion",
+    "Volume": "~3–4 BNPL partners; significant for appliance/category sales"
+   },
+   "id": "W2780",
+   "level": 2,
+   "name": "BNPL (Home Credit/Billease) Provider Integration & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"discount rate split\" (replaces manual Step 1).",
+     "- System auto-validate of \"IT integrates BNPL approval API at POS/checkout\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks separate settlement timing\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-469 (ensure controlled execution — Acquirer, PSP & Payment Partner Lifecycle Management (PA-80.1).)",
+     "- operational: dedicated clearing GL and daily reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation risk**: BNPL net settlement vs. gross sale timing mismatch; mitigated by dedicated clearing GL and daily reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BNPL partner API; POS approval flow; settlement reconciliation workspace"
+    ],
+    "Time Estimate": [
+     "- 2–4 weeks per BNPL integration"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager negotiates BNPL placement on appliance/category SKUs; defines commission/discount rate split (typically 4–8% MDR-equivalent)",
+     "duration": "Per contract",
+     "n": "1",
+     "r": "Category Manager / Payment Ops Manager"
+    },
+    {
+     "a": "Payment Ops Manager",
+     "activity": "IT integrates BNPL approval API at POS/checkout; cashier triggers application; receives instant approval/decline; captures reference",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "IT / Store Ops"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance reconciles BNPL settlement (full amount minus partner fee, net of refunds/chargebacks) to POS sales; tracks separate settlement timing (T+1 to T+3)",
+     "duration": "Per settlement",
+     "n": "3",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-469"
+   ],
+   "fields": {
+    "Frequency": "Annual review; event-driven",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, Finance, Category Manager",
+    "Trigger": "Annual fee review or new category rollout",
+    "Volume": "~10 MID classifications"
+   },
+   "id": "W2781",
+   "level": 2,
+   "name": "Merchant Category Code (MCC) Optimization & Interchange Classification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates MCC assignment\" (replaces manual Step 1).",
+     "- System auto-analyze of \"analyzes effective MDR by scheme/tier\" (replaces manual Step 2).",
+     "- System auto-track of \"tracks interchange/regulatory fee changes\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-469 (ensure controlled execution — Acquirer, PSP & Payment Partner Lifecycle Management (PA-80.1).)",
+     "- operational: annual validation"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost risk**: Wrong MCC inflates interchange (e.g., consumer vs. commercial pricing); mitigated by annual validation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Acquirer fee schedule; MCC master; MDR analytics dashboard"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per annual review"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager validates MCC assignment (e.g., 5200 Lumber/Building Materials, 5712 Furniture, 7623 Appliance Repair) per store/profile; corrects mis-classification",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Payment Ops Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance analyzes effective MDR by scheme/tier; benchmarks vs. market (1.5–3% blended); negotiates volume-based reductions and scheme incentive programs",
+     "duration": "Annual",
+     "n": "2",
+     "r": "Finance / Payment Ops Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Payment Ops Manager tracks interchange/regulatory fee changes (BSP rate caps, scheme updates); updates settlement expectation and GL accruals",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-469"
+   ],
+   "fields": {
+    "Frequency": "Annual per partner",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, Procurement, Legal, Finance, Treasury",
+    "Trigger": "Contract renewal (typically annual/biennial)",
+    "Volume": "~10 partner contracts (acquirers, e-wallets, gateways, BNPL)"
+   },
+   "id": "W2782",
+   "level": 2,
+   "name": "Payment Partner SLA, Pricing & MDR Contract Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"prepares partner performance dossier\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews SLA/penalty/liability clauses\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates first settlement cycle against revised schedule\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-469 (ensure controlled execution — Acquirer, PSP & Payment Partner Lifecycle Management (PA-80.1).)",
+     "- operational: annual benchmarking and competitive RFP"
+    ],
+    "Pain Points / Risks": [
+     "- **Commercial risk**: Suboptimal pricing on 2.8M transactions/month is material; mitigated by annual benchmarking and competitive RFP"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Settlement engine pricing master; contract repository; SLA monitoring"
+    ],
+    "Time Estimate": [
+     "- 4–6 weeks per major renewal"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Finance prepares partner performance dossier: transaction volume, uptime, decline rate, dispute ratio, effective cost; benchmarks against alternatives",
+     "duration": "1 week/partner",
+     "n": "1",
+     "r": "Finance"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Procurement leads commercial negotiation (MDR, per-txn fixed fee, settlement timing, chargeback fee); Legal reviews SLA/penalty/liability clauses",
+     "duration": "2–4 weeks",
+     "n": "2",
+     "r": "Procurement / Legal"
+    },
+    {
+     "a": "CFO",
+     "activity": "Treasury/Payment Ops Manager executes contract; configures new pricing in settlement engine; validates first settlement cycle against revised schedule",
+     "duration": "1 week",
+     "n": "3",
+     "r": "Treasury / Payment Ops Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-469"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; rare",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, IT, Store Ops, Finance, BCM",
+    "Trigger": "Partner termination, breach, or replacement",
+    "Volume": "~1–2 events/decade"
+   },
+   "id": "W2783",
+   "level": 2,
+   "name": "Payment Partner Offboarding & Business Continuity Cutover",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow orchestration of \"coordinates dual-running window\" (replaces manual Step 1).",
+     "- System auto-file of \"IT executes terminal profile updates in waves\" (replaces manual Step 2).",
+     "- System auto-document of \"Finance closes old partner GL accounts\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-469 (ensure controlled execution — Acquirer, PSP & Payment Partner Lifecycle Management (PA-80.1).)",
+     "- operational: dual-running window and rollback plan"
+    ],
+    "Pain Points / Risks": [
+     "- **Continuity risk**: Cutover gap causes tender outage at POS; mitigated by dual-running window and rollback plan"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Terminal management system; settlement reconciliation; BCM runbook"
+    ],
+    "Time Estimate": [
+     "- 6–10 weeks per offboarding"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Payment Ops Manager plans offboarding timeline with replacement partner onboarding; coordinates dual-running window; notifies card schemes and terminals of MID change",
+     "duration": "2–4 weeks planning",
+     "n": "1",
+     "r": "Payment Ops Manager / BCM"
+    },
+    {
+     "a": "Payment Ops Manager",
+     "activity": "IT executes terminal profile updates in waves; tests fallback routing; ensures in-flight settlements and pending disputes are mapped to new partner",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "IT"
+    },
+    {
+     "a": "CFO",
+     "activity": "Finance closes old partner GL accounts; reconciles final settlement and reserves; archives documentation; updates BCM runbook with lesson learned",
+     "duration": "1 month",
+     "n": "3",
+     "r": "Finance / BCM"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-215"
+   ],
+   "fields": {
+    "Frequency": "Event-driven + annual validation",
+    "Owner": "Payment Operations Manager",
+    "Participants": "Payment Ops Mgr, Finance, Master Data",
+    "Trigger": "New entity, new partner, or restructure",
+    "Volume": "5 entities × ~10 partners"
+   },
+   "id": "W2784",
+   "level": 2,
+   "name": "Multi-Entity Merchant Settlement Hierarchy & GL Mapping",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates uniqueness and completeness\" (replaces manual Step 1).",
+     "- System auto-post of \"Finance configures per-entity settlement GL posting rules\" (replaces manual Step 2).",
+     "- System auto-file of \"file across all entities\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-215 (ensure card/e-wallet settlement & chargeback control.)",
+     "- operational: annual integrity test and segregation controls"
+    ],
+    "Pain Points / Risks": [
+     "- **Reconciliation risk**: Mis-mapped MID causes wrong-entity revenue recognition; mitigated by annual integrity test and segregation controls"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Settlement hierarchy master; GL posting rules; intercompany clearing engine"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per annual validation"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Payment Operations Manager",
+     "activity": "Master Data maintains settlement hierarchy mapping MID/Partner/Entity to GL clearing, fee, and bank settlement accounts; validates uniqueness and completeness",
+     "duration": "Per change",
+     "n": "1",
+     "r": "Master Data"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "Finance configures per-entity settlement GL posting rules; ensures intercompany clearing for cross-entity transactions (e.g., Digital Commerce collects, Depot fulfills)",
+     "duration": "Per change",
+     "n": "2",
+     "r": "Finance"
+    },
+    {
+     "a": "CFO",
+     "activity": "Payment Ops Manager runs annual integrity test: simulate settlement file across all entities; verify GL postings and bank credits reconcile to expected",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Payment Ops Manager / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  }
+ ]
+}

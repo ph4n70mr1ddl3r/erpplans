@@ -1,0 +1,533 @@
+{
+ "process_area": {
+  "id": "PA-92.2",
+  "title": "Kit Assembly, Build Execution & Inventory Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-92-kitting-bundling-build-to-order-assembly/PA-92.2-kit-assembly-build-execution-inventory.md",
+ "value_stream": {
+  "directory": "VS-92-kitting-bundling-build-to-order-assembly",
+  "id": "VS-92",
+  "name": "Kitting, Bundling & Build-to-Order Assembly Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-506"
+   ],
+   "fields": {
+    "Frequency": "Per build cycle",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Ops, WMS, Inventory Control, Quality",
+    "Trigger": "Build plan / kit replenishment requirement",
+    "Volume": "Pre-packaged kits built at 4 DCs"
+   },
+   "id": "W3073",
+   "level": 2,
+   "name": "Centralized Kit Build (DC) Work Order & Assembly Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates kit-build work order per build plan\" (replaces manual Step 1).",
+     "- System auto-update of \"updates kit and component inventory\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-506 (ensure controlled execution — Kit Assembly, Build Execution & Inventory Management (PA-92.2).)",
+     "- operational: WMS-directed picking and QC (W3075)"
+    ],
+    "Pain Points / Risks": [
+     "- **Build-error risk**: Wrong components/quantities in finished kit; mitigated by WMS-directed picking and QC (W3075)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS kit-build work order (links to VS-04); component consumption; kit SKU receipt"
+    ],
+    "Time Estimate": [
+     "- Per build cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "DC Ops/WMS generates kit-build work order per build plan (W3069); allocates and picks components per BOM (W3066)",
+     "duration": "Per build",
+     "n": "1",
+     "r": "DC Ops / WMS"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "DC assembly staff build kits per work order; package, label, and apply kit SKU barcode; stage finished kits to saleable inventory",
+     "duration": "Per build",
+     "n": "2",
+     "r": "DC Assembly Staff"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "WMS/Inventory Control confirms component consumption and finished-kit receipt; updates kit and component inventory; closes work order",
+     "duration": "Per build",
+     "n": "3",
+     "r": "WMS / Inventory Control"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3066",
+    "W3069",
+    "W3075"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-506"
+   ],
+   "fields": {
+    "Frequency": "Per store task / display refresh",
+    "Owner": "Store Operations Manager",
+    "Participants": "Store Mgr, Sales Associates, Stock Associates",
+    "Trigger": "Display bundle or store-assembled kit requirement",
+    "Volume": "200 stores; display bundles and light assembly"
+   },
+   "id": "W3074",
+   "level": 2,
+   "name": "Store-Level Kit Build, Display Assembly & Light Value-Add",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"validates assembled display against planogram\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-506 (ensure controlled execution — Kit Assembly, Build Execution & Inventory Management (PA-92.2).)",
+     "- operational: ERP component consumption"
+    ],
+    "Pain Points / Risks": [
+     "- **Display-cost risk**: Display assembly consumes saleable components without tracking; mitigated by ERP component consumption"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store task system (links to VS-63); planogram (links to VS-55); component consumption at store"
+    ],
+    "Time Estimate": [
+     "- Per task"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Operations Manager",
+     "activity": "Store Mgr/Visual Merchandising receive display-assembly task (e.g., assembled grill display, furniture set, contractor combo display) via VS-55/VS-63",
+     "duration": "Per task",
+     "n": "1",
+     "r": "Store Mgr / Visual Merch"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Sales/Stock Associates assemble display or store-assembled kit per instructions; apply price/label; position for sale; consume components in ERP",
+     "duration": "Per task",
+     "n": "2",
+     "r": "Sales / Stock Associates"
+    },
+    {
+     "a": "Store Operations Manager",
+     "activity": "Store Mgr validates assembled display against planogram (links to VS-55); manages display maintenance and disassembly for component recovery (W3078)",
+     "duration": "Per task",
+     "n": "3",
+     "r": "Store Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3078"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-76"
+   ],
+   "fields": {
+    "Frequency": "Per build",
+    "Owner": "Quality Manager",
+    "Participants": "Quality, DC Ops, Store Ops",
+    "Trigger": "Kit build / pre-ship verification",
+    "Volume": "All kit builds"
+   },
+   "id": "W3075",
+   "level": 2,
+   "name": "Component Picking, Kit Quality Check & Build Verification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scan-confirm each component and quantity to prevent substitution errors\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspects finished kit\" (replaces manual Step 2).",
+     "- System auto-log of \"log build defects\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-76 (ensure kit build & component inventory integrity.)",
+     "- operational: scan-confirm and QC sampling"
+    ],
+    "Pain Points / Risks": [
+     "- **Defect-escape risk**: Defective kits reach customer; mitigated by scan-confirm and QC sampling"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS-directed picking; kit QC checklist; defect logging (links to VS-31)"
+    ],
+    "Time Estimate": [
+     "- Per build"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "DC Ops/Store Staff pick components per WMS-directed BOM; scan-confirm each component and quantity to prevent substitution errors",
+     "duration": "Per build",
+     "n": "1",
+     "r": "DC Ops / Store Staff"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality inspects finished kit: correct components/quantities, packaging integrity, labeling, and certification marks (per W447 for regulated)",
+     "duration": "Per build/sample",
+     "n": "2",
+     "r": "Quality"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality/Inventory Control log build defects; route rejects to rework or disposition; feed defect rate to vendor/process improvement",
+     "duration": "Per build",
+     "n": "3",
+     "r": "Quality / Inventory Control"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W447"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-76"
+   ],
+   "fields": {
+    "Frequency": "Per build",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control, DC Ops, Quality, IT",
+    "Trigger": "Kit build with lot/serial/expiry-relevant components",
+    "Volume": "Kits with chemical/paint/electrical components"
+   },
+   "id": "W3076",
+   "level": 2,
+   "name": "Kit Lot/Serial Tracking, Expiry & Traceability",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"create kit lot/serial inheriting earliest component expiry where relevant\" (replaces manual Step 1).",
+     "- System auto-log of \"genealogy for traceability supporting recalls\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitor kit expiry\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-76 (ensure kit build & component inventory integrity.)",
+     "- operational: lot/serial capture at build"
+    ],
+    "Pain Points / Risks": [
+     "- **Traceability gap**: Kit genealogy lost hampers recall scope; mitigated by lot/serial capture at build"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Lot/serial genealogy; expiry management (links to W1005); recall traceability (links to VS-89)"
+    ],
+    "Time Estimate": [
+     "- Per build"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control/DC Ops capture component lot/serial at build; create kit lot/serial inheriting earliest component expiry where relevant",
+     "duration": "Per build",
+     "n": "1",
+     "r": "Inventory Control / DC Ops"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "IT/Inventory Control maintain kit-to-component lot/serial genealogy for traceability supporting recalls (links to VS-89) and warranty (links to VS-53)",
+     "duration": "Per build",
+     "n": "2",
+     "r": "IT / Inventory Control"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality/Inventory Control monitor kit expiry (chemical/paint kits); enforce FEFO and expiry-based disposition (links to W1005)",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Quality / Inventory Control"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1005"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-76"
+   ],
+   "fields": {
+    "Frequency": "Continuous + cycle counting",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control, DC Ops, Store Ops, LP",
+    "Trigger": "Cycle count / variance event",
+    "Volume": "Kit and component inventory across DCs/stores"
+   },
+   "id": "W3077",
+   "level": 2,
+   "name": "Kit Inventory Reconciliation, Variance & Shrinkage Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"counts kit and component stock\" (replaces manual Step 1).",
+     "- System auto-document of \"document root cause\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates to VS-23\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-76 (ensure kit build & component inventory integrity.)",
+     "- operational: cycle counting and genealogy"
+    ],
+    "Pain Points / Risks": [
+     "- **Variance risk**: Kit/component mismatch distorts inventory and availability; mitigated by cycle counting and genealogy"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cycle counting (links to VS-05/W6); inventory adjustment approval; LP analytics (links to VS-23)"
+    ],
+    "Time Estimate": [
+     "- Per cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control cycle counts kit and component stock; reconciles system vs. physical; investigates variances (missing kit, missing component, built-but-unreceipted)",
+     "duration": "Per cycle",
+     "n": "1",
+     "r": "Inventory Control"
+    },
+    {
+     "a": "DC Operations Manager / Store Manager",
+     "activity": "DC/Store Ops correct variances: post adjustments with approval, rebuild/re-tear to reconcile, and document root cause",
+     "duration": "Per variance",
+     "n": "2",
+     "r": "DC Ops / Store Ops"
+    },
+    {
+     "a": "LP Manager",
+     "activity": "LP investigates shrinkage patterns (component theft, kit pilferage); escalates to VS-23; tracks kit shrink vs. target (<1.5%)",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Loss Prevention"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-506"
+   ],
+   "fields": {
+    "Frequency": "Event-driven",
+    "Owner": "Inventory Control Manager",
+    "Participants": "Inventory Control, DC Ops, Store Ops, Quality",
+    "Trigger": "Kit discontinuation, damage, or display teardown",
+    "Volume": "Discontinued/damaged/display kits"
+   },
+   "id": "W3078",
+   "level": 2,
+   "name": "Kit Disassembly (Tear-Down) & Component Return-to-Stock",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generate tear-down order against kit SKU\" (replaces manual Step 1).",
+     "- System auto-inspect of \"inspects returned components for resaleability\" (replaces manual Step 2).",
+     "- System auto-reconcile of \"reconciles value recovery vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-506 (ensure controlled execution — Kit Assembly, Build Execution & Inventory Management (PA-92.2).)",
+     "- operational: QC inspection and careful disassembly"
+    ],
+    "Pain Points / Risks": [
+     "- **Value-loss risk**: Components damaged in tear-down or written off; mitigated by QC inspection and careful disassembly"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Tear-down work order; component return-to-stock; quality disposition (links to W3021)"
+    ],
+    "Time Estimate": [
+     "- Per order"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Inventory Control Manager",
+     "activity": "DC Ops/Store Ops generate tear-down order against kit SKU; disassemble; return saleable components to stock per BOM",
+     "duration": "Per order",
+     "n": "1",
+     "r": "DC Ops / Store Ops"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Quality inspects returned components for resaleability (damage, packaging, expiry); routes non-saleable to disposition (links to W3021)",
+     "duration": "Per order",
+     "n": "2",
+     "r": "Quality"
+    },
+    {
+     "a": "Inventory Control Manager",
+     "activity": "Inventory Control posts kit-to-component inventory conversion; updates cost; reconciles value recovery vs. kit write-down (links to W3072)",
+     "duration": "Per order",
+     "n": "3",
+     "r": "Inventory Control / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3021",
+    "W3072"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-506"
+   ],
+   "fields": {
+    "Frequency": "Per arrangement",
+    "Owner": "Vendor Management Manager",
+    "Participants": "Vendor Mgmt, Supply Chain, Quality, AP",
+    "Trigger": "Capacity constraint or vendor-managed kit",
+    "Volume": "Outsourced builds / co-manufactured kits"
+   },
+   "id": "W3079",
+   "level": 2,
+   "name": "Outsourced / 3PL Kit Assembly & Co-Manufacturing Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow orchestration of \"coordinate component supply to co-manufacturer\" (replaces manual Step 2).",
+     "- System auto-inspect of \"inspects finished kits from co-manufacturer\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-506 (ensure controlled execution — Kit Assembly, Build Execution & Inventory Management (PA-92.2).)",
+     "- operational: WIP visibility and reconciliation"
+    ],
+    "Pain Points / Risks": [
+     "- **Custody risk**: Component loss/theft at co-manufacturer; mitigated by WIP visibility and reconciliation"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor portal (links to VS-03); consignment/WIP inventory (links to VS-45); co-manufacturing charge (links to W7)"
+    ],
+    "Time Estimate": [
+     "- Per cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Vendor Mgmt/Supply Chain contract 3PL/co-manufacturer for kit assembly; define BOM, quality standard, SLA, and component custody",
+     "duration": "Per contract",
+     "n": "1",
+     "r": "Vendor Mgmt / Supply Chain"
+    },
+    {
+     "a": "Supply Chain Planning Manager",
+     "activity": "Supply Chain/Vendor Mgmt coordinate component supply to co-manufacturer (consignment or sale); manage in-transit and WIP visibility",
+     "duration": "Per cycle",
+     "n": "2",
+     "r": "Supply Chain / Vendor Mgmt"
+    },
+    {
+     "a": "Vendor Management Manager",
+     "activity": "Quality inspects finished kits from co-manufacturer; AP reconciles co-manufacturing charges and component usage; scorecard vendor (links to VS-67)",
+     "duration": "Per cycle",
+     "n": "3",
+     "r": "Quality / AP / Vendor Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-506"
+   ],
+   "fields": {
+    "Frequency": "Per build cycle + seasonal",
+    "Owner": "DC Operations Manager",
+    "Participants": "DC Ops, Supply Chain, HR/Labor Planning, Finance",
+    "Trigger": "Build plan / capacity review",
+    "Volume": "DC build capacity vs. demand"
+   },
+   "id": "W3080",
+   "level": 2,
+   "name": "Build Capacity, Labor & Throughput Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-forecast of \"forecasts build labor hours from build plan and standard times\" (replaces manual Step 1).",
+     "- System auto-monitor of \"monitors build labor cost vs.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-506 (ensure controlled execution — Kit Assembly, Build Execution & Inventory Management (PA-92.2).)",
+     "- operational: sequencing and labor balancing"
+    ],
+    "Pain Points / Risks": [
+     "- **Capacity-bottleneck risk**: Build labor competes with pick/ship labor at peak; mitigated by sequencing and labor balancing"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Labor planning (links to W34/VS-19); build schedule; labor cost analytics (links to VS-28)"
+    ],
+    "Time Estimate": [
+     "- Per cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Operations Manager",
+     "activity": "DC Ops forecasts build labor hours from build plan and standard times; balances against DC pick/ship labor capacity (links to W34/PA-19.3)",
+     "duration": "Per cycle",
+     "n": "1",
+     "r": "DC Ops"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "Supply Chain/DC Ops sequence builds to smooth workload and avoid peak pick contention; prioritize high-margin/high-velocity kits",
+     "duration": "Per cycle",
+     "n": "2",
+     "r": "Supply Chain / DC Ops"
+    },
+    {
+     "a": "DC Operations Manager",
+     "activity": "HR/Labor Planning adjusts labor to build demand (seasonal ramp, overtime, temps); Finance monitors build labor cost vs. value",
+     "duration": "Per cycle",
+     "n": "3",
+     "r": "HR / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W34"
+   ]
+  }
+ ]
+}

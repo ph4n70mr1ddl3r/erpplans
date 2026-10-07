@@ -1,0 +1,1673 @@
+{
+ "process_area": {
+  "id": "PA-29.1",
+  "title": "Foundational Masters"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-29-master-data/PA-29.1-foundational-masters.md",
+ "value_stream": {
+  "directory": "VS-29-master-data",
+  "id": "VS-29",
+  "name": "Master Data Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-50"
+   ],
+   "fields": {
+    "Frequency": "Daily (approx. 30–50 new SKUs/week across all categories)",
+    "Owner": "Master Data Manager",
+    "Participants": "Category Manager, Pricing Analyst, Supply Chain Planner, Master Data Analyst",
+    "Trigger": "Merchandising department requests a new SKU/Item to be added to the assortment",
+    "Volume": "~125–210 new SKUs created/month (1,500–2,500/year canon); ~1,000–1,500 SKU updates/month"
+   },
+   "id": "W252",
+   "level": 2,
+   "name": "Centralized Item Master Creation & Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits a New Item Request via the Vendor Portal / PIM, providing core product…\" (replaces manual Step 1).",
+     "- System auto-review of \"Review & Categorization\" (replaces manual Step 2).",
+     "- System auto-log of \"Attribute Enrichment — Supply Chain & Compliance\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-50 (prevent unauthorized master data changes.)",
+     "- operational: Master Data Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Incomplete dimensional data causing warehouse slotting failures.",
+     "- Duplicate SKU creation leading to fragmented sales history and over-purchasing."
+    ],
+    "Staffing Implication": [
+     "~30–50 new SKUs/week. Each SKU request ~30 min end-to-end (10 min request + 10 min enrichment + 5 min pricing + 10 min validation/approval). 2 Master Data Analysts full-time (~80 hours/week handling ~75 SKUs). 1 Master Data Manager oversight."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor Portal / Product Information Management (PIM)",
+     "- ERP Item Master Module (centralized creation, attribute fields)",
+     "- ERP Compliance Module (Hazmat / ESG tracking)",
+     "- ERP Approval Workflow Engine",
+     "- POS / Ecom Integration (downstream sync)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~30 minutes per new SKU (excluding queue time)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Request Initiation (Vendor Portal)**: Vendor submits a New Item Request via the Vendor Portal / PIM, providing core product data, images, and marketing copy.",
+     "duration": "Variable",
+     "n": "1",
+     "r": "Vendor"
+    },
+    {
+     "a": "—",
+     "activity": "**Commercial Review & Categorization**: Category Manager reviews the vendor submission, assigns the hierarchy category, confirms standard cost, and flags any ESG/Sustainability attributes.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Attribute Enrichment — Supply Chain & Compliance**: Supply Chain Planner adds logistical attributes (dimensions, weight, pallet tie/high, default supply DC, minimum order quantity) and assigns Hazardous Materials (Hazmat) classifications if required.",
+     "duration": "10 min",
+     "n": "3",
+     "r": "Supply Chain Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Attribute Enrichment — Pricing**: Pricing Analyst adds retail pricing parameters (base retail price, price family grouping, initial margin)",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Pricing Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Validation & Quality Check**: Master Data Analyst reviews the completed request, ensuring no duplicates exist (checking GTIN/UPC/EAN) and all naming conventions are strictly followed",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Approval & Activation**: Master Data Manager approves the item. System assigns internal SKU number, activates the item across the relevant location matrix (store assortments), and syncs to POS and Ecommerce platforms",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Master Data Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Continuous automated ingestion; Monthly manual deduplication review",
+    "Owner": "CRM Data Steward",
+    "Participants": "Store Cashier, B2B Sales Rep, Customer Service Rep, CRM Data Steward",
+    "Trigger": "Ongoing customer data ingestion from POS loyalty sign-ups, Ecommerce registrations, and B2B Trade Account creations",
+    "Volume": "~4,500 new loyalty enrollments/month (the data-volumes §1.1 customer-registration anchor; loyalty sign-ups are its bulk); deduplication batch matching runs daily (per Step 2)"
+   },
+   "id": "W253",
+   "level": 2,
+   "name": "Customer Master Data Governance & Deduplication",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews the “Potential Duplicates” queue\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: CRM Data Steward review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- OTP delivery delays (SMS gateway issues) causing friction at the checkout lane.",
+     "- Merging two distinct customers (e.g., family members sharing a phone number) causing privacy issues."
+    ],
+    "Staffing Implication": [
+     "Continuous automated ingestion. Monthly dedup review ~4 hours by CRM Data Steward. Real-time matching is automated. 1 CRM Data Steward FTE."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Customer Master / CRM Module",
+     "- Customer Data Platform (CDP) deduplication engine",
+     "- SMS Gateway (for OTP delivery)",
+     "- POS and Ecommerce APIs"
+    ],
+    "Time Estimate": [
+     "**Total**: ~25 minutes per merge+review (15 min batch review + 10 min merge); automated matching runs daily",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Data Ingestion & Verification**: Customer data is captured at POS (phone number lookup/creation), Ecommerce, or B2B Portal. System mandates real-time One-Time Password (OTP) verification for mobile numbers to prevent dummy account creation and immediate duplicates.",
+     "duration": "2 min",
+     "n": "1",
+     "r": "Store Cashier / Customer"
+    },
+    {
+     "a": "—",
+     "activity": "**Automated Matching**: ERP/CDP runs daily batch matching algorithms (Levenshtein distance on names, exact match on email/mobile) to flag potential duplicate profiles",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Exception Management**: CRM Data Steward reviews the \"Potential Duplicates\" queue",
+     "duration": "15 min/batch",
+     "n": "3",
+     "r": "CRM Data Steward"
+    },
+    {
+     "a": "CRM Data Steward",
+     "activity": "**Merge & Consolidate**: Steward executes a merge. System consolidates loyalty points, purchase history, and contact details into the surviving \"Golden Record\", and leaves a tombstone on the deprecated record",
+     "duration": "10 min/merge",
+     "n": "4",
+     "r": "CRM Data Steward"
+    },
+    {
+     "a": "—",
+     "activity": "**Downstream Sync**: The Golden Record updates are pushed to Ecommerce, POS offline databases, and Marketing Automation tools",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "~10–15 times per year (per the §3.1 growth canon)",
+    "Owner": "IT ERP Administrator",
+    "Participants": "Real Estate Manager, VP Store Operations, Finance Controller, Master Data Manager",
+    "Trigger": "Real estate team confirms a new store/DC opening, relocation, or closure",
+    "Volume": "~1 new store location added/month (10–15/year per the growth canon); hierarchy updates quarterly"
+   },
+   "id": "W254",
+   "level": 2,
+   "name": "Location Master Lifecycle & Hierarchy Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits a Location Master request specifying store type, region, GL company…\" (replaces manual Step 1).",
+     "- System auto-capture of \"center, profit center, and fixed asset location mappings for the new entity\" (replaces manual Step 2).",
+     "- System auto-log of \"Logistical Setup\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Misaligned tax branch codes leading to BIR filing errors.",
+     "- Failure to update the hierarchy resulting in missing stores in regional sales reports."
+    ],
+    "Staffing Implication": [
+     "10–15 times/year. Each setup ~90 minutes (15 min request + 20 min financial + 15 min logistical + 10 min hierarchy + 30 min activation). Absorbed by IT ERP Administrator."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Location/Site Master",
+     "- Finance GL Mapping",
+     "- Supply Chain Network configuration"
+    ],
+    "Time Estimate": [
+     "**Total**: ~90 minutes per new location setup",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Location Request**: Operations submits a Location Master request specifying store type, region, GL company code, and tax registration details (TIN/Branch Code)",
+     "duration": "15 min",
+     "n": "1",
+     "r": "VP Store Operations"
+    },
+    {
+     "a": "—",
+     "activity": "**Financial Setup**: Finance Controller defines the cost center, profit center, and fixed asset location mappings for the new entity",
+     "duration": "20 min",
+     "n": "2",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "—",
+     "activity": "**Logistical Setup**: Supply Chain assigns the supplying DC, default transit times, and delivery schedules to the location profile",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Supply Chain Planner"
+    },
+    {
+     "a": "—",
+     "activity": "**Hierarchy Assignment**: Master Data Manager places the location in the enterprise hierarchy (e.g., Region: Visayas → Area: Cebu → Store: Mandaue City)",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Master Data Manager"
+    },
+    {
+     "a": "IT ERP Administrator",
+     "activity": "**System Activation**: ERP Administrator activates the location. This triggers automated setup in POS polling routines, replenishment MRP runs, and financial reporting roll-ups",
+     "duration": "30 min",
+     "n": "5",
+     "r": "IT ERP Administrator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Continuous deduplication checks; daily vendor changes",
+    "Owner": "Master Data Manager",
+    "Participants": "Buyer, AP Clerk, AP Supervisor, Finance Manager, Master Data Analyst",
+    "Trigger": "Vendor onboarding requests, continuous automated deduplication checks, and manual update requests (e.g., bank detail changes)",
+    "Volume": "~10–20 vendor setups/week; ~30–50 updates/week; weekly deduplication script run"
+   },
+   "id": "W287",
+   "level": 2,
+   "name": "Vendor Master Data Governance & Deduplication",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"entered during onboarding\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews flagged potential duplicate vendors.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: Master Data Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Vendor payment fraud due to unverified bank account changes.",
+     "- Duplicate vendors leading to fragmented spend visibility and missed volume discounts."
+    ],
+    "Staffing Implication": [
+     "Continuous automated ingestion. Weekly deduplication review ~2 hours. Master Data Analyst handles validation and merging."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Vendor Master Module",
+     "- Vendor Portal Integration (for self-service updates)",
+     "- ERP Audit Trail Engine",
+     "- Deduplication Engine"
+    ],
+    "Time Estimate": [
+     "**Total**: ~15 minutes per merge/review; automated checks run daily.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Data Entry & Validation**: Vendor data is initially entered during onboarding (W36) or an update is requested. System enforces mandatory fields (TIN, address, bank details) and checks TIN uniqueness to prevent duplicates.",
+     "duration": "10 min",
+     "n": "1",
+     "r": "AP Clerk / Vendor"
+    },
+    {
+     "a": "—",
+     "activity": "**Automated Matching**: System runs nightly matching algorithm across vendor names, addresses, and TINs to flag potential duplicate vendor profiles or parent-child relationships.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Exception Management**: Master Data Analyst reviews flagged potential duplicate vendors. If duplicates are found, analyst investigates (e.g., matching TINs for different branches vs. duplicate creation).",
+     "duration": "15 min/batch",
+     "n": "3",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Merge & Consolidate**: For confirmed duplicates, analyst executes a merge. System consolidates PO history, payment history, and leaves a tombstone on the deprecated record.",
+     "duration": "10 min/merge",
+     "n": "4",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "AP Supervisor",
+     "activity": "**Audit Trail Logging**: All changes to critical fields (bank details, TIN, tax classification) are captured in an immutable audit log. Bank detail changes trigger a 48-hour cooling-off period and require secondary approval (W36.7a).",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System / Master Data Analyst"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**Classification Governance**: Analyst verifies vendor classification (Local, Import, Service, MSME) using BIR/DTI records to ensure accurate reporting and MSME compliance tracking.",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Master Data Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W36"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Quarterly/Semi-Annually",
+    "Owner": "Master Data Manager",
+    "Participants": "VP Merchandising, Category Manager, BI/Data Analyst, Master Data Analyst",
+    "Trigger": "Introduction of new product lines or reorganization of existing merchandising departments",
+    "Volume": "~1–2 tree reorganizations per year; minor node additions monthly"
+   },
+   "id": "W290",
+   "level": 2,
+   "name": "Hierarchical Category Structure Management",
+   "parent": null,
+   "req_refs": [
+    "MDM-007"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-report of \"reporting impact and legacy mapping.\" (replaces manual Step 2).",
+     "- System rule-based auto-approval of \"approves the new multi-level category structure\" (replaces manual Step 3).",
+     "- System auto-create of \"creates the new nodes\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: Master Data Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Broken historical reporting if legacy mapping is not maintained during tree reorganization.",
+     "- Orphaned SKUs lacking a valid category assignment."
+    ],
+    "Staffing Implication": [
+     "Significant manual effort during restructuring (up to 4 hours per node split) for reclassification. Handled by existing MDM team."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Category Master",
+     "- BI/Data Warehouse",
+     "- Ecommerce PIM/Catalog"
+    ],
+    "Time Estimate": [
+     "**Total**: ~1–2 days end-to-end for a minor reorganization.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Hierarchy Proposal**: Merchandising proposes a change to the category tree (e.g., splitting \"Tools\" into \"Hand Tools\" and \"Power Tools\").",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Impact Assessment**: BI Analyst assesses reporting impact and legacy mapping. Master Data Manager assesses reclassification effort for existing SKUs.",
+     "duration": "2 hours",
+     "n": "2",
+     "r": "BI/Data Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Approval**: VP Merchandising approves the new multi-level category structure (MDM-007).",
+     "duration": "15 min",
+     "n": "3",
+     "r": "VP Merchandising"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**System Execution**: Master Data Analyst creates the new nodes (Department, Category, Sub-Category, Class), and executes a batch reclassification script for affected SKUs.",
+     "duration": "4 hours",
+     "n": "4",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Downstream Sync**: The new hierarchy is synced to the Data Warehouse (for BI reporting) and Ecommerce (for website navigation).",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-50",
+    "CTL-51"
+   ],
+   "fields": {
+    "Frequency": "Automated daily profiling; Monthly governance review",
+    "Owner": "Master Data Manager",
+    "Participants": "Data Stewards (CRM, Vendor, Item), BI Analyst, Master Data Manager",
+    "Trigger": "Monthly governance review and continuous automated profiling",
+    "Volume": "Millions of records scanned daily against rule sets"
+   },
+   "id": "W291",
+   "level": 2,
+   "name": "Master Data Quality Monitoring & Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks against predefined rules\" (Step 1, already system-executed).",
+     "- System auto-generate of \"generate alert tickets routed to the respective Data Steward\" (Step 3, already system-executed).",
+     "- System auto-record of \"record corrections based on the alerts.\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-50 (prevent unauthorized master data changes.); CTL-51 (detect stale or incomplete master data.)",
+     "- operational: Master Data Manager review and approval gate on archival/purge runs"
+    ],
+    "Pain Points / Risks": [
+     "- Lack of executive visibility into how poor data quality drives downstream costs (e.g., slotting failures, duplicate payments).",
+     "- \"Alert fatigue\" if the profiling rules are too strict.",
+     "- System bloat causing slow queries if historical/obsolete data is not actively archived."
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing MDM team and Data Stewards; shifts effort from reactive fixing to proactive monitoring."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP / MDM Data Profiling Engine",
+     "- BI Dashboard (Data Governance)",
+     "- CRM & Vendor Portals (for missing data requests)",
+     "- Integration with W474 (Enterprise Data Governance Council for scorecard review)"
+    ],
+    "Time Estimate": [
+     "**Total**: Continuous; ~2 hours/week steward remediation + ~2 hours/month archival review + ~2 hours/quarter DGC ≈ ~9 hours/month.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Automated Profiling**: System runs daily data quality (DQ) checks against predefined rules (e.g., % of Item Master missing dimensions, % of Customer Master missing email, suspected duplicate rates).",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Dashboard Generation**: BI platform aggregates DQ scores into a central MDM Governance Dashboard.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Exception Routing**: High-priority exceptions (e.g., vendor missing TIN) automatically generate alert tickets routed to the respective Data Steward.",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Remediation**: Data Stewards execute bulk or single-record corrections based on the alerts.",
+     "duration": "2 hours/week",
+     "n": "4",
+     "r": "Data Steward"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Data Archiving & Lifecycle Review**: System identifies obsolete records (e.g., zero transactions in 3 years, discontinued SKUs). Data Steward reviews and approves records for archival/soft-deletion to maintain system performance.",
+     "duration": "2 hours/month",
+     "n": "5",
+     "r": "Data Steward"
+    },
+    {
+     "a": "DGC Chair",
+     "activity": "**Quarterly Data Governance Council Review**: Master Data Manager compiles the Enterprise Data Quality Scorecard and presents DQ trends, archiving metrics, and policy changes to the Enterprise Data Governance Council (W474) for ratification.",
+     "duration": "2 hours/quarter",
+     "n": "6",
+     "r": "Master Data Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W474"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-54"
+   ],
+   "fields": {
+    "Frequency": "Continuous (onboarding ~1,200–1,600 new hires/year per profile §11.4); Quarterly bulk data verification",
+    "Owner": "HR Data Steward",
+    "Participants": "HR Specialist, Payroll Manager, IT ERP Administrator, Department Head",
+    "Trigger": "New hire onboarding (W15), cross-entity transfer, position/department change, statutory ID update, or annual data verification",
+    "Volume": "~1,200–1,600 new employee records/year; ~200 cross-entity transfers/year; 6,762 records under governance"
+   },
+   "id": "W292",
+   "level": 2,
+   "name": "Employee Master Data Governance & Cross-Entity Lifecycle",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters employee master data.\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates that the cost center belongs to the assigned entity.\" (replaces manual Step 2).",
+     "- System auto-flag of \"flags employees with missing or duplicate statutory IDs for remediation before…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-54 (prevent unauthorized employee master data changes.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Duplicate employee records (e.g., rehires creating a second profile instead of reactivating the original) causing fragmented YTD earnings and BIR reconciliation failures.",
+     "- Cross-entity transfers with incorrect YTD carryover causing over/under-taxation.",
+     "- Missing or invalid SSS/PhilHealth/Pag-IBIG numbers blocking statutory remittance filing.",
+     "- Stale position/department data causing incorrect cost center allocation in payroll GL postings."
+    ],
+    "Staffing Implication": [
+     "1 HR Data Steward FTE dedicated to employee master governance. Quarterly verification (~4 hours) absorbed by existing HR team. Cross-entity transfers require Payroll Manager coordination."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP HR / Employee Master Module",
+     "- Payroll Module (for statutory ID and salary data)",
+     "- ERP Organizational Hierarchy (departments, positions, cost centers)",
+     "- IT Access Management (W152 — role-based access triggered by position changes)",
+     "- Biometric / Time & Attendance System (employee ID linkage)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~15 minutes per new hire record; ~30 minutes per cross-entity transfer; ~4 hours quarterly verification.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HR Data Steward",
+     "activity": "**Record Creation & Validation**: During onboarding (W15), HR Specialist enters employee master data. System enforces mandatory fields (full name, TIN, SSS, PhilHealth, Pag-IBIG, bank account, BIR tax status). System validates TIN format (XXX-XXX-XXX or XXX-XXX-XXX-XXX), SSS format, and checks for duplicate records using name + birthdate + TIN matching.",
+     "duration": "15 min",
+     "n": "1",
+     "r": "HR Specialist"
+    },
+    {
+     "a": "—",
+     "activity": "**Entity Assignment & Position Mapping**: System assigns the employee to the correct legal entity (5 entities). HR Specialist maps to department code, position code, and cost center (linked to W288 Financial Master). System validates that the cost center belongs to the assigned entity.",
+     "duration": "5 min",
+     "n": "2",
+     "r": "HR Specialist"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Statutory ID Verification**: HR Data Steward verifies that all statutory IDs (TIN, SSS, PhilHealth, Pag-IBIG) are valid and unique. System flags employees with missing or duplicate statutory IDs for remediation before the next payroll run.",
+     "duration": "10 min",
+     "n": "3",
+     "r": "HR Data Steward"
+    },
+    {
+     "a": "HR Data Steward",
+     "activity": "**Cross-Entity Transfer Processing**: When an employee transfers between legal entities (e.g., BuildRight Depot, Inc. → BuildRight Logistics, Inc.), HR Specialist initiates a transfer request. System creates a separation record in the source entity and a new hire record in the target entity, linking them via a cross-reference ID for tenure continuity. Payroll Manager validates that YTD earnings, leave balances, and loan balances transfer correctly.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "HR Specialist / Payroll Manager"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Position & Department Change**: Department Head submits a position change request (promotion, lateral move, department reassignment). HR Data Steward updates the employee master, validates the new position code against the organizational hierarchy, and triggers downstream updates (access rights via W152, shift scheduling via W34, reporting line changes).",
+     "duration": "10 min",
+     "n": "5",
+     "r": "HR Data Steward"
+    },
+    {
+     "a": "HR Manager",
+     "activity": "**Quarterly Data Verification**: System generates a \"Data Completeness Report\" highlighting employees with missing fields (e.g., missing bank account, expired tax status, incomplete emergency contacts). HR Data Steward distributes reports to department heads for correction.",
+     "duration": "4 hours/quarter",
+     "n": "6",
+     "r": "HR Data Steward"
+    },
+    {
+     "a": "—",
+     "activity": "**Audit Trail & Change Logging**: All changes to employee master data (salary, department, entity, statutory IDs) are captured in an immutable audit log with timestamp, old value, new value, and changed-by user.",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W15",
+    "W152",
+    "W288",
+    "W34"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "~5–10 new service items/month; ~20–30 non-stock templates/month",
+    "Owner": "Master Data Manager",
+    "Participants": "Services Manager, Category Manager, Pricing Analyst, Master Data Analyst",
+    "Trigger": "Creation of a new service offering, modification of service pricing, or addition of a non-stock/special-order item template",
+    "Volume": "~200 active service items; ~500 non-stock item templates; growing with service expansion"
+   },
+   "id": "W296",
+   "level": 2,
+   "name": "Service & Non-Stock Item Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-request of \"Service Item Request\" (replaces manual Step 1).",
+     "- System auto-review of \"Pricing & Margin Review\" (replaces manual Step 2).",
+     "- System auto-assign of \"assignment, warranty coverage, and revenue recognition method\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: Master Data Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Service items created as regular merchandise items, causing inventory valuation errors (services have no physical inventory).",
+     "- Incorrect revenue recognition (point-in-time vs. over-time) causing PFRS 15 compliance issues at audit.",
+     "- Service pricing not updated when subcontractor rates change, eroding margins.",
+     "- Non-stock item templates not linked to default vendors, causing delays in special-order PO generation.",
+     "- Missing certification requirements on service items leading to unqualified workers performing installations (safety/legal risk)."
+    ],
+    "Staffing Implication": [
+     "Absorbed by existing MDM team and Services Manager. ~5–10 service items/month × ~30 min = ~2.5–5 hours/month. Quarterly review ~2 hours."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Item Master (service item type distinct from merchandise)",
+     "- POS Module (service selling, custom processing triggers)",
+     "- Ecommerce Platform (service booking pages)",
+     "- Scheduling / Field Service Module (installation scheduling)",
+     "- Revenue Recognition Module (PFRS 15 compliance)",
+     "- Subcontractor / Partner Portal (work order dispatch)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~30 minutes per service item setup; ~10 minutes per non-stock template; ~2 hours quarterly review.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Service Item Request**: Services Manager or Category Manager requests creation of a new service item (e.g., \"Aircon Installation — Split Type 1.5HP\", \"Bathroom Tile Laying — per sqm\", \"3D Kitchen Design Rendering — Standard\"). Request specifies: service type (installation, rental, custom processing, consultancy, subscription), pricing model (fixed price, per-unit, hourly, tiered), and linked merchandise SKUs (if applicable, e.g., installation linked to appliance SKU).",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Services Manager / Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Pricing & Margin Review**: Pricing Analyst reviews the proposed service pricing against cost inputs (labor rate, material cost, subcontractor rate, overhead allocation). System calculates the service margin and flags items below the target service margin threshold.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Pricing Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Attribute Configuration**: Master Data Analyst configures service-specific attributes in the ERP: service duration estimate, scheduling rules, required certifications (e.g., licensed electrician for electrical installation), subcontractor assignment, warranty coverage, and revenue recognition method (point-in-time vs. over-time per PFRS 15).",
+     "duration": "15 min",
+     "n": "3",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Non-Stock Item Template Creation**: For non-stock/special-order items (W38), Master Data Analyst creates item templates with: default vendor assignment, estimated lead time, special order flag (no inventory held), and auto-PO generation rules. Templates allow rapid creation of specific non-stock items against customer special orders while maintaining data consistency.",
+     "duration": "10 min",
+     "n": "4",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**POS & Channel Integration**: Service items are linked to POS quick-keys for in-store selling (W5B), ecommerce service booking pages, and the trade counter/pro desk (W112). Custom processing items (paint mixing W168, lumber cutting W169) are linked to the relevant POS workflow triggers.",
+     "duration": "10 min",
+     "n": "5",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Approval & Activation**: Master Data Manager reviews the complete service/non-stock item setup, verifies all mandatory attributes are populated, and activates the item. System generates a cross-reference linking the service item to any related merchandise items for bundle/cross-sell reporting.",
+     "duration": "5 min",
+     "n": "6",
+     "r": "Master Data Manager"
+    },
+    {
+     "a": "COO",
+     "activity": "**Periodic Service Catalog Review**: Quarterly, Services Manager and Master Data Manager review the active service catalog. Obsolete services (zero transactions in 6 months) are flagged for deactivation. Pricing is compared against subcontractor rate changes and competitor service pricing (W130).",
+     "duration": "2 hours/quarter",
+     "n": "7",
+     "r": "Services Manager / Master Data Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W112",
+    "W130",
+    "W168",
+    "W169",
+    "W38",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "~5–10 bank account additions/year (new store openings); ~2–3 banking partner changes/year; ~10–15 store deposit account linkages/year at the 10–15 new stores/year canon",
+    "Owner": "Treasury Manager",
+    "Participants": "Finance Controller, AP Supervisor, Payroll Manager, IT ERP Administrator, Master Data Analyst",
+    "Trigger": "New bank account opening, new banking partner relationship, bank branch closure/merger, store opening requiring deposit account linkage, or e-wallet/digital payment partner onboarding",
+    "Volume": "~210–230 bank accounts across 5 entities and 4 banking partners (BDO, BPI, Metrobank, Chinabank — operating/payroll/escrow/LC/float), incl. ~200 store deposit accounts; ~200 store deposit points; ~5 e-wallet settlement accounts"
+   },
+   "id": "W309",
+   "level": 2,
+   "name": "Bank & Banking Partner Master Governance",
+   "parent": null,
+   "req_refs": [
+    "FIN-032",
+    "HR-012"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Bank Master Record Creation\" (replaces manual Step 1).",
+     "- System auto-count of \"Entity Bank Account Setup\" (replaces manual Step 2).",
+     "- System auto-validate of \"check, e-wallet settlement\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: upgrade, causing bulk payment file rejection and delayed vendor payments"
+    ],
+    "Pain Points / Risks": [
+     "- Incorrect GL account mapping on a new bank account causing AP payments to post to the wrong cash account, requiring manual journal corrections.",
+     "- Store deposit account linked to the wrong bank branch, causing deposit rejection and cash reconciliation failure.",
+     "- E-wallet settlement frequency misconfigured (T+1 instead of T+2), causing settlement matching failures and unreconciled e-wallet balances.",
+     "- Bank payment file format not updated after a bank system upgrade, causing bulk payment file rejection and delayed vendor payments.",
+     "- Unauthorized signatory changes on entity bank accounts creating internal control failures.",
+     "- Dormant bank accounts not deactivated, cluttering the cash position report and complicating bank reconciliation."
+    ],
+    "Staffing Implication": [
+     "Bank account setup ~30 min per account. Store deposit linkage ~10 min per store (batch during new store openings). E-wallet partner config ~30 min. Annual review ~4 hours. Absorbed by Treasury team and IT ERP Administrator."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Bank Master Module",
+     "- Treasury Module (cash position, bank reconciliation — W89)",
+     "- AP Module (payment file generation — W7)",
+     "- Payroll Module (bank credit file — HR-012)",
+     "- AR Module (customer payment collection, e-wallet settlement — W261)",
+     "- CIT / Armored Car Module (store deposit scheduling — W174)",
+     "- Store EOD Module (cash reconciliation — W5F)",
+     "- Payment Gateway Integration (e-wallet settlement file import)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~30 minutes per bank account setup; ~10 minutes per store deposit linkage; ~1 hour per bank payment format; ~4 hours annual review.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "**Bank Master Record Creation**: Treasury Manager requests creation of a new bank master record when a new banking relationship is established. Request specifies: bank name, SWIFT/BIC code, Philippine bank code (BRSTN — Bank Routing Symbol Transit Number), clearing code (PhilPaSS), and branch details. Master Data Analyst creates the bank master in the ERP.",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Treasury Manager / Master Data Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Entity Bank Account Setup**: Treasury Manager requests creation of a new bank account in the ERP. Request specifies: entity (one of 5), bank, branch, account number, account type (operating, payroll, escrow, LC, float, deposit), currency (PHP/USD), GL account mapping (bank clearing account, bank sub-ledger), authorized signatories, and online banking access details. Finance Controller approves the GL mapping. IT ERP Administrator configures the bank account and links it to the relevant ERP modules (AP payment, payroll disbursement, treasury cash position, AR collection).",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Treasury Manager / IT ERP Administrator"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**Store Deposit Account Linkage**: For each of the 200 stores, Master Data Analyst links the store location (W254) to its designated bank deposit point. Configuration specifies: store code, nearest bank branch, deposit account number, deposit type (cash, check, e-wallet settlement), and CIT armored car deposit schedule (W174). This linkage drives the automatic store-level cash reconciliation in W5F and the bank deposit auto-matching in W30.4.",
+     "duration": "10 min/store",
+     "n": "3",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Treasury Manager",
+     "activity": "**E-Wallet & Digital Payment Partner Configuration**: For e-wallet settlement (GCash, Maya, GrabPay, ShopeePay — FIN-032), IT ERP Administrator configures: partner name, settlement account, settlement frequency (T+1, T+2), MDR rate per partner, reconciliation mapping (settlement file → POS transaction matching), and chargeback dispute workflow linkage.",
+     "duration": "30 min/partner",
+     "n": "4",
+     "r": "IT ERP Administrator"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Payment File Format Configuration**: IT ERP Administrator configures the bank-specific payment file formats for AP disbursements (BDO, BPI, Metrobank, Chinabank — each uses different file layouts). Formats include: payroll bank credit file (HR-012), AP vendor payment file (W7), LC payment instruction (W232), and intercompany settlement file (W14). Treasury Manager validates the format by running a test payment file before go-live.",
+     "duration": "1 hour/bank",
+     "n": "5",
+     "r": "IT ERP Administrator / Treasury Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Bank Detail Change Governance**: When a bank account needs to be modified (e.g., account closure, branch merger, signatory change), Treasury Manager initiates a change request. For entity-level bank accounts: Finance Controller approves. For vendor bank detail changes: the existing 48-hour cooling-off period (W287 Step 5) applies. All changes are logged in an immutable audit trail with old value, new value, approver, and effective date.",
+     "duration": "15 min",
+     "n": "6",
+     "r": "Treasury Manager"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Periodic Bank Master Review**: Annually, Treasury Manager reviews all bank master records: (a) verifies account status with actual bank statements, (b) confirms authorized signatories are current, (c) validates that e-wallet MDR rates match current contracts, (d) confirms payment file formats are compatible with any bank system updates, (e) deactivates closed/unused accounts.",
+     "duration": "4 hours/year",
+     "n": "7",
+     "r": "Treasury Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W174",
+    "W232",
+    "W254",
+    "W261",
+    "W287",
+    "W30",
+    "W5F",
+    "W7",
+    "W89"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "~20–30 geographic updates/year (new barangays, municipality conversions, LGU rate changes); quarterly data quality review; major update during census years (every 5 years)",
+    "Owner": "Master Data Manager",
+    "Participants": "Finance Controller, Tax Manager, Supply Chain Planner, IT ERP Administrator, Master Data Analyst",
+    "Trigger": "New Philippine geographic data release (PSA/Philippine Statistics Authority), new barangay/municipality creation by government, LGU tax rate change, store opening in a new location requiring full address hierarchy setup, or periodic data quality review",
+    "Volume": "~42,000+ barangays; ~1,500 municipalities/cities; ~82 provinces; 17 regions; 3 island groups (Luzon, Visayas, Mindanao); ~200 store-linked locations; ~4 DC-linked locations"
+   },
+   "id": "W310",
+   "level": 2,
+   "name": "Address & Geographic Hierarchy Master Governance (Philippine-Specific)",
+   "parent": null,
+   "req_refs": [
+    "SCP-002"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System workflow orchestration of \"Hierarchy Structure Definition\" (replaces manual Step 1).",
+     "- System workflow notification of \"LGU Tax Jurisdiction Mapping\" (replaces manual Step 2).",
+     "- System auto-review of \"reviewed when new DCs are opened or ferry routes change.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)"
+    ],
+    "Pain Points / Risks": [
+     "- Free-text addresses without geographic hierarchy linkage causing undeliverable shipments, failed LGU tax computation, and fragmented customer analytics.",
+     "- New barangays created by government not added to the geographic master, causing customer/vendor address entry failures for affected areas.",
+     "- DC coverage areas not updated when new roads or ferry routes reduce delivery times, causing inflated lead times and overstock at stores.",
+     "- BIR RDO assignment missing for a store location, causing VAT returns to be filed in the wrong jurisdiction.",
+     "- Province/region mismatch on vendor addresses causing incorrect LGU tax withholding.",
+     "- Address standardization not enforced at POS (e.g., customer provides \"Makati\" but system needs the specific barangay), causing data quality degradation in the customer master."
+    ],
+    "Staffing Implication": [
+     "Initial hierarchy setup ~8 hours (one-time). Geographic updates ~30 min/batch, ~20–30 times/year. Quarterly quality review ~2 hours. Absorbed by existing MDM team with Tax and Supply Chain input."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Geographic / Address Master Module",
+     "- Location Master (W254 — store/DC address linkage)",
+     "- Customer Master (W253 — customer address standardization)",
+     "- Vendor Master (W287 — vendor address standardization)",
+     "- Tax Module (LGU tax jurisdiction mapping — W119, W9A)",
+     "- BIR Compliance Module (RDO assignment — W54A, W260)",
+     "- Supply Chain Module (DC coverage area — SCP-002, W304)",
+     "- Ecommerce Platform (customer address validation at checkout)",
+     "- PSA / PSGC Data Integration"
+    ],
+    "Time Estimate": [
+     "**Total**: ~8 hours initial setup; ~30 minutes per geographic update batch; ~2 hours quarterly quality review.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Master Data Manager",
+     "activity": "**Hierarchy Structure Definition**: Master Data Analyst defines the Philippine geographic hierarchy in the ERP: Island Group → Region → Province → Municipality/City → Barangay. Each level has: official PSA code (Philippine Standard Geographic Code — PSGC), official name, parent relationship, and geographic coordinates (centroid for distance/routing calculations). The hierarchy is stored as a single tree structure used across all modules (store locations, customer addresses, vendor addresses, DC coverage areas, LGU tax jurisdictions).",
+     "duration": "8 hours (initial setup)",
+     "n": "1",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**LGU Tax Jurisdiction Mapping**: Tax Manager maps each municipality/city to its local business tax jurisdiction. Configuration specifies: LGU code, local business tax rate (percentage of gross receipts), tax filing frequency (annual, quarterly), and LGU contact details. This drives the per-location LBT computation in W9A and the real property tax computation in W119. For stores with locations spanning multiple barangays (e.g., large stores), the primary barangay is designated for tax purposes.",
+     "duration": "20 min/LGU",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**DC Coverage Area Assignment**: Supply Chain Planner defines the geographic coverage area for each of the 4 DCs. Each municipality/city is assigned to a primary DC (W254) based on: (a) road distance, (b) inter-island ferry route availability, (c) historical delivery time data. This drives replenishment lead time calculation (SCP-002) and delivery routing (W304). Coverage areas are reviewed when new DCs are opened or ferry routes change.",
+     "duration": "2 hours (initial); 30 min/update",
+     "n": "3",
+     "r": "Supply Chain Planner"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Geographic Data Update**: When PSA publishes new geographic data (new barangays created, municipality conversions, province reorganizations), Master Data Analyst updates the hierarchy: (a) adds new nodes with PSGC codes, (b) deactivates obsolete nodes (with address migration for affected records), (c) updates parent relationships for reorganized areas. System validates that no orphaned nodes exist after the update.",
+     "duration": "30 min/batch",
+     "n": "4",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Customer/Vendor Address Standardization**: Master Data Analyst configures the ERP to enforce address standardization during data entry: (a) barangay, city/municipality, province, and region are selected from the geographic master (dropdown) rather than free-text, (b) system auto-populates the postal code (ZIP) based on the selected municipality/city, (c) system validates that the selected barangay belongs to the selected city, which belongs to the selected province. This applies to customer enrollment (W17, W253), vendor onboarding (W36, W287), and store/DC locations (W254).",
+     "duration": "4 hours (one-time config)",
+     "n": "5",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**BIR Registration Location Linkage**: Tax Manager links each geographic area to its corresponding BIR Revenue District Office (RDO). Each store location (W254) is assigned to an RDO, which determines the BIR filing jurisdiction for that location. This drives: BIR CAS registration per location (W54A), VAT return filing location, and withholding tax remittance jurisdiction. System validates that the RDO assignment is consistent with the province/region in the geographic hierarchy.",
+     "duration": "10 min/location",
+     "n": "6",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Quarterly Data Quality Review**: Master Data Analyst runs a quarterly geographic data quality check: (a) completeness — all stores, DCs, vendors, and customers have a valid full-address hierarchy (no missing barangay, city, or province), (b) consistency — no addresses with barangay/province mismatches, (c) currency — all PSGC codes match the latest PSA publication, (d) coverage — all municipalities with a BuildRight store have a DC coverage assignment. Exceptions are routed to the relevant Data Steward for remediation (W291).",
+     "duration": "2 hours/quarter",
+     "n": "7",
+     "r": "Master Data Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W119",
+    "W17",
+    "W253",
+    "W254",
+    "W260",
+    "W287",
+    "W291",
+    "W304",
+    "W36",
+    "W54A",
+    "W9A"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Monthly (as new equipment types are acquired)",
+    "Owner": "Director, Facilities & Real Estate / Maintenance Manager",
+    "Participants": "Maintenance Manager, Master Data Analyst, Procurement Manager",
+    "Trigger": "Procurement of new store fixtures, material handling equipment (MHE), or HVAC systems requiring maintenance tracking",
+    "Volume": "~5,000 trackable equipment records; ~200 maintenance plans"
+   },
+   "id": "W400",
+   "level": 2,
+   "name": "Equipment & Asset Maintenance (EAM) Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"creates the Equipment Master template, defining the manufacturer, model,…\" (replaces manual Step 1).",
+     "- System auto-validate of \"Maintenance Plan Configuration\" (replaces manual Step 3).",
+     "- System auto-schedule of \"schedules and ties them to the Equipment Master in the ERP/EAM module.\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Unplanned downtime due to missing preventative maintenance schedules.",
+     "- Overstocking or stockouts of spare parts because equipment BOMs are not linked to inventory."
+    ],
+    "Staffing Implication": [
+     "Absorbed by Engineering and MDM teams. ~1.5 hours per new equipment type."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Enterprise Asset Management (EAM) / Plant Maintenance Module",
+     "- Item Master (for spare parts BOM)",
+     "- Procurement Module (warranty tracking)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~80 minutes per new equipment model setup.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Equipment Template Creation**: Procurement Manager provides specs for a new equipment model. Master Data Analyst creates the Equipment Master template, defining the manufacturer, model, warranty duration, and serial number tracking requirement.",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**BOM Definition**: Maintenance Manager defines the equipment Bill of Materials (BOM), mapping standard spare parts (linked to Item Master W252) needed for repairs.",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Maintenance Manager"
+    },
+    {
+     "a": "Director, Facilities & Real Estate",
+     "activity": "**Maintenance Plan Configuration**: Maintenance Manager establishes standard preventative maintenance (PM) schedules (e.g., 6-month HVAC servicing, 200-hour forklift check).",
+     "duration": "20 min",
+     "n": "3",
+     "r": "Maintenance Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**System Setup**: Master Data Analyst configures the PM schedules and ties them to the Equipment Master in the ERP/EAM module.",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Master Data Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W252"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "1–2 times per quarter",
+    "Owner": "Logistics Manager",
+    "Participants": "Fleet Supervisor, Master Data Analyst, HR Manager",
+    "Trigger": "Acquisition or leasing of new delivery trucks, vans, or corporate vehicles",
+    "Volume": "~200 fleet vehicles under dispatch management (40 owned trucks + 3PL-contracted; per the fleet canon)"
+   },
+   "id": "W401",
+   "level": 2,
+   "name": "Fleet & Vehicle Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"plate number, VIN, make/model, gross vehicle weight, cubic capacity\" (replaces manual Step 1).",
+     "- System auto-log of \"automated 30-day alerts prior to expiration\" (replaces manual Step 2).",
+     "- System auto-route of \"defining its route restrictions\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Delivery delays caused by operating vehicles with expired LTO registrations.",
+     "- Overloading trucks because GVW and cubic capacity master data are incorrect."
+    ],
+    "Staffing Implication": [
+     "Absorbed by Logistics team. ~1 hour per vehicle setup."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Fleet Management / TMS Module",
+     "- HR Employee Master (Driver linkage)",
+     "- Alerts & Notifications Engine"
+    ],
+    "Time Estimate": [
+     "**Total**: ~55 minutes per vehicle.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Vehicle Master Creation**: Fleet Supervisor submits vehicle details (plate number, VIN, make/model, gross vehicle weight, cubic capacity).",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Fleet Supervisor"
+    },
+    {
+     "a": "—",
+     "activity": "**Compliance Data Logging**: Master Data Analyst logs LTO registration expiration, insurance policy renewal dates, and emissions testing dates. System generates automated 30-day alerts prior to expiration.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Routing & Capacity Setup**: Logistics Manager configures the vehicle in the transportation management system (TMS), defining its route restrictions (e.g., truck ban exemptions) and maximum payload (weight/volume) for load building (W196).",
+     "duration": "20 min",
+     "n": "3",
+     "r": "Logistics Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Driver Linkage**: HR Manager links the vehicle to the authorized driver pool (W292), ensuring only drivers with active professional licenses can be assigned.",
+     "duration": "10 min",
+     "n": "4",
+     "r": "HR Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W196",
+    "W292"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "~10–20 new/renewed contracts per week",
+    "Owner": "Legal Counsel / Contract Administrator",
+    "Participants": "Category Manager, Procurement Manager, Finance Controller, Master Data Analyst",
+    "Trigger": "Execution of a new vendor trade agreement, real estate lease, or corporate B2B sales contract",
+    "Volume": "~3,000 active contracts"
+   },
+   "id": "W402",
+   "level": 2,
+   "name": "Contract & Agreement Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans and uploads the signed contract into the ERP Contract Management module,…\" (replaces manual Step 1).",
+     "- System auto-extract of \"extracts commercial terms\" (replaces manual Step 2).",
+     "- System auto-count of \"Lease Accounting Linkage\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Missed vendor rebates due to untracked trade agreements.",
+     "- Unwanted auto-renewals of software or services due to lack of expiration alerts."
+    ],
+    "Staffing Implication": [
+     "Managed by Legal/Contract Admin and Finance."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP Contract Lifecycle Management (CLM) Module",
+     "- Rebate / Trade Spend Management Module",
+     "- IFRS 16 Lease Accounting Module"
+    ],
+    "Time Estimate": [
+     "**Total**: ~65 minutes per complex contract ingestion.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Contract Ingestion**: Contract Administrator scans and uploads the signed contract into the ERP Contract Management module, capturing metadata (parties, start/end dates, renewal terms, financial value).",
+     "duration": "15 min",
+     "n": "1",
+     "r": "Contract Administrator"
+    },
+    {
+     "a": "—",
+     "activity": "**Commercial Terms Mapping**: Category Manager extracts commercial terms (e.g., 2% volume rebate, marketing development funds) and inputs them into the Trade Spend / Rebate agreements master.",
+     "duration": "20 min",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Lease Accounting Linkage**: For real estate contracts, Finance Controller maps the lease terms (monthly rent, escalation clauses) to the IFRS 16 / PFRS 16 lease accounting module (W275) to generate ROU asset schedules.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "—",
+     "activity": "**Governance & Alerting**: System applies a master rule to send renewal/termination alerts 90 days prior to contract expiration to the respective business owner.",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W275"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Monthly review",
+    "Owner": "Pricing Manager",
+    "Participants": "Merchandising Analyst, Master Data Analyst",
+    "Trigger": "Identification of a new market competitor or competitive mapping requirement for price scraping",
+    "Volume": "~10–15 tracked competitors; ~5,000 mapped KVIs (Key Value Items)"
+   },
+   "id": "W403",
+   "level": 2,
+   "name": "Competitor & Market Intelligence Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"profile, including their store locations\" (replaces manual Step 1).",
+     "- System auto-match of \"matching by GTIN, brand, or spec equivalence\" (replaces manual Step 2).",
+     "- System auto-update of \"updates the competitive price scraping tool with the new URLs and CSS selectors…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: Pricing Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- Pricing algorithms lowering margins based on incorrect SKU matches (e.g., matching a 5L paint can against a competitor's 1L can).",
+     "- Scraping tools breaking when competitor websites change."
+    ],
+    "Staffing Implication": [
+     "Absorbed by Pricing team. Heavy upfront mapping effort for KVIs."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Competitive Pricing & Scraping Tool",
+     "- ERP Pricing Rule Engine (W289)"
+    ],
+    "Time Estimate": [
+     "**Total**: ~65 minutes for competitor setup; ongoing KVI mapping effort.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Competitor Setup**: Pricing Manager defines a new competitor profile, including their store locations (mapped to proximity of BuildRight stores) and ecommerce URLs.",
+     "duration": "20 min",
+     "n": "1",
+     "r": "Pricing Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**KVI Mapping**: Merchandising Analyst maps BuildRight SKUs to the exact or comparable competitor SKUs (matching by GTIN, brand, or spec equivalence).",
+     "duration": "5 min/SKU",
+     "n": "2",
+     "r": "Merchandising Analyst"
+    },
+    {
+     "a": "—",
+     "activity": "**Scraping Configuration**: Master Data Analyst updates the competitive price scraping tool with the new URLs and CSS selectors if necessary.",
+     "duration": "30 min",
+     "n": "3",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Index Governance**: Pricing Manager reviews the competitive index rules (e.g., \"BuildRight price must be <= Competitor X for Category Y\").",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Pricing Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W289"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Weekly (for new registers or layout changes)",
+    "Owner": "IT Store Operations Manager",
+    "Participants": "Store Manager, Finance Controller, IT ERP Administrator",
+    "Trigger": "Deployment of a new POS terminal, self-checkout kiosk, or updates to receipt templates and macro keys",
+    "Volume": "~600 POS terminals across 200 stores"
+   },
+   "id": "W404",
+   "level": 2,
+   "name": "Point-of-Sale (POS) System & Hardware Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scanner, receipt printer, cash drawer\" (replaces manual Step 1).",
+     "- System auto-generate of \"printing on receipts.\" (replaces manual Step 2).",
+     "- System auto-file of \"profile to the terminal, containing the governed list of quick-keys\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Inconsistent tax rates printing on receipts if terminal tax profiles drift from the master.",
+     "- Rogue quick-keys created locally by Store Managers to bypass scanning."
+    ],
+    "Staffing Implication": [
+     "Absorbed by IT Operations."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS Central Configuration Manager",
+     "- ERP GL & Tax Modules",
+     "- Store Location Master"
+    ],
+    "Time Estimate": [
+     "**Total**: ~35 minutes per terminal configuration.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT Store Operations Manager",
+     "activity": "**Terminal Registration**: IT Store Ops Manager provisions a new POS terminal, assigning it a unique Terminal ID, linking it to the Store Location Master (W254), and defining its hardware profile (scanner, receipt printer, cash drawer).",
+     "duration": "15 min",
+     "n": "1",
+     "r": "IT Store Ops Mgr"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Financial Mapping**: Finance Controller links the Terminal ID to the specific petty cash/till GL account and tax profile for correct VAT/LGU tax printing on receipts.",
+     "duration": "10 min",
+     "n": "2",
+     "r": "Finance Controller"
+    },
+    {
+     "a": "IT Store Operations Manager",
+     "activity": "**UI & Macro Key Setup**: IT ERP Administrator pushes the standard UI profile to the terminal, containing the governed list of quick-keys (e.g., non-barcoded items, service fees, bag fees) ensuring consistency across all stores.",
+     "duration": "10 min",
+     "n": "3",
+     "r": "IT ERP Administrator"
+    },
+    {
+     "a": "—",
+     "activity": "**Offline DB Sync Rule**: System configures the terminal's offline database sync frequency and scope (downloading the Item Master and Pricing Master delta updates daily).",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W254"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Continuous",
+    "Owner": "Data Protection Officer (DPO)",
+    "Participants": "CRM Data Steward, IT ERP Administrator",
+    "Trigger": "Customer opts in/out of marketing, submits a DSAR, or changes data privacy preferences",
+    "Volume": "~600,000 customer records"
+   },
+   "id": "W405",
+   "level": 2,
+   "name": "Data Privacy & Consent Preferences Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logs the consent boolean\" (replaces manual Step 1).",
+     "- System auto-sync of \"synced to the Central Consent Master, overriding any conflicting…\" (replaces manual Step 2).",
+     "- System auto-generate of \"generate dynamic suppression lists, preventing unsolicited communications.\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: Data Protection Officer (DPO) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- National Privacy Commission (NPC) fines for sending marketing SMS to opted-out customers due to siloed consent data.",
+     "- Deleting financial transaction history accidentally when fulfilling a privacy deletion request."
+    ],
+    "Staffing Implication": [
+     "Automated system governance; DPO oversees compliance."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer Data Platform (CDP) / Consent Master",
+     "- Marketing Automation Tools",
+     "- Ecommerce / POS (Consent capture forms)"
+    ],
+    "Time Estimate": [
+     "**Total**: Automated capture; ~30 minutes per complex deletion.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Consent Capture**: Customer updates preferences via the Ecommerce portal, mobile app, or in-store prompt. System logs the consent boolean (Email, SMS, Direct Mail, Data Sharing), the timestamp, and the IP/source of consent.",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System / Customer"
+    },
+    {
+     "a": "—",
+     "activity": "**Centralized Preference Master**: The consent data is immediately synced to the Central Consent Master, overriding any conflicting channel-specific preferences.",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "DPO",
+     "activity": "**Suppression List Generation**: CRM Data Steward ensures that marketing automation tools query the Consent Master daily to generate dynamic suppression lists, preventing unsolicited communications.",
+     "duration": "10 min/day",
+     "n": "3",
+     "r": "CRM Data Steward"
+    },
+    {
+     "a": "DPO",
+     "activity": "**Right-to-be-Forgotten Execution**: When a deletion request is approved (W271), IT Administrator executes a governed anonymization script that obfuscates PII in the Customer Master (W253) but retains transaction IDs for financial integrity.",
+     "duration": "30 min",
+     "n": "4",
+     "r": "IT ERP Administrator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W253",
+    "W271"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Annually or upon regulatory update",
+    "Owner": "Chief Sustainability Officer (CSO)",
+    "Participants": "Master Data Analyst, Procurement Manager",
+    "Trigger": "Changes in regulatory emission factors, new sustainability certification standards, or updates to vendor scoring rubrics",
+    "Volume": "~100 emission factors; ~50 certification types"
+   },
+   "id": "W406",
+   "level": 2,
+   "name": "ESG & Sustainability Metrics Master Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-update of \"updates the standard greenhouse gas\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculate a vendor's Sustainability Score based on their certifications and…\" (replaces manual Step 3).",
+     "- System auto-generate of \"footprints use the single source of truth.\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- Inaccurate ESG reporting due to decentralized or outdated emission factor spreadsheets.",
+     "- Greenwashing risks from unverified or improperly mapped product certifications."
+    ],
+    "Staffing Implication": [
+     "Absorbed by the ESG and MDM teams."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP ESG / Sustainability Module",
+     "- Vendor Master",
+     "- Item Attribute Templates"
+    ],
+    "Time Estimate": [
+     "**Total**: ~2.5 hours per annual metric update.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Factor Definition**: CSO defines or updates the standard greenhouse gas (GHG) emission factors (e.g., kg CO2e per kWh of electricity, or per liter of diesel) using updated government or international frameworks.",
+     "duration": "1 hour",
+     "n": "1",
+     "r": "CSO"
+    },
+    {
+     "a": "CSO",
+     "activity": "**Certification Master**: Master Data Analyst governs the list of recognized sustainability certifications (e.g., FSC certified wood, Energy Star) and links them to the Item Master attributes (W252/W298).",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "CSO",
+     "activity": "**Vendor Scoring Rubric**: Procurement Manager configures the weighting algorithms in the Vendor Master (W287) that calculate a vendor's Sustainability Score based on their certifications and audit results.",
+     "duration": "1 hour",
+     "n": "3",
+     "r": "Procurement Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Dashboard Sync**: System syncs these master factors to the ESG reporting dashboards (W192-W195) to ensure all calculated carbon footprints use the single source of truth.",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W192",
+    "W195",
+    "W252",
+    "W287",
+    "W298"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-328"
+   ],
+   "fields": {
+    "Frequency": "Quarterly seasonal transitions (dry/wet/typhoon/holiday); ad-hoc for trend-responsive categories",
+    "Owner": "Master Data Analyst",
+    "Participants": "Master Data Analyst, Category Manager, Merchandise Planner, Pricing Analyst, Store Operations",
+    "Trigger": "Merchandise Planning seasonal assortment review (W264); Category Manager identifies SKUs for seasonal phase-in or phase-out",
+    "Volume": "~2,000–4,000 seasonal SKU lifecycle transitions per year (phase-in new seasonal SKUs + phase-out expiring seasonal SKUs)"
+   },
+   "id": "W1532",
+   "level": 2,
+   "name": "Seasonal SKU Lifecycle Master Data Setup, Phase-In/Phase-Out Calendar & Attribute Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-submit of \"submits seasonal SKU list to Master Data Analyst\" (replaces manual Step 1).",
+     "- System auto-capture of \"New seasonal SKU master data creation\" (replaces manual Step 2).",
+     "- System auto-schedule of \"Phase-out SKU master data update\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 35,000 active SKU base includes ~3,000–5,000 SKUs with seasonal demand patterns that rotate with Philippine weather and cultural cycles (the true seasonal-only assortment is ~500 SKUs per profile §6.2): (a) dry season (Dec–May): garden plants, outdoor furniture, paint (peak painting season), construction materials (peak building season), (b) wet/typhoon season (Jun–Nov): waterproofing products, emergency repair supplies, tarps, generators, (c) holiday \"Ber months\" (Sep–Dec): Christmas lights, decorative hardware, gift-eligible power tools, (d) back-to-school (May–Jun): dormitory renovation supplies, study desk/furniture. Each seasonal SKU lifecycle requires master data setup months before the selling season: product attributes, seasonal flags, phase-in date (when the SKU becomes orderable/visible to stores), peak selling dates, phase-out date (when replenishment stops), markdown triggers, and disposition rules. Poor seasonal master data management leads to: missed selling windows (SKU set up too late), excess inventory (phase-out date too late, markdown triggers too lenient), and store confusion (SKUs appearing in the system before stores are ready to display them)."
+    ],
+    "Controls": [
+     "- CTL-328 (ensure controlled execution — Foundational Masters (PA-29.1).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Volume overload**: ~2,000–4,000 seasonal SKU transitions per year creates massive master data workload during peak transition periods (especially the Q4 holiday transition); Master Data Analysts can become bottlenecks delaying SKU availability",
+     "- **Date dependency errors**: a single date entry error (e.g., phase-out date entered as 2026-01-15 instead of 2026-12-15) causes the SKU to become non-orderable 11 months early — potentially during its peak selling season; validation rules must catch impossible date combinations",
+     "- **Store-level variation complexity**: not all 200 stores carry all seasonal SKUs (e.g., garden plants only at the 200 stores with garden centers (per VS-145); winter products only in Baguio/Benguet stores); store listing accuracy per seasonal SKU adds complexity to the master data setup",
+     "- **Legacy seasonal SKU accumulation**: if phase-out SKUs are not properly dispositioned and deactivated, the product master accumulates inactive seasonal SKUs, cluttering search results and confusing store staff; annual master data hygiene cleanup required"
+    ],
+    "Staffing Implication": [
+     "- Master Data Analyst: ~500–1,200 hours/year on seasonal SKU lifecycle management; significant but absorbed within master data team (seasonal transitions are a core master data function)",
+     "- Store Managers: ~1–2 hours/store/quarter on seasonal transition execution; absorbed",
+     "- Category Managers: ~2–3 days/quarter on seasonal assortment intake; absorbed",
+     "- No incremental headcount",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Seasonal SKU master data template: standard + seasonal attributes, phase-in/out dates, disposition rules (W1532.2)",
+     "- Seasonal calendar visualization: timeline view by category, overlap/gap detection, automated alerts (W1532.4)",
+     "- Replenishment parameter automation: seasonal DOS targets, auto-adjustment based on phase (ramp-up, peak, wind-down, clearance) (W1532.4)",
+     "- Promotional pricing auto-activation: phase-in date triggers promotional price; phase-out date triggers markdown schedule (W1532.4)",
+     "- Store transition notification engine: seasonal SKU change communication with planogram and display instructions (W1532.5)",
+     "- Integration with W264 (Seasonal Merchandise Transition), W588 (Seasonal Build-Down), W830 (Phase-Out Disposition), W1220 (Seasonal Forward-Buy Planning), W1438 (Seasonal SKU Markdown Cadence)"
+    ],
+    "Time Estimate": [
+     "- New SKU creation: 15–20 min/SKU × ~1,000–2,000 new seasonal SKUs/year = ~250–670 hours/year",
+     "- Phase-out updates: 10–15 min/SKU × ~1,000–2,000 phase-out SKUs/year = ~170–500 hours/year",
+     "- Calendar maintenance: 4–6 hours/quarter = ~16–24 hours/year",
+     "- Store communication: 1–2 hours/store × 200 stores × 4 transitions/year = ~800–1,600 hours/year (Store Manager time)",
+     "- **Annual total: ~1,300–2,800 hours (Master Data Analyst + Store Managers)**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Seasonal assortment intake**: (a) Category Manager submits seasonal SKU list to Master Data Analyst: (i) new SKUs to phase in (with vendor, cost, retail price, expected season, target stores), (ii) existing SKUs to extend (with new phase-out date), (iii) existing SKUs to phase out (with final order date, markdown schedule, disposition plan); (b) Merchandise Planner provides seasonal sales forecast per SKU for inventory planning",
+     "duration": "2–3 days/quarter",
+     "n": "1",
+     "r": "Category Manager / Merchandise Planner"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**New seasonal SKU master data creation**: (a) for each new seasonal SKU, Master Data Analyst creates master data record: (i) standard product attributes (SKU, description, category, subcategory, brand, vendor, UOM, dimensions, weight, barcode), (ii) seasonal attributes: season code (DRY, WET, TYPH, HOLIDAY, B2S), phase-in date, peak start date, peak end date, phase-out date, disposition rule (markdown % schedule → donate → destroy), (iii) pricing: regular price, seasonal promotional price (if applicable), markdown trigger dates and percentages, (iv) replenishment parameters: minimum order quantity, lead time, target days of supply by season phase, (v) store listing: which stores carry this SKU (all 200 vs. stores with garden center vs. coastal stores only); (b) Master Data Analyst validates: (i) barcode uniqueness, (ii) price compliance (VAT-inclusive, minimum margin threshold), (iii) seasonal date logic (phase-in < peak start < peak end < phase-out)",
+     "duration": "15–20 min per SKU",
+     "n": "2",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Phase-out SKU master data update**: (a) for SKUs being phased out, Master Data Analyst updates: (i) phase-out date (final date for store replenishment orders), (ii) markdown schedule (if not already on markdown): trigger date → markdown %, (iii) disposition rule (vendor return, clearance, donate, destroy), (iv) system action: after phase-out date — SKU becomes non-orderable but remains searchable for historical transactions; (b) coordinates with Merchandise Planner on remaining inventory disposition per W588 (Seasonal Build-Down) and W830 (Phase-Out Disposition)",
+     "duration": "10–15 min per SKU",
+     "n": "3",
+     "r": "Master Data Analyst"
+    },
+    {
+     "a": "Master Data Manager",
+     "activity": "**Seasonal calendar maintenance**: (a) Master Data Analyst maintains the seasonal SKU calendar in the system: (i) visual timeline showing all seasonal SKUs by category with phase-in/peak/phase-out dates, (ii) overlap detection (incoming seasonal SKU vs. outgoing seasonal SKU competing for same shelf space), (iii) gap detection (category with no active seasonal SKU during expected peak period); (b) publishes seasonal calendar to Category Managers and Merchandise Planners for planning; (c) system uses calendar to: (i) auto-trigger replenishment parameter changes (increase target DOS during peak, decrease during phase-out), (ii) auto-activate promotional pricing on phase-in date, (iii) auto-trigger markdown schedule on phase-out date",
+     "duration": "4–6 hours/quarter",
+     "n": "4",
+     "r": "Master Data Analyst / System"
+    },
+    {
+     "a": "Store Operations",
+     "activity": "**Store communication and readiness**: (a) 4 weeks before phase-in date: system generates seasonal transition notification to affected Store Managers: (i) incoming seasonal SKUs with display location and planogram reference, (ii) outgoing seasonal SKUs with markdown schedule and clearance timeline; (b) Store Manager confirms readiness: display space cleared, planogram updated, staff briefed on seasonal product features; (c) 1 week before phase-in: system activates SKU for ordering and store-level inventory visibility",
+     "duration": "1–2 hours/store per seasonal transition",
+     "n": "5",
+     "r": "System / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1220",
+    "W1438",
+    "W264",
+    "W588",
+    "W830"
+   ]
+  }
+ ]
+}

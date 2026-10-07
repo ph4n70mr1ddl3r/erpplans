@@ -1,0 +1,568 @@
+{
+ "process_area": {
+  "id": "PA-143.2",
+  "title": "Delivery Execution, Installation & In-Home Service Operations"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.2-delivery-execution-installation-and-in-home-service.md",
+ "value_stream": {
+  "directory": "VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling",
+  "id": "VS-143",
+  "name": "Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Daily per DC/store catchment",
+    "Owner": "Bulky-Delivery Dispatch / DC Ops (VS-04) / Logistics (VS-06.3)",
+    "Participants": "DC Ops (VS-04), Store Ops (VS-07), Crews/Drivers, 3PL (VS-56), Customer Service (VS-13)",
+    "Trigger": "Day's bulky deliveries confirmed (W4291)",
+    "Volume": "Per-day manifests × ~each serving DC/store; each manifest = multi-stop two-man route"
+   },
+   "id": "W4297",
+   "level": 2,
+   "name": "Daily Delivery Manifest, Load Planning & Dispatch",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto time-window sequencing; e-manifest to crew device; load-verification scan; live ETA to customer"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: manifest-vs-load verification at staging; crew-license match before dispatch (W4293)"
+    ],
+    "Cross-references": [
+     "- links to VS-04 (DC), VS-06.3 (routing), VS-13/VS-75 (comms), W4291 (scheduling), W4293 (crew), W4294 (vehicle)"
+    ],
+    "Pain Points / Risks": [
+     "- **Load-sequence risk**: wrong stop order → re-handle/damage/time loss; mitigated by reverse-stop load plan",
+     "- **Mismatch risk**: wrong item/install-kit loaded → failed install; mitigated by manifest-vs-load verification at staging"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- WMS/pick (VS-04); logistics/routing (VS-06.3); dispatch/e-manifest; customer comms (VS-13/VS-75)"
+    ],
+    "Time Estimate": [
+     "- Load ~20–40 min/vehicle; dispatch build ~30–60 min/zone/day"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Bulky Delivery",
+     "activity": "Dispatch/DC build the day's manifest from confirmed orders — sequence by time-window + zone, group by vehicle type (W4294), and assign two-man crews by install-license match (W4293)",
+     "duration": "Daily",
+     "n": "1",
+     "r": "Dispatch / DC Ops"
+    },
+    {
+     "a": "DC Manager",
+     "activity": "DC Ops pick/stage bulky items, verify against manifest (item, install-kit, haul-away flag), load in reverse-stop order with securing equipment, and release to crew with e-manifest + customer instructions",
+     "duration": "Daily",
+     "n": "2",
+     "r": "DC Ops / Crew"
+    },
+    {
+     "a": "Head of Bulky Delivery",
+     "activity": "Dispatch push e-manifest to crew device, send customer ETA notifications (VS-75/VS-13), and track in real-time against the route",
+     "duration": "Daily",
+     "n": "3",
+     "r": "Dispatch / Customer Service"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4291",
+    "W4293",
+    "W4294"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Per bulky stop",
+    "Owner": "Two-Man Crew / Bulky-Delivery Operations",
+    "Participants": "Driver/Installer, Customer, Customer Service (VS-13), LP (VS-23)",
+    "Trigger": "Crew arrives at customer address",
+    "Volume": "Bulky-delivery stop volume (manifests × stops)"
+   },
+   "id": "W4298",
+   "level": 2,
+   "name": "In-Home Delivery Execution, Site Protection & Handoff",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Crew-app carry-path checklist; photo e-POD of placement; auto-prompt haul-away/recycling capture"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: site protection used; team-lift SOP; handoff captured (e-POD) before crew departure"
+    ],
+    "Cross-references": [
+     "- links to VS-06.3 (delivery app), VS-13 (service), VS-23 (exception), W4299 (install), W4305 (haul-away), W4301 (acceptance)"
+    ],
+    "Pain Points / Risks": [
+     "- **Property-damage risk**: appliance scratches floor/wall during carry; mitigated by site protection + trained carry path",
+     "- **Access-blocker risk**: unforeseen obstruction (narrow stair, low elevator) blocks delivery; mitigated by pre-delivery access check + on-site re-plan/escalation (W4302)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- e-POD/crew app (VS-06.3); order (VS-16); customer comms (VS-13); LP/exception (VS-23)"
+    ],
+    "Time Estimate": [
+     "- ~15–45 min/stop depending on item/site"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Crew Lead",
+     "activity": "Crew verify customer/identity and site access, lay floor/wall protection, and plan the carry path (stairs/elevator/clearances) per the pre-delivery check (W4292)",
+     "duration": "Per stop",
+     "n": "1",
+     "r": "Crew"
+    },
+    {
+     "a": "Crew Lead",
+     "activity": "Crew team-lift/roll the item to the install location using equipment (W4294), set in place, remove packaging, and collect for haul-away/recycling where applicable (W4305)",
+     "duration": "Per stop",
+     "n": "2",
+     "r": "Crew"
+    },
+    {
+     "a": "Crew Lead",
+     "activity": "Crew hand off to installer if separate (W4299) or complete placement, brief the customer on use/care, and capture handoff confirmation",
+     "duration": "Per stop",
+     "n": "3",
+     "r": "Crew / Installer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4292",
+    "W4294",
+    "W4299",
+    "W4301",
+    "W4302",
+    "W4305"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Per install-tagged bulky order",
+    "Owner": "Licensed Installer / Bulky-Delivery Service Ops / Installation Services (VS-12)",
+    "Participants": "Installer (W4293), Crew, Customer Service (VS-13), Quality (VS-31), HSE (VS-24)",
+    "Trigger": "Item install-required flag (W4292); delivery handoff (W4298)",
+    "Volume": "Install-tagged orders (split-AC, water heater, washing machine, cooker, rangehood, dishwasher)"
+   },
+   "id": "W4299",
+   "level": 2,
+   "name": "Appliance & White-Goods Installation, Hookup & Commissioning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Category install-SOP on installer app; mandatory leak-test photo capture; auto warranty-registration; install-fee auto-post"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: installer licensed (W4293); leak/safety test documented; warranty registered (VS-53); install evidence captured"
+    ],
+    "Cross-references": [
+     "- links to VS-12 (install services), VS-53 (warranty), VS-16/VS-17 (revenue), VS-31 (quality), VS-24 (HSE), W4293 (license), W4300 (quality)"
+    ],
+    "Pain Points / Risks": [
+     "- **Refrigerant/gas-safety risk**: improper split-AC refrigerant or gas hookup → leak/fire/health + RA 8749 Clean Air Act violation; mitigated by licensed installer (W4293) + leak-test SOP",
+     "- **Warranty-void risk**: install not registered → manufacturer warranty dispute; mitigated by mandatory install/warranty registration at completion"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Install/service (VS-12); warranty (VS-53); order/revenue (VS-16/VS-17); quality (VS-31); HSE (VS-24)"
+    ],
+    "Time Estimate": [
+     "- ~30–120 min/install depending on type (split-AC longest)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Crew Lead / Service Mgr",
+     "activity": "Installer perform the hookup/commissioning per category SOP — electrical (cooker/washer), plumbing (washer/dishwasher/water heater), refrigerant split-AC (vacuum/charge/leak-test per RA 8749 Clean Air Act), gas (cooker — gas-safe), and venting (rangehood/dryer)",
+     "duration": "Per install",
+     "n": "1",
+     "r": "Installer"
+    },
+    {
+     "a": "Service Mgr",
+     "activity": "Installer test function, leak/safety-check (gas leak, refrigerant leak, electrical, level/stability), brief the customer on operation/maintenance, and hand over manuals/warranty card",
+     "duration": "Per install",
+     "n": "2",
+     "r": "Installer"
+    },
+    {
+     "a": "Service Mgr",
+     "activity": "Installer register the install/warranty (VS-53), capture install evidence (photos, serial, completion), and post the install-fee/service revenue (VS-16/VS-17)",
+     "duration": "Per install",
+     "n": "3",
+     "r": "Installer / Service Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4292",
+    "W4293",
+    "W4298",
+    "W4300"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Per exception (benchmark 1–3% of bulky deliveries)",
+    "Owner": "Bulky-Delivery Service Ops / Quality (VS-31) / Damage Claims (VS-90)",
+    "Participants": "Crew/Installer, Customer Service (VS-13), Quality (VS-31), Vendor (VS-03), Claims (VS-90), LP (VS-23)",
+    "Trigger": "Damage found at delivery; defect-on-arrival; install-quality issue",
+    "Volume": "~1–3% of bulky stops → damage/defect exceptions"
+   },
+   "id": "W4300",
+   "level": 2,
+   "name": "Installation Quality, Damage/Defect-on-Delivery & Field Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- e-POD damage-photo → auto-claim draft; serial-based DOA check; concession/refund workflow; root-cause tagging"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: damage/defect documented at delivery (e-POD evidence); claim filed vs liable party (VS-90/VS-03); concession within RA authority (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-31 (quality), VS-90 (damage claims), VS-03 (vendor), VS-16/VS-118 (refund), VS-23 (LP), W4296 (analytics), W4302 (redelivery)"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence risk**: damage not documented at delivery → unrecoverable claim (vs carrier/vendor) and customer dispute; mitigated by mandatory photo+decision capture on e-POD at the doorstep",
+     "- **Liability-attribution risk**: transit vs DOA vs install error unclear → claim ping-pong; mitigated by triage SOP and serial/evidence trail"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- e-POD/exception (VS-06.3); quality/RMA (VS-31); damage claims (VS-90); vendor (VS-03); order/refund (VS-16/VS-118); LP (VS-23)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per field exception; claim resolution days–weeks"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Crew Lead / Service Mgr",
+     "activity": "Crew/Installer detect and document damage/defect at the point of delivery/install (photo, serial, nature), offer the customer options (accept-as-is with concession, refuse, swap), and capture the decision on e-POD",
+     "duration": "Per exception",
+     "n": "1",
+     "r": "Crew / Installer"
+    },
+    {
+     "a": "Service Mgr",
+     "activity": "Service Ops/Quality triage — transit damage (vs VS-06/VS-56 carrier), manufacturing defect (vs VS-31/VS-03 vendor DOA), or install error — and trigger recovery: redelivery (W4302), vendor RMA (VS-90/VS-31), or field repair",
+     "duration": "Per exception",
+     "n": "2",
+     "r": "Service Ops / Quality"
+    },
+    {
+     "a": "Service Mgr",
+     "activity": "Claims/LP file the claim against the liable party (carrier VS-90, vendor VS-03), process customer concession/refund/swap (VS-16/VS-118), and feed root-cause to prevention (W4296)",
+     "duration": "Per exception",
+     "n": "3",
+     "r": "Claims / LP / Service Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4296",
+    "W4302"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660",
+    "CTL-81"
+   ],
+   "fields": {
+    "Frequency": "Per bulky delivery",
+    "Owner": "Crew/Installer / Customer Service (VS-13) / CX (VS-13)",
+    "Participants": "Customer, Service Ops, CX (VS-13), Warranty (VS-53), Finance (VS-16)",
+    "Trigger": "Delivery/install complete",
+    "Volume": "Bulky-delivery volume"
+   },
+   "id": "W4301",
+   "level": 2,
+   "name": "Customer Acceptance, e-POD, Warranty Registration & Satisfaction Capture",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- e-sign e-POD → auto revenue recognition + warranty registration; auto NPS survey; service-recovery workflow on low score"
+    ],
+    "Controls": [
+     "- CTL-81 (ensure bulky delivery compliance & e-POD closure.)",
+     "- CTL-660: customer acceptance captured before crew departure; revenue recognized on acceptance; warranty registered (VS-53)"
+    ],
+    "Cross-references": [
+     "- links to VS-16/VS-17 (revenue), VS-53 (warranty), VS-13 (CX), VS-05 (inventory), W4299 (install), W4300 (exceptions)"
+    ],
+    "Pain Points / Risks": [
+     "- **Revenue-timing risk**: acceptance not captured → revenue/AR held; mitigated by e-POD-acceptance → auto revenue recognition",
+     "- **Warranty-gap risk**: warranty unregistered → future claim dispute; mitigated by auto-registration from install evidence"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- e-POD/acceptance (VS-06.3); order/revenue (VS-16/VS-17); warranty (VS-53); CX/NPS (VS-13); inventory (VS-05)"
+    ],
+    "Time Estimate": [
+     "- ~5–10 min acceptance; survey post-delivery"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Crew Lead",
+     "activity": "Crew capture customer acceptance (signature/e-sign on e-POD), confirm item condition + install function, and trigger revenue recognition / release of any hold (VS-16/VS-17)",
+     "duration": "Per delivery",
+     "n": "1",
+     "r": "Crew / Installer"
+    },
+    {
+     "a": "Finance Mgr",
+     "activity": "System auto-register warranty (VS-53) from install evidence, post the sale/install to revenue (VS-17), and update inventory/AR (VS-05/VS-16)",
+     "duration": "Per delivery",
+     "n": "2",
+     "r": "Service Ops / Finance"
+    },
+    {
+     "a": "CX Lead",
+     "activity": "CX send post-delivery satisfaction capture (NPS/survey), capture issues, and close the loop with service recovery if low score (VS-13)",
+     "duration": "Per delivery",
+     "n": "3",
+     "r": "CX / Customer Service"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4299",
+    "W4300"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Per failed attempt (benchmark 3–8% of bulky deliveries)",
+    "Owner": "Bulky-Delivery Service Ops / Customer Service (VS-13)",
+    "Participants": "Crew, Customer Service (VS-13), Logistics (VS-06), Finance (VS-118), Revenue Assurance (VS-118)",
+    "Trigger": "Customer not at home; access blocked; item unfit; customer reschedule",
+    "Volume": "~3–8% of bulky stops → failed/rescheduled"
+   },
+   "id": "W4302",
+   "level": 2,
+   "name": "Failed/Rescheduled Delivery, Redelivery & Customer-Not-At-Home Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Auto pre-delivery reminder (SMS/app); no-show fee auto-apply; self-service reschedule; failed-attempt cost analytics"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: failed-attempt evidenced; re-delivery fee per policy (W4295); cancellation/restocking within authority (VS-118)"
+    ],
+    "Cross-references": [
+     "- links to VS-13 (service), VS-06.3 (delivery), VS-16/VS-118 (refund), W4291 (reschedule), W4295 (fees), W4296 (analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Capacity-waste risk**: failed attempts consume crew/vehicle capacity; mitigated by reminder comms + slot-deposit/no-show policy",
+     "- **Customer-experience risk**: opaque reschedule → churn/chargeback; mitigated by proactive contact + clear re-delivery policy"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- e-POD/attempt (VS-06.3); scheduling (W4291); order/refund (VS-16/VS-118); CX (VS-13)"
+    ],
+    "Time Estimate": [
+     "- ~10–20 min per failed-attempt resolution"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Crew Lead / Service Mgr",
+     "activity": "Crew report failed-attempt reason (not-at-home, access, unfit site, refused) with evidence (photo/attempt log) and item returned-to-DC/store or held",
+     "duration": "Per attempt",
+     "n": "1",
+     "r": "Crew"
+    },
+    {
+     "a": "Service Mgr",
+     "activity": "Customer Service contact customer, reschedule into a new slot (W4291), and apply any re-delivery/attempt fee per policy (W4295) within RA authority",
+     "duration": "Per attempt",
+     "n": "2",
+     "r": "Customer Service"
+    },
+    {
+     "a": "CFO / Service Mgr",
+     "activity": "Revenue Assurance/Finance track failed-attempt cost, apply cancellation/restocking where customer cancels, and feed repeat-failure analytics to prevention (W4296)",
+     "duration": "Per attempt",
+     "n": "3",
+     "r": "Revenue Assurance / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4291",
+    "W4295",
+    "W4296"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Per contract + ongoing operations",
+    "Owner": "Bulky-Delivery Partner Mgmt / 3PL (VS-56) / Procurement (VS-34)",
+    "Participants": "Procurement (VS-34), Legal (VS-100.3), Logistics (VS-06), Finance (VS-17.4), HSE (VS-24)",
+    "Trigger": "3PL/bulky-specialist contracting; capacity flex (W4290)",
+    "Volume": "3PL-handled bulky-delivery volume (peak flex + outsourced zones)"
+   },
+   "id": "W4303",
+   "level": 2,
+   "name": "Subcontracted/3PL Bulky Delivery Partner Operations & SLA",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- 3PL SLA dashboard; 3PL data auto-ingest into dispatch/POD; insurance/bonding expiry tracking"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: 3PL specialist terms + insurance/bonding (VS-26); SLA-governed; HSE-compliant (W4304)"
+    ],
+    "Cross-references": [
+     "- links to VS-56 (3PL), VS-34 (procurement), VS-100.3 (legal), VS-26 (insurance), VS-24 (HSE), W4290 (capacity), W4304 (safety)"
+    ],
+    "Pain Points / Risks": [
+     "- **Capability-mismatch risk**: generic 3PL lacks lift-gate/licensed installer → failed/damaged install; mitigated by specialist contract terms + onboarding validation",
+     "- **Liability risk**: 3PL-caused damage/injury attributed to BuildRight; mitigated by contract liability + insurance/bonding (VS-26)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- 3PL/partner (VS-56); procurement/contract (VS-34); legal (VS-100.3); logistics (VS-06); finance (VS-17.4); HSE (VS-24)"
+    ],
+    "Time Estimate": [
+     "- ~2–3 weeks per contract cycle; ongoing governance"
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO / CFO",
+     "activity": "Procurement/Legal embed bulky-delivery terms in 3PL contracts (specialist vehicle/crew requirement, install-license, haul-away/recycle obligation, SLA, liability/damage, insurance, data) and onboard partners",
+     "duration": "Per contract",
+     "n": "1",
+     "r": "Procurement / Legal / Partner Mgmt"
+    },
+    {
+     "a": "Head of Bulky Delivery",
+     "activity": "Partner Mgmt govern day-to-day 3PL performance vs SLA (on-time, install-complete, damage, haul-away completion, customer acceptance), and integrate 3PL data into the dispatch/POD system",
+     "duration": "Continuous",
+     "n": "2",
+     "r": "Partner Mgmt / Logistics"
+    },
+    {
+     "a": "CFO / COO",
+     "activity": "Finance/HSE audit 3PL cost, insurance/bonding, HSE compliance (W4304), and enforce consequence/breach per contract",
+     "duration": "Periodic",
+     "n": "3",
+     "r": "Finance / HSE / Partner Mgmt"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W4290",
+    "W4304"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-660"
+   ],
+   "fields": {
+    "Frequency": "Continuous + per incident",
+    "Owner": "HSE (VS-24) / Bulky-Delivery Operations / Risk (VS-21.2)",
+    "Participants": "HSE (VS-24), HR (VS-19/VS-98), Insurance (VS-26), Legal (VS-100.3), Risk (VS-21.2)",
+    "Trigger": "Program operation; incident; HSE review",
+    "Volume": "All bulky-delivery field operations + incidents"
+   },
+   "id": "W4304",
+   "level": 2,
+   "name": "Field Service Safety, DOLE OSH, Heavy-Lifting & Customer-Premises Liability",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Pre-task hazard-check app; incident-reporting mobile; insurance-claim workflow; ERM auto-feed"
+    ],
+    "Controls": [
+     "- CTL-660 (ensure controlled execution — Delivery Execution, Installation & In-Home Service Operations (PA-143.2).)",
+     "- CTL-660: field-service SOP per DOLE OSH; PPE/lift-gate used; incidents reported & insured (VS-26); risks in ERM (VS-21.2)"
+    ],
+    "Cross-references": [
+     "- links to VS-24 (HSE), VS-19/VS-98 (crew), VS-21.2 (ERM), VS-26 (insurance), VS-100.3 (legal), W4293 (training), W4294 (equipment)"
+    ],
+    "Pain Points / Risks": [
+     "- **Injury risk**: heavy-lifting/appliance-handling injury to crew; mitigated by team-lift + lift-gate + OSH training + PPE",
+     "- **Customer-premises-liability risk**: property damage/personal injury at customer site; mitigated by site protection, conduct SOP, and insurance (VS-26)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- HSE (VS-24); HR (VS-19/VS-98); risk/ERM (VS-21.2); insurance (VS-26); legal (VS-100.3)"
+    ],
+    "Time Estimate": [
+     "- Standard ~2 weeks; pre-task check ~5 min/task; per-incident investigation variable"
+    ]
+   },
+   "steps": [
+    {
+     "a": "HSE Mgr / COO",
+     "activity": "HSE/Delivery Ops set the field-service safety standard (manual-handling/team-lift, lift-gate use, appliance securing, electrical/gas/refrigerant install safety, customer-premises conduct) per DOLE OSH",
+     "duration": "Annual",
+     "n": "1",
+     "r": "HSE / Delivery Ops"
+    },
+    {
+     "a": "Crew Lead",
+     "activity": "Crews/Installers execute pre-task hazard check, use required PPE/equipment (W4294), and report incidents/near-miss immediately",
+     "duration": "Per task",
+     "n": "2",
+     "r": "Crew / Installer"
+    },
+    {
+     "a": "HSE Mgr / Head of Internal Audit & Risk",
+     "activity": "HSE/Legal/Insurance manage incidents (injury, property damage, customer-premises liability), investigate, file insurance (VS-26), and feed the risk register (VS-21.2)",
+     "duration": "Per incident",
+     "n": "3",
+     "r": "HSE / Legal / Insurance / Risk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W4293",
+    "W4294"
+   ]
+  }
+ ]
+}

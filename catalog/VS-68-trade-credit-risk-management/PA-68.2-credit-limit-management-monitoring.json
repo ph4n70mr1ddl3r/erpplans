@@ -1,0 +1,471 @@
+{
+ "process_area": {
+  "id": "PA-68.2",
+  "title": "Credit Limit Management & Monitoring"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-68-trade-credit-risk-management/PA-68.2-credit-limit-management-monitoring.md",
+ "value_stream": {
+  "directory": "VS-68-trade-credit-risk-management",
+  "id": "VS-68",
+  "name": "Trade Credit Insurance & Risk Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-212",
+    "CTL-434"
+   ],
+   "fields": {
+    "Frequency": "~200–300 new + ~1,000 adjustments/month",
+    "Owner": "Credit Analyst",
+    "Participants": "Credit Analyst, Finance Mgr, Finance Dir, CFO",
+    "Trigger": "New account approved or existing account review",
+    "Volume": "~1,200–1,300/month"
+   },
+   "id": "W2486",
+   "level": 2,
+   "name": "Credit Limit Setting & Approval",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-212 (ensure trade-credit exposure control.)",
+     "- CTL-434 (credit-authorization — links to VS-16 / W24); Operational: Credit Analyst sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit-default risk**: a trade account defaults on extended credit, creating a bad-debt write-off; mitigated by the credit-scoring model and the credit-limit monitoring",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Mobile app (links to VS-75 / digital engagement app, VS-10 / ecommerce)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~30 min per occurrence",
+     "- Volume: ~1,200–1,300/month",
+     "- Frequency: ~200–300 new + ~1,000 adjustments/month",
+     "- Absorbed into the Credit Analyst role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Credit Analyst recommends limit based on: risk score, financial capacity, order history, relationship potential, credit insurance coverage; approval per matrix: Analyst ≤PHP 500K, Manager ≤PHP 2M, Director ≤PHP 10M, CFO >PHP 10M",
+     "duration": "30 min + approval chain",
+     "n": "1",
+     "r": "Credit Analyst / Finance Manager / Finance Controller / CFO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W24",
+    "W291"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-212",
+    "CTL-434"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~3,500 AR invoices/month",
+    "Owner": "System / Credit Analyst",
+    "Participants": "System, Credit Analyst, Trade Account Mgr",
+    "Trigger": "Order placed against trade account",
+    "Volume": "~3,500/month"
+   },
+   "id": "W2487",
+   "level": 2,
+   "name": "Real-Time Credit Limit Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-212 (ensure trade-credit exposure control.)",
+     "- CTL-434 (credit-authorization — links to VS-16 / W24); Operational: System / Credit Analyst sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit-default risk**: a trade account defaults on extended credit, creating a bad-debt write-off; mitigated by the credit-scoring model and the credit-limit monitoring",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~varies per occurrence",
+     "- Volume: ~3,500/month",
+     "- Frequency: Continuous; ~3,500 AR invoices/month",
+     "- Absorbed into the System / Credit Analyst role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Analyst",
+     "activity": "System monitors real-time: outstanding balance vs. credit limit; auto-blocks orders exceeding limit; auto-flags accounts at 80% utilization for analyst review; sends alert to Trade Account Manager",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W24",
+    "W291"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-434"
+   ],
+   "fields": {
+    "Frequency": "~100–200 increase requests/month",
+    "Owner": "Trade Account Manager",
+    "Participants": "Trade Account Mgr, Credit Analyst, Finance Mgr",
+    "Trigger": "Customer or Sales requests higher credit limit",
+    "Volume": "~100–200/month"
+   },
+   "id": "W2488",
+   "level": 2,
+   "name": "Credit Limit Increase Request",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-434 (ensure controlled execution — Credit Limit Management & Monitoring (PA-68.2).)",
+     "- CTL-434 (credit-authorization — links to VS-16 / W24); Operational: Trade Account Manager sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit-default risk**: a trade account defaults on extended credit, creating a bad-debt write-off; mitigated by the credit-scoring model and the credit-limit monitoring",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~2–4 hours per occurrence",
+     "- Volume: ~100–200/month",
+     "- Frequency: ~100–200 increase requests/month",
+     "- Absorbed into the Trade Account Manager role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Trade Account Manager submits request with justification: sales growth, payment history, new project opportunity; Credit Analyst evaluates; approves or counteroffers; applies to account within 24 hours",
+     "duration": "2–4 hours per request",
+     "n": "1",
+     "r": "Trade Account Mgr / Credit Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W24",
+    "W291"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-434"
+   ],
+   "fields": {
+    "Frequency": "~20–30 reductions/suspensions/month",
+    "Owner": "Credit Analyst",
+    "Participants": "Credit Analyst, Finance Mgr, Trade Account Mgr, Head of Trade / Account Management",
+    "Trigger": "Account risk increase detected",
+    "Volume": "~20–30/month"
+   },
+   "id": "W2489",
+   "level": 2,
+   "name": "Credit Limit Reduction & Suspension",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-434 (ensure controlled execution — Credit Limit Management & Monitoring (PA-68.2).)",
+     "- CTL-434 (credit-authorization — links to VS-16 / W24); Operational: Credit Analyst sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit-default risk**: a trade account defaults on extended credit, creating a bad-debt write-off; mitigated by the credit-scoring model and the credit-limit monitoring",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~1–2 hours per occurrence",
+     "- Volume: ~20–30/month",
+     "- Frequency: ~20–30 reductions/suspensions/month",
+     "- Absorbed into the Credit Analyst role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Controller",
+     "activity": "Credit Analyst reduces or suspends limit based on: payment deterioration, credit bureau alert, financial statement weakness, industry downturn; notifies Trade Account Manager; manages customer relationship impact",
+     "duration": "1–2 hours per action",
+     "n": "1",
+     "r": "Credit Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W24",
+    "W291"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-212"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring; ~5–8% of accounts typically past due",
+    "Owner": "Collections Specialist",
+    "Participants": "Collections Specialist, Credit Analyst, Finance Mgr",
+    "Trigger": "Customer payment past due",
+    "Volume": "~260–416 past-due accounts at any time"
+   },
+   "id": "W2490",
+   "level": 2,
+   "name": "Overdue Payment Monitoring & Escalation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Process steps auto-sequenced with system controls; data-entry auto-populated from master data; exceptions auto-flagged for human review"
+    ],
+    "Controls": [
+     "- CTL-212: duplicate-invoice/payment-application guard; Operational: Collections Specialist sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Execution risk**: process variability or system failure disrupts the workflow's output; mitigated by the documented procedure and the system controls",
+     "- **Score-distortion risk**: the payment-behavior score is gamed or stale (lump-sum payments inflating on-time %, disputed invoices distorting days-past-due), mispricing credit limits; mitigated by the monthly refresh, trend-based inputs, and Credit Analyst review of composite risk-score outliers"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing/financials (links to VS-17 / W9 financial close, VS-29 / W289 pricing master)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~2–3 hours per occurrence",
+     "- Volume: ~260–416 past-due accounts at any time",
+     "- Frequency: Daily monitoring; ~5–8% of accounts typically past due",
+     "- Absorbed into the Collections Specialist role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "System generates daily past-due report: aging buckets (30/60/90/120+ days); Collections Specialist contacts customers: 30-day (friendly reminder), 60-day (formal demand), 90-day (hold shipments), 120+ day (legal escalation)",
+     "duration": "2–3 hours/day",
+     "n": "1",
+     "r": "System / Collections Specialist"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W289",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-153"
+   ],
+   "fields": {
+    "Frequency": "Monthly; ~5,200 active accounts",
+    "Owner": "System / Credit Analyst",
+    "Participants": "System, Credit Analyst, Collections Specialist",
+    "Trigger": "Monthly payment behavior update",
+    "Volume": "~5,200 scores/month"
+   },
+   "id": "W2491",
+   "level": 2,
+   "name": "Customer Payment Behavior Scoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-153: consented scoring-data handling (data-privacy — links to VS-91 / W53, RA 10173); Operational: System / Credit Analyst sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Execution risk**: process variability or system failure disrupts the workflow's output; mitigated by the documented procedure and the system controls",
+     "- **Score-distortion risk**: the payment-behavior score is gamed or stale (lump-sum payments inflating on-time %, disputed invoices distorting days-past-due), mispricing credit limits; mitigated by the monthly refresh, trend-based inputs, and Credit Analyst review of composite risk-score outliers"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing/financials (links to VS-17 / W9 financial close, VS-29 / W289 pricing master)",
+     "- CRM (links to VS-13 / W17 loyalty, W156 CDP, W65 CSAT)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~varies per occurrence",
+     "- Volume: ~5,200 scores/month",
+     "- Frequency: Monthly; ~5,200 active accounts",
+     "- Absorbed into the System / Credit Analyst role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Credit Analyst",
+     "activity": "System calculates payment behavior score: on-time payment %, average days past due, payment trend (improving/deteriorating), promise-to-pay fulfillment rate; feeds into composite risk score",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W156",
+    "W17",
+    "W289",
+    "W53",
+    "W65",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-434"
+   ],
+   "fields": {
+    "Frequency": "~100–200 credit hold orders/month",
+    "Owner": "Order Management System / Credit Analyst",
+    "Participants": "OMS, Credit Analyst, Trade Account Mgr, Customer",
+    "Trigger": "Customer on credit hold attempts to place order",
+    "Volume": "~100–200/month"
+   },
+   "id": "W2492",
+   "level": 2,
+   "name": "Credit Hold Order Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Credit-score auto-computed from the financial-data feed; credit-limit auto-suggested from the scoring model; collection-aging auto-tracked with escalation"
+    ],
+    "Controls": [
+     "- CTL-434 (ensure controlled execution — Credit Limit Management & Monitoring (PA-68.2).)",
+     "- CTL-434 (credit-authorization — links to VS-16 / W24); Operational: Order Management System / Credit Analyst sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Credit-default risk**: a trade account defaults on extended credit, creating a bad-debt write-off; mitigated by the credit-scoring model and the credit-limit monitoring",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order management (links to VS-08 / W536 unified order management, VS-60 / W2286 routing)",
+     "- Compliance/risk (links to VS-22 / regulatory, VS-86 / AML, VS-91 / privacy)",
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~15–30 min per occurrence",
+     "- Volume: ~100–200/month",
+     "- Frequency: ~100–200 credit hold orders/month",
+     "- Absorbed into the Order Management System / Credit Analyst role; not incremental headcount unless volume scales significantly."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "System blocks order; notifies Trade Account Manager and Credit Analyst; Analyst evaluates: partial release (up to available credit), conditional release (with payment commitment), or full hold; overrides logged for audit",
+     "duration": "15–30 min per hold",
+     "n": "1",
+     "r": "System / Credit Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2286",
+    "W24",
+    "W291",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-434"
+   ],
+   "fields": {
+    "Frequency": "Monthly; ~5,400 accounts",
+    "Owner": "Finance Manager",
+    "Participants": "Finance Mgr, Credit Analyst, Collections Specialist, CFO",
+    "Trigger": "Monthly aging analysis",
+    "Volume": "Monthly aging report"
+   },
+   "id": "W2493",
+   "level": 2,
+   "name": "Aging Report & Provisioning Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Dashboard auto-refreshed from source systems; anomalies auto-flagged; report auto-distributed to stakeholders"
+    ],
+    "Controls": [
+     "- CTL-434 (ensure controlled execution — Credit Limit Management & Monitoring (PA-68.2).)",
+     "- operational: Finance Manager sign-off on the workflow output"
+    ],
+    "Pain Points / Risks": [
+     "- **Execution risk**: process variability or system failure disrupts the workflow's output; mitigated by the documented procedure and the system controls",
+     "- **Data-quality risk**: incomplete or inaccurate master data (pricing, inventory, customer) corrupts the workflow output; mitigated by the master-data governance (VS-29 / W291) and the periodic audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113)"
+    ],
+    "Time Estimate": [
+     "- ~4–6 hours per occurrence",
+     "- Volume: Monthly aging report",
+     "- Frequency: Monthly; ~5,400 accounts",
+     "- Absorbed into the Finance Manager role; not incremental headcount unless volume scales significantly.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "System generates AR aging report: current, 30, 60, 90, 120+ day buckets by account, region, and segment; Finance Manager calculates bad debt provision per PFRS 9 expected credit loss model; adjusts monthly",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "System / Finance Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W291"
+   ]
+  }
+ ]
+}

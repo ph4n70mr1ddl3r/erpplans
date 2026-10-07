@@ -1,0 +1,754 @@
+{
+ "process_area": {
+  "id": "PA-79.3",
+  "title": "Corporate Income Tax, Local Tax, DST & BIR Audit Defense"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-79-tax-management-bir-reporting/PA-79.3-income-tax-local-tax-and-audit-defense.md",
+ "value_stream": {
+  "directory": "VS-79-tax-management-bir-reporting",
+  "id": "VS-79",
+  "name": "Tax Management & BIR Statutory Reporting"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + annual per entity",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, GL, Tax Accountant, External Auditor",
+    "Trigger": "Quarter-end / year-end close",
+    "Volume": "5 entities; ~PHP 62.3B consolidated revenue"
+   },
+   "id": "W2769",
+   "level": 2,
+   "name": "Quarterly Corporate Income Tax (1702Q) & Annual Return (1702RT) Preparation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant derives taxable income from financial income using TAFI schedule\" (replaces manual Step 1).",
+     "- System auto-create of \"net taxable income ≤ PHP 5M and total assets ≤ PHP 100M\" (replaces manual Step 2).",
+     "- System auto-file of \"files 1702Q (quarterly) and 1702RT (annual) via eFPS\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: entity-level eligibility testing each quarter"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: CREATE rate misapplication; mitigated by entity-level eligibility testing each quarter"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP GL/financial close; TAFI worksheet; BIR eFPS; AFS generation"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per entity per filing cycle (quarterly + annual ≈ 5 cycles/year ≈ 7–11 weeks/year total)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "GL closes books per entity; Tax Accountant derives taxable income from financial income using TAFI schedule; nets prior-quarter over/under payments",
+     "duration": "5–7 days/entity",
+     "n": "1",
+     "r": "GL / Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager applies corporate income tax rate (25% regular; 20% under CREATE for net taxable income ≤ PHP 5M and total assets ≤ PHP 100M); computes quarterly tax due",
+     "duration": "1–2 days",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager files 1702Q (quarterly) and 1702RT (annual) via eFPS with AFS attachments; coordinates external auditor sign-off on annual",
+     "duration": "1–2 days",
+     "n": "3",
+     "r": "Tax Manager / External Auditor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Tax Accountant, GL",
+    "Trigger": "Quarterly and annual tax return preparation",
+    "Volume": "5 entities; ~150 adjustment items/year"
+   },
+   "id": "W2770",
+   "level": 2,
+   "name": "Tax-Adjusted Financial Income (TAFI) Schedule & Permanent/Temporary Differences",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Tax Accountant maintains TAFI schedule\" (replaces manual Step 1).",
+     "- System auto-track of \"tracks temporary differences\" (replaces manual Step 2).",
+     "- System auto-validate of \"validates documentation support\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: pre-filing documentation scrub"
+    ],
+    "Pain Points / Risks": [
+     "- **Audit risk**: Undocumented expenses disallowed at audit with 25% surcharge; mitigated by pre-filing documentation scrub"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP GL adjustment register; TAFI worksheet; deferred tax register"
+    ],
+    "Time Estimate": [
+     "- 5–7 days per quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant maintains TAFI schedule: adds back non-deductible items (penalties, excessive interest, undocumented expenses), subtracts tax-exempt income (13th month up to PHP 90K, de minimis benefits)",
+     "duration": "3–5 days",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager tracks temporary differences (depreciation, bad debt provision, leave pay accrual) for deferred tax computation; documents each position",
+     "duration": "2 days",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager validates documentation support (receipts, BIR-compliant invoices) for deductibility; identifies and cures unsupported items before filing",
+     "duration": "Continuous",
+     "n": "3",
+     "r": "Tax Manager / GL"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + annual per LGU",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Regulatory Officer, Treasury",
+    "Trigger": "Quarterly LBT installment; annual LGU renewal",
+    "Volume": "~80 LGUs (multiple stores per city/municipality); 205 locations"
+   },
+   "id": "W2771",
+   "level": 2,
+   "name": "Local Business Tax (LBT) Computation & LGU Filing per Location",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-track of \"tracks LBT method\" (replaces manual Step 1).",
+     "- System auto-generate of \"prepares LGU form\" (replaces manual Step 2).",
+     "- System auto-file of \"Treasury remits LBT to LGU Treasurer\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: LGU-specific rule library"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Different LGU methods and rates (1%–2% retail) create computation complexity; mitigated by LGU-specific rule library"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP per-location revenue apportionment; LGU permit master; LBT liability GL"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per quarter (batched across 80 LGUs)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Regulatory Officer maintains LGU business permit register per store/DC; tracks LBT method (gross receipts vs. gross sales) per LGU code",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Regulatory Officer"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager computes quarterly LBT per location based on prior-year gross receipts/sales apportionment; prepares LGU form; coordinates with Regional Managers for submission",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Treasury remits LBT to LGU Treasurer; Regulatory Officer obtains official receipt and attaches to permit file; tracks renewal calendar",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "Treasury / Regulatory Officer"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~50–100 DST events/year",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, Treasury, Legal, AP",
+    "Trigger": "Lease execution, loan drawdown, share issuance, promissory note",
+    "Volume": "~200 leases + debt facility activity"
+   },
+   "id": "W2772",
+   "level": 2,
+   "name": "Documentary Stamp Tax (DST) on Leases, Loans & Documents",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"document at execution\" (replaces manual Step 1).",
+     "- System auto-validate of \"validates DST cleared before final legal execution/release of obligation\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: document-trigger checklist"
+    ],
+    "Pain Points / Risks": [
+     "- **Compliance risk**: Missed DST on intercompany loans/leases surfaces at audit; mitigated by document-trigger checklist"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP DST liability; treasury/legal document register; BIR eFPS 2000-OT"
+    ],
+    "Time Estimate": [
+     "- 1–2 hours per event"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Legal/Treasury identifies DST-applicable document at execution (lease PHP 5/yr per PHP 2K rent, loan/debt instrument PHP 1.50 per PHP 200 (TRAIN/RR 4-2018), share issuance); captures tax base",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Legal / Treasury"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager computes DST due; books liability; remits via 2000-OT filing within 5 days after the close of the month of document execution",
+     "duration": "Per event",
+     "n": "2",
+     "r": "Tax Manager / AP"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant archives DST-paid documents with BIR receipt; validates DST cleared before final legal execution/release of obligation",
+     "duration": "Per event",
+     "n": "3",
+     "r": "Tax Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Event-driven; ~2–4 active audits/year",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, CFO, Legal, External Tax Counsel, Entity Controllers",
+    "Trigger": "BIR Letter of Authority (LOA) or Letter Notice (LN)",
+    "Volume": "Multi-year audit scope (3-year + 5-year)"
+   },
+   "id": "W2773",
+   "level": 2,
+   "name": "BIR Tax Audit / LOAN Response & Assessment Contestation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Tax Manager validates LOA jurisdiction/scope and signatory authority\" (replaces manual Step 1).",
+     "- System auto-file of \"files protest within 15/30-day windows\" (replaces manual Step 2).",
+     "- System auto-update of \"updates tax risk register\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: rigorous pre-filing defense and counsel engagement"
+    ],
+    "Pain Points / Risks": [
+     "- **Financial risk**: Assessments carry 25% surcharge + 20% interest + compromise penalties; mitigated by rigorous pre-filing defense and counsel engagement"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP document export for audit; tax provision/accrual GL; tax controversy tracker"
+    ],
+    "Time Estimate": [
+     "- Weeks to months per audit cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Tax Manager validates LOA jurisdiction/scope and signatory authority; assembles audit team; gathers documents (books, schedules, 2307s, subledger) in BIR-defined format",
+     "duration": "1–2 weeks",
+     "n": "1",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "External Tax Counsel responds to BIR findings (PAN/LA/FDDA) with legal and factual defenses; negotiates settlement or files protest within 15/30-day windows",
+     "duration": "Weeks–months",
+     "n": "2",
+     "r": "External Tax Counsel / Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager settles valid assessments, files Request for Reinvestigation or Court of Tax Appeals appeal where warranted; books final liability; updates tax risk register",
+     "duration": "Per outcome",
+     "n": "3",
+     "r": "Tax Manager / Legal"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Annual + event-driven",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, CFO, Legal, External Advisor",
+    "Trigger": "Annual entity review; CREATE More regulatory update",
+    "Volume": "5 entities; possible BOI/PEZA registrations"
+   },
+   "id": "W2774",
+   "level": 2,
+   "name": "CREATE / CREATE More Tax Incentive Monitoring & Entity Structure Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"CREATE reduced rate\" (replaces manual Step 1).",
+     "- System auto-log of \"Legal/Advisor evaluates BOI/PEZA registration opportunities for Digital Commerce or\" (replaces manual Step 2).",
+     "- System auto-monitor of \"monitors incentive compliance conditions\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: annual eligibility review and advisory engagement"
+    ],
+    "Pain Points / Risks": [
+     "- **Strategic risk**: Missed incentive registration or non-compliance with conditions forfeits benefit; mitigated by annual eligibility review and advisory engagement"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP entity-level profitability; incentive tracking register; FIRB/TIMTA portal"
+    ],
+    "Time Estimate": [
+     "- 1–2 weeks per annual cycle"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Tax Manager assesses entity eligibility for CREATE reduced rate (20% if ≤ PHP 5M net taxable income and total assets ≤ PHP 100M) each fiscal year per entity",
+     "duration": "Annual",
+     "n": "1",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Legal/Advisor evaluates BOI/PEZA registration opportunities for Digital Commerce or Logistics entities (income tax holiday, enhanced deductions under CREATE More)",
+     "duration": "Event-driven",
+     "n": "2",
+     "r": "Legal / External Advisor"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager monitors incentive compliance conditions (export ratio, local content, investment commitments); maintains Tax Incentives Management and Transparency Act (TIMTA) reports to BIR/FIRB",
+     "duration": "Annual/quarterly",
+     "n": "3",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Quarterly",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, GL, External Auditor",
+    "Trigger": "Quarterly and annual financial close",
+    "Volume": "5 entities + consolidated"
+   },
+   "id": "W2775",
+   "level": 2,
+   "name": "Tax Provision (PAS/IFRS 12) & Deferred Tax Asset / Liability Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Accountant computes current tax provision from 1702Q\" (replaces manual Step 1).",
+     "- System auto-test of \"Tax Manager computes deferred tax\" (replaces manual Step 2).",
+     "- System auto-log of \"methodology, NOLCO utilization schedule, and DTA recoverability evidence\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: recoverability testing and auditor challenge"
+    ],
+    "Pain Points / Risks": [
+     "- **Reporting risk**: Over-stated DTA requires write-down; mitigated by recoverability testing and auditor challenge"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP deferred tax register; NOLCO tracking; tax provision workspace"
+    ],
+    "Time Estimate": [
+     "- 3–5 days per quarter"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "Tax Accountant computes current tax provision from 1702Q; books current tax expense/liability per entity",
+     "duration": "Per close",
+     "n": "1",
+     "r": "Tax Accountant"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager computes deferred tax (PAS 12) from temporary differences; recognizes DTA on NOLCO/excess CWT subject to recoverability test; books movement",
+     "duration": "Per close",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "External Auditor reviews tax provision methodology, NOLCO utilization schedule, and DTA recoverability evidence; sign-off for AFS disclosure",
+     "duration": "Annual",
+     "n": "3",
+     "r": "External Auditor / Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Quarterly + continuous",
+    "Owner": "Tax Manager",
+    "Participants": "Tax Manager, CFO, Internal Audit, External Advisor",
+    "Trigger": "Quarterly governance review; new BIR issuance",
+    "Volume": "~80 filing obligations/year; ~20 tax risks tracked"
+   },
+   "id": "W2776",
+   "level": 2,
+   "name": "Tax Risk Register, Tax Calendar & Tax Controversy Governance",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enterprise tax calendar\" (replaces manual Step 1).",
+     "- System auto-report of \"reports to Audit Committee\" (replaces manual Step 2).",
+     "- System auto-log of \"Internal Audit performs annual tax control review\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: automated calendar and quarterly risk register"
+    ],
+    "Pain Points / Risks": [
+     "- **Governance risk**: Missed deadlines and untracked uncertain positions; mitigated by automated calendar and quarterly risk register"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP tax calendar workflow; risk register; Audit Committee reporting"
+    ],
+    "Time Estimate": [
+     "- Continuous; 2–3 days per quarterly review",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Tax Manager maintains enterprise tax calendar (entity × tax type × deadline) in ERP workflow; assigns preparer/reviewer; auto-escalates overdue items",
+     "duration": "Continuous",
+     "n": "1",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "Tax Manager maintains tax risk register (uncertain tax positions, transfer pricing exposure, pending assessments); rates likelihood/impact; reports to Audit Committee",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "Audit Committee",
+     "activity": "Internal Audit performs annual tax control review (segregation of duties, filing completeness, documentation); External Advisor validates methodology",
+     "duration": "Annual",
+     "n": "3",
+     "r": "Internal Audit / External Advisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "Rare; realistically 0–2 enforcement events per decade chain-wide; audit-risk-weighted sites are the exposure surface",
+    "Owner": "Tax Manager",
+    "Participants": "CFO, VP Legal, BIR-accredited tax counsel, Finance Controller, Regional Manager & Store Manager (closure/reopening execution), Corporate Secretary (protests & records), Compliance (VS-22 regulatory-desk linkage), HR (site-staff continuity), IR if material (W5019)",
+    "Trigger": "BIR serves a tax-enforcement suspension or closure order against a BuildRight store, branch, or registered seat — the Oplan Kandado class (preliminary 5-day closure for survey/inventory verification, or suspension of business for verified under-declaration under the RR/RMC closure framework) — or an LOA/audit escalation signals imminent enforcement closure",
+    "Volume": "1 order × 1+ closed site (trading halt at that site — the PHP 840K/day per-store downtime canon) × statutory reinstatement mechanics × 5-entity registration structure"
+   },
+   "id": "W5545",
+   "level": 2,
+   "name": "BIR Tax-Enforcement Suspension & Closure-Order Response (Oplan Kandado)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Tax-enforcement case template auto-opens on order intake with the protest clock, site-closure checklist (W850 linkage) and evidence-request list pre-assembled (replaces manual Steps 1–3 assembly)",
+     "- Branch-level tax-compliance dashboard auto-flags the violated obligation across all sites for the Step-6 sweep (replaces manual defect replication analysis)"
+    ],
+    "Background": [
+     "W2773 owns BIR audit defense and W658 the general inspection-response protocol, but neither owns the enforcement *closure event*: the order that halts trading at a site. The exposure is specific and time-boxed — every closed day costs the site's full revenue day while the reinstatement package (books, invoices, returns, settlement or protest) is assembled, and the protest windows against closure orders are short. The corpus documents Oplan Kandado nowhere ('Oplan Kandado'/'tax suspension'/'closure order' appear in zero PA files), leaving the highest-severity tax-enforcement scenario without an owner. Custody per E-25: the order dictates closure, W850 governs *how* a closure is executed and reopened, and reopening requires the BIR lifting order — never W850's trading judgment alone."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).)",
+     "- operational: no site reopens without the written BIR lifting order on file — W850's trading judgment never substitutes for the regulator's order",
+     "- operational: every closure-order event closes with a chain-wide compliance sweep result recorded in the W2776 register"
+    ],
+    "Pain Points / Risks": [
+     "- **Revenue-bleed risk**: every closed day costs the site's full revenue day while the package is assembled; mitigated by the same-day Steps 2–4 sequencing and the protest-track speed focus",
+     "- **Protest-lapse risk**: the short statutory protest windows against closure orders are missed while the site focuses on logistics; mitigated by the counsel-owned clock in Step 3",
+     "- **Scope-creep risk**: staff voluntarily closing more than the order covers (whole site when only a department/counter was ordered); mitigated by the order-scope verification in Step 1",
+     "- **Recurrence risk**: the same defect exists at other sites; mitigated by the mandatory chain-wide sweep in Step 6",
+     "- **Evidence risk**: books/invoices at the closed site are inaccessible or disordered precisely when needed; mitigated by the Step-2 preservation discipline"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by the Tax team, VP Legal and existing site operations; external BIR-accredited counsel engaged per retainer. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BIR RDO correspondence & order case file (evidence chain; VS-88 retention class)",
+     "- Store-closure status flag & trading-resume control (per W850)",
+     "- Tax calendar & controversy register entries (links to W2776); protest-deadline clock",
+     "- Payment/settlement postings & penalty accruals (links to W590/W2775)",
+     "- Registration/ATP records per branch (links to W1718-class entity records)",
+     "- Disclosure desk & materiality log (links to W5017/W5019)"
+    ],
+    "Time Estimate": [
+     "Per event: Steps 1–2 ≈ 8–16 staff-hours day one; Steps 3–5 ≈ 40–120 staff-hours across Tax, Legal and site operations over the enforcement window; Steps 6–7 ≈ 16–32 staff-hours. Event-driven, no annual figure claimed; the response is rehearsed through the W2776 controversy-governance cadence rather than drills."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "**Order intake & verification**: Tax Manager receives the served order; verify authenticity and legal basis (issuing RDO, provision cited — survey closure vs under-declaration suspension, scope: which TIN/branch codes and premises, effective time and duration); confirm immediate compliance duty with counsel; notify CFO and the Regional Manager of the affected site",
+     "duration": "< 2 h",
+     "n": "1",
+     "r": "Tax Manager / VP Legal"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Site closure execution**: the affected site executes closure mechanics per W850 (cash securing, systems sign-out, signage per the order's terms — no voluntary scope expansion beyond what the order covers); staff deployment handled (redeployment to nearby sites or paid stand-by per HR); inventory and books at the site preserved for the survey/verification if ordered",
+     "duration": "Same day",
+     "n": "2",
+     "r": "Store Manager / Regional Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Legal assessment & protest track**: counsel assesses the cited violation against the site's documented compliance (registered invoices/CRM, VAT returns, books); file the appropriate protest/reconsideration within the statutory window; where the violation is verified, negotiate settlement/compromise per the W2773 controversy-governance framework — resolution speed is the revenue lever",
+     "duration": "Days–weeks",
+     "n": "3",
+     "r": "Tax Counsel / VP Legal"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Remediation & reinstatement package**: correct the underlying defect chain-wide-relevant (invoicing configuration, unreported receipts, books); assemble compliance evidence (updated returns, payment proofs, ATP/registration records); present to the issuing RDO and secure the lifting/reinstatement order in writing",
+     "duration": "Per case",
+     "n": "4",
+     "r": "Tax Manager"
+    },
+    {
+     "a": "VP Store Operations",
+     "activity": "**Reopening execution**: on receipt of the lifting order, the site reopens per W850 mechanics; revenue-recovery steps (promo, local outreach) per store practice; spoilage/damage and inventory variances from the closed window reconciled (W64 seasonal exposure where relevant)",
+     "duration": "< 24 h after lifting",
+     "n": "5",
+     "r": "Store Manager / Regional Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Chain-wide prevention sweep**: audit the violated obligation across all sites and entities (same invoice/receipt configuration, same filing posture); register-level compliance checklist updated; the event feeds the W2776 tax risk register with root cause and detection gap",
+     "duration": "1–2 weeks",
+     "n": "6",
+     "r": "Tax Manager / Tax Specialists"
+    },
+    {
+     "a": "CFO / Audit Committee",
+     "activity": "**Governance & disclosure**: penalty/settlement accrual posted and financial-statement impact assessed per W590/W2775; Audit Committee briefed; if the event is material to a listed company, IR runs the W5017/W5019 disclosure assessment",
+     "duration": "Per event",
+     "n": "7",
+     "r": "Tax Manager / Controller"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1718",
+    "W2773",
+    "W2775",
+    "W2776",
+    "W5017",
+    "W5019",
+    "W590",
+    "W64",
+    "W658",
+    "W850"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-34",
+    "CTL-468"
+   ],
+   "fields": {
+    "Frequency": "~2–6 events/yr chain-wide — portal congestion near the 10th/20th/25th deadline days is a recurring Philippine reality already cited as a pain point in the W590/W2764 filing and PA-79.1 workflows, but never owned as an event",
+    "Owner": "Tax Manager",
+    "Participants": "Entity Tax Specialists, Finance Controller (AAB payments), Treasury (fund positioning per W556-class timing), Corporate Secretary (records), IT & CAS vendor (e-invoicing branch), external tax counsel (abatement), Compliance",
+    "Trigger": "eFPS, eBIRForms, or the BIR ePayment gateway (or an SSS/PhilHealth/Pag-IBIG/LGU portal on a statutory deadline) is unavailable on, or within 3 days before, a filing/payment deadline; or the accredited CAS/e-invoicing system fails to transmit sales-invoice data for more than 4 hours during the obligation window",
+    "Volume": "1 event × the affected filing calendar (monthly VAT 2550M/Q, withholding 1601-EQ/FQ, remittances, annual returns) × 5 legal entities × penalty exposure per return (25% surcharge + 20% p.a. interest + compromise penalty under the RMC 7-2015 framework)"
+   },
+   "id": "W5546",
+   "level": 2,
+   "name": "BIR eFPS & Government-Portal Outage Filing Contingency, AAB Fallback & Penalty-Relief Documentation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Portal-status monitor auto-opens the contingency case, pre-lists every return with a deadline inside the window across the 5 entities, and starts the attempt-logging template (replaces manual Step 1)",
+     "- Filing-status reconciliation auto-matches BIR records vs books on recovery and queues phantom/duplicate exceptions (replaces manual Step 6 sweeps)"
+    ],
+    "Background": [
+     "Four PA files name eFPS downtime as a pain point and one names the mitigation in a bullet — \"manual filing with AAB as fallback\" (W590-class) and \"filing 3+ days early\" (PA-79.1) — but no workflow owns the contingency event itself: the filing-day decision tree, the statutory fallback sequence, the evidence pack that makes penalty relief possible, and the reconciliation that prevents phantom \"filed\" status. The penalty asymmetry matters: failure-to-file and failure-to-pay are separate exposures, so an outage response that pays at an Authorized Agent Bank while the return is delayed is materially better protected than the reverse. This workflow is that event canon; the routine filing calendar stays with W2776 and the entity filing workflows."
+    ],
+    "Controls": [
+     "- CTL-468 (ensure controlled execution — Corporate Income Tax, Local Tax, DST & BIR Audit Defense (PA-79.3).); CTL-34 (ensure complete tax compliance.)",
+     "- operational: no deadline day closes with neither an electronic attempt nor a manual/AAB filing evidenced in the event log",
+     "- operational: every assessed penalty following an outage event carries an abatement decision (filed or consciously waived) before write-off approval"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence risk**: no timestamped proof of attempts → abatement denied and penalties stick; mitigated by the Step-1 evidence pack opened at first outage confirmation, before any filing decision",
+     "- **Split-liability risk**: return filed manually but payment missed (or paid but unfiled) — the two exposures differ; mitigated by the Step-3 payment-protection rule (pay even if the return must follow)",
+     "- **Phantom-filing risk**: portal shows \"successful\" submission without acknowledgment and BIR records show nothing; mitigated by the Step-6 recovery reconciliation against BIR records, not portal status",
+     "- **Duplicate-filing risk**: retries after recovery create duplicate returns; mitigated by the duplicate sweep in Step 6",
+     "- **CAS-suspension risk**: unresolved e-invoicing outages jeopardize the accreditation; mitigated by the Step-5 notification-and-backlog discipline"
+    ],
+    "Staffing Implication": [
+     "- Absorbed by the Tax team and Treasury desks; the evidence discipline adds minutes per filing, not headcount. No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- eFPS/eBIRForms submission logs & BIR acknowledgment receipts (primary evidence chain)",
+     "- AAB deposit slips & electronic-payment validation records (GCash/bank channels)",
+     "- Tax calendar engine with outage flags & pre-deadline buffer alerts (links to W2776)",
+     "- CAS/e-invoicing transmission logs & backlog queue (links to W473-class operations)",
+     "- Penalty accrual & abatement case tracking (links to W590/W2773)",
+     "- SSS/PhilHealth/Pag-IBIG portal-equivalent fallback records (links to W1527/W1306 statutory remittances)"
+    ],
+    "Time Estimate": [
+     "Per event: Steps 1–3 ≈ 4–12 staff-hours (5 entities × 15–45 min per affected return path decision + payment execution); Steps 4–6 ≈ 8–20 staff-hours over the following week. At ~2–6 events/yr ≈ 24–192 staff-hours/yr, absorbed by the Tax team within the existing filing calendar — no incremental headcount."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Tax Manager",
+     "activity": "**Outage confirmation & clock**: confirm the outage is portal-side (BIS advisory, acquirer-of-record status page, peer confirmation) vs local connectivity; open the event log with timestamped screenshots of each filing attempt — this evidence pack is the later abatement basis; list every return/payment with a deadline inside the outage window across all 5 entities",
+     "duration": "30–60 min",
+     "n": "1",
+     "r": "Entity Tax Specialist"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Filing-path decision tree per return**: (a) retry eFPS through the deadline day (including off-peak windows); (b) prepare the return in eBIRForms offline and file manually at the RDO; (c) where manual filing is unavailable, file at any Authorized Agent Bank (AAB) together with payment — the AAB-received return+payment is the statutory fallback; decision rule: never let the day end with neither an electronic attempt nor a manual/AAB filing",
+     "duration": "Same day",
+     "n": "2",
+     "r": "Entity Tax Specialist"
+    },
+    {
+     "a": "Finance Controller",
+     "activity": "**Payment protection**: where only payment is at risk, pay via AAB (or GCash/bank-channel instruments the BIR accepts) even if the return itself must follow — failure-to-pay carries the harsher exposure; Treasury confirms fund positioning per the payment calendar; keep deposit slips/validation as primary evidence",
+     "duration": "Same day",
+     "n": "3",
+     "r": "Entity Tax Specialist / Treasury"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Penalty-relief documentation**: assemble the abatement/relief request per the governing BIR issuance for system-downtime relief — the timestamped attempt log, BIR advisories, screenshots, manual/AAB proofs; calendar the follow-up; where penalties are assessed despite relief, elevate per the W2773 controversy framework",
+     "duration": "Per case",
+     "n": "4",
+     "r": "Tax Manager / Tax Counsel"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**CAS/e-invoicing outage branch**: if the accredited CAS cannot transmit sales-invoice data — notify BIR per accreditation rules, operate the approved manual/invoice-book fallback, log the outage window, and batch-transmit the backlog on recovery with BIR acknowledgment retained (links to W473-class e-invoicing operations)",
+     "duration": "Outage window",
+     "n": "5",
+     "r": "IT / Entity Tax Specialist"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Recovery reconciliation**: once portals recover — verify each return shows as filed and each payment as applied in BIR records; chase \"successful submission without acknowledgment\" cases; reconcile postings against books per the W590 close linkage; confirm no duplicate filing from the retry sequence",
+     "duration": "1–2 days",
+     "n": "6",
+     "r": "Entity Tax Specialist"
+    },
+    {
+     "a": "Tax Manager",
+     "activity": "**Deadline-hygiene update**: post-event, enforce the early-filing buffer policy (≥ 3 days before deadline per the PA-79.1 mitigation) with the W2776 calendar engine flagging returns filed inside the buffer; recurrence pattern (same portal, same deadline) feeds the calendar's pre-deadline alerts",
+     "duration": "1 week",
+     "n": "7",
+     "r": "Tax Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1306",
+    "W1527",
+    "W2764",
+    "W2773",
+    "W2776",
+    "W473",
+    "W556",
+    "W590"
+   ]
+  }
+ ]
+}

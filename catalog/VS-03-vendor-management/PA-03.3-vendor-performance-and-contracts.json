@@ -1,0 +1,1379 @@
+{
+ "process_area": {
+  "id": "PA-03.3",
+  "title": "Vendor Performance & Contracts"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-03-vendor-management/PA-03.3-vendor-performance-and-contracts.md",
+ "value_stream": {
+  "directory": "VS-03-vendor-management",
+  "id": "VS-03",
+  "name": "Vendor Management & Procurement"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "~200–300 reconciliations/quarter (for vendors with tiered rebate agreements)",
+    "Owner": "Category Manager",
+    "Participants": "Buyer, Finance Analyst, Vendor Account Manager, VP Merchandising, AP Manager",
+    "Trigger": "Monthly/quarterly vendor rebate period closes; system reconciles actual purchase volume against rebate agreement tier thresholds",
+    "Volume": "1 vendor per reconciliation; multi-tier agreements (e.g., 3% at PHP 1M, 5% at PHP 3M, 7% at PHP 5M quarterly)"
+   },
+   "id": "W959",
+   "level": 2,
+   "name": "Vendor Rebate Volume Tier Compliance Reconciliation & Shortfall Processing",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"Period-End Volume Calculation\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews each vendor's tier\" (replaces manual Step 2).",
+     "- System auto-document of \"documented in vendor rebate agreement with updated terms per W62\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Vendor rebate agreements are a significant margin contributor for BuildRight — estimated PHP 200–300M/year in rebate income. Many agreements use volume-based tiered structures where the rebate percentage increases as BuildRight's purchase volume from the vendor increases. Existing workflows cover rebate accrual and settlement (W27), vendor contract lifecycle (W62), and vendor rebate claim filing (W767). W959 addresses the gap between these workflows: the periodic reconciliation of actual purchase volume against tier thresholds, the financial impact of missing or exceeding tiers, and the proactive management of purchase timing to optimize tier achievement. This is especially important at quarter-end and year-end when purchasing decisions (accelerate or defer orders) can determine which tier applies, potentially shifting hundreds of thousands of pesos in rebate income."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Category Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Purchase timing distortion**: Aggressively accelerating purchases to hit tier thresholds can inflate inventory and carrying costs; Buyer must calculate incremental rebate income vs. incremental carrying cost before period-end purchase acceleration; simple rule: accelerate only if incremental rebate exceeds 2× incremental carrying cost for the acceleration period",
+     "- **Vendor data discrepancies**: Vendor's recorded sales to BuildRight may not match BuildRight's recorded purchases from vendor (different recognition timing, credit memos, returns); reconciliation per W100 resolves; allow 5–10% volume discrepancy tolerance before escalation",
+     "- **Rebate income volatility**: Tier changes create income volatility that complicates financial forecasting per W639; Finance models rebate income scenarios (maintain/upgrade/downgrade) quarterly for budget accuracy",
+     "- **Vendor resistance to downgrade negotiation**: Vendors may resist granting old tier rates after volume decline; leverage: BuildRight's large purchase volume (200 stores) and potential to shift volume to competitors; documented escalation path to VP Merchandising for negotiation deadlock"
+    ],
+    "Staffing Implication": [
+     "- **Finance Analyst**: ~8–12 hours/quarter on tier reconciliation across 200–300 vendors; absorbed by existing Merchandising Finance team",
+     "- **Buyers**: ~2–4 hours/quarter on shortfall investigation and vendor negotiation for affected vendors; absorbed by existing buying team",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- AP module (W7) for purchase volume extraction",
+     "- Vendor rebate agreement module (W62) with tier threshold definitions",
+     "- Automated volume calculation engine with exclusion rules",
+     "- Rebate accrual module (W27) for rate adjustments",
+     "- AP settlement module (W767) for rebate claim generation",
+     "- Vendor statement reconciliation (W100) for rebate receipt verification",
+     "- BI dashboard for rebate portfolio analytics and tier tracking",
+     "- Purchase planning module (W31) for proactive volume management",
+     "- Category P&L reporting (W102) for rebate income allocation"
+    ],
+    "Time Estimate": [
+     "- Volume calculation: 10–15 min/vendor (mostly automated)",
+     "- Tier assessment: 5–10 min/vendor",
+     "- Shortfall investigation: 1–2 hours/affected vendor",
+     "- Accrual adjustment: 15–30 min/vendor",
+     "- Portfolio optimization: 4–6 hours/quarter",
+     "- **Total quarterly effort**: ~40–60 hours across team",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Period-End Volume Calculation**: At rebate period close (monthly or quarterly per agreement): (a) system extracts all purchase volume (PO value at cost) per vendor from AP module per W7; (b) matches against vendor rebate agreement terms: (i) agreement period start/end; (ii) tier thresholds (e.g., PHP 1M/3M/5M); (iii) rebate rate per tier (e.g., 3%/5%/7%); (iv) eligible product categories (some agreements exclude clearance or consignment); (v) exclusion rules (returns, credits, sample items); (c) system calculates: actual qualifying volume, applicable tier, earned rebate amount, and variance to next tier (up or down)",
+     "duration": "10–15 min/vendor (automated calculation + manual review)",
+     "n": "1",
+     "r": "System / Finance Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Tier Achievement Assessment**: Finance Analyst reviews each vendor's tier status: (a) tier maintained (e.g., qualified for 5% tier, same as last period) → routine processing; (b) tier upgraded (e.g., qualified for 7% tier, up from 5%) → calculate incremental rebate income; (c) tier downgraded (e.g., qualified for 3% tier, down from 5%) → calculate lost rebate income and investigate volume decline; (d) near-miss analysis: vendor fell short of next tier by ≤ 10% — flag for Buyer review: could accelerated purchasing have pushed volume into next tier?; (e) system generates tier achievement report per vendor with variance analysis",
+     "duration": "5–10 min/vendor",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Shortfall Investigation & Vendor Negotiation**: For tier downgrades and significant near-misses: (a) Buyer investigates volume decline: (i) SKU discontinuations per W68 reducing purchases; (ii) competitive vendor gains (purchases shifted to alternative vendor); (iii) store-level stock balancing reducing replenishment orders; (iv) seasonal demand decline; (b) for tier downgrades: Buyer contacts vendor to negotiate: (i) retroactive tier maintenance with purchase commitment for next period; (ii) extended transition period (vendor grants old tier for one more period); (iii) revised tier thresholds reflecting current market conditions; (c) negotiation outcome documented in vendor rebate agreement with updated terms per W62; (d) for near-misses: Buyer reviews upcoming purchase requirements — if sufficient volume expected early next period, may negotiate \"rollover\" credit",
+     "duration": "1–2 hours/vendor (for downgrade/near-miss)",
+     "n": "3",
+     "r": "Buyer / Category Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Rebate Accrual Adjustment & Financial Processing**: (a) Finance adjusts rebate accrual per W27: (i) for tier upgrade — increase accrual rate to new tier for current and forward periods; (ii) for tier downgrade — decrease accrual rate; true-up prior period accrual at old rate to actual earned rebate; (iii) true-up amount posted to P&L as rebate income adjustment; (b) AP Manager processes vendor rebate settlement per W767: system generates rebate claim with calculated amount based on actual tier achievement; vendor verifies and pays rebate per agreed timeline (30–60 days); (c) Finance reconciles: rebate claimed vs. rebate received vs. rebate accrued; variance investigated per W100 vendor statement reconciliation",
+     "duration": "15–30 min/vendor",
+     "n": "4",
+     "r": "Finance Analyst / AP Manager"
+    },
+    {
+     "a": "VP Merchandising / CFO",
+     "activity": "**Quarterly Rebate Portfolio Optimization**: (a) Category Manager reviews rebate portfolio: (i) total rebate income vs. target; (ii) tier achievement rate across all vendors (target: ≥ 80% at committed tier or above); (iii) top 10 vendors by rebate income; (iv) vendors with declining purchase volumes trending toward downgrade; (v) vendors where BuildRight is purchasing below tier potential; (b) VP Merchandising reviews: (i) opportunities to consolidate purchases with fewer vendors to achieve higher tiers (volume concentration vs. vendor diversification trade-off per W763); (ii) renegotiation schedule for agreements approaching expiry; (iii) proactive purchase acceleration at period-end for near-miss vendors (weighing carrying cost per W220 vs. incremental rebate income); (c) annual: Finance includes vendor rebate income in category P&L analysis per W102",
+     "duration": "4–6 hours/quarter",
+     "n": "5",
+     "r": "Category Manager / VP Merchandising / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W100",
+    "W102",
+    "W220",
+    "W27",
+    "W31",
+    "W62",
+    "W639",
+    "W68",
+    "W7",
+    "W763",
+    "W767"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "~400–600 display audits/month (covering ~200 vendor-sponsored displays across 200 stores)",
+    "Owner": "Category Manager",
+    "Participants": "Department Supervisor (store), Category Manager, Visual Merchandising Coordinator, Vendor Account Manager, Finance (chargeback processing)",
+    "Trigger": "Monthly display compliance audit cycle; or vendor reports display not meeting contractual requirements",
+    "Volume": "1–5 displays audited per store per month"
+   },
+   "id": "W962",
+   "level": 2,
+   "name": "Vendor-Sponsored In-Store Display Compliance Audit & Chargeback",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates monthly audit schedule\" (replaces manual Step 1).",
+     "- System auto-record of \"records findings in audit app\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates to Category Manager for chargeback processing\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Many BuildRight vendors invest in sponsored in-store displays, endcaps, promotional islands, and branded sections under co-op advertising agreements per W513. These agreements typically include contractual requirements for: display location (specified aisle/zone), display dimensions, product assortment (minimum X facings of specified SKUs), signage and branding compliance, stock replenishment (vendor-sponsored displays must be kept stocked), and display condition (clean, organized, undamaged). In exchange, vendors pay BuildRight monthly display fees (PHP 5,000–50,000/display/month) or promotional funding. Existing W262 covers store promotional setup, and W86 covers planogram compliance. W962 addresses the gap of verifying that vendor-sponsored displays meet contractual requirements and processing chargebacks for non-compliance — either BuildRight charging the vendor for failing to maintain their display (e.g., expired promotional materials, damaged signage) or the vendor disputing display fees because BuildRight failed to provide agreed display location/conditions. Proper display compliance management ensures BuildRight receives contracted display revenue and maintains vendor relationships."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Audit coverage vs. effort**: Auditing all vendor displays across 200 stores is resource-intensive; risk-based prioritization (step 1b) focuses effort; random sampling catches issues in low-priority displays",
+     "- **Subjectivity in compliance assessment**: Some criteria (display condition, \"adequately stocked\") are subjective; standardized checklist with photographic evidence reduces subjectivity; Category Manager reviews borderline cases",
+     "- **Vendor relationship tension**: Chargebacks can strain vendor relationships; fair and documented audit process with clear contractual basis mitigates; early communication of non-compliance (before chargeback) gives vendor opportunity to correct",
+     "- **BuildRight-side non-compliance**: BuildRight may fail to provide agreed display conditions (renovation displaced display, stockout prevented display stocking); Category Manager must honestly assess BuildRight's contribution to non-compliance; don't chargeback vendor for BuildRight-caused issues",
+     "- **Display location conflicts**: Multiple vendors competing for prime display locations (endcaps, entrance displays); Category Manager resolves conflicts based on contractual rights, revenue contribution, and seasonal relevance"
+    ],
+    "Staffing Implication": [
+     "- **Department Supervisors**: ~10–15 min/display × 1–5 displays/month × 200 stores = 2,000–15,000 min/month total ≈ 33–250 hours/month chain-wide; distributed across 800 Department Supervisors (4/store × 200 stores) = ~2–19 min/supervisor/month; easily absorbed",
+     "- **Visual Merchandising Coordinator**: ~4–6 hours/month on non-compliance resolution; absorbed by existing Marketing team",
+     "- **Category Managers**: ~4–6 hours/month on audit review and chargeback processing; absorbed by existing roles",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Mobile display audit app with photo capture and compliance checklist",
+     "- Vendor display agreement module with contractual requirements per display",
+     "- Display audit scheduling and assignment system",
+     "- Non-compliance tracking and corrective action management",
+     "- Chargeback processing module (W245) with debit memo generation",
+     "- Vendor portal (W705) for chargeback notification and dispute",
+     "- Planogram compliance module (W86) for product assortment verification",
+     "- Price compliance module (W69) for pricing verification",
+     "- BI dashboard for display compliance analytics",
+     "- Quarterly business review integration (W155)"
+    ],
+    "Time Estimate": [
+     "- Audit schedule: 2–3 hours/month",
+     "- Display audit: 10–15 min/display",
+     "- Non-compliance resolution: 15–30 min/issue",
+     "- Chargeback processing: 30–60 min/chargeback",
+     "- Quarterly review: 4–6 hours/quarter",
+     "- **Total monthly effort per store**: ~30–60 min (Department Supervisor) + chain-wide coordination",
+     "---",
+     "*Total: 20 additional workflows (W943–W962). Grand total with existing 942 workflows: 962 workflows.*"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Monthly Display Audit Schedule**: Category Manager generates monthly audit schedule: (a) all active vendor-sponsored displays across 200 stores listed by vendor, store, and display type; (b) audit priority: (i) new displays (installed within last 60 days — highest priority); (ii) displays with previous non-compliance findings; (iii) high-value display agreements (≥ PHP 20,000/month); (iv) random sample of remaining displays (30%); (c) audit assignments distributed to Department Supervisors via mobile task management; (d) target: all high-priority displays audited within first 2 weeks of month; random sample completed by month-end",
+     "duration": "2–3 hours/month",
+     "n": "1",
+     "r": "Category Manager / System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**In-Store Display Audit Execution**: Department Supervisor conducts physical audit per display: (a) photographs display from 3 angles (front, side, product close-up) using mobile audit app; (b) checks compliance criteria per vendor agreement: (i) location — display in contracted zone per store layout plan; (ii) product assortment — correct SKUs, minimum facing quantities, no competitor products in display area; (iii) signage — current promotional signage, no expired materials, vendor branding intact; (iv) stock level — display adequately stocked (no empty facings); (v) condition — clean, organized, no damaged products or fixtures; (vi) pricing — correct prices displayed per W69 price compliance; (c) records findings in audit app: compliant (pass), minor non-compliance (advisory), major non-compliance (requires corrective action), critical non-compliance (display fee at risk)",
+     "duration": "10–15 min/display",
+     "n": "2",
+     "r": "Department Supervisor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Non-Compliance Resolution**: For non-compliant displays: (a) system routes findings to: (i) Visual Merchandising Coordinator — for display setup/condition issues; (ii) Store Manager — for stock replenishment issues; (iii) Category Manager — for product assortment issues; (iv) Vendor — for vendor-provided material/signage issues; (b) corrective action timeline: (i) critical — 48 hours; (ii) major — 7 days; (iii) minor — 14 days (advisory only, no fee impact); (c) Department Supervisor re-audits after corrective action deadline; (d) if non-compliance persists after corrective action deadline: escalates to Category Manager for chargeback processing",
+     "duration": "15–30 min/non-compliance",
+     "n": "3",
+     "r": "Department Supervisor / Visual Merchandising Coordinator"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Chargeback Processing**: For persistent non-compliance: (a) Category Manager authorizes chargeback per vendor agreement: (i) partial display fee reduction (e.g., 25% for minor compliance gaps); (ii) full display fee forfeiture for critical non-compliance (e.g., display removed, wrong location, competitor products); (iii) damage assessment for vendor-provided fixtures damaged by BuildRight staff; (b) Finance processes chargeback per W245 vendor chargebacks: (i) debit memo issued to vendor; (ii) display fee reduced by chargeback amount; (iii) vendor notified via W705 vendor portal with audit evidence (photos, compliance checklist); (c) vendor dispute resolution per W869 vendor dispute ticketing — vendor can contest chargeback with evidence; (d) Category Manager adjudicates disputes; VP Merchandising escalates unresolved disputes",
+     "duration": "30–60 min/chargeback",
+     "n": "4",
+     "r": "Category Manager / Finance"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly Vendor Display Performance Review**: (a) Category Manager reviews display compliance portfolio: (i) compliance rate by vendor (target: ≥ 90% compliant); (ii) repeat offenders — vendors with < 80% compliance for 2+ consecutive months; (iii) BuildRight-side non-compliance — stores failing to maintain agreed display conditions (impacts vendor relationship and renewal); (b) VP Merchandising shares compliance data with vendor at quarterly business review per W155 Joint Business Planning; (c) annual: display agreement renewals incorporate compliance history — vendors with strong compliance may negotiate better display locations; vendors with poor compliance face higher scrutiny or non-renewal",
+     "duration": "4–6 hours/quarter",
+     "n": "5",
+     "r": "Category Manager / VP Merchandising"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W155",
+    "W245",
+    "W262",
+    "W513",
+    "W69",
+    "W705",
+    "W86",
+    "W869",
+    "W943"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "3–4 reviews/year (post each major Philippine season)",
+    "Owner": "VP Merchandising",
+    "Participants": "Category Managers, Buyers, Pricing Analysts, Merchandise Planners, Vendors, Supply Chain Planning, Finance",
+    "Trigger": "End of seasonal selling period (post-Christmas, post-summer, post-rainy season)",
+    "Volume": "~500–800 seasonal SKUs reviewed per season"
+   },
+   "id": "W978",
+   "level": 2,
+   "name": "Vendor Seasonal Product Post-Season Performance Review & Assortment Rationalization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles post-season data pack per category\" (replaces manual Step 1).",
+     "- System auto-review of \"review pricing and timing\" (replaces manual Step 2).",
+     "- System auto-count of \"discounts, earlier delivery, markdown protection, exclusive products\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Seasonal merchandise — Christmas decorations, garden/outdoor products, rainy season items (tarpaulins, waterproofing, flood control), summer items (aircons, fans, water tanks) — follows a predictable sales curve: buildup, peak, and sharp decline. The key challenge in seasonal retail is maximizing sales during the peak while minimizing residual inventory that must be cleared at significant markdowns (often 50–70% off) or written off entirely. Philippine seasonal patterns are particularly pronounced: Christmas spending (September–December \"ber months\") accounts for a disproportionate share of annual retail sales, while typhoon season (June–November) creates unpredictable demand surges for emergency supplies. Post-season performance review is a structured analytical process that evaluates every seasonal SKU's actual performance against plan, identifies root causes of over/underperformance, captures learnings for future seasons, and makes assortment decisions (continue, discontinue, modify) for the next season's buy. This workflow closes the loop between seasonal buy planning (W32) and actual results, driving continuous improvement in seasonal merchandising effectiveness."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: enforces data submission deadline within 5 business days of season end"
+    ],
+    "Pain Points / Risks": [
+     "- **Data timeliness**: Post-season analysis requires complete data (all markdown sales, returns, and final inventory counts); delays in store-level data submission (especially from remote stores with connectivity issues per W535) slow analysis; system enforces data submission deadline within 5 business days of season end",
+     "- **Vendor relationship strain**: Negative performance reviews and markdown cost recovery demands can strain vendor relationships; Category Manager must balance accountability with partnership — focusing on constructive improvement plans rather than punitive measures; long-term vendor relationships are more valuable than one-season cost recovery",
+     "- **Assortment inertia**: There is a tendency to repeat last season's assortment with minor adjustments rather than making bold changes; underperforming SKUs may persist due to buyer familiarity or vendor influence; objective data-driven tier classification (step 2) forces evidence-based decisions; Merchandise Planner provides independent analysis to counter buyer bias",
+     "- **Seasonal calendar shift**: Philippine seasonal patterns are shifting — typhoon season is extending, summer heat is intensifying, and Christmas buying patterns are changing; historical performance data may not predict future demand; Merchandise Planner incorporates climate trend data and macroeconomic indicators into next season's planning"
+    ],
+    "Staffing Implication": [
+     "- **No incremental headcount** — absorbed by existing Merchandising team (Category Managers, Buyers, Merchandise Planners, Pricing Analysts); post-season review consumes ~40–60 person-hours per season across the team"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BI seasonal performance dashboard — SKU-level sales, margin, sell-through, and inventory",
+     "- Markdown pricing execution module (W93)",
+     "- Vendor performance scorecard (W44)",
+     "- Seasonal inventory disposition tracking",
+     "- Inter-store transfer module (W204) for redistribution",
+     "- Ecommerce clearance listing module",
+     "- Vendor return processing (W88, W901)",
+     "- Seasonal buy planning module (W32) for next season parameters",
+     "- Financial reporting — seasonal margin analysis, markdown cost tracking, write-off entries",
+     "- Seasonal knowledge base (document management per W255)"
+    ],
+    "Time Estimate": [
+     "- Data compilation: 8–12 hours/season",
+     "- SKU classification: 4–6 hours/category (5 categories = 20–30 hours)",
+     "- Vendor review: 2–3 hours/vendor (10–15 vendors = 20–45 hours)",
+     "- Inventory disposition: 1–2 weeks",
+     "- Retrospective meeting: half-day",
+     "- **Total per season**: 80–120 person-hours across the Merchandising team",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Season Close-Out Data Compilation**: Within 2 weeks of season end: (a) Merchandise Planner compiles post-season data pack per category: (i) **Sales performance**: actual vs. plan sales units, revenue, and margin per SKU; (ii) **Sell-through rate**: percentage of purchased quantity sold at full price vs. markdown; (iii) **Inventory position**: remaining units, value, and aging; (iv) **Pricing effectiveness**: number and depth of markdowns taken per W93; (v) **Timeline adherence**: first receipt date vs. plan, in-store date vs. plan, markdown initiation date vs. plan; (vi) **Vendor performance**: fill rate, on-time delivery, quality complaints per W44; (vii) **Store-level performance**: sales by store cluster (high-performing vs. underperforming stores); (viii) **Channel performance**: in-store vs. ecommerce seasonal sales mix",
+     "duration": "8–12 hours/season",
+     "n": "1",
+     "r": "Merchandise Planner"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**SKU-Level Performance Classification**: Category Managers classify each seasonal SKU into performance tiers: (a) **Tier 1 — Winners** (top 20%): sold ≥90% of plan at full price or minimal markdown; high margin; customer demand exceeded supply; action: increase buy quantity 15–25% for next season, explore line extensions; (b) **Tier 2 — Solid Performers** (next 30%): sold 70–89% of plan; acceptable markdown depth (≤20%); action: maintain or slightly adjust buy quantity; review pricing and timing; (c) **Tier 3 — Underperformers** (next 30%): sold 50–69% of plan; significant markdown (20–40%); action: reduce or eliminate from next season's assortment; review root cause (wrong product, wrong price, wrong timing, poor display); (d) **Tier 4 — Losers** (bottom 20%): sold <50% of plan; deep markdown (40–70%+); or total dead stock; action: discontinue; return to vendor per W88 if agreement allows; donate per W444 if unsellable; root cause analysis mandatory",
+     "duration": "4–6 hours/category",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Vendor Performance Review & Negotiation**: For each seasonal vendor: (a) Category Manager evaluates: (i) fill rate — did vendor deliver full ordered quantity on time?; (ii) quality — were there customer returns or complaints due to product quality?; (iii) markdown support — did vendor contribute to markdown costs per W161 (vendor price protection)?; (iv) marketing support — did vendor fund promotional activities per W513?; (b) underperforming vendors: Category Manager initiates discussion — performance improvement plan, markdown cost recovery per W245, or vendor replacement; (c) top-performing vendors: Category Manager negotiates improved terms for next season — volume discounts, earlier delivery, markdown protection, exclusive products; (d) new vendor scouting: Category Manager identifies gaps in seasonal assortment and sources new vendors per W36 (vendor onboarding) to fill gaps",
+     "duration": "2–3 hours/vendor",
+     "n": "3",
+     "r": "Category Manager / Buyer"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Residual Inventory Disposition**: For remaining seasonal inventory: (a) **Markdown acceleration** (within 30 days of season end): progressive markdown schedule — Week 1: 30% off, Week 2: 50% off, Week 3: 70% off; per W93 markdown pricing execution; (b) **Vendor return**: negotiate seasonal buy-back per W901 (vendor seasonal buy-back) for vendors with return agreements; (c) **Store-to-store redistribution**: transfer remaining stock from low-demand stores to stores with continued demand per W204; (d) **Ecommerce clearance**: list remaining inventory on BuildRight website/app with clearance pricing and on marketplace channels (Lazada/Shopee) per W180; (e) **Donation**: unsold items after all disposition channels exhausted → donated to community organizations per W444 (community donation) for tax deduction and ESG reporting per W194; (f) **Write-off**: items with no disposition channel → write-off per W220 (SLOB provisioning) with accounting entry",
+     "duration": "1–2 weeks post-season",
+     "n": "4",
+     "r": "Category Manager / Finance / Store Operations"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Season Retrospective & Next Season Planning Input**: VP Merchandising conducts seasonal retrospective meeting: (a) cross-functional attendees: Category Managers, Buyers, Supply Chain Planning, Store Operations, Marketing, Finance; (b) review: (i) total seasonal revenue vs. plan; (ii) gross margin performance; (iii) inventory turns; (iv) markdown rate as % of seasonal revenue; (v) top 10 winners and losers with root cause; (vi) vendor performance summary; (vii) store execution — seasonal display setup compliance per W262, promotional execution per W13; (c) capture learnings in seasonal knowledge base — documented insights for next season's planning per W32 (seasonal buy planning); (d) initiate next season's buy planning with adjusted parameters; (e) Finance incorporates seasonal margin impact into annual budget and forecast per W639 (rolling forecast)",
+     "duration": "Half-day meeting + documentation",
+     "n": "5",
+     "r": "VP Merchandising / Cross-functional"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W161",
+    "W180",
+    "W194",
+    "W204",
+    "W220",
+    "W245",
+    "W255",
+    "W262",
+    "W32",
+    "W36",
+    "W44",
+    "W444",
+    "W513",
+    "W535",
+    "W639",
+    "W88",
+    "W901",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "Weekly analysis; monthly vendor review; quarterly trend reporting",
+    "Owner": "Supply Chain Planner",
+    "Participants": "Buyer, Category Manager, DC Receiving Supervisor, Procurement Specialist",
+    "Trigger": "Weekly scheduled analysis; also triggered by significant lead time deviation detected during PO monitoring",
+    "Volume": "~800–1,000 active vendors with purchase orders; ~1,200 merchandise POs/month"
+   },
+   "id": "W1033",
+   "level": 2,
+   "name": "Vendor Lead Time Accuracy Monitoring & Supply Planning Impact Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates for each PO closed in the past week\" (replaces manual Step 1).",
+     "- System auto-log of \"logged in system with justification\" (replaces manual Step 2).",
+     "- System auto-review of \"review per W44\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's 35,000 active SKUs are sourced from ~800–1,000 vendors with lead times ranging from 7 days (local Manila vendors) to 90 days (import vendors from China, Taiwan, Indonesia). The auto-replenishment system (W2A) calculates reorder points and order quantities based on vendor-stated lead times. If a vendor's actual lead time consistently deviates from the stated lead time, the replenishment system either: (a) orders too early (if actual lead time is shorter than stated), resulting in excess inventory and carrying cost; or (b) orders too late (if actual lead time is longer than stated), resulting in stockouts and lost sales. Philippine supply chain realities exacerbate this: port congestion in Manila (averaging 5–10 days delay), customs processing variability (1–14 days), typhoon-related shipping disruptions, and local vendor production delays. Analysis of historical PO data shows that ~25% of vendors have lead time deviation > 20% from their stated lead time, and ~10% have deviation > 50%. This workflow systematically monitors vendor lead time accuracy, adjusts planning parameters, and feeds back into vendor performance management to ensure the replenishment engine operates on accurate data."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: should track import PO lead times separately from local POs with wider tolerance bands"
+    ],
+    "Pain Points / Risks": [
+     "- **Data quality — GR timestamp accuracy**: Lead time calculation depends on accurate goods receipt timestamps; if DC receiving clerks batch-process GRs at end of shift rather than at actual receipt time, the data is distorted; real-time GR processing per W3 is essential",
+     "- **Import lead time variability**: Import POs have inherently variable lead times (45–90 days stated, but actual ranges from 35–120 days due to port congestion, customs delays, and shipping route changes); the system should track import PO lead times separately from local POs with wider tolerance bands",
+     "- **Vendor gaming**: Some vendors consistently understate lead times to win business, knowing they can't meet the commitment; Buyer should set lead time expectations during onboarding per W36 based on industry data, not vendor-stated figures alone",
+     "- **Cascade effect**: A single late import shipment (3 containers of cement, 90 days late) can cascade into stockouts at 40+ stores simultaneously; Supply Chain Planner must monitor high-impact POs (multi-store, high-velocity SKUs) with extra vigilance"
+    ],
+    "Staffing Implication": [
+     "- **Supply Chain Planner**: Lead time analysis adds ~3–5 hours/week; absorbed by existing Supply Chain & Logistics team (40 per profile §3.3)",
+     "- **Buyer**: Monthly review meeting adds 60–90 min/month; absorbed by existing Buyer team",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PO lifecycle tracking with timestamped milestones (PO creation, vendor acknowledgment, ship date, GR date)",
+     "- Vendor master (W287) with lead time parameter per vendor per item",
+     "- Replenishment parameter engine (W312) with auto-adjustment capability",
+     "- Safety stock calculation engine with vendor lead time variability input",
+     "- Stockout tracking and attribution module",
+     "- Vendor performance scorecard (W44, W706) with lead time accuracy KPI",
+     "- BI analytics dashboard for lead time trend visualization",
+     "- Vendor improvement plan tracking (W110, CAPA module)"
+    ],
+    "Time Estimate": [
+     "- Weekly deviation calculation: automated",
+     "- Planning parameter adjustment: 30–60 min/week",
+     "- Stockout root cause analysis: 30 min/week",
+     "- Monthly review meeting: 60–90 min/month",
+     "- Quarterly trend report: 4–6 hours/quarter",
+     "- **Total**: ~3–5 hours/week (Supply Chain Planner)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Supply Chain Planner",
+     "activity": "**Weekly Lead Time Deviation Calculation**: System automatically calculates for each PO closed in the past week: (a) **Stated lead time** (from vendor master per W287): days between PO date and expected delivery date; (b) **Actual lead time**: days between PO date and goods receipt date at DC/store per W3/W109; (c) **Deviation** = (Actual − Stated) ÷ Stated × 100; (d) system aggregates by vendor: average deviation, standard deviation, on-time delivery rate (% of POs received within stated lead time + 3 day tolerance); (e) weekly vendor lead time scorecard generated: **Tier 1 (Accurate)**: deviation ≤ 10%, on-time ≥ 90%; **Tier 2 (Variable)**: deviation 10–25%, on-time 70–90%; **Tier 3 (Unreliable)**: deviation > 25%, on-time < 70%",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Planning Parameter Adjustment**: For vendors consistently deviating from stated lead time: (a) if vendor has been Tier 2 (Variable) for 2+ consecutive weeks: Supply Chain Planner adjusts the vendor's lead time parameter in the replenishment system (W312) to reflect actual average lead time + safety buffer; this immediately adjusts reorder points for all SKUs sourced from this vendor; (b) if vendor has been Tier 3 (Unreliable) for 2+ consecutive weeks: (i) increase safety stock for all affected SKUs by 1–2 weeks of demand to buffer against uncertainty; (ii) evaluate alternative sourcing per W921 (Emergency Alternative Vendor) for critical SKUs; (iii) Buyer escalates to vendor per W44 (Vendor Performance Review); (c) parameter changes logged in system with justification; system generates impact analysis: estimated inventory value change from parameter adjustment (increase in safety stock = additional carrying cost)",
+     "duration": "30–60 min/week",
+     "n": "2",
+     "r": "Supply Chain Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Stockout Root Cause Analysis (Lead Time Related)**: When a stockout occurs: (a) system checks if the stockout was caused by a late vendor delivery (PO past due with no GR); (b) if yes: flag the stockout as \"lead time related\" and attribute to the specific vendor and PO; (c) calculate lost sales impact: stockout duration × average daily sales velocity × average margin; (d) weekly stockout report includes lead-time-related stockout attribution by vendor; (e) vendors responsible for > 5% of total chain-wide stockouts in a month are flagged for Buyer review per W44",
+     "duration": "30 min/week",
+     "n": "3",
+     "r": "Supply Chain Planner / System"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Monthly Vendor Lead Time Review Meeting**: Monthly meeting between Supply Chain Planner, Buyer, and Category Manager: (a) review top 20 vendors by lead time deviation (worst performers); (b) for each: discuss root cause — production delay, shipping issue, customs hold, order processing error, or seasonal pattern; (c) agree on action: (i) renegotiate lead time commitment with vendor (adjust vendor master to realistic lead time), (ii) vendor improvement plan with milestones per W110 (CAPA), (iii) dual-source strategy per W763 (Vendor Diversification), (iv) vendor exit and replacement per W36/W62; (d) review top 20 vendors by volume (regardless of deviation) to ensure lead time parameters are current for high-value POs; (e) decisions documented and tracked in vendor performance module",
+     "duration": "60–90 min/month",
+     "n": "4",
+     "r": "Supply Chain Planner / Buyer / Category Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Quarterly Trend Analysis & Network Impact Report**: Supply Chain Planner compiles quarterly report: (a) chain-wide lead time accuracy trend: average deviation, % of vendors in each tier, improvement/degradation vs. prior quarter; (b) financial impact: estimated carrying cost from inflated safety stock (step 2) vs. lost sales from lead-time-related stockouts (step 3); (c) seasonal patterns: import vendors during Chinese New Year (Feb), typhoon season (Jul–Nov), Christmas peak (Oct–Dec) — lead time degradation patterns; (d) strategic recommendations: nearshoring opportunities (replace China imports with Philippines/ASEAN vendors for shorter lead times), vendor consolidation, or inventory strategy changes (VMI expansion per W20); (e) report presented to VP Supply Chain and COO for strategic planning per W127",
+     "duration": "4–6 hours/quarter",
+     "n": "5",
+     "r": "Supply Chain Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W109",
+    "W110",
+    "W127",
+    "W20",
+    "W287",
+    "W2A",
+    "W3",
+    "W312",
+    "W36",
+    "W44",
+    "W62",
+    "W706",
+    "W763",
+    "W921"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "Semi-annual (major review); quarterly (minor adjustments)",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Planogram Analyst, Merchandise Planner, VP Merchandising",
+    "Trigger": "Semi-annual planogram review cycle, vendor scorecard quarterly publication (W871), or category performance review (W101)",
+    "Volume": "~800–1,000 active vendors × ~2.5–3 product categories each (of the 12-category universe) = ~2,000–3,000 vendor-category combinations reviewed per cycle"
+   },
+   "id": "W1115",
+   "level": 2,
+   "name": "Vendor Performance-Based Shelf Space Allocation Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"Vendor Performance Scorecard Compilation\" (replaces manual Step 1).",
+     "- System auto-calculate of \"Shelf Space Allocation Modeling\" (replaces manual Step 2).",
+     "- System auto-document of \"documented in vendor business plan addendum\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot operates big-box stores with 8,000–15,000 sqm of selling area and 35,000 active SKUs. Shelf space is the store's most valuable asset — every linear meter of shelving, every endcap, every promotional display area must generate maximum revenue per sqm. Currently, shelf space allocation decisions are made during annual planogram reviews (W86 — planogram compliance) and promotional planning (W13), but there is no systematic mechanism to reallocate shelf space from underperforming vendors to high-performing ones. In a vendor performance-based shelf space allocation model: (a) vendors are scored on a composite index including: sales velocity (units/week per facing), gross margin contribution, fill rate / in-stock rate, promotional support (co-op funding, demo participation), and consumer demand (market share trend); (b) high-scoring vendors earn premium shelf positions (eye-level, endcaps, near entrance) and additional facings; (c) low-scoring vendors face shelf space reduction, repositioning to less desirable locations, or potential delisting; (d) vendor scorecards are published on the vendor portal (W871), creating transparency and motivating vendor performance improvement. This approach is standard practice in global retail but requires systematic execution to avoid subjectivity and vendor relationship damage."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor relationship damage**: \"Review\" vendors may react negatively to shelf space reduction, potentially withdrawing from the vendor program or reducing cooperative funding",
+     "- **Consumer disruption**: Changing shelf positions for familiar products can frustrate regular customers who know where to find their preferred items; major resets should be accompanied by in-store wayfinding and signage",
+     "- **Data quality dependency**: Performance scoring requires accurate data across multiple dimensions (sales, fill rate, marketing spend); incomplete or inaccurate data leads to unfair allocation decisions",
+     "- **Strategic override subjectivity**: Category Manager's \"strategic exceptions\" can undermine the data-driven approach if used too liberally; VP Merchandising should approve all overrides",
+     "- **Reset execution complexity**: 200 stores resetting simultaneously strains Store Operations and may require temporary labor augmentation"
+    ],
+    "Staffing Implication": [
+     "- **Category Manager**: Allocation review adds ~50–70 hours per semi-annual cycle (concentrated over 4–6 weeks)",
+     "- **Planogram Analyst**: Modeling adds ~100–140 hours per cycle",
+     "- **Store Operations**: Reset execution requires 2–3 days per store; with 200 stores resetting over a 2-week window, this is a significant operational event requiring coordination",
+     "- **No permanent incremental headcount** — cyclical workload absorbed by existing team"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor scorecard module (W871) — composite scoring automation",
+     "- Planogram software integration — space modeling, facing calculations",
+     "- Category performance module (W101) — sales velocity, margin analysis",
+     "- Vendor portal (W866) — scorecard publication and communication",
+     "- Trade fund management module (W738) — marketing support tracking",
+     "- Supply chain performance module — fill rate, lead time tracking",
+     "- Planogram compliance module (W573, W86) — store-level execution tracking",
+     "- BI analytics (W880) — post-reset performance dashboards"
+    ],
+    "Time Estimate": [
+     "- Scorecard compilation: 48–72 hours total (across 12 categories)",
+     "- Space modeling: 96–144 hours total",
+     "- Vendor communication: 20–30 hours total",
+     "- Planogram reset: 2–3 days/store × 200 stores (parallel execution)",
+     "- Post-reset tracking: 2–3 hours/cycle",
+     "- **Total per semi-annual cycle**: ~170–250 hours (Category Manager + Planogram Analyst)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor Performance Scorecard Compilation**: (a) Category Manager compiles composite vendor performance score for each vendor in their category: **Sales Performance (40% weight)**: sales velocity (units/week/facing), sales growth YoY, revenue per sqm of allocated shelf space, contribution to category gross margin; **Supply Reliability (25% weight)**: fill rate % (orders fulfilled complete and on-time), lead time accuracy, VMI program compliance (if applicable), ASN accuracy; **Marketing Support (20% weight)**: co-op advertising spend, demo/event participation, new product introduction pipeline, trade fund utilization (W738); **Strategic Fit (15% weight)**: brand strength and consumer demand, sustainability/ESG compliance, innovation (new product development), exclusivity agreements; (b) scores normalized on a 100-point scale per vendor per category; (c) vendors ranked within each category; (d) top 20% = \"Premier\" vendors, middle 50% = \"Core\" vendors, bottom 30% = \"Review\" vendors",
+     "duration": "4–6 hours/category × 12 categories = 48–72 hours total",
+     "n": "1",
+     "r": "Category Manager / System"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Shelf Space Allocation Modeling**: (a) Planogram Analyst uses planogram software to model space allocation scenarios: (i) **Current state**: existing facings and positions for each vendor; (ii) **Performance-based model**: shelf space proportional to composite score — Premier vendors get 150% of current space, Core vendors maintain 100%, Review vendors reduced to 50–75%; (iii) **Revenue-optimized model**: space allocated purely by sales per sqm, ignoring vendor relationship factors; (b) for each model, system calculates: projected category revenue, projected category gross margin, number of SKUs changes (additions/removals), number of planogram resets required per store; (c) Category Manager selects preferred model or hybrid: typically performance-based with strategic exceptions (e.g., a new vendor given minimum display space for trial period, or a high-margin vendor protected despite lower velocity)",
+     "duration": "8–12 hours/category",
+     "n": "2",
+     "r": "Planogram Analyst / System"
+    },
+    {
+     "a": "VP Merchandising (for delisting decisions)",
+     "activity": "**Vendor Communication & Negotiation**: (a) for \"Premier\" vendors: Category Manager meets to confirm expanded shelf space and discuss additional support opportunities (larger endcaps, demo events, co-branded promotions); (b) for \"Core\" vendors: standard communication via vendor portal (W871) with scorecard results and any minor space adjustments; (c) for \"Review\" vendors: formal meeting to discuss: (i) specific performance gaps and improvement timeline (90 days); (ii) potential shelf space reduction if performance does not improve; (iii) delisting timeline if vendor falls below minimum threshold for two consecutive reviews; (iv) remediation plan: vendor may propose additional marketing support, improved fill rate, or new exclusive products to justify maintaining current space; (d) all agreements documented in vendor business plan addendum",
+     "duration": "1–2 hours per Review vendor; 30 min per Premier vendor",
+     "n": "3",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Planogram Reset Execution**: (a) updated planograms distributed to all 200 stores per W573 (planogram execution & shelf compliance check); (b) shelf labels and product positions updated during overnight reset or during designated reset window; (c) Store Compliance: Store Manager confirms planogram compliance within 7 days; (d) Regional Manager audits 10% of stores for compliance within 14 days per W86; (e) system tracks compliance rate: target ≥ 95% of stores compliant within 7 days",
+     "duration": "2–3 days per store per reset",
+     "n": "4",
+     "r": "Store Operations / Planogram Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Post-Reset Performance Tracking**: (a) system monitors category performance for 8 weeks post-reset: (i) sales per sqm vs. pre-reset baseline; (ii) gross margin per sqm; (iii) customer traffic in affected sections; (iv) vendor fill rate changes (did Review vendors improve?); (b) results shared with VP Merchandising for quarterly review; (c) lessons learned inform next semi-annual allocation cycle",
+     "duration": "2–3 hours/cycle for analysis",
+     "n": "5",
+     "r": "System / Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W101",
+    "W13",
+    "W573",
+    "W738",
+    "W86",
+    "W866",
+    "W871",
+    "W880"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "Weekly review; continuous monitoring",
+    "Owner": "Logistics Manager (HQ)",
+    "Participants": "Logistics Manager, Supply Chain Planners, DC Operations Managers, Vendor Logistics Contacts",
+    "Trigger": "Weekly logistics performance review cycle (every Monday), or carrier SLA breach alert",
+    "Volume": "~800–1,000 active vendor-carrier lanes reviewed weekly"
+   },
+   "id": "W1132",
+   "level": 2,
+   "name": "Vendor Logistics Performance Weekly Scorecard & Carrier Lane Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"logistics performance data for the previous week\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates weekly scorecard\" (replaces manual Step 2).",
+     "- System auto-review of \"Review & Action Items\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's supply chain involves ~800–1,000 vendors shipping goods across 4 DCs and 200 stores, using a mix of vendor-arranged transport, BuildRight-contracted 3PLs, and owned fleet. With ~400–600 TEU containers/month of imports plus ~1,200 domestic POs/month, logistics performance directly impacts: (a) DC inventory availability — late vendor deliveries create stockouts at stores; (b) receiving efficiency — unscheduled or off-schedule deliveries create DC dock congestion; (c) cost — carrier rate variance, demurrage charges, and expediting fees erode margins; (d) product quality — transit damage rates vary significantly by carrier. This workflow establishes a weekly scorecard that tracks vendor and carrier logistics performance at the lane level (origin-destination pair), enabling data-driven carrier selection, vendor compliance enforcement, and logistics cost optimization. It complements W44 (vendor performance review), W762 (carrier performance weekly review), W727 (carrier daily monitoring), and W242 (3PL performance review) by adding a systematic weekly lane-level scorecard."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Logistics Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Data quality**: OTD calculation depends on accurate promised delivery dates from vendors — overly optimistic promises distort metrics",
+     "- **Carrier consolidation**: In the Philippines, small carrier market means limited alternative options for specific lanes (especially inter-island); switching costs can be high",
+     "- **Seasonal variation**: Rainy season and holiday port congestion create predictable performance dips; scorecard must adjust for seasonality",
+     "- **Demurrage attribution**: Container demurrage charges may be caused by vendor late shipping, carrier delay, port congestion, or DC scheduling — proper attribution requires detailed milestone tracking"
+    ],
+    "Staffing Implication": [
+     "- **Logistics Analyst (HQ)**: Weekly data aggregation and scorecard preparation = ~4–6 hours/week — absorbed by existing supply chain team",
+     "- **Logistics Manager**: Review and action item follow-up = ~3–4 hours/week — absorbed by existing role",
+     "- **No permanent incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP PO & GR modules — delivery date tracking",
+     "- Fleet telematics (W199) — transit time and GPS data",
+     "- DC dock scheduling system (W585) — appointment compliance",
+     "- Carrier invoice module — freight cost data",
+     "- Customs brokerage module — import container tracking",
+     "- Vendor portal (W871) — performance scorecard publication",
+     "- Analytics/BI module — lane heat map and trend visualization"
+    ],
+    "Time Estimate": [
+     "- Data aggregation: Automated (30 min review)",
+     "- Scorecard generation: 30–45 min",
+     "- Performance review: 60–90 min",
+     "- Communication: 30–60 min",
+     "- **Total weekly**: 2.5–4 hours",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Logistics Manager",
+     "activity": "**Weekly Data Aggregation**: (a) system auto-aggregates logistics performance data for the previous week: on-time delivery rate (OTD) per vendor per lane; transit time actual vs. promised; delivery appointment compliance (delivered within scheduled window); damage/shortage rate per carrier; freight cost per unit/km by lane; demurrage/detention charges incurred; container turnaround time (for imports); (b) data sourced from: ERP PO and GR modules, fleet telematics (W199), DC dock scheduling system (W585), carrier invoice data, customs brokerage records",
+     "duration": "Automated (30 min review)",
+     "n": "1",
+     "r": "System / Logistics Analyst"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "**Scorecard Generation & Lane Analysis**: (a) system generates weekly scorecard: top 20 vendors by PO volume — OTD, lead time accuracy, damage rate; top 10 carrier lanes by volume — cost, transit time, reliability; exception report — any lane with OTD < 90%, damage > 2%, or cost > 10% above benchmark; new carrier options — market rate comparison for underperforming lanes; seasonal lane performance — compare current vs. same period last year; (b) lane heat map: green (OTD > 95%, damage < 1%), yellow (OTD 85–95%, damage 1–2%), red (OTD < 85%, damage > 2%)",
+     "duration": "30–45 min",
+     "n": "2",
+     "r": "System / Logistics Analyst"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "**Performance Review & Action Items**: (a) Logistics Manager reviews scorecard with Supply Chain Planners and DC Operations Managers; (b) red lanes: root cause analysis — carrier capacity issue, vendor readiness problem, DC scheduling conflict, or infrastructure constraint (port congestion, road conditions); (c) action items: carrier escalation meeting (within 5 business days), vendor compliance notice per W669, DC scheduling adjustment, alternative carrier activation, or route optimization per W196; (d) yellow lanes: monitor for trend — if declining for 3+ consecutive weeks, escalate to red; (e) green lanes: identify best practices for replication; (f) cost optimization: identify lanes where competitive quoting could save > 5% without service degradation",
+     "duration": "60–90 min",
+     "n": "3",
+     "r": "Logistics Manager / Supply Chain Planners"
+    },
+    {
+     "a": "Logistics Manager",
+     "activity": "**Vendor & Carrier Communication**: (a) weekly performance summary shared with top 20 vendors via vendor portal (W871); (b) SLA breach notifications sent automatically to vendor and carrier contacts; (c) quarterly business review (QBR) invitations sent to strategic vendor-carrier partners; (d) carrier rate negotiation initiated for lanes with consistent overcharges",
+     "duration": "30–60 min",
+     "n": "4",
+     "r": "Logistics Manager / Vendor Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W196",
+    "W199",
+    "W242",
+    "W44",
+    "W585",
+    "W669",
+    "W727",
+    "W762",
+    "W871"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "~200–300 renegotiations/year (top vendors reviewed annually; others reviewed every 2–3 years)",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Buyer, Finance Manager, VP Merchandising, Vendor Account Manager",
+    "Trigger": "Annual vendor contract renewal cycle, or quarterly vendor business review, or significant volume growth with a vendor",
+    "Volume": "1 vendor per negotiation"
+   },
+   "id": "W1141",
+   "level": 2,
+   "name": "Vendor Payment Term Annual Renegotiation & Cost Savings Tracking",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"review vendor portfolio\" (replaces manual Step 1).",
+     "- System auto-count of \"discount improvement, impact on vendor relationship if terms are pushed too hard\" (replaces manual Step 2).",
+     "- System auto-import of \"import payment restructuring\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's top 20 vendors account for ~45% of COGS (~PHP 19–20 billion/year). Payment terms directly impact working capital: extending Net 30 to Net 60 frees up ~PHP 1.6 billion in cash (45% of COGS × 30 days ÷ 365 days); securing early payment discounts of 2/10 Net 30 can save ~PHP 200–400 million/year. Annual payment term renegotiation is a structured process that: (a) leverages BuildRight's growing volume (200 stores, ~PHP 62B revenue) to negotiate better terms; (b) aligns payment terms with BuildRight's cash conversion cycle objectives; (c) tracks and reports cost savings from renegotiated terms; (d) balances payment term extension (preserving cash) with early payment discount capture (reducing COGS). This workflow complements W62 (vendor contract lifecycle), W1105 (early payment discount capture), and W633 (PPV analysis) by focusing specifically on the annual payment term negotiation cycle."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: controls needed to prevent early or late payments that violate agreements"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor pushback**: Vendors may resist term extensions, especially smaller vendors with tighter cash flow; BuildRight must balance its leverage with vendor sustainability",
+     "- **Terms complexity**: Different payment terms per vendor, per product category within a vendor, or per order type (import vs. local) creates AP processing complexity",
+     "- **Compliance with negotiated terms**: AP team must adhere to newly negotiated terms; system controls needed to prevent early or late payments that violate agreements",
+     "- **Measurement accuracy**: Attributing savings specifically to payment term changes vs. other cost factors (volume, market price) requires careful financial modeling"
+    ],
+    "Staffing Implication": [
+     "- **Category Manager**: Negotiation preparation and execution adds ~3–5 hours per vendor; with ~30 vendors renegotiated annually per category manager, ~90–150 hours/year (~2–3 hours/week) — absorbed by existing role",
+     "- **Finance Manager**: Analysis and tracking adds ~4–6 hours/week during negotiation season (Q1) — absorbed by existing role",
+     "- **No permanent incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP vendor master (W287) — payment term storage",
+     "- AP module (W556) — payment run configuration with new terms",
+     "- Vendor contract module (W62) — agreement documentation",
+     "- Financial reporting module — DPO tracking, working capital analysis",
+     "- Procurement analytics (W633) — PPV and cost savings tracking",
+     "- Category P&L module (W102) — margin impact reporting",
+     "- Negotiation tracking dashboard — vendor-level term history and savings"
+    ],
+    "Time Estimate": [
+     "- Portfolio analysis: 4–6 hours (annual)",
+     "- Negotiation preparation: 2–3 hours per vendor",
+     "- Vendor negotiation: 1–2 hours per vendor",
+     "- Agreement finalization: 30–60 min per vendor",
+     "- Savings tracking: 2–3 hours/month",
+     "- **Total per vendor**: 4–6 hours; **Total annual**: ~150–200 hours (for top 30 vendors)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Vendor Portfolio Analysis & Prioritization**: (a) Finance Manager and Category Manager jointly review vendor portfolio: total annual spend per vendor, current payment terms (Net 30, Net 60, 2/10 Net 30, LC, etc.), payment term benchmark vs. industry standard, vendor concentration risk, vendor strategic importance (exclusive products, VMI, innovation partner); (b) prioritize vendors for renegotiation: Tier 1 (top 20 vendors by spend) — mandatory annual review; Tier 2 (top 21–100) — review every 2 years; Tier 3 (remaining) — review as needed or at contract renewal; (c) set negotiation targets per vendor: payment term extension (e.g., Net 30 → Net 60), early payment discount (e.g., 2/10 Net 30 → 3/10 Net 30), or combination",
+     "duration": "4–6 hours (annual)",
+     "n": "1",
+     "r": "Finance Manager / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Negotiation Preparation**: (a) Category Manager prepares negotiation package for each target vendor: current terms, proposed terms, business rationale (volume growth, expanded assortment, multi-year commitment), competitive benchmarking (what terms do comparable retailers receive), BuildRight's value proposition (200-store network, growing ecommerce channel, marketing partnership opportunities); (b) Finance Manager models financial impact: working capital benefit of term extension, COGS savings from discount improvement, impact on vendor relationship if terms are pushed too hard; (c) identify trade-offs: if vendor won't extend terms, what else can be negotiated (rebate increase, marketing fund contribution, exclusive product access, VMI expansion)",
+     "duration": "2–3 hours per vendor",
+     "n": "2",
+     "r": "Category Manager / Finance Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Vendor Negotiation**: (a) Category Manager leads negotiation with vendor account manager; (b) present data-driven proposal: \"Our volume has grown 15% YoY, and we're expanding to 300 stores. We'd like to move from Net 30 to Net 60, which is standard for our volume tier. In return, we're offering a 3-year commitment on your core assortment and priority placement in our ecommerce platform\"; (c) negotiation tactics: volume-based leverage, multi-year commitment incentive, competitive vendor comparison (without naming competitors), early payment discount as alternative to term extension; (d) Finance Manager joins for complex negotiations (LC terms, import payment restructuring); (e) target outcome: improved terms with mutual benefit (vendor gets volume commitment, BuildRight gets better cash management)",
+     "duration": "1–2 hours per vendor",
+     "n": "3",
+     "r": "Category Manager / Finance Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Agreement Finalization & ERP Update**: (a) negotiated terms documented in updated vendor agreement per W62; (b) legal review per W230 for significant changes; (c) ERP vendor master updated with new payment terms (W287, W295); (d) system validates new terms against existing open POs and invoices; (e) implementation timeline: immediate for new POs, transitional for existing open orders; (f) new terms communicated to AP team for payment run configuration (W556)",
+     "duration": "30–60 min per vendor",
+     "n": "4",
+     "r": "Category Manager / Finance Manager / AP Team"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Cost Savings Tracking & Reporting**: (a) Finance Manager tracks realized savings from renegotiated terms: working capital improvement (days payable outstanding change × daily COGS), early payment discount capture rate improvement, rebate/pricing improvements achieved as part of negotiation; (b) monthly report to VP Merchandising and CFO: total annualized savings from payment term negotiations, savings by vendor and category, working capital impact; (c) savings feed into category P&L reporting (W102) and procurement KPIs (W633 PPV); (d) lessons learned documented for future negotiation cycles",
+     "duration": "2–3 hours/month",
+     "n": "5",
+     "r": "Finance Manager / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W102",
+    "W1105",
+    "W230",
+    "W287",
+    "W295",
+    "W556",
+    "W62",
+    "W633"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "~5–15 recall events/year requiring cost recovery; quarterly reconciliation",
+    "Owner": "Category Manager (HQ)",
+    "Participants": "Category Manager, Finance Analyst, Supply Chain Planner, Vendor Representative, Legal Counsel (if disputed)",
+    "Trigger": "Product recall event (W29, W873–W878), or quarterly recall cost reconciliation, or vendor negotiation session",
+    "Volume": "1–50 affected SKUs per recall event"
+   },
+   "id": "W1151",
+   "level": 2,
+   "name": "Vendor Product Recall Cost Recovery & Margin Impact Assessment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Recall Cost Capture & Documentation\" (replaces manual Step 1).",
+     "- System auto-review of \"review and vendor claim preparation\" (replaces manual Step 2).",
+     "- System auto-document of \"Vendor Cost Recovery Claim\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Product recalls — while infrequent — impose significant costs on BuildRight Depot: (a) direct costs include inventory loss (quarantined and unsalable stock), return logistics (customer returns, DC-to-vendor shipping), and replacement procurement (urgent purchase from alternative vendor); (b) indirect costs include labor for recall execution (W874 — customer notification, W875 — inventory quarantine, W876 — regulatory reporting), store shelf space lost during recall period, and potential brand damage; (c) margin impact from selling replacement stock at original price but at higher procurement cost. Philippine consumer protection law (RA 7394, Consumer Act) and DTI regulations place primary recall responsibility on the manufacturer/importer, but retailers bear operational costs. Most vendor agreements include recall cost recovery provisions, but actual recovery requires systematic cost documentation and vendor negotiation. This workflow tracks recall costs comprehensively, calculates margin impact, and manages vendor cost recovery claims. It complements W29 (recall execution), W877 (vendor recovery), and W878 (recall close-out) by focusing on the financial cost accounting, margin analysis, and vendor reimbursement negotiation dimensions."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor resistance**: Vendors may dispute cost calculations, especially indirect costs and margin erosion; detailed documentation and contractual clarity essential",
+     "- **Timing**: Recall cost recovery can take 3–6 months of negotiation; interim costs absorbed by BuildRight's P&L",
+     "- **Partial recovery**: If vendor is a small MSME (per W115 supplier diversity program), full cost recovery may not be feasible; balance between cost recovery and maintaining vendor relationship",
+     "- **Unquantifiable costs**: Brand damage, customer trust erosion, and employee morale impact during recalls are real but difficult to quantify for vendor claims",
+     "- **Legal costs**: If vendor disputes escalate to legal proceedings, legal costs may exceed recovery amount for small recalls"
+    ],
+    "Staffing Implication": [
+     "- **Category Manager**: Recall cost documentation and vendor claim preparation adds ~5–10 hours per recall event — absorbed by existing role during recall periods",
+     "- **Finance Analyst**: Margin impact assessment adds ~2–3 hours per recall — absorbed by existing FP&A team",
+     "- **No permanent incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP recall module (W873–W878) — recall event tracking, inventory quarantine",
+     "- Financial cost tracker — automatic and manual cost capture per recall event",
+     "- Inventory valuation module — WAC of quarantined stock",
+     "- AP module — vendor recovery credit note processing",
+     "- Margin analysis module (W85) — pre/post recall margin comparison",
+     "- Vendor portal (W869) — cost recovery claim submission and tracking",
+     "- Vendor scorecard (W44) — recall performance metric",
+     "- Analytics module — recall cost trends, vendor recovery rates, category margin impact"
+    ],
+    "Time Estimate": [
+     "- Cost capture: ongoing during recall (automated + 1–2 hours/day during active recall)",
+     "- Margin assessment: 2–3 hours",
+     "- Vendor claim preparation: 2–4 hours",
+     "- Settlement & close: 1–2 hours",
+     "- **Total per recall event**: 10–20 hours (spread over weeks to months)",
+     "---",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Recall Cost Capture & Documentation**: (a) when a recall is initiated (W873), Category Manager opens a recall cost tracker in ERP; (b) system begins automatic cost capture for the recall event: inventory value of quarantined stock (at WAC), return processing labor hours × hourly rate, reverse logistics costs (pickup from stores, DC handling, vendor return shipping), regulatory filing costs (DTI notifications, BIR adjustments), replacement procurement cost differential (if alternative vendor price is higher); (c) Category Manager captures indirect costs: store labor hours spent on recall activities, estimated lost sales during shelf gap, customer complaint handling costs (W41), temporary price reduction on substitute items",
+     "duration": "Ongoing during recall",
+     "n": "1",
+     "r": "Category Manager / System"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Margin Impact Assessment**: (a) finance analyst calculates margin impact: gross margin on recalled items (before recall) vs. gross margin on replacement items (after recall); (b) if replacement sourced from alternative vendor at higher cost but sold at same retail price: margin erosion quantified per unit and projected over expected remaining sales period; (c) if replacement sourced from same vendor at same cost but recall caused shelf gap period: lost sales margin calculated (days off-shelf × average daily units × margin %); (d) total margin impact = direct recall costs + indirect costs + margin erosion on replacements + lost sales during gap; (e) margin impact report generated for executive review and vendor claim preparation",
+     "duration": "2–3 hours per recall",
+     "n": "2",
+     "r": "Finance Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Vendor Cost Recovery Claim**: (a) Category Manager prepares vendor cost recovery claim using recall cost tracker data; (b) claim includes: itemized direct costs with supporting documentation (GRNs, shipping invoices, labor logs), margin erosion calculation with market data (alternative vendor quotes), regulatory compliance costs with receipts, total claim amount; (c) claim submitted to vendor per terms of vendor agreement (W62 — contract terms, W244 — dispute resolution); (d) standard recovery expectation: 80–100% of direct costs, 50–75% of indirect costs; vendor agreement terms govern recovery rate; (e) if vendor disputes: escalation per W244 (dispute resolution) and legal review (W230)",
+     "duration": "2–4 hours per claim",
+     "n": "3",
+     "r": "Category Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "**Recovery Settlement & Post-Recall Financial Close**: (a) vendor remits cost recovery payment (credit note against future invoices, or direct payment); (b) recovery recorded in AP module against recall cost tracker; (c) net recall cost calculated: total recall costs minus vendor recovery; (d) unrecovered costs allocated: if vendor contract covers full recovery → no P&L impact; if partial recovery → net cost allocated to category margin as one-time charge; (e) recall financial record closed and archived; (f) lessons learned feed into vendor scorecard (W44) recall performance metric and vendor contract renewal negotiations (W704)",
+     "duration": "1–2 hours per recall",
+     "n": "4",
+     "r": "Finance Analyst / Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W115",
+    "W230",
+    "W244",
+    "W29",
+    "W41",
+    "W44",
+    "W62",
+    "W704",
+    "W85",
+    "W869",
+    "W873",
+    "W874",
+    "W875",
+    "W876",
+    "W877",
+    "W878"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "Quarterly for top 50 vendors (representing ~70% of COGS); semi-annual for next 50 vendors; annual for remaining ~900 vendors",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Buyer, Supply Planning Analyst, Quality Assurance, Finance Analyst, Vendor Account Manager, VP Merchandising (for top 10 vendors)",
+    "Trigger": "Quarterly review calendar; or triggered by vendor relationship milestone (new vendor onboarding first review, vendor escalation from W44, contract renewal approaching)",
+    "Volume": "~50 quarterly reviews + ~25 semi-annual reviews + ~900 annual reviews"
+   },
+   "id": "W1224",
+   "level": 2,
+   "name": "Vendor Quarterly Business Review, Scorecard Meeting & Strategic Relationship Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-compile of \"compiles vendor scorecard for the trailing quarter\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews scorecard and prepares QBR agenda\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify closure or escalate\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's ~1,000 vendors supply 35,000 active SKUs across diverse product categories. The top 20 vendors account for ~45% of COGS, and the top 50 vendors account for ~70%. Effective vendor relationship management is critical for: (a) maintaining supply reliability (target ≥ 95% OTIF), (b) securing competitive pricing and promotional support, (c) ensuring product quality and regulatory compliance, (d) building strategic partnerships for new product development and category growth. Quarterly Business Reviews (QBRs) with top vendors are a standard retail practice that formalizes the partnership: both parties review performance, discuss market trends, resolve issues, and plan forward. This workflow governs the preparation, execution, and follow-up of vendor QBRs."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor QBR fatigue** — conducting 50+ quarterly reviews consumes significant Category Manager time; grouping smaller vendors by category and conducting combined reviews mitigates",
+     "- **Scorecard disputes** — vendors may challenge OTIF data (e.g., claiming late delivery was due to BuildRight's PO error); clear dispute resolution process and data transparency via vendor portal mitigates",
+     "- **Action item follow-through** — QBRs generate action items that are often not tracked to closure; automated action tracking with escalation rules mitigates",
+     "- **Price increase pressure** — vendors frequently request price increases during QBRs; Category Manager must balance relationship management with margin protection; market benchmarking data essential",
+     "- **Information asymmetry** — vendors may not share honest capacity constraints or financial difficulties; relationship trust built over multiple QBRs encourages transparency"
+    ],
+    "Staffing Implication": [
+     "- Category Managers (5): ~10 QBRs each per quarter × 3 hours preparation + meeting = 150 hours/quarter = 600 hours/year",
+     "- Buyers (10–12): action item tracking ~30 min/week = ~260 hours/year",
+     "- Supply Planning Analysts: scorecard data validation ~2 hours/week = ~100 hours/year",
+     "- VP Merchandising: top 10 strategic reviews ~20 hours/quarter = 80 hours/year",
+     "- No incremental headcount"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Vendor scorecard module: automated compilation from PO data, goods receipt, quality records, payment data, complaint data",
+     "- QBR meeting management: agenda templates, minutes documentation, action item tracking",
+     "- Vendor tier classification: scorecard-based tier assignment with override capability",
+     "- Vendor portal: QBR minutes and action items shared via portal per VS-03.4",
+     "- Integration with W44 (vendor scorecard), W161 (markdown claims), W195 (sustainable sourcing), VS-03.4 (vendor portal), VS-03.1 (vendor sourcing), VS-03.2 (PO cycle)"
+    ],
+    "Time Estimate": [
+     "- Per QBR: 2 hours scorecard preparation + 1–2 hours meeting + 30 min documentation = ~4 hours",
+     "- Top 50 vendors quarterly: 50 × 4 hours = 200 hours/quarter",
+     "- Next 50 semi-annual: 25 × 4 hours = 100 hours/quarter (amortized)",
+     "- Strategic reviews (top 10 annual): 10 × 3 hours = 30 hours/year",
+     "- **Annual estimate: ~1,000–1,200 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Scorecard preparation** (2 weeks before QBR): System compiles **vendor scorecard** for the trailing quarter: (a) **OTIF performance**: on-time delivery rate (target ≥ 95%), in-full delivery rate, lead time adherence; (b) **Quality**: defect rate, return rate, customer complaint rate, product recall incidents; (c) **Commercial**: total spend vs. prior quarter and prior year, pricing competitiveness vs. market, promotional markdown claims per W161, payment term compliance; (d) **Responsiveness**: PO acknowledgment time, issue resolution time, query response time; (e) **Innovation**: new product introductions, category growth contribution, exclusive product development; (f) **Compliance**: BIR accreditation, product certification (PS mark, ICC), insurance currency, ESG compliance per W195",
+     "duration": "2 hours per vendor",
+     "n": "1",
+     "r": "System / Supply Planning Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews scorecard and prepares **QBR agenda**: (a) performance highlights and lowlights, (b) open issues from prior QBR — status of agreed actions, (c) upcoming seasonal demand forecast and required capacity, (d) new product opportunities or SKU rationalization discussion, (e) promotional calendar alignment for next quarter, (f) pricing review: any cost increase requests, competitive pricing concerns, (g) relationship health: any disputes, payment issues, or communication gaps",
+     "duration": "1–2 hours per vendor",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising (top 10)",
+     "activity": "**QBR meeting** (in-person for top 20 vendors; virtual for others): (a) Category Manager presents BuildRight scorecard; Vendor Account Manager presents their perspective: production capacity, new products, market trends, cost drivers; (b) discuss open action items from prior QBR — verify closure or escalate; (c) align on next quarter's demand forecast and promotional calendar; (d) negotiate any pricing changes — Category Manager has authority for ≤ 3% price increase acceptance; larger increases require VP Merchandising approval; (e) agree on new actions and owners with deadlines",
+     "duration": "1–2 hours",
+     "n": "3",
+     "r": "Category Manager / Vendor Account Manager"
+    },
+    {
+     "a": "CEO (for #1 vendor)",
+     "activity": "**Strategic vendor planning** (top 10 vendors only, annual): VP Merchandising and Category Manager conduct strategic planning session with vendor's senior leadership: (a) 3-year category growth plan, (b) exclusive product development roadmap, (c) joint business plan with shared KPIs, (d) technology integration roadmap (EDI, vendor portal enhancements per VS-03.4), (e) sustainability commitments per W195",
+     "duration": "2–4 hours",
+     "n": "4",
+     "r": "VP Merchandising / Category Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Post-QBR documentation**: Category Manager documents QBR minutes: (a) scorecard results, (b) agreed actions with owners and deadlines, (c) pricing agreements, (d) demand forecast shared with vendor, (e) any escalations or disputes; distributes to internal stakeholders (Buyer, Supply Planning, Finance, QA) and vendor within 48 hours",
+     "duration": "30 min",
+     "n": "5",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Action item tracking**: Buyer and Supply Planning Analyst track QBR action items to closure: (a) weekly check on overdue items, (b) escalate non-responsive vendor actions to Category Manager, (c) system sends automated reminders to action owners 3 days before deadline",
+     "duration": "30 min/week",
+     "n": "6",
+     "r": "Buyer / Supply Planning Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Semi-annual vendor tier classification**: Category Manager reviews vendor tier classification: (a) **Strategic** (top 50): QBR + joint business planning + preferred terms, (b) **Preferred** (next 100): semi-annual review + competitive terms, (c) **Transactional** (remaining ~850): annual review + standard terms; vendors may be promoted or demoted based on scorecard trajectory",
+     "duration": "1 day",
+     "n": "7",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W161",
+    "W195",
+    "W44"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "Monthly; per consignment vendor (currently ~12 key vendors, ~300 SKUs)",
+    "Owner": "Merchandise Analyst",
+    "Participants": "Merchandise Analyst, Category Manager, Finance – AP, Vendor Account Manager",
+    "Trigger": "Month-end close; consignment sell-through report generated",
+    "Volume": "~12 consignment vendor settlements/month; ~300 SKUs tracked"
+   },
+   "id": "W1230",
+   "level": 2,
+   "name": "Vendor Consignment Inventory Monthly Settlement, Revenue Share & Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates consignment sell-through report\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates vendor settlement\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify ending inventory matches physical count\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot carries consignment inventory for major appliances and select tiles from ~12 key vendors (~300 SKUs per model company profile Section 6.4). Under consignment terms, BuildRight does not own the inventory — the vendor retains ownership until the item is sold to a customer. At that point, ownership transfers from vendor to BuildRight (momentarily) and then to the customer. BuildRight pays the vendor only for items sold, typically at an agreed revenue-share percentage. This reduces BuildRight's inventory carrying cost and risk (especially for high-value appliances and slow-moving tile variants) but creates a complex reconciliation process: BuildRight must accurately track which consignment items were sold during the period, at what price, calculate the vendor's share, and settle payment — while maintaining inventory records that distinguish owned vs. vendor-owned stock. The ERP must support dual inventory ownership tracking per W23."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Merchandise Analyst review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory ownership confusion** — store staff may not distinguish owned vs. consignment items; if consignment item is damaged in-store, liability for damage must be clarified in vendor contract; dispute resolution can delay settlement",
+     "- **Sell-through data accuracy** — if POS correctly flags consignment SKUs per W543 but system configuration is wrong for new items, sales may not be tracked as consignment, causing underpayment to vendor",
+     "- **Unsold inventory accumulation** — consignment vendors may push slow-moving SKUs into BuildRight stores; without rigorous sell-through monitoring, unsold inventory accumulates and occupies valuable shelf space",
+     "- **Revenue-share calculation errors** — contract-specific percentages, tiered rates, and promotional adjustments make manual calculation error-prone; ERP automation is essential",
+     "- **Dual-stock physical counting** — during cycle counts, stock associates must identify and count consignment items separately; misclassification distorts both owned inventory and consignment reconciliation"
+    ],
+    "Staffing Implication": [
+     "- Merchandise Analyst: ~4–6 hours/month on consignment settlement for 12 vendors (absorbed by existing Merchandise Planner roles). Finance – AP: ~3 hours/month. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W23 consignment item setup and tracking for inventory ownership management",
+     "- W543 consignment sell-through transaction processing for POS-level ownership transfer",
+     "- W88 return-to-vendor for unsold consignment returns",
+     "- W7 AP processing for vendor settlement payment",
+     "- W6 cycle counting for physical inventory verification",
+     "- W93 markdown for aging consignment inventory price reduction",
+     "- W1224 vendor QBR for strategic consignment review",
+     "- GL posting for consignment COGS recognition and liability management"
+    ],
+    "Time Estimate": [
+     "- Per vendor settlement: ~3–4 hours (analyst) + 30 min (Category Manager) + 15 min (AP). Total across 12 vendors: ~48–60 hours/month.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "**Monthly consignment sell-through extraction**: System generates consignment sell-through report: (a) all consignment SKU sales for the month by vendor; (b) quantities sold per SKU; (c) selling price per unit; (d) total revenue per SKU; (e) unsold consignment inventory on-hand at month-end by location",
+     "duration": "30 min",
+     "n": "1",
+     "r": "System / Merchandise Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Revenue share calculation**: Merchandise Analyst calculates vendor settlement: (a) apply agreed revenue-share percentage per vendor contract (e.g., BuildRight keeps 15–25%, vendor receives 75–85% of selling price); (b) calculate vendor's share per SKU per unit; (c) sum total vendor settlement amount; (d) deduct any applicable chargebacks (damaged units, returns per W12A)",
+     "duration": "1–2 hours/vendor",
+     "n": "2",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Inventory reconciliation**: Merchandise Analyst reconciles: (a) beginning consignment inventory + units received during month – units sold = ending consignment inventory; (b) verify ending inventory matches physical count (perpetual system + cycle count per W6); (c) investigate discrepancies; (d) verify unsold items are still in saleable condition",
+     "duration": "1 hour/vendor",
+     "n": "3",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor settlement statement preparation**: (a) generate vendor settlement statement detailing: SKUs sold, quantities, unit price, revenue share split, deductions, net payable; (b) include aging of unsold consignment inventory (flag items >90 days for potential return-to-vendor per W88); (c) prepare AP invoice for vendor settlement",
+     "duration": "1 hour/vendor",
+     "n": "4",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Category Manager approval**: Category Manager reviews and approves settlement: (a) verify revenue-share calculation matches contract terms; (b) approve unsold inventory aging action (return request, markdown request per W93, or retention); (c) approve AP invoice for payment",
+     "duration": "30 min/vendor",
+     "n": "5",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**AP processing & payment**: Finance – AP processes vendor settlement invoice: (a) create AP voucher against consignment vendor account; (b) schedule payment per agreed terms; (c) post settlement to GL (consignment payable cleared, COGS recognized per W23); (d) issue payment via bank transfer per W7",
+     "duration": "15 min/vendor",
+     "n": "6",
+     "r": "Finance – AP"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Quarterly business review**: Include consignment performance in vendor QBR per W1224: (a) sell-through rate by SKU; (b) revenue share profitability vs. owned inventory; (c) inventory aging trends; (d) recommend assortment changes (add/remove consignment SKUs)",
+     "duration": "Quarterly",
+     "n": "7",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1224",
+    "W12A",
+    "W23",
+    "W543",
+    "W6",
+    "W7",
+    "W88",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "6 major bi-monthly promotions + 12 monthly hot deal cycles = ~18 promotional funding reconciliation cycles/year",
+    "Owner": "Merchandise Analyst",
+    "Participants": "Merchandise Analyst, Category Manager, Marketing Manager, Finance – AP, Vendor Account Manager",
+    "Trigger": "Completion of promotional event (bi-monthly sale or monthly hot deal); vendor funding claim period closes",
+    "Volume": "~100–200 vendor-funded promotional items per event across ~50–80 participating vendors"
+   },
+   "id": "W1236",
+   "level": 2,
+   "name": "Vendor Promotional Funding, Co-Op Advertising & Markdown Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"recorded in ERP promotional funding agreement per W300\" (replaces manual Step 1).",
+     "- System auto-generate of \"printing cost allocation per vendor\" (replaces manual Step 2).",
+     "- System auto-post of \"system extracts promotional SKU sell-through data\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's promotional strategy (Section 13.3) includes vendor-funded promotions: co-op advertising (vendor shares advertising cost in exchange for prominent placement in BuildRight's promotional catalog) and markdown funding (vendor reimburses BuildRight for the margin lost when an item is sold at a promotional discount). With 6 bi-monthly sale events and 12 monthly hot deal cycles, and ~50–80 vendors participating per event, tracking vendor promotional obligations and reconciling actual funding owed is a significant operational workflow. Common issues include: vendors disputing actual sell-through quantities, disagreements on co-op advertising cost allocation, delayed vendor reimbursement, and insufficient documentation to support funding claims. Without systematic tracking, BuildRight either leaves vendor money unclaimed (reducing promotional ROI) or over-claims (damaging vendor relationships and creating audit risk per W344)."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Merchandise Analyst review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Documentation gaps** — without pre-promotion funding agreements captured in the system, post-promotion claims rely on verbal agreements and emails; vendors dispute claims they don't have documented records of",
+     "- **Sell-through attribution errors** — promotional items sold through multiple channels (POS, ecommerce, trade counter) must all be attributed correctly; omnichannel sell-through reconciliation is complex",
+     "- **Vendor payment delays** — vendors may take 60–90 days to remit promotional funding, impacting BuildRight's cash flow and promotional margin realization",
+     "- **Co-op advertising cost allocation disputes** — vendors challenge the allocation methodology for catalog and digital advertising costs; clear pre-agreed allocation rules are essential",
+     "- **Audit trail** — promotional funding claims must withstand internal audit per W344; inadequate documentation creates compliance risk"
+    ],
+    "Staffing Implication": [
+     "- Merchandise Analyst: ~8–12 hours/event for funding reconciliation (~18 events/year = ~150–220 hours/year). Absorbed by existing Merchandise Planner/Analyst roles. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W13 promotions execution for promotional pricing and event management",
+     "- W262 store promotional setup for physical display compliance tracking",
+     "- W300 promotional rule master for funding agreement governance",
+     "- W7 AP processing for vendor credit memo and settlement",
+     "- W130 competitor price intelligence for promotional pricing context",
+     "- W344 trade promotion audit for internal audit coverage",
+     "- W1224 vendor QBR for promotional performance discussion",
+     "- GL posting for promotional expense and vendor funding recovery"
+    ],
+    "Time Estimate": [
+     "- Per event: ~35–60 hours total (steps 2–6 at 9–19 h + AP settlement 30 min × ~50–80 participating vendors = 25–40 h). Annual: ~270–450 hours/year across all promotional events."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Pre-promotion funding agreement**: Before event: (a) Category Manager negotiates promotional funding terms with vendor: markdown allowance per unit, co-op advertising contribution, volume bonus thresholds; (b) terms recorded in ERP promotional funding agreement per W300; (c) system links funding terms to promotional price in POS/ecommerce",
+     "duration": "Per vendor negotiation",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Co-op advertising cost tracking**: Marketing Manager tracks co-op advertising costs: (a) catalog printing cost allocation per vendor (based on page/space); (b) digital advertising spend attributable to vendor products; (c) in-store display material costs (signage, endcap displays); (d) social media campaign costs for vendor-funded items",
+     "duration": "2–4 hours/event",
+     "n": "2",
+     "r": "Marketing Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Post-promotion sell-through extraction**: After event concludes: (a) system extracts promotional SKU sell-through data: units sold per SKU per store/channel; (b) compare actual sales vs. vendor-committed volume; (c) identify items that achieved volume bonus thresholds",
+     "duration": "2–3 hours/event",
+     "n": "3",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor funding claim calculation**: Merchandise Analyst calculates: (a) markdown allowance due: (regular price – promo price) × units sold × vendor share %; (b) co-op advertising reimbursement: per agreed allocation; (c) volume bonus earned: per threshold structure; (d) deductions: vendor-funded items not displayed per W262 compliance, agreed sell-through shortfall penalties; (e) net vendor funding claim",
+     "duration": "3–5 hours/event",
+     "n": "4",
+     "r": "Merchandise Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Category Manager review and approval**: Category Manager reviews claims: (a) verify calculations match agreement terms; (b) validate sell-through data; (c) approve claim for vendor submission; (d) escalate disputed items to VP Merchandising",
+     "duration": "1–2 hours/event",
+     "n": "5",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Vendor claim submission & dispute resolution**: (a) submit funding claim to vendor with supporting documentation; (b) vendor reviews and may dispute quantities or calculations; (c) Merchandise Analyst resolves disputes with supporting POS/ecommerce transaction data; (d) agree final settlement amount",
+     "duration": "1–5 hours/event",
+     "n": "6",
+     "r": "Merchandise Analyst / Vendor"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "**AP credit memo & settlement**: (a) upon vendor agreement: create vendor credit memo in AP per W7; (b) credit memo offsets future vendor payments; (c) post to GL: promotional expense reduced by vendor funding recovery; (d) update promotional ROI analytics per W13",
+     "duration": "30 min/vendor",
+     "n": "7",
+     "r": "Finance – AP"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Promotional funding analytics**: Quarterly: (a) vendor funding recovery rate (% of eligible funding actually collected); (b) promotional ROI with and without vendor funding; (c) vendor payment timeliness; (d) funding terms benchmarking across vendors",
+     "duration": "4 hours/quarter",
+     "n": "8",
+     "r": "Merchandise Analyst"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1224",
+    "W13",
+    "W130",
+    "W262",
+    "W300",
+    "W344",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-248"
+   ],
+   "fields": {
+    "Frequency": "Quarterly rebate settlements; monthly co-op advertising reconciliation; promotional incentives per sale event",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Finance Analyst, Marketing Manager, Buyer, Vendor Account Manager, AP Clerk",
+    "Trigger": "Quarterly rebate calculation cycle; or co-op advertising campaign execution; or promotional incentive claim from vendor",
+    "Volume": "~200 vendors with rebate agreements; ~50 vendors with co-op advertising arrangements; ~PHP 800M–1.2B in annual vendor rebates and co-op income"
+   },
+   "id": "W1303",
+   "level": 2,
+   "name": "Vendor Rebate, Co-Op Advertising Fund & Promotional Incentive Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"enters rebate agreement parameters into ERP rebate module\" (replaces manual Step 1).",
+     "- System auto-log of \"Quarterly rebate calculation & claim\" (replaces manual Step 2).",
+     "- System auto-count of \"counts against future fund\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "Vendor rebates and co-op advertising funds are a significant revenue stream for BuildRight Depot, representing ~1.5–2.0% of COGS (~PHP 800M–1.2B annually). These arrangements fall into three categories: (a) **Volume Rebates** — vendors pay BuildRight a percentage of purchases when annual purchase volume exceeds agreed thresholds (e.g., \"3% rebate on all purchases exceeding PHP 50M annually\"); these are typically settled quarterly or annually; (b) **Co-Op Advertising Funds** — vendors contribute to BuildRight's advertising costs (catalog placement, social media ads, in-store displays) in exchange for prominent product placement; typically calculated as a percentage of BuildRight's purchases from that vendor (2–5%); (c) **Promotional Incentives** — vendors offer one-time payments or discounts to secure BuildRight's participation in promotional events (bi-monthly sales, seasonal promotions); these may include: markdown money (vendor subsidizes the discount on their products during sales), display allowances (payment for end-cap or promotional display placement), and new product launch incentives. Without systematic tracking, BuildRight may: fail to claim earned rebates (leaving money on the table), over-claim rebates (creating vendor disputes), or fail to fulfill co-op advertising obligations (resulting in vendor clawback). This workflow manages the full lifecycle of vendor rebates, co-op funds, and promotional incentives."
+    ],
+    "Controls": [
+     "- CTL-248 (ensure controlled execution — Vendor Performance & Contracts (PA-03.3).)",
+     "- operational: Category Manager review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor disputes on purchase volume** — vendors may dispute BuildRight's rebate claim based on their own records (especially for import purchases where LC timing differs from goods receipt timing); AP records are the authoritative source and must be reconcilable",
+     "- **Clawback risk**: some vendor rebate agreements include clawback clauses (if BuildRight's purchases drop below threshold, previously earned rebates must be returned); Category Manager must track and manage clawback risk during vendor negotiations; mitigated by the Category Manager review and approval gate and operational: periodic reconciliation against source documents",
+     "- **Co-op advertising documentation** — vendors may require proof of advertising placement (photos of in-store displays, screenshots of digital ads, copies of catalog pages) before confirming co-op fund claims; Marketing must maintain systematic documentation",
+     "- **Rebate income recognition** — under PFRS, vendor rebates may need to be recognized as a reduction of COGS (income approach) or as a reduction of inventory cost (cost approach); Finance must apply the correct accounting treatment per PFRS interpretation"
+    ],
+    "Staffing Implication": [
+     "- **Category Manager**: ~4–6 hours/quarter on rebate claims + ~2–3 hours/month on co-op + ~2–4 hours per promotional event = ~120 hours/year",
+     "- **Finance Analyst**: ~4–6 hours/quarter on rebate calculation + ~8 hours/year on program ROI = ~32 hours/year",
+     "- **Marketing Manager**: ~2–3 hours/month on co-op reconciliation = ~30 hours/year",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- ERP rebate module — agreement tracking, cumulative purchase monitoring, automated calculation",
+     "- Supplier portal — rebate claim submission, vendor confirmation, dispute management",
+     "- AP module — rebate credit memo and payment processing",
+     "- Marketing module — co-op advertising cost tracking by vendor",
+     "- Promotional management module — promotional sales tracking and incentive calculation",
+     "- BI dashboard — vendor program ROI, rebate income trend, co-op fund utilization"
+    ],
+    "Time Estimate": [
+     "- Quarterly rebate processing: ~20–30 hours total across all vendors",
+     "- Monthly co-op reconciliation: ~10–15 hours total",
+     "- Per promotional event: ~2–4 hours",
+     "- Annual ROI analysis: ~8–16 hours",
+     "- **Total annual: ~200–250 person-hours/year**",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "**Rebate agreement setup & tracking**: (a) during annual vendor negotiations (W44), Category Manager negotiates rebate terms: (i) volume rebate tiers (e.g., PHP 0–50M = 1%, PHP 50–100M = 2%, > PHP 100M = 3%), (ii) co-op advertising fund percentage (e.g., 3% of annual purchases), (iii) promotional incentive schedule (e.g., PHP 200K per bi-monthly catalog placement); (b) Finance Analyst enters rebate agreement parameters into ERP rebate module: tier thresholds, percentage rates, settlement frequency, eligible product categories, exclusions; (c) system tracks cumulative purchases per vendor against rebate tiers in real-time; (d) system alerts Category Manager when vendor approaches next rebate tier threshold",
+     "duration": "2–4 hours/vendor during annual negotiation",
+     "n": "1",
+     "r": "Category Manager / Finance Analyst"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "**Quarterly rebate calculation & claim**: (a) at quarter-end, system calculates earned rebate per vendor: (i) cumulative purchases for the quarter × applicable rebate rate, (ii) if annual rebate: system calculates projected annual rebate based on YTD purchases × annualized rate; (b) Finance Analyst reviews calculated rebates: (i) verify purchase volume against AP records per W7, (ii) verify eligible products (some agreements exclude consignment, clearance, or imported items), (iii) verify no double-counting across entities (BuildRight Depot purchases vs. Logistics purchases); (c) system generates rebate claim report per vendor with supporting purchase detail; (d) Category Manager reviews and approves claim; (e) claim transmitted to vendor via supplier portal; (f) vendor reviews and confirms or disputes; (g) upon vendor confirmation: system generates AP credit memo or vendor payment per agreement (credit against future invoices or direct payment)",
+     "duration": "4–6 hours/quarter",
+     "n": "2",
+     "r": "System / Finance Analyst / Category Manager"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "**Co-op advertising fund reconciliation**: Monthly, Marketing Manager and Category Manager reconcile co-op advertising fund: (a) system calculates co-op fund earned: monthly purchases from vendor × co-op fund %; (b) system tracks co-op advertising expenditures by vendor: (i) catalog placement costs (per page, per edition), (ii) social media advertising spend featuring vendor's products, (iii) in-store display costs (signage, fixtures, point-of-purchase materials), (iv) digital advertising costs (website banners, search ads); (c) reconcile earned fund vs. spent amount: (i) if earned > spent: BuildRight has surplus co-op fund to spend on vendor's advertising, (ii) if spent > earned: BuildRight may owe vendor reimbursement or excess counts against future fund; (d) Marketing Manager plans next month's co-op advertising allocation per vendor based on fund balance and promotional calendar",
+     "duration": "2–3 hours/month",
+     "n": "3",
+     "r": "Marketing Manager / Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Promotional incentive claim processing**: Per promotional event: (a) before sale event: Category Manager negotiates promotional incentives with vendor: markdown money (vendor subsidizes discount on their products), display allowance (payment for featured placement), bonus stock (vendor provides free product for every X units purchased); (b) promotional incentive terms entered in ERP with promotional event ID; (c) during promotion: system tracks promotional sales by vendor — items sold at promotional price, discount amount, display placement verification; (d) post-promotion: system calculates total promotional incentive earned per vendor: (i) markdown money: total units sold at discount × vendor subsidy per unit, (ii) display allowance: per-placement fee × number of stores displaying, (iii) bonus stock: units earned × cost per unit; (e) Category Manager submits promotional incentive claim to vendor with supporting sales data; (f) vendor confirms and issues credit or payment",
+     "duration": "2–4 hours per promotional event",
+     "n": "4",
+     "r": "Category Manager / System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "**Annual vendor program ROI analysis**: Annual, Category Manager and Finance Analyst evaluate vendor program ROI: (a) total rebates, co-op income, and promotional incentives earned per vendor, (b) as % of purchases from that vendor (benchmark: 2–5% of purchases), (c) vendor compliance rate (claims disputed, payments delayed), (d) comparison: vendors with rebate programs vs. vendors without (are rebate vendors giving BuildRight better net pricing or just inflating gross price to fund rebates?); (e) recommend to VP Merchandising: negotiate higher rebate rates with top vendors, replace underperforming rebate programs with flat net pricing, or expand co-op advertising programs",
+     "duration": "1–2 days/year",
+     "n": "5",
+     "r": "Category Manager / Finance Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W44",
+    "W7"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,516 @@
+{
+ "process_area": {
+  "id": "PA-62.1",
+  "title": "Sample Inventory Procurement & Distribution"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-62-product-sample-display-management/PA-62.1-sample-inventory-procurement.md",
+ "value_stream": {
+  "directory": "VS-62-product-sample-display-management",
+  "id": "VS-62",
+  "name": "Product Sample & Display Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-415"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; ~200 stores × 8–10 tile sample boards",
+    "Owner": "Category Manager (Tiles)",
+    "Participants": "Category Mgr, Vendor, Merch Planner, DC Ops",
+    "Trigger": "Quarterly sample refresh or new product launch",
+    "Volume": "~1,600–2,000 tile sample boards/quarter"
+   },
+   "id": "W2334",
+   "level": 2,
+   "name": "Tile & Flooring Sample Procurement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sample-replenishment auto-triggered from the W2337 minimum-threshold flag; sample-label auto-regenerated when the parent SKU price changes"
+    ],
+    "Controls": [
+     "- CTL-415 (ensure controlled execution — Sample Inventory Procurement & Distribution (PA-62.1).)",
+     "- operational: sample inventory tracked separately — prevents a sample-SKU transaction from corrupting sellable-inventory counts; operational: Store Manager display-condition check in the VS-07 daily walk"
+    ],
+    "Pain Points / Risks": [
+     "- **Sample-shrinkage risk**: physical tile samples walk (customers pocket a tile piece) or get damaged on the display board, leaving gaps that hurt conversion; mitigated by the W2337 minimum-threshold tracking and the durable-board/glued-sample construction spec",
+     "- **Sample-sellable-decoupling risk**: the sample is mounted at a price that doesn't match the current sellable SKU price (after a price change), misleading the customer; mitigated by the sample-SKU→parent-SKU link that flags the sample for re-labeling when the parent price changes"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item/sample master (links to VS-29 / W252, W296 service & non-stock item master) — the sample-SKU as a distinct tracked item tied to its sellable parent SKU",
+     "- Planogram/space (links to VS-55 / W86 planogram compliance, W314 planogram template master) — the Tile Gallery zone placement",
+     "- DC distribution (links to VS-04 / W3, W106 dispatch) — samples ride the regular replenishment"
+    ],
+    "Time Estimate": [
+     "~2–3 days Category Manager selection per quarter + ~1.5 weeks distribution + ~30 min/store merchandising × 200 stores = **~120–160 hours/quarter** distributed across Category Manager, DC, and Store Managers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager selects the tile/flooring SKUs requiring physical sample displays (the A/B movers where a tactile sample lifts conversion); coordinates with the vendor for sample production — physical tile pieces mounted on display boards with the SKU, price, and spec card",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Vendor delivers the sample boards to the DC; DC distributes to the 200 stores via the regular replenishment cycle (samples ride alongside merchandise POs to avoid a separate freight line); Store Manager merchandises the samples in the Tile Gallery zone per the VS-55 planogram",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Vendor / DC / Store Manager"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "System tags each sample board with a sample-SKU (distinct from the sellable SKU) so sample inventory is tracked separately from sellable inventory and the W2340 sample-to-order conversion can attribute the sale",
+     "duration": "Per refresh",
+     "n": "3",
+     "r": "Merch Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W106",
+    "W2337",
+    "W2340",
+    "W252",
+    "W296",
+    "W3",
+    "W314",
+    "W86"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "Semi-annual; ~200 stores × 200 color cards",
+    "Owner": "Category Manager (Paint)",
+    "Participants": "Category Mgr, Paint Vendor, Store Ops",
+    "Trigger": "Seasonal refresh or new paint line introduction",
+    "Volume": "~40,000 color cards per refresh cycle"
+   },
+   "id": "W2335",
+   "level": 2,
+   "name": "Paint Color Card & Swatch Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Card-distribution tracking with per-store receipt confirmation; tint-code→card QR code so a customer can scan the card to see the digital swatch (links to W2339)"
+    ],
+    "Controls": [
+     "- CTL-179: warranty/return integrity — a color-mismatch return traces back to the card accuracy; operational: Category Manager cycle-verification sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Color-mismatch risk**: the printed card doesn't match the actual tinted paint (card stock absorbs color differently, or the vendor's card and BuildRight's tint formula diverge), leading to customer complaints and returns; mitigated by the sample-verification in step 3 and the tint-formula governance in W168",
+     "- **Card-walk risk**: color cards are pocketable and high-walk; mitigated by displaying one reference set and keeping backups behind the counter, plus the W2337 replenishment"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item/sample master (links to VS-29 / W296) — color cards as sample-SKUs tied to the paint SKU and tint code",
+     "- Paint-mixing module (links to VS-09 / W168 custom paint mixing) — the tint code on the card drives the mix; color-card accuracy is the customer's expectation of the mix result",
+     "- Planogram (links to VS-55) — Paint Station card-display placement"
+    ],
+    "Time Estimate": [
+     "~1.5 days Category Manager ordering + ~1 week distribution + ~1 hour/store replacement × 200 stores = **~250–300 hours per cycle ≈ ~500–600 hours/year** (2 cycles)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Vendor",
+     "activity": "Category Manager orders the updated color-card sets from the paint vendor: all available tints with BuildRight's current pricing printed on each card; vendor prints and delivers to the DC",
+     "duration": "1–2 days",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "DC distributes to stores; Paint Station staff replaces the old cards with the new set (old cards recycled per VS-73 waste streams); system tracks the distribution and confirms receipt per store",
+     "duration": "1 week",
+     "n": "2",
+     "r": "DC / Store Staff"
+    },
+    {
+     "a": "Vendor",
+     "activity": "Category Manager validates the color-card accuracy against the actual tinted paint (the card is a representation; the mixed paint must match) via a sample-verification at a few stores each cycle",
+     "duration": "Per cycle",
+     "n": "3",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W168",
+    "W2337",
+    "W2339",
+    "W296"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-179"
+   ],
+   "fields": {
+    "Frequency": "Annual + new launches; ~200 stores × 5–8 samples",
+    "Owner": "Category Manager (Building Materials)",
+    "Participants": "Category Mgr, Vendor, Merch Planner, DC Ops",
+    "Trigger": "New product launch or annual refresh",
+    "Volume": "~1,000–1,600 countertop samples/cycle"
+   },
+   "id": "W2336",
+   "level": 2,
+   "name": "Countertop & Surface Material Sample Distribution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sample→special-order quote auto-populated from the sample-SKU scan (the Sales Associate scans the chip and the quote opens pre-filled with the parent slab SKU and current price)"
+    ],
+    "Controls": [
+     "- CTL-179: warranty/return integrity — a variation-dispute return; operational: \"natural variation\" disclosure standard on every stone sample"
+    ],
+    "Pain Points / Risks": [
+     "- **Sample-vs-slab-variation risk**: a granite sample chip doesn't represent the full-slab variation (granite is naturally variable), so the customer's slab differs from the sample they selected; mitigated by the customer-viewing-the-actual-slab step in the special-order process (W38) and a clear \"natural variation\" disclosure on the sample",
+     "- **Chip-damage risk**: laminate/quartz chips crack or the label peels, making the sample unreadable; mitigated by the durable-chip spec and the W2337 replenishment"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Item/sample master (links to VS-29 / W252, W296) — countertop sample-SKU tied to the full-slab parent",
+     "- Planogram (links to VS-55) — countertop display zone placement",
+     "- Special-order module (links to VS-09 / W38 special order) — countertops are typically special-order (full slab cut to spec), so the sample→quote→special-order chain is the conversion path"
+    ],
+    "Time Estimate": [
+     "~3 days Category Manager selection + ~1.5 weeks distribution + ~30 min/store merchandising × 200 stores = **~140–180 hours/cycle**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Manager selects the countertop SKUs for sample display (granite, quartz, laminate — the materials where the tactile/visual sample is decisive); vendor produces the sample chips; distributed via the DC; stores display in the dedicated countertop zone",
+     "duration": "2–3 days + 1–2 weeks",
+     "n": "1",
+     "r": "Category Manager / Vendor"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "System tags the countertop sample chips with sample-SKUs tied to the sellable parent (the full-slab SKU), enabling the W2340 sample-to-order attribution",
+     "duration": "Per cycle",
+     "n": "2",
+     "r": "Merch Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2337",
+    "W2340",
+    "W252",
+    "W296",
+    "W38"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-51"
+   ],
+   "fields": {
+    "Frequency": "Monthly; 200 stores",
+    "Owner": "Merchandising Coordinator",
+    "Participants": "Merch Coordinator, Store Manager, DC Ops",
+    "Trigger": "Monthly inventory review of sample stock",
+    "Volume": "~200 store sample inventories/month"
+   },
+   "id": "W2337",
+   "level": 2,
+   "name": "Sample Inventory Tracking & Replenishment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Below-threshold auto-detection from the cycle-count result; replenishment auto-added to the next regular store delivery"
+    ],
+    "Controls": [
+     "- CTL-51: stale/incomplete sample master — the sample-SKU must be current; operational: Merch Coordinator monthly review of the sample-presence rate per store"
+    ],
+    "Pain Points / Risks": [
+     "- **Hidden-gap risk**: a sample is missing but not flagged because the threshold is set too low or the cycle-count misses the sample class; mitigated by the W2337 monthly sample-specific review (separate from the sellable cycle count) and the W86 planogram-compliance audit that visually catches gaps",
+     "- **Replenishment-latency risk**: a below-threshold store waits 1–2 weeks for the next delivery, losing conversion the whole time; mitigated by samples riding every regular replenishment (not a separate monthly sample-only delivery)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Inventory module (links to VS-05 / W6 cycle counting, W97 sample/demo inventory status) — sample inventory as a tracked class with its own minimum thresholds",
+     "- DC distribution (links to VS-04 / W3) — samples ride regular replenishment",
+     "- Analytics (links to VS-27 / W113) — sample-presence rate per store (a planogram-compliance metric)"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/month Coordinator tracking + DC pick/pack absorbed into regular ops + ~15 min/store re-display × ~60 below-threshold stores/month = **~180–250 hours/year** Merch Coordinator + Store Managers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Merchandising Planner",
+     "activity": "System tracks the sample inventory per store: tile boards, color cards, countertop chips, fabric swatches — each as a tracked sample-SKU; flags stores with damaged/missing samples below the minimum threshold (e.g., <6 of 10 tile boards present)",
+     "duration": "2–3 hours/month",
+     "n": "1",
+     "r": "System / Merch Coordinator"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Coordinator generates replenishment orders for the below-threshold stores; samples picked at the DC and shipped with the regular store delivery; Store Manager confirms receipt and re-displays",
+     "duration": "1–2 weeks",
+     "n": "2",
+     "r": "Merch Coordinator / DC"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W3",
+    "W6",
+    "W86",
+    "W97"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-39",
+    "CTL-48"
+   ],
+   "fields": {
+    "Frequency": "Annual; ~20 sample vendors",
+    "Owner": "Category Manager",
+    "Participants": "Category Mgr, Procurement, Finance",
+    "Trigger": "Annual vendor review for sample costs",
+    "Volume": "~20 vendor negotiations/year"
+   },
+   "id": "W2338",
+   "level": 2,
+   "name": "Sample Vendor Negotiation & Cost Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sample-cost-per-vendor dashboard (BuildRight-funded vs. vendor-funded) surfaced at the annual negotiation; year-over-year delta auto-flagged"
+    ],
+    "Controls": [
+     "- CTL-39 (rebate/co-op accuracy — the sample cost-sharing validated against the agreement); CTL-48 (rebate-dispute resolution if the vendor disputes the cost-share)"
+    ],
+    "Pain Points / Risks": [
+     "- **Cost-creep risk**: the vendor funds samples year 1 then quietly passes the cost to BuildRight year 2 (buried in a price increase); mitigated by the annual sample-cost line-item review against the prior-year terms",
+     "- **Free-rider risk**: a vendor refuses to fund samples while benefiting from the display-driven sales; mitigated by the sample-funding expectation built into the Strategic-tier vendor commercial terms (W2464)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Co-op/rebate agreement master (links to VS-39 / W27, VS-14 marketing co-op) — the sample-cost-sharing terms recorded in the vendor agreement",
+     "- Vendor scorecard (links to VS-67 / W2458) — sample-cost cooperation as a qualitative dimension",
+     "- AP (links to VS-15 / W7) — where BuildRight shares the cost, the sample invoice is processed against the co-op accrual"
+    ],
+    "Time Estimate": [
+     "~1.5 days/year Category Manager + Procurement negotiation × ~20 vendors (distributed, ~1 hour each) = **~40–60 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "Category Manager negotiates the sample costs with each of the ~20 sample vendors: tile boards, color cards, countertop chips; samples are typically vendor-funded (the vendor absorbs the cost as a co-marketing investment) or cost-shared; the negotiated terms feed the vendor co-op budget per VS-39",
+     "duration": "1–2 days/year",
+     "n": "1",
+     "r": "Category Manager / Procurement"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2458",
+    "W2464",
+    "W27",
+    "W7"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-51"
+   ],
+   "fields": {
+    "Frequency": "Quarterly app updates; continuous availability",
+    "Owner": "Digital Product Manager",
+    "Participants": "Digital PM, IT, Category Mgr, Vendor",
+    "Trigger": "Quarterly app update or new feature launch",
+    "Volume": "~42,900 ecommerce customers + in-store tablet users"
+   },
+   "id": "W2339",
+   "level": 2,
+   "name": "Digital Sample & Augmented Reality Tool Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- AR-asset auto-disabled when the SKU is discontinued; digital-asset accuracy flagged for re-validation when the physical sample changes (W2334/W2335 refresh)"
+    ],
+    "Controls": [
+     "- CTL-51: digital-asset/SKU master currency; operational: Category Manager quarterly accuracy sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Digital-vs-physical-mismatch risk**: the AR render looks different from the actual product (lighting, texture resolution), generating \"not as shown\" returns; mitigated by the Category Manager accuracy validation in step 2 and a \"render is indicative\" disclosure",
+     "- **Asset-staleness risk**: a SKU is discontinued but its AR asset remains, letting customers visualize a product they can't buy; mitigated by the SKU-enabled flag tied to the item-master lifecycle status (W68 discontinuation)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM/DAM (links to VS-137 / W50 PIM, the digital-asset master) — the 3D models and textures as governed digital assets",
+     "- Ecommerce/app platform (links to VS-10 / W50 PIM, VS-75 digital engagement app) — the AR tool surface",
+     "- Item master (links to VS-29 / W252) — SKU enabled-for-visualization flag"
+    ],
+    "Time Estimate": [
+     "~4 hours/week Digital PM management + ~1 day/quarter Category Manager validation = **~250–300 hours/year** Digital PM + Category Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CIO",
+     "activity": "Digital PM manages the AR/3D visualization tools in the BuildRight app and in-store tablets: tile visualizer (see tile on your room floor), paint color visualizer (see the wall color), countertop preview; updates the product catalog quarterly with new SKUs enabled for visualization",
+     "duration": "Ongoing",
+     "n": "1",
+     "r": "Digital PM / IT"
+    },
+    {
+     "a": "Digital PM",
+     "activity": "Category Manager validates the color/texture accuracy of the digital samples vs. the physical (the digital must match the physical sample which must match the actual product); coordinates with the vendor for the digital assets (3D models, high-res textures)",
+     "duration": "Quarterly",
+     "n": "2",
+     "r": "Category Manager / Vendor"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W2334",
+    "W2335",
+    "W252",
+    "W50",
+    "W68"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-415"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~2,000–3,000 sample-assisted sales/month",
+    "Owner": "Sales Associate",
+    "Participants": "Sales Associate, Customer, CRM",
+    "Trigger": "Customer selects product based on sample display",
+    "Volume": "~2K–3K/month across tile, flooring, countertop categories"
+   },
+   "id": "W2340",
+   "level": 2,
+   "name": "Sample-to-Order Conversion Process",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sample-conversion dashboard auto-populated from the tagged transactions; sample-ROI auto-computed (sample-program cost ÷ sample-assisted margin)"
+    ],
+    "Controls": [
+     "- CTL-415 (ensure controlled execution — Sample Inventory Procurement & Distribution (PA-62.1).)",
+     "- operational: sample-SKU transaction integrity — the attribution link must not corrupt sellable-inventory financials; operational: Department Supervisor visibility on sample-assisted sale rate"
+    ],
+    "Pain Points / Risks": [
+     "- **Scan-failure risk**: the sample barcode is damaged/unreadable, so the Associate looks up the SKU manually and the sample-attribution is lost (understating the sample ROI); mitigated by the sample-SKU lookup fallback that still captures the attribution",
+     "- **Inventory-disappointment risk**: the sample sells the customer on a SKU that's out of stock, converting interest into a lost sale; mitigated by the real-time inventory check in step 1 (POS ATP per the integration architecture) before the quote closes"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / quotation (links to VS-08 / W5B in-store selling, W542 quotation & estimate) — the sample-scan → quote/sale path",
+     "- Item/sample master (links to VS-29 / W296) — the sample-SKU→parent-SKU link that attributes the sale",
+     "- Special order (links to VS-09 / W38) — countertop sample sales flow to special order",
+     "- CRM (links to VS-13) — sample-assisted sale tagged on the customer record for follow-up"
+    ],
+    "Time Estimate": [
+     "~20 min average per sample-assisted sale × ~2,500/month = **~800–1,000 staff-hours/month** Sales Associate (absorbed into the selling role, not incremental headcount); system logging is automated."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Department Supervisor",
+     "activity": "Sales Associate assists the customer at the sample display; identifies the selected sample; scans the sample barcode or looks up the SKU in the system; checks sellable inventory and current pricing; creates a quote or sales order (special order for countertops per W38)",
+     "duration": "15–30 min",
+     "n": "1",
+     "r": "Sales Associate"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "System logs the sample-assisted sale: sample-ID → parent-SKU → transaction; tracks the conversion rate per sample per store; feeds the sample-ROI analytics that justify the W2338 sample-program spend",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2338",
+    "W296",
+    "W38",
+    "W542",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-198"
+   ],
+   "fields": {
+    "Frequency": "6/year; 200 stores",
+    "Owner": "Merchandising Coordinator",
+    "Participants": "Merch Coordinator, Store Managers, DC Ops",
+    "Trigger": "Seasonal transition (6 rotations/year)",
+    "Volume": "~1,200 seasonal sample refreshes/year"
+   },
+   "id": "W2341",
+   "level": 2,
+   "name": "Seasonal Sample Refresh Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Refresh-kit auto-assembled at the DC from the seasonal planogram; off-season-sample disposition auto-suggested per vendor agreement"
+    ],
+    "Controls": [
+     "- CTL-198: asset-grade sample disposition; operational: Merch Coordinator sign-off on the rotation completion per store cluster"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-timed-refresh risk**: the samples rotate before or after the merchandise, leaving the display incoherent (new merchandise, old samples) for a window; mitigated by the refresh sequenced into the VS-55 planogram rotation as a single workstream",
+     "- **Off-season-sample-waste risk**: off-season samples are discarded when they could be reused next season or returned to the vendor for credit; mitigated by the disposition decision (return-to-vendor where the vendor accepts, recycle where not) in step 1"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Planogram/reset (links to VS-55 / W86, W264 seasonal transition, W314 planogram template) — the seasonal sample refresh sequenced with the merchandise reset",
+     "- DC pre-staging (links to VS-04 / W3) — seasonal sample kits kitted ahead of the reset wave",
+     "- Inventory disposition (links to VS-05 / W91 damaged/obsolete, VS-73 waste) — off-season sample disposition"
+    ],
+    "Time Estimate": [
+     "~1.5 weeks/rotation × 6 rotations + ~1 hour/store reset work × 200 stores = **~250–350 hours/rotation ≈ ~1,500–2,100 hours/year** distributed across Merch Coordinator, DC, and Store Managers."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Merchandising Planner",
+     "activity": "Coordinator issues the seasonal sample-refresh instructions: remove the off-season samples (return-to-vendor or recycle per VS-73), install the new-season samples; DC pre-stages the seasonal sample kits; stores execute during the planogram rotation per VS-55 (samples rotate with the merchandise reset)",
+     "duration": "1–2 weeks per rotation",
+     "n": "1",
+     "r": "Merch Coordinator / DC / Store Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W264",
+    "W3",
+    "W314",
+    "W86",
+    "W91"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,565 @@
+{
+ "process_area": {
+  "id": "PA-32.3",
+  "title": "Reverse Logistics & Disposition"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-32-returns-reverse-logistics/PA-32.3-reverse-logistics-disposition.md",
+ "value_stream": {
+  "directory": "VS-32-returns-reverse-logistics",
+  "id": "VS-32",
+  "name": "Returns & Reverse Logistics"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "Bi-weekly per store, aligned to the canonical store-side consolidation cycle (W176); ~400 reverse-logistics shipments/month across 200 stores",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager, Stock Associate, DC Returns Coordinator, Logistics Coordinator",
+    "Trigger": "Accumulated returns at store level reach consolidation threshold (~20 items or the bi-weekly cycle)",
+    "Volume": "~2 shipments/store/month"
+   },
+   "id": "W1638",
+   "level": 2,
+   "name": "Store-to-DC Reverse Logistics Consolidation Program, In-Transit Tracking & DC Hand-Off",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generates reverse shipping order with destination DC\" (replaces manual Step 2).",
+     "- System auto-capture of \"enter in-transit reverse logistics tracking\" (replaces manual Step 3).",
+     "- System auto-scan of \"scans shipment barcode\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules",
+     "---"
+    ],
+    "Pain Points / Risks": [
+     "- **Backhaul space**: Outbound delivery trucks may be full, leaving no space for returns; requires logistics coordination or dedicated reverse pickup",
+     "- **Item condition during transit**: Returned items not properly packed may be further damaged during store-to-DC transit",
+     "- **Documentation gaps**: Missing packing slips or incomplete item lists cause delays at DC receiving"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store returns staging inventory with disposition classification (W1638.1)",
+     "- Reverse shipping order creation with backhaul scheduling (W1638.2)",
+     "- In-transit reverse logistics tracking (W1638.3)",
+     "- DC receiving of reverse shipment with disposition routing (W1638.4)"
+    ],
+    "Time Estimate": [
+     "Bi-weekly store consolidation ~2 hours/store/event × ~26 events/year ≈ 52 hours/store/year ≈ 10,400 hours/year chain-wide; reverse-shipment creation 15 min × ~2 shipments/store/month ≈ 1,200 hours/year; driver pickup 10 min/store ≈ 800 hours/year; DC receipt and verification 20 min/shipment × ~400 shipments/month ≈ 1,600 hours/year (inventory location transfer and in-transit tracking automated)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Bi-weekly (per the Frequency, aligned to W176): Stock Associate consolidates items in store returns staging area: (a) groups by disposition type (RTV, quality hold, damaged/defective, recall), (b) groups RTV items by vendor, (c) packs items securely with packing slip listing each item, disposition type, and original transaction reference",
+     "duration": "~2 hours/event",
+     "n": "1",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Store Manager or Stock Associate creates reverse shipment in system: (a) selects items from returns staging inventory, (b) system generates reverse shipping order with destination DC, (c) assigns to scheduled outbound delivery truck (driver picks up returns during regular DC-to-store delivery — backhaul optimization)",
+     "duration": "15 min",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Logistics Coordinator",
+     "activity": "Driver picks up consolidated returns from store during scheduled delivery run; signs for returned items; items enter in-transit reverse logistics tracking",
+     "duration": "10 min/store",
+     "n": "3",
+     "r": "Driver"
+    },
+    {
+     "a": "DC Returns Coordinator",
+     "activity": "DC Receiving Clerk receives reverse shipment: (a) scans shipment barcode, (b) verifies items against packing slip, (c) routes items to DC returns processing area per disposition type",
+     "duration": "20 min/shipment",
+     "n": "4",
+     "r": "DC Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "System updates inventory location from store to DC; updates reverse logistics in-transit status; items remain in their disposition status (RTV, damaged, recall, etc.)",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W176"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "~800 reverse shipments/month across 4 DCs (~200/DC)",
+    "Owner": "DC Returns Coordinator",
+    "Participants": "DC Returns Coordinator, DC Quality Inspector, DC Supervisor",
+    "Trigger": "Reverse logistics shipments received at DC returns processing area",
+    "Volume": "~50 shipments/DC/week"
+   },
+   "id": "W1639",
+   "level": 2,
+   "name": "Returns Processing Center Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"inspection per W1603\" (replaces manual Step 1).",
+     "- System auto-validate of \"For items requiring further assessment\" (replaces manual Step 2).",
+     "- System auto-update of \"updates system with final disposition for each item\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: DC Returns Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Disposition-limbo risk**: ~800 reverse shipments/month received but unprocessed age past vendor claim windows; mitigated by sort-at-receipt routing by disposition type and the weekly processing summary with receipt-to-disposition cycle time (steps 1, 4)",
+     "- **Status-opacity risk**: physical items move while system status lags, misstating available stock; mitigated by final-disposition system updates as a precondition to stock relocation (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Returns receiving and sorting with disposition routing (W1639.1)",
+     "- Secondary quality check integration (W1639.2)",
+     "- Final disposition recording with inventory status update (W1639.3)",
+     "- Returns processing dashboard with cycle time and backlog metrics (W1639.4)"
+    ],
+    "Time Estimate": [
+     "Shipment sort-in 20 min/shipment × ~800 reverse shipments/month ≈ 3,200 hours/year; secondary quality assessment 10 min/item and disposition updates 5 min/item at the ~30% manual-review share of returns; weekly processing summary 1 hour/DC/week ≈ 208 hours/year across 4 DCs.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Returns Coordinator receives reverse shipments; sorts by disposition type: (a) RTV — route to vendor return staging per W1631, (b) Quality Hold — route to quality inspection per W1603, (c) Damaged/Defective — route to damage disposition per W91, (d) Recall — route to recall staging per W1616, (e) Resaleable — route to restock (putaway per W18)",
+     "duration": "20 min/shipment",
+     "n": "1",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "DC Returns Coordinator",
+     "activity": "For items requiring further assessment: DC Quality Inspector performs secondary quality check; determines final disposition per W1626",
+     "duration": "10 min/item",
+     "n": "2",
+     "r": "DC Quality Inspector"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Returns Coordinator updates system with final disposition for each item; inventory moved from \"Returns Processing\" to final status",
+     "duration": "5 min/item",
+     "n": "3",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Weekly: DC Returns Coordinator generates returns processing summary: (a) items received, processed, and dispositioned by type, (b) processing cycle time (receipt to final disposition), (c) backlog items (> 5 days unprocessed), (d) DC Supervisor reviews backlog and allocates resources",
+     "duration": "1 hour/week",
+     "n": "4",
+     "r": "DC Returns Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1603",
+    "W1616",
+    "W1626",
+    "W1631",
+    "W18",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "~500–800 items/month eligible for refurbishment",
+    "Owner": "DC Returns Coordinator",
+    "Participants": "DC Returns Coordinator, DC Quality Inspector, Category Manager (pricing)",
+    "Trigger": "Returned item assessed as \"Refurbishable\" during quality assessment (W1626 or W1639)",
+    "Volume": "~125–200 per DC/month"
+   },
+   "id": "W1640",
+   "level": 2,
+   "name": "Refurbishment & Repackaging Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-inspect of \"Inspector identifies refurbishable items\" (replaces manual Step 1).",
+     "- System auto-record of \"System creates refurbishment record\" (replaces manual Step 3).",
+     "- System auto-report of \"reports refurbishment metrics\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Refurb-overreach risk**: functionally marginal items refurbished and resold return again as defects; mitigated by inspector eligibility criteria (functional item, cosmetic/packaging-only flaws) gating refurbishment (step 1)",
+     "- **Traceability risk**: refurbished items lose their original-item linkage, breaking warranty and quality analytics; mitigated by the refurbishment record linking original and refurbished units (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Refurbishment eligibility assessment linked to quality check (W1640.1)",
+     "- Refurbished item creation with discounted pricing (W1640.3)",
+     "- Refurbishment analytics dashboard (W1640.4)"
+    ],
+    "Time Estimate": [
+     "~25 min per refurbished item (identification 5 min + repack and relabel 15 min + refurbishment record creation 5 min) × ~500–800 eligible items/month ≈ 2,500–4,000 hours/year; monthly refurbishment metrics 1 hour/DC ≈ 48 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "DC Returns Coordinator",
+     "activity": "DC Quality Inspector identifies refurbishable items: (a) item is functional but packaging damaged, (b) item has minor cosmetic imperfection that doesn't affect functionality, (c) item is missing minor accessories that can be replaced (screws, manual), (d) item needs cleaning or re-boxing",
+     "duration": "5 min/item",
+     "n": "1",
+     "r": "DC Quality Inspector"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Returns Coordinator performs refurbishment: (a) repack in new box or rewrap, (b) replace missing accessories from spare parts inventory, (c) clean and polish, (d) apply \"Refurbished\" or \"Open Box\" label per Category Manager pricing policy",
+     "duration": "15 min/item",
+     "n": "2",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "System creates refurbishment record: (a) original item linked to refurbished item, (b) refurbished item priced at discount (typically 10–20% below retail), (c) sold through specific channels: in-store clearance section, ecommerce \"Open Box\" category, or designated outlet store",
+     "duration": "5 min/item",
+     "n": "3",
+     "r": "System / Category Manager"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Monthly: DC Returns Coordinator reports refurbishment metrics: (a) items refurbished vs. scrapped, (b) recovery value (refurbished sale price minus refurbishment cost), (c) recovery rate as % of original product cost",
+     "duration": "1 hour/month",
+     "n": "4",
+     "r": "DC Returns Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1626",
+    "W1639"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "~56,000 return dispositions/month",
+    "Owner": "Quality Manager",
+    "Participants": "Quality Manager, DC Returns Coordinator, Category Managers",
+    "Trigger": "Return processed through quality assessment (W1626, W1639)",
+    "Volume": "Automated disposition for ~70% of returns; manual review for ~30%"
+   },
+   "id": "W1641",
+   "level": 2,
+   "name": "Returns Disposition Decision Engine & Automation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"route to vendor return per W1631\" (replaces manual Step 2).",
+     "- System auto-review of \"reviews disposition decision accuracy\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: Quality Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Mis-disposition-at-scale risk**: one wrong rule mis-routes thousands of returns per month; mitigated by the quarterly accuracy review comparing automated dispositions to actual outcomes (restock sell-through, RTV credit recovery) (step 4)",
+     "- **Exception-flood risk**: overly narrow rules push most returns into manual handling; mitigated by monitoring the automated share (~70% target) and tuning the matrix (steps 2–3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Disposition rules engine — reason code × category × condition × value × vendor-RTV-eligibility matrix deciding ~70% of ~56,000 monthly returns (steps 1–2)",
+     "- Exception queue — non-automatable returns routed to DC Returns Coordinator with Quality Manager guidance (step 3)",
+     "- Decision-accuracy review — quarterly automated-disposition vs. actual-outcome analysis (step 4)"
+    ],
+    "Time Estimate": [
+     "Automated disposition rules handle ~70% of ~56,000 returns/month; exception handling 10 min/item × ~17,000 exceptions/month ≈ 34,000 hours/year of DC Returns Coordinator time; quarterly disposition-accuracy review 4 hours ≈ 16 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Quality Manager",
+     "activity": "System applies automated disposition rules based on: (a) return reason code, (b) item category, (c) item condition assessment, (d) item value, (e) vendor RTV eligibility, (f) resale potential, (g) holding cost vs. recovery value",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Automated disposition matrix: (a) **Unwanted/wrong size + good condition → Restock**: immediate return to available inventory, (b) **Defective + vendor warranty → RTV**: route to vendor return per W1631, (c) **Damaged packaging + functional → Refurbish**: route to refurbishment per W1640, (d) **Damaged packaging + high value → Markdown**: route to markdown per W93, (e) **Safety issue → Recall hold**: route to recall process per W1615, (f) **Low value + damaged → Scrap**: route to disposal per W91, (g) **Seasonal + end of season → Liquidation**: route to liquidation per W1642",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Quality Manager",
+     "activity": "Items falling outside automated rules (exceptions) routed to DC Returns Coordinator for manual disposition with Quality Manager guidance",
+     "duration": "10 min/item",
+     "n": "3",
+     "r": "DC Returns Coordinator"
+    },
+    {
+     "a": "VP Supply Chain",
+     "activity": "Quarterly: Quality Manager reviews disposition decision accuracy: (a) automated disposition vs. actual outcome (did restocked items sell? were RTV credits recovered?), (b) tune rules for improved accuracy, (c) identify new disposition categories needed",
+     "duration": "4 hours/quarter",
+     "n": "4",
+     "r": "Quality Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1615",
+    "W1626",
+    "W1631",
+    "W1639",
+    "W1640",
+    "W1642",
+    "W91",
+    "W93"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "Monthly liquidation cycle",
+    "Owner": "Category Manager",
+    "Participants": "Category Manager, Marketing, Store Operations, DC Returns Coordinator",
+    "Trigger": "Accumulated returned/dispositioned inventory designated for liquidation",
+    "Volume": "~500–1,000 items/month across all locations"
+   },
+   "id": "W1642",
+   "level": 2,
+   "name": "Returned Product Liquidation & Channel Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews liquidation-eligible inventory monthly\" (replaces manual Step 1).",
+     "- System auto-count of \"Category Manager assigns liquidation channel\" (replaces manual Step 2).",
+     "- System auto-record of \"recorded in GL\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: Category Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Cannibalization risk**: liquidation channels undercut full-price sales of the same items; mitigated by channel-assignment rules and clearance-SKU separation from regular stock (step 2)",
+     "- **Value-stall risk**: liquidation items sit at shallow discounts indefinitely; mitigated by the 60-day step-down forcing deeper discount or bulk disposition (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Liquidation-eligible inventory review — monthly aggregation of non-resaleable returns, refurbished units (W1640), and damaged-packaging items (step 1)",
+     "- Channel assignment — in-store clearance (30–50% off), ecommerce clearance, bulk sale, or donation routing (step 2)",
+     "- Markdown & write-down posting — clearance SKU pricing with GL inventory write-down and markdown expense (step 3)",
+     "- Sell-through tracker — weekly clearance velocity with 60-day tier step-downs to deeper discount or bulk sale (step 4)"
+    ],
+    "Time Estimate": [
+     "Monthly liquidation cycle 4 hours (eligibility review 2 hours + channel assignment 2 hours) ≈ 48 hours/year; weekly sell-through monitoring 30 min ≈ 26 hours/year on ~500–1,000 liquidation items/month (clearance pricing updates automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews liquidation-eligible inventory monthly: (a) returned items not resaleable at full price, (b) refurbished items (W1640), (c) damaged packaging items, (d) end-of-season clearance items",
+     "duration": "2 hours/month",
+     "n": "1",
+     "r": "Category Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager assigns liquidation channel: (a) **In-store clearance section** — dedicated markdown area per store; priced at 30–50% discount, (b) **Ecommerce clearance** — online \"Deals\" section with clearance pricing, (c) **Bulk liquidation to jobbers** — sell in bulk to discount retailers or scrap buyers at 10–20% of cost, (d) **Employee sale** — periodic employee-only clearance events at deep discount, (e) **Donation** — functional items donated to community organizations (BuildRight CSR program)",
+     "duration": "2 hours/month",
+     "n": "2",
+     "r": "Category Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "System updates pricing for liquidation channel; inventory moved to clearance SKU or liquidation batch; markdown recorded in GL (inventory write-down + markdown expense)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Track liquidation sell-through: weekly monitoring of clearance inventory velocity; remaining items after 60 days moved to next liquidation tier (deeper discount or bulk sale)",
+     "duration": "30 min/week",
+     "n": "4",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1640"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "~1,000–1,500 reverse logistics shipments/month",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Logistics Coordinator, DC Returns Coordinator, Finance",
+    "Trigger": "Reverse logistics shipment created (store-to-DC, DC-to-vendor, DC-to-customer)",
+    "Volume": "~250–375 per DC/month"
+   },
+   "id": "W1643",
+   "level": 2,
+   "name": "Reverse Logistics Carrier & Cost Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Logistics Coordinator manages reverse logistics carriers\" (replaces manual Step 1).",
+     "- System auto-route of \"route\" (replaces manual Step 2).",
+     "- System auto-review of \"review reverse logistics cost\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: Logistics Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Freight-leakage risk**: BuildRight absorbs RTV freight the vendor is contractually liable for; mitigated by cost allocation flagging vendor-chargeable shipments at creation (step 2)",
+     "- **Damage-in-return-transit risk**: recoverable value destroyed on the way back to the DC or vendor; mitigated by carrier performance review including damage rate, informing carrier selection (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Reverse-shipment planning — backhaul-first routing (store-to-DC on outbound trucks), vendor-arranged DC-to-vendor, courier for customer returns (step 1)",
+     "- Reverse-cost allocation — carrier cost per movement type with vendor-chargeable RTV freight flagged (step 2)",
+     "- Monthly reverse-logistics cost review — cost by type, cost as % of returns value, carrier damage and performance (step 3)"
+    ],
+    "Time Estimate": [
+     "Carrier management 2 hours/week ≈ 104 hours/year; monthly reverse-logistics cost review 1 hour ≈ 12 hours/year across ~1,000–1,500 reverse shipments/month (cost-allocation tracking automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Supply Chain",
+     "activity": "Logistics Coordinator manages reverse logistics carriers: (a) store-to-DC: primarily backhaul on outbound delivery trucks (lowest cost), (b) DC-to-vendor: vendor-arranged pickup (vendor cost) or BuildRight carrier (negotiate vendor reimbursement), (c) DC-to-customer (ecommerce returns): 3PL carrier (Lalamove, Transportify)",
+     "duration": "2 hours/week",
+     "n": "1",
+     "r": "Logistics Coordinator"
+    },
+    {
+     "a": "Controller",
+     "activity": "Cost allocation: system tracks reverse logistics cost per type: (a) carrier cost for RTV shipments (chargeable to vendor where possible), (b) backhaul cost (marginal — loaded on existing route), (c) 3PL cost for ecommerce returns (BuildRight cost — factored into ecommerce cost-to-serve), (d) internal handling cost (DC Returns Coordinator labor)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "VP Supply Chain / CFO",
+     "activity": "Monthly: Logistics Coordinator and Controller review reverse logistics cost: (a) total cost by type, (b) cost as % of returns value, (c) carrier performance (damage rate, transit time), (d) vendor reimbursement recovery rate",
+     "duration": "1 hour/month",
+     "n": "3",
+     "r": "Logistics Coordinator / Controller"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-339"
+   ],
+   "fields": {
+    "Frequency": "Monthly reporting; quarterly executive review",
+    "Owner": "Controller",
+    "Participants": "Controller, Quality Manager, VP Merchandising, VP Supply Chain, CFO",
+    "Trigger": "Monthly financial close cycle",
+    "Volume": "Chain-wide aggregation of returns data"
+   },
+   "id": "W1644",
+   "level": 2,
+   "name": "Returns Financial Analytics & Cost-to-Serve Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"System aggregates monthly returns financial data\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews returns financial report\" (replaces manual Step 2).",
+     "- System auto-issue of \"issues\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-339 (ensure controlled execution — Reverse Logistics & Disposition (PA-32.3).)",
+     "- operational: Controller review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Blind-spot risk**: returns cost buried inside shrink and markdown lines never surfaces as a managed cost-to-serve line; mitigated by monthly aggregation of returns value, recovery, and net cost against the <1.5%-of-gross-revenue target (steps 1–2)",
+     "- **Analysis-without-action risk**: quarterly executive reviews produce decks but no fixes; mitigated by cross-functional action planning that assigns corrective work (vendor VCARs, description fixes) to the top return drivers (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Returns financial data aggregation from POS, ecommerce, warehouse, and finance modules (W1644.1)",
+     "- Returns cost-to-serve calculation (W1644.1)",
+     "- Returns financial dashboard with trend and root cause analysis (W1644.2)",
+     "- Integration with vendor quality (W1608), product content (W50), and loss prevention (W1628) analytics"
+    ],
+    "Time Estimate": [
+     "Monthly returns financial review 2 hours ≈ 24 hours/year; quarterly executive analytics and cross-functional action planning 4 hours ≈ 16 hours/year (returns financial aggregation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Controller",
+     "activity": "System aggregates monthly returns financial data: (a) total returns value by category, store, and channel, (b) return rate (% of sales by category), (c) recovery value (restock + refurbish + RTV credit + liquidation), (d) unrecoverable cost (scrap + markdown loss + handling cost), (e) reverse logistics cost (carrier + handling + refurbishment), (f) cost-to-serve per return (total returns cost ÷ number of returns)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Controller reviews returns financial report: (a) net return cost as % of gross revenue (target: < 1.5%), (b) trend analysis (monthly, quarterly, YoY), (c) top 10 SKUs by return cost, (d) top 10 stores by return rate, (e) recovery rate by disposition type",
+     "duration": "2 hours/month",
+     "n": "2",
+     "r": "Controller"
+    },
+    {
+     "a": "CFO",
+     "activity": "Quarterly: Controller presents returns financial analytics to executive team: (a) total returns cost impact on margin, (b) root cause analysis linking return reasons to quality/vendor/category issues, (c) recommendations: vendor quality improvement, product specification changes, packaging improvements, policy changes",
+     "duration": "2 hours/quarter",
+     "n": "3",
+     "r": "Controller"
+    },
+    {
+     "a": "CEO",
+     "activity": "Cross-functional action planning: VP Merchandising, VP Supply Chain, and Quality Manager review top return drivers and implement corrective actions: (a) vendor quality improvement (W1610), (b) product specification or packaging changes, (c) customer education (improved product information, how-to guides), (d) return policy adjustments for specific categories",
+     "duration": "2 hours/quarter",
+     "n": "4",
+     "r": "VP Merchandising / VP Supply Chain"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1608",
+    "W1610",
+    "W1628",
+    "W50"
+   ]
+  }
+ ]
+}

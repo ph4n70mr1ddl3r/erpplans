@@ -1,0 +1,589 @@
+{
+ "process_area": {
+  "id": "PA-38.3",
+  "title": "Financing Reconciliation & Partner Settlement"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-38-consumer-credit-financing/PA-38.3-financing-reconciliation-settlement.md",
+ "value_stream": {
+  "directory": "VS-38-consumer-credit-financing",
+  "id": "VS-38",
+  "name": "Consumer Credit & Financing"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-357"
+   ],
+   "fields": {
+    "Frequency": "Daily (~5–8 partners × 365 days = ~2,000 settlements/year)",
+    "Owner": "Treasury",
+    "Participants": "Treasury, Revenue Accountant, Accounting Manager",
+    "Trigger": "Daily settlement received from financing partners (T+1 to T+3)",
+    "Volume": "~4,000 installment transactions/day across all stores (per W747; ~120,000/month)"
+   },
+   "id": "W1779",
+   "level": 2,
+   "name": "Financing Partner Daily Settlement Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Financing partner settles daily transactions\" (replaces manual Step 1).",
+     "- System auto-record of \"records to POS transactions\" (replaces manual Step 2).",
+     "- System auto-escalate of \"escalates to partner for unresolved items\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-357 (ensure controlled execution — Financing Reconciliation & Partner Settlement (PA-38.3).)",
+     "- operational: Treasury review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Unmatched-aging risk**: small differences accumulate into an unresolvable mass; mitigated by aging-of-unreconciled reporting reviewed daily (step 4)",
+     "- **False-match risk**: auto-matching binds the wrong records; mitigated by multi-key matching with review thresholds (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Partner settlement capture — daily net remittance (gross − MDR) per partner (~2,000 settlements/year) (step 1)",
+     "- Auto-match engine — transaction reference, date, amount, terminal ID (step 2)",
+     "- Unmatched-item investigation — timing, amount, MDR variance (step 3)",
+     "- Daily reconciliation report with aging of unreconciled items (step 4)"
+    ],
+    "Time Estimate": [
+     "Daily settlement desk ~1.5–2.5 hours (unmatched-item investigation 1–2 hours + reconciliation report 30 min) ≈ 548–913 hours/year across ~5–8 partners' T+1–T+3 settlements (settlement matching automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury",
+     "activity": "Financing partner settles daily transactions: (a) bank installment: acquiring bank remits net amount (gross − MDR) to BuildRight bank account, (b) non-card financing: partner remits approved transaction amounts, (c) BNPL provider: remits via designated settlement account, (d) settlement file received electronically (per partner: CSV, API, or bank statement)",
+     "duration": "Automated (T+1 to T+3)",
+     "n": "1",
+     "r": "Financing Partner → System"
+    },
+    {
+     "a": "Treasury",
+     "activity": "System auto-matches settlement records to POS transactions: (a) match on: transaction reference, date, amount, terminal ID, (b) matched transactions: system posts receipt to GL (debit cash, credit AR-financing partner), (c) unmatched transactions: flagged for investigation (unreconciled items queue)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Treasury investigates unmatched items: (a) timing differences (settlement covers different date range than POS), (b) amount discrepancies (MDR calculation differences, promotional rate misapplication), (c) missing transactions (POS transaction not received by partner), (d) resolves within 5 business days; escalates to partner for unresolved items",
+     "duration": "1–2 hours/day",
+     "n": "3",
+     "r": "Treasury"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Daily reconciliation report: matched count/amount, unmatched count/amount, aging of unreconciled items; Accounting Manager reviews material discrepancies",
+     "duration": "30 min/day",
+     "n": "4",
+     "r": "Treasury"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W747"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-357"
+   ],
+   "fields": {
+    "Frequency": "Monthly (~5–8 partner statements)",
+    "Owner": "Treasury",
+    "Participants": "Treasury, Revenue Accountant, Accounting Manager",
+    "Trigger": "Monthly statement received from financing partner",
+    "Volume": "~5–8 reconciliations/month"
+   },
+   "id": "W1780",
+   "level": 2,
+   "name": "Monthly Financing Partner Statement Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"Treasury reconciles monthly statement to internal records\" (replaces manual Step 2).",
+     "- System auto-validate of \"verify correct promotional MDR applied during campaign periods\" (replaces manual Step 3).",
+     "- System auto-review of \"reviews and approves monthly reconciliation\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-357 (ensure controlled execution — Financing Reconciliation & Partner Settlement (PA-38.3).)",
+     "- operational: Treasury review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **MDR-misapplication leakage**: the partner charges above the contracted rate; mitigated by per-transaction rate comparison (step 3)",
+     "- **Reconciliation-theater risk**: reconciliations filed with items still open; mitigated by approval gated on resolution or documented plan (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Monthly statement reconciliation — transactions, settlements, MDR totals vs. internal records (steps 1–2)",
+     "- Discrepancy investigation — MDR rate misapplication per transaction (step 3)",
+     "- GL adjustments and filed reconciliation with Accounting Manager approval (step 4)"
+    ],
+    "Time Estimate": [
+     "Monthly statement reconciliation 1 day/partner × ~5–8 partners ≈ 60–96 days/year plus Accounting Manager approval 1 day/month ≈ 12 days/year; discrepancy investigation over 1–2-week windows at realized volume.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury",
+     "activity": "Financing partner provides monthly statement: (a) total transactions processed, (b) total settlement amount remitted, (c) total MDR/fees charged, (d) chargebacks and reversals, (e) promotional subsidy adjustments",
+     "duration": "By 10th of following month",
+     "n": "1",
+     "r": "Financing Partner"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Treasury reconciles monthly statement to internal records: (a) total transaction amount: partner total vs. POS total for installment transactions, (b) total settlement received: partner total vs. bank deposits, (c) MDR charged: partner calculation vs. contracted rate × transaction volume, (d) promotional adjustments: verify against approved promotional campaigns, (e) net settlement: partner total vs. GL clearing account balance",
+     "duration": "1 day/partner",
+     "n": "2",
+     "r": "Treasury"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Discrepancies investigated and resolved: (a) MDR rate misapplication: compare contracted rate to actual rate charged per transaction, (b) promotional rate discrepancies: verify correct promotional MDR applied during campaign periods, (c) settlement timing: adjust for T+2 or T+3 settlements crossing month-end, (d) adjustments: partner issues credit note or debit memo for confirmed discrepancies",
+     "duration": "1–2 weeks",
+     "n": "3",
+     "r": "Treasury / Financing Partner"
+    },
+    {
+     "a": "CFO",
+     "activity": "Accounting Manager reviews and approves monthly reconciliation; adjusts GL entries for any reconciling items; reconciliation filed for audit trail",
+     "duration": "1 day",
+     "n": "4",
+     "r": "Accounting Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-357"
+   ],
+   "fields": {
+    "Frequency": "~50–100 chargebacks/year",
+    "Owner": "Store Manager",
+    "Participants": "Store Manager, Treasury, Legal Counsel, Financing Partner, Customer",
+    "Trigger": "Chargeback received from financing partner (customer disputes transaction)",
+    "Volume": "~0.005% of installment transactions (~50–100 chargebacks/year)"
+   },
+   "id": "W1781",
+   "level": 2,
+   "name": "Financing Chargeback & Dispute Resolution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"log, sales associate\" (replaces manual Step 2).",
+     "- System auto-submit of \"submit representment with evidence to partner\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-357 (ensure controlled execution — Financing Reconciliation & Partner Settlement (PA-38.3).)",
+     "- operational: Store Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Evidence-loss risk**: transaction evidence purged before the dispute lands; mitigated by evidence retention windows matched to dispute timelines (step 2)",
+     "- **Repeat-fraud risk**: the same customer/terminal pattern generates serial chargebacks; mitigated by chargeback pattern analysis feeding Loss Prevention (step 4)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Chargeback intake and categorization — not received, defective, not as described (step 1)",
+     "- Evidence assembly — receipt, POS log, delivery confirmation, CCTV (step 2)",
+     "- Response submission to the partner within dispute windows (step 3)",
+     "- Upheld-chargeback accounting — revenue reversal, inventory recovery, fee (step 4)"
+    ],
+    "Time Estimate": [
+     "~4–8 hours of effort per chargeback case (store investigation over 1–3 days + evidence-based response within a 5–10-day elapsed window; reversal/recovery per resolution) × ~50–100 chargebacks/year ≈ 200–800 hours/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Financing partner notifies BuildRight of chargeback: (a) customer claims: merchandise not received, defective, or not as described, (b) fraud claim: customer denies making the purchase, (c) processing error: duplicate charge, incorrect amount",
+     "duration": "Event-driven",
+     "n": "1",
+     "r": "Financing Partner → Treasury"
+    },
+    {
+     "a": "—",
+     "activity": "Treasury alerts Store Manager for investigation: (a) pull transaction details (receipt, POS log, sales associate), (b) check delivery status (for ecommerce), (c) review CCTV footage if fraud claim, (d) check return history for the transaction",
+     "duration": "1–3 days",
+     "n": "2",
+     "r": "Store Manager / Treasury"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "BuildRight responds to financing partner: (a) provide evidence supporting the transaction (signed receipt, delivery confirmation, product description match), (b) if BuildRight accepts chargeback (legitimate dispute): accept loss, process return, reverse transaction, (c) if BuildRight contests: submit representment with evidence to partner, (d) partner makes final determination",
+     "duration": "5–10 days",
+     "n": "3",
+     "r": "Treasury / Store Manager"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "If chargeback upheld: (a) revenue reversed, (b) inventory recovered (if merchandise returned), (c) chargeback fee (typically PHP 500–1,500) charged as expense, (d) if chargeback overturned: transaction reinstated, funds returned to BuildRight",
+     "duration": "Per resolution",
+     "n": "4",
+     "r": "Treasury / System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-208"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "FP&A",
+    "Participants": "FP&A, Treasury, CFO",
+    "Trigger": "Monthly management reporting",
+    "Volume": "~5–8 partners × monthly reports"
+   },
+   "id": "W1782",
+   "level": 2,
+   "name": "MDR Fee Tracking & Expense Reporting",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"System tracks MDR fees per transaction\" (replaces manual Step 1).",
+     "- System auto-report of \"Monthly MDR expense report\" (replaces manual Step 2).",
+     "- System auto-generate of \"generated by financing\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-208 (ensure consumer-financing settlement & compliance.)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Rate-creep risk**: actual MDR drifts above contracted rates; mitigated by monthly contract-rate comparison (step 2)",
+     "- **Mix-shift blindness**: longer installment terms quietly raise blended MDR; mitigated by term-mix analysis in the expense report (steps 1–2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Per-transaction MDR tracking by tender type — standard 1.5–2.0%, installment 2.5–4.0% (step 1)",
+     "- Monthly MDR expense report — by partner, % of financed sales, actual vs. contract rate (step 2)",
+     "- Renegotiation analytics — volume leverage and outlier identification (step 3)"
+    ],
+    "Time Estimate": [
+     "Monthly MDR expense report 1 day ≈ 12 days/year (per-transaction fee tracking automated); quarterly renegotiation support rides W1769.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System tracks MDR fees per transaction: (a) standard credit card MDR: 1.5–2.0%, (b) installment MDR: 2.5–4.0% (higher for longer terms and 0% promotions), (c) BNPL fee: 2–4%, (d) non-card financing fee: 3–5%, (e) fees recorded as selling expense per transaction, allocated to store cost center",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly MDR expense report: (a) total MDR expense by partner, (b) MDR as % of financed sales, (c) MDR rate comparison vs. contracted rates (identify overcharging), (d) MDR by store (identify stores with higher installment usage and higher MDR cost), (e) trend analysis: is MDR cost increasing as % of sales?",
+     "duration": "1 day/month",
+     "n": "2",
+     "r": "FP&A"
+    },
+    {
+     "a": "CEO",
+     "activity": "CFO uses MDR data for partner renegotiation: (a) aggregate volume provides leverage for better rates, (b) identify partners with highest MDR for targeted negotiation, (c) assess if MDR cost is justified by incremental sales generated by financing",
+     "duration": "Quarterly",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1769"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-208"
+   ],
+   "fields": {
+    "Frequency": "~10–15% of installment transactions involve multi-tender (≈12,000–18,000/month at the W747 base)",
+    "Owner": "Revenue Accountant",
+    "Participants": "Revenue Accountant, Cashier, Treasury",
+    "Trigger": "Customer uses multiple payment methods (e.g., partial installment + partial cash)",
+    "Volume": "~12,000–18,000 multi-tender transactions/month (per the Frequency's 10–15% at the W747 base)"
+   },
+   "id": "W1783",
+   "level": 2,
+   "name": "Multi-Tender Transaction Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-record of \"records each tender separately\" (replaces manual Step 2).",
+     "- System auto-count of \"Accountant ensures total transaction amount equals sum of all tenders\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-208 (ensure consumer-financing settlement & compliance.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Split-tender error**: the recorded total ≠ sum of tender components; mitigated by system-enforced equality at POS (steps 2–3)",
+     "- **Reconciliation-complexity risk**: multi-tender sales reconcile to neither cash nor settlement cleanly; mitigated by tender-level matching rules (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Multi-tender transaction recording — each tender component captured separately (steps 1–2)",
+     "- Tender-level reconciliation — cash to daily deposit, installment to partner settlement (step 3)"
+    ],
+    "Time Estimate": [
+     "Multi-tender verification ~1–2 min per transaction (tender-split recording automated) × ~1,000–1,800 multi-tender installment transactions/month ≈ 200–720 hours/year; full-amount reconciliation rides the daily revenue close.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Multi-tender scenarios: (a) customer purchases PHP 20K appliance: pays PHP 5K cash, PHP 15K on 12-month installment, (b) customer uses loyalty points + credit card installment, (c) customer uses GCash + BNPL for remaining balance",
+     "duration": "Per transaction",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "—",
+     "activity": "System records each tender separately: (a) cash portion: deposited daily, (b) installment portion: settled by financing partner at T+1 to T+3, (c) loyalty points: liability reduction, (d) e-wallet: settled per e-wallet provider terms",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Reconciliation: Revenue Accountant ensures total transaction amount equals sum of all tenders; each tender component reconciled to its respective settlement channel",
+     "duration": "Part of daily reconciliation",
+     "n": "3",
+     "r": "Revenue Accountant"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W747"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-208"
+   ],
+   "fields": {
+    "Frequency": "~10–20 exceptions/month",
+    "Owner": "Treasury",
+    "Participants": "Treasury, Financing Partner, Accounting Manager",
+    "Trigger": "Settlement delay, partial settlement, or settlement error from financing partner",
+    "Volume": "Low volume but requires timely resolution"
+   },
+   "id": "W1784",
+   "level": 2,
+   "name": "Financing Partner Payment Exception Handling",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-file of \"file\" (replaces manual Step 1).",
+     "- System auto-log of \"Treasury contacts partner for resolution\" (replaces manual Step 2).",
+     "- System auto-record of \"record loss or adjust MDR\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-208 (ensure consumer-financing settlement & compliance.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Chronic-partner risk**: repeated short settlements erode revenue silently; mitigated by the >3-in-30-days CFO escalation including termination consideration (step 4)",
+     "- **GL-distortion risk**: unresolved exceptions accumulate as phantom receivables; mitigated by the adjustment policy with accrual/loss recognition (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Exception intake and classification — settlement delay, short settlement, error (~10–20/month) (step 1)",
+     "- Partner escalation tracking with documented communication (step 2)",
+     "- GL adjustment policy — loss recognition or accrual for expected settlement (step 3)",
+     "- Chronic-issue escalation — > 3 exceptions in 30 days triggers CFO action (step 4)"
+    ],
+    "Time Estimate": [
+     "~2–4 hours per settlement exception (partner contact and escalation over 1–3 days + GL adjustment as needed) × ~10–20 exceptions/month ≈ 240–960 hours/year; chronic-partner escalation to CFO beyond 3 exceptions per 30 days.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Exception types: (a) settlement not received by expected date (T+2 or T+3), (b) settlement amount differs from expected (short settlement), (c) duplicate settlement (partner pays twice), (d) settlement for wrong merchant (BuildRight receives another merchant's settlement), (e) partner system outage (no settlement file)",
+     "duration": "Event-driven",
+     "n": "1",
+     "r": "Treasury"
+    },
+    {
+     "a": "Accounting Manager",
+     "activity": "Treasury contacts partner for resolution: (a) escalates to partner's merchant support, (b) documents communication, (c) tracks exception in reconciliation log, (d) target resolution: 5 business days",
+     "duration": "1–3 days",
+     "n": "2",
+     "r": "Treasury"
+    },
+    {
+     "a": "CFO",
+     "activity": "GL adjustment if needed: (a) if settlement permanently short: record loss or adjust MDR, (b) if settlement delayed but expected: no adjustment (accrue), (c) if duplicate: return excess to partner",
+     "duration": "Per exception",
+     "n": "3",
+     "r": "Accounting Manager"
+    },
+    {
+     "a": "—",
+     "activity": "Chronic issues (> 3 exceptions in 30 days from same partner): CFO escalates to partner management; considers partner termination if systemic",
+     "duration": "As needed",
+     "n": "4",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-208"
+   ],
+   "fields": {
+    "Frequency": "Daily",
+    "Owner": "Treasury",
+    "Participants": "Treasury, Ecommerce Operations, Digital Commerce Inc.",
+    "Trigger": "Ecommerce financing transactions settled via BuildRight Digital Commerce Inc.",
+    "Volume": "~500–1,000 ecommerce financing transactions/month"
+   },
+   "id": "W1785",
+   "level": 2,
+   "name": "Ecommerce Financing Settlement Reconciliation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-collect of \"collects payment from gateway\" (replaces manual Step 1).",
+     "- System auto-recordof \"Reconciliation layers: (a) ecommerce platform orders → payment\" (replaces manual Step 2).",
+     "- System auto-report of \"report including all layers, intercompany settlement confirmation, and MDR…\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-208 (ensure consumer-financing settlement & compliance.)",
+     "- operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Layer-break risk**: gateway records and partner settlements mismatch with no layer owning the difference; mitigated by the end-to-end layered reconciliation (step 2)",
+     "- **IC-mis-allocation risk**: financed ecommerce revenue lands in the wrong entity; mitigated by Digital Commerce intercompany confirmation (step 2)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Multi-layer reconciliation — ecommerce orders → payment gateway → financing partner settlements → Digital Commerce entity records (steps 1–2)",
+     "- Intercompany settlement confirmation between entities (step 2)",
+     "- Monthly comprehensive ecommerce financing reconciliation report (step 3)"
+    ],
+    "Time Estimate": [
+     "recurring effort 1–2 hours/day ≈ 250–500 hours/year (working days); cadence-carried steps as authored (1 day/month).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Treasury",
+     "activity": "Ecommerce financing flow: (a) customer selects installment/BNPL on buildright.com.ph, (b) payment gateway (PayMongo/Dragonpay) processes installment with financing partner, (c) BuildRight Digital Commerce Inc. collects payment from gateway, (d) Digital Commerce Inc. remits to BuildRight Depot Inc. per intercompany agreement (daily or weekly), (e) Depot Inc. recognizes revenue at fulfillment (per intercompany arrangement)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "CFO",
+     "activity": "Reconciliation layers: (a) ecommerce platform orders → payment gateway records → financing partner settlements → Digital Commerce Inc. receipts → Depot Inc. intercompany remittances, (b) each layer reconciled separately, (c) discrepancies between layers investigated and resolved",
+     "duration": "1–2 hours/day",
+     "n": "2",
+     "r": "Treasury / Ecommerce Operations"
+    },
+    {
+     "a": "CFO",
+     "activity": "Monthly: comprehensive ecommerce financing reconciliation report including all layers, intercompany settlement confirmation, and MDR analysis",
+     "duration": "1 day/month",
+     "n": "3",
+     "r": "Treasury"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": []
+  },
+  {
+   "ctl_refs": [
+    "CTL-357"
+   ],
+   "fields": {
+    "Frequency": "Annual",
+    "Owner": "CFO",
+    "Participants": "CFO, Treasury, Accounting Manager, External Auditor",
+    "Trigger": "Annual financial close and external audit",
+    "Volume": "1 comprehensive review/year"
+   },
+   "id": "W1786",
+   "level": 2,
+   "name": "Annual Financing Program Financial Close & Audit",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-reconcile of \"reconciled through December 31\" (replaces manual Step 1).",
+     "- System auto-record of \"External auditor review\" (replaces manual Step 2).",
+     "- System continuous audit of \"CFO responds to audit findings\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-357 (ensure controlled execution — Financing Reconciliation & Partner Settlement (PA-38.3).)",
+     "- operational: CFO review and approval gate; periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **Unresolved-at-audit risk**: open items surface during the external audit; mitigated by year-end cutoff discipline from W1779/W1780 (step 1)",
+     "- **Disclosure-gap risk**: financing program arrangements missing from FS notes; mitigated by disclosure preparation including related-party considerations (step 3)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Year-end financing reconciliation — all partner statements reconciled through December 31 (step 1)",
+     "- External audit support — transaction sample traced to settlements; revenue recognition verification (step 2)",
+     "- Financial statement disclosures for the financing program (step 3)"
+    ],
+    "Time Estimate": [
+     "7 days elapsed per occurrence (1 week); cadence-carried steps as authored (During annual audit, As needed) — at Annual ≈ 1 occurrence/year.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "Year-end financing reconciliation: (a) all partner statements reconciled through December 31, (b) all unreconciled items resolved or accrued, (c) MDR expense accrued for transactions settled in January but related to December sales, (d) in-house installment AR aged and provisioned per W1778, (e) promotional subsidy accrual for active promotions straddling year-end",
+     "duration": "1 week",
+     "n": "1",
+     "r": "Treasury / Accounting Manager"
+    },
+    {
+     "a": "CFO",
+     "activity": "External auditor review: (a) select sample of installment transactions and trace to settlement records, (b) verify revenue recognition per PFRS 15, (c) confirm MDR expense accuracy, (d) review AR aging and bad debt provision adequacy for in-house installment portfolio, (e) verify partner reconciliation completeness, (f) confirm intercompany elimination for Digital Commerce Inc. financing settlements",
+     "duration": "During annual audit",
+     "n": "2",
+     "r": "External Auditor"
+    },
+    {
+     "a": "External Auditor",
+     "activity": "CFO responds to audit findings; adjusts if needed; includes financing program disclosures in financial statement notes (related party — if Digital Commerce Inc. settlement terms are non-standard)",
+     "duration": "As needed",
+     "n": "3",
+     "r": "CFO"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1778",
+    "W1779",
+    "W1780"
+   ]
+  }
+ ]
+}

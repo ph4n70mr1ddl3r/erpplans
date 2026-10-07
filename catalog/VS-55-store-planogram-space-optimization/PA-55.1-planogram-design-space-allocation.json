@@ -1,0 +1,515 @@
+{
+ "process_area": {
+  "id": "PA-55.1",
+  "title": "Planogram Design & Category Space Allocation"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-55-store-planogram-space-optimization/PA-55.1-planogram-design-space-allocation.md",
+ "value_stream": {
+  "directory": "VS-55-store-planogram-space-optimization",
+  "id": "VS-55",
+  "name": "Store Planogram & Space Optimization"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "Bi-monthly; 200 stores × 8 zones",
+    "Owner": "Merchandising Planner",
+    "Participants": "Merch Planner, Category Mgr, VP Store Operations",
+    "Trigger": "Seasonal calendar trigger (6 rotations/year)",
+    "Volume": "~1,600 planogram updates per rotation"
+   },
+   "id": "W2166",
+   "level": 2,
+   "name": "Seasonal Planogram Refresh",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Store-cluster planogram variants auto-generated from the master planogram + cluster dimensions; compliance-photo diff (store's build vs. the plan) auto-scored"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- operational: Category Manager sign-off on each rotation's planogram before distribution"
+    ],
+    "Pain Points / Risks": [
+     "- **Format-mismatch risk**: a single planogram doesn't fit the format range (a planogram designed for a 15,000 sqm store overcrowds an 8,000 sqm store); mitigated by the store-cluster format variants in step 2 (3–4 format tiers, not one-size)",
+     "- **Late-arrival risk**: the planogram lands at the store after the seasonal merchandise, so the merchandise sits in the backroom unbuilt; mitigated by the planogram-package distributed 2 weeks ahead of the merchandise reset wave"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Space-planning / planogram module (links to VS-29 / W314 planogram template master) — the design tool and the versioned planogram",
+     "- Analytics (links to VS-27 / W113, W2169) — the performance basis for the space allocation",
+     "- Store communication (links to VS-07 / W571 HQ→store comms) — the planogram-package distribution and compliance-photo return"
+    ],
+    "Time Estimate": [
+     "~2.5 days Planner + ~5 hours Category Mgr/Store Ops × 6 rotations + ~3 hours/store reset execution × 200 stores = **~4,000–5,000 hours/year** distributed across Planner, Category Mgrs, and Store teams (Store reset labor is the bulk, absorbed into store-ops)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Planner reviews category performance (sales/sqm, margin/sqm, turns — from W2169) and designs the seasonal planogram with space-planning software assigning linear meterage per category",
+     "duration": "2–3 days",
+     "n": "1",
+     "r": "Merchandising Planner"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager validates the assortment alignment and cross-merchandising (links to W2168); VP Store Operations reviews the format-specific adaptations for large/standard/compact stores (the planogram must flex to the 8,000–15,000 sqm range)",
+     "duration": "4–6 hours",
+     "n": "2",
+     "r": "Category Mgr / VP Store Operations"
+    },
+    {
+     "a": "Merchandising Planner",
+     "activity": "System generates the store-specific planogram packages (one per store-cluster format); distributes to stores via the VS-63 communication system with the compliance-photo requirement",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2168",
+    "W2169",
+    "W314",
+    "W571"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "~200–300 placement decisions/month",
+    "Owner": "Category Manager",
+    "Participants": "Category Mgr, Merch Planner, Buyer",
+    "Trigger": "New SKU introduction (~200–300/month)",
+    "Volume": "~200–300/month"
+   },
+   "id": "W2167",
+   "level": 2,
+   "name": "New Product Shelf Placement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Placement auto-suggested from the SKU dimensions + velocity class + available facing; displaced-SKU auto-flagged for the delist-or-relocate decision"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- operational: Category Manager sign-off on the placement"
+    ],
+    "Pain Points / Risks": [
+     "- **Velocity-misestimate risk**: a new SKU is placed as an A-item (prime eye-level space) but sells as a C-item, wasting prime space; mitigated by the W2460 new-vendor/new-SKU baseline monitoring that re-tiers the placement after 90 days of actual velocity",
+     "- **Displacement-blindness risk**: the displaced C-item is silently delisted from the shelf (still in assortment but no facing), creating an unfulfillable assortment promise; mitigated by the displaced-SKU report and the delist-or-relocate decision recorded"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Planogram module (links to VS-29 / W314) — the shelf-position assignment",
+     "- Item master (links to VS-29 / W252, W1 SKU lifecycle) — the new SKU's dimensions and classification",
+     "- Shelf-label/price-tag (links to VS-08 / W181) — the label generation triggered by the placement"
+    ],
+    "Time Estimate": [
+     "~75 min/decision × ~250 placements/month = **~300 hours/month ≈ ~3,600 hours/year** Planner + Buyers (absorbed into the buying/planning role)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Buyer submits the new SKU with dimensions, category, expected velocity (A/B/C classification per the ABC analysis); Planner evaluates the available shelf space and the optimal position (eye-level for A-items, etc.)",
+     "duration": "45 min",
+     "n": "1",
+     "r": "Buyer / Merch Planner"
+    },
+    {
+     "a": "Category Manager",
+     "activity": "Planner assigns the position, facing count, minimum shelf quantity; determines the displaced SKU (the C-item that loses facing to make room); system pushes the update to stores with the shelf labels (links to W181 price-tag printing)",
+     "duration": "30 min",
+     "n": "2",
+     "r": "Merchandising Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W181",
+    "W2460",
+    "W252",
+    "W314"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "~10–15 displays per rotation",
+    "Owner": "Merchandising Planner",
+    "Participants": "Merch Planner, Category Mgr, Marketing",
+    "Trigger": "Seasonal promotion requiring cross-merch display",
+    "Volume": "~2,000 implementations per rotation"
+   },
+   "id": "W2168",
+   "level": 2,
+   "name": "Cross-Merchandising Display Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Basket-analysis auto-surfaces the top cross-merch opportunities per season; compliance-photo auto-matched to the display spec"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- operational: Marketing + Planner joint sign-off on each cross-merch display"
+    ],
+    "Pain Points / Risks": [
+     "- **Forced-cross-merch risk**: a cross-merch display is built on a weak co-purchase signal (the categories don't actually basket together), wasting the space; mitigated by the basket-analysis evidence requirement in step 1",
+     "- **POP-store-mismatch risk**: the POP materials arrive at a store that hasn't built the display (or vice versa), creating an incoherent customer experience; mitigated by the synchronized distribution (POP and planogram-package in the same wave)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Basket analytics (links to VS-27 / W113, VS-13 CRM) — the co-purchase analysis driving cross-merch selection",
+     "- Planogram/space (links to VS-29 / W314) — the cross-merch display as a planogram element",
+     "- Marketing/POP (links to VS-14 / W262 promotional setup, W190 in-house design) — the POP materials"
+    ],
+    "Time Estimate": [
+     "~7 hours Planner + ~4 days Marketing × ~12 displays/rotation × 6 rotations = **~400–500 hours/year** Planner + Marketing."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Planner identifies the cross-merch opportunities from the POS basket-analysis (a bathroom set, an electrical-starter corner, a garden-starter endcap — the complementary categories that co-purchase); designs the display layout with fixtures and signage",
+     "duration": "6–8 hours",
+     "n": "1",
+     "r": "Merchandising Planner"
+    },
+    {
+     "a": "VP Marketing",
+     "activity": "Marketing designs the POP materials; coordinates the print for 200 stores; Store Ops communicates the display requirements with the compliance-photo return",
+     "duration": "3–5 days",
+     "n": "2",
+     "r": "Marketing / Store Ops"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W190",
+    "W262",
+    "W314"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "Monthly; 200 stores × 8 zones",
+    "Owner": "Analytics Manager",
+    "Participants": "Analytics Manager, Category Mgr, Merch Planner",
+    "Trigger": "Monthly analytics cycle",
+    "Volume": "~1,600 zone-level analyses/month"
+   },
+   "id": "W2169",
+   "level": 2,
+   "name": "Space Productivity Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Productivity dashboard auto-refreshed monthly with rank-order; underperformer auto-flagged with the ramp-up filter applied"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- Operational: Analytics Manager methodology sign-off; Category Manager review of any zone-cut decision (strategic-purpose check)"
+    ],
+    "Pain Points / Risks": [
+     "- **Productivity-without-context risk**: a zone shows low sales/sqm but serves a strategic purpose (a loss-leader destination category that draws traffic to adjacent high-margin zones); mitigated by the Category Manager judgment in step 2, not a pure productivity-driven cut",
+     "- **New-store-noise risk**: a new store's zones show artificially low productivity (ramp-up) and get cut prematurely; mitigated by the ramp-up filter (exclude stores <12 months from the cut decision)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113, W208 retail analytics) — the productivity dataset",
+     "- Planogram/space (links to VS-29 / W314) — the zone and sqm definitions",
+     "- Store-P&L (links to VS-17 / W26) — the margin input"
+    ],
+    "Time Estimate": [
+     "~2.5 hours/month Analyst + ~5 hours/month Category Mgr/Planner = **~90 hours/month ≈ ~1,080 hours/year** distributed across the analytics and merch teams."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "System calculates sales/sqm, margin/sqm, turns/sqm per zone per store (the productivity metrics that drive the W2166 space allocation); identifies the top-performing and underperforming zones and stores",
+     "duration": "2–3 hours",
+     "n": "1",
+     "r": "System / Analytics Manager"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews the underperformers; Planner adjusts the planogram for the next rotation (expand high-productivity zones, reduce or restructure low-productivity zones)",
+     "duration": "4–6 hours",
+     "n": "2",
+     "r": "Category Mgr / Merch Planner"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W208",
+    "W2166",
+    "W26",
+    "W314"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "Continuous; ~500–800 changes/month",
+    "Owner": "Merchandising Planner",
+    "Participants": "Merch Planner, IT, Store Ops",
+    "Trigger": "Every planogram change",
+    "Volume": "~500–800 version updates/month"
+   },
+   "id": "W2170",
+   "level": 2,
+   "name": "Planogram Version Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Change-auto-versioned at the planogram-module level (no manual versioning); change-diff auto-generated for the weekly review"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- operational: Planner weekly change-log review sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Unversioned-change risk**: an off-process change (a Store Manager locally rearranges a zone) isn't versioned, so the master planogram and the store diverge; mitigated by the W86 planogram-compliance audit that detects the divergence and the no-local-change policy",
+     "- **History-loss risk**: the 24-month history is purged prematurely, losing the audit trail for a later-disputed decision; mitigated by the retention setting enforced at the system level (not a manual purge)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Planogram module (links to VS-29 / W314) — the version-control engine",
+     "- Document/audit (links to VS-88 / W255 document storage) — the 24-month retained history",
+     "- IT change management (links to VS-27 / W132) — bulk planogram changes released via the change pipeline"
+    ],
+    "Time Estimate": [
+     "~1.5 hours/week Planner = **~75 hours/year**, absorbed into the planning routine."
+    ]
+   },
+   "steps": [
+    {
+     "a": "IT System Admin",
+     "activity": "System auto-versions every planogram change (date, user, zones affected, SKUs added/removed, reason); Planner reviews the change log weekly; a 24-month history is maintained per store for audit and rollback",
+     "duration": "1–2 hours/week",
+     "n": "1",
+     "r": "System / Merch Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W132",
+    "W255",
+    "W314",
+    "W86"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "Annual per store; ~10–15 new stores/year",
+    "Owner": "Store Design Manager",
+    "Participants": "Store Design Mgr, VP Store Operations, VP Merch",
+    "Trigger": "Annual review or new store design",
+    "Volume": "~10–15 new + 20–30 optimizations/year"
+   },
+   "id": "W2171",
+   "level": 2,
+   "name": "Store Layout Zone Optimization",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Traffic-heatmap auto-generated from sensor data; layout-variant auto-proposed from the productivity analysis"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- CTL-394 (capex-approval — links to VS-40 / W21 for major layout changes); operational: COO + VP Merch sign-off on the layout and the execution timing"
+    ],
+    "Pain Points / Risks": [
+     "- **Disruption-during-execution risk**: a layout optimization during peak season disrupts sales more than the optimization recovers; mitigated by the low-sales-period scheduling in step 2",
+     "- **Sensor-blindness risk**: the optimization relies on traffic/dwell data that only exists for sensor-equipped stores, so non-sensor stores get a less-informed design; mitigated by the sensor-store results applied as a template to comparable non-sensor stores"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store-design / CAD (links to VS-109 store remodel, VS-20 real-estate) — the layout design tool",
+     "- Analytics (links to VS-27 / W113, W2169) — the traffic/dwell/conversion data",
+     "- Capex (links to VS-40 / W21 capex) — major layout changes are capex, not opex"
+    ],
+    "Time Estimate": [
+     "~4 days/optimization × ~30 optimizations/year + ~2.5 hours/review = **~140–180 hours/year** Store Design Manager + leadership."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "Store Design Manager analyzes the traffic flow, dwell time, and conversion-by-zone (where sensor or POS-heatmap data exists); designs the optimized layout with expanded high-conversion zones and contracted low-conversion zones",
+     "duration": "3–5 days",
+     "n": "1",
+     "r": "Store Design Manager"
+    },
+    {
+     "a": "CEO",
+     "activity": "VP Merchandising and COO review and approve with the expected ROI (links to W2173); scheduled for a low-sales period to minimize disruption",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "VP Merch / COO"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W21",
+    "W2169",
+    "W2173"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; 13 categories",
+    "Owner": "Merchandising Planner",
+    "Participants": "Merch Planner, Category Mgr, Store Design Mgr",
+    "Trigger": "Quarterly review cycle — Category Adjacency Planning",
+    "Volume": "~13 adjacency reviews/quarter"
+   },
+   "id": "W2172",
+   "level": 2,
+   "name": "Category Adjacency Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Co-purchase heatmap auto-generated from basket data; adjacency-change-impact auto-estimated from the prior cycle"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- Operational: Category Manager + Store Design Manager joint sign-off on adjacency changes"
+    ],
+    "Pain Points / Risks": [
+     "- **Physical-constraint risk**: the co-purchase-optimal adjacency is physically impossible (the two categories are on opposite walls due to the store footprint); mitigated by the Store Design Manager's input on feasibility before approval",
+     "- **Adjacency-churn risk**: changing adjacencies every quarter destabilizes the customer's mental model of the store; mitigated by limiting adjacency changes to material co-purchase shifts, not minor ones"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Basket analytics (links to VS-27 / W113, VS-13) — the co-purchase signal",
+     "- Planogram module (links to VS-29 / W314) — the adjacency map",
+     "- Space-planning (links to W2166) — the adjacency change implemented in the refresh"
+    ],
+    "Time Estimate": [
+     "~7 hours/quarter Planner + ~1 hour/quarter Category Mgr × 13 categories = **~120–160 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Planner reviews the adjacency map and the cross-category purchase patterns from POS basket data (which categories co-purchase and should be adjacent); proposes the changes for logical complementary placement (e.g., tiles adjacent to thin-set/grout; paint adjacent to brushes/rollers)",
+     "duration": "6–8 hours",
+     "n": "1",
+     "r": "Merchandising Planner"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager approves; incorporates into the next seasonal planogram refresh (W2166) so the adjacency change lands in a coordinated reset, not piecemeal",
+     "duration": "1 hour",
+     "n": "2",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2166",
+    "W314"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-394"
+   ],
+   "fields": {
+    "Frequency": "6 analyses/year",
+    "Owner": "FP&A Analyst",
+    "Participants": "FP&A, Merch Planner, Category Mgr",
+    "Trigger": "Bi-monthly (seasonal rotations)",
+    "Volume": "6 analyses/year"
+   },
+   "id": "W2173",
+   "level": 2,
+   "name": "Planogram Cost-Benefit Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cost-benefit model auto-assembled from the planogram change + labor standard; post-actual auto-reconciled with variance flagging"
+    ],
+    "Controls": [
+     "- CTL-394 (ensure controlled execution — Planogram Design & Category Space Allocation (PA-55.1).)",
+     "- CTL-394 (budget/forecast accuracy — links to VS-17 / W26); operational: Finance Manager sign-off on the methodology"
+    ],
+    "Pain Points / Risks": [
+     "- **Attribution-noise risk**: the post-rotation uplift is confounded by other changes (a promo ran during the same period, a competitor closed nearby); mitigated by the controlled comparison where possible (stores that got the change vs. a holdout cluster)",
+     "- **Projection-optimism risk**: the projected benefit is consistently overstated, eroding trust in the cost-benefit model; mitigated by the post-actual reconciliation in step 2 and the model recalibration"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- FP&A / cost accounting (links to VS-17 / W26 budget, VS-158 / W85) — the cost and benefit inputs",
+     "- Analytics (links to VS-27 / W113, W2169) — the actual-uplift measurement",
+     "- Planogram history (links to VS-29 / W314, W2170) — the version that's being evaluated"
+    ],
+    "Time Estimate": [
+     "~9 hours/rotation × 6 rotations = **~50–60 hours/year** FP&A Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Finance Manager",
+     "activity": "FP&A calculates the change cost (reset labor, labels, fixtures, signage) vs. the projected benefit (sales uplift, margin improvement, inventory-cost reduction from better space allocation)",
+     "duration": "6–8 hours",
+     "n": "1",
+     "r": "FP&A Analyst"
+    },
+    {
+     "a": "VP Merchandising",
+     "activity": "Post-rotation: measures the actual vs. projected uplift; incorporates the learning into the next projection model so the cost-benefit estimates improve cycle-over-cycle",
+     "duration": "2–3 hours",
+     "n": "2",
+     "r": "FP&A Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W2169",
+    "W2170",
+    "W26",
+    "W314",
+    "W85"
+   ]
+  }
+ ]
+}

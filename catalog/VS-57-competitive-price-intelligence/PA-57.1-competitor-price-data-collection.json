@@ -1,0 +1,462 @@
+{
+ "process_area": {
+  "id": "PA-57.1",
+  "title": "Competitor Price Data Collection & Analysis"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-57-competitive-price-intelligence/PA-57.1-competitor-price-data-collection.md",
+ "value_stream": {
+  "directory": "VS-57-competitive-price-intelligence",
+  "id": "VS-57",
+  "name": "Competitive Price Intelligence & Monitoring"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-175",
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Weekly; ~500–1,000 price points",
+    "Owner": "Pricing Analyst",
+    "Participants": "Category Manager",
+    "Trigger": "Weekly collection cycle",
+    "Volume": "~500–1,000 prices/week across 4–5 competitors"
+   },
+   "id": "W2214",
+   "level": 2,
+   "name": "Competitor Price Scraping & Collection",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Scraping automated for ecommerce prices; SKU-match auto-suggested from the item-master mapping"
+    ],
+    "Controls": [
+     "- CTL-175 (ensure competitor-price data integrity & price-match governance.)",
+     "- CTL-400 (competition-law conduct — links to VS-129 / W2683); operational: Category Manager weekly collection-review"
+    ],
+    "Pain Points / Risks": [
+     "- **SKU-mismatch risk**: a competitor's \"comparable\" SKU isn't truly equivalent (different spec/pack), making the price comparison misleading; mitigated by the documented SKU-matching rule (equivalent spec, equivalent pack size)",
+     "- **Scraping-legality/ToS risk**: aggressive scraping violates competitor website ToS; mitigated by the compliant collection (respect robots.txt, use licensed third-party feeds, mystery-shopping within RA 10667 conduct limits)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Price-intelligence platform (links to VS-27 / W113, VS-44 / market research) — the scraped/mystery-shopped dataset",
+     "- Item/SKU matching (links to VS-29 / W252, W403 competitor master) — the competitor-SKU-to-BuildRight-SKU mapping",
+     "- Pricing master (links to VS-29 / W289) — the BuildRight price for comparison"
+    ],
+    "Time Estimate": [
+     "~5 hours/week Pricing Analyst = **~250 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Pricing Analyst collects competitor prices: web scraping of competitor ecommerce sites, mystery-shop store visits for in-store prices, third-party price-intelligence feed; normalizes to BuildRight's SKU equivalents",
+     "duration": "4–6 hours/week",
+     "n": "1",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W252",
+    "W2683",
+    "W289",
+    "W403"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-108",
+    "CTL-175",
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~20–30 decisions/month",
+    "Owner": "Category Manager",
+    "Participants": "VP Merchandising",
+    "Trigger": "Significant price gap identified (>10%)",
+    "Volume": "~20–30/month"
+   },
+   "id": "W2215",
+   "level": 2,
+   "name": "Price Matching Decision & Execution",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Gap auto-flagged at >10%; margin-impact auto-computed before the decision"
+    ],
+    "Controls": [
+     "- CTL-175 (ensure competitor-price data integrity & price-match governance.)",
+     "- CTL-400 (price-change authorization — links to VS-08 / W40); CTL-108 (margin-floor guard — loss-making price prevention); operational: VP Merchandising sign-off on matches below the margin floor"
+    ],
+    "Pain Points / Risks": [
+     "- **Race-to-the-bottom risk**: matching every competitor cut erodes category margin to zero; mitigated by the margin-floor guard (no price below the documented floor) and the differentiate-option",
+     "- **Transient-promo-matching risk**: BuildRight matches a competitor's 1-week promo as a permanent price cut, surrendering margin after the competitor's promo ends; mitigated by the promo-vs-permanent distinction (match a permanent cut; counter a promo with a promo)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing master (links to VS-29 / W289, VS-08 / W40 price-change execution) — the price change",
+     "- Margin guard (links to VS-17 / W85 product costing, VS-158) — the margin-floor check before a match",
+     "- Analytics (links to VS-57 / W2230 margin analysis) — the margin-impact view"
+    ],
+    "Time Estimate": [
+     "~45 min/decision × ~25/month ≈ ~1,125 min ≈ **~19 hours/month** Category Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Category Manager reviews the >10%-gap SKUs; decides: match (lower price), differentiate (justify premium via value-add), or hold (transient competitor promo); executes the price change in the pricing master",
+     "duration": "30–60 min/decision",
+     "n": "1",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2230",
+    "W289",
+    "W40",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Ad-hoc; ~2–3 major events/quarter",
+    "Owner": "Pricing Analyst",
+    "Participants": "Category Manager",
+    "Trigger": "Competitor launches promo",
+    "Volume": "~2–3 events/quarter"
+   },
+   "id": "W2216",
+   "level": 2,
+   "name": "Competitor Promotion Monitoring",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Competitor-promo auto-detected from circular/social-media monitoring; threat-level auto-assessed"
+    ],
+    "Controls": [
+     "- CTL-400 (ensure controlled execution — Competitor Price Data Collection & Analysis (PA-57.1).)",
+     "- Operational: Category Manager counter-promo sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Late-detection risk**: a competitor promo is detected days after launch, ceding sales; mitigated by the weekly (not monthly) monitoring cadence and the social-media alert",
+     "- **Over-reaction risk**: BuildRight launches a costly counter-promo for a minor competitor event; mitigated by the threat-assessment (is the competitor's promo material to BuildRight's category?)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Promo-intelligence (links to VS-57 / W2214, VS-58 / W2260 competitor promo intelligence) — the competitor-promo dataset",
+     "- Promo planning (links to VS-58 / W2238 coupon design, VS-14 / W13 promotions) — the counter-promo",
+     "- Analytics (links to VS-57 / W2234 promo ROI) — the counter-promo ROI view"
+    ],
+    "Time Estimate": [
+     "~3 hours/event × ~8/year = **~24 hours/year** Pricing Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Pricing Analyst monitors competitor promos (weekly ad circulars, social media, in-store signage); assesses the competitive threat; recommends BuildRight's counter-promo or hold",
+     "duration": "Per event",
+     "n": "1",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W2214",
+    "W2234",
+    "W2238",
+    "W2260"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; 13 categories",
+    "Owner": "VP Merchandising",
+    "Participants": "COO",
+    "Trigger": "Quarterly pricing strategy review",
+    "Volume": "~13 reviews/quarter"
+   },
+   "id": "W2217",
+   "level": 2,
+   "name": "Price Positioning Strategy Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Positioning-vs-price auto-checked; competitive-position auto-plotted"
+    ],
+    "Controls": [
+     "- CTL-400 (ensure controlled execution — Competitor Price Data Collection & Analysis (PA-57.1).)",
+     "- Operational: COO quarterly positioning sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Positioning-incoherence risk**: a category is positioned \"premium\" but priced at parity, confusing the customer; mitigated by the positioning-price alignment check",
+     "- **One-position-fits-all risk**: a single positioning for a category ignores format variation (a compact store may need a different position than a flagship); mitigated by the format-aware positioning where material"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing strategy (links to VS-01 / W1 assortment, VS-29 / W289) — the category price-position",
+     "- Competitive data (links to VS-57 / W2214, W2219 basket comparison) — the positioning evidence",
+     "- Category P&L (links to VS-17 / W85, VS-101 merchandise financial planning) — the margin implication"
+    ],
+    "Time Estimate": [
+     "~1.5 days/quarter = **~50 hours/year** VP Merchandising."
+    ]
+   },
+   "steps": [
+    {
+     "a": "COO",
+     "activity": "VP Merchandising reviews each category's price position: price-leader, parity, premium; validates against the competitive data (W2214) and the category strategy; adjusts the positioning where the data warrants",
+     "duration": "1–2 days/quarter",
+     "n": "1",
+     "r": "VP Merchandising"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1",
+    "W2214",
+    "W2219",
+    "W289",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-108",
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Monthly; ~50–100 active rules",
+    "Owner": "Pricing Analyst",
+    "Participants": "Category Manager",
+    "Trigger": "Monthly rule review",
+    "Volume": "~50–100 rules"
+   },
+   "id": "W2218",
+   "level": 2,
+   "name": "Dynamic Pricing Rule Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Rules auto-fired within bands; conflict auto-detected; performance auto-reported"
+    ],
+    "Controls": [
+     "- CTL-400 (ensure controlled execution — Competitor Price Data Collection & Analysis (PA-57.1).)",
+     "- CTL-400 (price-change authorization — links to VS-08); CTL-108 (margin-floor guard — loss-making price prevention); operational: Category Manager monthly rule-review sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Rule-conflict risk**: two rules fire on the same SKU (competitor-follow lowers, inventory-clearance lowers further), producing an unintended deep discount; mitigated by the rule-precedence (one rule per SKU per period) and the conflict-check",
+     "- **Customer-trust risk**: too-frequent price changes (especially upward) erode customer trust (\"the price is different every visit\"); mitigated by the upward-change discipline (rare, justified) and the downward-change tolerance"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Pricing engine / rules (links to VS-29 / W289, VS-08 / W107 pricing hierarchy, W329 competitive tactical response) — the dynamic-pricing rules",
+     "- Competitor feed (links to VS-57 / W2214) — the competitor-price-follow input",
+     "- Inventory (links to VS-05 / W220 slow-moving) — the clearance-rule input"
+    ],
+    "Time Estimate": [
+     "~5 hours/month = **~60 hours/year** Pricing Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Pricing Analyst maintains the dynamic-pricing rules: competitor-price-follow rules (auto-adjust within a band), inventory-clearance rules (auto-markdown at threshold), time-based rules (happy-hour, slow-day); reviews rule performance and tunes",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W107",
+    "W220",
+    "W2214",
+    "W289",
+    "W329"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-175"
+   ],
+   "fields": {
+    "Frequency": "Quarterly; 100-SKU basket",
+    "Owner": "Pricing Analyst",
+    "Participants": "VP Merchandising",
+    "Trigger": "Quarterly comprehensive cycle — Market Basket Price Comparison",
+    "Volume": "~100 SKUs × 4–5 competitors"
+   },
+   "id": "W2219",
+   "level": 2,
+   "name": "Market Basket Price Comparison",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Basket-comparison auto-computed quarterly; positioning-impact auto-modeled"
+    ],
+    "Controls": [
+     "- CTL-175 (ensure competitor-price data integrity & price-match governance.)",
+     "- Operational: VP Merchandising quarterly basket sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Basket-relevance risk**: the 100-SKU basket doesn't match what customers actually compare (a basket of slow-movers no one notices); mitigated by the basket drawn from the high-velocity, high-comparison SKUs",
+     "- **Basket-positioning-vs-margin risk**: lowering the basket to look competitive erodes margin on the most-visible SKUs; mitigated by the basket-vs-margin joint view (the \"loss-leader basket\" funded by margin elsewhere)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Basket benchmark (links to VS-57 / W2214, VS-44 / market research) — the 100-SKU basket",
+     "- Pricing master (links to VS-29 / W289) — the BuildRight basket prices",
+     "- Analytics (links to VS-27 / W113) — the basket-comparison visualization"
+    ],
+    "Time Estimate": [
+     "~2.5 days/quarter = **~80 hours/year** Pricing Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Pricing Analyst compares BuildRight's 100-SKU benchmark basket (the high-visibility basket customers use to judge \"expensive vs. cheap\") vs. each competitor; identifies where BuildRight is above/below; recommends the basket-positioning adjustment",
+     "duration": "2–3 days/quarter",
+     "n": "1",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W2214",
+    "W289"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Semi-annual; ~50–100 SKUs",
+    "Owner": "Analytics Manager",
+    "Participants": "VP Merchandising",
+    "Trigger": "Semi-annual cycle — Price Elasticity",
+    "Volume": "~50–100 elasticity analyses"
+   },
+   "id": "W2220",
+   "level": 2,
+   "name": "Price Elasticity Analysis",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Elasticity auto-computed from the price-volume history; confounded-periods auto-flagged"
+    ],
+    "Controls": [
+     "- CTL-400 (ensure controlled execution — Competitor Price Data Collection & Analysis (PA-57.1).)",
+     "- Operational: Analytics Manager methodology sign-off; VP Merchandising review"
+    ],
+    "Pain Points / Risks": [
+     "- **Confounded-elasticity risk**: the elasticity model conflates the price effect with a concurrent promo or a competitor move; mitigated by the controlled-period selection (periods with only a price change, no confounders)",
+     "- **Stale-elasticity risk**: the elasticity from 2 years ago doesn't reflect a customer whose income/preferences shifted; mitigated by the semi-annual refresh"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113, W208 retail analytics) — the price-volume history for the elasticity model",
+     "- Pricing master (links to VS-29 / W289) — the historical prices",
+     "- Demand forecasting (links to VS-02 / W31) — the elasticity feeds the forecast"
+    ],
+    "Time Estimate": [
+     "~4 days/semi-annual = **~60–80 hours/year** Analytics Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Merchandising",
+     "activity": "Analytics Manager computes the price-elasticity (the demand-response to a price change) for ~50–100 key SKUs from historical price-volume data; classifies elastic (price-sensitive) vs. inelastic (price-insensitive); informs the pricing strategy",
+     "duration": "3–5 days/semi-annual",
+     "n": "1",
+     "r": "Analytics Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W113",
+    "W208",
+    "W289",
+    "W31"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-400"
+   ],
+   "fields": {
+    "Frequency": "Monthly",
+    "Owner": "Pricing Analyst",
+    "Participants": "Category Manager",
+    "Trigger": "Monthly reporting cycle — Competitor Pricing Intelligence Report",
+    "Volume": "Monthly report covering 4–5 competitors"
+   },
+   "id": "W2221",
+   "level": 2,
+   "name": "Competitor Pricing Intelligence Report",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Report auto-assembled from the W2214–W2220 datasets; action-prompts auto-tagged"
+    ],
+    "Controls": [
+     "- CTL-400 (ensure controlled execution — Competitor Price Data Collection & Analysis (PA-57.1).)",
+     "- Operational: Category Manager monthly review; VP Merchandising escalation on unaddressed material moves"
+    ],
+    "Pain Points / Risks": [
+     "- **Report-as-shelfware risk**: the report is distributed but not acted on; mitigated by the action-prompt per finding (each material move carries a \"Category Manager to decide by\" tag)",
+     "- **Data-overload risk**: the report is too detailed for the Category Manager audience; mitigated by the executive-summary-first structure"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113) — the intelligence-report dataset",
+     "- Competitive intelligence (links to VS-33 / competitive intelligence, VS-57 / W2214–W2220) — the source data",
+     "- Distribution (links to VS-07 / W571) — the report distribution"
+    ],
+    "Time Estimate": [
+     "~5 hours/month = **~60 hours/year** Pricing Analyst."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Category Manager",
+     "activity": "Pricing Analyst compiles the monthly intelligence report: competitor price moves, promo activity, basket-position shift, BuildRight's positioning implication; distributes to Category Managers and VP Merchandising",
+     "duration": "4–6 hours/month",
+     "n": "1",
+     "r": "Pricing Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2214",
+    "W2220",
+    "W571"
+   ]
+  }
+ ]
+}

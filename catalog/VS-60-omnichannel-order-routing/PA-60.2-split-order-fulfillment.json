@@ -1,0 +1,455 @@
+{
+ "process_area": {
+  "id": "PA-60.2",
+  "title": "Split-Order & Mixed-Basket Fulfillment"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-60-omnichannel-order-routing/PA-60.2-split-order-fulfillment.md",
+ "value_stream": {
+  "directory": "VS-60-omnichannel-order-routing",
+  "id": "VS-60",
+  "name": "Omnichannel Order Routing & Fulfillment Orchestration"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-410"
+   ],
+   "fields": {
+    "Frequency": "~3K–5K/month (one register with W534: 7–12% of ecommerce orders)",
+    "Owner": "Order Management System",
+    "Participants": "Ecom Ops Manager",
+    "Trigger": "Split order across sources",
+    "Volume": "~3K–5K/month (one register with W534: 7–12% of ecommerce orders)"
+   },
+   "id": "W2294",
+   "level": 2,
+   "name": "Multi-Source Fulfillment Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Orchestration fully automated with consolidation-preference"
+    ],
+    "Controls": [
+     "- CTL-410 (ensure controlled execution — Split-Order & Mixed-Basket Fulfillment (PA-60.2).)",
+     "- operational: sub-order orchestration integrity; operational: Ecom Ops Manager split-order monitoring"
+    ],
+    "Pain Points / Risks": [
+     "- **Orchestration-desync risk**: the sub-orders trigger out of sync (store picks before the drop-ship PO sends), producing inconsistent delivery; mitigated by the atomic-orchestration (all sub-orders trigger together)",
+     "- **Consolidation-missed-opportunity risk**: sub-orders ship separately when consolidation would have been cheaper; mitigated by the W2295 consolidation logic"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order orchestration (links to VS-08 / W536 unified order management, W534 multi-origin) — the multi-source coordination",
+     "- Inventory (links to VS-05 / W105) — the per-source ATP",
+     "- Delivery (links to VS-56 / W548, VS-06 logistics) — the consolidation-vs-separate decision"
+    ],
+    "Time Estimate": [
+     "Automated; Ecom Ops Manager ~4 hours/month = **~50 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecom Ops Manager",
+     "activity": "System orchestrates: triggers pick at store, DC, sends drop-ship PO; tracks sub-orders against parent; determines delivery strategy: consolidate at DC, separate deliveries, or consolidate at store",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W105",
+    "W2295",
+    "W534",
+    "W536",
+    "W548"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-410"
+   ],
+   "fields": {
+    "Frequency": "~5K–8K/month",
+    "Owner": "Logistics Coordinator",
+    "Participants": "Ecom Ops Manager",
+    "Trigger": "Sub-orders consolidated",
+    "Volume": "~5K–8K/month"
+   },
+   "id": "W2295",
+   "level": 2,
+   "name": "Consolidated Delivery Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Consolidation auto-identified; SLA-priority override auto-applied"
+    ],
+    "Controls": [
+     "- CTL-410 (ensure controlled execution — Split-Order & Mixed-Basket Fulfillment (PA-60.2).)",
+     "- CTL-410 (SLA-priority override integrity); operational: Logistics Coordinator consolidation-rate review"
+    ],
+    "Pain Points / Risks": [
+     "- **Hold-too-long risk**: the 24-hour hold for consolidation delays the first sub-order past its SLA; mitigated by the SLA-priority override (ship immediately if the SLA is at-risk)",
+     "- **Consolidation-never-arrives risk**: the second sub-order is delayed, so the held first sub-order waits 24 hours then ships anyway, gaining nothing; mitigated by the hold-window-limit and the consolidation-rate monitoring"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Consolidation engine (links to VS-60 / W2294, VS-56 / W592) — the same-customer/same-DC consolidation logic",
+     "- Delivery (links to VS-04 / W52 fleet, VS-56) — the consolidated shipment",
+     "- Analytics (links to VS-27 / W113) — the consolidation-rate tracking"
+    ],
+    "Time Estimate": [
+     "Automated + ~3 hours/month Logistics Coord = **~40 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecom Ops Manager",
+     "activity": "System identifies consolidation: same DC, same customer; holds first sub-order 24 hours for consolidation; ships together; reduces cost and improves experience; tracks consolidation rate",
+     "duration": "Automated + ongoing",
+     "n": "1",
+     "r": "System / Logistics Coord"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W113",
+    "W2294",
+    "W52",
+    "W592"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-410"
+   ],
+   "fields": {
+    "Frequency": "~12K–17K notifications/month",
+    "Owner": "Customer Communication System",
+    "Participants": "Customer",
+    "Trigger": "Order split",
+    "Volume": "~3K–5K/month (one register with W534: 7–12% of ecommerce orders)"
+   },
+   "id": "W2296",
+   "level": 2,
+   "name": "Split Order Customer Communication",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Split notification auto-sent with combined view link; CS unified-view auto-populated"
+    ],
+    "Controls": [
+     "- CTL-410 (ensure controlled execution — Split-Order & Mixed-Basket Fulfillment (PA-60.2).)",
+     "- Operational: Ecom Ops Manager comms-effectiveness review (W2305)"
+    ],
+    "Pain Points / Risks": [
+     "- **Comms-confusion risk**: the split notification confuses the customer (multiple tracking numbers, multiple dates), increasing contact-center load; mitigated by the clear single-CS-contact and the combined app/web view",
+     "- **Comms-timing risk**: the notification lands before the customer is ready (e.g., at 2 AM); mitigated by the business-hours notification preference"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Customer comms (links to VS-13 / W56 backorder notification, VS-10 / W98) — the split notification",
+     "- App/web order view (links to VS-75 / VS-10) — the combined status",
+     "- CRM (links to VS-13 / W156 CDP) — the unified customer-service view"
+    ],
+    "Time Estimate": [
+     "Automated; monitoring absorbed into Ecom Ops."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Customer",
+     "activity": "Proactive: explains split, sub-order tracking numbers, delivery dates per sub-order, single CS contact; customer views combined status in app/web; CS has unified view",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W156",
+    "W2305",
+    "W534",
+    "W56",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-410"
+   ],
+   "fields": {
+    "Frequency": "~1.5K–2.5K/month",
+    "Owner": "Customer Service Agent",
+    "Participants": "CSA, Finance, CS Supervisor",
+    "Trigger": "Customer cancels part of split order",
+    "Volume": "~1.5K–2.5K/month"
+   },
+   "id": "W2297",
+   "level": 2,
+   "name": "Partial Order Cancellation & Modification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Partial cancellation auto-processed; promo-adjustment auto-computed"
+    ],
+    "Controls": [
+     "- CTL-410 (ensure controlled execution — Split-Order & Mixed-Basket Fulfillment (PA-60.2).)",
+     "- operational: partial-cancel integrity; promo-adjustment accuracy; operational: CS Supervisor sign-off on partial-cancels >PHP 5K"
+    ],
+    "Pain Points / Risks": [
+     "- **Cancellation-after-ship risk**: the customer cancels a sub-order that already shipped, requiring a return-not-delivery; mitigated by the cancellation-window (before ship-confirm) and the return-flow fallback",
+     "- **Promo-adjustment-complexity risk**: a promo that required the full basket (buy-A-get-B) now needs adjustment on a partial cancellation; mitigated by the promo-rule engine handling the partial-cancel case"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Order cancellation (links to VS-10 / W98, VS-16 / W101 refund) — the partial cancellation and refund",
+     "- Inventory (links to VS-05 / W105) — the restored ATP",
+     "- Finance (links to VS-17 / W9, VS-157) — the partial-revenue and promo-adjustment"
+    ],
+    "Time Estimate": [
+     "~12 min/case × ~2,000/month = **~400 hours/month CSA** (distributed)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CS Supervisor",
+     "activity": "System cancels specific sub-order(s), restores inventory, processes partial refund, keeps remaining active; Finance adjusts: partial refund, revenue for fulfilled only, promo adjustments",
+     "duration": "10–15 min",
+     "n": "1",
+     "r": "CSA / System / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W101",
+    "W105",
+    "W9",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-410"
+   ],
+   "fields": {
+    "Frequency": "~1K–2K/month",
+    "Owner": "Order Management System",
+    "Participants": "Customer, CSA, Ecom Ops Manager",
+    "Trigger": "Item becomes unavailable in split order",
+    "Volume": "~1K–2K/month"
+   },
+   "id": "W2298",
+   "level": 2,
+   "name": "Backorder Management in Split Orders",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Backorder auto-detected; options auto-presented; expiry auto-processed"
+    ],
+    "Controls": [
+     "- CTL-410 (ensure controlled execution — Split-Order & Mixed-Basket Fulfillment (PA-60.2).)",
+     "- operational: backorder integrity; operational: Ecom Ops Manager backorder-resolution-rate review"
+    ],
+    "Pain Points / Risks": [
+     "- **Backorder-limbo risk**: a backordered sub-order sits unresolved, and the customer forgets/discharges; mitigated by the backorder-expiry and the periodic customer re-confirmation",
+     "- **Substitute-rejection risk**: the offered substitute doesn't meet the customer's need, generating a cancellation; mitigated by the substitute-accuracy (the substitute must be functionally equivalent)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Backorder (links to VS-05 / W56 backorder, VS-10 / W98) — the backorder logic",
+     "- Substitute (links to VS-01 / W279 product substitution) — the substitute option",
+     "- Customer comms (links to VS-13 / W56) — the options notification"
+    ],
+    "Time Estimate": [
+     "~7 min/case × ~1,500/month = **~175 hours/month** distributed (CSA + system)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecom Ops Manager",
+     "activity": "System detects: evaluates alternatives (different source, substitute, partial shipment + backorder); customer notified of options; chooses: partial now + backorder later, substitute, or cancel",
+     "duration": "5–10 min",
+     "n": "1",
+     "r": "System / Customer / CSA"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W279",
+    "W56",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-410",
+    "CTL-44"
+   ],
+   "fields": {
+    "Frequency": "~1,500–2,800/month (the SFS register canon)",
+    "Owner": "Finance Manager",
+    "Participants": "CFO",
+    "Trigger": "Order across BuildRight entities",
+    "Volume": "~1,500–2,800/month (the SFS register canon)"
+   },
+   "id": "W2299",
+   "level": 2,
+   "name": "Cross-Entity Fulfillment Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Cross-entity fulfillment auto-processed; IC pricing auto-applied; entity-revenue auto-attributed"
+    ],
+    "Controls": [
+     "- CTL-410 (TP arm's-length — links to VS-72 / W235); CTL-44 (entity-attribution integrity); operational: Finance Manager monthly reconciliation sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **TP-misallocation risk**: the cross-entity transfer price isn't arm's-length, creating a TP exposure; mitigated by the VS-72 TP methodology and documentation",
+     "- **Revenue-entity-misattribution risk**: the revenue is recognized by the wrong entity (fulfilling vs. selling), distorting entity P&L; mitigated by the system-controlled entity-attribution (the selling entity, not the fulfilling, recognizes revenue)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Cross-entity fulfillment (links to VS-72 / W2583 IC invoice, VS-17 / W14 intercompany) — the cross-entity order",
+     "- Transfer pricing (links to VS-72 / W2594 TP documentation, VS-17 / W235) — the IC pricing",
+     "- Revenue recognition (links to VS-17 / W9, VS-157) — the selling-entity revenue"
+    ],
+    "Time Estimate": [
+     "Automated + ~5 hours/month Finance Manager = **~60 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "CFO",
+     "activity": "System manages cross-entity: Depot Inc. inventory fulfills Digital Commerce Inc. order; intercompany transfer pricing applied; revenue recognized by selling entity; monthly reconciliation per VS-17",
+     "duration": "Automated + 4–6 hours/month",
+     "n": "1",
+     "r": "System / Finance Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W14",
+    "W235",
+    "W2583",
+    "W2594",
+    "W9"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-197"
+   ],
+   "fields": {
+    "Frequency": "Weekly; ~100 checks/week",
+    "Owner": "Ecommerce Quality Coordinator",
+    "Participants": "Ecom Quality Coordinator, Ecom Ops Manager",
+    "Trigger": "Weekly random check",
+    "Volume": "~100/week"
+   },
+   "id": "W2300",
+   "level": 2,
+   "name": "Fulfillment Quality Control",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Sample auto-selected (risk-based); quality-score auto-fed to source-performance"
+    ],
+    "Controls": [
+     "- CTL-197: order-routing/fulfillment accuracy — pick-fraud detection; operational: Ecom Ops Manager corrective-action sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Sample-blindness risk**: 100 of ~9,900 weekly ecommerce orders is a tiny sample; mitigated by the risk-based sample (high-error sources weighted) and the customer-return data (W2308) as the population signal",
+     "- **Error-detected-not-fixed risk**: errors are found but the root cause isn't addressed; mitigated by the corrective-action requirement and the follow-up audit"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Quality audit (links to VS-31 / W110 quality, VS-133 OpEx process-mining) — the quality-check methodology",
+     "- Order/inventory (links to VS-10 / W98, VS-05) — the order details audited",
+     "- Source-performance (links to VS-60 / W2303 source comparison) — the per-source quality score"
+    ],
+    "Time Estimate": [
+     "~5 hours/week = **~250 hours/year** Ecom Quality Coordinator."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecom Ops Manager",
+     "activity": "Random 100 orders/week: correct items, quantities, packaging, label, timely dispatch; quality score by source; >2% error rate triggers corrective action",
+     "duration": "4–6 hours/week",
+     "n": "1",
+     "r": "Ecom Quality Coord"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W110",
+    "W2303",
+    "W2308",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-410"
+   ],
+   "fields": {
+    "Frequency": "~3K–5K/month",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Store Staff, 3PL, Ecom Ops Manager",
+    "Trigger": "Customer selects express",
+    "Volume": "~3K–5K/month"
+   },
+   "id": "W2301",
+   "level": 2,
+   "name": "Same-Day & Express Fulfillment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Express routing auto-filtered (in-radius-with-stock); SLA auto-tracked with premium-refund on miss"
+    ],
+    "Controls": [
+     "- CTL-410 (ensure controlled execution — Split-Order & Mixed-Basket Fulfillment (PA-60.2).)",
+     "- CTL-410 (express-SLA integrity); operational: Ecom Ops Manager express-SLA-miss review"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA-miss risk**: the 4-hour SLA is missed due to pick/pack/3PL-pickup delay, requiring a refund of the express premium; mitigated by the cutoff (12 PM) and the in-radius-with-stock precondition",
+     "- **Store-capacity risk**: express orders surge during peak, overwhelming store pick capacity; mitigated by the express-volume-cap per store per hour"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Express routing (links to VS-60 / W2286 routing, W548 on-demand) — the in-radius-with-stock routing",
+     "- Premium 3PL (links to VS-56 / W548) — the GrabExpress/Lalamove integration",
+     "- SLA (links to VS-60 / W2292) — the premium-SLA clock (4-hour)"
+    ],
+    "Time Estimate": [
+     "~Same-day per order; Ecom Ops Manager ~4 hours/day during express window = **~1,000 hours/year** (absorbed into ops)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecom Ops Manager",
+     "activity": "Routes only to stores with stock in radius; cutoff 12 PM; premium 3PL (GrabExpress, Lalamove Priority); store picks/packs in 2 hours; 3PL pickup in 1 hour; delivery in 4 hours; premium SLA tracking",
+     "duration": "Same day",
+     "n": "1",
+     "r": "System / Store Staff / 3PL"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2286",
+    "W2292",
+    "W548"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,506 @@
+{
+ "process_area": {
+  "id": "PA-54.1",
+  "title": "Gift Card Issuance & Distribution"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-54-gift-card-stored-value/PA-54.1-gift-card-issuance-distribution.md",
+ "value_stream": {
+  "directory": "VS-54-gift-card-stored-value",
+  "id": "VS-54",
+  "name": "Gift Card & Stored Value Management"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "Monthly reorder; quarterly new designs",
+    "Owner": "Marketing Operations Manager",
+    "Participants": "Marketing Ops Mgr, VP Marketing, Vendor, DC",
+    "Trigger": "Gift card inventory reorder point or new design launch",
+    "Volume": "~50,000 cards printed/year; 10,000 in circulation"
+   },
+   "id": "W2142",
+   "level": 2,
+   "name": "Physical Gift Card Stock Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Stock-level auto-monitored with reorder at threshold; sequential-number range auto-registered to ERP on vendor shipment"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- operational: Marketing Ops monthly stock-reconciliation sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Unactivated-card-loss risk**: physical cards lost/stolen before activation are worthless (no liability until activation), but loss signals weak controls; mitigated by the sequential-number registry and the store-level stock-count reconciliation",
+     "- **Design-obsolescence risk**: a quarterly new-design launch leaves the prior design as dead stock; mitigated by the design-phase-out plan (sell-through the old before activating the new)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Gift-card/stored-value module (links to VS-08 / W28 gift card liability, VS-29 / W296 service-item master) — the card-SKU and the activation registry",
+     "- Inventory (links to VS-05 / W6 cycle counting) — the physical-card stock tracking (distinct from the stored-value liability)",
+     "- DC distribution (links to VS-04 / W3) — card allocation to stores"
+    ],
+    "Time Estimate": [
+     "~6 hours/month Marketing Ops + DC handling absorbed = **~70–90 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Marketing",
+     "activity": "Marketing Ops Manager monitors physical gift card stock across 200 stores; reorder triggers at minimum threshold; coordinates with card vendor for production (security features, sequential numbering, BuildRight branding)",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Marketing Ops Mgr"
+    },
+    {
+     "a": "Marketing Ops Mgr",
+     "activity": "Vendor produces cards with embedded security (sequential numbering registered to ERP at activation); ships to DC for distribution; DC allocates to stores based on sell-through rate",
+     "duration": "2–3 weeks lead time",
+     "n": "2",
+     "r": "Vendor / DC"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W28",
+    "W296",
+    "W3",
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "~15,000–20,000 gift card transactions/month",
+    "Owner": "Cashier",
+    "Participants": "Store Manager, Finance",
+    "Trigger": "Customer purchases gift card at POS",
+    "Volume": "~15K–20K/month; avg PHP 2,000; ~PHP 30–40M/month"
+   },
+   "id": "W2143",
+   "level": 2,
+   "name": "Gift Card Sale & Activation at POS",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- Activation and liability-posting fully automated in the POS flow; AMLA KYC auto-prompted at the threshold"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- operational: Store Manager daily-close review of gift-card activations"
+    ],
+    "Pain Points / Risks": [
+     "- **Activation-failure risk**: the customer pays but the card doesn't activate (system glitch), so the stored-value never loads and the customer loses their money; mitigated by the activation-confirmation receipt and the W2158 daily liability reconciliation catching the discrepancy",
+     "- **Revenue-misrecognition risk**: the cashier posts the load as revenue (not liability), overstating revenue and understating liability; mitigated by the system-controlled posting (the cashier can't override the liability-vs-revenue split)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS / stored-value (links to VS-08 / W5B, W28 gift card liability, POS-013 real-time) — the activation and liability posting",
+     "- Stored-value liability GL (links to VS-17 / W28) — the liability account (Dr. Cash, Cr. Gift Card Liability)",
+     "- AMLA KYC (links to VS-86 / W2148) — the high-value-cash-purchase trigger"
+    ],
+    "Time Estimate": [
+     "~1.5 min/transaction × ~17,500/month = **~440 hours/month Cashier time** (absorbed into the checkout role, not incremental headcount)."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "Cashier scans the physical card; system prompts for load amount; customer pays; system activates the card (registers the sequential number to the stored-value liability) and prints a receipt; for cash purchases ≥PHP 50K, AMLA KYC applies (W2148)",
+     "duration": "1–2 min",
+     "n": "1",
+     "r": "Cashier"
+    },
+    {
+     "a": "Finance",
+     "activity": "System posts the sale: cash/card receipt to revenue-bank, load amount to gift-card liability (not revenue — revenue is recognized at redemption per PFRS 15)",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W2148",
+    "W2158",
+    "W28",
+    "W5B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "~3,000–5,000 digital cards/month; growing 20% QoQ",
+    "Owner": "Ecommerce Operations",
+    "Participants": "Ecommerce Ops, Fraud Analyst",
+    "Trigger": "Customer purchases digital gift card online",
+    "Volume": "~3K–5K/month; avg PHP 2,500"
+   },
+   "id": "W2144",
+   "level": 2,
+   "name": "Digital Gift Card Sale & Delivery",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Digital-card issuance and delivery fully automated; fraud-hold auto-routed to the analyst worklist"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- operational: Ecommerce Ops monitoring of the fraud-hold queue"
+    ],
+    "Pain Points / Risks": [
+     "- **Stolen-payment-issuance risk**: a fraudster buys a digital card with a stolen credit card and redeems it before the chargeback lands; mitigated by the fraud-filter hold and the redemption-speed limit on newly-issued digital cards",
+     "- **Delivery-failure risk**: the email/SMS doesn't reach the recipient (typo, spam filter), and the customer disputes the charge; mitigated by the delivery-confirmation and the resend mechanism"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce / stored-value (links to VS-10 / W11 BOPIS, W180 marketplace; VS-08 / W28) — the digital-card issuance and delivery",
+     "- Email/SMS gateway (links to VS-10) — the delivery channel",
+     "- Fraud filter (links to VS-125 / W266 ecommerce fraud) — the hold-and-review control"
+    ],
+    "Time Estimate": [
+     "System automated; Ecommerce Ops ~4 hours/week monitoring = **~200 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Ops",
+     "activity": "Customer selects denomination and recipient (self or gift recipient) on ecommerce/app; pays online; system generates a digital card number, emails/SMSes it to the recipient, and posts the liability",
+     "duration": "Automated",
+     "n": "1",
+     "r": "Ecommerce System"
+    },
+    {
+     "a": "Ecommerce Ops",
+     "activity": "For fraudulent-pattern transactions (rapid high-value purchases, stolen-card payment), the fraud filter (links to VS-125) holds the digital-card issuance pending review",
+     "duration": "Automated + review",
+     "n": "2",
+     "r": "Ecommerce System / Fraud Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W11",
+    "W180",
+    "W266",
+    "W28"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "~20–30 corporate orders/month; peaks at Christmas",
+    "Owner": "Corporate Sales Manager",
+    "Participants": "Corporate Sales Mgr, Head of Trade / Account Management, Finance",
+    "Trigger": "Corporate client requests bulk purchase",
+    "Volume": "~20–30 orders/month; 50–500 cards each"
+   },
+   "id": "W2145",
+   "level": 2,
+   "name": "Corporate Bulk Gift Card Program",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Bulk activation via file upload with pre-validation; invoice auto-generated per the corporate terms"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- operational: Head of Trade / Account Management sign-off on bulk orders >PHP 500K"
+    ],
+    "Pain Points / Risks": [
+     "- **Bulk-activation-error risk**: a bulk activation loads the wrong amount or wrong card range, creating a large liability discrepancy; mitigated by the pre-activation validation (test activation on a sample before the full bulk run)",
+     "- **Corporate-default risk**: the corporate client is invoiced (not prepaid) and defaults on payment while the cards are already activated; mitigated by the credit-check (W24) and the prepaid-default for new corporate clients"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Stored-value / bulk activation (links to VS-08 / W28, VS-16 / W8 AR for invoiced terms) — the bulk activation and billing",
+     "- CRM / corporate account (links to VS-11 / W58 corporate account, VS-13 / W24 credit application) — the corporate client record",
+     "- AMLA KYC (links to VS-86 / W2148) — the bulk-cash threshold"
+    ],
+    "Time Estimate": [
+     "~2 hours/order × ~25 orders/month = **~600 hours/year** Corporate Sales Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Head of Trade / Account Management",
+     "activity": "Corporate Sales Manager processes the bulk order: denomination, quantity, custom branding if requested, payment terms (often invoiced vs. prepaid); for bulk cash orders ≥ threshold, AMLA KYC applies",
+     "duration": "Per order",
+     "n": "1",
+     "r": "Corporate Sales Mgr"
+    },
+    {
+     "a": "Finance",
+     "activity": "System bulk-activates the card range to the stored-value liability on payment receipt; delivers physical (to the corporate client) or digital (to the client's recipient list); invoices per the corporate payment terms",
+     "duration": "Per order",
+     "n": "2",
+     "r": "System / Corporate Sales Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2148",
+    "W24",
+    "W28",
+    "W58",
+    "W8"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-283",
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "~4–6 campaigns/year aligned with seasonal calendar",
+    "Owner": "Marketing Promotions Manager",
+    "Participants": "Marketing Promotions Mgr, VP Marketing, Finance, Finance Manager",
+    "Trigger": "Marketing launches gift card promotion (e.g., buy PHP 5K get PHP 500 bonus)",
+    "Volume": "~4–6 campaigns/year; 30–50% lift during campaign"
+   },
+   "id": "W2146",
+   "level": 2,
+   "name": "Gift Card Promotional Campaign",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Bonus-load auto-applied at the promo threshold; separate-liability-tranche auto-configured"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- operational: promo-spend accuracy; CTL-283 (campaign regulatory compliance — DTI promo-permit review per W833); operational: Finance sign-off on the bonus-liability tranche"
+    ],
+    "Pain Points / Risks": [
+     "- **Promo-fraud risk**: a fraudster exploits the bonus structure (buy PHP 5K, get PHP 500 bonus, redeem the PHP 5K for cash equivalent, keep the PHP 500); mitigated by the no-cashout-on-bonus term and the fraud-monitoring (W2160)",
+     "- **Revenue-misrecognition risk**: the bonus liability is commingled with the paid liability, distorting breakage accounting; mitigated by the separate liability tranche in step 2"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Stored-value / promo config (links to VS-08 / W28, VS-58 / coupon, VS-14 / W13 promotions) — the bonus-load configuration",
+     "- Marketing/promo (links to VS-14 / W83 campaign) — the promo execution",
+     "- DTI permit (links to VS-22 / W868) — the \"Per DTI Permit No.\" requirement on the promo"
+    ],
+    "Time Estimate": [
+     "~3 days/campaign × ~5 campaigns = **~100–120 hours/year** Marketing + Finance."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Marketing",
+     "activity": "Marketing designs the promo (bonus structure, eligibility, channel); configures the bonus-load in the stored-value system; promotes across channels; tracks redemption and lift vs. baseline",
+     "duration": "Per campaign",
+     "n": "1",
+     "r": "Marketing Promotions Mgr"
+    },
+    {
+     "a": "Finance Manager",
+     "activity": "Finance validates the bonus-load accounting (the bonus is a separate liability tranche with a different breakage/revenue-recognition treatment per PFRS 15)",
+     "duration": "Per campaign",
+     "n": "2",
+     "r": "Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W13",
+    "W2160",
+    "W28",
+    "W83",
+    "W833",
+    "W868"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "Monthly review; ad-hoc activation",
+    "Owner": "Marketing Operations Manager",
+    "Participants": "Marketing Ops Mgr, VP Marketing",
+    "Trigger": "Monthly performance review or new channel activation",
+    "Volume": "4 channels: POS (70%), ecommerce (20%), app (5%), corporate (5%)"
+   },
+   "id": "W2147",
+   "level": 2,
+   "name": "Gift Card Distribution Channel Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Channel-dashboard auto-refreshed monthly with cannibalization-view"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- Operational: VP Marketing monthly channel-review sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **Channel-cannibalization risk**: a new channel (app) grows by shifting sales from POS, not by growing the total; mitigated by the total-program view alongside the channel view",
+     "- **Channel-cost-blindness risk**: a high-volume channel (corporate bulk) carries hidden servicing cost (custom branding, invoicing) that erodes its net contribution; mitigated by the channel-profitability analysis (W2165)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Analytics/BI (links to VS-27 / W113) — the channel-performance dataset",
+     "- Channel platforms (links to VS-08 POS, VS-10 ecommerce, VS-75 app, VS-11 corporate) — the 4 channels",
+     "- Stored-value (links to VS-08 / W28) — the channel-tagged liability"
+    ],
+    "Time Estimate": [
+     "~6 hours/month = **~70–80 hours/year** Marketing Ops."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Marketing",
+     "activity": "Marketing Ops Manager reviews monthly channel performance: sales volume, average denomination, customer segment, channel cost; identifies growth opportunities and underperforming channels",
+     "duration": "Monthly",
+     "n": "1",
+     "r": "Marketing Ops Mgr"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2165",
+    "W28"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-211",
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "Annual comprehensive; ad-hoc for changes",
+    "Owner": "Legal & Compliance Officer",
+    "Participants": "Legal Compliance Officer, VP Legal & Compliance",
+    "Trigger": "BSP regulation update or annual review",
+    "Volume": "BSP stored-value regulations; Consumer Act; AMLA"
+   },
+   "id": "W2148",
+   "level": 2,
+   "name": "Gift Card Compliance & Regulatory Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- AMLA-threshold auto-aggregated per customer/day; expiry disabled on sold gift checks per RA 10962 (loyalty/promo cards carry program terms)"
+    ],
+    "Controls": [
+     "- CTL-211 (ensure stored-value float & liability integrity.)",
+     "- CTL-391 (AMLA KYC — links to VS-86); CTL-211 (consumer-protection / stored-value expiry — links to VS-22 / W2682); operational: VP Legal annual compliance sign-off"
+    ],
+    "Pain Points / Risks": [
+     "- **AMLA-exposure risk**: a structured cash purchase (multiple sub-threshold cards to evade the PHP 50K KYC) goes undetected; mitigated by the aggregation-logic in the KYC trigger (single-customer, single-day aggregation)",
+     "- **Expiry-non-compliance risk**: a sold gift check carries an expiry date, violating RA 10962 (no expiry/dormancy fees on gift checks; loyalty/promo program cards are the exempt class); mitigated by the no-expiry setting enforced at the stored-value-system level for sold cards"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Compliance / T&Cs (links to VS-22 / W22.1 regulatory, VS-88 / W255 document) — the program T&Cs and disclosures",
+     "- AMLA KYC (links to VS-86 / W2143 trigger) — the high-value-cash KYC",
+     "- Breakage accounting (links to VS-17 / W28, W2156) — the PFRS 15 treatment"
+    ],
+    "Time Estimate": [
+     "~40 hours/year Legal Compliance Officer + ad-hoc = **~50–60 hours/year**."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Legal",
+     "activity": "Legal & Compliance Officer monitors the regulatory framework: BSP stored-value-product rules (disclosure, expiry limits, consumer protection), RA 7394 Consumer Act (clear terms, no deceptive practices), RA 9160 AMLA (KYC on cash purchases ≥PHP 50K — single or aggregated), BIR revenue-recognition (PFRS 15 breakage)",
+     "duration": "Annual + ad-hoc",
+     "n": "1",
+     "r": "Legal Compliance Officer"
+    },
+    {
+     "a": "VP Legal",
+     "activity": "Officer ensures BuildRight's program complies: T&Cs posted, no expiry on sold gift checks per RA 10962 (Gift Check Act of 2017 — valid until issued/used); program terms only on loyalty/promotional gift cards (RA 10962 §5-exempt), AMLA KYC triggered on the threshold, breakage accounting per PFRS 15",
+     "duration": "Ongoing",
+     "n": "2",
+     "r": "Legal Compliance Officer"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W2143",
+    "W2156",
+    "W22",
+    "W255",
+    "W2682",
+    "W28"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-391"
+   ],
+   "fields": {
+    "Frequency": "Semi-annual",
+    "Owner": "Category Manager (Gift Cards)",
+    "Participants": "Category Manager, VP Marketing",
+    "Trigger": "Semi-annual pricing review",
+    "Volume": "Standard: PHP 300, 500, 1K, 2K, 3K, 5K, 10K"
+   },
+   "id": "W2149",
+   "level": 2,
+   "name": "Gift Card Denomination & Pricing Strategy",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Denomination-performance auto-analyzed; denomination-set auto-suggested"
+    ],
+    "Controls": [
+     "- CTL-391 (ensure controlled execution — Gift Card Issuance & Distribution (PA-54.1).)",
+     "- CTL-391 (denomination config integrity); operational: VP Marketing sign-off on denomination changes"
+    ],
+    "Pain Points / Risks": [
+     "- **Denomination-mismatch risk**: the standard denominations don't match customer intent (e.g., no PHP 1,500 denomination for a typical gift amount), suppressing sales; mitigated by the custom-load option alongside the standard set",
+     "- **High-denomination-fraud risk**: the PHP 10K denomination is a fraud target (high value, portable); mitigated by the AMLA KYC on high-value cash purchases (W2143/2148)"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Stored-value / denomination config (links to VS-08 / W28, VS-29 / W296) — the standard-denomination master",
+     "- Analytics (links to VS-27 / W113) — the denomination-performance dataset",
+     "- POS (links to VS-08 / W5B) — the denomination selection at sale"
+    ],
+    "Time Estimate": [
+     "~1 day/semi-annual = **~16–20 hours/year** Category Manager."
+    ]
+   },
+   "steps": [
+    {
+     "a": "VP Marketing",
+     "activity": "Category Manager reviews denomination performance: which denominations sell best, average load vs. face value, custom-load adoption; adjusts the standard-denomination set and the custom-load limits",
+     "duration": "Semi-annual",
+     "n": "1",
+     "r": "Category Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W113",
+    "W2143",
+    "W28",
+    "W296",
+    "W5B"
+   ]
+  }
+ ]
+}

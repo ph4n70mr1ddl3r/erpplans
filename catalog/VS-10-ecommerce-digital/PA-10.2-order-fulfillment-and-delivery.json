@@ -1,0 +1,2512 @@
+{
+ "process_area": {
+  "id": "PA-10.2",
+  "title": "Order Fulfillment & Delivery"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-10-ecommerce-digital/PA-10.2-order-fulfillment-and-delivery.md",
+ "value_stream": {
+  "directory": "VS-10-ecommerce-digital",
+  "id": "VS-10",
+  "name": "Ecommerce & Digital Channels"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~25,700 BOPIS orders/month; ~857/day",
+    "Owner": "Customer Service Rep (in-store)",
+    "Participants": "System (order routing), Stock Associate (picker), Customer Service Rep (handoff), Customer",
+    "Trigger": "Customer places BOPIS order on website/app",
+    "Volume": "Avg 3–4 items per order"
+   },
+   "id": "W11",
+   "level": 2,
+   "name": "Ecommerce — BOPIS Order Fulfillment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"creates store pick list\" (replaces manual Step 2).",
+     "- System auto-generate of \"printed pick list\" (replaces manual Step 3).",
+     "- System auto-scan of \"scans each item to confirm\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **ATP accuracy and phantom inventory**: BOPIS fulfillment depends on store-level ATP being accurate; if perpetual inventory is off due to shrinkage, missed scans, or delayed cycle counts (W6), customers place orders for items that are not physically on the shelf, leading to pick failures, substitution friction, and customer dissatisfaction",
+     "- **Pick SLA compliance during peak hours**: the 4-hour pick SLA is difficult to maintain when store foot traffic peaks (weekends, payday sales) because Stock Associates responsible for BOPIS picks are simultaneously managing sales floor replenishment and customer service; orders placed during peak may exceed the 4-hour window",
+     "- **5-day hold period expiry and restocking cost**: approximately 8–12% of BOPIS orders are never picked up (per W1442, the dedicated no-show workflow), triggering auto-cancellation, refund processing, and restocking labor; high-value items held for 5 days represent tied-up inventory that could have been sold to walk-in customers",
+     "- **Customer wait time at pickup counter**: during high-volume periods, multiple customers may arrive simultaneously for BOPIS pickup, creating a queue at the Customer Service counter that is staffed by a single CSR; wait times exceeding 10 minutes negatively impact the BOPIS value proposition vs. in-store shopping"
+    ],
+    "Staffing Implication": [
+     "- **1 CSR per store**: 857 BOPIS orders/day ÷ 200 stores = ~4 BOPIS orders/store/day. At ~10 min per order (pick + handoff), that's ~40 min/day. The CSR also handles returns and special orders, so 1 per store is adequate. Current headcount (1 CSR/store) works.",
+     "- **Stock Associates absorb picking**: ~4 BOPIS picks/day is minimal additional load for the 4 stock associates already doing replenishment and cycle counts.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time inventory availability per store on website (W11.1)",
+     "- Available-to-Promise (ATP) reservation at order placement: system deducts from available inventory (not physical) at the fulfillment location; ATP = on-hand − allocated to open orders − safety stock buffer; if ATP = 0, item shown as \"unavailable\" on website for that location (W11.1)",
+     "- ATP reservation held until pick confirmation (hard commitment) or order cancellation; BOPIS reservation auto-releases after 5-day hold period if not picked up (W11.11)",
+     "- Order routing to store with pick list generation (W11.2–3)",
+     "- In-store pick confirmation via scanning (W11.4)",
+     "- Out-of-stock substitution/cancellation handling (W11.5)",
+     "- Customer notification (SMS/email) (W11.7)",
+     "- Order handoff verification with ID check (W11.9)",
+     "- Auto-cancel and refund after hold period (W11.11)",
+     "- Ecommerce IC settlement for BOPIS: revenue is recognized by Depot Inc. at pickup (goods are Depot Inc. inventory); Digital Commerce Inc. (which collected payment online) remits collected payments to Depot Inc. monthly per W14 ecommerce payment collection IC flow; Digital Commerce Inc. charges Depot Inc. a per-order fulfillment fee per W14 ecommerce fulfillment IC flow; all IC settlements processed monthly via W14",
+     "- Ecommerce VAT for BOPIS: BOPIS transactions are subject to 12% VAT identical to in-store; output VAT is recognized by Depot Inc. (the entity recognizing revenue per IC model); Digital Commerce Inc. does not recognize VAT on payment collection (remitted to Depot Inc.); VAT on BOPIS transactions included in Depot Inc.'s BIR 2550M filing"
+    ],
+    "Time Estimate": [
+     "- Customer order placement and payment: 5–10 min (customer-driven)",
+     "- System order routing and pick list generation: automated (instant)",
+     "- Store notification receipt: automated (instant)",
+     "- Stock Associate item picking and scan confirmation: 5–15 min/order",
+     "- Out-of-stock substitution / cancellation handling: 3 min",
+     "- Staging picked items at Customer Service counter: 2 min",
+     "- Customer notification (Ready for Pickup): automated (instant)",
+     "- Customer arrival and ID verification: 2–5 min (customer-dependent)",
+     "- CSR ID check and item release: 3 min",
+     "- Order completion and inventory deduction: automated (instant)",
+     "- Auto-cancel and refund after 5-day hold: automated + 5 min restocking",
+     "- **Total elapsed time (order to handoff)**: ~4 hours (per Pick SLA)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer places order on website/app; selects pickup store; pays online",
+     "duration": "—",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "—",
+     "activity": "System routes order to selected store; creates store pick list",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Store receives notification (tablet/terminal alert + printed pick list)",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Stock Associate picks items from sales floor or backroom; scans each item to confirm",
+     "duration": "5–15 min/order",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If item not in stock at store: system offers substitution or cancels line; notifies customer",
+     "duration": "3 min",
+     "n": "5",
+     "r": "System / CSR"
+    },
+    {
+     "a": "CSR",
+     "activity": "Stock Associate stages picked items at Customer Service counter",
+     "duration": "2 min",
+     "n": "6",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "System marks order as \"Ready for Pickup\"; sends SMS/email to customer",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Customer arrives at Customer Service counter; presents ID and order number",
+     "duration": "—",
+     "n": "8",
+     "r": "Customer"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "Customer Service Rep verifies ID; scans order; releases items",
+     "duration": "3 min",
+     "n": "9",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "System marks order as \"Completed\"; inventory deducted",
+     "duration": "Automated",
+     "n": "10",
+     "r": "System"
+    },
+    {
+     "a": "CSR",
+     "activity": "If not picked up within 5 days: auto-cancel; refund initiated; items returned to shelf",
+     "duration": "Automated (return: 5 min)",
+     "n": "11",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W14",
+    "W1442",
+    "W6"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-47"
+   ],
+   "fields": {
+    "Frequency": "~17,200 delivery orders/month; ~573/day",
+    "Owner": "DC Dispatch Supervisor",
+    "Participants": "System (order routing), DC Picker, DC Packer, Delivery Partner driver, Customer",
+    "Trigger": "Customer places delivery order on website/app (non-BOPIS)",
+    "Volume": "Avg 3–4 items per order"
+   },
+   "id": "W19",
+   "level": 2,
+   "name": "Ecommerce — Home Delivery Fulfillment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews split fulfillment frequency weekly — high split rates for specific…\" (replaces manual Step 2).",
+     "- System auto-assign of \"assigns to picker by zone\" (replaces manual Step 3).",
+     "- System auto-scan of \"scans each for confirmation\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-47 (ensure ecommerce payment reconciliation accuracy.)",
+     "- operational: DC Dispatch Supervisor review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- 3PL delivery failures",
+     "- Customer not-at-home",
+     "- Multi-item order splitting across DCs",
+     "- Fragile items damage in transit",
+     "- Same-day delivery SLA pressure",
+     "- Rural address quality"
+    ],
+    "Staffing Implication": [
+     "- DC pick/pack staff absorb ecommerce fulfillment volume. 1 Ecommerce Operations Manager monitors daily fulfillment. 3PL coordination absorbed by Supply Chain team.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce platform order routing, 3PL carrier API integration, POS system (for BOPIS fallback), inventory management (ATP check), payment gateway settlement, customer notification system (SMS/email)"
+    ],
+    "Time Estimate": [
+     "- ~15 min per order (picking + packing + dispatch). Parent workflow oversight: ~1–2 hours daily for monitoring dashboards."
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "Customer places delivery order on website/app; selects delivery address; pays online",
+     "duration": "—",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "—",
+     "activity": "System routes order to nearest DC (or store if DC out of stock); creates pick list; **multi-DC order splitting**: if order contains items stocked at different DCs (e.g., bulky items at DC3 Laguna but specialty items only at DC4 Clark), system evaluates fulfillment options — (a) single-DC fulfillment preferred: ship all items from one DC if ATP available, even if not the closest DC for some lines; (b) split fulfillment: if no single DC has ATP for all items, system splits order into sub-orders per fulfillment DC — each sub-order gets its own tracking number, carrier assignment, and delivery timeline; customer receives a single order confirmation with \"Items shipping from multiple locations\" notice and per-sub-order tracking links; (c) split cost allocation: additional shipping cost from split fulfillment (if any) is absorbed by BuildRight, not charged to customer; (d) partial delivery: first sub-order ships immediately; remaining sub-orders ship as ATP becomes available; customer notified per sub-order status; (e) returns for split orders: customer may return all items to any BuildRight store per W12B regardless of which DC fulfilled; system handles cross-location inventory adjustment per W12C; Supply Planner reviews split fulfillment frequency weekly — high split rates for specific items trigger replenishment parameter review per W31.8",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC receives pick task; assigns to picker by zone",
+     "duration": "2 min",
+     "n": "3",
+     "r": "WMS / DC Supervisor"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Picker picks items; scans each for confirmation",
+     "duration": "5–15 min/order",
+     "n": "4",
+     "r": "Picker"
+    },
+    {
+     "a": "—",
+     "activity": "If item unavailable: system offers substitution or cancels line; notifies customer",
+     "duration": "3 min",
+     "n": "5",
+     "r": "System / CSR"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Packer packs items for shipping; generates shipping label and packing slip",
+     "duration": "5 min/order",
+     "n": "6",
+     "r": "Packer"
+    },
+    {
+     "a": "DC Dispatch",
+     "activity": "System creates delivery order with selected partner (Lalamove, Transportify, own fleet)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "DC Dispatch",
+     "activity": "Delivery partner picks up package; system updates order status to \"Shipped\"",
+     "duration": "5 min",
+     "n": "8",
+     "r": "Delivery Partner"
+    },
+    {
+     "a": "—",
+     "activity": "System sends tracking link to customer via SMS/email",
+     "duration": "Automated",
+     "n": "9",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "Delivery partner delivers to customer; obtains proof of delivery (photo, signature)",
+     "duration": "Varies by distance",
+     "n": "10",
+     "r": "Delivery Partner"
+    },
+    {
+     "a": "—",
+     "activity": "System marks order as \"Delivered\"; inventory formally deducted",
+     "duration": "Automated",
+     "n": "11",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "If delivery fails (customer unavailable): system initiates failed delivery lifecycle — (a) 1st attempt: delivery partner leaves notification (call/SMS); customer given 2-hour window to respond for same-day re-delivery attempt; (b) if no response or 2nd attempt fails: order returns to DC; system sends customer notification with reschedule options (next available date) or cancellation option; (c) if customer reschedules: system creates new delivery order with carrier; (d) if customer cancels: system initiates refund to original payment method (Dr. Revenue / Cr. Cash) and DC restocks item per W12A.7; (e) if customer does not respond within 3 business days after return-to-DC: system auto-cancels order and initiates refund",
+     "duration": "15 min + carrier transit time",
+     "n": "12",
+     "r": "Delivery Partner / DC"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Home delivery return (reverse logistics)**: for bulky/large items (appliances, lumber, tiles, fixtures) that the customer cannot transport to a store, system schedules carrier pickup via 3PL integration; carrier collects item from customer address and returns to originating DC; DC Receiving Clerk inspects returned item; if resalable: system processes refund to original payment method and restocks per W12A.7; if damaged: disposition per W6.8a (markdown, scrap, RTV); refund processed upon DC inspection confirmation",
+     "duration": "15 min/setup + carrier transit time",
+     "n": "12a",
+     "r": "System / DC Receiving Clerk / CSR"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**Carrier damage vs. vendor defect liability assignment**: when a home delivery customer reports damaged goods, CSR creates a damage report at intake with customer-provided photos and damage description; system routes damage report for liability determination: (a) **carrier damage** — external packaging damage, dents/scratches consistent with transit handling, item damage on one side, water damage to outer carton — CSR files carrier damage claim via 3PL integration (W19.7); carrier's insurance covers loss; customer receives immediate replacement or refund; system posts Dr. Carrier Claim Receivable / Cr. Inventory; (b) **vendor/manufacturing defect** — item defective out of box with intact packaging, missing parts, functional failure without physical damage — CSR processes vendor warranty claim (W33) or RTV (W3.6a); system posts Dr. Vendor Claim Receivable / Cr. Inventory; (c) **undetermined** — if cause unclear from photos, DC inspects returned item and makes final determination; (d) monthly: DC Supervisor generates delivery damage report — carrier damage rate by carrier (feeds W44/W62B), vendor defect rate by vendor (feeds W44), customer impact (refund vs. replacement)",
+     "duration": "10 min/classification",
+     "n": "12b",
+     "r": "CSR / DC Receiving Clerk"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W12A",
+    "W12B",
+    "W12C",
+    "W3",
+    "W31",
+    "W33",
+    "W44",
+    "W6",
+    "W62B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~1,000–2,000 ship-from-store orders/month; primarily bulky items (appliances, lumber, tiles) with limited DC coverage",
+    "Owner": "Store Manager (store execution); DC Dispatch (carrier coordination)",
+    "Participants": "System (order routing), Stock Associate (picker), DC Dispatch, 3PL Carrier, Customer",
+    "Trigger": "Customer places home delivery order on website/app; nearest DC out of stock but nearby store has ATP",
+    "Volume": "Avg 1–3 items per order"
+   },
+   "id": "W19B",
+   "level": 2,
+   "name": "Ship from Store (Store-Fulfilled Home Delivery)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks ATP at stores within delivery radius of customer address\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews ship-from-store suggestion\" (replaces manual Step 2).",
+     "- System auto-record of \"System routes order to selected store\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: Store Manager (store execution); DC Dispatch (carrier coordination) review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Store operations disruption**: ship-from-store adds packing and carrier-handoff duties to Stock Associates and Department Supervisors who are already managing sales floor replenishment, BOPIS picks, and customer service; during peak in-store traffic (weekends, payday sales), store staff deprioritize ship-from-store orders, violating the 3–7 day delivery SLA",
+     "- **Store inventory accuracy dependency**: ship-from-store is only viable if store-level ATP (available-to-promise) is accurate; if a store's perpetual inventory is off due to shrinkage, missed scans, or cycle count delays (W6), the customer order is accepted but the item cannot be found at pick time, triggering a W98 pick failure exception",
+     "- **Carrier pickup scheduling at stores**: unlike DCs with scheduled carrier routes, stores require ad-hoc carrier dispatch for ship-from-store orders; 3PL carriers (Lalamove, Transportify) may take 2–4 hours to arrive at the store for pickup, extending the fulfillment timeline and making the 3–7 day SLA difficult to meet for same-day or next-day orders",
+     "- **Store-level packaging material supply**: stores do not naturally stock shipping cartons, bubble wrap, and packing tape in quantities needed for home delivery fulfillment; without a dedicated replenishment process for packaging materials (separate from merchandise replenishment W4), Stock Associates improvise packaging, increasing carrier damage rates",
+     "- **3PL carrier reliability for bulky hardware items**: standard on-demand delivery partners (Lalamove, Transportify) are optimized for small parcels; hardware/DIY orders frequently include oversized or heavy items (lumber, cement bags, tile pallets, appliances) that require specialized vehicles and careful handling; carrier damage rates for bulky items run 2–3x higher than standard parcels, directly impacting margin and customer satisfaction",
+     "- **Multi-DC order splitting customer confusion**: when a customer's order is split across two DCs, they receive two deliveries at different times; despite system notification, customers frequently contact support believing the order is incomplete after the first partial delivery, generating unnecessary W98 exception cases and CS cost",
+     "- **Failed delivery cost accumulation**: each failed delivery attempt (customer unavailable, wrong address) costs ~PHP 150–300 in carrier fees plus DC re-stocking labor; at ~2% failed delivery rate on ~17,000 orders/month, this represents ~PHP 50K–100K/month in wasted logistics spend; failed deliveries also tie up inventory in DC receiving returns for 3–5 days",
+     "- **Ecommerce IC settlement timing gap**: Digital Commerce Inc. collects payment at order placement but remits to Depot Inc. only monthly per W14; during high-GMV periods (payday sales, 11.11, 12.12), Depot Inc. carries up to PHP 100M+ in IC receivables from Digital Commerce Inc., creating working capital pressure that Treasury must manage via IC loans (W14 IC Loans)",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Store-level**: ~1,000–2,000 ship-from-store orders/month ÷ 200 stores = ~5–10 orders/store/month. At ~40 min per order (pick + pack + carrier handoff), that's ~3–7 hours/store/month. Absorbed by existing Stock Associates (4 per store) as a minor additional duty.",
+     "- **DC Dispatch incremental load**: carrier coordination for store pickups adds ~5–10 min per order × 1,000–2,000 orders/month = ~83–333 hours/month across 4 DCs. Absorbed by existing DC Dispatch team (3–4 per DC) as a shared responsibility with standard W19 dispatch.",
+     "- **Peak period concern**: during promotional events (W13) where ship-from-store volume may spike 3–5x, stores in Metro Manila with high ecommerce density may see 30–50 ship-from-store orders/month; these stores should designate a backup Stock Associate for ship-from-store picking to avoid conflicts with BOPIS and sales floor duties.",
+     "**Delivery SLA**: 2–5 business days from order placement",
+     "- **Per DC**: Home delivery adds 17,200 orders/month ÷ 30 days ÷ 4 DCs = **~143 orders/DC/day**. At ~15 min pick+pack per order, that's **~36 hours/DC/day** of additional DC labor. This requires 3–4 dedicated pickers/packers per DC for home delivery, within the existing ~150 DC headcount (total DC pick/pack team of 25–30 handles both store replenishment at ~42 orders/day and ~143 home delivery orders/day in shifts). Home delivery orders are typically smaller (3–4 items) and packed individually, while store replenishment orders are larger (~50 lines) and packed in bulk — different skills and pacing.",
+     "- **Staffing implication**: Home delivery fulfillment absorbs a significant portion of DC pick/pack capacity. The 25–30 pickers/packers per DC should be sufficient for combined W4 + W19 volume, but DC management should monitor utilization during ecommerce growth. Peak ecommerce periods (sale events at 3× normal volume per data volumes §1.1) may require temporary surge staffing or overtime. During these peak periods, DC Supervisors should coordinate with HR to deploy agency workers (per W10 agency/manpower contractor management) for temporary pick/pack surge capacity, or arrange overtime for existing DC staff. Additionally, 3PL carrier surge capacity should be pre-arranged with delivery partners (W19.7) at least 2 weeks before planned promotional events (W13) to handle elevated home delivery order volumes."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Real-time inventory availability per DC on website (W19.1)",
+     "- Available-to-Promise (ATP) reservation at order placement: system deducts from available inventory at the fulfillment DC; ATP = on-hand − allocated to open orders − safety stock buffer; if ATP = 0, item shown as \"unavailable\" for that delivery zone (W19.1)",
+     "- ATP reservation held until pick confirmation (hard commitment) or order cancellation; released if delivery fails and order is cancelled (W19.12)",
+     "- Order routing to nearest fulfillment location (W19.2)",
+     "- WMS pick task generation and assignment (W19.3–4)",
+     "- Out-of-stock substitution/cancellation (W19.5)",
+     "- Shipping label and packing slip generation (W19.6)",
+     "- Delivery partner API integration for order creation and tracking (W19.7, W19.8, W19.10)",
+     "- Customer notification (SMS/email) with tracking link (W19.9)",
+     "- Proof of delivery capture (W19.10)",
+     "- Failed delivery / return-to-origin handling (W19.12)",
+     "- Ecommerce payment reconciliation: system imports daily settlement reports from each payment gateway (PayMongo, Dragonpay, GCash, Maya); matches settlement line items to individual ecommerce orders; reconciles gross payments, gateway fees (per-transaction and percentage), chargebacks, and refunds; posts gateway fees to payment processing expense (Dr. Payment Processing Expense / Cr. Cash); flags unreconciled settlements for investigation; Treasury verifies bank deposits match expected settlement amounts; reconciliation performed daily by Treasury Analyst as part of W30 daily cycle (W19)",
+     "- Home delivery reverse logistics: for bulky items requiring carrier pickup, system integrates with 3PL carriers to schedule reverse pickup at customer address; tracks return shipment to DC; DC inspection and disposition (restock, markdown, scrap, RTV); refund triggered upon inspection confirmation (W19.12a)",
+     "- 3PL / delivery partner management: carrier master record with rate cards per zone/weight/tier and SLA terms; automated carrier selection by delivery zone, package weight, and cost; carrier performance dashboard tracking on-time delivery %, damage rate, cost per delivery, and customer complaint rate per carrier; monthly carrier invoice reconciliation (carrier fees matched to completed delivery orders); quarterly carrier performance review similar to W44 vendor scorecard; rate renegotiation triggered by SLA breach or market benchmarking (W19.7, W19.8, W19.10)",
+     "- Ecommerce IC settlement for home delivery: revenue is recognized by Depot Inc. at delivery (goods are Depot Inc. inventory fulfilled by Logistics Inc. DCs); Digital Commerce Inc. (which collected payment online) remits collected payments to Depot Inc. monthly per W14 ecommerce payment collection IC flow; Logistics Inc. charges Depot Inc. a per-order fulfillment fee per W14 ecommerce fulfillment IC flow; all IC settlements processed monthly via W14",
+     "- Ecommerce VAT for home delivery: ecommerce transactions are subject to 12% VAT identical to in-store; output VAT is recognized by Depot Inc. (the entity recognizing revenue per IC model); Digital Commerce Inc. does not recognize VAT on payment collection (remitted to Depot Inc.); system tracks input VAT and output VAT per entity; VAT on ecommerce transactions included in Depot Inc.'s BIR 2550M filing"
+    ],
+    "System Touchpoints (Ship from Store)": [
+     "- Multi-origin fulfillment engine: DC fulfillment preferred, store fulfillment fallback when DC ATP = 0; configurable delivery radius per store (typically 20–30 km) (W19B.1)",
+     "- Store ATP check with real-time available inventory (on-hand − allocated − safety stock buffer) (W19B.1)",
+     "- Store pick list generation and scan confirmation (W19B.3–4)",
+     "- Outbound shipment creation from store location with 3PL carrier dispatch (W19B.6)",
+     "- Inventory deduction at store location upon delivery confirmation (W19B.8)",
+     "- Ecommerce IC settlement: identical to standard home delivery — Depot Inc. recognizes revenue; Digital Commerce Inc. remits payment per W14; Logistics Inc. charges per-order fulfillment fee per W14 (store fulfillment may have a different fee rate than DC fulfillment) (W19B.8)",
+     "- Integration with W19 (home delivery), W4 (store replenishment — ship-from-store consumption reduces store inventory), W14 (IC settlement)"
+    ],
+    "Time Estimate": [
+     "- System fulfillment option evaluation (DC vs. store): automated (instant)",
+     "- Supply Planner / DC Dispatch review and approval: 5 min/order",
+     "- System order routing and pick list generation at store: automated (instant)",
+     "- Store Stock Associate picking and scan confirmation: 10–20 min/order",
+     "- Packing and staging at store dispatch area: 10 min/order",
+     "- DC Dispatch 3PL carrier booking and carrier pickup from store: 15 min setup + 1–4 hour carrier wait",
+     "- Last-mile delivery to customer: varies (1–3 business days)",
+     "- Delivery confirmation and inventory deduction: automated (instant)",
+     "- **Total elapsed time (order to delivery)**: 3–7 business days (per Delivery SLA)",
+     "- Delivery partner order creation and dispatch: automated + 5 min carrier pickup",
+     "- Customer tracking notification: automated (instant)",
+     "- Last-mile delivery to customer: varies by distance (1–4 hours Metro Manila; 1–3 days provincial)",
+     "- Proof of delivery capture and order completion: automated (instant)",
+     "- Failed delivery re-attempt / return-to-DC lifecycle: 15 min processing + carrier transit time",
+     "- **Total elapsed time (order to delivery)**: 1–5 business days depending on location",
+     "- Customer order placement and payment: 5–10 min (customer-driven)",
+     "- System order routing and multi-DC split evaluation: automated (instant)",
+     "- DC pick task assignment: 2 min",
+     "- DC item picking and scan confirmation: 5–15 min/order",
+     "- Out-of-stock substitution / cancellation handling: 3 min",
+     "- Packing, shipping label, and packing slip generation: 5 min/order",
+     "- Delivery partner order creation and dispatch: automated + 5 min carrier pickup",
+     "- Customer tracking notification: automated (instant)",
+     "- Last-mile delivery to customer: varies by distance (1–4 hours Metro Manila; 1–3 days provincial)",
+     "- Proof of delivery capture and order completion: automated (instant)",
+     "- Failed delivery re-attempt / return-to-DC lifecycle: 15 min processing + carrier transit time",
+     "- **Total elapsed time (order to delivery)**: 1–5 business days depending on location"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "System evaluates order fulfillment options: (a) DC fulfillment (standard W19) preferred, (b) if DC ATP = 0 for any line item, system checks ATP at stores within delivery radius of customer address, (c) if store ATP available, system offers ship-from-store as fulfillment option with estimated delivery date",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "Supply Planner or DC Dispatch reviews ship-from-store suggestion; confirms store has sufficient stock and store is not in a peak selling period (system shows store's current day sales velocity); approves or overrides to wait for DC replenishment",
+     "duration": "5 min/order",
+     "n": "2",
+     "r": "Supply Planner / DC Dispatch"
+    },
+    {
+     "a": "—",
+     "activity": "System routes order to selected store; creates store pick list with item locations; creates outbound shipment record",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Store receives notification (tablet/terminal alert); Stock Associate picks items from sales floor or backroom; scan-confirms each item",
+     "duration": "10–20 min/order",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Dept. Supervisor",
+     "activity": "Stock Associate stages picked items at store receiving/dispatch area; packs for shipping using packaging materials",
+     "duration": "10 min/order",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "DC Dispatch creates delivery order with 3PL carrier (same W19.7 integration); carrier picks up from store during scheduled route or on-demand",
+     "duration": "15 min/setup + pickup wait",
+     "n": "6",
+     "r": "DC Dispatch / Carrier"
+    },
+    {
+     "a": "—",
+     "activity": "Carrier delivers to customer per standard W19.10; proof of delivery captured",
+     "duration": "Varies",
+     "n": "7",
+     "r": "Carrier"
+    },
+    {
+     "a": "—",
+     "activity": "System marks order \"Delivered\"; inventory deducted at store location (not DC); revenue recognized by Depot Inc. per standard ecommerce IC model (W14)",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "If customer returns ship-from-store item: standard W12B (online return) or W19.12a (reverse logistics pickup) — item returns to the originating store (not DC) if store has capacity; otherwise to DC",
+     "duration": "Per W12/W19",
+     "n": "9",
+     "r": "System / CSR"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W12",
+    "W12B",
+    "W13",
+    "W14",
+    "W19",
+    "W30",
+    "W4",
+    "W44",
+    "W6",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Daily operations",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Hub Coordinator, Hub Pickers (3–5 per hub), Hub Packers (2–3 per hub), 3PL Couriers, Supply Planner, DC Dispatch",
+    "Trigger": "High online order density in a specific urban zone; or DC congestion",
+    "Volume": "Covers selected \"Strategic Stores\" converted to Hubs; each hub processes ~50–80 online orders/day (vs. ~4 BOPIS orders/day at a standard store; 10–15 hubs ≈ 500–1,200 orders/day, within the ~1,430/day chain-wide ecommerce volume); initial rollout to 10–15 hubs in Metro Manila, Cebu, and Davao"
+   },
+   "id": "W210",
+   "level": 2,
+   "name": "E-commerce Fulfillment Hub (Dark Store) Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-assign of \"assigns orders to the nearest Fulfillment Hub\" (replaces manual Step 2).",
+     "- System auto-dispatch of \"dispatch\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Dual identity conflict (store vs. hub)**: converted \"Strategic Stores\" must simultaneously serve walk-in customers and process high-volume online fulfillment from the same location; walk-in customers may find fast-selling items \"reserved\" for online orders (step 1), causing in-store customer complaints and potential lost sales at the physical shelf",
+     "- **Hub SKU assortment limitation**: dark stores stock only the ~2,000–3,000 fastest-moving ecommerce SKUs, not the full 35,000-SKU range; when online orders contain non-hub items, the routing engine must redirect to the nearest DC (W19) or another store (W19B), splitting the order and creating customer confusion",
+     "- **Hub picker staffing in tight labor market**: each hub requires 5–8 dedicated pickers/packers operating at ecommerce pace (vs. store replenishment pace); competing for warehouse labor in Metro Manila against pure-play e-commerce companies (Shopee, Lazada logistics) who pay premium wages makes hub staffing retention challenging",
+     "- **Priority replenishment competing with standard store replenishment**: hub replenishment via priority DC push (W154) consumes DC truck capacity and dock slots that would otherwise serve standard store replenishment (W4); during DC congestion periods, hub replenishment may crowd out replenishment for non-hub stores, causing stockouts in the broader network"
+    ],
+    "Staffing Implication": [
+     "- **Hub Coordinator (1 per hub)**: full-time role managing 10–15 hubs = 10–15 Hub Coordinators; responsible for daily hub operations, picker/packer scheduling, courier coordination, and replenishment monitoring (4–6 hours/day operational + 2–3 hours/day admin/reporting); this is a new dedicated role not present in standard stores",
+     "- **Hub Pickers (3–5 per hub)**: each hub requires dedicated pickers operating at ecommerce pace (batch picking 10–15 orders per wave); 3–5 pickers/hub × 10–15 hubs = 30–75 dedicated Hub Pickers; these are additional headcount beyond standard store Stock Associates, as hub picking volume (~50–80 orders/day) far exceeds standard store BOPIS picking (~4 orders/day)",
+     "- **Hub Packers (2–3 per hub)**: dedicated packing and QC staff at each hub; 2–3 packers/hub × 10–15 hubs = 20–45 dedicated Hub Packers; may share personnel with Hub Pickers during volume fluctuations",
+     "- **DC Dispatch incremental load**: carrier coordination for hub dispatch adds to existing W19 dispatch duties; each hub generates ~50–80 dispatches/day requiring courier booking and handoff; absorbed by existing DC Dispatch team with possible 1 additional dispatcher during peak",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Dark store / fulfillment hub inventory partitioning engine: reserves designated SKUs for online order fulfillment, preventing walk-in sale of hub-allocated stock (W210.1)",
+     "- Intelligent order routing engine: assigns ecommerce orders to the nearest fulfillment hub based on customer delivery address, hub ATP, and hub processing capacity (W210.2)",
+     "- Wave pick management system: batch picking with RF gun integration supporting multiple simultaneous order picks per wave (W210.3)",
+     "- 3PL carrier dispatch integration: automated courier booking and pickup scheduling from hub backroom, with real-time dispatch confirmation (W210.5)",
+     "- Priority replenishment integration with W154 (DC-to-store push): triggers priority replenishment when hub ATP falls below safety threshold; feeds into DC replenishment planning"
+    ],
+    "Time Estimate": [
+     "- Wave picking (batch of 10–15 orders): 20 min/wave",
+     "- Packing and QC: 5 min/order",
+     "- Courier dispatch coordination: 10 min/batch",
+     "- Hub Coordinator daily management: 4–6 hours/day",
+     "- Replenishment monitoring: 30 min/day per hub"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Hub Inventory Reservation**: System prioritizes \"Hub-specific\" inventory for online orders; prevents \"walk-in\" sales of designated e-comm stock",
+     "duration": "Real-time",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Order Routing**: Intelligent routing engine assigns orders to the nearest Fulfillment Hub (Dark Store) to reduce last-mile cost (W19)",
+     "duration": "Real-time",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Hub Coordinator",
+     "activity": "**Wave Picking**: Hub Pickers perform batch picking (multiple orders simultaneously) using RF guns (W3)",
+     "duration": "20 min/wave",
+     "n": "3",
+     "r": "Hub Picker"
+    },
+    {
+     "a": "—",
+     "activity": "**Packing & QC**: Items verified and packed in the store's \"Dark Zone\" (backroom or dedicated section)",
+     "duration": "5 min",
+     "n": "4",
+     "r": "Hub Packer"
+    },
+    {
+     "a": "—",
+     "activity": "**Dispatch**: 3PL Couriers (Lalamove/Transportify) pick up directly from store backroom; avoids DC bottleneck",
+     "duration": "10 min",
+     "n": "5",
+     "r": "DC Dispatch (at store)"
+    },
+    {
+     "a": "—",
+     "activity": "**Replenishment**: Hub inventory replenished via priority DC-to-Store \"Push\" (W154) to ensure high ATP",
+     "duration": "Daily",
+     "n": "6",
+     "r": "Supply Planner"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W154",
+    "W19",
+    "W19B",
+    "W3",
+    "W4"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~3–7% of home delivery orders (the courier-pickup leg of the ecommerce returns canon: ≈ 4,000–5,000 total return requests/month per W1623, less the ≈ 3,300–4,200 store drop-offs per W12B)",
+    "Owner": "Ecommerce Customer Service Manager",
+    "Participants": "Customer, CSR, 3PL Carrier, DC Receiving Team, Finance (Refunds)",
+    "Trigger": "Customer requests return or exchange for an item delivered to their home (W19/W19B)",
+    "Volume": "~800–1,700 returns/month at steady state (the courier-pickup remainder of the W1623 canon; peaks post-holiday and post-promo)"
+   },
+   "id": "W215",
+   "level": 2,
+   "name": "Customer Home Delivery Reverse Logistics (Returns)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-capture of \"Center\" (replaces manual Step 1).",
+     "- System auto-review of \"reviews request against Return Policy\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates\" (replaces manual Step 3)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: Ecommerce Customer Service Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **3PL reverse pickup cost**: scheduling a dedicated carrier pickup at the customer's home for a return costs PHP 150–400 per trip; for low-value items (e.g., a PHP 500 hand tool), the reverse logistics cost plus QC inspection plus refund processing can exceed the gross margin on the original sale, making the return a net loss",
+     "- **Return fraud and \"wardrobing\"**: customers returning used or partially consumed items (e.g., power tools used for a single project, paint cans returned half-empty) is difficult to detect during QC inspection; without serial number tracking and photographic evidence at original delivery, fraudulent returns erode margin",
+     "- **QC bottleneck at DC**: DC Receiving Team processes inbound returns alongside regular vendor deliveries and inter-DC transfers; returns require individual inspection (step 6) which takes 10 min/item; a spike in returns after a promotional event (W13) can create a QC backlog, delaying refunds and triggering customer complaints",
+     "- **Refund timing expectation vs. processing reality**: customers expect immediate refund upon carrier pickup, but refund is only authorized after DC receipt and QC pass (step 7); the 3–7 day gap between customer handing over the item and receiving the refund generates the majority of return-related CS contacts"
+    ],
+    "Staffing Implication": [
+     "- **CSR (return validation and booking)**: ~800–1,700 returns/month × 20 min per return (validation + booking) = ~267–567 hours/month; distributed across the 30-person Ecommerce Customer Support team = ~9–19 hours/agent/month; largely absorbed within existing call center capacity, with post-promotional spikes requiring surge scheduling",
+     "- **DC Receiving Team (QC inspection)**: ~800–1,700 returns/month × 10 min QC inspection per item = ~133–283 hours/month across 4 DCs = ~33–71 hours/DC/month; absorbed by existing DC Receiving Team as part of standard inbound processing, though post-promotional return spikes may require temporary overtime",
+     "- **Finance (AR) refund authorization**: ~800–1,700 refunds/month × 10 min per authorization = ~133–283 hours/month; absorbed by existing AR team within W101 refund processing duties",
+     "- **No incremental headcount at the canon volumes**; if courier-pickup volumes grow beyond ~1,500/month (quality issues or marketplace expansion), a dedicated Returns Processing Clerk at each high-volume DC should be considered",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Online Return Merchandise Authorization (RMA) portal",
+     "- 3PL integration for reverse logistics booking",
+     "- Linkage between Return ID and original Order ID",
+     "- QC status integration with Refund trigger"
+    ],
+    "Time Estimate": [
+     "- Customer return request initiation: 10 min (customer-driven)",
+     "- CSR return validation and policy check: 15 min",
+     "- 3PL carrier booking and return label generation: 5 min",
+     "- Carrier pickup from customer address: 10 min + transit time (1–3 days)",
+     "- DC receipt and return label scanning: 5 min",
+     "- Quality inspection (resalable / damaged / wrong item): 10 min/item",
+     "- Finance refund authorization: 10 min",
+     "- Customer refund notification and system closure: automated (instant)",
+     "- **Total elapsed time (return request to refund)**: 5–10 business days (carrier pickup transit + DC QC queue + refund processing)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Return Request**: Customer initiates return via Web/App or Call Center; provides reason and photos of item/packaging",
+     "duration": "10 min",
+     "n": "1",
+     "r": "Customer"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Validation**: CSR reviews request against Return Policy (W12); verifies purchase date and item condition; approves for pickup",
+     "duration": "15 min",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "**Collection Booking**: System books 3PL carrier (Lalamove/Transportify) for home pickup; generates \"Return Label\" for customer",
+     "duration": "5 min",
+     "n": "3",
+     "r": "CSR / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Pick-up**: Carrier collects item from customer; verifies \"Return ID\" and basic condition; issues \"Proof of Collection\"",
+     "duration": "10 min",
+     "n": "4",
+     "r": "3PL Carrier"
+    },
+    {
+     "a": "DC Supervisor",
+     "activity": "**DC Receipt**: Item arrives at DC (or Hub); Receiving Clerk scans Return Label; system identifies original Order/SO",
+     "duration": "5 min",
+     "n": "5",
+     "r": "Receiving Clerk"
+    },
+    {
+     "a": "—",
+     "activity": "**Quality Inspection**: Quality Checker inspects item: (a) Resaleable → return to stock (W91); (b) Damaged → quarantine (W91); (c) Wrong item → flag for investigation",
+     "duration": "10 min",
+     "n": "6",
+     "r": "Quality Checker"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Refund Authorization**: Once receipt is confirmed and QC passed: Finance authorizes refund to original payment method (W101)",
+     "duration": "10 min",
+     "n": "7",
+     "r": "Finance (AR)"
+    },
+    {
+     "a": "—",
+     "activity": "**Closure**: System notifies customer of refund status; updates inventory and sales analytics",
+     "duration": "Automated",
+     "n": "8",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101",
+    "W12",
+    "W12B",
+    "W13",
+    "W1623",
+    "W19",
+    "W19B",
+    "W91"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~200–400 orders/month chain-wide",
+    "Owner": "Ecommerce Fulfillment Manager",
+    "Participants": "System, Drop-Ship Vendor (DSV), CSR, virtual Receiving Clerk, Finance (AP)",
+    "Trigger": "Customer orders a specialty, custom, or bulk direct-ship item (custom glass panels, premium cabinets, industrial pumps) on website or POS",
+    "Volume": "Avg PHP 20,000–100,000 per order"
+   },
+   "id": "W246",
+   "level": 2,
+   "name": "Drop-Ship Vendor (DSV) Order Fulfillment",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-generate of \"generate back-to-back PO\" (replaces manual Step 1).",
+     "- System auto-capture of \"enters tracking number in Vendor Portal\" (replaces manual Step 4).",
+     "- System auto-track of \"tracking status via carrier APIs\" (replaces manual Step 5)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: only shows the vendor's stock status at the point of PO creation"
+    ],
+    "Pain Points / Risks": [
+     "- **Vendor fulfillment SLA non-compliance**: drop-ship vendors are typically smaller specialty manufacturers who may not have the operational discipline of BuildRight's DCs; vendor confirmation within 24 hours is not always met, and production timelines (1–3 days) can stretch to 5–7 days during the vendor's own peak periods, leaving BuildRight's customer waiting with no visibility into the delay",
+     "- **Co-branded packaging and labeling quality**: vendors print co-branded BuildRight packing slips and shipping labels from the Vendor Portal, but print quality, label adhesion, and packaging standards vary significantly across the 30–50 accredited DSVs; poor packaging or illegible labels reflect on BuildRight's brand, not the vendor's, creating brand risk that is difficult to police remotely",
+     "- **Virtual Goods Receipt accuracy**: the Virtual GR is triggered by carrier delivery confirmation (POD signature), not by physical inspection; if the customer receives a wrong or damaged item, the system has already recognized revenue and the vendor invoice is in the AP queue, requiring a W98 exception case and a vendor claim to unwind the transaction",
+     "- **Customer service gap for vendor-fulfilled orders**: when a customer contacts BuildRight support about a drop-ship order issue (delay, wrong item, damage), the CSR has no direct control over the vendor's fulfillment process; the CSR must contact the vendor via the Vendor Portal or phone, adding a communication layer that delays resolution compared to BuildRight-fulfilled orders",
+     "- **Vendor inventory visibility limitation**: BuildRight's system only shows the vendor's stock status at the point of PO creation; the vendor may accept the PO but subsequently run out of stock before shipping, particularly for items with long production lead times; BuildRight has no real-time visibility into the vendor's actual inventory position"
+    ],
+    "Staffing Implication": [
+     "- **Ecommerce Fulfillment Manager**: oversees the DSV program including vendor onboarding, SLA monitoring, and exception escalation; ~200–400 orders/month × 10 min oversight/order = ~33–67 hours/month; this is a dedicated responsibility within the existing Ecommerce Fulfillment Manager role",
+     "- **Virtual Receiving Clerk**: the \"virtual receiving\" function (step 6) is automated — no physical goods pass through BuildRight's DC; the virtual Receiving Clerk role monitors Virtual GR exceptions (delivery discrepancies, missing POD) estimated at ~5–10% of DSV orders = ~10–40 exception cases/month × 15 min each = ~2.5–10 hours/month; absorbed by existing DC Receiving Team",
+     "- **Finance (AP)**: 3-way match reconciliation and payment settlement for ~200–400 DSV invoices/month × 1 hour each = ~200–400 hours/month shared across the AP team; DSV invoices are high-value (avg PHP 20,000–100,000) and require careful matching; at current volumes, absorbed by existing AP team within W7 processing",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Drop-Ship SKU virtual classification in Item Master",
+     "- Back-to-back automated Purchase Order generator",
+     "- Vendor Portal/EDI integration for tracking sync and document print",
+     "- Automated Virtual Goods Receipt triggered by 3PL carrier API delivery status",
+     "- Integration with W2A/W2B (procurement), W7 (AP processing), and W19 (ecommerce delivery)"
+    ],
+    "Time Estimate": [
+     "- Customer order placement and payment: 5–10 min (customer-driven)",
+     "- System order routing and back-to-back PO generation: automated (instant)",
+     "- Vendor PO receipt and stock/production timeline confirmation: 24 hours (vendor SLA)",
+     "- Vendor fulfillment (pick/produce) and labeling: 1–3 days (depends on item type)",
+     "- Vendor dispatch and tracking entry: 15 min (vendor-side)",
+     "- Transit and customer tracking updates: automated (ongoing, carrier-dependent)",
+     "- Virtual Goods Receipt upon delivery confirmation: automated (instant)",
+     "- Invoice submission and 3-way match reconciliation: 1 hour per invoice",
+     "- AP payment settlement: per W7 payment terms",
+     "- **Total elapsed time (order to delivery)**: 3–7 business days (vendor fulfillment dependent)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Order Route**: Customer places order; system identifies SKU as Drop-Ship in Item Master; processes payment; split-routes order to generate back-to-back PO",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Fulfillment Mgr",
+     "activity": "**Vendor Intake**: PO automatically transmitted to the accredited Drop-Ship Vendor via EDI/Vendor Portal; vendor confirms stock and production timeline within 24 hours",
+     "duration": "1 day",
+     "n": "2",
+     "r": "Vendor"
+    },
+    {
+     "a": "—",
+     "activity": "**Fulfillment & Labeling**: Vendor picks/produces item; prints co-branded BuildRight packing slip and co-branded shipping label from Vendor Portal",
+     "duration": "1–3 days",
+     "n": "3",
+     "r": "Vendor"
+    },
+    {
+     "a": "—",
+     "activity": "**Dispatch**: Vendor dispatches package directly to customer's address using co-branded carrier; enters tracking number in Vendor Portal",
+     "duration": "15 min",
+     "n": "4",
+     "r": "Vendor"
+    },
+    {
+     "a": "—",
+     "activity": "**Transit Sync**: System automatically imports tracking status via carrier APIs; triggers tracking updates and SMS alerts to the customer",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "virtual Receiving Clerk",
+     "activity": "**Virtual Receipt**: Upon carrier delivery confirmation (POD signature): system automatically posts a \"Virtual Goods Receipt\" in ERP; triggers sales revenue recognition",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "Accountant",
+     "activity": "**Invoice & Reconciliation**: Vendor submits invoice via Portal; system performs 3-way match (PO vs. Virtual GR vs. Invoice); routes to AP for payment settlement (W7)",
+     "duration": "1 hour",
+     "n": "7",
+     "r": "System / Finance"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W19",
+    "W2A",
+    "W2B",
+    "W7",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Ongoing (daily)",
+    "Owner": "Store Customer Experience Supervisor",
+    "Participants": "Store Picker, Customer, Pro Desk Associate",
+    "Trigger": "Ecommerce BOPIS order picked and staged (W11)",
+    "Volume": "~4–5 BOPIS pickups per store/day (~25,700 BOPIS orders/month per profile §8.5)"
+   },
+   "id": "W247",
+   "level": 2,
+   "name": "BOPIS Smart Locker & Queue Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Counter rather than the backroom.\" (replaces manual Step 1).",
+     "- System auto-scan of \"scans the locker QR code and links it to the order ID in the ERP system.\" (replaces manual Step 2).",
+     "- System auto-capture of \"enters the PIN at the locker screen\" (replaces manual Step 4)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: connectivity issues preventing locker opening"
+    ],
+    "Pain Points / Risks": [
+     "- Locker capacity constraints during peak periods (weekends, pay-day weekends)",
+     "- Customer forgetting pickup code or locker number",
+     "- Items too large for smart locker compartments",
+     "- Temperature-sensitive items spoiling in lockers (e.g., paint, adhesives in heat)",
+     "- System connectivity issues preventing locker opening",
+     "- Maintenance and cleaning of locker compartments",
+     "---"
+    ],
+    "Staffing Implication": [
+     "- **Store Pickers**: smart locker staging (step 1–2) adds ~8 min per BOPIS order (5 min pick + 3 min locker staging) vs. ~7 min for standard BOPIS counter staging (W11 steps 4–6); at ~4–5 BOPIS orders/store/day (per the Volume), the incremental time is negligible and absorbed by existing Stock Associates",
+     "- **Pro Desk Associate**: at stores with smart lockers, the Pro Desk Associate handles counter queue check-ins for oversized items (step 4b) and occasional locker malfunction overrides; estimated 10–20 counter pickups/day for oversized items + 1–2 locker override incidents/day = ~30–50 min/day; absorbed by existing Pro Desk Associate as part of their customer service duties",
+     "- **No incremental headcount per store**; the smart locker system reduces CSR counter workload by shifting ~60–80% of BOPIS pickups to self-service locker retrieval, potentially freeing ~30–60 min/day of CSR time for other customer service tasks"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Smart Locker API integration (allocating locker space, tracking locker state)",
+     "- In-store check-in tablet/queuing system linked to Pro Desk alert system",
+     "- Real-time customer pickup notification (SMS/Email/App Push)",
+     "- Integration with W11 (BOPIS) and W65 (CSAT)"
+    ],
+    "Time Estimate": [
+     "- BOPIS order picking and smart locker staging: 5 min pick + 3 min locker placement = 8 min/order",
+     "- Locker QR code scanning and order linking: 3 min/order",
+     "- Customer pickup PIN/QR notification delivery: automated (instant)",
+     "- Customer arrival and locker scan/counter check-in: 2 min (customer-driven)",
+     "- Order completion reconciliation (locker door close or handoff scan): automated (instant)",
+     "- CSAT survey delivery: automated (instant)",
+     "- **Total per-order processing time (picker + staging + customer pickup)**: ~13 min of staff time + customer arrival time",
+     "- **Customer experience time (arrival to item in hand)**: ~2 min for smart locker; ~5 min for counter pickup queue",
+     "- **Smart locker capacity mismatch**: smart locker banks are sized for average daily volume plus promo spikes (~4–5 BOPIS orders/store/day average, 10–15/day peak) but during promotional events (W13), BOPIS volume can spike 3–5x; when all lockers are occupied, overflow orders must be staged at the counter, defeating the self-service locker experience and creating queue congestion at the Pro Desk",
+     "- **Oversized item limitations**: hardware/DIY BOPIS orders frequently include items that physically cannot fit in standard smart lockers (e.g., 4x8 plywood sheets, 40kg cement (per W964) bags, ladders); these items must always be handled through the counter pickup queue, creating a dual-process complexity that confuses customers expecting a uniform locker experience",
+     "- **Locker maintenance and hardware reliability**: smart lockers in Philippine retail environments face humidity, dust, and heavy usage; electronic locks and QR scanners fail at an estimated 2–5% monthly rate per unit; a jammed locker with a customer's order inside requires manual override by the Store Associate, causing customer delays",
+     "- **PIN/QR code sharing and identity verification gap**: the smart locker system releases items to anyone with the pickup PIN or QR code; unlike counter pickup (W11 step 9) which requires ID verification, locker pickup has no identity check, increasing the risk of wrong-party pickup (e.g., family member picking up without customer authorization, or code intercepted via SMS)"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Mgr",
+     "activity": "**Staging**: Store Picker picks BOPIS order (W11 step 4). Stages the items in an in-store **Smart Locker** or **Expedited Pick-up Counter** rather than the backroom.",
+     "duration": "5 min",
+     "n": "1",
+     "r": "Store Picker"
+    },
+    {
+     "a": "—",
+     "activity": "**Locking & Sync**: Associate places the items in a designated smart locker; scans the locker QR code and links it to the order ID in the ERP system.",
+     "duration": "3 min",
+     "n": "2",
+     "r": "Store Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Notification**: Locker system triggers an automated pickup PIN code and QR code to the customer's email and mobile app (W11 step 6).",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Customer Arrival**: Customer arrives at the store. (a) For Smart Locker: Scans the QR/enters the PIN at the locker screen; the locker door pops open. (b) For Pickup Counter: Customer checks in on a tablet queueing screen; Pro Desk is alerted.",
+     "duration": "2 min",
+     "n": "4",
+     "r": "Customer"
+    },
+    {
+     "a": "Store Mgr",
+     "activity": "**Reconciliation**: The locker door closing or the associate hand-off scan triggers a real-time order completion status in the ERP (W11 step 8).",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System / Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Feedback Loop**: System sends an instant SMS survey asking for customer experience rating (CSAT W65).",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W11",
+    "W13",
+    "W65",
+    "W964"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Daily monitoring; weekly trend review; monthly executive SLA report",
+    "Owner": "E-Commerce Operations Supervisor",
+    "Participants": "E-Commerce Operations Supervisor, Fulfillment Analyst, DC Dispatch Supervisor (C for DC-origin orders), Store Operations (C for BOPIS/SFS orders), Drop-Ship Vendor Coordinator (C for DSV orders), Last-Mile Supervisor (C for carrier performance), E-Commerce Manager (A for major/critical escalations), Customer Service Representative (I for customer-impacting breaches)",
+    "Trigger": "Daily SLA monitoring cycle (automated overnight calculation, reviewed by 8:00 AM)",
+    "Volume": "~42,900 ecommerce orders/month (~1,430/day); mix of BOPIS (~25,700/month), home delivery from DC (~12,900/month), ship-from-store (~2,800/month, per W19B/W1196 reconciled), and drop-ship vendor (~200–400/month, per W246); SLA metrics tracked per order per fulfillment origin"
+   },
+   "id": "W591",
+   "level": 2,
+   "name": "E-Commerce Fulfillment SLA Monitoring & Exception Escalation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-calculate of \"calculates SLA metrics for previous day's orders per fulfillment origin —\" (replaces manual Step 1).",
+     "- System auto-review of \"Daily SLA dashboard generation and review\" (replaces manual Step 2).",
+     "- System auto-log of \"log for trend analysis, no escalation required\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W11 covers BOPIS order fulfillment with a 4-hour pick SLA. W19 covers home delivery fulfillment from DC. W19B covers ship-from-store fulfillment. W98 covers ecommerce order exceptions and cancellations. W246 covers drop-ship vendor order fulfillment. W268 covers last-mile delivery tracking and POD. However, no single workflow provides unified daily SLA monitoring across all ecommerce fulfillment channels with structured escalation when SLAs are breached. Given ~42,900 orders/month across 4 fulfillment origins (DC, store-BOPIS, store-SFS, vendor drop-ship), each with different SLA targets (same-day ship for DC orders before 2 PM, 2-hour BOPIS pickup readiness, next-day metro delivery, 48-hour DSV ship), a dedicated monitoring workflow is essential to: (a) detect SLA breaches in near-real-time before they impact customer experience; (b) identify systemic root causes (carrier delays, DC staffing gaps, DSV non-compliance, store pick failures); (c) escalate per severity to the appropriate resolution owner; (d) generate weekly trend data for process improvement. Philippine ecommerce context adds complexity: Metro Manila traffic congestion affects last-mile delivery SLAs; provincial BOPIS stores have variable staffing levels; drop-ship vendors (primarily based in Metro Manila and Southern China) have different operational cadences; and typhoon season (June–November) disrupts logistics networks."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: must track and compute SLAs differently per origin"
+    ],
+    "Pain Points / Risks": [
+     "- **SLA measurement timestamp accuracy**: SLA calculations depend on accurate timestamps at each fulfillment step (order placed, pick started, pick completed, pack completed, carrier handoff, delivery); if store associates forget to scan items at pick confirmation (W11 step 4), the BOPIS readiness timestamp is inaccurate, making SLA measurement unreliable",
+     "- **Multi-origin fulfillment complexity**: with 4 different fulfillment origins (DC, store-BOPIS, store-SFS, DSV), each with different SLA definitions and measurement points, the monitoring system must track and compute SLAs differently per origin; adding a new fulfillment channel (e.g., dark store per W210) requires SLA target definition and monitoring configuration",
+     "- **Carrier-dependent SLA gaps**: last-mile delivery SLA is dependent on 3PL carriers (Lalamove, Transportify) whose performance BuildRight does not directly control; Metro Manila traffic congestion (average 2.5 hours daily travel time per Metro Manila Development Authority) makes next-day delivery SLAs unreliable, especially during rush hours and rainy season",
+     "- **DSV SLA enforcement**: drop-ship vendors are independent businesses with their own operational constraints; BuildRight's contractual SLA requirements (48-hour ship) may not align with DSV's standard processing times, and enforcement relies on commercial leverage (scorecard impact, program removal) rather than operational control",
+     "- **BOPIS SLA during store peak hours**: the 2-hour BOPIS pickup readiness SLA competes with in-store customer service during peak periods (weekends, paydays — 15th and 30th); Store Managers prioritize walk-in customers over BOPIS picks, causing systematic SLA breaches during peak periods that are difficult to resolve without dedicated BOPIS staffing",
+     "- **Weather and infrastructure disruption**: Philippine typhoon season (June–November, average 20 typhoons/year) and Metro Manila flooding can cause systemic SLA failures across multiple origins simultaneously, overwhelming the exception escalation process and requiring executive-level customer communication decisions"
+    ],
+    "Staffing Implication": [
+     "- **Fulfillment Analyst (dedicated)**: ~1 hour/day on SLA dashboard review, breach classification, and root cause analysis + ~15 min/day on carrier/DSV performance data = ~6.5 hours/week. This is a dedicated role within the E-Commerce Operations team.",
+     "- **E-Commerce Operations Supervisor**: ~30 min/day on corrective action assignment + ~1 hour/week on weekly review + ~2 hours/month on monthly report = ~6 hours/week. Absorbed within existing role with some reallocation from operational tasks.",
+     "- **Origin Owners (DC Supervisor, Store Managers, DSV Coordinator, Last-Mile Supervisor)**: ~15–30 min per major breach on root cause analysis; at ~15–20 major breaches/week across all origins, this represents ~4–6 hours/week distributed across all origin owners. Absorbed within existing roles.",
+     "- **E-Commerce Manager**: ~30 min/week on weekly SLA review + ~1 hour/month on monthly report review + ~2 hours/month on critical escalations = ~4 hours/month. Absorbed within existing role.",
+     "- **1 incremental Fulfillment Analyst recommended** to provide dedicated SLA monitoring capacity, freeing the E-Commerce Operations Supervisor from daily triage duties."
+    ],
+    "Steps": [],
+    "System Touchpoints (W591 — SLA Monitoring)": [
+     "- Ecommerce SLA monitoring dashboard: real-time and daily batch SLA calculation per fulfillment origin with breach detection (W591.1–2)",
+     "- Order management system (OMS): order lifecycle timestamps (placed, confirmed, routed, picked, packed, shipped, delivered, BOPIS-ready, BOPIS-picked-up) for SLA measurement (W591.1)",
+     "- SLA breach severity classification engine: configurable rules for minor/major/critical classification with auto-notification (W591.3)",
+     "- SLA breach log with root cause codes: standardized root cause taxonomy for trend analysis (W591.4)",
+     "- Corrective action tracking module: assignment, status, and escalation workflow with 48-hour auto-escalation (W591.5)",
+     "- Carrier performance dashboard: per-carrier on-time delivery rate, delivery time distribution, exception rate (W591.6, cross-reference W268)",
+     "- DSV performance scorecard: per-vendor ship SLA, fill rate, accuracy rate (W591.6, cross-reference W246)",
+     "- Store-level BOPIS SLA ranking: per-store pickup readiness time with top/bottom store identification (W591.7)",
+     "- Weekly SLA trend report: auto-generated trend charts by origin, root cause, and store (W591.7)",
+     "- Monthly executive SLA report template: standardized format with CSAT correlation and financial impact (W591.8)",
+     "- Integration with W11 (BOPIS fulfillment timestamps), W19 (home delivery fulfillment timestamps), W19B (SFS timestamps), W246 (DSV timestamps), W268 (last-mile delivery timestamps), W98 (exception management)",
+     "- Customer notification system: automated customer apology and goodwill gesture triggers for critical SLA breaches (cross-reference W65 customer satisfaction)"
+    ],
+    "Time Estimate": [
+     "Daily cycle 65 min (SLA dashboard review 30 min + breach severity classification 20 min + carrier/vendor performance feed 15 min) ≈ 395 hours/year; major/critical breaches add 30 min–2 hours root-cause analysis plus 15 min corrective tracking each at realized breach volume; weekly trend review 1 hour ≈ 52 hours/year; monthly executive SLA report 2 hours ≈ 24 hours/year (overnight SLA calculation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Overnight SLA performance calculation (automated)**: System calculates SLA metrics for previous day's orders per fulfillment origin — (a) **DC home delivery**: orders received before 2:00 PM — same-day ship rate (target: ≥95%); orders received after 2:00 PM — next-day ship rate (target: ≥98%); ship-to-deliver cycle time (target: 1–3 days Metro Manila, 3–7 days provincial); (b) **BOPIS**: orders received — pickup readiness time (target: ≤2 hours from order confirmation); actual pickup time by customer; auto-cancel rate (target: <5%); (c) **Ship-from-store**: orders received — ship SLA (target: ≤4 hours from order routing to carrier handoff); (d) **Drop-ship vendor**: orders routed to DSV — DSV ship SLA (target: ≤48 hours from order routing); DSV fill rate (target: ≥95%); (e) System calculates aggregate SLA score per origin, per store/DC/DSV, and overall; flags orders that breached SLA with breach duration and classification",
+     "duration": "Automated (overnight batch, completed by 6:00 AM)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "E-Commerce Ops Supervisor",
+     "activity": "**Daily SLA dashboard generation and review**: Fulfillment Analyst reviews auto-generated SLA dashboard by 8:00 AM — (a) previous day's overall SLA performance vs. targets; (b) SLA breach list: order ID, fulfillment origin, breach type (pick, pack, ship, deliver, BOPIS readiness), breach duration, customer impact; (c) heat map: breach concentration by store (BOPIS/SFS), DC (home delivery), DSV (drop-ship), or carrier (last-mile); (d) comparison to 7-day rolling average for trend detection; (e) Fulfillment Analyst triages breaches into severity categories per step 3",
+     "duration": "30 min/day",
+     "n": "2",
+     "r": "Fulfillment Analyst"
+    },
+    {
+     "a": "E-Commerce Ops Supervisor",
+     "activity": "**SLA breach severity classification**: Fulfillment Analyst classifies each breach into severity tiers — (a) **Minor**: single order breach, <1 hour over SLA, no customer complaint; action: log for trend analysis, no escalation required (e.g., BOPIS order ready in 2 hours 15 minutes vs. 2-hour SLA); (b) **Major**: multiple orders from same origin breach SLA, or single order breach >2 hours over SLA, or customer complaint received; action: escalate to fulfillment origin owner (DC Supervisor, Store Manager, DSV Coordinator) for root cause and corrective action within 24 hours (e.g., 20+ BOPIS orders at one store exceeding 2-hour readiness SLA due to understaffing); (c) **Critical**: systemic SLA failure affecting >5% of daily orders from any origin, or carrier network failure causing delivery suspensions, or BOPIS system outage affecting multiple stores; action: escalate immediately to E-Commerce Manager with incident report; E-Commerce Manager convenes cross-functional response within 2 hours; customer communication required per W98",
+     "duration": "20 min/day",
+     "n": "3",
+     "r": "Fulfillment Analyst"
+    },
+    {
+     "a": "E-Commerce Ops Supervisor",
+     "activity": "**Root cause analysis for major/critical breaches**: For each major or critical breach, Fulfillment Analyst or designated origin owner conducts root cause analysis — (a) **DC-origin**: picker absenteeism, wave planning delay, carrier no-show, packaging material shortage, WMS system issue; (b) **Store-origin (BOPIS/SFS)**: stock associate not available for pick, ATP accuracy failure (item not on shelf despite system showing available), POS system delay, customer traffic competing for staff attention; (c) **DSV-origin**: vendor did not acknowledge order within SLA, vendor stockout after order routing, vendor shipment delay, vendor system integration failure; (d) **Carrier-origin**: 3PL driver shortage, vehicle breakdown, traffic congestion (Metro Manila EDSA, provincial road conditions), weather disruption (typhoon, flooding); (e) root cause documented in SLA breach log with category code for trend analysis",
+     "duration": "15–30 min/breach (major); 1–2 hours (critical)",
+     "n": "4",
+     "r": "Fulfillment Analyst / Origin Owner"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**Corrective action assignment and tracking**: For each major/critical breach, E-Commerce Ops Supervisor assigns corrective action to responsible party — (a) **DC**: DC Supervisor adjusts wave planning, adds temporary pick staff, or escalates carrier issue to Last-Mile Supervisor; (b) **Store**: Store Manager reallocates staff for BOPIS picks, investigates ATP discrepancy, or requests replenishment for phantom stock items; (c) **DSV**: Drop-Ship Vendor Coordinator contacts vendor for explanation, updates DSV performance scorecard per W246, escalates repeated non-compliance to VP Merchandising for DSV program review; (d) **Carrier**: Last-Mile Supervisor contacts 3PL carrier (Lalamove, Transportify) for service recovery, evaluates backup carrier activation; (e) system tracks corrective action status: assigned → in-progress → completed; unresolved corrective actions >48 hours auto-escalate to E-Commerce Manager",
+     "duration": "15 min/breach",
+     "n": "5",
+     "r": "E-Commerce Ops Supervisor"
+    },
+    {
+     "a": "E-Commerce Ops Supervisor",
+     "activity": "**Carrier/vendor performance feed**: Fulfillment Analyst updates carrier and DSV performance data — (a) per-carrier SLA performance: Lalamove on-time delivery rate, Transportify on-time delivery rate, own-fleet BOPIS readiness rate; (b) per-DSV SLA performance: ship timeliness, order accuracy, fill rate; (c) data feeds into carrier/vendor quarterly business review preparation; (d) carrier/vendor performance data shared with Last-Mile Supervisor (carriers) and Drop-Ship Vendor Coordinator (DSVs) for operational improvement",
+     "duration": "15 min/day",
+     "n": "6",
+     "r": "Fulfillment Analyst"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**Weekly SLA trend review (Friday)**: E-Commerce Ops Supervisor conducts weekly review with origin owners — (a) week's SLA performance by origin vs. target; (b) trend: improving, stable, or deteriorating per origin; (c) top 3 root causes for the week's breaches; (d) corrective action completion rate (target: ≥90% resolved within 48 hours); (e) store-level BOPIS SLA ranking (top 10 / bottom 10 stores); (f) DC ship SLA by wave; (g) DSV compliance rate; (h) carrier on-time rate; (i) action items for next week: staffing adjustments, process changes, carrier performance discussions, DSV compliance warnings; (j) prepare weekly SLA summary for E-Commerce Manager",
+     "duration": "60 min/week",
+     "n": "7",
+     "r": "E-Commerce Ops Supervisor / Origin Owners"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**Monthly executive SLA report**: E-Commerce Ops Supervisor prepares monthly SLA report for E-Commerce Manager and VP Merchandising — (a) monthly SLA performance by channel: BOPIS, DC home delivery, SFS, DSV; (b) month-over-month trend; (c) customer impact: CSAT scores correlated with SLA performance, NPS impact, complaint rate; (d) financial impact: estimated lost revenue from SLA-related order cancellations, cost of expedited shipping to recover breached orders, cost of customer goodwill gestures (discount codes for SLA breaches); (e) process improvement recommendations; (f) carrier/DSV quarterly review preparation data",
+     "duration": "2 hours/month",
+     "n": "8",
+     "r": "E-Commerce Ops Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W11",
+    "W1196",
+    "W19",
+    "W19B",
+    "W210",
+    "W246",
+    "W268",
+    "W65",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Ongoing per delivery transaction; ~42,900 orders/month of which ~17,200 are home delivery orders requiring tracking and POD (~573/day); BOPIS orders (~25,700/month) tracked to pickup readiness but POD is pickup confirmation per W11",
+    "Owner": "Last-Mile Operations Supervisor",
+    "Participants": "Last-Mile Operations Supervisor, Dispatch Coordinator, 3PL Driver (R for Lalamove/Transportify), Own-Fleet Driver, Customer Service Representative (R for exception handling), Fulfillment Analyst (R for POD reconciliation), Customer (I for notifications and delivery confirmation), Drop-Ship Vendor Coordinator (C for DSV deliveries)",
+    "Trigger": "Order dispatched from DC, store (SFS), or drop-ship vendor for customer delivery",
+    "Volume": "~17,200 home delivery orders/month requiring end-to-end tracking and POD capture; mix of carriers: Lalamove (~40% of home delivery volume), Transportify (~30%), own fleet for BOPIS delivery-to-vehicle (~15%), DSV-direct carrier (~15%); delivery coverage across Luzon (~65% of volume), Visayas (~20%), Mindanao (~15%)"
+   },
+   "id": "W592",
+   "level": 2,
+   "name": "E-Commerce Customer Delivery Tracking & Proof of Delivery Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-scan of \"scans shipment barcode and assigns to carrier/driver\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates unique tracking link and notifies customer —\" (replaces manual Step 2).",
+     "- System auto-send of \"sends milestone SMS/email to customer at key points —\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "W268 covers last-mile home delivery tracking and proof-of-delivery from a logistics operations perspective, focusing on driver loading, GPS tracking, and POD capture at the point of delivery. W19 covers the home delivery fulfillment process from order receipt to dispatch. W98 covers ecommerce order exceptions and cancellations. W12 covers returns. W509 covers ecommerce product return inspection. However, no workflow covers the end-to-end delivery tracking lifecycle from the customer and financial reconciliation perspective — specifically: (a) delivery dispatch confirmation triggering customer notification; (b) real-time tracking link generation and distribution; (c) delivery attempt logging including first-attempt delivery success rate; (d) failed delivery handling with reschedule and return-to-origin options; (e) POD capture (photo + signature) for payment release and revenue recognition per PFRS 15; (f) POD reconciliation against dispatch log to identify unreconciled deliveries; (g) exception handling for damage, wrong item, and partial delivery claims. This workflow is critical because: delivery confirmation is required before revenue recognition for certain ecommerce transactions per PFRS 15 (performance obligation satisfied at delivery); POD (photo + signature) is required for payment release from Digital Commerce Inc. to Depot Inc. per the IC settlement model (W14); and delivery tracking data feeds customer CSAT measurement and SLA monitoring per W591. Philippine context: multi-island geography means deliveries may involve sea freight (RoRo) for Visayas and Mindanao orders; provincial addresses may be imprecise (barangay-level only); cash-on-delivery (COD) orders (~20% of home delivery volume) require driver cash collection and reconciliation per W99."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: Last-Mile Operations Supervisor review and approval gate; operational: periodic reconciliation against source documents"
+    ],
+    "Pain Points / Risks": [
+     "- **POD capture compliance in provincial areas**: drivers in provincial areas with no mobile signal cannot upload POD data in real-time; cached POD data on driver devices may be lost if the device is damaged, stolen, or factory-reset before upload; a 2% POD data loss rate on ~17,200 deliveries/month equals ~344 deliveries/month without POD, creating revenue recognition uncertainty and customer dispute vulnerability",
+     "- **Customer address quality in Philippines**: Philippine addressing is inconsistent — many provincial addresses use barangay-level descriptions (\"near the church\", \"behind the public market\") rather than street numbers; GPS coordinates may be inaccurate due to limited Google Maps coverage in rural areas; this drives up the \"Address Not Found\" delivery attempt rate and extends delivery times",
+     "- **COD cash handling risk**: ~3,440 COD orders/month with average order value ~PHP 3,500 means ~PHP 12M/month in cash handled by 3PL drivers; cash collection, remittance, and reconciliation is inherently risky — driver theft, loss, or delayed remittance creates cash shortages and reconciliation backlogs; Lalamove and Transportify drivers are not BuildRight employees, limiting cash handling controls; mitigated by the Last-Mile Operations Supervisor review and approval gate and operational: periodic reconciliation against source documents",
+     "- **Multi-island delivery complexity**: orders to Visayas and Mindanao require sea freight (RoRo) between islands, adding 1–3 days to delivery time and introducing weather-dependent delays; typhoon season can suspend RoRo operations for days, creating delivery backlogs that cascade across the tracking and POD system",
+     "- **Carrier liability limitation for damage**: Lalamove and Transportify standard terms limit carrier liability to approximately 10x the freight cost; for a PHP 500 delivery fee, maximum carrier liability is ~PHP 5,000 — far below the value of typical BuildRight orders (power tools PHP 5,000–50,000, appliances PHP 10,000–80,000); this means BuildRight absorbs most damage losses for high-value items, making POD photo quality critical for claim disputes",
+     "- **DSV carrier POD data gap**: drop-ship vendors use their own carriers for delivery to BuildRight customers; POD data from DSV carriers may not include photo or GPS stamp (only signature), creating a lower-quality POD record that is harder to use in customer disputes and may not satisfy PFRS 15 delivery confirmation requirements"
+    ],
+    "Staffing Implication": [
+     "- **Dispatch Coordinator (dedicated)**: ~30 min/day on dispatch confirmation + ~30 min/day on COD reconciliation = ~5 hours/week. This is an existing role within the DC dispatch team; POD reconciliation and COD handling are additional responsibilities.",
+     "- **Fulfillment Analyst**: ~30 min/day on POD reconciliation = ~2.5 hours/week. Absorbed within existing Fulfillment Analyst role (also supporting W591 SLA monitoring).",
+     "- **CSR team**: ~30 min/day on delivery exception handling = ~2.5 hours/week distributed across CSR team. At ~15–20 delivery exceptions/day requiring CSR intervention, this represents ~30 min total across the team.",
+     "- **Last-Mile Operations Supervisor**: ~30 min/day on monitoring + ~1 hour/week on weekly review = ~3.5 hours/week. Absorbed within existing role.",
+     "- **No incremental headcount required**. The delivery tracking and POD management workflow is absorbed by existing DC dispatch, fulfillment, and last-mile operations staff."
+    ],
+    "Steps": [],
+    "System Touchpoints (W592 — Delivery Tracking & POD)": [
+     "- Order management system (OMS): order status lifecycle from \"Shipped\" to \"Delivered — POD Confirmed\" with timestamp tracking at each status change (W592.1, W592.4)",
+     "- Carrier integration APIs: Lalamove API, Transportify API for real-time GPS tracking, dispatch confirmation, and POD data exchange (W592.1, W592.3, W592.6)",
+     "- Customer notification engine: SMS (via Philippine SMS gateway — Globe/Smart), email, and in-app push notifications for dispatch, milestone, and delivery confirmation (W592.2, W592.3)",
+     "- Real-time tracking portal: customer-facing web page with live map, estimated delivery time, and carrier contact (W592.2, W592.3)",
+     "- Driver mobile app: delivery attempt logging, POD capture (signature pad, camera, GPS stamp), COD cash recording, offline caching for provincial areas with no connectivity (W592.4, W592.5, W592.6, W592.9)",
+     "- POD cloud storage: encrypted POD images and signatures with order ID linking; retention per BIR 10-year document retention requirement (W592.6)",
+     "- POD reconciliation engine: automated matching of dispatch log to POD records with exception flagging (W592.7)",
+     "- Delivery exception register: categorization and tracking of damage, wrong item, partial delivery, and refusal exceptions linked to W98 (W592.8)",
+     "- COD cash reconciliation module: driver cash recording, remittance matching, and IC settlement triggering per W14 (W592.9, cross-reference W99)",
+     "- Revenue recognition integration: POD confirmation triggers revenue recognition for goods-in-transit orders per PFRS 15 (W592.7, cross-reference W487)",
+     "- Multi-leg shipment tracking: DC-to-port, RoRo sea crossing, port-to-customer tracking for Visayas/Mindanao deliveries (W592.3)",
+     "- DSV carrier API integration: POD data reception from drop-ship vendor carriers (W592.6, cross-reference W246)",
+     "- Weekly delivery performance dashboard: first-attempt success rate, POD compliance, carrier benchmarking, regional analysis (W592.10)"
+    ],
+    "Time Estimate": [
+     "Per-order effort ~8–10 min (dispatch confirmation 3–5 min + attempt logging 2 min + POD capture 3 min) across ~17,200 home-delivery orders/month ≈ 2,290–2,870 hours/month ≈ 27,500–34,400 hours/year of driver/app time; failed deliveries add 10–15 min each and damage/wrong-item exceptions 15–30 min each at realized volume; Fulfillment Analyst desk ~75 min/day (tracking monitoring 15 min + POD reconciliation 30 min + COD reconciliation 30 min) ≈ 456 hours/year; weekly compliance review 1 hour ≈ 52 hours/year (tracking links and customer notifications automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**Delivery dispatch confirmation**: When order is handed off to carrier (3PL driver pickup at DC/DSV warehouse, or own-fleet driver loading at DC), system records dispatch confirmation — (a) DC Dispatch Coordinator scans shipment barcode and assigns to carrier/driver; (b) system records: order ID, shipment ID, dispatch timestamp, carrier name, driver name and contact, vehicle plate number; (c) for DSV shipments: DSV confirms dispatch via EDI/API integration with their own carrier; (d) system changes order status from \"Processing\" to \"Shipped\" in OMS; (e) dispatch data transmitted to tracking system per W268",
+     "duration": "3–5 min/order at DC batch dispatch",
+     "n": "1",
+     "r": "Dispatch Coordinator / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Real-time tracking link generation and customer notification**: System generates unique tracking link and notifies customer — (a) system creates tracking URL with real-time map display showing package location (carrier GPS integration for Lalamove/Transportify; WMS-driven status for DSV shipments); (b) system sends SMS to customer: \"Your BuildRight order #[number] has been shipped! Track your delivery: [link]. Estimated delivery: [date/time range]. Contact: [customer service number]\"; (c) system sends email with same information plus order summary and delivery instructions; (d) for BOPIS orders, this step is replaced by \"Ready for Pickup\" notification per W11 step 7; (e) tracking link active from dispatch until delivery confirmation or return-to-origin",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**In-transit tracking and proactive updates**: System provides continuous tracking updates — (a) **GPS-based location updates**: carrier driver mobile app streams GPS coordinates every 60 seconds for Lalamove/Transportify deliveries; system updates customer tracking page in near-real-time; (b) **Milestone updates**: system sends milestone SMS/email to customer at key points — \"Out for Delivery\" (driver en route to customer address), \"Nearby\" (driver within 2 km, proximity alert); (c) **Exception alerts**: if delivery is delayed beyond estimated window by >4 hours, system alerts Last-Mile Supervisor and sends proactive customer notification with revised ETA; (d) **Multi-leg tracking**: for provincial deliveries requiring RoRo (Roll-on/Roll-off) sea crossing (Luzon to Visayas/Mindanao), system tracks each leg — DC to port, sea crossing, port to customer — with estimated time per leg",
+     "duration": "Automated (monitoring: 15 min/day by Dispatch Coordinator)",
+     "n": "3",
+     "r": "System / Last-Mile Supervisor"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**Delivery attempt logging**: Driver attempts delivery and logs outcome via mobile app — (a) **Successful delivery**: driver marks \"Delivered\" in app; proceeds to POD capture (step 5); (b) **Customer not available**: driver marks \"Attempted — No Response\"; system logs attempt with timestamp and GPS coordinates; system auto-calls customer (IVR) and sends SMS: \"We attempted delivery. Reschedule: [link] or call [number]. Order held for 3 business days\"; (c) **Customer refusal**: driver marks \"Refused\" with reason code (wrong item visible, damaged packaging, changed mind, duplicate order); system creates exception ticket per W98; (d) **Incomplete address**: driver marks \"Address Not Found\"; system logs GPS location where driver stopped; CSR contacts customer for address clarification; (e) for COD orders: driver collects cash payment at delivery; driver records cash amount collected in app; system creates COD cash reconciliation entry per W99",
+     "duration": "2 min/delivery attempt",
+     "n": "4",
+     "r": "Driver / System"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**Failed delivery handling — reschedule or return**: If first delivery attempt fails — (a) **Reschedule (within 3 business days)**: customer responds to reschedule notification within 24 hours; system reschedules delivery for next available date; Dispatch Coordinator reassigns to carrier/driver; customer receives new tracking link and ETA; if customer does not reschedule within 3 business days, order auto-moves to return-to-origin; (b) **Return to origin (store/DC)**: if reschedule window expires or customer explicitly requests return, system initiates return-to-origin — generates return shipment label, notifies carrier to return package to originating DC/DSV warehouse; system changes order status to \"Return in Transit\"; upon receipt at DC/DSV, inventory restored per W12 return process; customer refund initiated per W101; (c) **Return to nearest store**: customer may opt to pick up order at nearest BuildRight store instead of rescheduled delivery; system converts order to BOPIS at designated store; inventory transferred in system; customer receives BOPIS pickup notification per W11",
+     "duration": "10–15 min per failed delivery",
+     "n": "5",
+     "r": "CSR / Dispatch Coordinator"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**POD capture (photo + signature)**: Upon successful delivery, driver captures POD via mobile app — (a) **Customer electronic signature**: customer signs on driver's mobile screen; signature stored as encrypted image; (b) **Delivery photo**: driver photographs delivered items at customer's doorstep or staging area; photo must show items and delivery location context; (c) **GPS coordinate stamp**: system auto-tags delivery location coordinates from driver's GPS at time of POD capture; (d) **Delivery confirmation metadata**: order ID, delivery timestamp, customer name, driver name, carrier; (e) POD data uploaded to cloud via mobile app — if offline (no signal at delivery location, common in provincial areas), POD data cached locally on device and auto-uploads when connectivity restored (within 24 hours); (f) for DSV deliveries: DSV carrier captures POD per DSV's own process; DSV transmits POD data to BuildRight via API integration",
+     "duration": "3 min/delivery",
+     "n": "6",
+     "r": "Driver / System"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**POD reconciliation against dispatch log**: Fulfillment Analyst reconciles POD records against dispatch log — (a) **Daily reconciliation**: system matches dispatched shipments (step 1) to POD records (step 6) by order ID; (b) **Matched (delivered with POD)**: POD received, order status \"Delivered — POD Confirmed\"; revenue recognition confirmed per PFRS 15 for goods-in-transit accounting; (c) **Dispatched but no POD**: shipment dispatched >24 hours ago but no POD received — Fulfillment Analyst investigates: driver did not capture POD, POD upload pending (offline mode), delivery not yet attempted, or shipment lost; (d) **POD received but dispatch missing**: POD exists for order not in dispatch log (system error or manual order); Fulfillment Analyst resolves with Dispatch Coordinator; (e) target: POD reconciliation completion rate ≥98% within 48 hours of delivery; unreconciled items >48 hours escalated to Last-Mile Supervisor",
+     "duration": "30 min/day",
+     "n": "7",
+     "r": "Fulfillment Analyst"
+    },
+    {
+     "a": "E-Commerce Ops Supervisor",
+     "activity": "**Exception handling — damage, wrong item, partial delivery**: Customer reports delivery issue via phone, chat, or email — (a) **Damaged in transit**: customer reports damaged item(s); CSR creates exception ticket with photos; system triggers replacement order per W19 or return per W12 based on customer preference; carrier damage claim filed by Last-Mile Supervisor with supporting POD photos; damage liability assigned per carrier contract (Lalamove/Transportify standard liability limited to 10x freight cost); uninsured damage loss absorbed by BuildRight; (b) **Wrong item delivered**: customer reports receiving incorrect item(s); CSR verifies against order and pick/pack records; if picking error at DC, DC Supervisor investigates per W19 quality process and replacement order shipped expedited; if carrier misrouting, carrier claim filed; (c) **Partial delivery**: customer reports missing item(s) from multi-item order; CSR checks if order was split per W19 multi-DC order splitting — if split, customer informed of separate delivery; if not split, DC dispatch verifies packing slip vs. order; missing items shipped separately as expedited replacement; (d) all exceptions logged in delivery exception register with category, resolution, and resolution time per W98",
+     "duration": "15–30 min per exception",
+     "n": "8",
+     "r": "CSR / Last-Mile Supervisor"
+    },
+    {
+     "a": "Last-Mile Supervisor",
+     "activity": "**COD cash reconciliation**: For COD orders (~20% of home delivery = ~3,440 orders/month) — (a) driver records cash collected per order in mobile app at POD capture; (b) driver remits collected cash to DC cashier or designated bank deposit at end of shift; (c) system reconciles driver cash remittance to COD delivery log; (d) discrepancies (cash short/over) flagged for investigation per W99 payment settlement; (e) once reconciled, cash remittance posted to Digital Commerce Inc. (payment collector) for IC settlement to Depot Inc. (revenue recognizer) per W14; (f) unreconciled COD cash >48 hours escalated to Last-Mile Supervisor and Treasury per W30",
+     "duration": "30 min/day (COD reconciliation)",
+     "n": "9",
+     "r": "Dispatch Coordinator / Treasury Analyst"
+    },
+    {
+     "a": "E-Commerce Ops Supervisor",
+     "activity": "**Weekly POD compliance and delivery performance review**: Last-Mile Supervisor reviews weekly metrics — (a) **First-attempt delivery success rate**: target ≥85%; below target triggers carrier performance review; (b) **POD capture compliance rate**: target 100% (photo + signature); below 98% triggers driver coaching; (c) **Average delivery time by carrier**: Lalamove, Transportify, own fleet, DSV-direct; benchmarked against SLA targets per W591; (d) **Failed delivery rate**: target <10%; above target triggers customer address quality review and delivery window optimization; (e) **Exception rate**: damage, wrong item, partial delivery claims as % of deliveries; above 2% triggers DC packing quality review; (f) **COD reconciliation rate**: target ≥98% same-day; below target triggers cash handling process review; (g) **Regional performance**: Luzon vs. Visayas vs. Mindanao delivery times and success rates; provincial delivery SLA gaps identified for process improvement",
+     "duration": "60 min/week",
+     "n": "10",
+     "r": "Last-Mile Supervisor"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101",
+    "W11",
+    "W12",
+    "W14",
+    "W19",
+    "W246",
+    "W268",
+    "W30",
+    "W487",
+    "W509",
+    "W591",
+    "W98",
+    "W99"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Daily; ~15–25% of ecommerce orders require splitting (~6,500–10,700 orders/month)",
+    "Owner": "Ecommerce Operations Specialist",
+    "Participants": "Operations Specialist, DC Planner, Customer, 3PL Carrier, Customer Service Agent",
+    "Trigger": "Ecommerce order requires splitting across multiple fulfillment locations per POS-021 multi-DC order splitting",
+    "Volume": "~6,500–10,700 split orders/month out of ~42,900 total; average 2.1 sub-orders per split order"
+   },
+   "id": "W829",
+   "level": 2,
+   "name": "Customer Ecommerce Order Split & Partial Delivery Proactive Communication",
+   "parent": null,
+   "req_refs": [
+    "POS-021"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-create of \"creates sub-orders with separate tracking numbers but unified customer order…\" (replaces manual Step 1).",
+     "- System auto-send of \"sends W708 communication within 5 minutes of order confirmation\" (replaces manual Step 2).",
+     "- System auto-route of \"routes sub-orders to respective DCs per W536 unified order management\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "POS-021 requires multi-DC order splitting when no single DC has ATP for all items. With 35,000 SKUs across 4 DCs, ~15–25% of orders will span multiple fulfillment locations. While the system handles the splitting automatically, the customer communication and partial delivery management workflow is not covered by existing workflows. W19 covers home delivery fulfillment and W592 covers delivery tracking, but neither addresses the customer experience when one order becomes 2-3 separate deliveries arriving on different days. Poor communication of split orders is a top driver of customer complaints in omnichannel retail — customers don't understand why they received a partial order and may assume items are missing."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: Ecommerce Operations Specialist review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer confusion about partial deliveries**: despite notifications, some customers will not read or understand split order communications and will contact customer service assuming items are missing",
+     "- **Carrier cost increase**: multiple shipments for a single order increase delivery cost; with ~6,500–10,700 split orders/month, this represents significant incremental logistics cost",
+     "- **Environmental impact**: multiple deliveries for one order increases carbon footprint; environmentally conscious customers may object",
+     "- **Sub-orders arriving out of sequence**: later-submitted sub-orders may arrive before earlier ones due to DC proximity and carrier schedules, further confusing customers",
+     "- **Return routing complexity**: customer attempting to return items to wrong sub-order carrier causes return processing delays"
+    ],
+    "Staffing Implication": [
+     "Absorbed by Ecommerce Operations Specialist and Customer Service team; ~25–30 hours/month for exception handling. Ecommerce Ops Specialist: ~10–15 hours/month on monitoring and analytics. Customer Service: ~15 hours/month on split order inquiries. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- POS-021 multi-DC splitting logic for automatic order split detection",
+     "- W536 unified order management for sub-order routing",
+     "- W106 DC dispatch for individual sub-order fulfillment",
+     "- W19 home delivery fulfillment for delivery execution",
+     "- W592 delivery tracking for carrier tracking integration",
+     "- W708 customer communication for all notifications",
+     "- W258 ticketing for customer inquiry management",
+     "- W259 call center for preemptive customer service",
+     "- W101 refund processing for cancelled sub-order refunds",
+     "- W215 returns for partial order returns",
+     "- W510 product reviews for post-delivery engagement",
+     "- W156 CDP for product recommendations",
+     "- W183 supply chain optimization for inventory positioning insights"
+    ],
+    "Time Estimate": [
+     "Mostly automated. Exception handling: ~30 min/case × ~200 exceptions/month = 100 hours/month. Monthly analytics: 3 hours.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Ops Specialist",
+     "activity": "**Order split detection**: system detects order requires split per POS-021: creates sub-orders with separate tracking numbers but unified customer order reference",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Immediate customer notification**: system sends W708 communication within 5 minutes of order confirmation: (a) \"Your order has been split for faster fulfillment\" — positive framing; (b) list of items per delivery with estimated delivery dates; (c) separate tracking numbers per sub-order; (d) total amount remains same — no additional charges; (e) single point of contact for any questions per W258",
+     "duration": "< 5 min (automated)",
+     "n": "2",
+     "r": "System / Ecommerce Ops Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Specialist",
+     "activity": "**Sub-order routing to DCs**: system routes sub-orders to respective DCs per W536 unified order management: (a) DC1 fulfills items A, B, C; (b) DC3 fulfills items D, E; (c) each DC picks, packs, and dispatches per W106",
+     "duration": "Automated routing",
+     "n": "3",
+     "r": "System / DC Planner"
+    },
+    {
+     "a": "Ecommerce Ops Specialist",
+     "activity": "**Sub-order status tracking**: customer sees unified order dashboard: (a) overall order status (% complete by items); (b) individual sub-order status with carrier tracking per W592; (c) delivered items checked off; (d) pending items with countdown to delivery",
+     "duration": "Continuous (automated)",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Ops Specialist",
+     "activity": "**First delivery notification**: system sends notification — \"Part 1 of your order has been delivered! Items D and E are on their way, estimated [date]\"",
+     "duration": "Automated",
+     "n": "5",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Ops Specialist",
+     "activity": "**Partial delivery gap monitoring**: if more than 3 days between first and last sub-order delivery: (a) system sends proactive status update; (b) if any sub-order delayed beyond estimated date: W708 notification with updated ETA and apology; (c) Customer Service preemptively available for inquiries per W259",
+     "duration": "15-30 min/case",
+     "n": "6",
+     "r": "System / Customer Service Agent"
+    },
+    {
+     "a": "Ecommerce Ops Specialist",
+     "activity": "**Final delivery confirmation**: system sends \"Your order is complete!\" notification with: (a) delivery confirmation for all items; (b) feedback/review prompt per W510; (c) related product recommendations per W156 CDP",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Exception handling**: (a) if one sub-order is cancelled (out of stock after split): immediate customer notification, refund for affected items per W101, option to cancel remaining sub-orders; (b) if customer wants to return items from only one sub-order: process per W215 returns with sub-order reference",
+     "duration": "30 min/exception",
+     "n": "8",
+     "r": "Customer Service Agent / Ecommerce Ops Specialist"
+    },
+    {
+     "a": "Ecommerce Ops Mgr",
+     "activity": "**Monthly split order analytics**: (a) split order rate; (b) average sub-orders per split; (c) delivery gap statistics; (d) split order complaint rate vs. non-split; (e) customer satisfaction comparison; (f) SKU availability by DC to identify inventory positioning improvements per W183",
+     "duration": "3 hours/month",
+     "n": "9",
+     "r": "Ecommerce Ops Specialist"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W101",
+    "W106",
+    "W156",
+    "W183",
+    "W19",
+    "W215",
+    "W258",
+    "W259",
+    "W510",
+    "W536",
+    "W592",
+    "W708"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~800–1,200 bulk/project delivery orders/month chain-wide",
+    "Owner": "Store Logistics Coordinator (Receiving Clerk role)",
+    "Participants": "Customer, Store Logistics Coordinator, Delivery Partner (3PL or own fleet), Sales Associate/Pro Desk, Supply Planning",
+    "Trigger": "Individual B2C customer (non-trade, non-corporate) places a large home renovation or construction order requiring: (a) delivery of bulky/heavy items (cement, lumber, tiles, steel) exceeding standard parcel delivery; (b) staged delivery across multiple dates as construction progresses; (c) delivery to multiple addresses (e.g., contractor's warehouse + project site); (d) delivery requiring special equipment (boom truck, flatbed)",
+    "Volume": "Avg order value PHP 30,000–150,000; avg 3–5 delivery stages per project"
+   },
+   "id": "W899",
+   "level": 2,
+   "name": "Customer Bulk/Project Delivery Scheduling & Multi-Drop Coordination (B2C)",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-log of \"Project Delivery Needs Assessment\" (replaces manual Step 1).",
+     "- System auto-calculate of \"calculates delivery cost per option\" (replaces manual Step 2).",
+     "- System auto-generate of \"generates transfer request to ship items to store for consolidated delivery\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's standard home delivery (W19) handles ecommerce orders averaging PHP 3,500 with 3–4 items fulfilled from DC via parcel carrier or 3PL. However, a significant segment of walk-in B2C customers — homeowners undertaking major renovations (\"building a house,\" \"remodeling the kitchen,\" \"landscaping the garden\") — place large orders (PHP 30K–150K) involving cement, lumber, tiles, fixtures, and appliances that require fundamentally different logistics: flatbed or boom truck delivery, multi-drop scheduling aligned with construction phases, and delivery to construction sites (not residential porches). These orders are typically placed in-store with Sales Associate assistance, not online. While W164 handles staged project deliveries for B2B corporate/institutional projects, and W19 handles standard ecommerce home delivery, there is no workflow for B2C project delivery coordination — a gap that affects an estimated 5–6% of B2C walk-in revenue (~PHP 2.85B/month = 55% of PHP 5.19B × 5–6% = PHP 143M–171M/month in project delivery orders — the ceiling implied by ~800–1,200 orders/month at the PHP 30,000–150,000 AOV band). Poor execution here — late deliveries damaging construction schedules, wrong items delaying masonry work, split deliveries confusing contractors — directly impacts customer satisfaction and repeat business."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: standard operating procedures; system-enforced validation rules"
+    ],
+    "Pain Points / Risks": [
+     "- **Construction schedule delays cascading**: if customer's construction is delayed (common in the Philippines due to weather, permit delays, contractor availability), pre-scheduled deliveries must be rescheduled; flexible rescheduling without penalty is essential for customer retention",
+     "- **Last-mile site accessibility**: Philippine construction sites in dense urban areas (narrow alleys in Metro Manila, hillside lots in Baguio/Cebu, island locations in Visayas) often cannot accommodate standard 10-wheeler trucks; requires smaller vehicles or manual carry-in — adding cost and time",
+     "- **ATP reservation across multiple delivery stages**: reserving stock for a Phase 3 delivery that is 4 weeks out ties up inventory that could be sold to walk-in customers; dynamic ATP allocation with safety stock buffer needed",
+     "- **Customer changing mind mid-project**: customer may swap tile selection or add fixtures after initial order; modifying a multi-stage delivery plan mid-execution is operationally complex",
+     "- **Delivery partner reliability for project orders**: 3PL partners used to parcel delivery may not handle flatbed/boom truck requirements or construction-site delivery protocols; dedicated project delivery partners needed",
+     "- **Cash-on-delivery risk for large orders**: PHP 100K+ orders delivered COD carry risk of customer refusal at delivery point; for project orders > PHP 50K: require at least 50% deposit at order placement per W546"
+    ],
+    "Staffing Implication": [
+     "- **Store Logistics Coordinator**: role absorbed by Receiving Clerk (1 of 2 per store) with expanded delivery coordination duties; ~2–3 hours/day on project delivery coordination during peak; existing Receiving Clerk handles inbound receiving and outbound delivery coordination",
+     "- **Sales Associates**: ~15–20 min per large order for delivery needs assessment; absorbed by existing floor staff",
+     "- **No incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- In-store POS/order management for large order creation",
+     "- Delivery planning module with phased scheduling capability",
+     "- ATP reservation system across delivery phases (W536)",
+     "- Transfer order system for DC-to-store stock replenishment (W4)",
+     "- Fleet/3PL dispatch management (W52, W196)",
+     "- Customer notification module (W708) for delivery reminders",
+     "- Proof-of-delivery capture (mobile app for driver)",
+     "- Delivery discrepancy and claims module (W500)",
+     "- Store credit issuance (W781) for service recovery",
+     "- BI dashboard for project delivery analytics (delivery accuracy, cost per delivery, customer satisfaction by region)",
+     "- LGU truck ban compliance module (W431) for delivery time windows"
+    ],
+    "Time Estimate": [
+     "- Needs assessment: 15–20 min",
+     "- Delivery plan creation: 10–15 min",
+     "- Order splitting and routing: 15–30 min",
+     "- Per-stage delivery execution: 2–6 hours (driver + loading + transit + unloading)",
+     "- Discrepancy resolution: 1–4 hours per issue",
+     "- Post-completion record: 10–15 min",
+     "- **Total project coordination**: ~3–6 hours of staff time across all stages (excluding driver time)",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Project Delivery Needs Assessment**: During large in-store purchase consultation: (a) Sales Associate or Pro Desk identifies customer needs project delivery based on: (i) order contains bulky items (cement bags, lumber, plywood sheets, tile pallets, steel bars); (ii) order total exceeds PHP 15,000; (iii) customer mentions renovation/construction project; (b) Associate interviews customer on logistics needs: (i) delivery address (residential, construction site, contractor warehouse); (ii) site accessibility (narrow road, high-rise, gated community, rural); (iii) delivery timing constraints (construction schedule, barangay truck ban per W431); (iv) staging preference (single delivery vs. phased delivery aligned with construction stages); (v) unloading requirements (manual carry, crane/boom truck, forklift); (vi) contact person at delivery site (customer, contractor, caretaker)",
+     "duration": "15–20 min",
+     "n": "1",
+     "r": "Sales Associate / Pro Desk"
+    },
+    {
+     "a": "Store Logistics Coordinator",
+     "activity": "**Delivery Plan Creation**: Based on needs assessment: (a) system generates delivery plan options: (i) **Single Delivery**: all items in one trip — suitable for accessible site, available storage at destination; (ii) **Phased Delivery**: items grouped by construction phase — (example: Phase 1: cement, sand, gravel, rebar for foundation; Phase 2: hollow blocks, lumber for framing; Phase 3: tiles, adhesives, grout for finishing; Phase 4: fixtures, paint, accessories for installation); each phase scheduled per customer's construction timeline; (iii) **Multi-Address Delivery**: items split across addresses (e.g., heavy materials to site, fixtures to residence for safekeeping); (b) system calculates delivery cost per option based on: distance from store/DC, vehicle type required, number of trips, special equipment; (c) customer selects preferred option; (d) delivery fee: free for orders > PHP 20,000 within 15 km of store; distance-based fee beyond 15 km per W19 delivery fee structure; special equipment surcharge for boom truck/crane",
+     "duration": "10–15 min",
+     "n": "2",
+     "r": "Sales Associate / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Order Splitting & Fulfillment Routing**: (a) system splits order into delivery stages per customer's selection; (b) each stage creates a separate fulfillment order with: (i) assigned items and quantities; (ii) scheduled delivery date/time window; (iii) assigned vehicle type; (iv) assigned delivery partner (own fleet for within-city, 3PL for long-distance); (c) for items stocked at DC: system generates transfer request to ship items to store for consolidated delivery (if store doesn't stock item); (d) for items stocked at store: items pulled from shelf or yard and staged in backroom delivery holding area; (e) system reserves ATP for all staged items across all delivery phases — preventing stock diversion to other orders; (f) if any item unavailable: Sales Associate contacts customer to discuss substitution (W279) or delay affected phase",
+     "duration": "15–30 min",
+     "n": "3",
+     "r": "System / Store Logistics Coordinator"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Delivery Execution per Stage**: For each delivery stage: (a) day before scheduled delivery: system sends reminder to customer (SMS/app) with delivery window, driver name, vehicle plate, and contact number; (b) delivery team loads vehicle at store — Store Logistics Coordinator verifies items against delivery manifest; (c) driver departs with delivery manifest and customer contact; (d) upon arrival: driver contacts customer/site contact; unloads items per agreed method; (e) customer/site contact signs delivery receipt with quantity verification — notes any discrepancies or damage on receipt; (f) driver photographs delivered items at site as proof of delivery; (g) system updates delivery stage status: Delivered, Partially Delivered (with discrepancy notes), or Failed (customer unavailable, site inaccessible)",
+     "duration": "2–6 hours per delivery trip",
+     "n": "4",
+     "r": "Delivery Partner / Store Logistics Coordinator"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Discrepancy & Issue Resolution**: (a) if delivery discrepancy noted on receipt (wrong item, short quantity, damage): (i) Store Logistics Coordinator contacts customer within 4 hours; (ii) for wrong/short items: schedule corrective delivery within 24–48 hours from store stock or DC replenishment; (iii) for damage: initiate damage claim against delivery partner per W500 transfer order in-transit damage process; (iv) customer issued store credit per W781 for inconvenience if BuildRight-caused; (b) if failed delivery (customer not home, site inaccessible): (i) driver attempts phone contact; (ii) if unreachable: return items to store; (iii) Store Logistics Coordinator contacts customer to reschedule within 24 hours; (iv) second failed delivery attempt: customer responsible for re-delivery fee",
+     "duration": "1–4 hours per issue",
+     "n": "5",
+     "r": "Store Logistics Coordinator / Delivery Partner"
+    },
+    {
+     "a": "—",
+     "activity": "**Project Delivery Completion & Record**: (a) after final delivery stage completed: system marks project delivery order as \"Completed\"; (b) system generates project delivery summary: total items delivered, delivery stages completed, any outstanding discrepancies; (c) customer satisfaction survey sent per W65 within 48 hours; (d) system logs project delivery record against customer's loyalty account for future reference; (e) if customer has Project Vault (W894): delivery completion updates project list status",
+     "duration": "10–15 min post-completion",
+     "n": "6",
+     "r": "System / Store Logistics Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W164",
+    "W19",
+    "W196",
+    "W279",
+    "W4",
+    "W431",
+    "W500",
+    "W52",
+    "W536",
+    "W546",
+    "W65",
+    "W708",
+    "W781",
+    "W894"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Weekly × 52 weeks/year",
+    "Owner": "Ecommerce Logistics Manager",
+    "Participants": "3PL Partner Account Managers, Ecommerce Operations Manager, Supply Chain Manager",
+    "Trigger": "Weekly scheduled review (every Monday morning)",
+    "Volume": "Review of 5–10 active delivery partner scorecards"
+   },
+   "id": "W1013",
+   "level": 2,
+   "name": "E-Commerce Last-Mile Delivery Partner Performance Weekly Review",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-document of \"Automated Performance Data Compilation\" (replaces manual Step 1).",
+     "- System auto-log of \"Logistics Manager reviews dashboard\" (replaces manual Step 2).",
+     "- System auto-review of \"Underperformer Discussion & Action Plan\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's ecommerce channel processes ~17,200 home delivery orders/month (Section 8.5) through a mix of third-party logistics (3PL) partners: Lalamove, Transportify, own fleet (for bulky items), and potentially Grab Express and Entrego. The last-mile delivery experience directly impacts customer satisfaction, repeat purchase rate, and brand perception. Philippine last-mile delivery faces unique challenges: traffic congestion (Metro Manila averages 15–20 km/h during peak hours), address ambiguity (many areas lack standardized addresses), typhoon-related disruptions, and variable 3PL service quality. A weekly performance review ensures BuildRight maintains delivery SLAs, identifies underperforming partners before they cause systemic customer dissatisfaction, and provides data-driven input for contract renewals and partner allocation decisions. Delivery partner performance directly affects BuildRight's ecommerce NPS score and costs — failed deliveries cost ~PHP 150–300 per attempt (redelivery labor, return shipping, customer service handling)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: outage or labor action"
+    ],
+    "Pain Points / Risks": [
+     "- **Data completeness**: 3PL partner APIs may have gaps (missing POD, delayed status updates); Ecommerce Logistics Manager must verify data completeness before drawing conclusions; partner contracts should mandate API uptime ≥ 99% and data completeness ≥ 98%",
+     "- **Attribution fairness**: Some delivery failures are not the partner's fault — incorrect customer address, customer not available, store fulfillment delay causing late dispatch; root cause analysis (step 3b) must correctly attribute failures before penalizing partners",
+     "- **Partner concentration risk**: Over-reliance on a single 3PL partner (e.g., 60%+ of delivery volume) creates risk if that partner experiences a system outage or labor action; BuildRight should maintain at least 3 active delivery partners per zone with no single partner handling >50% of volume; mitigated by CTL-270 (controlled execution — Order Fulfillment & Delivery (PA-10.2))",
+     "- **Seasonal capacity**: During ber months (Sep–Dec), delivery demand increases 30–50% while 3PL capacity is also constrained by overall e-commerce season; early capacity booking (August) and temporary partner onboarding (W62B) are essential"
+    ],
+    "Staffing Implication": [
+     "- **Ecommerce Logistics Manager**: Weekly review adds ~2–3 hours/week; absorbed by existing role",
+     "- **No incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Delivery partner performance dashboard with real-time metrics",
+     "- Order management system (W536) with delivery tracking integration",
+     "- 3PL API integration for automated performance data collection",
+     "- Customer satisfaction survey module (post-delivery NPS/CSAT)",
+     "- Proof-of-delivery capture system (photo + digital signature)",
+     "- Volume allocation management module",
+     "- Contract management system with SLA thresholds",
+     "- Cost per delivery analytics engine"
+    ],
+    "Time Estimate": [
+     "- Data compilation: automated",
+     "- Scorecard review: 30–45 min/week",
+     "- Underperformer discussion: 30–60 min as needed",
+     "- Volume allocation: 15–30 min/week",
+     "- Monthly/quarterly reporting: 60 min/month + 2–3 hours/quarter",
+     "- **Total weekly**: 60–120 min",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Logistics Manager",
+     "activity": "**Automated Performance Data Compilation**: System auto-generates weekly performance dashboard for each active delivery partner: (a) **On-Time Delivery (OTD) Rate**: % of deliveries within promised time window (target: ≥ 90%); (b) **First-Attempt Delivery Success Rate**: % of deliveries completed on first attempt (target: ≥ 85%); (c) **Customer Delivery Satisfaction Score**: post-delivery survey rating on 1–5 scale (target: ≥ 4.2); (d) **Delivery Damage Rate**: % of deliveries with reported product damage (target: < 0.5%); (e) **Average Delivery Time**: order dispatch to proof-of-delivery (target: Zone 1 < 4 hrs, Zone 2 < 8 hrs, Zone 3 < 24 hrs, Zone 4 < 48 hrs); (f) **Cost Per Delivery**: average delivery cost per order by zone (benchmarked against contracted rates); (g) **Proof-of-Delivery (POD) Compliance**: % of deliveries with proper POD documentation (photo + signature) (target: ≥ 98%); (h) **Exception Rate**: % of deliveries requiring manual intervention (address not found, customer not available, wrong item)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Scorecard Review & Partner Ranking**: Ecommerce Logistics Manager reviews dashboard and: (a) ranks all partners by composite score (weighted: OTD 30%, First-Attempt 25%, Satisfaction 20%, Damage 15%, Cost 10%); (b) identifies partners below threshold (composite score < 80 or any individual metric < 70%); (c) compares partner performance by delivery zone — some partners may excel in Metro Manila but underperform in provincial areas; (d) analyzes trends: improving, stable, or declining performance over rolling 4-week period; (e) identifies systemic issues (e.g., all partners showing lower OTD in a specific week indicates external factor like typhoon, not partner deficiency)",
+     "duration": "30–45 min",
+     "n": "2",
+     "r": "Ecommerce Logistics Manager"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Underperformer Discussion & Action Plan**: For partners below threshold: (a) Ecommerce Logistics Manager contacts 3PL Account Manager with specific performance data; (b) joint root cause analysis: driver capacity, routing issues, geographic coverage gaps, technology failures, seasonal demand spikes; (c) agree on corrective action with timeline: additional drivers, updated routing algorithm, address geocoding improvements, driver training; (d) set performance improvement target for next 2-week review cycle; (e) if partner fails to improve for 4 consecutive weeks, escalate to Supply Chain Manager for potential volume reduction or partner replacement per W242 (3PL Performance Review)",
+     "duration": "30–60 min per underperformer",
+     "n": "3",
+     "r": "Ecommerce Logistics Manager / 3PL Account Manager"
+    },
+    {
+     "a": "Supply Chain Manager",
+     "activity": "**Volume Allocation Adjustment**: Based on weekly performance review: (a) shift delivery volume allocation toward higher-performing partners (within contract minimum volume commitments); (b) reduce allocation to underperformers while they implement corrective actions; (c) for new geographic zones or peak periods, provisionally allocate to best-performing partner; (d) if no partner meets SLA in a specific zone, evaluate onboarding new partner per W62B (3PL Onboarding) or increase own fleet capacity; (e) monthly: review volume allocation strategy with Supply Chain Manager for cost optimization",
+     "duration": "15–30 min",
+     "n": "4",
+     "r": "Ecommerce Logistics Manager"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Monthly Executive Summary & Quarterly Business Review**: Monthly: (a) Ecommerce Logistics Manager compiles monthly delivery performance summary for Ecommerce Operations Manager; (b) key metrics: total deliveries, composite partner score, cost per delivery trend, customer satisfaction trend, failed delivery cost impact; (c) quarterly: formal QBR with top 3 partners — review SLA performance, discuss contract terms, plan for seasonal peaks (ber months, payday weekends), agree on technology improvements (API integration, real-time tracking enhancements) per W312 (routing/carrier master governance)",
+     "duration": "Monthly: 60 min; Quarterly QBR: 2–3 hours",
+     "n": "5",
+     "r": "Ecommerce Logistics Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W242",
+    "W312",
+    "W536",
+    "W62B"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~3,000–5,000 same-day/express orders/month (projected ~10% of ecommerce orders at maturity)",
+    "Owner": "Ecommerce Operations Manager (HQ)",
+    "Participants": "Ecommerce Operations Coordinator, Store Fulfillment Team (ship-from-store), 3PL Express Courier, Customer",
+    "Trigger": "Customer selects same-day or express delivery option at ecommerce checkout",
+    "Volume": "1 order per transaction; average 1–5 line items"
+   },
+   "id": "W1155",
+   "level": 2,
+   "name": "Customer Ecommerce Same-Day / Express Delivery Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checkout, pays express delivery surcharge\" (replaces manual Step 1).",
+     "- System auto-scan of \"scanned for accuracy and packed in appropriate packaging\" (replaces manual Step 2).",
+     "- System auto-dispatch of \"Dispatch & Delivery\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight's ecommerce channel (projected ~3% of revenue in Year 1, growing to 7% by Year 3) currently offers standard home delivery with 2–5 business day lead time. However, a growing segment of customers — particularly professional contractors and urgent DIYers — need materials faster: (a) a contractor who ran out of cement or rebar mid-project cannot wait 2–5 days; (b) a homeowner dealing with a burst pipe needs plumbing supplies today; (c) a customer doing a weekend renovation project needs materials delivered Saturday morning; (d) post-typhoon repair customers need emergency materials immediately. Same-day and express delivery options address this need: (a) same-day delivery (order by 10 AM, deliver by 6 PM) — for urgent projects and emergencies; (b) express next-day delivery (order by 8 PM, deliver next business day by 12 PM) — for planned projects needing quick turnaround. Ship-from-store fulfillment (W19B) enables same-day delivery by fulfilling orders from the nearest BuildRight store rather than from DCs, reducing delivery distance and time. This workflow manages same-day and express delivery operations. It complements W19 (standard home delivery), W19B (ship-from-store), and W268 (last-mile tracking) by adding the expedited timeline and fulfillment urgency dimensions."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: shows stock but physical shelf is empty, order fails"
+    ],
+    "Pain Points / Risks": [
+     "- **Store fulfillment disruption**: Express orders pull staff away from in-store customer service during peak hours; fulfillment scheduling should prioritize off-peak picking",
+     "- **Courier reliability**: Third-party express couriers (Lalamove, GrabExpress) have variable reliability; backup courier relationships needed",
+     "- **Cost**: Express delivery cost (courier + packaging + handling) often exceeds the delivery surcharge; service may be loss-leader initially to build ecommerce loyalty",
+     "- **Inventory accuracy**: Express fulfillment depends on real-time store inventory accuracy; if system shows stock but physical shelf is empty, order fails",
+     "- **Coverage limitations**: Same-day delivery only feasible within metro areas; provincial stores may offer next-day only"
+    ],
+    "Staffing Implication": [
+     "- **Store Fulfillment Associate**: Express pick & pack adds ~20–30 min per order; at ~1–2 express orders/store/week (metro stores; per the Frequency), ~30–60 min/week — absorbed by existing stock associates",
+     "- **Ecommerce Operations Coordinator**: Exception handling and monitoring adds ~30–60 min/day — existing role",
+     "- **No permanent incremental headcount**"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce platform — express delivery option, surcharge calculation, cutoff time enforcement",
+     "- Order management system (W536) — fulfillment routing, express priority flag",
+     "- Store fulfillment app (W19B) — express pick & pack workflow, SLA countdown timer",
+     "- ATP/inventory module — real-time store stock check for fulfillment eligibility",
+     "- 3PL express courier API — automated dispatch, real-time tracking",
+     "- Customer notification engine — order confirmation, tracking link, exception alerts",
+     "- Delivery fee module — express surcharge, refund processing",
+     "- Analytics module — express performance dashboard, delivery time analysis"
+    ],
+    "Time Estimate": [
+     "- Order routing: automated (< 30 sec)",
+     "- Pick & pack: 20–30 min",
+     "- Courier pickup + delivery: 1–4 hours",
+     "- Exception handling: 5–10 min per exception",
+     "- **Total store effort per express order**: 25–40 min",
+     "---",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Express Order Receipt & Fulfillment Store Selection**: (a) customer selects same-day or express delivery at checkout, pays express delivery surcharge (same-day: PHP 150–300 based on distance; next-day: PHP 99–150); (b) system evaluates fulfillment options: ship-from-store (W19B) — checks nearest store inventory for all line items, if available → same-day eligible; DC fulfillment — standard delivery only (2–5 days), not eligible for same-day; (c) if nearest store has all items: order routed to that store for immediate pick & pack; (d) if nearest store is out of stock on some items: system checks next-nearest store or offers partial shipment with express items delivered same-day and remainder on standard delivery; (e) order appears in store fulfillment queue with EXPRESS priority flag and cutoff time",
+     "duration": "Automated (< 30 sec)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Store-Level Priority Pick & Pack**: (a) store fulfillment associate receives express order notification on mobile device with audible alert; (b) associate picks items from shelf within 30 minutes of order receipt (vs. standard 2-hour pick SLA for BOPIS); (c) items scanned for accuracy and packed in appropriate packaging: fragile items (tiles, light fixtures) — bubble wrap and reinforced box; heavy items (cement, paint) — double-bagged or boxed; long items (lumber, pipes) — wrapped in protective covering; (d) pack confirmation scanned in system; (e) order staged in express pickup area separate from standard BOPIS/ship-from-store staging",
+     "duration": "20–30 min",
+     "n": "2",
+     "r": "Store Fulfillment Associate"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Express Courier Dispatch & Delivery**: (a) system automatically dispatches express courier (Lalamove, Transportify, or GrabExpress for same-day; BuildRight's own scheduled fleet for next-day) based on vehicle requirement and delivery distance; (b) courier receives pickup notification with store address, order number, and package details; (c) courier arrives at store, presents ID and order number; store associate hands over package and scans handoff; (d) real-time tracking link sent to customer via SMS/app; (e) delivery SLA: same-day orders placed by 10 AM delivered by 6 PM; next-day orders delivered by 12 PM; (f) delivery confirmation via digital POD with customer signature and photo",
+     "duration": "1–4 hours (pickup + delivery)",
+     "n": "3",
+     "r": "Express Courier / Store Fulfillment Associate"
+    },
+    {
+     "a": "Ecommerce Operations Manager",
+     "activity": "**Exception Handling & Performance Monitoring**: (a) if store cannot fulfill within express SLA (stock discrepancy, item damaged): customer notified immediately with options — substitute item (per W279 substitution rules), cancel and refund, or downgrade to standard delivery with delivery fee refund; (b) if courier delay exceeds SLA by >2 hours: customer notified with updated ETA and delivery fee refund; (c) daily express performance dashboard: on-time delivery rate (target: ≥95%), average delivery time, fulfillment success rate, customer satisfaction rating, delivery cost per order; (d) weekly review with 3PL express partners per W242 (3PL performance review)",
+     "duration": "30–60 min/day",
+     "n": "4",
+     "r": "Ecommerce Operations Coordinator"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W19",
+    "W19B",
+    "W242",
+    "W268",
+    "W279",
+    "W536"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~7–12% of ecommerce orders (the multi-origin share, per W534) are mixed-basket (multi-origin)",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Ecommerce Ops Manager, DC Warehouse, Store Stock Associate, Drop-Ship Vendor, Logistics Manager, Customer",
+    "Trigger": "Customer places ecommerce order containing items available from multiple fulfillment origins (DC, store, drop-ship vendor)",
+    "Volume": "~12,000–17,000 mixed-basket orders/month (of ~42,900 total ecommerce orders)"
+   },
+   "id": "W1195",
+   "level": 2,
+   "name": "Mixed-Basket Multi-Origin Order Orchestration & Split Shipment Coordination",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"checks inventory availability across all fulfillment origins\" (replaces manual Step 1).",
+     "- System auto-create of \"creates parent order with child shipment orders\" (replaces manual Step 2).",
+     "- System auto-schedule of \"schedules deliveries to arrive on same day when possible\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's omnichannel model means a single customer order may contain items fulfilled from multiple origins: standard items from the nearest DC, bulky items from the nearest store (lumber, cement), and specialty items drop-shipped directly from the vendor (custom fixtures, large appliances). This workflow orchestrates the splitting, parallel fulfillment, and unified tracking of multi-origin orders so the customer experiences a single order with coordinated delivery."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: unified tracking page and proactive communication in Step 4; operational: cost optimization in Step 1 and minimum order thresholds for free delivery; operational: real-time inventory reservation at order placement and exception handling in Step 5"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer confusion from multiple deliveries**: receiving items in separate shipments may frustrate customers expecting a single delivery; mitigated by unified tracking page and proactive communication in Step 4",
+     "- **Fulfillment cost erosion on split orders**: multiple shipments increase total fulfillment cost per order, potentially eroding margin on low-value orders; mitigated by cost optimization in Step 1 and minimum order thresholds for free delivery",
+     "- **Child shipment synchronization failure**: if one child shipment is cancelled (vendor stockout, store inventory error) after others are fulfilled, customer receives incomplete order; mitigated by real-time inventory reservation at order placement and exception handling in Step 5"
+    ],
+    "Staffing Implication": [
+     "- **Ecommerce Operations Manager**: ~2 hours/day on mixed-basket coordination and exception handling. Absorbed within existing role.",
+     "- **No permanent incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Multi-origin inventory availability check across DC, store, and DSV networks (W1195.1)",
+     "- Order splitting engine with cost-optimized routing (W1195.2)",
+     "- Unified customer-facing tracking portal aggregating multi-origin shipments (W1195.4)",
+     "- Proactive partial delivery communication (W829) (W1195.3)",
+     "- Fulfillment cost allocation and margin analysis module (W1195.6)"
+    ],
+    "Time Estimate": [
+     "Delivery coordination 5 min/order × ~12,000–17,000 mixed-basket orders/month ≈ 1,000–1,400 hours/month ≈ 12,000–17,000 hours/year; exception handling 10 min per delayed/cancelled child shipment at realized volume; settlement reconciliation 1 hour/week ≈ 52 hours/year (intake, origin determination, order splitting, and unified tracking automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Order intake and origin determination**: At order placement: system checks inventory availability across all fulfillment origins: (a) DC inventory (standard pick/pack/ship items), (b) store inventory (bulky items, lumber, cement — only available from stores with forklift/loading capability), (c) drop-ship vendor inventory (DSV items per W246); system determines optimal split based on: (i) item availability, (ii) delivery speed (nearest origin to customer), (iii) shipping cost optimization (minimize number of shipments), (iv) item compatibility (hazardous items cannot ship with standard items per W82)",
+     "duration": "Automated (< 10 sec)",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Split order creation**: System creates parent order with child shipment orders: (a) Child Order A — DC-origin items (fulfilled per W19), (b) Child Order B — Store-origin items (fulfilled per W19B or W1196), (c) Child Order C — DSV-origin items (fulfilled per W246); each child order has independent fulfillment SLA but unified customer-facing tracking",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Delivery coordination**: For mixed-basket orders where DC and store shipments arrive on different days: (a) if customer selects BOPIS: system holds all items at store until complete order is ready for single pickup, (b) if customer selects delivery: system schedules deliveries to arrive on same day when possible; if not possible, system communicates partial delivery to customer per W829 with estimated arrival of remaining items",
+     "duration": "5 min/order",
+     "n": "3",
+     "r": "Ecommerce Ops Manager"
+    },
+    {
+     "a": "—",
+     "activity": "**Unified tracking presentation**: Customer sees single order tracking page showing all child shipments with individual tracking numbers, origins, and ETAs; system sends consolidated status updates: \"2 of 3 shipments dispatched,\" \"1 of 3 shipments delivered,\" \"Order complete\"",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Exception handling**: If any child shipment is delayed or cancelled: (a) system alerts Ecommerce Ops Manager, (b) customer is proactively notified per W829 with options: wait for delayed item, cancel delayed item for refund, or substitute with available alternative, (c) if customer cancels: partial refund processed immediately, remaining shipments proceed",
+     "duration": "10 min/exception",
+     "n": "5",
+     "r": "Ecommerce Ops Manager"
+    },
+    {
+     "a": "Controller",
+     "activity": "**Settlement reconciliation**: System tracks cost allocation per child shipment: (a) DC fulfillment cost, (b) store fulfillment cost (labor allocation), (c) DSV fulfillment fee, (d) delivery cost per shipment; reconciles total fulfillment cost against order margin for profitability analysis",
+     "duration": "Automated + 1 hour/week",
+     "n": "6",
+     "r": "System / Finance"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W1196",
+    "W19",
+    "W19B",
+    "W246",
+    "W534",
+    "W82",
+    "W829"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~1,500–2,800 ship-from-store orders/month (stores serve as fulfillment nodes for bulky and local-availability items; per W19B/W591)",
+    "Owner": "Ecommerce Operations Manager",
+    "Participants": "Stock Associate (store picker), Store Manager, Ecommerce Ops Manager, 3PL Delivery Partner",
+    "Trigger": "Ecommerce order is routed to a store for fulfillment (home delivery or BOPIS)",
+    "Volume": "~7–14 ship-from-store orders/store/month (~1,500–2,800/month chain-wide, per the Frequency)"
+   },
+   "id": "W1196",
+   "level": 2,
+   "name": "Ship-from-Store Fulfillment Operations & Store-Level Inventory Reservation",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"routes order to nearest store with available inventory\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates digital pick list on store tablet\" (replaces manual Step 3).",
+     "- System auto-scan of \"scanner\" (replaces manual Step 4)."
+    ],
+    "Background": [
+     "BuildRight Depot's 200 stores serve not only as retail locations but also as distributed fulfillment centers for ecommerce orders. Ship-from-store enables faster delivery (same-day or next-day for items available locally), expands the online catalog to include items not stocked at DCs (lumber, cement, oversized items), and reduces shipping costs for customers near a store. This workflow manages the store-level pick, pack, and handoff process for ship-from-store orders, including inventory reservation to prevent overselling."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: inventory reservation in Step 2 and prioritizing cycle counts for high-velocity ecommerce items per W6; operational: scheduling picks during off-peak hours (morning before 10 AM) and capping daily store fulfillment volume; operational: routing bulky items to customer pickup (BOPIS) or specialized heavy-haul delivery partners per W1191"
+    ],
+    "Pain Points / Risks": [
+     "- **Inventory accuracy impact on pick success**: if store inventory records show stock but physical shelf is empty (inventory accuracy < 97%), pick failures occur; mitigated by inventory reservation in Step 2 and prioritizing cycle counts for high-velocity ecommerce items per W6",
+     "- **Store labor competition with customer service**: Stock Associates picking ecommerce orders are not available for customer assistance on the sales floor; mitigated by scheduling picks during off-peak hours (morning before 10 AM) and capping daily store fulfillment volume",
+     "- **Bulky item shipping limitation**: standard 3PL couriers (Lalamove, Transportify) cannot transport lumber, cement, or oversized items; mitigated by routing bulky items to customer pickup (BOPIS) or specialized heavy-haul delivery partners per W1191",
+     "- **Store space constraints**: packing stations compete with backroom receiving space; mitigated by dedicated small packing area near customer service counter"
+    ],
+    "Staffing Implication": [
+     "- **Stock Associate**: ~15–30 min per ship-from-store order × ~2 orders/day = 30–60 min/day. Absorbed by existing 4 Stock Associates per store on rotating basis.",
+     "- **Store Manager**: ~15 min/day on fulfillment dashboard review. Absorbed within existing daily routine.",
+     "- **No permanent incremental headcount**."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Store inventory ATP (Available-to-Promise) engine with real-time POS inventory sync (W1196.2)",
+     "- Digital pick list with barcode scanning and location guidance on handheld tablet (W1196.3–4)",
+     "- Shipping label generation with carrier API integration (W1196.5)",
+     "- Chain-of-custody tracking via courier scan at handoff (W1196.6)",
+     "- Store fulfillment dashboard with pick accuracy and SLA metrics (W1196.7)"
+    ],
+    "Time Estimate": [
+     "~20–45 min per order of store fulfillment effort (picking 10–25 min + packing and label generation 5–15 min + courier handoff ~5 min per daily pickup) × ~1,500–2,800 ship-from-store orders/month ≈ 6,000–25,000 hours/year chain-wide (~7–14 orders/store/month), plus end-of-day fulfillment reconciliation 15 min/store ≈ 91 hours/store/year (routing, reservation, and pick-list generation automated).",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Order routing to store**: Ecommerce system routes order to nearest store with available inventory; system considers: (a) item availability (real-time store inventory from POS sync), (b) store operating hours, (c) item type restrictions (hazardous items per W82 cannot be shipped from store via standard courier — only customer pickup or specialized carrier), (d) store fulfillment capacity (daily pick capacity threshold); system pushes order to store's fulfillment queue on handheld tablet",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Inventory reservation**: Upon order routing: system reserves inventory at the store (decrements available-to-promise quantity but not physical inventory until pick); reservation holds for 4 hours (BOPIS) or until end of business day (delivery); if not picked within hold period, reservation expires and order is rerouted to alternate store or DC",
+     "duration": "Automated",
+     "n": "2",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Pick list generation and assignment**: System generates digital pick list on store tablet with: (a) item SKU, description, and quantity, (b) aisle/shelf location, (c) item image for verification; assigns to available Stock Associate based on current workload; Stock Associate receives push notification",
+     "duration": "Automated",
+     "n": "3",
+     "r": "System"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**In-store picking**: Stock Associate picks items from shelf using handheld scanner; scans each item barcode to confirm correct SKU and lot/batch; if item not found at designated location: (a) searches nearby locations, (b) if confirmed out of stock: marks as \"Pick Failed,\" system releases reservation and routes to alternate fulfillment origin; picks bulky items (lumber, cement) from lumber yard or backroom staging area",
+     "duration": "10–25 min/order",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "—",
+     "activity": "**Packing and label generation**: Stock Associate packs items at designated packing station: (a) standard items in corrugated box with void fill, (b) fragile items (tiles) with edge protection, (c) bulky items (lumber) wrapped and labeled; system generates shipping label with customer address and tracking barcode; for hazardous items: applies required DG labels per transport regulations",
+     "duration": "5–15 min/order",
+     "n": "5",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Courier handoff**: 3PL courier arrives at store per daily pickup schedule; Stock Associate hands off packed orders; courier scans each package for chain-of-custody tracking; system updates order status to \"Shipped\" and triggers customer notification with tracking number; for BOPIS: customer arrives, CSR verifies identity, releases order",
+     "duration": "5 min/handoff",
+     "n": "6",
+     "r": "Stock Associate / Courier"
+    },
+    {
+     "a": "Ecommerce Ops Manager",
+     "activity": "**End-of-day reconciliation**: Store Manager reviews daily fulfillment dashboard: (a) orders received vs. orders fulfilled, (b) pick failure rate (target: < 3%), (c) average pick-to-ship time, (d) inventory accuracy exceptions triggered by pick failures; pick failures feed into cycle count priorities per W6",
+     "duration": "15 min/day",
+     "n": "7",
+     "r": "Store Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W1191",
+    "W19B",
+    "W591",
+    "W6",
+    "W82"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~15–20% of ecommerce delivery orders request express; ~2,500–3,500 express orders/month",
+    "Owner": "Ecommerce Fulfillment Coordinator",
+    "Participants": "Ecommerce Fulfillment Coordinator, Store Stock Associate, 3PL Rider (Lalamove, Transportify), Customer",
+    "Trigger": "Customer selects same-day or next-day delivery option during ecommerce checkout",
+    "Volume": "~42,900 total ecommerce orders/month × 40% delivery × 18% express = ~3,100 express orders/month"
+   },
+   "id": "W1234",
+   "level": 2,
+   "name": "Customer E-Commerce Same-Day & Next-Day Express Delivery Fulfillment",
+   "parent": null,
+   "req_refs": [
+    "POS-013"
+   ],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-validate of \"check real-time inventory per POS-013 event streaming\" (replaces manual Step 1).",
+     "- System auto-flag of \"flagged as EXPRESS\" (replaces manual Step 2).",
+     "- System auto-count of \"3PL rider dispatch\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's ecommerce platform offers BOPIS (4-hour SLA) and home delivery (2–5 business days) per Section 8. Customers with urgent needs — contractors who ran out of materials mid-project, homeowners with emergency repair needs (plumbing leak, broken electrical) — require faster delivery. Same-day delivery (order by 10 AM, delivery by 6 PM) and next-day delivery (order by 10 PM, delivery next business day) are premium fulfillment options that command higher delivery fees and drive customer loyalty. In Philippine metro areas (Metro Manila, Cebu, Davao), on-demand delivery platforms (Lalamove, Transportify, Grab) provide same-day logistics capacity. BuildRight's 200-store network means most customers are within 15 km of a store, enabling store-origin same-day fulfillment. This workflow covers the express-specific fulfillment process, complementing W19 (standard home delivery) and W548 (third-party on-demand delivery)."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: Ecommerce Fulfillment Coordinator review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **3PL rider availability** — on-demand riders are shared resources; during peak hours (lunch, end of business day), rider availability drops, risking SLA breach; backup 3PL contracts are essential; mitigated by the Ecommerce Fulfillment Coordinator review and approval gate",
+     "- **Store fulfillment priority conflict** — express pick interrupts regular store operations (replenishment, BOPIS picks); if express volume grows, dedicated store fulfillment staff may be needed",
+     "- **Delivery fee vs. cost** — same-day delivery fee charged to customer may not cover actual 3PL cost, especially for heavy/bulky items (cement, lumber); margin analysis per W85 must account for express delivery cost",
+     "- **Metro vs. provincial coverage** — same-day delivery is feasible only in metro areas with 3PL coverage; provincial stores cannot offer same-day; the ecommerce platform must show availability based on customer location"
+    ],
+    "Staffing Implication": [
+     "- Stock Associate: ~30 min per express pick. Monthly per high-volume metro store: ~15 hours. Ecommerce Fulfillment Coordinator: ~2 hours/day on express order monitoring. Absorbed by existing roles. No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- W534 multi-origin fulfillment for order routing",
+     "- W548 third-party on-demand delivery for 3PL API integration",
+     "- W19 home delivery for standard delivery baseline",
+     "- W242 3PL performance review for partner quality management",
+     "- W65 CSAT/NPS for post-delivery feedback",
+     "- W12B online returns for damaged-in-transit claims",
+     "- POS event streaming for real-time inventory availability"
+    ],
+    "Time Estimate": [
+     "- Per express order: ~1–2 hours from order to delivery. Monthly: ~3,100 orders × 30 min pick + delivery coordination = ~1,550 store labor-hours/month chain-wide.",
+     "---"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Ecommerce Fulfillment Coordinator",
+     "activity": "**Express order routing**: System routes express order to nearest store with available inventory: (a) check real-time inventory per POS-013 event streaming; (b) if nearest store out of stock: check next nearest; (c) if no store stock: check DC with same-day dispatch capability; (d) assign fulfillment location and SLA (same-day or next-day)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System"
+    },
+    {
+     "a": "Store Manager",
+     "activity": "**Priority pick & pack**: Store Stock Associate receives priority pick list (flagged as EXPRESS): (a) pick items from shelf immediately (interrupts regular replenishment); (b) pack items for transport (protective packaging for tiles, appliances, paint); (c) mark order ready for rider pickup in system; (d) SLA: pick within 30 minutes of order receipt",
+     "duration": "15–30 min",
+     "n": "2",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "Ecommerce Fulfillment Coordinator",
+     "activity": "**3PL rider dispatch**: (a) system auto-requests rider from Lalamove/Transportify API per W548; (b) rider dispatched to store; (c) rider arrives at store customer service counter; (d) Stock Associate hands over package with delivery receipt; (e) rider confirms pickup in BuildRight system",
+     "duration": "15–30 min",
+     "n": "3",
+     "r": "System / 3PL Rider"
+    },
+    {
+     "a": "—",
+     "activity": "**In-transit tracking**: (a) customer receives real-time tracking link; (b) GPS tracking per 3PL rider app; (c) system monitors delivery SLA countdown; (d) if rider delayed: alert customer with updated ETA; (e) escalation if delivery at risk of missing same-day window",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Delivery confirmation**: (a) rider delivers to customer address; (b) customer signs/acknowledges receipt; (c) system marks order delivered; (d) photo proof of delivery captured by rider app; (e) system triggers customer satisfaction survey per W65",
+     "duration": "5 min",
+     "n": "5",
+     "r": "3PL Rider / Customer"
+    },
+    {
+     "a": "—",
+     "activity": "**Exception handling**: (a) if customer not available: rider returns items to store; order reverts to standard delivery or BOPIS; (b) if item damaged in transit: process per W12B online returns; (c) if rider no-show: dispatch backup rider from alternative 3PL; (d) all exceptions logged for 3PL performance review per W242",
+     "duration": "15 min/exception",
+     "n": "6",
+     "r": "Ecommerce Fulfillment Coordinator"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12B",
+    "W19",
+    "W242",
+    "W534",
+    "W548",
+    "W65",
+    "W85"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~3,300–4,200 ecommerce store drop-offs/month (~8–10% of ~42,900 ecommerce orders — the store drop-off subset of the ≈ 4,000–5,000 total ecommerce return requests per the W1623 canon; ≈ 17–21 drop-offs/store/month)",
+    "Owner": "Customer Service Representative (CSR)",
+    "Participants": "CSR, Store Manager (approval override), Department Supervisor (quality inspection), Ecommerce Operations (system verification)",
+    "Trigger": "Customer brings an ecommerce purchase to a BuildRight store for return, having initiated the return online (RMA) or walking in without prior online initiation",
+    "Volume": "~17–21 in-store ecommerce return drop-offs per store per month; ~3,300–4,200 chain-wide/month (the W12B canon; the courier-pickup remainder ≈ 800–1,700/month rides W215)"
+   },
+   "id": "W1273",
+   "level": 2,
+   "name": "Customer E-Commerce In-Store Return Drop-Off Processing & Cross-Channel Refund",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-count of \"Counter with item to return\" (replaces manual Step 1).",
+     "- System auto-validate of \"checks return eligibility\" (replaces manual Step 2).",
+     "- System auto-record of \"records grade in system with photos\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's return policy explicitly states: \"Returns initiated online; processed in-store\" (§8.4). With ~42,900 monthly ecommerce orders and the corpus ecommerce-returns canon of ~10–12% return requests (≈ 4,000–5,000/month per W1623 — higher than in-store's ~2% due to sizing/color mismatches, product not matching photos, and buyer's remorse), approximately 3,300–4,200 items return through stores each month (the store drop-off subset per the W12B canon; the remainder ≈ 800–1,700/month is refunded on courier pickup per W215). W12 covers in-store returns and exchanges for POS purchases. W215 covers customer home delivery reverse logistics. W509 covers ecommerce product return inspection, grading, and disposition. However, no workflow covers the specific in-store drop-off experience for ecommerce returns — the process where a customer walks into a BuildRight store carrying an item purchased online and expects to return it for a refund. This process has unique requirements: (a) verifying the item was purchased online (not a stolen item from another store), (b) matching the item to an ecommerce order, (c) determining the original payment method for correct refund routing (credit card refund, e-wallet reversal, GCash credit, bank transfer, or store credit), (d) cross-channel inventory disposition (returned ecommerce item becomes store inventory or is routed to DC), (e) handling items that were fulfilled from a different store or DC. This workflow bridges W12 (in-store returns), W509 (return inspection), and W98 (order exceptions) to cover the ecommerce-to-store return channel."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: Customer Service Representative review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Cross-channel refund complexity** — COD orders (potential ~20% of home delivery per W19) have no original digital payment method to refund; offering only store credit for COD returns frustrates customers who expected cash refund; Bank transfer option requires customers to provide bank details, adding friction",
+     "- **Return fraud — wardrobing** — customers may use an item for a project and return it as \"unused\"; Grade B/C inspection helps but Grade A determination is subjective for items like power tools (minimal use signs), paint accessories, and hardware",
+     "- **Ecommerce inventory distortion** — when an ecommerce-fulfilled item is returned to a store, the store gains inventory that the DC does not; if the item was originally allocated from DC stock, the DC-level allocation model becomes inaccurate; periodic inter-channel inventory reconciliation is needed",
+     "- **Store return volume spike during sales** — post-promotional periods (after bi-monthly sales per §13.3) see return rates spike to 30–40% of promotional items; Customer Service Counter (1 CSR per store) becomes bottleneck; temporary CSR augmentation may be needed",
+     "- **Non-returnable item disputes** — custom-cut lumber, custom-mixed paint, installed appliances, and special orders are non-returnable per policy; customers who purchased these online may not have noticed the non-returnable notation; CSRs must handle disputes diplomatically per W740"
+    ],
+    "Staffing Implication": [
+     "- **CSR**: ~4–9 hours/month on ecommerce returns per store. At ~2–5% of the CSR's time (1 CSR per store, ~170 working hours/month), it is absorbed but still competes with other CSR duties (BOPIS pickup, special orders, complaints); part-time CSR support remains advisable during post-sale return spikes.",
+     "- **No permanent incremental headcount.**",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Ecommerce order lookup by order number, RMA number, QR code, customer name, email, phone, or loyalty account (W1273.1)",
+     "- RMA creation and management integrated with ecommerce platform (W1273.2)",
+     "- Item inspection grading module with photo capture (W1273.3, W509)",
+     "- Cross-channel refund routing: credit card, e-wallet, bank transfer, COD refund, store credit (W1273.4–5)",
+     "- Store inventory update with grade-based disposition (W1273.6)",
+     "- Ecommerce order status synchronization and customer notification (W1273.7)",
+     "- Integration with W12 (in-store returns — standard process), W509 (return inspection/grading — detailed quality checks), W88 (RTV — for Grade C items), W176 (store-to-DC reverse logistics), W28 (gift card/store credit lifecycle), W549 (open-box discount processing — Grade B), W98 (ecommerce order exceptions), W215 (home delivery reverse logistics), W267 (digital payment reconciliation — for e-wallet/card refunds), W533 (event streaming — return event published)",
+     "- **Custody & precedence** (per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md), E-09): return *decisioning* (eligibility, approval tiers, disposition) consolidates in VS-32 (W1622–W1630); this workflow and VS-07 W12B are the two faces of the store drop-off execution — W1273 the in-store drop-off experience and cross-channel refund mechanics, W12B the store-side volume/labor canon (≈ 3,300–4,200/month, the subset of W1623's ≈ 4,000–5,000 total ecommerce return requests); POS refund mechanics ride VS-08 W1538"
+    ],
+    "Time Estimate": [
+     "- Per in-store ecommerce return: ~15–25 minutes (identification 3–5 min + order verification 3–5 min + inspection 5–10 min + refund processing 5 min)",
+     "- Monthly per store: ~17–21 returns × 15–25 min = ~4–9 hours/month per store",
+     "- Monthly chain-wide: ~3,300–4,200 returns × 15–25 min = ~825–1,750 hours/month",
+     "- Annual: ~10,000–21,000 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "—",
+     "activity": "**Customer arrival and identification**: customer arrives at Customer Service Counter with item to return; CSR greets customer and asks: (a) \"Was this purchased online or in-store?\" — if in-store, process per standard W12, (b) if online: \"Do you have your order number or return authorization (RMA)?\" — customer provides order number (from email confirmation or order history in app), RMA number (if initiated online), or QR code from return confirmation email, (c) if customer has no order reference: CSR looks up order by customer name, email, phone number, or loyalty account",
+     "duration": "3–5 min",
+     "n": "1",
+     "r": "CSR"
+    },
+    {
+     "a": "—",
+     "activity": "**Order verification**: CSR retrieves ecommerce order in system: (a) confirms order exists and is within return window (standard: 14 days from delivery; extended during holidays: 30 days), (b) verifies item being returned matches an item on the order (SKU, quantity), (c) checks return eligibility: (i) item is returnable per category policy (custom-cut items, paint-mixed items, and installed items may be non-returnable), (ii) item has not been previously returned, (iii) order was not flagged for fraud, (d) if customer has pre-approved RMA: system shows RMA status as \"Approved — Awaiting Drop-Off\"; CSR proceeds to step 3, (e) if no RMA: CSR initiates RMA in system on customer's behalf",
+     "duration": "3–5 min",
+     "n": "2",
+     "r": "CSR"
+    },
+    {
+     "a": "Store Manager (Grade C/D)",
+     "activity": "**Item inspection and grading**: CSR inspects returned item per W509 grading criteria: (a) **Grade A (Resaleable)**: item in original packaging, unused, all accessories included, no damage — can be returned to store shelf, (b) **Grade B (Discountable)**: item opened, minor cosmetic damage, missing non-critical accessories — can be sold as open-box per W549, (c) **Grade C (Non-Resaleable)**: item used, damaged, missing critical components — RTV to vendor per W88, DC return per W176, or scrap, (d) **Grade D (Hazardous/Recall)**: item poses safety risk — quarantine per W29 recall procedures; CSR records grade in system with photos (mandatory for Grade B and C)",
+     "duration": "5–10 min",
+     "n": "3",
+     "r": "CSR / Department Supervisor (Grade C/D)"
+    },
+    {
+     "a": "—",
+     "activity": "**Refund method determination**: system determines refund method based on original payment: (a) **Credit/Debit Card** → refund to original card (processed by system; 3–5 business days for customer to see credit), (b) **E-Wallet (GCash/Maya)** → refund to original e-wallet account (processed by system; 1–2 business days), (c) **COD (Cash on Delivery)** → store credit (gift card per W28) or bank transfer (requires customer to provide bank details), (d) **Bank Transfer / Online Banking** → refund to original bank account (3–5 business days), (e) **Loyalty Points** → points restored to customer account immediately; CSR confirms refund method with customer",
+     "duration": "2 min",
+     "n": "4",
+     "r": "System / CSR"
+    },
+    {
+     "a": "Store Manager (refund > PHP 10K)",
+     "activity": "**Refund processing**: CSR processes return in system: (a) system creates return transaction linked to original ecommerce order, (b) inventory adjusted: item received into store inventory at appropriate grade (Grade A → saleable stock, Grade B → open-box stock, Grade C → RTV stock), (c) refund initiated to original payment method per step 4, (d) customer signs return receipt (digital signature on tablet or printed), (e) CSR provides customer with return confirmation (printed receipt + email confirmation), (f) if customer prefers exchange: CSR offers store credit or direct exchange for same/different item per W12 exchange rules",
+     "duration": "5 min",
+     "n": "5",
+     "r": "CSR / System"
+    },
+    {
+     "a": "—",
+     "activity": "**Cross-channel inventory disposition**: system routes returned item based on grade: (a) **Grade A**: item added to store inventory — available for sale at this store location immediately, (b) **Grade B**: item added to store inventory with \"Open-Box\" status per W549 — discounted pricing applied automatically, (c) **Grade C**: item flagged for disposition — consolidated with store-level returns per W176 (store-to-DC reverse logistics) for DC-level RTV processing per W88, (d) system updates ecommerce platform inventory availability if item was originally fulfilled from DC (DC stock does not increase; store stock increases)",
+     "duration": "Automated",
+     "n": "6",
+     "r": "System"
+    },
+    {
+     "a": "—",
+     "activity": "**Ecommerce order status update**: system updates ecommerce order status: (a) order status changes to \"Returned — In Store\", (b) customer notification sent: email + SMS confirming return receipt and refund timeline, (c) ecommerce fulfillment metrics updated: return rate, return reason, return grade distribution, (d) if refund is store credit: gift card/voucher generated per W28 and delivered to customer (physical card in-store or digital to email/app)",
+     "duration": "Automated",
+     "n": "7",
+     "r": "System"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W12",
+    "W12B",
+    "W1538",
+    "W1622",
+    "W1623",
+    "W1630",
+    "W176",
+    "W19",
+    "W215",
+    "W267",
+    "W28",
+    "W29",
+    "W509",
+    "W533",
+    "W549",
+    "W740",
+    "W88",
+    "W98"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~25,700 BOPIS orders/month (~860/day across 200 stores); SLA monitoring continuous; exception escalation as needed",
+    "Owner": "E-Commerce Operations Manager",
+    "Participants": "E-Commerce Operations Manager, Store Stock Associate (picker), Customer Service Rep (store), Store Manager, Customer",
+    "Trigger": "BOPIS order placed on ecommerce platform; or SLA breach event (order not ready within 4-hour SLA per model company profile)",
+    "Volume": "~860 BOPIS orders/day; SLA target: 95%+ picked within 4 hours; expected SLA breach rate: 5–8% (~43–69 orders/day needing exception handling)"
+   },
+   "id": "W1429",
+   "level": 2,
+   "name": "E-Commerce BOPIS Same-Day Pick SLA Monitoring, Exception Escalation & Customer Notification",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-route of \"routes BOPIS order to designated store based\" (replaces manual Step 1).",
+     "- System auto-escalate of \"Real-time SLA monitoring\" (replaces manual Step 2).",
+     "- System auto-log of \"Exception handling for SLA breaches\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's BOPIS (Buy Online, Pick Up In Store) service processes ~25,700 orders/month (~PHP 90M GMV/month) across all 200 stores. The core BOPIS promise is \"Ready within 4 hours\" — once a customer places an order online, the assigned store must pick, pack, and stage the order within 4 hours, then notify the customer that their order is ready for pickup. At ~860 BOPIS orders/day, SLA compliance is operationally challenging: (a) store Stock Associates must pick BOPIS orders alongside routine shelf replenishment — BOPIS picks take priority but compete for labor, (b) some BOPIS orders include items that are out-of-stock at the assigned store (inventory sync lag per W525 — near-real-time but < 30 second latency means a customer can order an item that was just sold at POS), (c) bulky items (cement, lumber) ordered via BOPIS require yard pickup logistics, (d) the 4-hour SLA clock starts at order placement, not at store acknowledgment — there is no buffer for delayed order transmission. This workflow monitors BOPIS pick SLA compliance, escalates exceptions, and manages customer notification for SLA breaches."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: E-Commerce Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Labor conflict with shelf replenishment**: Stock Associates assigned to BOPIS picks are pulled away from routine shelf replenishment; during peak BOPIS periods (payday weekends), shelf gaps may appear as Stock Associates prioritize picking customer orders over restocking",
+     "- **Inventory accuracy at store level**: BOPIS SLA compliance depends on accurate store-level inventory; at BuildRight's 97% inventory accuracy target, ~3% of BOPIS orders may encounter \"not found\" items, requiring cancellation and customer frustration",
+     "- **Customer expectation management**: the 4-hour SLA is aggressive for a home improvement retailer with 35,000 SKUs and bulky items; customer complaints are likely if the SLA is not met consistently, especially for time-sensitive project materials",
+     "- **Holiday/typhoon SLA degradation**: during typhoons (store operating hours affected) or holidays (reduced staffing), BOPIS SLA compliance may drop significantly; communication of modified SLA expectations is essential"
+    ],
+    "Staffing Implication": [
+     "- E-Commerce Operations Manager: ~3–5 hours/day on SLA monitoring and exception escalation. Absorbed within existing role.",
+     "- Store Stock Associates: BOPIS picking absorbed into existing duties; during peak BOPIS days, dedicated picker may be needed (absorbed by flexible scheduling per W573).",
+     "- No incremental headcount."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOPIS order routing engine: intelligent store assignment based on inventory, proximity, and capacity (W1429.1)",
+     "- Real-time SLA monitoring dashboard: order-level timer with color-coded alerts and store-level compliance rates (W1429.2)",
+     "- Customer notification engine: automated email/SMS/push notifications at each order status change (W1429.4)",
+     "- BOPIS SLA analytics: weekly performance reporting by store, day, and root cause (W1429.5)",
+     "- Integration with W525 (POS sync — near-real-time inventory source), W771 (BOPIS abandoned pickup — aging management), W554 (store shelf replenishment — labor competition), W659 (ecommerce incident management — system issue escalation), W536 (unified order management — order routing)"
+    ],
+    "Time Estimate": [
+     "- Daily SLA monitoring: 2–3 hours/day = ~730–1,095 hours/year",
+     "- Exception handling: 15–30 min/exception × ~50 exceptions/day × 365 days = ~4,500–9,100 hours/year (absorbed by Store Managers)",
+     "- Weekly review: 2–3 hours/week = ~104–156 hours/year",
+     "- Total annual (HQ): ~835–1,250 hours/year"
+    ]
+   },
+   "steps": [
+    {
+     "a": "Store Manager",
+     "activity": "**Order-to-store routing and pick assignment** (T+0): (a) system routes BOPIS order to designated store based on: (i) item availability (near-real-time inventory per W525), (ii) store proximity to customer's selected pickup location, (iii) store pick queue depth (distribute orders across stores with capacity), (b) store receives pick list on Stock Associate's RF device: items, quantities, bin locations, SLA deadline (order time + 4 hours), (c) system starts SLA timer per order",
+     "duration": "< 5 min (system routing)",
+     "n": "1",
+     "r": "System / Stock Associate"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Real-time SLA monitoring** (T+0 to T+4 hours): (a) E-Commerce Operations Manager monitors BOPIS SLA dashboard: (i) orders in progress with time remaining, (ii) orders approaching SLA breach (< 1 hour remaining and not yet picked), (iii) orders breached (4-hour SLA exceeded without pick completion), (b) SLA compliance rate by store: identify stores consistently breaching SLA (> 10% breach rate in a week), (c) system auto-escalates: (i) T+2 hours and not started: yellow alert to Store Manager via mobile app, (ii) T+3 hours and not completed: red alert to Store Manager with instruction to prioritize immediately, (iii) T+4 hours (breach): automatic escalation to E-Commerce Operations Manager + customer notification",
+     "duration": "Continuous (dashboard review: 2–3 hours/day)",
+     "n": "2",
+     "r": "System / E-Commerce Operations Manager"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Exception handling for SLA breaches**: When an order breaches the 4-hour SLA: (a) E-Commerce Operations Manager investigates root cause: (i) store staffing shortage (not enough Stock Associates on shift), (ii) item not found at expected location (inventory inaccuracy — shelf empty but system shows stock), (iii) bulky item handling delay (yard item requires forklift), (iv) high BOPIS volume day (e.g., payday weekend) overwhelming pick capacity, (b) resolution options: (i) expedite pick immediately (reassign from another task), (ii) if item genuinely unavailable: initiate short-ship (pick available items, cancel unavailable with customer notification and partial refund), (iii) if delay is < 2 additional hours: pick and send delayed-ready notification with apology",
+     "duration": "15–30 min/exception",
+     "n": "3",
+     "r": "E-Commerce Operations Manager / Store Manager"
+    },
+    {
+     "a": "E-Commerce Operations Manager",
+     "activity": "**Customer notification management**: System sends automated customer notifications: (a) order received: confirmation email/SMS with order number and pickup location, (b) pick in progress: (no customer notification — internal only), (c) ready for pickup: email/SMS/push notification — \"Your order is ready! Please bring valid ID and order confirmation to Customer Service Counter at [Store Name]. Your order will be held for 5 days.\", (d) SLA breach apology (if applicable): \"We're sorry — your order is taking longer than expected. We're working on it and will notify you as soon as it's ready.\", (e) order aging (5 days with no pickup): reminder notification per W771 — \"Your order will be auto-cancelled in [X] days. Please pick up or contact us to extend.\"",
+     "duration": "Automated",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "GM, Digital Commerce Inc.",
+     "activity": "**Weekly SLA performance review**: (a) E-Commerce Operations Manager reviews weekly BOPIS SLA metrics: (i) chain-wide SLA compliance rate (target: ≥ 95%), (ii) SLA compliance by store (identify bottom 10 stores), (iii) SLA compliance by day of week (payday weekends vs. weekdays), (iv) top reasons for SLA breach (staffing, stockout, volume), (b) for stores with < 90% SLA compliance: Store Manager must submit corrective action plan (e.g., assign dedicated BOPIS picker during peak hours), (c) trend analysis: is SLA compliance improving or deteriorating?",
+     "duration": "2–3 hours/week",
+     "n": "5",
+     "r": "E-Commerce Operations Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W525",
+    "W536",
+    "W554",
+    "W573",
+    "W659",
+    "W771"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "Continuous as new SKUs onboard (~125–200 new SKUs/month per the 1,500–2,500/year canon); quarterly SEO review; monthly content audit",
+    "Owner": "E-Commerce Content Manager",
+    "Participants": "Content Manager, Product Photographer, SEO Specialist, Category Managers, PIM Administrator, External Content Agency",
+    "Trigger": "New SKU onboarding (W50); or quarterly SEO performance review; or monthly product content audit revealing low-converting product pages",
+    "Volume": "35,000 active SKUs on ecommerce platform; ~125–200 new SKUs/month requiring content (per the canon Frequency); ~5,000 existing SKUs with below-benchmark conversion requiring enrichment per quarter"
+   },
+   "id": "W1441",
+   "level": 2,
+   "name": "Ecommerce Product Content Enrichment, How-To Guide Integration & SEO Optimization for Home Improvement",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-review of \"reviews title, description, and meta tags for keyword optimization\" (replaces manual Step 1).",
+     "- System auto-log of \"blog for organic search traffic\" (replaces manual Step 2).",
+     "- System auto-flag of \"flag for enrichment\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's ecommerce platform (buildright.com.ph) hosts the full 35,000 SKU catalog. However, home improvement products require richer content than typical retail — customers need technical specifications (pipe diameter, wire gauge, tile PEI rating), installation instructions, compatibility information (which fixture fits which pipe), and visual references (product in-situ photos, installation videos). Poor product content directly impacts conversion rates and return rates: customers who cannot determine if a product meets their needs will not purchase online (they visit the store instead, defeating the ecommerce channel), or they purchase the wrong item and return it. This workflow manages the continuous enrichment of product content: technical specifications, high-quality photography, how-to guides, and search engine optimization (SEO) to drive organic traffic."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: E-Commerce Content Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Content creation at scale**: enriching 35,000 SKUs with photography, specs, and guides is a multi-year effort; prioritizing by revenue and page views ensures highest-impact content is created first",
+     "- **Technical accuracy**: home improvement products have exact specifications (pipe threads, wire gauges, tile ratings) that must be accurate; incorrect specs lead to wrong purchases and returns",
+     "- **SEO competition**: BuildRight competes with Lazada, Shopee, and specialized hardware stores for organic search; differentiation through proprietary how-to guides and expert content is essential"
+    ],
+    "Staffing Implication": [
+     "- E-Commerce Content Manager: primary owner; ~40 hours/week. Absorbed within existing role (may require 1 dedicated content manager).",
+     "- Product Photographer: ~20 hours/week on product photography. External photographer or shared resource.",
+     "- SEO Specialist: ~10 hours/week. May be external agency resource.",
+     "- Category Managers: ~2 hours/week each on specification review. Absorbed.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- PIM (Product Information Management) — central content repository feeding ecommerce platform (W50)",
+     "- CMS (Content Management System) — how-to guide creation and publishing (W1441.2)",
+     "- SEO analytics dashboard — Google Search Console integration (W1441.4)",
+     "- Product page analytics — conversion rate, bounce rate, time on page by SKU (W1441.3)",
+     "- Integration with W50 (PIM), W1 (assortment), W10 (ecommerce platform)"
+    ],
+    "Time Estimate": [
+     "- New SKU content: 30–45 min × 250 SKUs/month = ~125–188 hours/month",
+     "- How-to guides: 4–8 hours × 4–6 guides/quarter = 16–48 hours/quarter",
+     "- Monthly audit: 8 hours/month",
+     "- Quarterly SEO review: 8 hours/quarter",
+     "- UGC curation: 4 hours/month",
+     "- **Annual estimate: ~1,800–2,400 hours/year**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**New SKU content creation**: When a new SKU is onboarded per W50: (a) Category Manager provides technical specifications (dimensions, material, brand, application), (b) Product Photographer captures: (i) white-background product shot (primary image), (ii) in-situ/lifestyle photo (product installed or in use), (iii) detail shots (texture, finish, connector close-up), (iv) 360° rotation for key items (fixtures, appliances), (c) Content Manager writes: (i) product title optimized for search (\"buildright\" + category + brand + key spec), (ii) bullet-point specifications, (iii) installation notes, (iv) compatibility notes (\"fits standard ½\" PVC pipe\"), (d) SEO Specialist reviews title, description, and meta tags for keyword optimization",
+     "duration": "30–45 min per SKU",
+     "n": "1",
+     "r": "Content Manager / Photographer"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**How-to guide integration**: For complex product categories (plumbing, electrical, tile installation): (a) Content Manager creates or commissions how-to guides: (i) \"How to Install a Wall-Mounted Faucet\" with BuildRight product links, (ii) \"Complete Guide to Bathroom Renovation\" with shopping list builder, (iii) \"Electrical Wiring Basics for Homeowners\" with safety warnings, (b) integrate guides into product pages as \"Related Guides\" and \"Project Ideas\" sections, (c) guides link to all BuildRight products needed for the project (cross-sell), (d) guides published on buildright.com.ph/blog for organic search traffic",
+     "duration": "4–8 hours per guide",
+     "n": "2",
+     "r": "Content Manager / Category Manager"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**Monthly content quality audit**: Content Manager audits product pages for: (a) missing images (target: 100% have primary image; 80% have lifestyle photo), (b) incomplete specifications (target: 100% have dimensions, material, brand), (c) pages with conversion rate below category average — flag for enrichment, (d) pages with high return rate — investigate if content is misleading, (e) pages with high traffic but low conversion — pricing or content issue, (f) prioritize top 500 SKUs by page views for enrichment first",
+     "duration": "8 hours/month",
+     "n": "3",
+     "r": "Content Manager"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**Quarterly SEO performance review**: SEO Specialist reviews: (a) organic search traffic by category and keyword, (b) keyword ranking positions for target terms (\"home improvement Philippines\", \"hardware store online\", category-specific terms), (c) click-through rate from search results, (d) page load speed impact on search ranking, (e) identify keyword opportunities where BuildRight is not ranking on page 1, (f) recommend content updates, new guide topics, and link-building activities for next quarter",
+     "duration": "8 hours/quarter",
+     "n": "4",
+     "r": "SEO Specialist"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**User-generated content curation**: Monitor and curate customer-generated content: (a) customer project photos tagged @buildright on social media — request permission to feature on product pages, (b) customer reviews with photos — highlight on product pages, (c) customer Q&A — publish answers on product page for future customers, (d) content becomes social proof and improves SEO through fresh, unique content",
+     "duration": "4 hours/month",
+     "n": "5",
+     "r": "Content Manager"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W1",
+    "W10",
+    "W50"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-270"
+   ],
+   "fields": {
+    "Frequency": "~8–12% no-show rate = ~2,000–3,100 orders/month across all 200 stores; daily auto-cancel processing; weekly no-show rate review",
+    "Owner": "E-Commerce Operations Manager",
+    "Participants": "E-Commerce Ops Manager, Store Customer Service Rep, Finance/AP (refund processing), Stock Associate (restocking)",
+    "Trigger": "BOPIS order hold period expires (5 days) without customer pickup; or daily no-show rate monitoring dashboard alert",
+    "Volume": "~25,700 BOPIS orders/month; ~2,000–3,100 no-shows/month; each no-show triggers auto-cancel, refund, and restock"
+   },
+   "id": "W1442",
+   "level": 2,
+   "name": "BOPIS Customer No-Show Rate Monitoring, Auto-Cancel Processing & Restocking Workflow",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- System auto-send of \"sends automated reminders to BOPIS customers\" (replaces manual Step 1).",
+     "- System auto-generate of \"generates daily auto-cancel report\" (replaces manual Step 2).",
+     "- System auto-log of \"apologize for any inconvenience\" (replaces manual Step 3)."
+    ],
+    "Background": [
+     "BuildRight Depot's BOPIS (Buy Online, Pick Up In Store) service processes ~25,700 orders/month across 200 stores. The service level agreement is a 4-hour pick time (per W11) and a 5-day customer hold period. Not all customers who place BOPIS orders actually show up to pick them up — the no-show rate is estimated at 8–12%, resulting in ~2,000–3,100 unpicked orders/month. These unpicked orders create several problems: (a) reserved inventory is held in the staging area and unavailable for sale to walk-in customers, (b) the staging area consumes limited backroom space, (c) the payment must be refunded (tying up finance team time), (d) the item must be restocked to the sales floor. This workflow manages the end-to-end no-show process: proactive customer reminders, auto-cancel processing at hold period expiry, refund initiation, and restocking."
+    ],
+    "Controls": [
+     "- CTL-270 (ensure controlled execution — Order Fulfillment & Delivery (PA-10.2).)",
+     "- operational: E-Commerce Operations Manager review and approval gate"
+    ],
+    "Pain Points / Risks": [
+     "- **Customer experience risk**: auto-cancelling a BOPIS order for a customer who intended to pick up but forgot is a negative experience; proactive reminders (Step 1) and easy reorder (Step 3) mitigate this",
+     "- **Refund processing delays**: Philippine payment gateways may take 3–7 business days to process refunds; customer may contact support wondering where their money is; automated refund status tracking is essential",
+     "- **Inventory reservation cost**: items reserved for BOPIS are unavailable for walk-in customers for up to 5 days; for fast-moving items (cement, paint, popular power tools), this reservation cost is significant; consider reducing hold period to 3 days for fast-movers"
+    ],
+    "Staffing Implication": [
+     "- E-Commerce Ops Manager: ~3–4 hours/week on no-show management. Absorbed.",
+     "- Customer Service Rep: ~2 hours/day on high-value follow-up. Absorbed within call center team.",
+     "- Stock Associates: restocking is ~7 min/store/day. Fully absorbed.",
+     "- No incremental headcount.",
+     "---"
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- BOPIS order management system — hold period timer, auto-cancel engine, inventory reservation release (W1442.2)",
+     "- Automated communication engine — reminder email/SMS triggers (W1442.1)",
+     "- Refund processing integration — payment gateway refund initiation (W1442.2)",
+     "- No-show analytics dashboard — rate tracking by store, category, customer segment (W1442.5)",
+     "- Integration with W11 (BOPIS fulfillment), W1429 (pick SLA monitoring), W10 (ecommerce platform)"
+    ],
+    "Time Estimate": [
+     "- Daily auto-cancel review: 30 min/day = 182 hours/year",
+     "- Weekly analysis: 2 hours/week = 104 hours/year",
+     "- High-value follow-up: 10 min × ~200 orders/month = 33 hours/month = 400 hours/year",
+     "- Restocking: 7 min × 2,500 orders/month ÷ 200 stores = ~88 min/store/month (~3 min/store/day) = absorbed",
+     "- **Annual estimate: ~686 hours/year (HQ) + restocking absorbed in-store**"
+    ]
+   },
+   "steps": [
+    {
+     "a": "E-Commerce Ops Manager",
+     "activity": "**Proactive customer reminders**: System sends automated reminders to BOPIS customers: (a) Day 1 (order placed): confirmation email/SMS with pickup instructions, store hours, and required ID, (b) Day 3 (if not picked up): reminder email/SMS — \"Your order is ready for pickup! Please pick up within 2 days\", (c) Day 4 (if not picked up): final reminder — \"Last day! Your order will be auto-cancelled tomorrow at [time] and refunded\", (d) customer can extend hold period by 2 days via app/email reply (one extension allowed)",
+     "duration": "Automated",
+     "n": "1",
+     "r": "System (automated)"
+    },
+    {
+     "a": "E-Commerce Ops Manager",
+     "activity": "**Daily auto-cancel processing**: At end of Day 5 (hold period expiry): (a) system auto-cancels all unpicked BOPIS orders, (b) system initiates refund to original payment method (credit card, e-wallet, GCash), (c) system generates daily auto-cancel report: order number, SKU, store, value, cancel reason (\"hold period expired\"), (d) system releases inventory reservation — items become available for walk-in sale",
+     "duration": "Automated (30 min/day exception review)",
+     "n": "2",
+     "r": "System (automated)"
+    },
+    {
+     "a": "E-Commerce Ops Manager",
+     "activity": "**Customer service follow-up for high-value orders**: For auto-cancelled orders > PHP 10,000: (a) E-Commerce Ops Manager flags for manual review — verify customer did not attempt pickup (sometimes system error), (b) Customer Service Rep contacts customer via phone: (i) apologize for any inconvenience, (ii) offer to reorder with expedited processing, (iii) document reason for no-show (forgot, changed mind, found cheaper elsewhere, emergency), (c) if customer wants to reorder: create new BOPIS order with priority pick status",
+     "duration": "10 min per high-value order",
+     "n": "3",
+     "r": "Customer Service Rep"
+    },
+    {
+     "a": "Department Supervisor",
+     "activity": "**Restocking execution**: Stock Associate restocks auto-cancelled items: (a) retrieve item from BOPIS staging area, (b) verify item condition (no damage from staging), (c) return to shelf location per planogram, (d) system updates on-hand inventory — item now available for walk-in and ecommerce sale, (e) for large/bulky items (appliances, lumber): restock priority is high to free staging space",
+     "duration": "5–10 min per item",
+     "n": "4",
+     "r": "Stock Associate"
+    },
+    {
+     "a": "E-Commerce Manager",
+     "activity": "**Weekly no-show rate analysis**: E-Commerce Ops Manager reviews weekly no-show dashboard: (a) no-show rate by store (identify stores with > 15% rate for root cause analysis), (b) no-show rate by category (identify product types customers frequently abandon), (c) no-show rate by day-of-week and time (identify patterns), (d) customer demographics of no-shows (new vs. repeat, loyalty tier), (e) revenue impact of no-shows: refund processing cost + lost walk-in sales from reserved inventory, (f) implement corrective actions: adjust hold period, tighten payment authorization, require deposit for high-value BOPIS",
+     "duration": "2 hours/week",
+     "n": "5",
+     "r": "E-Commerce Ops Manager"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W10",
+    "W11",
+    "W1429"
+   ]
+  }
+ ]
+}

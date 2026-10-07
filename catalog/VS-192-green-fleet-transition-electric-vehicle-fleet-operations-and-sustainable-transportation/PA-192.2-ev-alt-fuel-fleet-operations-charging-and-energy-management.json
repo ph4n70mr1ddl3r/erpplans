@@ -1,0 +1,695 @@
+{
+ "process_area": {
+  "id": "PA-192.2",
+  "title": "EV / Alt-Fuel Fleet Operations, Charging & Energy Management"
+ },
+ "schema": "erpplans-catalog/1.0",
+ "source": "01-model-company/workflows/VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/PA-192.2-ev-alt-fuel-fleet-operations-charging-and-energy-management.md",
+ "value_stream": {
+  "directory": "VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation",
+  "id": "VS-192",
+  "name": "Green Fleet Transition, Electric Vehicle (EV) Fleet Operations & Sustainable Transportation"
+ },
+ "workflows": [
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Daily, per vehicle and per depot",
+    "Owner": "Fleet Charging Operations Supervisor (VS-06)",
+    "Participants": "Drivers, Facilities/Energy (VS-138/VS-120), Depot/DC Ops (VS-04), EV-host ops (VS-163)",
+    "Trigger": "Vehicles in service; nightly/peak charging cycles",
+    "Volume": "Per EV in the owned fleet, daily; scales with conversion (~early tens → larger)"
+   },
+   "id": "W5473",
+   "level": 2,
+   "name": "EV Fleet Daily Charging Operations, Load Scheduling & Smart-Charge Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SoC-vs-dispatch-aware overnight scheduling; tariff-aware and renewable-aware smart-charging; automatic session logging and exception alerting; demand-charge avoidance logic."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: documented fleet-vs-customer priority policy; SoC-at-departure minimum enforced."
+    ],
+    "Cross-references": [
+     "- links to VS-163 (EV-host shared), VS-120 (energy/tariff), VS-138 (facilities), VS-06 (fleet/telematics), W5468 (infrastructure), W5474 (charger maintenance), W5477 (dispatch), W5479 (renewable matching), W5481 (MRV), W5486 (billing)"
+    ],
+    "Pain Points / Risks": [
+     "- **UndersoC-at-departure risk**: a scheduling fault leaves a vehicle under-charged for its dispatch, forcing diesel fallback or a missed delivery; mitigated by SoC-at-departure rules and pre-departure checks.",
+     "- **Peak-demand-charge risk**: unmanaged simultaneous charging trips a demand-charge band and erodes the electricity-cost case; mitigated by smart-load scheduling and solar peak-shaving (W5479).",
+     "- **Fleet-vs-customer contention risk**: fleet charging starves the customer-host revenue stream (VS-163) at peak; mitigated by the documented priority policy and off-hours fleet charging."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Charge-management/CPMS (links VS-163 EV-host platform); telematics/SoC (VS-06/W5475); energy/tariff (VS-120); TMS/dispatch (W5477); billing (W5486); MRV (W5481)."
+    ],
+    "Time Estimate": [
+     "- Automated once configured; ~15–30 min/supervisor daily exception-handling + review."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Charging Operations Supervisor",
+     "activity": "Each evening, the charge-management system schedules each returning EV against its next-day dispatch (W5477), state-of-charge, time-of-departure, and the site's transformer/charger capacity (W5468).",
+     "duration": "nightly",
+     "n": "1",
+     "r": "Charge Ops Supervisor / System"
+    },
+    {
+     "a": "Fleet Charging Operations Supervisor",
+     "activity": "Apply smart-charging rules: prioritize low-tariff / high-renewable hours (W5479), cap simultaneous draw to the site limit, defer non-urgent charging, and sequence to avoid peak-demand charges.",
+     "duration": "nightly",
+     "n": "2",
+     "r": "Charge Ops Supervisor / System"
+    },
+    {
+     "a": "Fleet Charging Operations Supervisor",
+     "activity": "Reconcile fleet-charging priority vs the shared customer-host network (VS-163) under a documented priority policy (fleet-priority off-hours, customer-priority during trading).",
+     "duration": "ongoing",
+     "n": "3",
+     "r": "Charge Ops Supervisor"
+    },
+    {
+     "a": "Fleet Charging Operations Supervisor",
+     "activity": "Log every charging session (vehicle, charger, kWh, start/stop, tariff, renewable-share) for billing (W5486), MRV (W5481), and analytics (W5488).",
+     "duration": "per session",
+     "n": "4",
+     "r": "System"
+    },
+    {
+     "a": "Fleet Charging Operations Supervisor",
+     "activity": "Exception-handle charging failures (faulty charger, vehicle not accepting charge, interrupted session) and trigger maintenance (W5474) or diesel/hybrid fallback (W5477).",
+     "duration": "per exception",
+     "n": "5",
+     "r": "Charge Ops Supervisor"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5468",
+    "W5474",
+    "W5475",
+    "W5477",
+    "W5479",
+    "W5481",
+    "W5486",
+    "W5488"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Continuous; preventive maintenance per OEM schedule",
+    "Owner": "Facilities & Energy Manager (VS-138)",
+    "Participants": "Charger vendor/EPC, Fleet (VS-06), HSE (VS-24), EV-host ops (VS-163)",
+    "Trigger": "Chargers commissioned (W5468); daily operations; fault alerts",
+    "Volume": "Charging points across 4 DCs + stores (fleet-dedicated and shared with VS-163)"
+   },
+   "id": "W5474",
+   "level": 2,
+   "name": "Depot Charging Station Operations, Maintenance & Uptime Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Uptime/availability monitoring with auto-fault tickets; OEM SLA scorecard; predictive maintenance from usage/fault telemetry; firmware-rollout management."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: charger-vendor TPRM/SLA; BFP/electrical-permit verification; uptime evidence; N+1 redundancy policy for depot fleet chargers; staged firmware rollout."
+    ],
+    "Cross-references": [
+     "- links to VS-163 (EV-host shared), VS-138 (facilities/CMMS), VS-34/VS-161 (vendor/SLA), VS-24 (HSE), VS-35 (assets), W5468 (infrastructure), W5483 (battery-fire/HV safety)"
+    ],
+    "Pain Points / Risks": [
+     "- **Single-point-charger-failure risk**: a depot with one charger that fails halts the wave; mitigated by redundancy/N+1 sizing (W5468) and SLA-backed field service.",
+     "- **Connector/cable-abuse risk**: driver mishandling damages connectors, driving downtime and cost; mitigated by driver training (W5484) and inspection.",
+     "- **Firmware/homologation-drift risk**: an OEM firmware push introduces a fault or breaks OCPP interop; mitigated by staged firmware rollouts and a rollback plan."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Charger/CPMS (VS-163 shared); facilities/CMMS (VS-138); vendor/SLA (VS-161/VS-34); HSE (VS-24); asset register (VS-35)."
+    ],
+    "Time Estimate": [
+     "- Automated monitoring; ~hours/week site PM per site batch; fault-response per SLA."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Operate the charger network (availability monitoring, session initiation support, fault triage) for both fleet-dedicated and shared customer-facing units (VS-163).",
+     "duration": "daily",
+     "n": "1",
+     "r": "Facilities / EV-Host Ops"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Execute preventive maintenance per OEM schedule (connector/cable inspection, cooling, firmware updates, ground-fault/earth-leakage tests) and maintain a charger asset register with uptime SLA.",
+     "duration": "per schedule",
+     "n": "2",
+     "r": "Facilities / Charger Vendor"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Triage and resolve faults (error codes, communication faults, payment/OCPP issues, hardware faults) under a vendor SLA; escalate to OEM field service; provide a backup charger or diesel fallback.",
+     "duration": "per fault",
+     "n": "3",
+     "r": "Facilities / Charger Vendor"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Track and report charger uptime/availability (target e.g., ≥98%), MTBF/MTTR, and session success-rate per site; drive vendor performance against SLA.",
+     "duration": "monthly",
+     "n": "4",
+     "r": "Facilities Analyst"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Coordinate HSE (VS-24) for any safety event (arc-flash, cable damage, fire-signs) and feed incidents into the battery-fire/high-voltage safety program (W5483).",
+     "duration": "per event",
+     "n": "5",
+     "r": "Facilities / HSE"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5468",
+    "W5483",
+    "W5484"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Continuous SoH telemetry; quarterly SoH review per vehicle",
+    "Owner": "Fleet Maintenance Manager (VS-06.2)",
+    "Participants": "OEM/battery vendor, Telematics (VS-06), Maintenance (VS-06.2), Treasury/warranty (W5467)",
+    "Trigger": "Vehicles in service; periodic SoH review; warranty/degradation thresholds",
+    "Volume": "Per EV in the fleet"
+   },
+   "id": "W5475",
+   "level": 2,
+   "name": "EV Battery State-of-Health, Range Assurance & Battery Lifecycle Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- BMS→CMMS SoH feed with degradation-trend alerting; warranty-threshold auto-detection and claim drafting; battery-passport/traceability ledger."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: documented thermal-management discipline; SoH-based route-assignment rule."
+    ],
+    "Cross-references": [
+     "- links to VS-06 (fleet/telematics), VS-06.2/VS-138 (maintenance/CMMS), W5467 (warranty), W5477 (SoH-aware dispatch), W5483 (thermal/fire safety), W5487 (second-life/recycling)"
+    ],
+    "Pain Points / Risks": [
+     "- **Accelerated-degradation risk**: PH tropical heat + heavy-payload duty cycles degrade batteries faster than OEM temperate-climate baselines, eroding the TCO case; mitigated by thermal management, conservative warranty terms (W5467), and SoH-based route assignment.",
+     "- **Warranty-evidence risk**: inadequate SoH telemetry forfeits a valid warranty claim; mitigated by continuous BMS data capture and documented thresholds.",
+     "- **Range-misjudgment risk**: dispatching a degraded-range vehicle to a long lane strands the route; mitigated by SoH-aware dispatch (W5477)."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics/BMS feed (VS-06); fleet asset register (VS-06); warranty tracker (links W5467); maintenance/CMMS (VS-06.2/VS-138); battery lifecycle/second-life (W5487)."
+    ],
+    "Time Estimate": [
+     "- Automated telemetry; ~hours/quarter per vehicle for SoH review; per-claim case work."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Capture battery SoH telemetry (capacity fade, internal resistance, cell-balance, temperature excursions, charge-cycle count) from the vehicle BMS via telematics (VS-06).",
+     "duration": "continuous",
+     "n": "1",
+     "r": "Telematics / Maintenance Analyst"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Track each vehicle's usable range vs its dispatch requirement (W5477); flag vehicles approaching range-insufficiency for route reassignment or remediation.",
+     "duration": "quarterly",
+     "n": "2",
+     "r": "Maintenance Analyst"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Detect degradation against the OEM warranty threshold (e.g., <70% at 5-yr/300k-km per W5467) and prepare warranty claims / battery-module replacement cases.",
+     "duration": "per threshold",
+     "n": "3",
+     "r": "Maintenance / Warranty Admin"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Manage the battery lifecycle plan: in-service → degradation monitoring → warranty/replacement → second-life (W5487) → recycling (W5487), maintaining a battery passport/traceability record.",
+     "duration": "ongoing",
+     "n": "4",
+     "r": "Maintenance Analyst"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Maintain battery thermal-management discipline (avoid chronic high-temp operation that accelerates degradation in the PH tropical climate) and feed any thermal event into the safety program (W5483).",
+     "duration": "ongoing",
+     "n": "5",
+     "r": "Maintenance / Driver"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5467",
+    "W5477",
+    "W5483",
+    "W5487"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Continuous telematics; weekly/monthly driver review",
+    "Owner": "Fleet Operations Manager (VS-06.2)",
+    "Participants": "Drivers, HR/L&D (VS-19.4), Telematics vendor, HSE (VS-24)",
+    "Trigger": "Vehicles in service; driver behavior program",
+    "Volume": "Per driver × per EV/alt-fuel vehicle"
+   },
+   "id": "W5476",
+   "level": 2,
+   "name": "Green Fleet Telematics, Eco-Driving & Driver Behavior Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Eco-score auto-generation and trend alerting; per-driver coaching-task assignment; kWh/L-savings auto-quantification for incentives."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: documented driver-contest/grievance path; coaching threshold policy."
+    ],
+    "Cross-references": [
+     "- links to VS-06 (telematics W199), VS-19.4/VS-124 (driver enablement), VS-24 (safety), VS-91 (driver-data privacy), VS-103 (HR), W5472 (route baseline), W5483 (safety), W5488 (savings analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Range-erosion-from-behavior risk**: aggressive driving can cut real-world EV range 15–25%, defeating the route plan; mitigated by eco-driving scoring and coaching.",
+     "- **Driver-privacy risk**: telematics behavior data mishandled breaches RA 10173 and damages trust; mitigated by the VS-91 consent/retention discipline and a documented grievance path."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Telematics platform (VS-06); driver/HR (VS-19.4/VS-103); L&D (VS-124); HSE (VS-24); data privacy (VS-91); analytics (W5488)."
+    ],
+    "Time Estimate": [
+     "- Automated scoring; ~2–4 hours/month per fleet for driver review and coaching."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Operations Manager",
+     "activity": "Configure telematics (links VS-06 W199) to capture EV-relevant behavior: harsh acceleration/braking (which drains battery and degrades range), over-speed, idling (for hybrids), cabin-pre-conditioning abuse, and eco-mode adherence.",
+     "duration": "per setup",
+     "n": "1",
+     "r": "Telematics / Fleet Ops"
+    },
+    {
+     "a": "Fleet Operations Manager",
+     "activity": "Generate per-driver and per-vehicle eco-driving scores; benchmark kWh/km (EV) and L/100km (hybrid/alt-fuel) against the route baseline (W5472).",
+     "duration": "monthly",
+     "n": "2",
+     "r": "Fleet Analyst"
+    },
+    {
+     "a": "Fleet Operations Manager",
+     "activity": "Coach under-performing drivers (links VS-124/VS-19.4 enablement) and recognize top performers; feed serious/safety behaviors (speeding, harsh events) into the safety program (W5483) and driver standards (VS-06.2).",
+     "duration": "monthly",
+     "n": "3",
+     "r": "Fleet Ops / L&D"
+    },
+    {
+     "a": "Fleet Operations Manager",
+     "activity": "Quantify the kWh/L savings from eco-driving and feed it into the TCO/benefit tracking (W5488) and the driver-incentive program.",
+     "duration": "quarterly",
+     "n": "4",
+     "r": "Fleet Analyst"
+    },
+    {
+     "a": "Fleet Operations Manager",
+     "activity": "Maintain telematics data quality and privacy (driver-behavior data is personal data under RA 10173 — links VS-91) and a documented driver-contest/grievance path.",
+     "duration": "ongoing",
+     "n": "5",
+     "r": "Fleet Ops / DPO (VS-91)"
+    }
+   ],
+   "tier": "Tier 3",
+   "w_refs": [
+    "W199",
+    "W5472",
+    "W5483",
+    "W5488"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Daily, per vehicle and per route",
+    "Owner": "Dispatch Supervisor (VS-06.1/VS-06.3)",
+    "Participants": "Drivers, Network Planning (W5472), Charging Ops (W5473), Store Ops (VS-177)",
+    "Trigger": "Daily dispatch; network re-design (W5472); SoH updates (W5475)",
+    "Volume": "Per EV/alt-fuel dispatch across 4 DCs + last-mile + jobsite"
+   },
+   "id": "W5477",
+   "level": 2,
+   "name": "Range-Aware Route Dispatch, Payload Optimization & Charging-Stop Planning",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- SoH/route-aware vehicle-assignment; payload/cube optimization within the EV envelope; charger-aware stop planning with reservation; automated fallback trigger and logging."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: documented energy-buffer margin; fallback-usage ceiling and root-cause policy."
+    ],
+    "Cross-references": [
+     "- links to VS-06 (TMS/dispatch), VS-02 (supply planning), W5472 (network/route), W5473/W5474 (charging), W5475 (SoH), W5485 (3PL fallback), W5488 (fallback-usage analytics)"
+    ],
+    "Pain Points / Risks": [
+     "- **Range-miscalculation risk**: under-estimating energy need (e.g., heavy payload + A/C + climb) strands a vehicle mid-route; mitigated by conservative energy-buffer margins and telematics-based re-planning.",
+     "- **Fallback-creep risk**: over-reliance on diesel fallback defeats decarbonization; mitigated by the fallback-usage KPI ceiling (W5488) and root-cause on each fallback event.",
+     "- **Charger-contention risk**: multiple dispatched vehicles target the same opportunity charger; mitigated by charger-aware dispatch and reservation."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- TMS/dispatch (VS-06); network/energy model (W5472); SoH (W5475); charging availability (W5473/W5474); supply planning (VS-02); telematics (VS-06)."
+    ],
+    "Time Estimate": [
+     "- Automated dispatch once configured; ~minutes/dispatcher daily exception-handling."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Dispatch Supervisor",
+     "activity": "Assign vehicles to dispatches matching usable range (from SoH W5475) to the route's energy requirement (distance, payload, grade, climate/A/C load from W5472).",
+     "duration": "per dispatch",
+     "n": "1",
+     "r": "Dispatcher / TMS"
+    },
+    {
+     "a": "Dispatch Supervisor",
+     "activity": "Optimize payload/cube within the EV's reduced-payload envelope; split/combine orders or adjust replenishment frequency (VS-02) to maintain coverage.",
+     "duration": "per dispatch",
+     "n": "2",
+     "r": "Dispatcher / Supply Planning"
+    },
+    {
+     "a": "Dispatch Supervisor",
+     "activity": "Plan any en-route/ opportunity charging stops (links W5474) into the schedule with dwell, and confirm charger availability at the stop.",
+     "duration": "per dispatch",
+     "n": "3",
+     "r": "Dispatcher / Charging Ops"
+    },
+    {
+     "a": "Dispatch Supervisor",
+     "activity": "Pre-condition the cabin (while plugged in) to preserve range and confirm SoC-at-departure meets the route requirement plus margin.",
+     "duration": "per dispatch",
+     "n": "4",
+     "r": "Driver / Charging Ops"
+    },
+    {
+     "a": "Dispatch Supervisor",
+     "activity": "Define and trigger fallback coverage (diesel/hybrid vehicle or 3PL with green clause W5485) for EV-unavailable, range-insufficient, or peak-day events; track fallback-usage (W5488).",
+     "duration": "per event",
+     "n": "5",
+     "r": "Dispatcher / Fleet"
+    }
+   ],
+   "tier": "Tier 1",
+   "w_refs": [
+    "W5472",
+    "W5473",
+    "W5474",
+    "W5475",
+    "W5485",
+    "W5488"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Per fuel-delivery; continuous quality/operations",
+    "Owner": "Fuel & Fleet Cost Manager (VS-61)",
+    "Participants": "Fleet (VS-06), Facilities/storage (VS-138/VS-24), Procurement (VS-03/VS-34), HSE (VS-24)",
+    "Trigger": "Alt-fuel vehicles/equipment in service; fuel procurement (VS-61)",
+    "Volume": "Alt-fuel share of the fleet (biodiesel-blend drop-in for existing diesel; LNG/CNG for heavy line-haul where viable; hybrids)"
+   },
+   "id": "W5478",
+   "level": 2,
+   "name": "Alternative-Fuel (Biodiesel/B20, LNG, Hybrid) Operations & Fuel Quality Management",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Fuel-quality test-result logging with auto-hold on off-spec; alt-fuel GHG auto-calculation from certified lifecycle factors; supplier continuity/supply-risk alerting."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: fuel-supplier TPRM/accreditation; BFP/DENR storage compliance; fuel-quality and sustainability-claim evidence; receipt quality-test mandatory before dispensing."
+    ],
+    "Cross-references": [
+     "- links to VS-61 (fuel/fleet cost), VS-03/VS-34 (procurement), VS-138 (storage), VS-114 (DG if applicable), VS-06.2 (maintenance), VS-24 (HSE), VS-25 (ESG claim), W5481 (MRV)"
+    ],
+    "Pain Points / Risks": [
+     "- **Fuel-quality risk**: off-spec biodiesel (water/microbial contamination, wrong blend) clogs filters and strands vehicles; mitigated by receipt quality testing and accredited suppliers.",
+     "- **Greenwashing-claim risk**: claiming a GHG reduction without feedstock/certification evidence breaches ESG disclosure integrity (VS-25); mitigated by ISCC/RSB-certified supply and documented lifecycle factors.",
+     "- **LNG/CNG-safety risk**: high-pressure gaseous fuel storage carries BFP/DENR and fire risk beyond diesel; mitigated by compliant storage, HSE review (VS-24), and trained operators."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Fuel/fleet cost (VS-61); procurement (VS-03/VS-34); facilities/storage (VS-138); DG/hazmat if applicable (VS-114); maintenance (VS-06.2); ESG/MRV (W5481/VS-25)."
+    ],
+    "Time Estimate": [
+     "- Per delivery receipt/quality test ~1–2 hours; ongoing monitoring absorbed."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fuel & Fleet Cost Manager",
+     "activity": "Procure biodiesel/B20 (or higher blend) and LNG/CNG from accredited suppliers (links VS-61/VS-34) with documented blend ratio, feedstock/RSB/ISCC sustainability, and quality spec.",
+     "duration": "per contract",
+     "n": "1",
+     "r": "Procurement / Fuel Manager"
+    },
+    {
+     "a": "Fuel & Fleet Cost Manager",
+     "activity": "Receive, store, and dispense alt-fuel compliantly (storage tanks, BFP Fire Code for LNG/CNG, DENR where applicable — links VS-114); maintain fuel-quality testing (water, sediment, blend ratio, cetane) on receipt.",
+     "duration": "per delivery",
+     "n": "2",
+     "r": "Facilities / Fuel Manager"
+    },
+    {
+     "a": "Fuel & Fleet Cost Manager",
+     "activity": "Monitor alt-fuel vehicle performance (fuel economy, cold-start, filter-clogging from biodiesel, component compatibility) and adjust maintenance intervals (VS-06.2) accordingly.",
+     "duration": "monthly",
+     "n": "3",
+     "r": "Maintenance / Fleet"
+    },
+    {
+     "a": "Fuel & Fleet Cost Manager",
+     "activity": "Track alt-fuel GHG reduction (lifecycle, vs diesel) for MRV (W5481) and ensure sustainability-claim evidence (feedstock, certification) supports ESG disclosure (VS-25).",
+     "duration": "quarterly",
+     "n": "4",
+     "r": "ESG / Fuel Manager"
+    },
+    {
+     "a": "Fuel & Fleet Cost Manager",
+     "activity": "Manage alt-fuel supply continuity (single-supplier risk, blend availability by region) and a diesel-fallback for supply interruption.",
+     "duration": "ongoing",
+     "n": "5",
+     "r": "Procurement / Fuel Manager"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5481"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Continuous optimization; seasonal review",
+    "Owner": "Facilities & Energy Manager (VS-138/VS-120)",
+    "Participants": "Solar O&M (VS-108), Fleet Charging Ops (W5473), Distribution Utility / Retail Electricity Supplier (VS-120), ESG (VS-25)",
+    "Trigger": "Charging load established (W5473); solar generation (VS-108); tariff/DR signals",
+    "Volume": "Per charging site with co-located solar (VS-108)"
+   },
+   "id": "W5479",
+   "level": 2,
+   "name": "Charging–Renewable Integration, Demand Response & On-Site Solar Load Matching",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- Solar-forecast-aware charging scheduling; automated REC-retirement accounting; tariff/DR-aware load shaping; renewable-share auto-verification for ESG."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: documented REC retirement-vs-sale policy; conservative \"renewable-charged\" claim threshold."
+    ],
+    "Cross-references": [
+     "- links to VS-108 (solar/REC W3465), VS-120 (energy/RCOA/WESM), VS-138 (facilities), W5473/W5474 (charging), VS-25 (ESG claim), W5481 (MRV)"
+    ],
+    "Pain Points / Risks": [
+     "- **Double-counting risk**: claiming the same renewable kWh for both REC trading/sale (VS-108) and fleet \"renewable-charged\" marketing breaches integrity; mitigated by clear REC retirement-vs-sale accounting and conservative claims.",
+     "- **Seasonal-shortfall risk**: monsoon-season solar shortfall shifts charging to grid/peak tariff, eroding the cost case; mitigated by seasonal planning and grid/fallback.",
+     "- **DR-participation risk**: a DR event curtails charging and disrupts dispatch; mitigated by evaluating DR economics and an opt-out/compensation policy."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Solar/BMS/SCADA (VS-108); charge-management (W5473/W5474); energy/tariff/RCOA/WESM (VS-120); REC registry (VS-108 W3465); ESG data (VS-25)."
+    ],
+    "Time Estimate": [
+     "- Automated optimization once configured; ~hours/week for review and seasonal planning."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Integrate the charging schedule (W5473) with the on-site solar generation forecast (VS-108) and battery-storage dispatch to maximize self-consumption of renewable generation for fleet charging.",
+     "duration": "daily",
+     "n": "1",
+     "r": "Facilities / Solar O&M"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Shape charging load to off-peak/low-tariff hours and avoid peak-demand bands (RCOA/WESM tariff exposure per VS-120); participate in any utility demand-response (DR) program where economics support it.",
+     "duration": "ongoing",
+     "n": "2",
+     "r": "Facilities / Energy Analyst"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Track and verify the renewable-share of fleet charging (kWh-renewable / kWh-charged) to support a credible \"renewable-charged fleet\" ESG claim (VS-25) and avoid double-counting against the REC accounting (VS-108 W3465).",
+     "duration": "monthly",
+     "n": "3",
+     "r": "ESG / Energy Analyst"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Coordinate battery-storage dispatch (charge from solar surplus, discharge to cover charging peak) and manage battery cycle-life economics.",
+     "duration": "ongoing",
+     "n": "4",
+     "r": "Facilities / Solar O&M"
+    },
+    {
+     "a": "Facilities & Energy Manager",
+     "activity": "Review the solar-charging match seasonally (monsoon/cloudy-season generation shortfall) and define the grid-supplement/fallback plan to maintain charging continuity.",
+     "duration": "seasonal",
+     "n": "5",
+     "r": "Facilities / Energy Analyst"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W3465",
+    "W5473",
+    "W5474",
+    "W5481"
+   ]
+  },
+  {
+   "ctl_refs": [
+    "CTL-807"
+   ],
+   "fields": {
+    "Frequency": "Per OEM PM schedule; per fault/event",
+    "Owner": "Fleet Maintenance Manager (VS-06.2)",
+    "Participants": "Maintenance technicians, OEM authorized service, Towing/roadside vendor, HSE (VS-24)",
+    "Trigger": "Vehicle in service; PM schedule; fault/roadside event",
+    "Volume": "Per EV/alt-fuel vehicle in the fleet"
+   },
+   "id": "W5480",
+   "level": 2,
+   "name": "EV-Specific Preventive Maintenance, Diagnostics, Roadside & Towing Operations",
+   "parent": null,
+   "req_refs": [],
+   "sections": {
+    "Automation Opportunity": [
+     "- OBD/fault-code → CMMS auto-ticketing and OEM-authorization routing; HV-qualification/authorization enforcement in work-order assignment; thermal-event auto-alerting to HSE."
+    ],
+    "Controls": [
+     "- CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging & Energy Management (PA-192.2).)",
+     "- operational: HV-qualification gating before HV work; HV-safe towing protocol mandatory; thermal-event response per W5483."
+    ],
+    "Cross-references": [
+     "- links to VS-06.2/VS-138 (maintenance/CMMS), VS-19.4 (technician qualification), VS-56/VS-74 (towing/roadside), VS-24 (HSE), W5475 (battery SoH), W5483 (battery-fire/HV safety), W5484 (technician training)"
+    ],
+    "Pain Points / Risks": [
+     "- **Unqualified-HV-work risk**: untrained technicians working on HV systems face lethal shock and breach DOLE-OSH; mitigated by HV-qualification gating and outsourcing to authorized service.",
+     "- **Stranded-vehicle-recovery risk**: improper towing (flat-towing the driven axle) damages an EV drivetrain; mitigated by HV-safe towing protocols and trained towing vendors.",
+     "- **Thermal-event risk**: a battery thermal-runaway event is a fire/toxic-gas hazard requiring specialist response; mitigated by the W5483 program, trained responders, and isolation."
+    ],
+    "Steps": [],
+    "System Touchpoints": [
+     "- Maintenance/CMMS (VS-06.2/VS-138); EV telematics/OBD (VS-06); OEM service portal; towing/dispatch (VS-56); HSE (VS-24); safety program (W5483)."
+    ],
+    "Time Estimate": [
+     "- Per OEM PM schedule; fault diagnostics ~hours/event; roadside/tow per event."
+    ]
+   },
+   "steps": [
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Execute EV-specific preventive maintenance per OEM schedule (battery/thermal-system inspection, high-voltage isolation test, inverter/motor, regenerative-brake system, cooling-fluid, 12V aux) distinct from diesel PM.",
+     "duration": "per schedule",
+     "n": "1",
+     "r": "Maintenance Technician"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Diagnose faults via OBD/EV telematics (fault codes, HV-system warnings, thermal events) and triage to in-house (light), OEM authorized (HV/battery), or roadside/tow.",
+     "duration": "per fault",
+     "n": "2",
+     "r": "Maintenance Technician / OEM"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Maintain a trained/authorized technician pool (HV-qualified per OEM + DOLE-OSH) and OEM tooling; outsource HV/battery work to authorized service where in-house qualification is absent.",
+     "duration": "ongoing",
+     "n": "3",
+     "r": "Maintenance / HR (VS-19.4)"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Operate roadside assistance and towing for EVs: HV-safe towing (no flat-tow of driven axle), recovery of a stranded/thermal-event vehicle, and coordination with the towing vendor (links VS-56/VS-74).",
+     "duration": "per event",
+     "n": "4",
+     "r": "Towing Vendor / Fleet"
+    },
+    {
+     "a": "Fleet Maintenance Manager",
+     "activity": "Feed all safety-relevant faults (thermal runaway signs, isolation loss, fire) into the battery-fire/HV safety program (W5483) and the recall path if systemic.",
+     "duration": "per event",
+     "n": "5",
+     "r": "Maintenance / HSE"
+    }
+   ],
+   "tier": "Tier 2",
+   "w_refs": [
+    "W5475",
+    "W5483",
+    "W5484"
+   ]
+  }
+ ]
+}
